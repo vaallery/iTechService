@@ -40,7 +40,7 @@ group :development, :test do
   gem 'rspec-rails', '2.11.0'
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'factory_girl'
+  gem 'factory_girl_rails'
 end
 
 # To use ActiveModel has_secure_password

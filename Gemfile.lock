@@ -78,6 +78,9 @@ GEM
       multi_json (~> 1.0)
     factory_girl (4.1.0)
       activesupport (>= 3.0.0)
+    factory_girl_rails (4.1.0)
+      factory_girl (~> 4.1.0)
+      railties (>= 3.0.0)
     ffi (1.1.5)
     gherkin (2.11.5)
       json (>= 1.4.6)
@@ -212,7 +215,7 @@ DEPENDENCIES
   debugger
   debugger-linecache
   debugger-pry
-  factory_girl
+  factory_girl_rails
   haml-rails
   jquery-rails
   jquery-rails-cdn

@@ -6,7 +6,7 @@ Feature: Receiving and returning devices
   
   Scenario: Receiving device for some service
     Given a device
-    When I enter device and client params and service type
+    When I enter correct initial data
     Then device should get an unique ticket number 
     And device tasks should contain chosen service
     And device location should match chosen service

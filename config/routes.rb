@@ -1,4 +1,14 @@
 ItechService::Application.routes.draw do
+  resources :users
+
+  resources :clients
+
+  resources :device_types
+
+  resources :tasks
+
+  resources :devices
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
