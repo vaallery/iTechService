@@ -36,6 +36,7 @@ end
 
 group :test do
   gem 'cucumber-rails'
+  gem 'simplecov', require: false
 end
 
 group :development, :test do

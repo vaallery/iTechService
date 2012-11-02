@@ -22,10 +22,6 @@ FactoryGirl.define do
     end
     
     factory :device_without_ticket_number do
-      ticket_number nil
-    end
-    
-    factory :device_with_blank_ticket_number do
       ticket_number ''
     end
   end

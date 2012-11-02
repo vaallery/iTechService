@@ -12,4 +12,9 @@ describe User do
     user.should_not be_valid
   end
   
+  it "is not valid without 'password'" do
+    user = build :user_without_password
+    user.should_not be_valid
+  end
+  
 end

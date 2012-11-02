@@ -10,5 +10,6 @@ class CreateDevices < ActiveRecord::Migration
     end
     add_index :devices, :device_type_id
     add_index :devices, :client_id
+    add_index :devices, :ticket_number
   end
 end

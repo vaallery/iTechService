@@ -24,7 +24,7 @@ describe ClientsController do
   # Client. As you add validations to Client, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    attributes_for :client
   end
 
   # This should return the minimal set of values that should be in the session
@@ -36,7 +36,7 @@ describe ClientsController do
 
   describe "GET index" do
     it "assigns all clients as @clients" do
-      client = Client.create! valid_attributes
+      client = create :client
       get :index, {}, valid_session
       assigns(:clients).should eq([client])
     end
@@ -44,7 +44,7 @@ describe ClientsController do
 
   describe "GET show" do
     it "assigns the requested client as @client" do
-      client = Client.create! valid_attributes
+      client = create :client
       get :show, {:id => client.to_param}, valid_session
       assigns(:client).should eq(client)
     end
@@ -59,7 +59,7 @@ describe ClientsController do
 
   describe "GET edit" do
     it "assigns the requested client as @client" do
-      client = Client.create! valid_attributes
+      client = create :client
       get :edit, {:id => client.to_param}, valid_session
       assigns(:client).should eq(client)
     end
@@ -105,7 +105,7 @@ describe ClientsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested client" do
-        client = Client.create! valid_attributes
+        client = create :client
         # Assuming there are no other clients in the database, this
         # specifies that the Client created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -115,13 +115,13 @@ describe ClientsController do
       end
 
       it "assigns the requested client as @client" do
-        client = Client.create! valid_attributes
+        client = create :client
         put :update, {:id => client.to_param, :client => valid_attributes}, valid_session
         assigns(:client).should eq(client)
       end
 
       it "redirects to the client" do
-        client = Client.create! valid_attributes
+        client = create :client
         put :update, {:id => client.to_param, :client => valid_attributes}, valid_session
         response.should redirect_to(client)
       end
@@ -129,7 +129,7 @@ describe ClientsController do
 
     describe "with invalid params" do
       it "assigns the client as @client" do
-        client = Client.create! valid_attributes
+        client = create :client
         # Trigger the behavior that occurs when invalid params are submitted
         Client.any_instance.stub(:save).and_return(false)
         put :update, {:id => client.to_param, :client => {}}, valid_session
@@ -137,7 +137,7 @@ describe ClientsController do
       end
 
       it "re-renders the 'edit' template" do
-        client = Client.create! valid_attributes
+        client = create :client
         # Trigger the behavior that occurs when invalid params are submitted
         Client.any_instance.stub(:save).and_return(false)
         put :update, {:id => client.to_param, :client => {}}, valid_session
@@ -148,14 +148,14 @@ describe ClientsController do
 
   describe "DELETE destroy" do
     it "destroys the requested client" do
-      client = Client.create! valid_attributes
+      client = create :client
       expect {
         delete :destroy, {:id => client.to_param}, valid_session
       }.to change(Client, :count).by(-1)
     end
 
     it "redirects to the clients list" do
-      client = Client.create! valid_attributes
+      client = create :client
       delete :destroy, {:id => client.to_param}, valid_session
       response.should redirect_to(clients_url)
     end

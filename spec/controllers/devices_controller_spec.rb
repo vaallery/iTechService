@@ -24,7 +24,7 @@ describe DevicesController do
   # Device. As you add validations to Device, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    attributes_for(:device).merge({client_attributes: attributes_for(:client)}).merge({device_type_attributes: attributes_for(:device_type)})
   end
 
   # This should return the minimal set of values that should be in the session
@@ -36,7 +36,7 @@ describe DevicesController do
 
   describe "GET index" do
     it "assigns all devices as @devices" do
-      device = Device.create! valid_attributes
+      device = create :device
       get :index, {}, valid_session
       assigns(:devices).should eq([device])
     end
@@ -44,7 +44,7 @@ describe DevicesController do
 
   describe "GET show" do
     it "assigns the requested device as @device" do
-      device = Device.create! valid_attributes
+      device = create :device
       get :show, {:id => device.to_param}, valid_session
       assigns(:device).should eq(device)
     end
@@ -59,7 +59,7 @@ describe DevicesController do
 
   describe "GET edit" do
     it "assigns the requested device as @device" do
-      device = Device.create! valid_attributes
+      device = create :device
       get :edit, {:id => device.to_param}, valid_session
       assigns(:device).should eq(device)
     end
@@ -105,7 +105,7 @@ describe DevicesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested device" do
-        device = Device.create! valid_attributes
+        device = create :device
         # Assuming there are no other devices in the database, this
         # specifies that the Device created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -115,13 +115,13 @@ describe DevicesController do
       end
 
       it "assigns the requested device as @device" do
-        device = Device.create! valid_attributes
+        device = create :device
         put :update, {:id => device.to_param, :device => valid_attributes}, valid_session
         assigns(:device).should eq(device)
       end
 
       it "redirects to the device" do
-        device = Device.create! valid_attributes
+        device = create :device
         put :update, {:id => device.to_param, :device => valid_attributes}, valid_session
         response.should redirect_to(device)
       end
@@ -129,7 +129,7 @@ describe DevicesController do
 
     describe "with invalid params" do
       it "assigns the device as @device" do
-        device = Device.create! valid_attributes
+        device = create :device
         # Trigger the behavior that occurs when invalid params are submitted
         Device.any_instance.stub(:save).and_return(false)
         put :update, {:id => device.to_param, :device => {}}, valid_session
@@ -137,7 +137,7 @@ describe DevicesController do
       end
 
       it "re-renders the 'edit' template" do
-        device = Device.create! valid_attributes
+        device = create :device
         # Trigger the behavior that occurs when invalid params are submitted
         Device.any_instance.stub(:save).and_return(false)
         put :update, {:id => device.to_param, :device => {}}, valid_session
@@ -148,14 +148,14 @@ describe DevicesController do
 
   describe "DELETE destroy" do
     it "destroys the requested device" do
-      device = Device.create! valid_attributes
+      device = create :device
       expect {
         delete :destroy, {:id => device.to_param}, valid_session
       }.to change(Device, :count).by(-1)
     end
 
     it "redirects to the devices list" do
-      device = Device.create! valid_attributes
+      device = create :device
       delete :destroy, {:id => device.to_param}, valid_session
       response.should redirect_to(devices_url)
     end

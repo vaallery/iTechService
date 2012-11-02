@@ -22,11 +22,6 @@ describe Device do
     device.should_not be_valid
   end
   
-  it 'is not valid with blank ticket_number' do
-    device = build :device_with_blank_ticket_number
-    device.should_not be_valid
-  end
-  
   it 'should have unique ticket number' do
     device1 = create :valid_device
     device = build :valid_device

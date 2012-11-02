@@ -24,7 +24,7 @@ describe DeviceTypesController do
   # DeviceType. As you add validations to DeviceType, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    attributes_for :device_type
   end
 
   # This should return the minimal set of values that should be in the session
@@ -36,7 +36,7 @@ describe DeviceTypesController do
 
   describe "GET index" do
     it "assigns all device_types as @device_types" do
-      device_type = DeviceType.create! valid_attributes
+      device_type = create :device_type
       get :index, {}, valid_session
       assigns(:device_types).should eq([device_type])
     end
@@ -44,7 +44,7 @@ describe DeviceTypesController do
 
   describe "GET show" do
     it "assigns the requested device_type as @device_type" do
-      device_type = DeviceType.create! valid_attributes
+      device_type = create :device_type
       get :show, {:id => device_type.to_param}, valid_session
       assigns(:device_type).should eq(device_type)
     end
@@ -59,7 +59,7 @@ describe DeviceTypesController do
 
   describe "GET edit" do
     it "assigns the requested device_type as @device_type" do
-      device_type = DeviceType.create! valid_attributes
+      device_type = create :device_type
       get :edit, {:id => device_type.to_param}, valid_session
       assigns(:device_type).should eq(device_type)
     end
@@ -105,7 +105,7 @@ describe DeviceTypesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested device_type" do
-        device_type = DeviceType.create! valid_attributes
+        device_type = create :device_type
         # Assuming there are no other device_types in the database, this
         # specifies that the DeviceType created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -115,13 +115,13 @@ describe DeviceTypesController do
       end
 
       it "assigns the requested device_type as @device_type" do
-        device_type = DeviceType.create! valid_attributes
+        device_type = create :device_type
         put :update, {:id => device_type.to_param, :device_type => valid_attributes}, valid_session
         assigns(:device_type).should eq(device_type)
       end
 
       it "redirects to the device_type" do
-        device_type = DeviceType.create! valid_attributes
+        device_type = create :device_type
         put :update, {:id => device_type.to_param, :device_type => valid_attributes}, valid_session
         response.should redirect_to(device_type)
       end
@@ -129,7 +129,7 @@ describe DeviceTypesController do
 
     describe "with invalid params" do
       it "assigns the device_type as @device_type" do
-        device_type = DeviceType.create! valid_attributes
+        device_type = create :device_type
         # Trigger the behavior that occurs when invalid params are submitted
         DeviceType.any_instance.stub(:save).and_return(false)
         put :update, {:id => device_type.to_param, :device_type => {}}, valid_session
@@ -137,7 +137,7 @@ describe DeviceTypesController do
       end
 
       it "re-renders the 'edit' template" do
-        device_type = DeviceType.create! valid_attributes
+        device_type = create :device_type
         # Trigger the behavior that occurs when invalid params are submitted
         DeviceType.any_instance.stub(:save).and_return(false)
         put :update, {:id => device_type.to_param, :device_type => {}}, valid_session
@@ -148,14 +148,14 @@ describe DeviceTypesController do
 
   describe "DELETE destroy" do
     it "destroys the requested device_type" do
-      device_type = DeviceType.create! valid_attributes
+      device_type = create :device_type
       expect {
         delete :destroy, {:id => device_type.to_param}, valid_session
       }.to change(DeviceType, :count).by(-1)
     end
 
     it "redirects to the device_types list" do
-      device_type = DeviceType.create! valid_attributes
+      device_type = create :device_type
       delete :destroy, {:id => device_type.to_param}, valid_session
       response.should redirect_to(device_types_url)
     end
