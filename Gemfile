@@ -12,6 +12,8 @@ gem 'jquery-rails'
 gem 'jquery-rails-cdn'
 gem 'simple_form'
 gem 'json_builder'
+gem 'devise'
+gem 'cancan'
 
 # Gems used only for assets and not required
 # in production environments by default.

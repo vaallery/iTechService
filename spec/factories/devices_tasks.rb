@@ -2,8 +2,16 @@
 
 FactoryGirl.define do
   factory :devices_task, :class => 'DevicesTasks' do
-    device nil
-    task nil
+    device
+    task
     done false
+    
+    factory :devices_task_without_device do
+      device nil
+    end
+    
+    factory :devices_task_without_task do
+      task nil
+    end
   end
 end

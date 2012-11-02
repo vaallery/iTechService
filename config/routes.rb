@@ -1,4 +1,9 @@
 ItechService::Application.routes.draw do
+  
+  devise_for :users
+
+  root to: 'devices#index'
+  
   resources :users
 
   resources :clients

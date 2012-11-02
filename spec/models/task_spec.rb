@@ -1,5 +1,24 @@
 require 'spec_helper'
 
 describe Task do
-  pending "add some examples to (or delete) #{__FILE__}"
+  
+  it "is valid with valid attributes" do
+    task = create :task
+    task.should be_valid
+  end
+  
+  it "is not valid without 'name'" do
+    task = build :task_without_name
+    task.should_not be_valid
+  end
+  
+  describe "associations" do
+    
+    it "should have a 'devices' attribute" do
+      task = create :task
+      task.should respond_to :devices
+    end
+    
+  end
+  
 end

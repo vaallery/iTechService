@@ -2,7 +2,11 @@
 
 FactoryGirl.define do
   factory :user do
-    username "MyString"
-    role "MyString"
+    username "username"
+    role "staff"
+    
+    factory :user_without_username do
+      username nil
+    end
   end
 end

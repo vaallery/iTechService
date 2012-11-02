@@ -2,8 +2,12 @@
 
 FactoryGirl.define do
   factory :task do
-    name "MyString"
-    duration 1
+    name "Some task"
+    duration 10
     cost "9.99"
+    
+    factory :task_without_name do
+      name nil
+    end
   end
 end
