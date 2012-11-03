@@ -20,6 +20,18 @@ ActiveRecord::Schema.define(:version => 20121102051612) do
     t.datetime "updated_at",   :null => false
   end
 
+  create_table "device_tasks", :force => true do |t|
+    t.integer  "device_id"
+    t.integer  "task_id"
+    t.boolean  "done"
+    t.text     "comment"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "device_tasks", ["device_id"], :name => "index_device_tasks_on_device_id"
+  add_index "device_tasks", ["task_id"], :name => "index_device_tasks_on_task_id"
+
   create_table "device_types", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -37,18 +49,6 @@ ActiveRecord::Schema.define(:version => 20121102051612) do
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
-
-  create_table "devices_tasks", :force => true do |t|
-    t.integer  "device_id"
-    t.integer  "task_id"
-    t.boolean  "done"
-    t.text     "comment"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "devices_tasks", ["device_id"], :name => "index_devices_tasks_on_device_id"
-  add_index "devices_tasks", ["task_id"], :name => "index_devices_tasks_on_task_id"
 
   create_table "tasks", :force => true do |t|
     t.string   "name"

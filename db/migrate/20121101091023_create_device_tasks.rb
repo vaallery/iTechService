@@ -1,6 +1,6 @@
-class CreateDevicesTasks < ActiveRecord::Migration
+class CreateDeviceTasks < ActiveRecord::Migration
   def change
-    create_table :devices_tasks do |t|
+    create_table :device_tasks do |t|
       t.references :device
       t.references :task
       t.boolean :done
@@ -8,7 +8,7 @@ class CreateDevicesTasks < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_index :devices_tasks, :device_id
-    add_index :devices_tasks, :task_id
+    add_index :device_tasks, :device_id
+    add_index :device_tasks, :task_id
   end
 end

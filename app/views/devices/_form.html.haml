@@ -1,7 +1,20 @@
 = simple_form_for @device, :html => { :class => 'form-horizontal' } do |f|
-  = f.association :device_type
-  = f.association :client
+  
+  = f.input :client, url: autocomplete_client_phone_number_devices_path, as: :autocomplete,
+      id_element: '#device_client_id', placeholder: 'phone number'
+  = f.hidden_field :client_id
+
+  = f.input :device_type, url: autocomplete_device_type_name_devices_path, as: :autocomplete,
+      id_element: '#device_device_type_id'
+  = f.hidden_field :device_type_id
+  
   = f.input :comment
+
+  #tasks.well
+    = f.simple_fields_for :tasks do |tf|
+      = render 'task_fields', f: tf
+    = link_to_add_fields nil, '#tasks', f, :tasks
+
   .form-actions
-    = f.button :submit, :class => 'btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), devices_path, :class => 'btn'
+    = f.button :submit, :class => 'btn-primary'

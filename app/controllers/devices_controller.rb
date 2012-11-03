@@ -1,4 +1,7 @@
 class DevicesController < ApplicationController
+  autocomplete :device_type, :name, full: true
+  autocomplete :client, :phone_number, full: true, extra_data: [:name], display_value: :name_phone
+  
   # GET /devices
   # GET /devices.json
   def index

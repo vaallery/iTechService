@@ -12,8 +12,11 @@ ItechService::Application.routes.draw do
 
   resources :tasks
 
-  resources :devices
-
+  resources :devices do
+    get :autocomplete_device_type_name, on: :collection
+    get :autocomplete_client_phone_number, on: :collection
+  end
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

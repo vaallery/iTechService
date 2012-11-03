@@ -1,5 +1,5 @@
 #flash_messages
-  - if notice
+  - if notice.present?
     .row
       .span6.alert_place
         .alert.alert-success
@@ -8,7 +8,7 @@
           %i.icon-info-sign
           %span.text= notice
           
-  - if alert
+  - if alert.present?
     .row
       .span6.alert_place
         .alert.alert
@@ -17,7 +17,7 @@
           %i.icon-warning-sign
           %span.text= alert
   
-  - if flash
+  - if flash.present?
     - flash.each do |name, msg|
       .row
         .span6.alert_place

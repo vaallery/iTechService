@@ -1,14 +1,15 @@
 class Device < ActiveRecord::Base
   belongs_to :client
   belongs_to :device_type
-  has_many :tasks, through: :devices_tasks
+  has_many :device_tasks, dependent: :destroy
+  has_many :tasks, through: :device_tasks
   attr_accessible :comment, :client_attributes, :device_type_attributes
   accepts_nested_attributes_for :client, :device_type
   
   validates :ticket_number, :client, :device_type, presence: true
   validates :ticket_number, uniqueness: true
   
-  before_validation :assign_ticket_number
+  before_validation :generate_ticket_number
   
   def type_name
     device_type.try :name
@@ -20,8 +21,7 @@ class Device < ActiveRecord::Base
   
   private
   
-  def assign_ticket_number
-    # self.ticket_number ||= (Device.maximum('ticket_number') || 0) + 1
+  def generate_ticket_number
     self.ticket_number ||= (Device.any?) ? (Device.last.ticket_number.to_i + 1).to_s : 1.to_s
   end
 end
