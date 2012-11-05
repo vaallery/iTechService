@@ -3,7 +3,7 @@
 FactoryGirl.define do
 
   factory :device, aliases: [:valid_device] do
-    ticket_number '32083'
+    # ticket_number '32083'
     device_type
     client
     

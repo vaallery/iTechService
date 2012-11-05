@@ -24,7 +24,7 @@ describe Device do
   
   it 'should have unique ticket number' do
     device1 = create :valid_device
-    device = build :valid_device
+    device = build :valid_device, ticket_number: device1.ticket_number
     device.should_not be_valid
   end
   
@@ -46,12 +46,25 @@ describe Device do
       @device.should respond_to :client_name
     end
     
+    it "should have a 'client_phone' attribute" do
+      @device.should respond_to :client_phone
+    end
+    
     it "should have a 'type_name' attribute" do
       @device.should respond_to :type_name
     end
     
     it "should have a 'tasks' attribute" do
       @device.should respond_to :tasks
+    end
+    
+    it "should not create a new 'Device Type' if it is exists" do
+      device_type = create :device_type
+      expect {
+        device = build :device_without_device_type
+        device.build_device_type name: device_type.name
+        device.save
+      }.to_not change(DeviceType, :count)
     end
     
     describe "attribute 'client_name'" do

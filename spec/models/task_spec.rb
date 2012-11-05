@@ -19,6 +19,11 @@ describe Task do
       task.should respond_to :devices
     end
     
+    it "should have a 'user' attribute" do
+      task = create :task
+      task.should respond_to :user
+    end
+    
   end
   
 end

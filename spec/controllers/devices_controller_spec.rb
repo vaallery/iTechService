@@ -24,7 +24,8 @@ describe DevicesController do
   # Device. As you add validations to Device, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    attributes_for(:device).merge({client_attributes: attributes_for(:client)}).merge({device_type_attributes: attributes_for(:device_type)})
+    attributes_for(:device).merge(client_attributes: attributes_for(:client))
+        .merge(device_type_attributes: attributes_for(:device_type))
   end
 
   # This should return the minimal set of values that should be in the session
@@ -82,6 +83,18 @@ describe DevicesController do
       it "redirects to the created device" do
         post :create, {:device => valid_attributes}, valid_session
         response.should redirect_to(Device.last)
+      end
+      
+      it "creates a new client from nested params" do
+        expect {
+          post :create, {device: valid_attributes}, valid_session
+        }.to change(Client, :count).by(1)
+      end
+      
+      it "creates a new Device Type from nested params" do
+        expect {
+          post :create, {device: valid_attributes}, valid_session
+        }.to change(Device, :count).by(1)
       end
     end
 

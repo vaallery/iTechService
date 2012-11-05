@@ -1,16 +1,17 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :devices_task, :class => 'DevicesTasks' do
+  factory :device_task, :class => 'DeviceTask' do
     device
     task
     done false
+    comment 'comment'
     
-    factory :devices_task_without_device do
+    factory :device_task_without_device do
       device nil
     end
     
-    factory :devices_task_without_task do
+    factory :device_task_without_task do
       task nil
     end
   end
