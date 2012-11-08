@@ -9,5 +9,4 @@ FactoryGirl.define do
       name nil
     end
   end
-  
 end

@@ -7,24 +7,24 @@ describe Device do
     device.should be_valid
   end
   
-  it "is not valid without device type" do
+  it "is not valid without 'device type'" do
     device = build :device_without_device_type
     device.should_not be_valid
   end
   
-  it "is not valid without a client" do
+  it "is not valid without a 'client'" do
     device = build :device_without_client
     device.should_not be_valid
   end
   
-  it 'is not valid without ticket number' do
+  it "is not valid without 'ticket number'" do
     device = build :device_without_ticket_number
     device.should_not be_valid
   end
   
-  it 'should have unique ticket number' do
-    device1 = create :valid_device
-    device = build :valid_device, ticket_number: device1.ticket_number
+  it "should have unique 'ticket number'" do
+    device1 = create :device
+    device = build :device_2, ticket_number: device1.ticket_number
     device.should_not be_valid
   end
   
@@ -59,7 +59,7 @@ describe Device do
     end
     
     it "should not create a new 'Device Type' if it is exists" do
-      device_type = create :device_type
+      device_type = @device.device_type
       expect {
         device = build :device_without_device_type
         device.build_device_type name: device_type.name

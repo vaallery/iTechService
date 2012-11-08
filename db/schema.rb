@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20121102051612) do
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
+  add_index "devices", ["ticket_number"], :name => "index_devices_on_ticket_number"
 
   create_table "tasks", :force => true do |t|
     t.string   "name"

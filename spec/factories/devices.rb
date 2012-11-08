@@ -3,9 +3,12 @@
 FactoryGirl.define do
 
   factory :device, aliases: [:valid_device] do
-    # ticket_number '32083'
     device_type
     client
+    
+    factory :device_2 do
+      association :device_type, factory: :device_type, name: "iPhone 5 16GB"
+    end
     
     factory :invalid_device do
       device_type nil
