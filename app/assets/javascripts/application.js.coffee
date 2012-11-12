@@ -19,17 +19,24 @@
 # require_tree .
 
 jQuery ->
-  $('a.remove_fields').live 'click', () ->
+  #$('a.remove_fields').live 'click', () ->
+  $('form').on 'click', '.remove_fields', (event) ->
     $(this).prev("input[type=hidden]").val("1")
     $(this).closest(".fields").hide()
-    false
+    event.preventDefault()
     
-  $('a.add_fields').live 'click', () ->
-    target = $(this).attr 'param_selector'
-    association = $(this).attr 'param_association'
-    content = $(this).attr 'param_content'
+  #$('a.add_fields').live 'click', () ->
+  $('form').on 'click', '.add_fields', (event) ->
+    target = $(this).data 'selector'
+    association = $(this).data 'association'
+    content = $(this).data 'content'
     add_fields target, association, content
-
+    event.preventDefault()
+    
+  $('#modal_form').live 'hidden', (event) ->
+    $('html,body').css 'overflow', 'auto'
+    $('#modal_form').remove()
+    
 add_fields = (target, association, content) ->
   new_id = new Date().getTime()
   regexp = new RegExp "new_" + association, "g"

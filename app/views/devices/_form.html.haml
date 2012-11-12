@@ -1,20 +1,34 @@
-= simple_form_for @device, :html => { :class => 'form-horizontal' } do |f|
-  
-  = f.input :client, url: autocomplete_client_phone_number_devices_path, as: :autocomplete,
-      id_element: '#device_client_id', placeholder: 'phone number'
+= simple_form_for @device, :html => { :class => 'form-horizontal span5' }, defaults: {input_html: {class: 'span12'}} do |f|
+
+  .control-group
+    = f.label :client, class: 'control-label'
+    .controls
+      .input-prepend.input-append
+        %span.add-on
+          %i.icon-search
+        = f.autocomplete_field :client, autocomplete_client_phone_number_devices_path,
+          id_element: '#device_client_id', placeholder: 'phone number'
+        = link_to new_client_path, id: 'new_client_link', class: 'btn', remote: true do
+          %i.icon-plus
+        = link_to '#', id: 'edit_client_link', class: 'btn', remote: true do
+          %i.icon-edit
+
+  -#= f.input :client, url: autocomplete_client_phone_number_devices_path, as: :autocomplete,
+  -#    id_element: '#device_client_id', placeholder: 'phone number'
   = f.hidden_field :client_id
 
   = f.input :device_type, url: autocomplete_device_type_name_devices_path, as: :autocomplete,
       id_element: '#device_device_type_id'
   = f.hidden_field :device_type_id
   
-  = f.input :comment
+  = f.input :comment, input_html: {rows: 5}
 
-  #tasks.well
-    = f.simple_fields_for :tasks do |tf|
-      = render 'task_fields', f: tf
-    = link_to_add_fields nil, '#tasks', f, :tasks
+  #device_tasks
+    %h4= Device.human_attribute_name :tasks
+    = f.simple_fields_for :device_tasks do |ff|
+      = render 'device_task_fields', f: ff
+  = link_to_add_fields t('add'), '#device_tasks', f, :device_tasks
 
   .form-actions
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), devices_path, :class => 'btn'
-    = f.button :submit, :class => 'btn-primary'
+    .pull-left= link_to t('.cancel', :default => t("helpers.links.cancel")), devices_path, :class => 'btn'
+    .pull-right= f.button :submit, :class => 'btn-primary'

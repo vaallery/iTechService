@@ -5,17 +5,18 @@ module ApplicationHelper
     fields = f.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
       render(association.to_s.singularize + "_fields", f: builder, index: "new_#{association}", options: options)
     end
-    name = sanitize("<i class='icon-plus icon-white'/>") + ' ' + name
-    # link_to(name, '#', onclick: "add_fields(\"#{append_to_selector}\", \"#{association}\",
-        #  \"#{escape_javascript(fields)}\")", class: 'add_fields btn-mini btn-success btn', remote: true)
+    #name = sanitize("<i class='icon-plus icon-white'/>") + ' ' + name
+    #link_to(name, '#', onclick: "add_fields(\"#{append_to_selector}\", \"#{association}\",
+    #     \"#{escape_javascript(fields)}\")", class: 'add_fields btn-mini btn-success btn', remote: true)
     link_to name, '#', class: 'add_fields btn-mini btn-success btn', 
-        html_options: { param_selector: append_to_selector, param_association: association, param_content: j(fields)}
+        data: { selector: append_to_selector, association: association, content: (fields.gsub('\n', '')) }
   end
 
   def link_to_remove_fields(f)
-    f.hidden_field(:_destroy) <<
-    link_to('#', class: 'remove_fields btn btn-mini btn-danger') do
-      tag(:i, class: 'icon-minus icon-white')
+    content_tag :span do
+      f.hidden_field(:_destroy) +
+      link_to(t('remove'), '#', class: 'remove_fields btn btn-mini btn-danger')
+      #link_to('#', class: 'remove_fields btn btn-mini btn-danger') {tag('i', class: 'icon-minus icon-white')}
     end
   end
 

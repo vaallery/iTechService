@@ -19,14 +19,14 @@ gem 'rails3-jquery-autocomplete'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'
+  gem 'coffee-rails'
   gem 'twitter-bootstrap-rails'#, :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
-  gem "less"
-  gem 'uglifier', '>= 1.0.3'
+  gem "less-rails"
+  gem 'uglifier'
 end
 
 group :development do
@@ -41,7 +41,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '2.11.0'
+  gem 'rspec-rails'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl_rails'

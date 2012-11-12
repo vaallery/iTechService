@@ -3,8 +3,8 @@ class Device < ActiveRecord::Base
   belongs_to :device_type
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
-  attr_accessible :comment, :client_attributes, :device_type_attributes
-  accepts_nested_attributes_for :client, :device_type
+  attr_accessible :comment, :client_attributes, :device_type_attributes, :device_tasks_attributes
+  accepts_nested_attributes_for :client, :device_type, :device_tasks
   
   validates :ticket_number, :client, :device_type, presence: true
   validates :ticket_number, uniqueness: true

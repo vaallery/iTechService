@@ -1,0 +1,8 @@
+:plain
+  if($('#modal_form').length == 0) {
+    $("body").append("#{j(render('shared/modal_form'))}")
+    $('html,body').css('overflow', 'hidden');
+    $("#modal_form").modal('show');
+  } else {
+    $("#modal_form").html("#{j(render('modal_form_content'))}")
+  }

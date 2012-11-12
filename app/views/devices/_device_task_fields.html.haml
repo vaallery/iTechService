@@ -1,0 +1,5 @@
+.device_task.fields.well.well-small
+  = f.input :done unless @device.new_record?
+  = f.association :task
+  = f.input :comment, as: :text, input_html: {rows: 3}
+  = link_to_remove_fields f

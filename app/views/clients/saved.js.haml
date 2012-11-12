@@ -1,0 +1,5 @@
+:plain
+  $('#edit_client_link').attr('href', "#{edit_client_path(@client)}");
+  $("#device_client").val("#{@client.name_phone}");
+  $("#device_client_id").val("#{@client.id}");
+  $("#modal_form").modal('hide');

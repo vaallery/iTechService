@@ -28,6 +28,7 @@ class DevicesController < ApplicationController
   # GET /devices/new.json
   def new
     @device = Device.new
+    @device.device_tasks.build
 
     respond_to do |format|
       format.html # new.html.erb

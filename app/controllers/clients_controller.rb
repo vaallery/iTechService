@@ -29,12 +29,18 @@ class ClientsController < ApplicationController
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @client }
+      format.js { render 'shared/show_modal_form' }
     end
   end
 
   # GET /clients/1/edit
   def edit
     @client = Client.find(params[:id])
+    
+    respond_to do |format|
+      format.html
+      format.js { render 'shared/show_modal_form' }
+    end
   end
 
   # POST /clients
@@ -46,6 +52,7 @@ class ClientsController < ApplicationController
       if @client.save
         format.html { redirect_to @client, notice: 'Client was successfully created.' }
         format.json { render json: @client, status: :created, location: @client }
+        format.js { render 'saved' }
       else
         format.html { render action: "new" }
         format.json { render json: @client.errors, status: :unprocessable_entity }
@@ -62,6 +69,7 @@ class ClientsController < ApplicationController
       if @client.update_attributes(params[:client])
         format.html { redirect_to @client, notice: 'Client was successfully updated.' }
         format.json { head :no_content }
+        format.js { render 'saved' }
       else
         format.html { render action: "edit" }
         format.json { render json: @client.errors, status: :unprocessable_entity }
