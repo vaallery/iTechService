@@ -13,6 +13,10 @@ class Device < ActiveRecord::Base
   before_validation :generate_ticket_number
   before_validation :check_device_type
   
+  scope :undone, where(done_at: nil)
+  
+  scope :ordered, order("done_at desc")
+  
   def type_name
     device_type.try :name
   end
@@ -27,11 +31,6 @@ class Device < ActiveRecord::Base
   
   def done?
     device_tasks.all?{|t|t.done}
-  end
-  
-  def done_at
-    done_time = done? ? device_tasks.maximum(:done_at) : nil
-    done_time.try :getlocal
   end
   
   private

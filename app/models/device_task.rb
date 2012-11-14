@@ -9,14 +9,18 @@ class DeviceTask < ActiveRecord::Base
   after_initialize {|dt| dt.cost = task_cost}
   
   before_save do |dt|
-    unless (old_done = changed_attributes['done']).nil?
-      if self.done and !old_done
-        done_at_val = Time.now
-      elsif !self.done and old_done
-        done_at_val = nil
-      end
-      self.done_at = done_at_val
+    old_done = changed_attributes['done']
+    if self.done and (!old_done or old_done.nil?)
+      done_at_val = Time.now
+    elsif !self.done and old_done
+      done_at_val = nil
     end
+    self.done_at = done_at_val
+  end
+  
+  after_commit do |dt|
+    done_time = device.done? ? device.device_tasks.maximum(:done_at).getlocal : nil
+    device.update_attribute :done_at, done_time
   end
   
   def task_name
