@@ -1,6 +1,7 @@
-.device_task.fields.well.well-small
-  = f.input :done unless @device.new_record?
-  = f.association :task, input_html: {class: 'device_task_task span12'}
-  = f.input :cost, input_html: {class: 'device_task_cost span12'}
-  = f.input :comment, as: :text, input_html: {rows: 3}
-  = link_to_remove_fields f
+%tr.device_task.fields
+  - unless @device.new_record?
+    %td= f.check_box :done
+  %td= f.select :task_id, Task.all.collect{|t|[t.name,t.id]}, {include_blank: true}, class: 'device_task_task'
+  %td= f.number_field :cost, class: 'device_task_cost input-small'
+  %td= f.text_area :comment, rows: 3
+  %td= link_to_remove_fields f

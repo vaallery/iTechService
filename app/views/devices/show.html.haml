@@ -22,15 +22,16 @@
 
 %table.table.table-bordered.table-condensed.table-hover
   %caption
-    %h4= Device.human_attribute_name :device_tasks
+    %h4= Device.human_attribute_name :tasks
   %thead
     %tr
       %th= Task.human_attribute_name :name
       %th= DeviceTask.human_attribute_name :comment
       %th= Task.human_attribute_name :duration
       %th= DeviceTask.human_attribute_name :cost
-      %th= DeviceTask.human_attribute_name :created_at
       %th= DeviceTask.human_attribute_name :done_at
+      %th= DeviceTask.human_attribute_name :created_at
+      %th= DeviceTask.human_attribute_name :updated_at
   %tbody
     - @device.device_tasks.ordered.each do |device_task|
       %tr{class: class_for_task(device_task)}
@@ -38,8 +39,9 @@
         %td= device_task.comment
         %td= device_task.task_duration
         %td= device_task.cost
-        %td= l device_task.created_at, format: :long_d
         %td= l device_task.done_at, format: :long_d unless device_task.done_at.blank?
+        %td= l device_task.created_at, format: :long_d
+        %td= l device_task.updated_at, format: :long_d
     
 
 .form-actions

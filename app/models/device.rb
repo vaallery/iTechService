@@ -25,6 +25,15 @@ class Device < ActiveRecord::Base
     client.try :phone_number
   end
   
+  def done?
+    device_tasks.all?{|t|t.done}
+  end
+  
+  def done_at
+    done_time = done? ? device_tasks.maximum(:done_at) : nil
+    done_time.try :getlocal
+  end
+  
   private
   
   def generate_ticket_number
