@@ -1,11 +1,8 @@
 - model_class = Device
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human
+  %h1= t '.title', default: model_class.model_name.human
+  %p= timestamp_string_for @device
 
-%p
-  %strong= model_class.human_attribute_name(:device_type_id) + ':'
-  %br
-  = @device.device_type_id
 %p
   %strong= model_class.human_attribute_name(:ticket_number) + ':'
   %br
@@ -13,11 +10,37 @@
 %p
   %strong= model_class.human_attribute_name(:client_id) + ':'
   %br
-  = @device.client_id
+  = @device.client.name_phone
+%p
+  %strong= model_class.human_attribute_name(:device_type_id) + ':'
+  %br
+  = @device.type_name
 %p
   %strong= model_class.human_attribute_name(:comment) + ':'
   %br
   = @device.comment
+
+%table.table.table-bordered.table-condensed.table-hover
+  %caption
+    %h4= Device.human_attribute_name :device_tasks
+  %thead
+    %tr
+      %th= Task.human_attribute_name :name
+      %th= DeviceTask.human_attribute_name :comment
+      %th= Task.human_attribute_name :duration
+      %th= DeviceTask.human_attribute_name :cost
+      %th= DeviceTask.human_attribute_name :created_at
+      %th= DeviceTask.human_attribute_name :done_at
+  %tbody
+    - @device.device_tasks.ordered.each do |device_task|
+      %tr{class: class_for_task(device_task)}
+        %td= device_task.task_name
+        %td= device_task.comment
+        %td= device_task.task_duration
+        %td= device_task.cost
+        %td= l device_task.created_at, format: :long_d
+        %td= l device_task.done_at, format: :long_d unless device_task.done_at.blank?
+    
 
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), devices_path, :class => 'btn'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121102051612) do
+ActiveRecord::Schema.define(:version => 20121113104040) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(:version => 20121102051612) do
     t.text     "comment"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.decimal  "cost"
+    t.datetime "done_at"
   end
 
   add_index "device_tasks", ["device_id"], :name => "index_device_tasks_on_device_id"
@@ -55,8 +57,9 @@ ActiveRecord::Schema.define(:version => 20121102051612) do
     t.string   "name"
     t.integer  "duration"
     t.decimal  "cost"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "priority",   :default => 0
   end
 
   create_table "users", :force => true do |t|

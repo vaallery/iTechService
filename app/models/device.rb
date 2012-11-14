@@ -3,11 +3,12 @@ class Device < ActiveRecord::Base
   belongs_to :device_type
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
-  attr_accessible :comment, :client_attributes, :device_type_attributes, :device_tasks_attributes
-  accepts_nested_attributes_for :client, :device_type, :device_tasks
+  attr_accessible :comment, :client_id, :device_type_id, :device_tasks_attributes
+  accepts_nested_attributes_for :device_tasks
   
   validates :ticket_number, :client, :device_type, presence: true
   validates :ticket_number, uniqueness: true
+  validates_associated :device_tasks
   
   before_validation :generate_ticket_number
   before_validation :check_device_type
@@ -31,9 +32,7 @@ class Device < ActiveRecord::Base
   end
   
   def check_device_type
-    if (existing_device_type = DeviceType.find_by_name(self.type_name)).present?
-      self.device_type_id = existing_device_type.id
-    end
+    device_type_id = DeviceType.find_or_create_by_name(type_name).id
   end
   
 end

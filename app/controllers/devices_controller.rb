@@ -28,7 +28,7 @@ class DevicesController < ApplicationController
   # GET /devices/new.json
   def new
     @device = Device.new
-    @device.device_tasks.build
+    #@device.device_tasks.build
 
     respond_to do |format|
       format.html # new.html.erb
@@ -46,6 +46,7 @@ class DevicesController < ApplicationController
   def create
     @device = Device.new(params[:device])
 
+    debugger
     respond_to do |format|
       if @device.save
         format.html { redirect_to @device, notice: 'Device was successfully created.' }

@@ -1,4 +1,6 @@
-= simple_form_for @device, :html => { :class => 'form-horizontal span5' }, defaults: {input_html: {class: 'span12'}} do |f|
+= simple_form_for @device, html: { class: 'form-horizontal span5' }, defaults: {input_html: {class: 'span12'}} do |f|
+
+  = f.full_error :ticket_number
 
   .control-group
     = f.label :client, class: 'control-label'
@@ -6,20 +8,24 @@
       .input-prepend.input-append
         %span.add-on
           %i.icon-search
-        = f.autocomplete_field :client, autocomplete_client_phone_number_devices_path,
-          id_element: '#device_client_id', placeholder: 'phone number'
+        = autocomplete_field_tag :client, @device.try(:client).try(:name_phone), autocomplete_client_phone_number_devices_path,
+            id_element: '#device_client_id', placeholder: 'phone number'
+        = f.hidden_field :client_id
         = link_to new_client_path, id: 'new_client_link', class: 'btn', remote: true do
           %i.icon-plus
-        = link_to '#', id: 'edit_client_link', class: 'btn', remote: true do
+        = link_to @device.client.present? ? edit_client_path(@device.client) : '#',
+            id: 'edit_client_link', class: 'btn', remote: true do
           %i.icon-edit
 
-  -#= f.input :client, url: autocomplete_client_phone_number_devices_path, as: :autocomplete,
-  -#    id_element: '#device_client_id', placeholder: 'phone number'
-  = f.hidden_field :client_id
-
-  = f.input :device_type, url: autocomplete_device_type_name_devices_path, as: :autocomplete,
-      id_element: '#device_device_type_id'
-  = f.hidden_field :device_type_id
+  .control-group
+    = f.label :device_type, class: 'control-label'
+    .controls
+      .input-prepend
+        %span.add-on
+          %i.icon-search
+        = autocomplete_field_tag :device_type, @device.try(:type_name), autocomplete_device_type_name_devices_path,
+          id_element: '#device_device_type_id'
+        = f.hidden_field :device_type_id
   
   = f.input :comment, input_html: {rows: 5}
 
@@ -30,5 +36,5 @@
   = link_to_add_fields t('add'), '#device_tasks', f, :device_tasks
 
   .form-actions
-    .pull-left= link_to t('.cancel', :default => t("helpers.links.cancel")), devices_path, :class => 'btn'
-    .pull-right= f.button :submit, :class => 'btn-primary'
+    .pull-left= link_to t('.cancel', default: t("helpers.links.cancel")), devices_path, class: 'btn'
+    .pull-right= f.button :submit, class: 'btn-primary'

@@ -33,4 +33,9 @@ module ApplicationHelper
     end
   end
   
+  def timestamp_string_for object
+    "[#{object.class.human_attribute_name(:created_at)}: #{l(object.created_at, format: :long_d)} | " +
+      "#{object.class.human_attribute_name(:updated_at)}: #{l(object.updated_at, format: :long_d)}]"
+  end
+  
 end
