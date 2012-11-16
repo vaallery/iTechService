@@ -13,9 +13,10 @@ class Device < ActiveRecord::Base
   before_validation :generate_ticket_number
   before_validation :check_device_type
   
-  scope :undone, where(done_at: nil)
-  
   scope :ordered, includes(:tasks).order("devices.done_at desc, tasks.priority desc")
+  scope :done, where('devices.done_at IS NOT NULL')
+  scope :pending, where(done_at: nil)
+  scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   
   def type_name
     device_type.try :name
@@ -42,8 +43,29 @@ class Device < ActiveRecord::Base
   end
   
   def self.search params
-    Device.scoped
+    devices = Device.includes :device_tasks, :tasks
     
+    unless (status = params[:status]).blank?
+      case status
+      when 'done' then devices = devices.done
+      when 'pending' then devices = devices.pending
+      when 'important' then devices = devices.important
+      end
+    end
+    
+    unless (ticket_q = params[:ticket]).blank?
+      devices = devices.where 'devices.ticket_number LIKE ?', "%#{ticket_q}%"
+    end
+    
+    unless (device_q = params[:device]).blank?
+      devices = devices.where 'devices.serial_number LIKE ?', "%#{device_q}%"
+    end
+    
+    unless (client_q = params[:client]).blank?
+      devices = devices.joins(:client).where 'clients.name LIKE :q OR clients.phone_number LIKE :q', q: "%#{client_q}%"
+    end
+    
+    devices
   end
   
   def done_tasks
