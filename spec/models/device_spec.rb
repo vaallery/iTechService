@@ -83,6 +83,18 @@ describe Device do
       
     end
     
+    describe "ordering" do
+      
+      it 'should place pending devices higher than done devices' do
+        pending
+      end
+      
+      it 'should place important pending devices on top' do
+        pending
+      end
+      
+    end
+    
   end
   
 end

@@ -26,6 +26,8 @@
         = autocomplete_field_tag :device_type, @device.try(:type_name), autocomplete_device_type_name_devices_path,
           id_element: '#device_device_type_id'
         = f.hidden_field :device_type_id
+        
+  = f.input :serial_number
   
   = f.input :comment, input_html: {rows: 5}
 

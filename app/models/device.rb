@@ -3,7 +3,7 @@ class Device < ActiveRecord::Base
   belongs_to :device_type
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
-  attr_accessible :comment, :client_id, :device_type_id, :device_tasks_attributes
+  attr_accessible :comment, :serial_number, :client_id, :device_type_id, :device_tasks_attributes
   accepts_nested_attributes_for :device_tasks
   
   validates :ticket_number, :client, :device_type, presence: true
@@ -15,7 +15,7 @@ class Device < ActiveRecord::Base
   
   scope :undone, where(done_at: nil)
   
-  scope :ordered, order("done_at desc")
+  scope :ordered, includes(:tasks).order("devices.done_at desc, tasks.priority desc")
   
   def type_name
     device_type.try :name
