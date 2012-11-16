@@ -5,18 +5,17 @@ module ApplicationHelper
     fields = f.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
       render(association.to_s.singularize + "_fields", f: builder, index: "new_#{association}", options: options)
     end
-    #name = sanitize("<i class='icon-plus icon-white'/>") + ' ' + name
-    #link_to(name, '#', onclick: "add_fields(\"#{append_to_selector}\", \"#{association}\",
-    #     \"#{escape_javascript(fields)}\")", class: 'add_fields btn-mini btn-success btn', remote: true)
-    link_to name, '#', class: 'add_fields btn-mini btn-success btn', 
-        data: { selector: append_to_selector, association: association, content: (fields.gsub('\n', '')) }
+    name = "<i class='icon-plus'>" + ' ' + name + '</i>'
+    link_to '#', class: 'add_fields btn-mini btn-success btn', 
+        data: { selector: append_to_selector, association: association, content: (fields.gsub('\n', '')) } do
+      name.html_safe
+    end
   end
 
   def link_to_remove_fields(f)
     content_tag :span do
       f.hidden_field(:_destroy) +
-      link_to(t('remove'), '#', class: 'remove_fields btn btn-mini btn-danger')
-      #link_to('#', class: 'remove_fields btn btn-mini btn-danger') {tag('i', class: 'icon-minus icon-white')}
+      link_to('#', class: 'remove_fields btn btn-mini btn-danger'){tag('i', class: 'icon-minus')}
     end
   end
 
@@ -48,6 +47,21 @@ module ApplicationHelper
   
   def nav_state_for controller
     params[:controller] == controller ? 'active' : ''
+  end
+  
+  def link_to_edit object, options = {}
+    options.merge! class: 'btn btn-small'
+    link_to(url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options) do
+      "<i class='icon-edit'></i>".html_safe
+    end
+  end
+  
+  def link_to_destroy object, options = {}
+    options.merge! class: 'btn btn-small btn-danger', method: 'delete',
+        data: {confirm: t('helpers.links.confirm', default: 'Are you sure?')}
+    link_to(url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options) do
+      "<i class='icon-trash'></i>".html_safe
+    end
   end
   
 end

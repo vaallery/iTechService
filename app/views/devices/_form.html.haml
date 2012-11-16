@@ -45,7 +45,7 @@
     %tbody
       = f.simple_fields_for :device_tasks do |ff|
         = render 'device_task_fields', f: ff
-  = link_to_add_fields t('add'), '#device_tasks tbody', f, :device_tasks
+  = link_to_add_fields t('.add_task'), '#device_tasks tbody', f, :device_tasks
 
   -#
     #device_tasks
