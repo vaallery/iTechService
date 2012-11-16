@@ -109,6 +109,9 @@ GEM
     json_builder (3.1.7)
       activesupport (>= 2.0.0)
       json
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     less (2.2.2)
       commonjs (~> 0.2.6)
     less-rails (2.2.6)
@@ -237,6 +240,7 @@ DEPENDENCIES
   jquery-rails
   jquery-rails-cdn
   json_builder
+  kaminari
   less-rails
   pg
   rails (= 3.2.8)

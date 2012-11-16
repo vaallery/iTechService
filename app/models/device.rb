@@ -29,8 +29,41 @@ class Device < ActiveRecord::Base
     client.try :phone_number
   end
   
+  def presentation
+    serial_number.blank? ? type_name : [type_name, serial_number].join(' | ')
+  end
+  
   def done?
-    device_tasks.all?{|t|t.done}
+    device_tasks.pending.empty?
+  end
+  
+  def pending?
+    !done?
+  end
+  
+  def self.search params
+    Device.scoped
+    
+  end
+  
+  def done_tasks
+    device_tasks.where done: true
+  end
+  
+  def pending_tasks
+    device_tasks.where done: false
+  end
+  
+  def is_important?
+    tasks.important.any?
+  end
+  
+  def progress
+    "#{done_tasks.count} / #{device_tasks.count}"
+  end
+  
+  def progress_pct
+    (done_tasks.count * 100.0 / device_tasks.count).to_i
   end
   
   private

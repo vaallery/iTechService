@@ -1,15 +1,25 @@
 class DevicesController < ApplicationController
+  #before_filter :store_location
+  helper_method :sort_column, :sort_direction
   autocomplete :device_type, :name, full: true
   autocomplete :client, :phone_number, full: true, extra_data: [:name], display_value: :name_phone
   
   # GET /devices
   # GET /devices.json
   def index
-    @devices = Device.ordered
-
+    @devices = Device.search params
+    
+    if params.has_key? :sort and params.has_key? :direction
+      @devices = @devices.order(sort_column + ' ' + sort_direction)
+    else
+      @devices = @devices.ordered
+    end
+    @devices = @devices.page params[:page]
+    
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @devices }
+      format.js { render 'shared/index' }
     end
   end
 
@@ -84,4 +94,15 @@ class DevicesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+  
+  def sort_column
+    Device.column_names.include?(params[:sort]) ? params[:sort] : ''
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'asc'
+  end
+  
 end

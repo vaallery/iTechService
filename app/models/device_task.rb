@@ -5,6 +5,8 @@ class DeviceTask < ActiveRecord::Base
   validates :task_id, presence: true
   
   scope :ordered, joins(:task).order("done asc, tasks.priority desc")
+  scope :done, where(done: true)
+  scope :pending, where(done: false)
   
   after_initialize {|dt| dt.cost = task_cost}
   
@@ -33,6 +35,10 @@ class DeviceTask < ActiveRecord::Base
   
   def task_duration
     task.try :duration
+  end
+  
+  def is_important?
+    task.is_important?
   end
   
 end

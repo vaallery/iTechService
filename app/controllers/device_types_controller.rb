@@ -2,7 +2,7 @@ class DeviceTypesController < ApplicationController
   # GET /device_types
   # GET /device_types.json
   def index
-    @device_types = DeviceType.all
+    @device_types = DeviceType.scoped.page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb

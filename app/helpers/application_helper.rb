@@ -22,9 +22,17 @@ module ApplicationHelper
 
   def sortable(column, title = nil)
     title ||= column.titleize
-    css_class = column == sort_column ? "current #{sort_direction}" : nil
-    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-    link_to title, params.merge(sort: column, direction: direction, page: nil), {class: css_class, remote: true}
+    if column == sort_column
+      css_class = "current #{sort_direction} nav nav-pills"
+      direction = sort_direction == "asc" ? "desc" : "asc"
+      icon_name = (sort_direction == 'asc') ? 'caret-up' : 'caret-down'
+    else
+      css_class = 'nav nav-pills'
+      icon_name = 'sort'
+      direction = 'asc'
+    end
+    title = "#{title} <i class='icon-#{icon_name}'></i>".html_safe
+    link_to title, params.merge(sort: column, direction: direction, page: nil), {class: css_class, remote: false}
   end
   
   def search_button
@@ -36,6 +44,10 @@ module ApplicationHelper
   def timestamp_string_for object
     "[#{object.class.human_attribute_name(:created_at)}: #{l(object.created_at, format: :long_d)} | " +
       "#{object.class.human_attribute_name(:updated_at)}: #{l(object.updated_at, format: :long_d)}]"
+  end
+  
+  def nav_state_for controller
+    params[:controller] == controller ? 'active' : ''
   end
   
 end

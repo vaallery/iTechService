@@ -34,7 +34,7 @@
       %th= DeviceTask.human_attribute_name :updated_at
   %tbody
     - @device.device_tasks.ordered.each do |device_task|
-      %tr{class: class_for_task(device_task)}
+      %tr{class: row_class_for_task(device_task)}
         %td= device_task.task_name
         %td= device_task.comment
         %td= device_task.task_duration

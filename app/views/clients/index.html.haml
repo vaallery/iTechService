@@ -1,23 +1,14 @@
-- model_class = Client
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.pluralize
+  %h1=t '.title', :default => Client.model_name.human.pluralize
   = link_to t('.new', :default => t("helpers.links.new")), new_client_path, :class => 'btn btn-primary'
 
-%table.table.table-striped.table-hover
-  %thead
-    %tr
-      %th= model_class.human_attribute_name(:id)
-      %th= model_class.human_attribute_name(:name)
-      %th= model_class.human_attribute_name(:phone_number)
-      %th= model_class.human_attribute_name(:created_at)
-      %th=t '.actions', :default => t("helpers.actions")
-  %tbody
-    - @clients.each do |client|
-      %tr
-        %td= link_to client.id, client_path(client)
-        %td= link_to client.name, client_path(client)
-        %td= client.phone_number
-        %td=l client.created_at, format: :long_d
-        %td.btn-group
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_client_path(client), :class => 'btn btn-mini'
-          = link_to t('.destroy', :default => t("helpers.links.destroy")), client_path(client), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'
+.table_filter.navbar.container
+  .navbar-inner
+    = form_tag devices_path, method: 'get', id: 'search_devices_form', class: 'navbar-search form-search', remote: true do
+      .input-prepend
+        %span.add-on.btn.disabled
+          %i.icon-search
+        = text_field_tag :client, params[:client], id: 'search_client_input', class: 'search-query input-medium',
+            placeholder: 'name or phone'
+
+#resource_table= render 'table'
