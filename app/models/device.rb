@@ -31,7 +31,7 @@ class Device < ActiveRecord::Base
   end
   
   def presentation
-    serial_number.blank? ? type_name : [type_name, serial_number].join(' | ')
+    serial_number.blank? ? type_name : [type_name, serial_number].join(' / ')
   end
   
   def done?

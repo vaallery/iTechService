@@ -49,6 +49,13 @@ module ApplicationHelper
     params[:controller] == controller ? 'active' : ''
   end
   
+  def link_to_show object, options = {}
+    options.merge! class: 'btn btn-small'
+    link_to(url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options) do
+      "<i class='icon-eye-open'></i>".html_safe
+    end
+  end
+  
   def link_to_edit object, options = {}
     options.merge! class: 'btn btn-small'
     link_to(url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options) do

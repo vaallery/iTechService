@@ -18,3 +18,5 @@ jQuery ->
     $(this).siblings('.search-query').val ''
     $('#search_devices_form').submit()
     event.preventDefault()
+    
+  $('.device_comment_tooltip').tooltip()

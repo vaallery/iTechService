@@ -7,7 +7,7 @@ class Client < ActiveRecord::Base
   validates :name, :phone_number, presence: true
   
   def name_phone
-    "#{self.name} | #{self.human_phone_number}"
+    "#{self.name} / #{self.human_phone_number}"
   end
   
   def human_phone_number
