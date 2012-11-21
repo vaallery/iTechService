@@ -6,6 +6,17 @@ class Client < ActiveRecord::Base
   
   validates :name, :phone_number, presence: true
   
+  def self.search params
+    clients = Client.scoped
+    
+    unless (client_q = params[:client]).blank?
+      clients = clients.where 'LOWER(clients.name) LIKE :q OR clients.phone_number LIKE :q',
+          q: "%#{client_q.downcase}%"
+    end
+    
+    clients
+  end
+  
   def name_phone
     "#{self.name} / #{self.human_phone_number}"
   end

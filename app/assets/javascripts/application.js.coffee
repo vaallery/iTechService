@@ -15,27 +15,42 @@
 #= require jquery-ui
 #= require twitter/bootstrap
 #= require autocomplete-rails
+#= require turbolinks
 #= require_self
 # require_tree .
 
-jQuery ->
-  #$('a.remove_fields').live 'click', () ->
-  $('form').on 'click', '.remove_fields', (event) ->
-    $(this).prev("input[type=hidden]").val("1")
-    $(this).closest(".fields").hide()
-    event.preventDefault()
+
+#ready = ->
+#$('form').on 'click', '.remove_fields', (event) ->
+$(document).on 'click', '.remove_fields', (event) ->
+  $(this).prev("input[type=hidden]").val("1")
+  $(this).closest(".fields").hide()
+  event.preventDefault()
+  
+#$('form').on 'click', '.add_fields', (event) ->
+$(document).on 'click', '.add_fields', (event) ->
+  target = $(this).data 'selector'
+  association = $(this).data 'association'
+  content = $(this).data 'content'
+  add_fields target, association, content
+  event.preventDefault()
+  
+#$('#modal_form').live 'hidden', (event) ->
+$(document).live 'hidden', '#modal_form', (event) ->
+  $('html,body').css 'overflow', 'auto'
+  $('#modal_form').remove()
+  
+$(document).on 'keyup', '#search_form .search-query', (event) ->
+  $('#search_form').submit()
+  event.preventDefault()
+
+$(document).on 'click', '#search_form .clear_search_input', (event) ->
+  $(this).siblings('.search-query').val ''
+  $('#search_form').submit()
+  event.preventDefault()
     
-  #$('a.add_fields').live 'click', () ->
-  $('form').on 'click', '.add_fields', (event) ->
-    target = $(this).data 'selector'
-    association = $(this).data 'association'
-    content = $(this).data 'content'
-    add_fields target, association, content
-    event.preventDefault()
-    
-  $('#modal_form').live 'hidden', (event) ->
-    $('html,body').css 'overflow', 'auto'
-    $('#modal_form').remove()
+#$(document).ready(ready)
+#$(document).on('page:load', ready)
     
 add_fields = (target, association, content) ->
   new_id = new Date().getTime()

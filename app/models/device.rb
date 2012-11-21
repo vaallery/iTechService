@@ -3,8 +3,9 @@ class Device < ActiveRecord::Base
   belongs_to :device_type
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
-  attr_accessible :comment, :serial_number, :client_id, :device_type_id, :device_tasks_attributes
+  attr_accessible :comment, :serial_number, :client, :client_id, :device_type, :device_type_id, :device_tasks_attributes
   accepts_nested_attributes_for :device_tasks
+  attr_accessible :created_at, :updated_at, :done_at
   
   validates :ticket_number, :client, :device_type, presence: true
   validates :ticket_number, uniqueness: true
@@ -13,7 +14,7 @@ class Device < ActiveRecord::Base
   before_validation :generate_ticket_number
   before_validation :check_device_type
   
-  scope :ordered, includes(:tasks).order("devices.done_at desc, tasks.priority desc")
+  scope :ordered, order("devices.done_at desc, created_at asc")#, tasks.priority desc")
   scope :done, where('devices.done_at IS NOT NULL')
   scope :pending, where(done_at: nil)
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
@@ -58,11 +59,12 @@ class Device < ActiveRecord::Base
     end
     
     unless (device_q = params[:device]).blank?
-      devices = devices.where 'devices.serial_number LIKE ?', "%#{device_q}%"
+      devices = devices.where 'LOWER(devices.serial_number) LIKE ?', "%#{device_q.downcase}%"
     end
     
     unless (client_q = params[:client]).blank?
-      devices = devices.joins(:client).where 'clients.name LIKE :q OR clients.phone_number LIKE :q', q: "%#{client_q}%"
+      devices = devices.joins(:client).where 'LOWER(clients.name) LIKE :q OR clients.phone_number LIKE :q',
+          q: "%#{client_q.downcase}%"
     end
     
     devices

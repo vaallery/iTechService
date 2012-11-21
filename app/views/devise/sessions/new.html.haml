@@ -1,0 +1,18 @@
+%h2= t '.title', default: 'Sign in'
+
+= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-inline' }) do |f|
+  
+  = f.input_field :username, required: false, autofocus: true, label: false,
+      placeholder: resource.class.human_attribute_name(:username), class: 'input-medium'
+  
+  = f.input_field :password, required: false, label: false,
+      placeholder: resource.class.human_attribute_name(:password), class: 'input-medium'
+  
+  - if devise_mapping.rememberable?
+    = f.label :remember_me do
+      = f.input_field :remember_me, as: :boolean
+      = resource.class.human_attribute_name(:remember_me)
+  
+  = f.button :submit, t('.signin', default: 'Sign in')
+
+= render "devise/shared/links"

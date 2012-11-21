@@ -10,11 +10,9 @@ class DevicesController < ApplicationController
     @devices = Device.search params
     
     if params.has_key? :sort and params.has_key? :direction
-      @devices = @devices.order(sort_column + ' ' + sort_direction)
-    else
-      @devices = @devices.ordered
+      @devices = @devices.reorder 'devices.'+sort_column + ' ' + sort_direction
     end
-    @devices = @devices.page params[:page]
+    @devices = @devices.ordered.page params[:page]
     
     respond_to do |format|
       format.html
@@ -38,7 +36,6 @@ class DevicesController < ApplicationController
   # GET /devices/new.json
   def new
     @device = Device.new
-    #@device.device_tasks.build
 
     respond_to do |format|
       format.html # new.html.erb

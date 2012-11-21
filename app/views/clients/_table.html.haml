@@ -18,6 +18,7 @@
           %td= client.human_phone_number
           %td=l client.created_at, format: :long_d
           %td.btn-group
+            = link_to_show client
             = link_to_edit client
             = link_to_destroy client
 

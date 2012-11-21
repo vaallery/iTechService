@@ -21,6 +21,7 @@ module ApplicationHelper
 
   def sortable(column, title = nil)
     title ||= column.titleize
+    
     if column == sort_column
       css_class = "current #{sort_direction} nav nav-pills"
       direction = sort_direction == "asc" ? "desc" : "asc"

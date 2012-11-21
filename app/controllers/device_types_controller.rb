@@ -44,7 +44,8 @@ class DeviceTypesController < ApplicationController
 
     respond_to do |format|
       if @device_type.save
-        format.html { redirect_to @device_type, notice: 'Device type was successfully created.' }
+        #format.html { redirect_to @device_type, notice: 'Device type was successfully created.' }
+        format.html { redirect_to device_types_path, notice: 'Device type was successfully created.' }
         format.json { render json: @device_type, status: :created, location: @device_type }
       else
         format.html { render action: "new" }
@@ -60,7 +61,8 @@ class DeviceTypesController < ApplicationController
 
     respond_to do |format|
       if @device_type.update_attributes(params[:device_type])
-        format.html { redirect_to @device_type, notice: 'Device type was successfully updated.' }
+        #format.html { redirect_to @device_type, notice: 'Device type was successfully updated.' }
+        format.html { redirect_to device_types_path, notice: 'Device type was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

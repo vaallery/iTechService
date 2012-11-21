@@ -16,6 +16,7 @@ gem 'devise'
 gem 'cancan'
 gem 'rails3-jquery-autocomplete'
 gem 'kaminari'
+gem 'turbolinks'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -46,6 +47,8 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'ffaker'
 end
 
 # To use ActiveModel has_secure_password

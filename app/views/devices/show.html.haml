@@ -36,7 +36,9 @@
     - @device.device_tasks.ordered.each do |device_task|
       %tr{class: row_class_for_task(device_task)}
         %td= device_task.task_name
-        %td= device_task.comment
+        %td
+          %p.device_comment_tooltip{'data-title' => device_task.comment}
+            = h device_task.comment.truncate(30, separator: ' ')
         %td= device_task.task_duration
         %td= device_task.cost
         %td= l device_task.done_at, format: :long_d unless device_task.done_at.blank?

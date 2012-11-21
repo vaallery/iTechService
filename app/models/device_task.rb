@@ -1,7 +1,7 @@
 class DeviceTask < ActiveRecord::Base
   belongs_to :device
   belongs_to :task
-  attr_accessible :done, :comment, :cost, :device_id, :task_id
+  attr_accessible :done, :comment, :cost, :task, :device, :device_id, :task_id
   validates :task_id, presence: true
   
   scope :ordered, joins(:task).order("done asc, tasks.priority desc")

@@ -18,17 +18,16 @@
         %tr{class: row_class_for_device(device)}
           %td= link_to device.id, device_path(device)
           %td= link_to device.ticket_number, device_path(device)
-          -#%td= link_to device.presentation, device_path(device)
           %td
             = link_to device.type_name, device_path(device)
             %small= device.serial_number
           %td= h device.client.name_phone
           %td
             %p.device_comment_tooltip{'data-title' => device.comment}
-              = h device.comment.truncate(30, separator: ' ')
+              %small= h device.comment.truncate(30, separator: ' ')
           %td= l device.created_at, format: :long_d
           %td
-            - if device.done?
+            - if device.done? and device.done_at.present?
               = l device.done_at, format: :long_d
             - else
               %span.badge{class: "badge-#{device.is_important? ? 'important' : 'info'}"}

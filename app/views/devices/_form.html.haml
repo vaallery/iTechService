@@ -9,7 +9,7 @@
         %span.add-on
           %i.icon-search
         = autocomplete_field_tag :client, @device.try(:client).try(:name_phone), autocomplete_client_phone_number_devices_path,
-            id_element: '#device_client_id', placeholder: 'phone number'
+            id_element: '#device_client_id', placeholder: 'phone number', autofocus: true
         = f.hidden_field :client_id
         = link_to new_client_path, id: 'new_client_link', class: 'btn', remote: true do
           %i.icon-plus

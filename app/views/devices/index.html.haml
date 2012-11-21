@@ -1,5 +1,6 @@
 .page-header
-  %h1=t '.title', :default => Device.model_name.human.pluralize
+  %h1
+    = t '.title', :default => Device.model_name.human.pluralize
   = link_to t('.new', :default => t("helpers.links.new")), new_device_path, :class => 'btn btn-primary'
   
 .table_filter.navbar.container
@@ -15,7 +16,7 @@
           %li= link_to t('pending'), devices_path(status: 'pending')
           %li= link_to t('important'), devices_path(status: 'important')
     
-    = form_tag devices_path, method: 'get', id: 'search_devices_form', class: 'navbar-search form-search', remote: true do
+    = form_tag devices_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
       = hidden_field_tag :status, params[:status]
       .input-append
         = text_field_tag :ticket, params[:ticket], id: 'search_ticket_input', class: 'search-query input-medium',

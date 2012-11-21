@@ -2,11 +2,13 @@ class ClientsController < ApplicationController
   # GET /clients
   # GET /clients.json
   def index
-    @clients = Client.scoped.page params[:page]
+    @clients = Client.search params
+    @clients = @clients.page params[:page]
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @clients }
+      format.js { render 'shared/index' }
     end
   end
 

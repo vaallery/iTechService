@@ -3,7 +3,7 @@ class CreateDeviceTasks < ActiveRecord::Migration
     create_table :device_tasks do |t|
       t.references :device
       t.references :task
-      t.boolean :done
+      t.boolean :done, default: false
       t.text :comment
 
       t.timestamps
