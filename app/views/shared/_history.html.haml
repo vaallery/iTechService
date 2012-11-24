@@ -1,0 +1,20 @@
+#history
+  %a.close.close_history{href: '#'}
+    %i.icon-remove-sign
+  %br
+  %table.table.table-condensed
+    %thead
+      %tr
+        %th= t '.date'
+        %th= HistoryRecord.human_attribute_name :column_name
+        -#%th= HistoryRecord.human_attribute_name :old_value
+        %th= HistoryRecord.human_attribute_name :new_value
+        %th= HistoryRecord.human_attribute_name :user
+    %tbody
+      - @records.each do |rec|
+        %tr
+          %td= l rec.created_at, format: :long_d
+          %td= rec.column_name.humanize
+          -#%td= human_history_value rec.old_value, rec.column_type
+          %td= human_history_value rec.new_value, rec.column_type
+          %td= rec.user.try :username

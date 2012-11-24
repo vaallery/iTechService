@@ -72,4 +72,15 @@ module ApplicationHelper
     end
   end
   
+  def human_history_value value, type
+    case type
+    when 'boolean'
+      icon_class = value == 't' ? 'icon-check' : 'icon-check-empty'
+      val = "<i class=#{icon_class}></i>"
+    else
+      val = value 
+    end
+    val.html_safe
+  end
+  
 end

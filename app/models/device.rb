@@ -3,6 +3,7 @@ class Device < ActiveRecord::Base
   belongs_to :device_type
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
+  has_many :history_records, as: :object
   attr_accessible :comment, :serial_number, :client, :client_id, :device_type, :device_type_id, :device_tasks_attributes
   accepts_nested_attributes_for :device_tasks
   attr_accessible :created_at, :updated_at, :done_at
@@ -88,6 +89,10 @@ class Device < ActiveRecord::Base
   
   def progress_pct
     (done_tasks.count * 100.0 / device_tasks.count).to_i
+  end
+  
+  def history_of attribute
+    
   end
   
   private

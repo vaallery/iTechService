@@ -92,6 +92,19 @@ class DevicesController < ApplicationController
     end
   end
   
+  def history
+    device = Device.find params[:id]
+    @records = device.history_records
+    render 'shared/show_history'
+  end
+  
+  def task_history
+    device = Device.find params[:device_id]
+    device_task = DeviceTask.find params[:id]
+    @records = device_task.history_records
+    render 'shared/show_history'
+  end
+  
   private
   
   def sort_column

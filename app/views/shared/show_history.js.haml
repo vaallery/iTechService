@@ -1,0 +1,7 @@
+:plain
+  if($('#history').length == 0) {
+    $('body').append("#{j(render('shared/history'))}");
+    $history = $('#history');
+  } else {
+    $('#history').replaceWith("#{j(render('shared/history'))}");
+  }

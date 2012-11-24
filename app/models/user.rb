@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   
+  has_many :history_records, as: :object
+  
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :registerable, :rememberable,
   # :lockable, :timeoutable and :omniauthable
@@ -9,6 +11,8 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :role, :username, :email, :password, :password_confirmation, :remember_me
   validates :username, presence: true
+  
+  cattr_accessor :current
   
   scope :admins, where(role: 'admin')
   

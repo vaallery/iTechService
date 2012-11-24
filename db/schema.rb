@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115040042) do
+ActiveRecord::Schema.define(:version => 20121122054853) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -54,6 +54,25 @@ ActiveRecord::Schema.define(:version => 20121115040042) do
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
   add_index "devices", ["ticket_number"], :name => "index_devices_on_ticket_number"
+
+  create_table "history_records", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "object_id"
+    t.string   "object_type"
+    t.string   "column_name"
+    t.string   "column_type"
+    t.string   "old_value"
+    t.string   "new_value"
+    t.datetime "deleted_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "history_records", ["new_value"], :name => "index_history_records_on_new_value"
+  add_index "history_records", ["object_id", "object_type"], :name => "index_history_records_on_object_id_and_object_type"
+  add_index "history_records", ["old_value", "new_value"], :name => "index_history_records_on_old_value_and_new_value"
+  add_index "history_records", ["old_value"], :name => "index_history_records_on_old_value"
+  add_index "history_records", ["user_id"], :name => "index_history_records_on_user_id"
 
   create_table "tasks", :force => true do |t|
     t.string   "name"

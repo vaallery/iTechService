@@ -10,13 +10,8 @@ jQuery ->
     $.getJSON '/tasks/'+task_id+'.json', (data) ->
       task_cost.val data.cost
       
-  #$('#search_devices_form').on 'keyup', '.search-query', (event) ->
-  #  $('#search_devices_form').submit()
-  #  event.preventDefault()
-
-  #$('#search_devices_form').on 'click', '.clear_search_input', (event) ->
-  #  $(this).siblings('.search-query').val ''
-  #  $('#search_devices_form').submit()
-  #  event.preventDefault()
-    
   $('.device_comment_tooltip').tooltip()
+  
+  $('#history').live 'click', '.close_history', (event) ->
+    $history = $('#history')
+    $history.remove()

@@ -1,6 +1,10 @@
 - model_class = Device
 .page-header
-  %h1= t '.title', default: model_class.model_name.human
+  %h1
+    = t '.title', default: model_class.model_name.human
+    %small
+      = link_to history_device_path(@device), style: "text-decoration:none;", remote: true do
+        %i.icon-calendar
   %p= timestamp_string_for @device
 
 %p
@@ -32,6 +36,7 @@
       %th= DeviceTask.human_attribute_name :done_at
       %th= DeviceTask.human_attribute_name :created_at
       %th= DeviceTask.human_attribute_name :updated_at
+      %th
   %tbody
     - @device.device_tasks.ordered.each do |device_task|
       %tr{class: row_class_for_task(device_task)}
@@ -44,7 +49,9 @@
         %td= l device_task.done_at, format: :long_d unless device_task.done_at.blank?
         %td= l device_task.created_at, format: :long_d
         %td= l device_task.updated_at, format: :long_d
-    
+        %td{style: "background:none;border-right:none;"}
+          = link_to history_device_task_path(@device, device_task), style: "text-decoration:none;", remote: true do
+            %i.icon-calendar
 
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), devices_path, :class => 'btn'
