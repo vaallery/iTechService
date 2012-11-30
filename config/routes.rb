@@ -2,8 +2,8 @@ ItechService::Application.routes.draw do
   
   devise_for :users
 
-  root to: 'devices#index'
-  
+  root to: 'dashboard#index'
+
   resources :users
 
   resources :clients
@@ -12,6 +12,8 @@ ItechService::Application.routes.draw do
 
   resources :tasks
 
+  resources :locations
+  
   resources :devices do
     get :autocomplete_device_type_name, on: :collection
     get :autocomplete_client_phone_number, on: :collection

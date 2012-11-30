@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
-  
+
+  belongs_to :location
   has_many :history_records, as: :object
   
   # Include default devise modules. Others available are:
@@ -9,14 +10,14 @@ class User < ActiveRecord::Base
          :recoverable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :role, :username, :email, :password, :password_confirmation, :remember_me
+  attr_accessible :role, :username, :email, :password, :password_confirmation, :remember_me, :location_id
   validates :username, presence: true
   
   cattr_accessor :current
   
   scope :admins, where(role: 'admin')
   
-  ROLES = %w[admin staff technician]
+  ROLES = %w[admin software media technician]
   
   def email_required?
     false
@@ -29,9 +30,25 @@ class User < ActiveRecord::Base
   def admin?
     has_role? 'admin'
   end
+
+  def technician?
+    has_role? 'technician'
+  end
+
+  def software?
+    has_role? 'software'
+  end
+
+  def media?
+    has_role? 'media'
+  end
   
   def has_role? role
-    self.role == role
+    if role.is_a? Array
+      role.include? self.role
+    else
+      self.role == role
+    end
   end
   
   def self.search search

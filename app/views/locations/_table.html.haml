@@ -1,0 +1,23 @@
+- if @locations.any?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th= Location.human_attribute_name(:id)
+        %th= Location.human_attribute_name(:name)
+        %th= Location.human_attribute_name(:ancestry)
+        %th= Location.human_attribute_name(:created_at)
+        %th
+    %tbody
+      - @locations.each do |location|
+        %tr
+          %td= link_to location.id, location_path(location)
+          %td= link_to location.name, location_path(location)
+          %td= location.ancestors_names
+          %td=l location.created_at, format: :long_d
+          %td
+            .btn-group
+              = link_to_edit location
+              = link_to_destroy location
+
+- else
+  = render 'shared/empty'

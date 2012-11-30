@@ -3,9 +3,9 @@ class DevicesController < ApplicationController
   helper_method :sort_column, :sort_direction
   autocomplete :device_type, :name, full: true
   autocomplete :client, :phone_number, full: true, extra_data: [:name], display_value: :name_phone
+  load_and_authorize_resource
+  skip_load_resource only: :index
   
-  # GET /devices
-  # GET /devices.json
   def index
     @devices = Device.search params
     
@@ -13,6 +13,7 @@ class DevicesController < ApplicationController
       @devices = @devices.reorder 'devices.'+sort_column + ' ' + sort_direction
     end
     @devices = @devices.ordered.page params[:page]
+    @location_name = params[:location].present? ? Location.find(params[:location]).full_name : 'everywhere'
     
     respond_to do |format|
       format.html
@@ -21,8 +22,6 @@ class DevicesController < ApplicationController
     end
   end
 
-  # GET /devices/1
-  # GET /devices/1.json
   def show
     @device = Device.find(params[:id])
 
@@ -32,24 +31,20 @@ class DevicesController < ApplicationController
     end
   end
 
-  # GET /devices/new
-  # GET /devices/new.json
   def new
     @device = Device.new
+    @device.location = current_user.location
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @device }
     end
   end
 
-  # GET /devices/1/edit
   def edit
     @device = Device.find(params[:id])
   end
 
-  # POST /devices
-  # POST /devices.json
   def create
     @device = Device.new(params[:device])
 
@@ -64,8 +59,6 @@ class DevicesController < ApplicationController
     end
   end
 
-  # PUT /devices/1
-  # PUT /devices/1.json
   def update
     @device = Device.find(params[:id])
 
@@ -80,8 +73,6 @@ class DevicesController < ApplicationController
     end
   end
 
-  # DELETE /devices/1
-  # DELETE /devices/1.json
   def destroy
     @device = Device.find(params[:id])
     @device.destroy

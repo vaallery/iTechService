@@ -22,13 +22,14 @@
       #navbar.navbar.navbar-static-top
         .navbar-inner
           .container-fluid
-            %a.brand(href="#") iTech Service
+            = link_to "iTech Service", root_path, class: 'brand'
             %ul.nav
               %li{class: nav_state_for('devices')}= link_to "Devices", devices_path
               %li{class: nav_state_for('clients')}= link_to "Clients", clients_path
-              %li{class: nav_state_for('device_types')}= link_to "Device types", device_types_path
-              %li{class: nav_state_for('tasks')}= link_to "Tasks", tasks_path
-              %li{class: nav_state_for('users')}= link_to "Users", users_path
+              %li{class: nav_state_for('device_types')}= link_to "Device types", device_types_path if can? :manage, DeviceType
+              %li{class: nav_state_for('tasks')}= link_to "Tasks", tasks_path if can? :manage, Task
+              %li{class: nav_state_for('locations')}= link_to t('locations'), locations_path if can? :manage, Location
+              %li{class: nav_state_for('users')}= link_to "Users", users_path if can? :manage, User
             - if user_signed_in?
               %ul.nav.pull-right
                 %li

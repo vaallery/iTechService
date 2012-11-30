@@ -1,10 +1,13 @@
 class Device < ActiveRecord::Base
+  
   belongs_to :client, inverse_of: :devices
   belongs_to :device_type
+  belongs_to :location
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
   has_many :history_records, as: :object
-  attr_accessible :comment, :serial_number, :client, :client_id, :device_type, :device_type_id, :device_tasks_attributes
+  attr_accessible :comment, :serial_number, :client, :client_id, :device_type, :device_type_id, :location_id,
+                  :device_tasks_attributes
   accepts_nested_attributes_for :device_tasks
   attr_accessible :created_at, :updated_at, :done_at
   
@@ -53,6 +56,10 @@ class Device < ActiveRecord::Base
       when 'pending' then devices = devices.pending
       when 'important' then devices = devices.important
       end
+    end
+
+    unless (location = params[:location]).blank?
+      devices = devices.where devices: {location_id: location}
     end
     
     unless (ticket_q = params[:ticket]).blank?

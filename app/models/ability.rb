@@ -7,10 +7,20 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
-    else
-      can :read, :all
-      cannot :manage, User
+    elsif user.technician?
+      can :update, Device
+    elsif user.software?
+      can :receive, Device
+      can :manage, [Device, Client]
+
+    elsif user.media?
+      can :update, Device
     end
+    if user.has_role? ['technician', 'software', 'media']
+      can :change_location, Device, new_record?: false
+      cannot :update, DeviceTask
+    end
+    can :read, :all
     #
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are

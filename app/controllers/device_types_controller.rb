@@ -1,4 +1,6 @@
 class DeviceTypesController < ApplicationController
+  load_and_authorize_resource
+
   # GET /device_types
   # GET /device_types.json
   def index

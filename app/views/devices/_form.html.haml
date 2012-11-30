@@ -31,6 +31,9 @@
   
   = f.input :comment, input_html: {rows: 5}
 
+  = f.association :location, collection: available_locations_for(current_user), label_method: :full_name,
+      disabled: cannot?(:change_location, @device)
+
   %table#device_tasks.table.table-bordered.table-condensed.table-hover
     %caption
       %h4= Device.human_attribute_name :tasks

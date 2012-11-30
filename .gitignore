@@ -13,3 +13,19 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+doc/
+*.swp
+*~
+.DS_Store
+/public/pictures/*
+/public/ckeditor_assets/*
+.DS_Store
+.rvmrc*
+.project
+.sass-cache/
+public/assets/
+.idea/*
+.powrc
+.idea/misc.xml
+.elasticbeanstalk/

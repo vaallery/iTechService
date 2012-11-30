@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121122054853) do
+ActiveRecord::Schema.define(:version => 20121129033039) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -38,7 +38,10 @@ ActiveRecord::Schema.define(:version => 20121122054853) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "ancestry"
   end
+
+  add_index "device_types", ["ancestry"], :name => "index_device_types_on_ancestry"
 
   create_table "devices", :force => true do |t|
     t.integer  "device_type_id"
@@ -49,10 +52,12 @@ ActiveRecord::Schema.define(:version => 20121122054853) do
     t.datetime "updated_at",     :null => false
     t.datetime "done_at"
     t.string   "serial_number"
+    t.integer  "location_id"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
+  add_index "devices", ["location_id"], :name => "index_devices_on_location_id"
   add_index "devices", ["ticket_number"], :name => "index_devices_on_ticket_number"
 
   create_table "history_records", :force => true do |t|
@@ -73,6 +78,15 @@ ActiveRecord::Schema.define(:version => 20121122054853) do
   add_index "history_records", ["old_value", "new_value"], :name => "index_history_records_on_old_value_and_new_value"
   add_index "history_records", ["old_value"], :name => "index_history_records_on_old_value"
   add_index "history_records", ["user_id"], :name => "index_history_records_on_user_id"
+
+  create_table "locations", :force => true do |t|
+    t.string   "name"
+    t.string   "ancestry"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "locations", ["ancestry"], :name => "index_locations_on_ancestry"
 
   create_table "tasks", :force => true do |t|
     t.string   "name"
@@ -99,10 +113,13 @@ ActiveRecord::Schema.define(:version => 20121122054853) do
     t.string   "last_sign_in_ip"
     t.string   "authentication_token"
     t.string   "email",                  :default => ""
+    t.integer  "location_id"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["location_id"], :name => "index_users_on_location_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["username"], :name => "index_users_on_username"
 
 end
