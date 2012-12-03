@@ -1,0 +1,13 @@
+#device_type_selector
+  = f.hidden_field 'device_type_id'
+  .input-append.input-prepend
+    -#= text_field_tag 'device_type_name', (@device.device_type.blank? ? nil : @device.device_type.full_name), disabled: true
+    .btn-group
+      = link_to device_type_select_devices_path, class: 'btn', remote: true do
+        %i.icon-refresh
+      %button#device_type_select_button.btn.dropdown-toggle{'data-toggle' => 'dropdown'}
+        %span#device_type_name.pull-left
+          = @device.device_type.blank? ? '-' : @device.device_type.try(:full_name)
+        %span.caret.pull-right
+      %ul#device_types_list.dropdown-menu
+        = make_device_types_list root_device_types

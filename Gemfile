@@ -16,7 +16,6 @@ gem 'devise'
 gem 'cancan'
 gem 'rails3-jquery-autocomplete'
 gem 'kaminari'
-gem 'turbolinks'
 gem 'ancestry'
 
 # Gems used only for assets and not required

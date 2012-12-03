@@ -5,34 +5,43 @@
   .control-group
     = f.label :client, class: 'control-label'
     .controls
-      .input-prepend.input-append
-        %span.add-on
-          %i.icon-search
-        = autocomplete_field_tag :client, @device.try(:client).try(:name_phone), autocomplete_client_phone_number_devices_path,
-            id_element: '#device_client_id', placeholder: 'phone number', autofocus: true
-        = f.hidden_field :client_id
-        = link_to new_client_path, id: 'new_client_link', class: 'btn', remote: true do
-          %i.icon-plus
-        = link_to @device.client.present? ? edit_client_path(@device.client) : '#',
-            id: 'edit_client_link', class: 'btn', remote: true do
-          %i.icon-edit
+      - if can? :change_client, @device
+        .input-prepend.input-append
+          %span.add-on
+            %i.icon-search
+          = autocomplete_field_tag :client, @device.try(:client).try(:name_phone), autocomplete_client_phone_number_devices_path,
+              id_element: '#device_client_id', placeholder: 'phone number', autofocus: true
+          = f.hidden_field :client_id
+          = link_to new_client_path, id: 'new_client_link', class: 'btn', remote: true do
+            %i.icon-plus
+          = link_to @device.client.present? ? edit_client_path(@device.client) : '#',
+              id: 'edit_client_link', class: 'btn', remote: true do
+            %i.icon-edit
+      - else
+        = text_field_tag :client, @device.client.try(:name_phone), disabled: true, class: 'span12'
 
   .control-group
     = f.label :device_type, class: 'control-label'
     .controls
-      .input-prepend
-        %span.add-on
-          %i.icon-search
-        = autocomplete_field_tag :device_type, @device.try(:type_name), autocomplete_device_type_name_devices_path,
-          id_element: '#device_device_type_id'
-        = f.hidden_field :device_type_id
-        
-  = f.input :serial_number
-  
-  = f.input :comment, input_html: {rows: 5}
+      - if can? :change_device_type, @device
+        = render 'device_type_field', f: f
+      - else
+        = text_field_tag :device_type, @device.device_type.try(:full_name), disabled: true, class: 'span12'
 
-  = f.association :location, collection: available_locations_for(current_user), label_method: :full_name,
-      disabled: cannot?(:change_location, @device)
+  = f.input :serial_number, disabled: cannot?(:change_serial_number, @device)
+  
+  = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:change_device_comment, @device)
+
+  -#= f.association :location, collection: available_locations_for(current_user), label_method: :full_name,
+  -#    disabled: cannot?(:change_location, @device)
+
+  .control-group
+    = f.label :location, class: 'control-label'
+    .controls
+      - if can? :change_location, @device
+        = render 'location_field', f: f
+      - else
+        = text_field_tag :location, @device.location.try(:full_name), disabled: true, class: 'span12'
 
   %table#device_tasks.table.table-bordered.table-condensed.table-hover
     %caption
@@ -49,13 +58,6 @@
       = f.simple_fields_for :device_tasks do |ff|
         = render 'device_task_fields', f: ff
   = link_to_add_fields t('.add_task'), '#device_tasks tbody', f, :device_tasks
-
-  -#
-    #device_tasks
-      %h4= Device.human_attribute_name :tasks
-      = f.simple_fields_for :device_tasks do |ff|
-        = render 'device_task_fields', f: ff
-    = link_to_add_fields t('add'), '#device_tasks', f, :device_tasks
 
   .form-actions
     .pull-left= link_to t('.cancel', default: t("helpers.links.cancel")), devices_path, class: 'btn'

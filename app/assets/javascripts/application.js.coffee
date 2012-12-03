@@ -15,7 +15,7 @@
 #= require jquery-ui
 #= require twitter/bootstrap
 #= require autocomplete-rails
-#= require turbolinks
+#= require jquery.jstree
 #= require_self
 # require_tree .
 

@@ -1,6 +1,0 @@
-.device_task.fields.well.well-small
-  = f.input :done unless @device.new_record?
-  = f.association :task, input_html: {class: 'device_task_task span12'}
-  = f.input :cost, input_html: {class: 'device_task_cost span12'}
-  = f.input :comment, as: :text, input_html: {rows: 3}
-  = link_to_remove_fields f

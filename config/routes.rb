@@ -8,7 +8,7 @@ ItechService::Application.routes.draw do
 
   resources :clients
 
-  resources :device_types
+  resources :device_types, except: [:new, :edit]
 
   resources :tasks
 
@@ -18,6 +18,7 @@ ItechService::Application.routes.draw do
     get :autocomplete_device_type_name, on: :collection
     get :autocomplete_client_phone_number, on: :collection
     get :history, on: :member, defaults: {format: 'js'}
+    get :device_type_select, on: :collection, defaults: {format: 'js'}
     #resources :device_tasks, only: [:show] do
     #  get :history, on: :member
     #end

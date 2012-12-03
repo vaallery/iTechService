@@ -1,0 +1,9 @@
+:plain
+  if(#{@device_type.has_children?}){
+    $('#device_types_list').html("#{j(make_device_types_list(@device_type.children))}");
+  }else{
+    $('#device_device_type_id').val("#{@device_type.id}");
+    $('#device_type_select_button').attr('disabled','disabled').addClass('btn-success');
+  }
+  $('#device_type_name').text("#{@device_type.full_name}");
+  //$('#device_type_name').val("#{@device_type.full_name}");

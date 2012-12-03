@@ -14,7 +14,7 @@ class DevicesController < ApplicationController
     end
     @devices = @devices.ordered.page params[:page]
     @location_name = params[:location].present? ? Location.find(params[:location]).full_name : 'everywhere'
-    
+
     respond_to do |format|
       format.html
       format.json { render json: @devices }
@@ -94,6 +94,15 @@ class DevicesController < ApplicationController
     device_task = DeviceTask.find params[:id]
     @records = device_task.history_records
     render 'shared/show_history'
+  end
+
+  def device_type_select
+    if params[:device_type_id].blank?
+      render 'device_type_refresh'
+    else
+      @device_type = DeviceType.find params[:device_type_id]
+      render 'device_type_select'
+    end
   end
   
   private

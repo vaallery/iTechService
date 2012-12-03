@@ -1,0 +1,6 @@
+:plain
+  //$('#device_type_name').val("");
+  $('#device_type_name').text("-");
+  $('#device_types_list').html("#{j(make_device_types_list(root_device_types))}");
+  $('#device_type_select_button').removeAttr('disabled').removeClass('btn-success');
+  $('#device_device_type_id').val("");

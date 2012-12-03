@@ -1,0 +1,10 @@
+.btn-group
+  %button#locations_select_button.btn.dropdown-toggle{'data-toggle' => 'dropdown'}
+    %span#location_value.pull-left
+      = @device.location.blank? ? '-' : Location.find(@device.location.id).full_name
+    %span.caret.pull-right
+  %ul#locations_list.dropdown-menu
+    - available_locations_for(current_user).each do |location|
+      %li
+        = link_to location.full_name, '#', location_id: location.id
+= f.hidden_field :location_id

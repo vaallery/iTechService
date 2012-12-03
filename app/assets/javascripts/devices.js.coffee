@@ -15,3 +15,8 @@ jQuery ->
   $('#history').live 'click', '.close_history', (event) ->
     $history = $('#history')
     $history.remove()
+
+  $('a', 'ul#locations_list').live 'click', (event) ->
+    $('#location_value').text($(this).text())
+    $('#device_location_id').val($(this).attr('location_id'))
+    event.preventDefault()
