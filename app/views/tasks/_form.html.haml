@@ -1,8 +1,9 @@
 = simple_form_for @task, :html => { :class => 'form-horizontal' } do |f|
   = f.input :name
+  = f.input :role, collection: Role::ROLES, value_method: :to_s, label_method: :humanize
   = f.input :duration
   = f.input :cost
   = f.input :priority
   .form-actions
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), tasks_path, :class => 'btn'
-    = f.button :submit, :class => 'btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), tasks_path, class: 'btn'
+    = f.button :submit, class: 'btn-primary'

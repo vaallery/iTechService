@@ -6,7 +6,9 @@ ItechService::Application.routes.draw do
 
   resources :users
 
-  resources :clients
+  resources :clients do
+    get :check_phone_number, on: :collection
+  end
 
   resources :device_types, except: [:new, :edit]
 
@@ -19,9 +21,6 @@ ItechService::Application.routes.draw do
     get :autocomplete_client_phone_number, on: :collection
     get :history, on: :member, defaults: {format: 'js'}
     get :device_type_select, on: :collection, defaults: {format: 'js'}
-    #resources :device_tasks, only: [:show] do
-    #  get :history, on: :member
-    #end
   end
   match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: 'get',
       as: :history_device_task, defaults: {format: 'js'}

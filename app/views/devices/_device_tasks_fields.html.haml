@@ -1,0 +1,19 @@
+%table#device_tasks.table.table-bordered.table-condensed.table-hover
+  %caption
+    %h4= Device.human_attribute_name :tasks
+  %thead
+    %tr
+      %th= DeviceTask.human_attribute_name :task
+      %th= DeviceTask.human_attribute_name :cost
+      %th= DeviceTask.human_attribute_name :comment
+      %th
+  %tbody
+    = f.simple_fields_for :device_tasks do |ff|
+      = render 'device_task_fields', f: ff
+  %tfoot
+    %tr
+      %td= t 'total'
+      %td.align_right= @device.tasks_cost
+      %td
+      %td
+= link_to_add_fields t('.add_task'), '#device_tasks tbody', f, :device_tasks

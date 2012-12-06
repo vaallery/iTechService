@@ -92,4 +92,14 @@ class ClientsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def check_phone_number
+    @number = params[:number]
+    @number = PhoneTools.convert_phone @number
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
 end

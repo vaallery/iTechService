@@ -256,3 +256,5 @@ ru:
   activerecord:
     errors:
       <<: *errors
+
+  phone_placeholder: "6, 7, 10 или 11 цифр"

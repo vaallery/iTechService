@@ -7,6 +7,7 @@
       %tr
         %th= Task.human_attribute_name(:id)
         %th= Task.human_attribute_name(:name)
+        %th= Task.human_attribute_name(:role)
         %th= Task.human_attribute_name(:priority)
         %th= Task.human_attribute_name(:cost)
         %th= Task.human_attribute_name(:duration)
@@ -17,6 +18,7 @@
         %tr
           %td= link_to task.id, task_path(task)
           %td= link_to task.name, task_path(task)
+          %td= task.role
           %td= task.priority
           %td= task.cost
           %td= task.duration

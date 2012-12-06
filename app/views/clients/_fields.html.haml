@@ -1,0 +1,11 @@
+= f.input :name, input_html: {class: 'input-xlarge'}
+.control-group
+  = f.label :phone_number, class: 'control-label'
+  .controls.input-xlarge
+    .input-append.input-prepend
+      %span.add-on
+        %i.icon-phone
+      = f.phone_field :phone_number, placeholder: t('phone_placeholder'), style: "width:180px;"
+      %span.add-on#phone_length 0
+      %a#check_phone_number.btn.disabled{href: '#'}
+        %i.icon-ok

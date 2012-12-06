@@ -5,7 +5,7 @@
   .control-group
     = f.label :client, class: 'control-label'
     .controls
-      - if can? :change_client, @device
+      - if can? :change_client, @device or can? :receive, @device
         .input-prepend.input-append
           %span.add-on
             %i.icon-search
@@ -23,41 +23,24 @@
   .control-group
     = f.label :device_type, class: 'control-label'
     .controls
-      - if can? :change_device_type, @device
+      - if can? :change_device_type, @device or can? :receive, @device
         = render 'device_type_field', f: f
       - else
         = text_field_tag :device_type, @device.device_type.try(:full_name), disabled: true, class: 'span12'
 
-  = f.input :serial_number, disabled: cannot?(:change_serial_number, @device)
+  = f.input :serial_number, disabled: (cannot?(:change_serial_number, @device) and cannot?(:receive, @device))
   
-  = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:change_device_comment, @device)
-
-  -#= f.association :location, collection: available_locations_for(current_user), label_method: :full_name,
-  -#    disabled: cannot?(:change_location, @device)
+  = f.input :comment, input_html: {rows: 5}, disabled: (cannot?(:change_device_comment, @device) and cannot?(:receive, @device))
 
   .control-group
     = f.label :location, class: 'control-label'
     .controls
-      - if can? :change_location, @device
+      - if can? :change_location, @device or can? :receive, @device
         = render 'location_field', f: f
       - else
         = text_field_tag :location, @device.location.try(:full_name), disabled: true, class: 'span12'
 
-  %table#device_tasks.table.table-bordered.table-condensed.table-hover
-    %caption
-      %h4= Device.human_attribute_name :tasks
-    %thead
-      %tr
-        - unless @device.new_record?
-          %th= DeviceTask.human_attribute_name :done
-        %th= DeviceTask.human_attribute_name :task
-        %th= DeviceTask.human_attribute_name :cost
-        %th= DeviceTask.human_attribute_name :comment
-        %th
-    %tbody
-      = f.simple_fields_for :device_tasks do |ff|
-        = render 'device_task_fields', f: ff
-  = link_to_add_fields t('.add_task'), '#device_tasks tbody', f, :device_tasks
+  = render @device.new_record? ? 'device_tasks_fields' : 'device_tasks', f: f
 
   .form-actions
     .pull-left= link_to t('.cancel', default: t("helpers.links.cancel")), devices_path, class: 'btn'

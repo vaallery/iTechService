@@ -34,6 +34,10 @@ class Device < ActiveRecord::Base
   def client_phone
     client.try :phone_number
   end
+
+  def client_presentation
+    client.name_phone
+  end
   
   def presentation
     serial_number.blank? ? type_name : [type_name, serial_number].join(' / ')
@@ -97,10 +101,14 @@ class Device < ActiveRecord::Base
   def progress_pct
     (done_tasks.count * 100.0 / device_tasks.count).to_i
   end
-  
-  def history_of attribute
-    
+
+  def tasks_cost
+    device_tasks.sum :cost
   end
+  
+  #def history_of attribute
+  #
+  #end
   
   private
   

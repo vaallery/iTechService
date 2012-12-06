@@ -8,6 +8,8 @@ class DeviceTask < ActiveRecord::Base
   scope :ordered, joins(:task).order("done asc, tasks.priority desc")
   scope :done, where(done: true)
   scope :pending, where(done: false)
+  scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location.id},
+                                                                tasks: {role: user.role}) }
   
   after_initialize {|dt| dt.cost = task_cost}
   
@@ -39,7 +41,15 @@ class DeviceTask < ActiveRecord::Base
   end
   
   def is_important?
-    task.is_important?
+    task.try :is_important?
   end
-  
+
+  def device_presentation
+    device.presentation
+  end
+
+  def client_presentation
+    device.client_presentation
+  end
+
 end

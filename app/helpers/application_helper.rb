@@ -72,15 +72,34 @@ module ApplicationHelper
     end
   end
   
-  def human_history_value value, type
-    case type
+  def human_history_value rec #value, type
+    case rec.column_type
     when 'boolean'
-      icon_class = value == 't' ? 'icon-check' : 'icon-check-empty'
+      icon_class = rec.new_value == 't' ? 'icon-check' : 'icon-check-empty'
       val = "<i class=#{icon_class}></i>"
+    when 'integer'
+      case rec.column_name
+      when 'client_id'
+        val = Client.find(rec.new_value).try :name_phone
+      when 'location_id'
+        val = Location.find(rec.new_value).try :full_name
+      when 'device_id'
+        val = Device.find(rec.new_value).try :presentation
+      when 'task_id'
+        val = Task.find(rec.new_value).try :name
+      end
     else
-      val = value 
+      val = rec.new_value
     end
     val.html_safe
+  end
+
+  def attribute_changed_by object, attribute
+    object.history_records
+  end
+
+  def human_date date
+    date.present? ? l(date, format: :long_d) : ''
   end
   
 end

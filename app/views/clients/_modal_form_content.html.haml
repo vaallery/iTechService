@@ -1,12 +1,11 @@
-= simple_form_for @client, :html => { :class => 'form-horizontal', remote: true } do |f|
+= simple_form_for @client, html: { class: 'form-horizontal', remote: true } do |f|
   .modal-header
     %a.close{'data-dismiss' => 'modal', href: '#'}
       %i.icon-remove-sign
     %h3= t "clients.#{params[:action]}"
   
   .modal-body
-    = f.input :name
-    = f.input :phone_number
+    = render 'fields', f: f
   
   .modal-footer
-    = f.button :submit, :class => 'btn-primary'
+    = f.button :submit, class: 'btn-primary'

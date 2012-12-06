@@ -17,8 +17,6 @@ class User < ActiveRecord::Base
   
   scope :admins, where(role: 'admin')
   
-  ROLES = %w[admin software media technician]
-  
   def email_required?
     false
   end
@@ -29,6 +27,10 @@ class User < ActiveRecord::Base
   
   def admin?
     has_role? 'admin'
+  end
+
+  def not_admin?
+    !admin?
   end
 
   def technician?
@@ -58,7 +60,7 @@ class User < ActiveRecord::Base
       scoped
     end
   end
-  
+
   private
   
   def ensure_an_admin_remains
