@@ -1,3 +1,4 @@
+
 class DevicesController < ApplicationController
   #before_filter :store_location
   helper_method :sort_column, :sort_direction
@@ -28,6 +29,11 @@ class DevicesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @device }
+      format.pdf do
+        pdf = TicketPdf.new @device, view_context
+        send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
+                  type: "application/pdf", disposition: "inline"
+      end
     end
   end
 

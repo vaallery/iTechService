@@ -19,6 +19,10 @@ module ApplicationHelper
     end
   end
 
+  def link_back_to_index
+    link_to ("<i class='icon-chevron-left'></i>").html_safe, url_for(action: 'index', controller: params[:controller]), style: "text-decoration:none;"
+  end
+
   def sortable(column, title = nil)
     title ||= column.titleize
     

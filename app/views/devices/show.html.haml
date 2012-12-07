@@ -1,14 +1,29 @@
 - model_class = Device
 .page-header
   %h1
-    = t '.title', default: model_class.model_name.human
-    - if current_user.admin?
-      %small
-        = link_to history_device_path(@device), style: "text-decoration:none;", remote: true do
-          %i.icon-calendar
+    = link_back_to_index
+    -#= link_to devices_path, class: 'btn-link' do
+    -#  %i.icon-chevron-left
+      -#= t '.back', default: t("helpers.links.back")
+    -#= t '.title', default: model_class.model_name.human
+    = @device.type_name
+    -#- if current_user.admin?
+    %small
+      = link_to history_device_path(@device), style: "text-decoration:none;", remote: true do
+        %i.icon-calendar
           
   %p= timestamp_string_for @device
+  = link_to device_path(@device, format: 'pdf'), target: '_blank', class: 'btn btn-info' do
+    %i.icon-print
+    = t 'ticket.link'
+  = link_to '#', target: '_blank', class: 'btn btn-info' do
+    %i.icon-file
+    = t 'agreement'
 
+%p
+  %strong= model_class.human_attribute_name(:serial_number) + ':'
+  %br
+  = @device.serial_number
 %p
   %strong= model_class.human_attribute_name(:ticket_number) + ':'
   %br
@@ -17,10 +32,6 @@
   %strong= model_class.human_attribute_name(:client_id) + ':'
   %br
   = @device.client.name_phone
-%p
-  %strong= model_class.human_attribute_name(:device_type_id) + ':'
-  %br
-  = @device.type_name
 %p
   %strong= model_class.human_attribute_name(:comment) + ':'
   %br
@@ -38,8 +49,8 @@
       %th= DeviceTask.human_attribute_name :done_at
       %th= DeviceTask.human_attribute_name :created_at
       %th= DeviceTask.human_attribute_name :updated_at
-      - if current_user.admin?
-        %th
+      -#- if current_user.admin?
+      %th
   %tbody
     - @device.device_tasks.ordered.each do |device_task|
       %tr{class: row_class_for_task(device_task)}
@@ -48,16 +59,21 @@
           %p.device_comment_tooltip{'data-title' => device_task.comment}
             = h device_task.comment.truncate(30, separator: ' ')
         %td= device_task.task_duration
-        %td= device_task.cost
+        %td.align_right= device_task.cost
         %td= l device_task.done_at, format: :long_d unless device_task.done_at.blank?
         %td= l device_task.created_at, format: :long_d
         %td= l device_task.updated_at, format: :long_d
-        - if current_user.admin?
-          %td{style: "background:none;"}
-            = link_to history_device_task_path(@device, device_task), style: "text-decoration:none;", remote: true do
-              %i.icon-calendar
+        -#- if current_user.admin?
+        %td{style: "background:none;"}
+          = link_to history_device_task_path(@device, device_task), style: "text-decoration:none;", remote: true do
+            %i.icon-calendar
+  %tfoot
+    %tr
+      %td{colspan: 3}= t 'total'
+      %td.align_right= @device.tasks_cost
+      %td{colspan: 4}
 
 .form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), devices_path, :class => 'btn'
+  -#= link_to t('.back', :default => t("helpers.links.back")), devices_path, :class => 'btn'
   = link_to t('.edit', :default => t("helpers.links.edit")), edit_device_path(@device), :class => 'btn'
   = link_to t('.destroy', :default => t("helpers.links.destroy")), device_path(@device), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

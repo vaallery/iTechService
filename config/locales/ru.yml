@@ -257,4 +257,9 @@ ru:
     errors:
       <<: *errors
 
+  ticket:
+    contacts1: 'Для дополнительной информации звоните по:'
+    contacts2: 'xxxxxxx'
+    link: Талон
+
   phone_placeholder: "6, 7, 10 или 11 цифр"
