@@ -8,7 +8,7 @@ class DeviceTask < ActiveRecord::Base
   scope :ordered, joins(:task).order("done asc, tasks.priority desc")
   scope :done, where(done: true)
   scope :pending, where(done: false)
-  scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location.id},
+  scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id},
                                                                 tasks: {role: user.role}) }
   
   after_initialize {|dt| dt.cost = task_cost}

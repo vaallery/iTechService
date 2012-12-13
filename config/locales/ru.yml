@@ -1,13 +1,13 @@
 ru:
   date:
     abbr_day_names:
-    - Вс
     - Пн
     - Вт
     - Ср
     - Чт
     - Пт
     - Сб
+    - Вс
     abbr_month_names:
     - 
     - янв.
@@ -258,8 +258,16 @@ ru:
       <<: *errors
 
   ticket:
-    contacts1: 'Для дополнительной информации звоните по:'
-    contacts2: 'xxxxxxx'
+    address1: 'г.Владивосток,'
+    address2: 'Океанский проспект, 90'
+    contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
+    email: 'e-mail: info@itechstore.ru'
     link: Талон
+    notice: 'Сохраняйте этот талон до получения Вашего устройства'
+    operations_list: 'Список операций:'
+    schedule1: 'Пн-Пт: с 10 до 21'
+    schedule2: 'Сб: с 12 до 21'
+    schedule3: 'Вс - выходной'
+    site: 'www.itechstore.ru'
 
   phone_placeholder: "6, 7, 10 или 11 цифр"

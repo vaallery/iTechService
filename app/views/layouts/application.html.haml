@@ -32,8 +32,7 @@
               %li{class: nav_state_for('users')}= link_to "Users", users_path if can? :manage, User
             - if user_signed_in?
               %ul.nav.pull-right
-                %li
-                  %a= current_user.username
+                %li= profile_link
                 %li
                   = link_to destroy_user_session_path, method: :delete do
                     %i.icon-signout

@@ -24,7 +24,8 @@ doc/
 .rvmrc*
 .project
 .sass-cache/
-public/assets/
+/public/assets/
+/uploads
 .idea/*
 .powrc
 .idea/misc.xml

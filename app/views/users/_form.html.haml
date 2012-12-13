@@ -1,9 +1,56 @@
+-#= simple_form_for @user, :html => { :class => 'form-horizontal span5' }, defaults: {input_html: {class: 'span11'}} do |f|
 = simple_form_for @user, :html => { :class => 'form-horizontal' } do |f|
-  = f.input :username
-  = f.input :role, collection: Role::ROLES, value_method: :to_s, label_method: :humanize
-  = f.association :location, label_method: :full_name
-  = f.input :password
-  = f.input :password_confirmation
+
+  %ul.nav.nav-tabs
+    %li= link_to t("info"), "#info_tab", 'data-toggle' => 'tab'
+    %li.active= link_to t('shedule'), '#schedule_tab', 'data-toggle' => 'tab'
+    %li= link_to t("account"), "#account_tab", 'data-toggle' => 'tab'
+
+  .tab-content
+    #info_tab.tab-pane
+      .control-group
+        %label.control-label= User.human_attribute_name :photo
+        #user_photo_fields.controls
+          = image_tag f.object.photo.medium.url if f.object.photo?
+          = f.file_field :photo
+          = f.hidden_field :photo_cache
+          %label
+            = f.check_box :remove_photo
+            = t 'remove_photo'
+
+      = f.input :surname
+      = f.input :name
+      = f.input :patronymic
+      = f.input :birthday, input_html: { class: 'date_field' }
+      = f.input :hiring_date, input_html: { class: 'date_field' }
+      -#= f.input :salary_date, input_html: { class: 'date_field' }
+      = f.input :prepayment
+
+    #schedule_tab.tab-pane.active
+      %table#schedule_table.table.table-bordered.table-condensed
+        %thead
+          %tr
+            %th
+            - ('00'..'23').each do |h|
+              %th= h
+        %tbody
+          - (1..7).each do |day|
+            %tr.schedule_day{day: day}
+              %td
+                %strong= t('date.abbr_day_names')[day-1]
+              - (0..23).each do |hour|
+                %td.schedule_hour{class: schedule_hour_class_for(f.object, day, hour), day: day, hour: hour}
+      #log
+      = f.fields_for :schedule_days do |ff|
+        = ff.text_field :hours, class: "schedule_day_#{ff.object.day}"
+        %br
+
+    #account_tab.tab-pane
+      = f.input :username
+      = f.input :role, collection: Role::ROLES, value_method: :to_s, label_method: :humanize
+      = f.association :location, label_method: :full_name
+      = f.input :password
+      = f.input :password_confirmation
   .form-actions
     -#= link_to t('.cancel', :default => t("helpers.links.cancel")), users_path, :class => 'btn'
-    = f.button :submit, :class => 'btn-primary'
+    = f.button :submit, class: 'btn-primary'

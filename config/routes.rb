@@ -5,6 +5,7 @@ ItechService::Application.routes.draw do
   root to: 'dashboard#index'
 
   resources :users
+  match 'profile' => 'users#profile', via: 'get'#, as: 'profile'
 
   resources :clients do
     get :check_phone_number, on: :collection

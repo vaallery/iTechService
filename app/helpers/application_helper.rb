@@ -105,5 +105,12 @@ module ApplicationHelper
   def human_date date
     date.present? ? l(date, format: :long_d) : ''
   end
+
+  def profile_link
+    icon_class = current_user.admin? ? 'icon-user-md' : 'icon-user'
+    link_to profile_path do
+      ("<i class='#{icon_class}'></i>" + current_user.username).html_safe
+    end
+  end
   
 end

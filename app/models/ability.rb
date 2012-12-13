@@ -6,9 +6,9 @@ class Ability
     #
     user ||= User.new # guest user (not logged in)
     if user.admin?
-      #can :manage, :all
-      can :manage, Device
-      cannot :remove_device_tasks, Device
+      can :manage, :all
+      #can :manage, Device
+      #cannot :remove_device_tasks, Device
     else
       if user.software?
         can :receive, Device

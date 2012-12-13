@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121203084934) do
+ActiveRecord::Schema.define(:version => 20121212071826) do
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -53,12 +53,14 @@ ActiveRecord::Schema.define(:version => 20121203084934) do
     t.datetime "done_at"
     t.string   "serial_number"
     t.integer  "location_id"
+    t.integer  "user_id"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
   add_index "devices", ["location_id"], :name => "index_devices_on_location_id"
   add_index "devices", ["ticket_number"], :name => "index_devices_on_ticket_number"
+  add_index "devices", ["user_id"], :name => "index_devices_on_user_id"
 
   create_table "history_records", :force => true do |t|
     t.integer  "user_id"
@@ -79,6 +81,16 @@ ActiveRecord::Schema.define(:version => 20121203084934) do
   add_index "history_records", ["old_value"], :name => "index_history_records_on_old_value"
   add_index "history_records", ["user_id"], :name => "index_history_records_on_user_id"
 
+  create_table "karmas", :force => true do |t|
+    t.boolean  "good"
+    t.text     "comment"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "karmas", ["user_id"], :name => "index_karmas_on_user_id"
+
   create_table "locations", :force => true do |t|
     t.string   "name"
     t.string   "ancestry"
@@ -87,6 +99,17 @@ ActiveRecord::Schema.define(:version => 20121203084934) do
   end
 
   add_index "locations", ["ancestry"], :name => "index_locations_on_ancestry"
+
+  create_table "schedule_days", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "day"
+    t.string   "hours"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "schedule_days", ["day"], :name => "index_schedule_days_on_day"
+  add_index "schedule_days", ["user_id"], :name => "index_schedule_days_on_user_id"
 
   create_table "tasks", :force => true do |t|
     t.string   "name"
@@ -115,6 +138,14 @@ ActiveRecord::Schema.define(:version => 20121203084934) do
     t.string   "authentication_token"
     t.string   "email",                  :default => ""
     t.integer  "location_id"
+    t.string   "photo"
+    t.string   "surname"
+    t.string   "name"
+    t.string   "patronymic"
+    t.date     "birthday"
+    t.date     "hiring_date"
+    t.date     "salary_date"
+    t.string   "prepayment"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

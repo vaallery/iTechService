@@ -52,6 +52,7 @@ class DevicesController < ApplicationController
   end
 
   def create
+    params[:device].merge! user_id: current_user.id
     @device = Device.new(params[:device])
 
     respond_to do |format|
