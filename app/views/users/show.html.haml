@@ -23,7 +23,19 @@
       %dd= @user.prepayment
 
   #schedule_tab.tab-pane
-
+    %table.table.table-bordered.table-condensed
+      %thead
+        %tr
+          %th
+          - ('00'..'23').each do |h|
+            %th= h
+      %tbody
+        - (1..7).each do |day|
+          %tr{day: day}
+            %td
+              %strong= t('date.abbr_day_names')[day-1]
+            - (0..23).each do |hour|
+              %td{class: schedule_hour_class_for(@user, day, hour), day: day, hour: hour}
 
   #account_tab.tab-pane
     %dl.dl-horizontal

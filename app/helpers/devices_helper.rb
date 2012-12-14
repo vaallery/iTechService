@@ -23,7 +23,7 @@ module DevicesHelper
 
   def device_moved_at device
     if (rec = device.history_records.where(column_name: 'location_id').order('updated_at desc').first).present?
-      human_date rec.updated_at
+      human_datetime rec.updated_at
     else
       nil
     end

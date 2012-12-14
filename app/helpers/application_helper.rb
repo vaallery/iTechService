@@ -103,6 +103,10 @@ module ApplicationHelper
   end
 
   def human_date date
+    date.present? ? l(date, format: :default) : ''
+  end
+
+  def human_datetime date
     date.present? ? l(date, format: :long_d) : ''
   end
 
