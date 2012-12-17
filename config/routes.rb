@@ -4,7 +4,9 @@ ItechService::Application.routes.draw do
 
   root to: 'dashboard#index'
 
-  resources :users
+  resources :users do
+    get :duty_calendar, on: :member
+  end
   match 'profile' => 'users#profile', via: 'get'#, as: 'profile'
 
   resources :clients do

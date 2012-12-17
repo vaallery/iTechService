@@ -1,13 +1,12 @@
--#= simple_form_for @user, :html => { :class => 'form-horizontal span5' }, defaults: {input_html: {class: 'span11'}} do |f|
 = simple_form_for @user, :html => { :class => 'form-horizontal user_form' } do |f|
 
   %ul.nav.nav-tabs
-    %li.active= link_to t("info"), "#info_tab", 'data-toggle' => 'tab'
-    %li= link_to t('shedule'), '#schedule_tab', 'data-toggle' => 'tab'
+    %li= link_to t("info"), "#info_tab", 'data-toggle' => 'tab'
+    %li.active= link_to t('shedule'), '#schedule_tab', 'data-toggle' => 'tab'
     %li= link_to t("account"), "#account_tab", 'data-toggle' => 'tab'
 
   .tab-content
-    #info_tab.tab-pane.active
+    #info_tab.tab-pane
       .control-group
         %label.control-label= User.human_attribute_name :photo
         #user_photo_fields.controls
@@ -21,12 +20,14 @@
       = f.input :surname
       = f.input :name
       = f.input :patronymic
+      -#= date_field f, :birthday
+      -#= date_field f, :hiring_date
       = f.input :birthday, input_html: { class: 'date_field' }
       = f.input :hiring_date, input_html: { class: 'date_field' }
       -#= f.input :salary_date, input_html: { class: 'date_field' }
       = f.input :prepayment
 
-    #schedule_tab.tab-pane
+    #schedule_tab.tab-pane.active
       %table#schedule_table.table.table-bordered.table-condensed
         %thead
           %tr
@@ -43,7 +44,14 @@
 
       = f.fields_for :schedule_days do |ff|
         = ff.hidden_field :hours, class: "schedule_day_#{ff.object.day}"
-        %br
+
+      #duty_days
+        = render 'calendar'
+
+        #duty_days_fields
+          = f.fields_for :duty_days do |ff|
+            = ff.hidden_field :day
+            = ff.hidden_field(:_destroy)
 
     #account_tab.tab-pane
       = f.input :username

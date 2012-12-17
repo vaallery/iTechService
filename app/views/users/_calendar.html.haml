@@ -1,0 +1,44 @@
+- @calendar_month ||= Date.current.beginning_of_month
+- days = calendar_month_days(@calendar_month).in_groups_of(7)
+#calendar{class: params[:action] == 'edit' ? 'editable' : ''}
+  %table.table.table-bordered.table-condensed
+    %caption
+      %h4
+        = t 'duty_days'
+    %thead
+      %tr
+        %th{colspan: 8}
+          %ul.pager
+            %li.previous
+              = link_to duty_calendar_user_path(@user, date: @calendar_month.prev_month), remote: true do
+                &larr;
+            %li
+              %span= @calendar_month.strftime "%B %Y"
+            %li.next
+              = link_to duty_calendar_user_path(@user, date: @calendar_month.next_month), remote: true do
+                &rarr;
+
+      %tr
+        %th
+        - t('date.abbr_day_names').each do |day|
+          %th
+            %strong= day
+    %tbody
+      - days.each_index do |i|
+        %tr
+          %td
+            %strong= i+1
+          - days[i].each do |day|
+            %td{class: calendar_day_class(@user, day, @calendar_month.month), date: day}
+              - if day.today?
+                %span.badge.badge-info
+                  = day.day
+              - else
+                = day.day
+    %tfoot
+      - next_other_duties(@user, Date.current).each do |duty_day|
+        %tr
+          %td{colspan: 2}
+            = duty_day.day.strftime '%d.%m.%y'
+          %td{colspan: 6}
+            = duty_day.user.full_name.blank? ? duty_day.user.username : duty_day.user.full_name

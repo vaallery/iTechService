@@ -83,4 +83,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def duty_calendar
+    @calendar_month = params[:date].blank? ? Date.current : params[:date].to_date
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
 end

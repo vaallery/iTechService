@@ -116,5 +116,12 @@ module ApplicationHelper
       ("<i class='#{icon_class}'></i>" + current_user.username).html_safe
     end
   end
-  
+
+  def date_field form, attr
+    content_tag(:div, class: 'input-append') do
+      form.text_field(attr, class: 'span5') +
+          link_to("<i class='icon-calendar'></i>".html_safe, '#', class: 'btn datepicker')
+    end
+  end
+
 end
