@@ -1,0 +1,24 @@
+= hidden_field_tag :direction, params[:direction]
+= hidden_field_tag :sort, params[:sort]
+- if @infos.any?
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th= sortable 'id', Info.human_attribute_name(:id)
+        %th= sortable 'title', Info.human_attribute_name(:title)
+        %th= sortable 'created_at', Info.human_attribute_name(:created_at)
+        %th
+    %tbody
+      - @infos.each do |info|
+        %tr
+          %td= link_to info.id, info_path(info)
+          %td= link_to info.title, info_path(info)
+          %td= human_datetime info.created_at
+          %td.btn-group
+            = link_to_edit info
+            = link_to_destroy info
+
+  = paginate @infos
+
+- else
+  = render 'shared/empty'

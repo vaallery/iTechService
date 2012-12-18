@@ -1,0 +1,5 @@
+.page-header
+  %h1
+    = link_back_to_index
+    = t '.title', default: t('helpers.titles.new', model: Info.model_name.human, default: "New #{Info.model_name.human}")
+= render partial: "form"

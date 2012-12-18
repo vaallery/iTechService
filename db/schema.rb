@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121214045815) do
+ActiveRecord::Schema.define(:version => 20121218110854) do
+
+  create_table "ckeditor_assets", :force => true do |t|
+    t.string   "data_file_name",                  :null => false
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.integer  "assetable_id"
+    t.string   "assetable_type",    :limit => 30
+    t.string   "type",              :limit => 30
+    t.integer  "width"
+    t.integer  "height"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
 
   create_table "clients", :force => true do |t|
     t.string   "name"
@@ -90,6 +106,15 @@ ActiveRecord::Schema.define(:version => 20121214045815) do
   add_index "history_records", ["old_value", "new_value"], :name => "index_history_records_on_old_value_and_new_value"
   add_index "history_records", ["old_value"], :name => "index_history_records_on_old_value"
   add_index "history_records", ["user_id"], :name => "index_history_records_on_user_id"
+
+  create_table "infos", :force => true do |t|
+    t.string   "title",      :null => false
+    t.text     "content",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "infos", ["title"], :name => "index_infos_on_title"
 
   create_table "karmas", :force => true do |t|
     t.boolean  "good"

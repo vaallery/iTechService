@@ -44,6 +44,16 @@ class Fakeout
     }
   end
 
+  def build_infos
+    info_time = fake_time_from 1.year.ago
+    {
+      created_at: info_time,
+      updated_at: info_time,
+      title: Faker::Lorem.sentence(1+rand(5)).chop,
+      content: "<p>#{Faker::Lorem.paragraph(1).chop}</p>"
+    }
+  end
+
   # in this example i'm faking out time - like Marty McFly!
   # def build_question
     # question_time = fake_time_from(1.year.ago)
@@ -138,6 +148,16 @@ class Fakeout
     post_fake
     puts "Done, I Faked it!"
   end
+
+  def fake_infos
+    if respond_to? "build_infos"
+      1.upto 50 do
+        attributes = build_infos #send "build_infos"
+        Info.create! attributes if attributes and attributes.present?
+      end
+      puts "Done, I Faked it!"
+    end
+  end
   
   def self.prompt
     puts "Really? This will clean all #{MODELS.map(&:pluralize).join(', ')} from your #{RAILS_ENV} database y/n? "
@@ -218,4 +238,10 @@ namespace :fakeout do
   task :large, [:no_prompt] => :clean do |t, args|
     Fakeout.new(:large).fakeout
   end
+
+  desc "fake out INFOS"
+  task :infos do |t, args|
+    Fakeout.new(:small).fake_infos
+  end
+
 end

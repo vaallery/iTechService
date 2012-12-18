@@ -1,4 +1,5 @@
-class Ability
+class
+Ability
   include CanCan::Ability
 
   def initialize(user)
@@ -14,6 +15,7 @@ class Ability
         can :receive, Device
         can :manage, [Device, Client]
       end
+      can :read, Info
       can :update, Device
       cannot :update, DeviceTask
       cannot :change_location, Device, new_record?: true

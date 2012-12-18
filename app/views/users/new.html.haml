@@ -1,6 +1,5 @@
-- model_class = User
 .page-header
   %h1
     = link_back_to_index
-    =t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human, :default => "New #{model_class.model_name.human}")
-= render :partial => "form"
+    =t '.title', default: t('helpers.titles.new', model: User.model_name.human, default: "New #{User.model_name.human}")
+= render partial: "form"

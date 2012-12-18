@@ -9,7 +9,7 @@
         %th= User.human_attribute_name(:username)
         %th= User.human_attribute_name(:role)
         %th= User.human_attribute_name(:created_at)
-        %th=t '.actions', :default => t("helpers.actions")
+        %th
     %tbody
       - @users.each do |user|
         %tr

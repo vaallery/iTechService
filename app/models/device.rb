@@ -23,6 +23,11 @@ class Device < ActiveRecord::Base
   scope :done, where('devices.done_at IS NOT NULL')
   scope :pending, where(done_at: nil)
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
+
+  after_initialize do |device|
+    device.location_id ||= User.current.location_id
+    device.user_id ||= User.current.id
+  end
   
   def type_name
     device_type.try :name

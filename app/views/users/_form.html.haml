@@ -1,12 +1,12 @@
-= simple_form_for @user, :html => { :class => 'form-horizontal user_form' } do |f|
+= simple_form_for @user, html: { class: 'form-horizontal user_form' } do |f|
 
   %ul.nav.nav-tabs
-    %li= link_to t("info"), "#info_tab", 'data-toggle' => 'tab'
-    %li.active= link_to t('shedule'), '#schedule_tab', 'data-toggle' => 'tab'
+    %li.active= link_to t("info"), "#info_tab", 'data-toggle' => 'tab'
+    %li= link_to t('shedule'), '#schedule_tab', 'data-toggle' => 'tab'
     %li= link_to t("account"), "#account_tab", 'data-toggle' => 'tab'
 
   .tab-content
-    #info_tab.tab-pane
+    #info_tab.tab-pane.active
       .control-group
         %label.control-label= User.human_attribute_name :photo
         #user_photo_fields.controls
@@ -27,7 +27,7 @@
       -#= f.input :salary_date, input_html: { class: 'date_field' }
       = f.input :prepayment
 
-    #schedule_tab.tab-pane.active
+    #schedule_tab.tab-pane
       %table#schedule_table.table.table-bordered.table-condensed
         %thead
           %tr

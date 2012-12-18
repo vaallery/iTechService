@@ -1,13 +1,14 @@
 .page-header
   #news
-    %h3= t 'news'
+    %h3= link_to t('news'), infos_path
+    #news_table= render 'infos/table_read'
 %ul.nav.nav-tabs
-  %li= link_to t("info"), "#info_tab", 'data-toggle' => 'tab'
-  %li.active= link_to t('shedule'), '#schedule_tab', 'data-toggle' => 'tab'
+  %li.active= link_to t("info"), "#info_tab", 'data-toggle' => 'tab'
+  %li= link_to t('shedule'), '#schedule_tab', 'data-toggle' => 'tab'
   %li= link_to t("account"), "#account_tab", 'data-toggle' => 'tab'
 
 .tab-content
-  #info_tab.tab-pane
+  #info_tab.tab-pane.active
     %dl.dl-horizontal
 
       %dt= image_tag @user.photo.medium.url if @user.photo?
@@ -24,7 +25,7 @@
       %dt= User.human_attribute_name :prepayment
       %dd= @user.prepayment
 
-  #schedule_tab.tab-pane.active
+  #schedule_tab.tab-pane
     %table.schedule_table.table.table-bordered.table-condensed
       %thead
         %tr

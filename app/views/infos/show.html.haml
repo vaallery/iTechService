@@ -1,0 +1,12 @@
+.page-header
+  %h1
+    = link_back_to_index
+    = @info.title
+    %small.muted= "[#{human_datetime @info.created_at}]"
+
+= @info.content.html_safe
+
+- if can? :manage, Info
+  .form-actions
+    = link_to t('.edit', default: t("helpers.links.edit")), edit_info_path(@info), class: 'btn'
+    = link_to t('.destroy', default: t("helpers.links.destroy")), info_path(@info), method: "delete", data: { confirm: t('.confirm', default: t("helpers.links.confirm", default: 'Are you sure?')) }, class: 'btn btn-danger'

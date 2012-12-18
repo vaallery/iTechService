@@ -1,0 +1,14 @@
+- if @infos.any?
+  %table
+    - date = nil
+    - @infos.each do |info|
+      - unless date == info.created_at.to_date
+        - date = info.created_at.to_date
+        %tr
+          %td{colspan: 1}
+            %strong= date.strftime '%d.%m.%Y'
+      %tr
+        %td.time_col
+          = info.created_at.strftime '%H:%M'
+        %td
+          = link_to info.title, info_path(info)

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   load_and_authorize_resource
+  before_filter :load_infos, only: [:show, :profile]
 
   def index
     @users = User.scoped.page params[:page]
@@ -89,6 +90,12 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  private
+
+  def load_infos
+    @infos = Info.grouped_by_date.limit 20
   end
 
 end

@@ -1,0 +1,6 @@
+= javascript_include_tag "ckeditor/init"
+= simple_form_for @info, html: { class: 'form-horizontal' } do |f|
+  = f.input :title
+  = f.input :content, as: :ckeditor, input_html: { tollbar: 'Full', width: 800, height: 400 }
+  .form-actions
+    = f.button :submit, class: 'btn-primary'

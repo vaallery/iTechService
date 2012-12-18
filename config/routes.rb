@@ -1,5 +1,9 @@
 ItechService::Application.routes.draw do
   
+  mount Ckeditor::Engine => '/ckeditor'
+
+  resources :infos
+
   devise_for :users
 
   root to: 'dashboard#index'
