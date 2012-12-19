@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :role, :username, :email, :password, :password_confirmation, :remember_me, :location_id,
-                  :surname, :name, :patronymic, :birthday, :hiring_date, :salary_date, :prepayment,
+                  :surname, :name, :patronymic, :birthday, :hiring_date, :salary_date, :prepayment, :wish,
                   :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes
 
   accepts_nested_attributes_for :schedule_days, :duty_days, allow_destroy: true, reject_if: :all_blank

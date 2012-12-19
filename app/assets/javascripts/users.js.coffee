@@ -59,6 +59,25 @@ jQuery ->
       $this.addClass 'duty'
       alert('Укороченный день!') if $this.hasClass('shortened')
 
+  $('#edit_wish_link').click (event) ->
+    $('#wish_view, #wish_edit').toggleClass 'hide'
+
+  $('#save_user_wish').click (event) ->
+    $form = $('#update_user_wish_form')
+    url = $form.attr('action') + '.json'
+    data = $form.serialize()
+    $.ajax(
+      url: url
+      data: data
+      dataType: 'json'
+      type: 'PUT'
+    ).done((result) ->
+      $("#wish_view").text result.wish
+      $("#wish_view, #wish_edit").toggleClass("hide")
+    ).fail (result, status) ->
+      alert status
+
+
 toggle_schedule_day = (el) ->
   el.toggleClass 'work_hour'
 

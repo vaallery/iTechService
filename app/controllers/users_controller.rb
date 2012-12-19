@@ -92,6 +92,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_wish
+    @user = User.find params[:id]
+
+    respond_to do |format|
+      if @user.update_attributes(wish: params[:user_wish])
+        format.json { render json: {wish: @user.wish} }
+      else
+        format.json { render json: {error: 'error'}}
+      end
+    end
+  end
+
   private
 
   def load_infos

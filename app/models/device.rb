@@ -10,7 +10,7 @@ class Device < ActiveRecord::Base
   attr_accessible :comment, :serial_number, :client, :client_id, :device_type, :device_type_id, :location_id,
                   :device_tasks_attributes, :user, :user_id
   accepts_nested_attributes_for :device_tasks
-  attr_accessible :created_at, :updated_at, :done_at
+  #attr_accessible :created_at, :updated_at, :done_at
   
   validates :ticket_number, :client, :device_type, presence: true
   validates :ticket_number, uniqueness: true

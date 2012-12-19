@@ -11,7 +11,8 @@ ItechService::Application.routes.draw do
   resources :users do
     get :duty_calendar, on: :member
   end
-  match 'profile' => 'users#profile', via: 'get'#, as: 'profile'
+  match 'profile' => 'users#profile', via: 'get'
+  match 'users/:id/update_wish' => 'users#update_wish', via: ['post', 'put'], as: 'update_wish_user'
 
   resources :clients do
     get :check_phone_number, on: :collection

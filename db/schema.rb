@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121218110854) do
+ActiveRecord::Schema.define(:version => 20121218110855) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(:version => 20121218110854) do
     t.date     "hiring_date"
     t.date     "salary_date"
     t.string   "prepayment"
+    t.text     "wish"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
