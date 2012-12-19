@@ -25,8 +25,8 @@ class Device < ActiveRecord::Base
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
 
   after_initialize do |device|
-    device.location_id ||= User.current.location_id
-    device.user_id ||= User.current.id
+    device.location_id ||= User.try(:current).try :location_id
+    device.user_id ||= User.try(:current).try :id
   end
   
   def type_name
@@ -116,14 +116,13 @@ class Device < ActiveRecord::Base
     device_tasks.sum :cost
   end
 
-  #def history_of attribute
-  #
-  #end
-  
   private
   
   def generate_ticket_number
-    self.ticket_number ||= (Device.any?) ? (Device.last.ticket_number.to_i + 1).to_s : 1.to_s
+    if self.ticket_number.blank?
+      begin number = UUIDTools::UUID.random_create.hash.to_s end while Device.exists? ticket_number: number
+      self.ticket_number = number
+    end
   end
   
   def check_device_type

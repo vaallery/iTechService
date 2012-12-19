@@ -21,6 +21,7 @@ gem 'prawn'
 gem 'carrierwave'
 gem "mini_magick"
 gem "ckeditor"
+gem 'uuidtools'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -54,14 +54,14 @@ class TicketPdf < Prawn::Document
 
   def receiver_part
     logo
-    move_up 66
+    move_up 22
     font_size 24 do
       font @font_bold
       text "№ #{@device.ticket_number}", align: :center, inlign_format: true
     end
     font @font_normal
     text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
-    move_down 30
+    move_down 20
     text @device.client_name
     move_down 5
     text @view.t('ticket.operations_list')
