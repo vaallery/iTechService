@@ -12,7 +12,8 @@
       = link_to history_device_path(@device), style: "text-decoration:none;", remote: true do
         %i.icon-calendar
           
-  %p= timestamp_string_for @device
+  %span.help-block
+    %small= timestamp_string_for @device
   = link_to device_path(@device, format: 'pdf'), target: '_blank', class: 'btn btn-info' do
     %i.icon-print
     = t 'ticket.link'
@@ -49,7 +50,6 @@
       %th= DeviceTask.human_attribute_name :done_at
       %th= DeviceTask.human_attribute_name :created_at
       %th= DeviceTask.human_attribute_name :updated_at
-      -#- if current_user.admin?
       %th
   %tbody
     - @device.device_tasks.ordered.each do |device_task|
@@ -63,7 +63,6 @@
         %td= l device_task.done_at, format: :long_d unless device_task.done_at.blank?
         %td= l device_task.created_at, format: :long_d
         %td= l device_task.updated_at, format: :long_d
-        -#- if current_user.admin?
         %td{style: "background:none;"}
           = link_to history_device_task_path(@device, device_task), style: "text-decoration:none;", remote: true do
             %i.icon-calendar
