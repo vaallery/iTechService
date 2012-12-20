@@ -14,5 +14,5 @@
     %tr
       %td{colspan: 2}= t 'total'
       %td.align_right= @device.tasks_cost
-      %td
+      %td{colspan: can?(:remove_device_tasks, f.object) ? 2 : 1}
 = link_to_add_fields t('.add_task'), '#device_tasks tbody', f, :device_tasks

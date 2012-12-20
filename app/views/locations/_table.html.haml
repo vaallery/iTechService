@@ -13,11 +13,11 @@
           %td= link_to location.id, location_path(location)
           %td= link_to location.name, location_path(location)
           %td= location.ancestors_names
-          %td=l location.created_at, format: :long_d
+          %td= human_datetime location.created_at
           %td
             .btn-group
-              = link_to_edit location
-              = link_to_destroy location
+              = link_to_edit_small location
+              = link_to_destroy_small location
 
 - else
   = render 'shared/empty'

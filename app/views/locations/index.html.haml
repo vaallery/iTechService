@@ -1,6 +1,2 @@
-- model_class = Location
-.page-header
-  %h1=t '.title', :default => model_class.model_name.human.pluralize
-  = link_to t('.new', :default => t("helpers.links.new")), new_location_path, :class => 'btn btn-primary'
-
+= auto_header_tag
 #resource_table= render 'table'

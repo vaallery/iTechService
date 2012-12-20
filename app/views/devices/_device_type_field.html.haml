@@ -1,7 +1,6 @@
 #device_type_selector
   = f.hidden_field 'device_type_id'
   .input-append.input-prepend
-    -#= text_field_tag 'device_type_name', (@device.device_type.blank? ? nil : @device.device_type.full_name), disabled: true
     .btn-group
       = link_to device_type_select_devices_path, class: 'btn', remote: true do
         %i.icon-refresh

@@ -27,6 +27,7 @@ Ability
       cannot :change_serial_number, Device
       cannot :change_device_comment, Device
       can :read, :all
+      #cannot :destroy, Device
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

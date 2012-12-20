@@ -1,7 +1,7 @@
 .page-header
   %h1
-    = t '.title', :default => Device.model_name.human.pluralize
-  = link_to t('.new', :default => t("helpers.links.new")), new_device_path, :class => 'btn btn-primary' if can? :receive, Device
+    = t '.title', default: Device.model_name.pluralize
+  = link_to_new Device if can? :receive, Device
   
 .table_filter.navbar.container
   .navbar-inner

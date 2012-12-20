@@ -1,5 +1,2 @@
-.page-header
-  %h1
-    = link_back_to_index
-    = t '.title', default: t('helpers.titles.edit', model: Info.model_name.human, default: "Edit #{Info.model_name.human}")
+= auto_header_tag
 = render partial: "form"

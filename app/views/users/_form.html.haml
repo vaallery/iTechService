@@ -2,7 +2,8 @@
 
   %ul.nav.nav-tabs
     %li.active= link_to t("info"), "#info_tab", 'data-toggle' => 'tab'
-    %li= link_to t('shedule'), '#schedule_tab', 'data-toggle' => 'tab'
+    - unless @user.new_record?
+      %li= link_to t('shedule'), '#schedule_tab', 'data-toggle' => 'tab'
     %li= link_to t("account"), "#account_tab", 'data-toggle' => 'tab'
 
   .tab-content
@@ -26,33 +27,33 @@
       = f.input :hiring_date, input_html: { class: 'date_field' }
       -#= f.input :salary_date, input_html: { class: 'date_field' }
       = f.input :prepayment
+    - unless @user.new_record?
+      #schedule_tab.tab-pane
+        = f.input :wish, input_html: {rows: 5, class: 'span7'}
+        %table#schedule_table.table.table-bordered.table-condensed
+          %thead
+            %tr
+              %th
+              - ('00'..'23').each do |h|
+                %th= h
+          %tbody
+            - (1..7).each do |day|
+              %tr.schedule_day{day: day}
+                %td
+                  %strong= t('date.abbr_day_names')[day-1]
+                - (0..23).each do |hour|
+                  %td.schedule_hour{class: schedule_hour_class_for(@user, day, hour), day: day, hour: hour}
 
-    #schedule_tab.tab-pane
-      = f.input :wish, input_html: {rows: 5, class: 'span7'}
-      %table#schedule_table.table.table-bordered.table-condensed
-        %thead
-          %tr
-            %th
-            - ('00'..'23').each do |h|
-              %th= h
-        %tbody
-          - (1..7).each do |day|
-            %tr.schedule_day{day: day}
-              %td
-                %strong= t('date.abbr_day_names')[day-1]
-              - (0..23).each do |hour|
-                %td.schedule_hour{class: schedule_hour_class_for(@user, day, hour), day: day, hour: hour}
+        = f.fields_for :schedule_days do |ff|
+          = ff.hidden_field :hours, class: "schedule_day_#{ff.object.day}"
 
-      = f.fields_for :schedule_days do |ff|
-        = ff.hidden_field :hours, class: "schedule_day_#{ff.object.day}"
+        #duty_days
+          = render 'calendar'
 
-      #duty_days
-        = render 'calendar'
-
-        #duty_days_fields
-          = f.fields_for :duty_days do |ff|
-            = ff.hidden_field :day
-            = ff.hidden_field(:_destroy)
+          #duty_days_fields
+            = f.fields_for :duty_days do |ff|
+              = ff.hidden_field :day
+              = ff.hidden_field(:_destroy)
 
     #account_tab.tab-pane
       = f.input :username
@@ -61,5 +62,4 @@
       = f.input :password
       = f.input :password_confirmation
   .form-actions
-    -#= link_to t('.cancel', :default => t("helpers.links.cancel")), users_path, :class => 'btn'
-    = f.button :submit, class: 'btn-primary'
+    = submit_button f

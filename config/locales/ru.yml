@@ -9,7 +9,7 @@ ru:
     - Сб
     - Вс
     abbr_month_names:
-    - 
+    -
     - янв.
     - февр.
     - марта
@@ -35,7 +35,7 @@ ru:
       long: ! '%d %B %Y'
       short: ! '%d %b'
     month_names:
-    - 
+    -
     - января
     - февраля
     - марта
@@ -164,9 +164,11 @@ ru:
     select:
       prompt: ! 'Выберите: '
     submit:
-      create: Создать %{model}
-      submit: Сохранить %{model}
-      update: Сохранить %{model}
+      create: "Создать %{model}"
+      update: "Сохранить %{model}"
+    button:
+      create: "Создать %{model}"
+      update: "Сохранить %{model}"
   number:
     currency:
       format:
@@ -246,7 +248,7 @@ ru:
     formats:
       default: ! '%a, %d %b %Y, %H:%M:%S %z'
       long: ! '%d %B %Y, %H:%M'
-      long_d: ! '%d.%m.%Y %H:%M' 
+      long_d: ! '%d.%m.%Y %H:%M'
       short: ! '%d %b, %H:%M'
     pm: вечера
   # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
@@ -256,6 +258,15 @@ ru:
   activerecord:
     errors:
       <<: *errors
+
+  dashboard:
+    new_device: Новый девайс
+    new_info: Создать новость
+    new_user: Новый пользователь
+
+  device:
+    moved_at: Перемёщен в
+    moved_by: Переместил(а)
 
   ticket:
     address1: 'г.Владивосток,'
@@ -270,4 +281,7 @@ ru:
     schedule3: 'Вс - выходной'
     site: 'www.itechstore.ru'
 
+  create: Создать
   phone_placeholder: "6, 7, 10 или 11 цифр"
+  save: Сохранить
+  update: Сохранить

@@ -1,4 +1,4 @@
-= simple_form_for @location, :html => { :class => 'form-horizontal' } do |f|
+= simple_form_for @location, html: { class: 'form-horizontal' } do |f|
 
   = f.input :name, autofocus: true
 
@@ -6,5 +6,4 @@
     = choose_location_for f
 
   .form-actions
-    = f.button :submit, :class => 'btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), locations_path, :class => 'btn'
+    = submit_button f

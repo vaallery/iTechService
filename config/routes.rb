@@ -20,9 +20,9 @@ ItechService::Application.routes.draw do
 
   resources :device_types, except: [:new, :edit]
 
-  resources :tasks
+  resources :tasks, except: :show
 
-  resources :locations
+  resources :locations, except: :show
   
   resources :devices do
     get :autocomplete_device_type_name, on: :collection

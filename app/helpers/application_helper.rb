@@ -5,10 +5,9 @@ module ApplicationHelper
     fields = f.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
       render(association.to_s.singularize + "_fields", f: builder, index: "new_#{association}", options: options)
     end
-    name = "<i class='icon-plus'>" + ' ' + name + '</i>'
-    link_to '#', class: 'add_fields btn-mini btn-success btn', 
+    link_to '#', class: 'add_fields btn-mini btn-success btn',
         data: { selector: append_to_selector, association: association, content: (fields.gsub('\n', '')) } do
-      name.html_safe
+      icon_tag(:plus) + name
     end
   end
 
@@ -20,7 +19,7 @@ module ApplicationHelper
   end
 
   def link_back_to_index
-    link_to ("<i class='icon-chevron-left'></i>").html_safe, url_for(action: 'index', controller: params[:controller]), style: "text-decoration:none;"
+    link_to icon_tag('chevron-left'), url_for(action: 'index', controller: controller_name), style: "text-decoration:none;"
   end
 
   def sortable(column, title = nil)
@@ -35,13 +34,13 @@ module ApplicationHelper
       icon_name = 'sort'
       direction = 'asc'
     end
-    title = "#{title} <i class='icon-#{icon_name}'></i>".html_safe
+    title = "#{title} #{icon_tag(icon_name)}".html_safe
     link_to title, params.merge(sort: column, direction: direction, page: nil), {class: css_class, remote: false}
   end
   
   def search_button
     button_tag type: 'submit', class: "btn btn-info" do
-      name = sanitize "<i class='icon-search icon-white'></i> #{t(:search)}"
+      icon_tag(:search) + t(:search)
     end
   end
   
@@ -51,36 +50,75 @@ module ApplicationHelper
   end
   
   def nav_state_for controller
-    params[:controller] == controller ? 'active' : ''
+    controller_name == controller ? 'active' : ''
+  end
+
+  def link_to_new object_class, name = nil, options = {}
+    options.merge! class: 'btn btn-success btn-large'
+    name ||= t '.new', default: t("helpers.links.new")
+    link_to url_for(controller: object_class.name.tableize, action: 'new'), options do
+      icon_tag(:file) + name
+    end
   end
   
   def link_to_show object, options = {}
-    options.merge! class: 'btn btn-small'
-    link_to(url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options) do
-      "<i class='icon-eye-open'></i>".html_safe
+    options.merge! class: 'btn'
+    name = t '.edit', default: t("helpers.links.edit")
+    link_to url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options do
+      icon_tag(:eye) + name
     end
   end
   
   def link_to_edit object, options = {}
-    options.merge! class: 'btn btn-small'
-    link_to(url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options) do
-      "<i class='icon-edit'></i>".html_safe
+    options.merge! class: 'btn'
+    name = t '.edit', default: t("helpers.links.edit")
+    link_to url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options do
+      icon_tag(:edit) + name
     end
   end
-  
+
   def link_to_destroy object, options = {}
+    options.merge! class: 'btn btn-danger', method: 'delete',
+        data: {confirm: t('helpers.links.confirm', default: 'Are you sure?')}
+    name = t '.destroy', default: t("helpers.links.destroy")
+    link_to url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options do
+      icon_tag(:trash) + name
+    end
+  end
+
+  def submit_button form, options = {}
+    options.merge! class: 'submit_button btn btn-primary', type: 'submit'
+    model_name = form.object.class.model_name
+    human_model_name = model_name.human
+    action = form.object.new_record? ? 'create' : 'update'
+    name = t "helpers.button.#{model_name}.#{action}", model: human_model_name,
+             default: t("helpers.button.#{action}", model: human_model_name, default: t(action, default: 'Save'))
+    button_tag options do
+      icon_tag(:save) + name
+    end
+  end
+
+  def link_to_show_small object, options = {}
+    options.merge! class: 'btn btn-small'
+    link_to icon_tag('eye-open'), url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options
+  end
+
+  def link_to_edit_small object, options = {}
+    options.merge! class: 'btn btn-small'
+    link_to icon_tag(:edit), url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options
+  end
+
+  def link_to_destroy_small object, options = {}
     options.merge! class: 'btn btn-small btn-danger', method: 'delete',
         data: {confirm: t('helpers.links.confirm', default: 'Are you sure?')}
-    link_to(url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options) do
-      "<i class='icon-trash'></i>".html_safe
-    end
+    link_to icon_tag(:trash), url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options
   end
-  
+
   def human_history_value rec #value, type
     case rec.column_type
     when 'boolean'
-      icon_class = rec.new_value == 't' ? 'icon-check' : 'icon-check-empty'
-      val = "<i class=#{icon_class}></i>"
+      icon_class = rec.new_value == 't' ? 'check' : 'check-empty'
+      val = icon_tag icon_class
     when 'integer'
       case rec.column_name
       when 'client_id'
@@ -111,16 +149,46 @@ module ApplicationHelper
   end
 
   def profile_link
-    icon_class = current_user.admin? ? 'icon-user-md' : 'icon-user'
-    link_to profile_path do
-      ("<i class='#{icon_class}'></i>" + current_user.username).html_safe
-    end
+    icon_class = current_user.admin? ? 'user-md' : 'user'
+    link_to icon_tag(icon_class) + current_user.username, profile_path
   end
 
   def date_field form, attr
     content_tag(:div, class: 'input-append') do
       form.text_field(attr, class: 'span5') +
-          link_to("<i class='icon-calendar'></i>".html_safe, '#', class: 'btn datepicker')
+          link_to(icon_tag(:calendar), '#', class: 'btn datepicker')
+    end
+  end
+
+  def icon_tag name, type = nil
+    white_class = type.to_s == 'white' ? 'icon-white' : ''
+    "<i class='icon-#{name.to_s} #{white_class}'></i> ".html_safe
+  end
+
+  def title_for model_class
+    case action_name
+      when 'index'
+        t '.title', default: model_class.model_name.human.pluralize
+      when 'show'
+        t '.title', default: model_class.model_name.human
+      else
+        t '.title', default: t("helpers.titles.#{action_name}", model: model_class.model_name.human,
+                               default: "#{action_name.humanize} #{model_class.model_name.human}")
+    end
+  end
+
+  def auto_title
+    title_for controller_name.classify.constantize
+  end
+
+  def auto_header_tag
+    model_class = controller_name.classify.constantize
+    content_tag :div, class: 'page-header' do
+      if action_name == 'index'
+        content_tag(:h1, auto_title) + link_to_new(model_class)
+      else
+        content_tag :h1, link_back_to_index + auto_title
+      end
     end
   end
 

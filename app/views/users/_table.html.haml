@@ -18,8 +18,9 @@
           %td= user.role
           %td=l user.created_at, format: :long_d
           %td.btn-group
-            = link_to_edit user
-            = link_to_destroy user
+            = link_to_show_small user
+            = link_to_edit_small user
+            = link_to_destroy_small user
 
   = paginate @users
   

@@ -15,8 +15,9 @@
           %td= link_to info.title, info_path(info)
           %td= human_datetime info.created_at
           %td.btn-group
-            = link_to_edit info
-            = link_to_destroy info
+            = link_to_show_small info
+            = link_to_edit_small info
+            = link_to_destroy_small info
 
   = paginate @infos
 

@@ -43,5 +43,4 @@
   = render @device.new_record? ? 'device_tasks_fields' : 'device_tasks', f: f
 
   .form-actions
-    .pull-left= link_to t('.cancel', default: t("helpers.links.cancel")), devices_path, class: 'btn'
-    .pull-right= f.button :submit, class: 'btn-primary'
+    = submit_button f

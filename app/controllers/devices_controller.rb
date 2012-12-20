@@ -5,7 +5,7 @@ class DevicesController < ApplicationController
   autocomplete :device_type, :name, full: true
   autocomplete :client, :phone_number, full: true, extra_data: [:name], display_value: :name_phone
   load_and_authorize_resource
-  skip_load_resource only: :index
+  skip_load_resource only: [:index, :history, :task_history]
   
   def index
     @devices = Device.search params

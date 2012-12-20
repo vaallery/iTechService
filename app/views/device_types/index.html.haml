@@ -1,8 +1,2 @@
 #device_types_tree
   %ul= nested_device_types device_types
--#
-  .page-header
-    %h1=t '.title', :default => DeviceType.model_name.human.pluralize
-    = link_to t('.new', :default => t("helpers.links.new")), new_device_type_path, :class => 'btn btn-primary'
-
-  #resource_table= render 'table'
