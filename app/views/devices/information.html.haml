@@ -1,0 +1,14 @@
+- if @device.present?
+  %hr
+  %dl.dl-horizontal
+    %dt= Device.human_attribute_name :client
+    %dd= @device.client_presentation
+
+    %dt= Device.human_attribute_name :device_type
+    %dd= @device.type_name
+
+    %dt= Device.human_attribute_name :serial_number
+    %dd= @device.serial_number
+
+    %dt= Device.human_attribute_name :status
+    %dd= @device.status

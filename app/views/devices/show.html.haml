@@ -28,6 +28,9 @@
   %dt= Device.human_attribute_name :comment
   %dd= @device.comment
 
+  %dt= Device.human_attribute_name :location
+  %dd= @device.location_name
+
 %table.table.table-bordered.table-condensed.table-hover
   %caption
     %h4= Device.human_attribute_name :tasks

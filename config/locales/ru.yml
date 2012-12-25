@@ -265,6 +265,9 @@ ru:
     new_user: Новый пользователь
 
   device:
+    information: Информация об устройстве
+    not_found: Устройство не найдено
+    enter_ticket_number: Укажите номер талона
     moved_at: Перемёщен в
     moved_by: Переместил(а)
 
@@ -284,4 +287,5 @@ ru:
   create: Создать
   phone_placeholder: "6, 7, 10 или 11 цифр"
   save: Сохранить
+  search: Найти
   update: Сохранить

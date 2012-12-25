@@ -4,8 +4,9 @@ class DevicesController < ApplicationController
   helper_method :sort_column, :sort_direction
   autocomplete :device_type, :name, full: true
   autocomplete :client, :phone_number, full: true, extra_data: [:name], display_value: :name_phone
-  load_and_authorize_resource
+  load_and_authorize_resource except: :check_status
   skip_load_resource only: [:index, :history, :task_history]
+  skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
   
   def index
     @devices = Device.search params
@@ -109,6 +110,20 @@ class DevicesController < ApplicationController
     else
       @device_type = DeviceType.find params[:device_type_id]
       render 'device_type_select'
+    end
+  end
+
+  def check_status
+    @device = Device.find_by_ticket_number params[:ticket_number]
+
+    respond_to do |format|
+      if @device.present?
+        format.js { render 'information' }
+        format.json { render json: @device.status_info}
+      else
+        format.js { render t('device.not_found') }
+        format.json { render json: {error: t('device.not_found')} }
+      end
     end
   end
   

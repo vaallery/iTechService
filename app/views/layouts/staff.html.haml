@@ -1,0 +1,5 @@
+- unless devise_controller?
+  = content_for :header do
+    = render 'layouts/header'
+
+= render template: 'layouts/application'

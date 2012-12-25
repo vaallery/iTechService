@@ -5,8 +5,13 @@ ItechService::Application.routes.draw do
   resources :infos
 
   devise_for :users
+  #devise_scope :user do
+  #  get 'sign_in', to: 'devise/sessions#new'
+  #end
 
   root to: 'dashboard#index'
+  match 'dashboard' => 'dashboard#index', via: 'get'
+  #match 'device_info' => 'dashboard#device_info', via: 'get'
 
   resources :users do
     get :duty_calendar, on: :member
@@ -27,11 +32,12 @@ ItechService::Application.routes.draw do
   resources :devices do
     get :autocomplete_device_type_name, on: :collection
     get :autocomplete_client_phone_number, on: :collection
-    get :history, on: :member, defaults: {format: 'js'}
-    get :device_type_select, on: :collection, defaults: {format: 'js'}
+    get :history, on: :member, defaults: { format: 'js' }
+    get :device_type_select, on: :collection, defaults: { format: 'js' }
   end
+  match 'check_device_status' => 'devices#check_status', via: 'get'
   match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: 'get',
-      as: :history_device_task, defaults: {format: 'js'}
+      as: :history_device_task, defaults: { format: 'js' }
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

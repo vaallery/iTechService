@@ -30,7 +30,11 @@ class Device < ActiveRecord::Base
   end
   
   def type_name
-    device_type.try :name
+    device_type.try :full_name
+  end
+
+  def location_name
+    location.try :full_name
   end
   
   def client_name
@@ -114,6 +118,19 @@ class Device < ActiveRecord::Base
 
   def tasks_cost
     device_tasks.sum :cost
+  end
+
+  def status
+    location_name
+  end
+
+  def status_info
+    {
+      client: client_presentation,
+      device_type: type_name,
+      serial_number: serial_number,
+      status: status
+    }
   end
 
   private
