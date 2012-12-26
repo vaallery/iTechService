@@ -69,4 +69,10 @@ ItechService::Application.configure do
   # config.action_mailer.default_url_options = { host: '' }
 
   config.assets.initialize_on_precompile = false
+
+  config.middleware.use ExceptionNotifier,
+                        email_prefix: "[!!! Exception] ",
+                        sender_address: %{"iTechService" <exception@itechservice.ru>},
+                        exception_recipients: %w{kvn@itechdevs.com}
+
 end

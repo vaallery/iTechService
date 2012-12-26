@@ -31,7 +31,7 @@ class TicketPdf < Prawn::Document
       text @view.t('ticket.schedule2'), indent_paragraphs: 70
       text @view.t('ticket.schedule3'), indent_paragraphs: 70
     end
-    move_down 20
+    move_down 10
     font_size 24 do
       font @font_bold
       text "№ #{@device.ticket_number}", align: :center, inlign_format: true
@@ -49,6 +49,7 @@ class TicketPdf < Prawn::Document
     move_down 5
     font_size 10 do
       text @view.t('ticket.notice')
+      text @view.t('ticket.check_status')
     end
   end
 

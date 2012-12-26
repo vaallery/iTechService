@@ -274,10 +274,11 @@ ru:
   ticket:
     address1: 'г.Владивосток,'
     address2: 'Океанский проспект, 90'
+    check_status: 'Вы можете проверить статус устройства по адресу: www.itechstore.ru/check.'
     contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
     email: 'e-mail: info@itechstore.ru'
     link: Талон
-    notice: 'Сохраняйте этот талон до получения Вашего устройства'
+    notice: 'Сохраняйте этот талон до получения Вашего устройства.'
     operations_list: 'Список операций:'
     schedule1: 'Пн-Пт: с 10 до 21'
     schedule2: 'Сб: с 12 до 21'

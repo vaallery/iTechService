@@ -22,6 +22,7 @@ gem 'carrierwave'
 gem "mini_magick"
 gem "ckeditor"
 gem 'uuidtools'
+gem 'exception_notification', git: 'git://github.com/alanjds/exception_notification.git'
 
 # Gems used only for assets and not required
 # in production environments by default.
