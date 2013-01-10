@@ -22,3 +22,6 @@ jQuery ->
     $('#location_value').text($(this).text())
     $('#device_location_id').val($(this).attr('location_id'))
     event.preventDefault()
+
+  $('#device_security_code_none').click (event)->
+    $('#device_security_code').val('-')

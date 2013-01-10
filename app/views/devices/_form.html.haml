@@ -28,11 +28,16 @@
       - else
         = text_field_tag :device_type, @device.device_type.try(:full_name), disabled: true, class: 'span12'
 
-  = f.input :security_code
+  .control-group
+    = f.label :security_code
+    .controls
+      .input-append
+        = f.input_field :security_code
+        = link_to t('none'), '#', id: 'device_security_code_none', class: 'btn btn-warning'
 
   = f.input :emei
 
-  = f.input :serial_number, disabled: (cannot?(:change_serial_number, @device) and cannot?(:receive, @device))
+  -#= f.input :serial_number, disabled: (cannot?(:change_serial_number, @device) and cannot?(:receive, @device))
   
   = f.input :comment, input_html: {rows: 5}, disabled: (cannot?(:change_device_comment, @device) and cannot?(:receive, @device))
 

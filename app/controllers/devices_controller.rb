@@ -39,7 +39,7 @@ class DevicesController < ApplicationController
   end
 
   def new
-    @device = Device.new
+    @device = Device.new(params[:device])
     #@device.location = current_user.location
 
     respond_to do |format|

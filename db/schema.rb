@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110061627) do
+ActiveRecord::Schema.define(:version => 20130110143351) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20130110061627) do
     t.string   "phone_number"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "card_number"
   end
 
   create_table "device_tasks", :force => true do |t|
@@ -74,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20130110061627) do
     t.integer  "user_id"
     t.string   "emei"
     t.boolean  "replaced",       :default => false
+    t.string   "security_code"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"

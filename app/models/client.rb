@@ -2,7 +2,7 @@ class Client < ActiveRecord::Base
   include ApplicationHelper
   
   has_many :devices, inverse_of: :client
-  attr_accessible :name, :phone_number
+  attr_accessible :name, :phone_number, :card_number
   
   validates :name, :phone_number, presence: true
   

@@ -7,6 +7,12 @@
   %dt= Client.human_attribute_name :phone_number
   %dd= @client.human_phone_number
 
+  %dt= Client.human_attribute_name :card_number
+
+#client_devices
+
 .form-actions
+  = link_to new_device_path(device: {client_id: @client.id}), class: 'btn' do
+    = icon_tag('plus-sign') + t('add_device')
   = link_to_edit @client
   = link_to_destroy @client
