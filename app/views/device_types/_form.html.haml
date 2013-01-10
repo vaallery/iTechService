@@ -1,0 +1,13 @@
+.well.span6
+
+  %h3= @device_type.full_name
+  - if @device_type.is_childless?
+    %hr
+    = simple_form_for @device_type, html: { class: 'form-horizontal span8', remote: true },
+                      defaults: { input_html: {class: 'span12'} } do |f|
+
+      = f.input :qty_for_replacement
+      = f.input :qty_replaced, disabled: true, as: 'string'
+
+      .control-group
+        .controls= submit_button f

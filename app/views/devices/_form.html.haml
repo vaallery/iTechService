@@ -10,7 +10,7 @@
           %span.add-on
             %i.icon-search
           = autocomplete_field_tag :client, @device.try(:client).try(:name_phone), autocomplete_client_phone_number_devices_path,
-              id_element: '#device_client_id', placeholder: 'phone number', autofocus: true
+              id_element: '#device_client_id', placeholder: 'name / phone number', autofocus: true
           = f.hidden_field :client_id
           = link_to new_client_path, id: 'new_client_link', class: 'btn', remote: true do
             %i.icon-plus
@@ -28,9 +28,22 @@
       - else
         = text_field_tag :device_type, @device.device_type.try(:full_name), disabled: true, class: 'span12'
 
+  = f.input :security_code
+
+  = f.input :emei
+
   = f.input :serial_number, disabled: (cannot?(:change_serial_number, @device) and cannot?(:receive, @device))
   
   = f.input :comment, input_html: {rows: 5}, disabled: (cannot?(:change_device_comment, @device) and cannot?(:receive, @device))
+
+  .control-group
+    = f.label :replaced
+    .controls
+      = f.input_field :replaced, disabled: true
+      %span.help-inline
+        = t('device_types.available_for_replacement') + ': '
+        %span#available_for_replacement
+          = @device.device_type.available_for_replacement unless @device.new_record?
 
   .control-group
     = f.label :location, class: 'control-label'

@@ -24,7 +24,7 @@ module LocationsHelper
   end
 
   def available_locations_for user
-    if user.admin?
+    if user.admin? or user.location.nil?
       Location.all
     else
       Location.allowed_for(user)

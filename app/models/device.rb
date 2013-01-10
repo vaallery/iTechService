@@ -7,8 +7,8 @@ class Device < ActiveRecord::Base
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
   has_many :history_records, as: :object
-  attr_accessible :comment, :serial_number, :client, :client_id, :device_type, :device_type_id, :location_id,
-                  :device_tasks_attributes, :user, :user_id
+  attr_accessible :comment, :serial_number, :emei, :client, :client_id, :device_type, :device_type_id,
+                  :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code
   accepts_nested_attributes_for :device_tasks
   #attr_accessible :created_at, :updated_at, :done_at
   
@@ -18,11 +18,14 @@ class Device < ActiveRecord::Base
   
   before_validation :generate_ticket_number
   before_validation :check_device_type
+  before_validation :check_security_code
+  after_save :update_qty_replaced
 
   scope :ordered, order("devices.done_at desc, created_at asc")#, tasks.priority desc")
   scope :done, where('devices.done_at IS NOT NULL')
   scope :pending, where(done_at: nil)
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
+  scope :replaced, where(replaced: true)
 
   after_initialize do |device|
     device.location_id ||= User.try(:current).try :location_id
@@ -133,17 +136,32 @@ class Device < ActiveRecord::Base
     }
   end
 
+  def is_iphone?
+    type_name.downcase['iphone'].present?
+  end
+
   private
-  
+
   def generate_ticket_number
     if self.ticket_number.blank?
       begin number = UUIDTools::UUID.random_create.hash.to_s end while Device.exists? ticket_number: number
       self.ticket_number = number
     end
   end
-  
+
   def check_device_type
     device_type_id = DeviceType.find_or_create_by_name(type_name).id
   end
-  
+
+  def update_qty_replaced
+    qty_replaced = Device.replaced.where(device_type_id: self.device_type_id)
+    self.device_type.update_attribute :qty_replaced, qty_replaced
+  end
+
+  def check_security_code
+    if is_iphone?
+# TODO: add validation error if security_code blank (if it absent, it should be '-')
+    end
+  end
+
 end

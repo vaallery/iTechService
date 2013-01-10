@@ -4,5 +4,8 @@
   }else{
     $('#device_device_type_id').val("#{@device_type.id}");
     $('#device_type_select_button').attr('disabled','disabled').addClass('btn-success');
+    $('#available_for_replacement').text("#{@device_type.available_for_replacement}");
+    if(#{@device_type.available_for_replacement} > 0)
+      $('#device_replaced').removeAttr('disabled');
   }
   $('#device_type_name').text("#{@device_type.full_name}");

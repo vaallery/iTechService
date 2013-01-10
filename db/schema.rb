@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121218110855) do
+ActiveRecord::Schema.define(:version => 20130110061627) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -52,9 +52,11 @@ ActiveRecord::Schema.define(:version => 20121218110855) do
 
   create_table "device_types", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "ancestry"
+    t.integer  "qty_for_replacement", :default => 0
+    t.integer  "qty_replaced",        :default => 0
   end
 
   add_index "device_types", ["ancestry"], :name => "index_device_types_on_ancestry"
@@ -64,12 +66,14 @@ ActiveRecord::Schema.define(:version => 20121218110855) do
     t.string   "ticket_number"
     t.integer  "client_id"
     t.text     "comment"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.datetime "done_at"
     t.string   "serial_number"
     t.integer  "location_id"
     t.integer  "user_id"
+    t.string   "emei"
+    t.boolean  "replaced",       :default => false
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"

@@ -4,7 +4,6 @@
 
 jQuery ->
 
-
   $.jstree._themes = "assets/jstree/"
   $('#device_types_tree')
     .bind 'create.jstree', (e, data) ->

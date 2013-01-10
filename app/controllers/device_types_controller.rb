@@ -23,13 +23,19 @@ class DeviceTypesController < ApplicationController
     end
   end
 
+  def edit
+    @device_type = DeviceType.find params[:id]
+  end
+
   def update
     @device_type = DeviceType.find(params[:id])
 
     respond_to do |format|
       if @device_type.update_attributes(params[:device_type])
+        format.js { render 'edit' }
         format.json { head :no_content }
       else
+        format.js { render 'edit' }
         format.json { render json: @device_type.errors, status: :unprocessable_entity }
       end
     end

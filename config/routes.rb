@@ -23,7 +23,7 @@ ItechService::Application.routes.draw do
     get :check_phone_number, on: :collection
   end
 
-  resources :device_types, except: [:new, :edit]
+  resources :device_types, except: [:new]
 
   resources :tasks, except: :show
 
