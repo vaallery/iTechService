@@ -154,13 +154,15 @@ class Device < ActiveRecord::Base
   end
 
   def update_qty_replaced
-    qty_replaced = Device.replaced.where(device_type_id: self.device_type_id)
-    self.device_type.update_attribute :qty_replaced, qty_replaced
+    if changed_attributes[:replaced].present? and replaced != changed_attributes[:replaced]
+      qty_replaced = Device.replaced.where(device_type_id: self.device_type_id)
+      self.device_type.update_attribute :qty_replaced, qty_replaced
+    end
   end
 
   def check_security_code
-    if is_iphone?
-# TODO: add validation error if security_code blank (if it absent, it should be '-')
+    if is_iphone? and security_code.blank?
+      errors.add :security_code, I18n.t('.security_code.should_present')
     end
   end
 

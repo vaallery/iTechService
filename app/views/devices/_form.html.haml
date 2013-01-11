@@ -34,6 +34,8 @@
       .input-append
         = f.input_field :security_code
         = link_to t('none'), '#', id: 'device_security_code_none', class: 'btn btn-warning'
+      -#= f.error :security_code
+      = f.full_error :security_code
 
   = f.input :emei
 
