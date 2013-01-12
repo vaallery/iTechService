@@ -12,7 +12,7 @@ class Device < ActiveRecord::Base
   accepts_nested_attributes_for :device_tasks
   #attr_accessible :created_at, :updated_at, :done_at
   
-  validates :ticket_number, :client, :device_type, presence: true
+  validates :ticket_number, :client, :device_type, :location, presence: true
   validates :ticket_number, uniqueness: true
   validates_associated :device_tasks
   
@@ -162,7 +162,7 @@ class Device < ActiveRecord::Base
 
   def check_security_code
     if is_iphone? and security_code.blank?
-      errors.add :security_code, I18n.t('.security_code.should_present')
+      errors.add :security_code, I18n.t('.errors.messages.empty')
     end
   end
 
