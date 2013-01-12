@@ -23,6 +23,10 @@ module LocationsHelper
     end.html_safe
   end
 
+  def available_locations
+    available_locations_for current_user
+  end
+
   def available_locations_for user
     if user.admin? or user.location.nil?
       Location.all

@@ -1,6 +1,7 @@
 :plain
   if(#{@device_type.has_children?}){
     $('#device_types_list').html("#{j(make_device_types_list(@device_type.children))}");
+    $('#device_type_select_button').dropdown('toggle');
   }else{
     $('#device_device_type_id').val("#{@device_type.id}");
     $('#device_type_select_button').attr('disabled','disabled').addClass('btn-success');

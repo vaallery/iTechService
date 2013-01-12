@@ -16,11 +16,15 @@
     = t 'agreement'
 
 %dl.dl-horizontal
-  %dt= Device.human_attribute_name :serial_number
-  %dd= @device.serial_number
 
   %dt= Device.human_attribute_name :ticket_number
   %dd= @device.ticket_number
+
+  %dt= Device.human_attribute_name :emei
+  %dd= @device.emei
+
+  %dt= Device.human_attribute_name :security_code
+  %dd= @device.security_code
 
   %dt= Device.human_attribute_name :client_id
   %dd= @device.client.name_phone
@@ -30,6 +34,9 @@
 
   %dt= Device.human_attribute_name :location
   %dd= @device.location_name
+
+  %dt= Device.human_attribute_name :serial_number
+  %dd= @device.serial_number
 
 %table.table.table-bordered.table-condensed.table-hover
   %caption
