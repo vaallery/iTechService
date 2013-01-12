@@ -12,9 +12,10 @@ jQuery ->
     event.preventDefault()
 
   $('#client_phone_number').live 'keyup', (event) ->
+    $('#check_phone_number').removeClass 'btn-success'
     count = $('#client_phone_number').val().length
     $('#phone_length').text(count)
     if count in [6,7,10,11]
-      $('#check_phone_number').removeClass('disabled')
+      $('#check_phone_number').removeClass 'disabled'
     else
-      $('#check_phone_number').addClass('disabled')
+      $('#check_phone_number').addClass 'disabled'

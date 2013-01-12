@@ -150,7 +150,7 @@ class Device < ActiveRecord::Base
   end
 
   def check_device_type
-    device_type_id = DeviceType.find_or_create_by_name(type_name).id
+    self.device_type_id = DeviceType.find_or_create_by_name(type_name).id
   end
 
   def update_qty_replaced
