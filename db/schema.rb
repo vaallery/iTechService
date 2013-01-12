@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110143351) do
+ActiveRecord::Schema.define(:version => 20130112095114) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -140,6 +140,23 @@ ActiveRecord::Schema.define(:version => 20130110143351) do
   end
 
   add_index "locations", ["ancestry"], :name => "index_locations_on_ancestry"
+
+  create_table "orders", :force => true do |t|
+    t.string   "number"
+    t.integer  "customer_id"
+    t.string   "customer_type"
+    t.string   "object_kind"
+    t.string   "object"
+    t.date     "desired_date"
+    t.string   "status"
+    t.text     "comment"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"
+  add_index "orders", ["object_kind"], :name => "index_orders_on_object_kind"
+  add_index "orders", ["status"], :name => "index_orders_on_status"
 
   create_table "schedule_days", :force => true do |t|
     t.integer  "user_id"

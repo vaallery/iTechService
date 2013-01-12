@@ -21,7 +21,7 @@
           %td
             = link_to device.type_name, device_path(device)
             %small= device.serial_number
-            %p.device_comment_tooltip{'data-title' => device.comment, style: "display:inline;"}
+            %p.device_comment_tooltip{'data-title' => device.comment}
               %i.icon-comment
           %td= h device.client.name_phone
           %td= device.location.try :full_name
@@ -30,7 +30,8 @@
             - if device.done? and device.done_at.present?
               = l device.done_at, format: :long_d
             - else
-              %span.badge{class: "badge-#{device.is_important? ? 'important' : 'info'}"}
+              %span.device_progress.badge{class: progress_badge_class_for_device(device),
+                  'data-title' => task_list_for(device)}
                 = device.progress
           %td
             .btn-group

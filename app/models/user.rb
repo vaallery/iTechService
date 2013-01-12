@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :history_records, as: :object
   has_many :schedule_days, dependent: :destroy
   has_many :duty_days, dependent: :destroy
+  has_many :orders, as: :customer
 
   mount_uploader :photo, PhotoUploader
   

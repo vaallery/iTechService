@@ -12,8 +12,12 @@ module DevicesHelper
     device.done? ? 'success' : device.is_important? ? 'error' : 'warning'
   end
 
+  def progress_badge_class_for_device device
+    badge_class = 'badge-'
+    badge_class << (device.done_tasks.count == 0 ? 'important' : 'info')
+  end
+
   def device_moved_by device
-    #debugger
     if (rec = device.history_records.where(column_name: 'location_id').order('updated_at desc').first).present?
       rec.user.username
     else
@@ -27,6 +31,16 @@ module DevicesHelper
     else
       nil
     end
+  end
+
+  def task_list_for device
+    content_tag(:ul, style: 'list-style:none; text-align:left; margin:0') do
+      list = ''
+      device.device_tasks.each do |task|
+        list << content_tag(:li, "#{icon_tag(task.done ? 'check' : 'check-empty')} #{task.task_name}")
+      end
+      list.html_safe
+    end.html_safe
   end
   
 end

@@ -7,6 +7,10 @@ jQuery ->
       task_cost.val data.cost
       
   $('.device_comment_tooltip').tooltip()
+
+  $('.device_progress').tooltip
+    placement: 'left'
+    html: true
   
   $('#history').live 'click', '.close_history', (event) ->
     $history = $('#history')
