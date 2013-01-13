@@ -1,7 +1,7 @@
 class HistoryObserver < ActiveRecord::Observer
   include DeviseHelper
   
-  observe :device, :device_task
+  observe :device, :device_task, :order, :user
   
   def after_save model
     if model.is_a? Device
@@ -11,6 +11,8 @@ class HistoryObserver < ActiveRecord::Observer
     elsif model.is_a? User
       tracked_attributes = %w[role username location_id surname name patronymic birthday hiring_date salary_date
           prepayment wish photo]
+    elsif model.is_a? Order
+      tracked_attributes = %w[status]
     end
     
     unless (changed_attributes_keys = tracked_attributes & model.changed_attributes.keys).empty?

@@ -1,0 +1,11 @@
+= simple_form_for @order, html: { class: 'form-horizontal' } do |f|
+  = f.hidden_field :customer_id
+  = f.hidden_field :customer_type
+  = f.input :number, disabled: true, input_html: { class: 'input-xlarge' }
+  = f.input :object_kind, as: :object_kind
+  = f.input :object, input_html: { class: 'input-xlarge' }
+  = f.input :comment, input_html: {rows: 5}
+  = f.input :desired_date, input_html: { class: 'date_field' }
+  = f.input :status, as: :status
+  .form-actions
+    = submit_button f

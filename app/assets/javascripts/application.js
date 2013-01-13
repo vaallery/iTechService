@@ -16,7 +16,7 @@
 //= require twitter/bootstrap
 //= require autocomplete-rails
 //= require jquery.jstree
-// require ckeditor/init
+//= require ckeditor/init
 // require jasny-bootstrap/jasny-bootstrap.min
 //= require_self
 //= require_tree .

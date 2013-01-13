@@ -11,8 +11,8 @@ class Device < ActiveRecord::Base
                   :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code
   accepts_nested_attributes_for :device_tasks
   #attr_accessible :created_at, :updated_at, :done_at
-  
-  validates :ticket_number, :client, :device_type, :location, presence: true
+
+  validates :ticket_number, :client_id, :device_type_id, :location_id, presence: true
   validates :ticket_number, uniqueness: true
   validates_associated :device_tasks
   
@@ -71,16 +71,17 @@ class Device < ActiveRecord::Base
   def self.search params
     devices = Device.includes :device_tasks, :tasks
     
-    unless (status = params[:status]).blank?
-      case status
-      when 'done' then devices = devices.done
-      when 'pending' then devices = devices.pending
-      when 'important' then devices = devices.important
-      end
+    unless (status_q = params[:status]).blank?
+      devices = devices.send status_q if %w[done pending important].include? status_q
+      #case status
+      #  when 'done' then devices = devices.done
+      #  when 'pending' then devices = devices.pending
+      #  when 'important' then devices = devices.important
+      #end
     end
 
-    unless (location = params[:location]).blank?
-      devices = devices.where devices: {location_id: location}
+    unless (location_q = params[:location]).blank?
+      devices = devices.where devices: {location_id: location_q}
     end
     
     unless (ticket_q = params[:ticket]).blank?

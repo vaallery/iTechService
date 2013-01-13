@@ -1,0 +1,38 @@
+- model_class = Order
+.page-header
+  %h1
+    = link_back_to_index
+    = @order.type_name
+    %small
+      = link_to icon_tag(:calendar), history_order_path(@order), style: "text-decoration:none;", remote: true
+
+  %span.help-block
+    %small= timestamp_string_for @order
+
+%dl.dl-horizontal
+
+  %dt= model_class.human_attribute_name :number
+  %dd= @order.number
+
+  %dt= model_class.human_attribute_name :customer
+  %dd= @order.customer_name
+
+  %dt= model_class.human_attribute_name :object_kind
+  %dd= @order.object_kind
+
+  %dt= model_class.human_attribute_name :object
+  %dd= @order.object
+
+  %dt= model_class.human_attribute_name :comment
+  %dd= @order.comment
+
+  %dt= model_class.human_attribute_name :desired_date
+  %dd= l @order.desired_date, format: :long_d
+
+  %dt= model_class.human_attribute_name :status
+  %dd= @order.status
+
+- if can? :manage, Order
+  .form-actions
+    = link_to_edit @order
+    = link_to_destroy @order

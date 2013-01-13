@@ -12,11 +12,9 @@ class LocationInput < SimpleForm::Inputs::Base
         template.content_tag(:span, nil, class: 'caret pull-right')
       end +
       template.content_tag(:ul, id: 'locations_list', class: 'dropdown-menu') do
-        list = ''
-        template.available_locations_for(user).each do |location|
-          list << template.content_tag(:li, template.link_to(location.full_name, '#', location_id: location.id))
-        end
-        template.sanitize list
+        template.available_locations_for(user).map do |location|
+          template.content_tag(:li, template.link_to(location.full_name, '#', location_id: location.id))
+        end.join.html_safe
       end
     end
     ).html_safe

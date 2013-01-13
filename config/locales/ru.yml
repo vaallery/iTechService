@@ -271,6 +271,20 @@ ru:
     moved_at: Перемёщен в
     moved_by: Переместил(а)
 
+  order:
+    object_kinds:
+      device: Техника
+      accessory: Аксессуар
+      soft: Софт
+      misc: Прочее
+      all_kinds: Все типы
+    statuses:
+      new: Новый
+      pending: Выполняется
+      done: Выполнен
+      canceled: Отменен
+      all_statuses: Все статусы
+
   ticket:
     address1: 'г.Владивосток,'
     address2: 'Океанский проспект, 90'

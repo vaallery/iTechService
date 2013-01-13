@@ -16,7 +16,7 @@
 
   = f.input :emei, input_html: {class: 'input-xlarge'}
 
-  -#= f.input :serial_number, disabled: (cannot?(:change_serial_number, @device) and cannot?(:receive, @device))
+  = f.input :serial_number, disabled: (cannot?(:change_serial_number, @device) and cannot?(:receive, @device))
   
   = f.input :comment, input_html: {rows: 5}, disabled: (cannot?(:change_device_comment, @device) and cannot?(:receive, @device))
 

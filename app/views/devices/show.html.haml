@@ -3,9 +3,8 @@
     = link_back_to_index
     = @device.type_name
     %small
-      = link_to history_device_path(@device), style: "text-decoration:none;", remote: true do
-        %i.icon-calendar
-          
+      = link_to icon_tag(:calendar), history_device_path(@device), style: "text-decoration:none;", remote: true
+
   %span.help-block
     %small= timestamp_string_for @device
   = link_to device_path(@device, format: 'pdf'), target: '_blank', class: 'btn btn-info' do
