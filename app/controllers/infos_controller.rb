@@ -5,7 +5,11 @@ class InfosController < ApplicationController
 
   def index
     if can? :manage, Info
-      @infos = Info.scoped.reorder(sort_column + ' ' + sort_direction).page(params[:page])
+      @infos = Info.ordered
+      unless sort_column.blank? and sort_direction.blank?
+        @infos = @infos.reorder(sort_column + ' ' + sort_direction)
+      end
+      @infos = @infos.page(params[:page])
     else
       @infos = Info.grouped_by_date
     end

@@ -1,19 +1,20 @@
-#navbar.navbar.navbar-static-top
-  .navbar-inner
-    .container-fluid
-      = link_to "iTech Service", root_path, class: 'brand'
-      %ul.nav
-        %li{class: nav_state_for('devices')}= link_to "Devices", devices_path
-        %li{class: nav_state_for('clients')}= link_to "Clients", clients_path
-        %li{class: nav_state_for('device_types')}= link_to "Device types", device_types_path if can? :manage, DeviceType
-        %li{class: nav_state_for('tasks')}= link_to "Tasks", tasks_path if can? :manage, Task
-        %li{class: nav_state_for('locations')}= link_to t('locations'), locations_path if can? :manage, Location
-        %li{class: nav_state_for('users')}= link_to "Users", users_path if can? :manage, User
-        %li{class: nav_state_for('infos')}= link_to 'Infos', infos_path if can? :read, Info
-        %li{class: nav_state_for('orders')}= link_to 'Orders', orders_path if can? :read, Order
-      - if user_signed_in?
-        %ul.nav.pull-right
-          %li= profile_link
-          %li
-            = link_to destroy_user_session_path, method: :delete do
-              %i.icon-signout
+= content_for :header do
+  #navbar.navbar.navbar-static-top
+    .navbar-inner
+      .container-fluid
+        = link_to "iTech Service", root_path, class: 'brand'
+        %ul.nav
+          %li{class: nav_state_for('devices')}= link_to "Devices", devices_path
+          %li{class: nav_state_for('clients')}= link_to "Clients", clients_path
+          %li{class: nav_state_for('device_types')}= link_to "Device types", device_types_path if can? :manage, DeviceType
+          %li{class: nav_state_for('tasks')}= link_to "Tasks", tasks_path if can? :manage, Task
+          %li{class: nav_state_for('locations')}= link_to t('locations'), locations_path if can? :manage, Location
+          %li{class: nav_state_for('users')}= link_to "Users", users_path if can? :manage, User
+          %li{class: nav_state_for('infos')}= link_to 'Infos', infos_path if can? :read, Info
+          %li{class: nav_state_for('orders')}= link_to 'Orders', orders_path if can? :read, Order
+        - if user_signed_in?
+          %ul.nav.pull-right
+            %li= profile_link
+            %li
+              = link_to destroy_user_session_path, method: :delete do
+                %i.icon-signout

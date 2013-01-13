@@ -10,7 +10,7 @@
         %th
     %tbody
       - @infos.each do |info|
-        %tr
+        %tr{class: info.important ? 'warning' : ''}
           %td= link_to info.id, info_path(info)
           %td= link_to info.title, info_path(info)
           %td= human_datetime info.created_at

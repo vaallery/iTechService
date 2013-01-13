@@ -1,0 +1,3 @@
+= content_for :info do
+  - if (info = Info.important.first).present?
+    #important_info= link_to info.content.html_safe, info_path(info)

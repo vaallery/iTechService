@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130112095114) do
+ActiveRecord::Schema.define(:version => 20130113092929) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -114,10 +114,11 @@ ActiveRecord::Schema.define(:version => 20130112095114) do
   add_index "history_records", ["user_id"], :name => "index_history_records_on_user_id"
 
   create_table "infos", :force => true do |t|
-    t.string   "title",      :null => false
-    t.text     "content",    :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "title",                         :null => false
+    t.text     "content",                       :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "important",  :default => false
   end
 
   add_index "infos", ["title"], :name => "index_infos_on_title"

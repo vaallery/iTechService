@@ -19,6 +19,7 @@
 
   %body
     = yield :header
+    = yield :info
 
     .container-fluid
       = render partial: 'layouts/flash_messages', flash: flash

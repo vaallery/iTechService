@@ -1,5 +1,7 @@
+= javascript_include_tag "ckeditor/init"
 = simple_form_for @info, html: { class: 'form-horizontal' } do |f|
   = f.input :title, input_html: {class: 'span9'}
-  = f.input :content, as: :ckeditor, input_html: { tollbar: 'Full', width: 800, height: 400 }
+  = f.input :content, as: :ckeditor, input_html: { toolbar: 'Full', width: 800, height: 400 }
+  = f.input :important
   .form-actions
     = submit_button f
