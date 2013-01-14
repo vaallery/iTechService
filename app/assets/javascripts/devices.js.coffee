@@ -15,6 +15,7 @@ jQuery ->
   $('#history').live 'click', '.close_history', (event) ->
     $history = $('#history')
     $history.remove()
+    event.preventDefault()
 
   $('a', '#locations_list').click (event) ->
     $('#location_value').text $(this).text()
@@ -22,4 +23,17 @@ jQuery ->
     event.preventDefault()
 
   $('#device_security_code_none').click (event)->
-    $('#device_security_code').val('-')
+    $('#device_security_code').val '-'
+    event.preventDefault()
+
+  $('#client_search').keyup ()->
+    $.getScript '/devices/autocomplete_client.js?client_q='+$(this).val()
+
+  if $('#clients_autocomplete_list').length
+    $('#clients_autocomplete_list').css
+      left: $('#client_input').offset().left
+      top: $('#client_input').offset().top + $('#client_input').outerHeight()
+
+  $(document).on 'click', (event)->
+    if $(this).parents('#clients_autocomplete_list').length is 0
+      $('#clients_autocomplete_list').hide()

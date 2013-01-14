@@ -1,3 +1,4 @@
-= f.input :name, input_html: {class: 'input-xlarge'}
-= f.input :phone_number, as: :phone_number
-= f.input :card_number, input_html: {class: 'input-xlarge'}
+= f.input :name
+= f.input :full_phone_number, as: :phone_number
+= f.hidden_field :phone_number
+= f.input :card_number

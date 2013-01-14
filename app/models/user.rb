@@ -83,7 +83,8 @@ class User < ActiveRecord::Base
   end
 
   def full_name
-    [surname, name, patronymic].join ' '
+    res = [surname, name, patronymic].join ' '
+    res = username if res.blank?
   end
 
   def is_duty_day? date

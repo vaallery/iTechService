@@ -300,6 +300,7 @@ ru:
     site: 'www.itechstore.ru'
 
   create: Создать
+  nothing_found: Ничего не найдено
   phone_placeholder: "6, 7, 10 или 11 цифр"
   save: Сохранить
   search: Найти

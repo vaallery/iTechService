@@ -3,10 +3,10 @@
     %h4= Device.human_attribute_name :tasks
   %thead
     %tr
-      %th= DeviceTask.human_attribute_name :task
-      %th= DeviceTask.human_attribute_name :cost
-      %th= DeviceTask.human_attribute_name :comment
-      %th
+      %th.task_type= DeviceTask.human_attribute_name :task
+      %th.task_cost= DeviceTask.human_attribute_name :cost
+      %th.task_comment= DeviceTask.human_attribute_name :comment
+      %th.task_actions
   %tbody
     = f.simple_fields_for :device_tasks do |ff|
       = render 'device_task_fields', f: ff

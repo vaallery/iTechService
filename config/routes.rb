@@ -30,8 +30,9 @@ ItechService::Application.routes.draw do
   resources :locations, except: :show
   
   resources :devices do
-    get :autocomplete_device_type_name, on: :collection
-    get :autocomplete_client_phone_number, on: :collection
+    #get :autocomplete_client_phone_number, on: :collection
+    get :autocomplete_client, on: :collection
+    get :select_client, on: :collection
     get :history, on: :member, defaults: { format: 'js' }
     get :device_type_select, on: :collection, defaults: { format: 'js' }
   end

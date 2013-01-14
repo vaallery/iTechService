@@ -2,7 +2,7 @@
 .page-header
   %h1
     = link_back_to_index
-    = @order.type_name
+    = "Order №#{@order.number}"
     %small
       = link_to icon_tag(:calendar), history_order_path(@order), style: "text-decoration:none;", remote: true
 
@@ -11,28 +11,25 @@
 
 %dl.dl-horizontal
 
-  %dt= model_class.human_attribute_name :number
-  %dd= @order.number
-
   %dt= model_class.human_attribute_name :customer
   %dd= @order.customer_name
 
   %dt= model_class.human_attribute_name :object_kind
-  %dd= @order.object_kind
+  %dd= t("order.object_kinds.#{@order.object_kind}")
 
   %dt= model_class.human_attribute_name :object
   %dd= @order.object
 
   %dt= model_class.human_attribute_name :comment
-  %dd= @order.comment
+  %dd= @order.comment.present? ? @order.comment : '-'
 
   %dt= model_class.human_attribute_name :desired_date
-  %dd= l @order.desired_date, format: :long_d
+  %dd= @order.desired_date.present? ? l(@order.desired_date) : '-'
 
   %dt= model_class.human_attribute_name :status
-  %dd= @order.status
+  %dd= t("order.statuses.#{@order.status}")
 
-- if can? :manage, Order
+- if can? :manage, model_class
   .form-actions
     = link_to_edit @order
     = link_to_destroy @order

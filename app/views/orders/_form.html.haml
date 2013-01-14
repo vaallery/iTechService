@@ -4,8 +4,11 @@
   = f.input :number, disabled: true, input_html: { class: 'input-xlarge' }
   = f.input :object_kind, as: :object_kind
   = f.input :object, input_html: { class: 'input-xlarge' }
-  = f.input :comment, input_html: {rows: 5}
+  = f.input :comment, input_html: {rows: 5, class: 'input-xlarge'}
   = f.input :desired_date, input_html: { class: 'date_field' }
-  = f.input :status, as: :status
+  - if f.object.new_record?
+    = f.hidden_field :status
+  - else
+    = f.input :status, as: :status
   .form-actions
     = submit_button f

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130113092929) do
+ActiveRecord::Schema.define(:version => 20130114042218) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -32,9 +32,10 @@ ActiveRecord::Schema.define(:version => 20130113092929) do
   create_table "clients", :force => true do |t|
     t.string   "name"
     t.string   "phone_number"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
     t.string   "card_number"
+    t.string   "full_phone_number"
   end
 
   create_table "device_tasks", :force => true do |t|

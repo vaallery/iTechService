@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @order = Order.new(customer_type: 'User', customer_id: current_user.id)
+    @order = Order.new(customer_type: 'User', customer_id: current_user.id, status: 'new')
 
     respond_to do |format|
       format.html
@@ -45,7 +45,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: 'Order was successfully created.' }
+        format.html { redirect_to orders_url, notice: 'Order was successfully created.' }
         format.json { render json: @order, status: :created, location: @order }
       else
         format.html { render action: "new" }
@@ -59,7 +59,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.update_attributes(params[:order])
-        format.html { redirect_to @order, notice: 'Order was successfully updated.' }
+        format.html { redirect_to orders_url, notice: 'Order was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -83,6 +83,16 @@ class OrdersController < ApplicationController
     order = Order.find params[:id]
     @records = order.history_records
     render 'shared/show_history'
+  end
+
+  private
+
+  def sort_column
+    Order.column_names.include?(params[:sort]) ? params[:sort] : ''
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
   end
 
 end

@@ -58,7 +58,6 @@ module PhoneTools
             full_number = full + base_digits
           end
           i += 1
-          #puts "i=#{i} | short=#{short} | full=#{full} | rgxp=#{rgxp.inspect} | base=#{base_digits} | full_number=#{full_number}"
         end
         full_number ||= '7423'+number
       end
@@ -66,6 +65,7 @@ module PhoneTools
       full_number ||= '7'+number[1,10] if number.length == 11
     end
     full_number ||= ''
+    [number, full_number]
   end
 
 end

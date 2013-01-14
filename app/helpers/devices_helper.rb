@@ -35,12 +35,20 @@ module DevicesHelper
 
   def task_list_for device
     content_tag(:ul, style: 'list-style:none; text-align:left; margin:0') do
-      list = ''
-      device.device_tasks.each do |task|
-        list << content_tag(:li, "#{icon_tag(task.done ? 'check' : 'check-empty')} #{task.task_name}")
-      end
-      list.html_safe
+      device.device_tasks.collect do |task|
+        content_tag(:li, "#{icon_tag(task.done ? 'check' : 'check-empty')} #{task.task_name}")
+      end.join.html_safe
     end.html_safe
+  end
+
+  def clients_autocomplete_list clients = []
+    if clients.any?
+      clients.collect do |client|
+        content_tag :li, link_to(client.presentation, select_client_devices_path(client_id: client.id), remote: true)
+      end.join.html_safe
+    else
+      content_tag(:li, link_to(t(:nothing_found), '#', remote: true)).html_safe
+    end
   end
   
 end

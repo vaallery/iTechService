@@ -81,8 +81,6 @@ class ClientsController < ApplicationController
     end
   end
 
-  # DELETE /clients/1
-  # DELETE /clients/1.json
   def destroy
     @client = Client.find(params[:id])
     @client.destroy
@@ -94,8 +92,8 @@ class ClientsController < ApplicationController
   end
 
   def check_phone_number
-    @number = params[:number]
-    @number = PhoneTools.convert_phone @number
+    number = params[:number]
+    @number = PhoneTools.convert_phone number
 
     respond_to do |format|
       format.js

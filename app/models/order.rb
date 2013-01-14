@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
   has_many :history_records, as: :object
   attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status
   validates :customer_id, :object, :object_kind, presence: true
+  before_validation :generate_number
 
   scope :ordered, order("orders.created_at desc")
   scope :new_orders, where(status: 'new')
@@ -19,7 +20,7 @@ class Order < ActiveRecord::Base
   STATUSES = %w[new pending done canceled]
 
   def customer_name
-    customer.try :name
+    customer.try :full_name
   end
 
   def self.search params
@@ -47,6 +48,15 @@ class Order < ActiveRecord::Base
     end
 
     orders
+  end
+
+  private
+
+  def generate_number
+    if self.number.blank?
+      begin num = UUIDTools::UUID.random_create.hash.to_s end while Order.exists? number: num
+      self.number = num
+    end
   end
 
 end

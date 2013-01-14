@@ -2,8 +2,7 @@
 class DevicesController < ApplicationController
   #before_filter :store_location
   helper_method :sort_column, :sort_direction
-  autocomplete :device_type, :name, full: true
-  autocomplete :client, :phone_number, full: true, extra_data: [:name], display_value: :name_phone
+  #autocomplete :client, :phone_number, full: true, extra_data: [:name], display_value: :name_phone
   load_and_authorize_resource except: :check_status
   skip_load_resource only: [:index, :history, :task_history]
   skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
@@ -125,6 +124,14 @@ class DevicesController < ApplicationController
         format.json { render json: {error: t('device.not_found')} }
       end
     end
+  end
+
+  def autocomplete_client
+    @clients = Client.search(params).limit(10)
+  end
+
+  def select_client
+    @client = Client.find params[:client_id]
   end
   
   private

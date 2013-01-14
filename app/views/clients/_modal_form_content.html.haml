@@ -2,7 +2,7 @@
   .modal-header
     %a.close{'data-dismiss' => 'modal', href: '#'}
       %i.icon-remove-sign
-    %h3= t "clients.#{params[:action]}"
+    %h3= t "client.#{params[:action]}"
   
   .modal-body
     = render 'fields', f: f

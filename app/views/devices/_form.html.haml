@@ -1,9 +1,9 @@
-= simple_form_for @device, html: { class: 'form-horizontal' } do |f|
+= simple_form_for @device, html: { class: 'form-horizontal device_form' } do |f|
 
   = f.full_error :ticket_number
 
   - if can? :change_client, @device or can? :receive, @device
-    = f.input :client, as: :client
+    = f.input :client, as: :client, wrapper_html: {id: 'client_fields'}
   - else
     = f.input :client, as: :string, disabled: true, input_html: {class: 'input-xlarge'}
 
@@ -14,9 +14,9 @@
 
   = f.input :security_code, as: :security_code
 
-  = f.input :emei, input_html: {class: 'input-xlarge'}
+  = f.input :emei
 
-  = f.input :serial_number, disabled: (cannot?(:change_serial_number, @device) and cannot?(:receive, @device))
+  = f.input :serial_number
   
   = f.input :comment, input_html: {rows: 5}, disabled: (cannot?(:change_device_comment, @device) and cannot?(:receive, @device))
 
