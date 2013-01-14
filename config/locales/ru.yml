@@ -270,6 +270,7 @@ ru:
     enter_ticket_number: Укажите номер талона
     moved_at: Перемёщен в
     moved_by: Переместил(а)
+    phone_stolen: этот телефон в чёрном списке!!!
 
   order:
     object_kinds:

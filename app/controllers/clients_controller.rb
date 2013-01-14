@@ -1,8 +1,7 @@
 class ClientsController < ApplicationController
   load_and_authorize_resource
+  skip_load_resource only: :index
 
-  # GET /clients
-  # GET /clients.json
   def index
     @clients = Client.search params
     @clients = @clients.page params[:page]
@@ -14,30 +13,25 @@ class ClientsController < ApplicationController
     end
   end
 
-  # GET /clients/1
-  # GET /clients/1.json
   def show
     @client = Client.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @client }
     end
   end
 
-  # GET /clients/new
-  # GET /clients/new.json
   def new
     @client = Client.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @client }
       format.js { render 'shared/show_modal_form' }
     end
   end
 
-  # GET /clients/1/edit
   def edit
     @client = Client.find(params[:id])
     
@@ -47,8 +41,6 @@ class ClientsController < ApplicationController
     end
   end
 
-  # POST /clients
-  # POST /clients.json
   def create
     @client = Client.new(params[:client])
 
@@ -64,8 +56,6 @@ class ClientsController < ApplicationController
     end
   end
 
-  # PUT /clients/1
-  # PUT /clients/1.json
   def update
     @client = Client.find(params[:id])
 

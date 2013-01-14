@@ -2,7 +2,7 @@ class DeviceTypeInput < SimpleForm::Inputs::Base
 
   def input
     template.content_tag(:span, id: 'device_type_selector') do
-      @builder.hidden_field(:device_type_id) +
+      @builder.hidden_field(attribute_name) +
       template.content_tag(:div, class: 'input-append input-prepend') do
         template.content_tag(:div, class: 'btn-group') do
           template.link_to(template.icon_tag(:refresh), template.device_type_select_devices_path, class: 'btn',

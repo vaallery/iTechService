@@ -32,5 +32,8 @@
               = link_to_show_small order
               = link_to_edit_small order
               = link_to_destroy_small order
+
+  = paginate @orders
+
 - else
   = render 'shared/empty'

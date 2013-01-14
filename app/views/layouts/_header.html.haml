@@ -12,6 +12,7 @@
           %li{class: nav_state_for('users')}= link_to "Users", users_path if can? :manage, User
           %li{class: nav_state_for('infos')}= link_to 'Infos', infos_path if can? :read, Info
           %li{class: nav_state_for('orders')}= link_to 'Orders', orders_path if can? :read, Order
+          %li{class: nav_state_for('stolen_phones')}= link_to 'Black list', stolen_phones_path
         - if user_signed_in?
           %ul.nav.pull-right
             %li= profile_link

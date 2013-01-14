@@ -25,16 +25,16 @@ ItechService::Application.routes.draw do
 
   resources :device_types, except: [:new]
 
-  resources :tasks, except: :show
+  resources :tasks
 
   resources :locations, except: :show
   
   resources :devices do
-    #get :autocomplete_client_phone_number, on: :collection
     get :autocomplete_client, on: :collection
     get :select_client, on: :collection
     get :history, on: :member, defaults: { format: 'js' }
     get :device_type_select, on: :collection, defaults: { format: 'js' }
+    get :check_emei, on: :collection
   end
   match 'check_device_status' => 'devices#check_status', via: 'get'
   match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: 'get',
@@ -43,6 +43,8 @@ ItechService::Application.routes.draw do
   resources :orders do
     get :history, on: :member, defaults: { format: 'js' }
   end
+
+  resources :stolen_phones, except: :show
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,12 @@
+= auto_header_tag
+
+.table_filter.navbar.container
+  .navbar-inner
+    = form_tag stolen_phones_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
+      .input-append
+        = text_field_tag :emei_q, params[:emei_q], id: 'search_stolen_phone_input', class: 'search-query input-medium',
+            placeholder: 'EMEI'
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+
+#resource_table= render 'table'

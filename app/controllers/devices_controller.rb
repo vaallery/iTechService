@@ -133,6 +133,12 @@ class DevicesController < ApplicationController
   def select_client
     @client = Client.find params[:client_id]
   end
+
+  def check_emei
+    stolen_phone = StolenPhone.find_by_emei params[:emei_q]
+    msg = stolen_phone.present? ? t('device.phone_stolen') : ''
+    render json: {present: stolen_phone.present?, msg: msg}
+  end
   
   private
   

@@ -9,13 +9,11 @@ class Client < ActiveRecord::Base
   
   def self.search params
     clients = Client.scoped
-
     unless (client_q = params[:client_q]).blank?
       clients = clients.where 'LOWER(clients.name) LIKE :q OR clients.phone_number LIKE :q
                               OR clients.full_phone_number LIKE :q OR clients.card_number LIKE :q',
                               q: "%#{client_q.downcase}%"
     end
-    
     clients
   end
 

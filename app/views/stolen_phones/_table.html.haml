@@ -1,0 +1,25 @@
+- model_class = StolenPhone
+
+- if @stolen_phones.any?
+
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th= model_class.human_attribute_name(:id)
+        %th= model_class.human_attribute_name(:emei)
+        %th= model_class.human_attribute_name(:created_at)
+        %th
+    %tbody
+      - @stolen_phones.each do |stolen_phone|
+        %tr
+          %td= stolen_phone.id
+          %td= stolen_phone.emei
+          %td=l stolen_phone.created_at, format: :long_d
+          %td.btn-group
+            = link_to_edit_small stolen_phone
+            = link_to_destroy_small stolen_phone
+
+  = paginate @stolen_phones
+
+- else
+  = render 'shared/empty'

@@ -1,6 +1,6 @@
 jQuery ->
   
-  $('.device_task_task').change () ->
+  $('.device_task_task').live 'change', () ->
     task_id = $(this).val()
     task_cost = $(this).parents('.device_task').find('.device_task_cost')
     $.getJSON '/tasks/'+task_id+'.json', (data) ->
@@ -37,3 +37,15 @@ jQuery ->
   $(document).on 'click', (event)->
     if $(this).parents('#clients_autocomplete_list').length is 0
       $('#clients_autocomplete_list').hide()
+
+  $('#device_emei').blur ()->
+    $.getJSON '/devices/check_emei?emei_q='+$(this).val(), (data)->
+      if data.present
+        $('#device_emei').parents('.control-group').addClass 'warning'
+        if $('#device_emei').siblings('.help-inline').length
+          $('#device_emei').siblings('.help-inline').html data.msg
+        else
+          $('#device_emei').parents('.controls').append "<span class='help-inline'>"+data.msg+"</span>"
+      else
+        $('#device_emei').parents('.control-group').removeClass 'warning'
+        $('#device_emei').siblings('.help-inline').remove()

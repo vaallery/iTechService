@@ -4,7 +4,7 @@
   .navbar-inner
     = form_tag clients_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
       .input-append
-        = text_field_tag :client, params[:client_q], id: 'search_client_input', class: 'search-query input-medium',
+        = text_field_tag :client_q, params[:client_q], id: 'search_client_input', class: 'search-query input-medium',
             placeholder: 'name or phone'
         %span.add-on.btn.clear_search_input
           %i.icon-remove
