@@ -26,6 +26,7 @@ doc/
 .sass-cache/
 /public/assets/
 /uploads
+/public/uploads
 .idea/*
 .powrc
 .idea/misc.xml

@@ -46,6 +46,8 @@ ItechService::Application.routes.draw do
 
   resources :stolen_phones, except: :show
 
+  resources :prices
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

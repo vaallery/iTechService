@@ -192,4 +192,8 @@ module ApplicationHelper
     end
   end
 
+  def caret_tag
+    content_tag(:b, nil, class: 'caret').html_safe
+  end
+
 end

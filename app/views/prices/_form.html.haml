@@ -1,0 +1,6 @@
+= simple_form_for @price, html: { class: 'form-horizontal' } do |f|
+  = f.input :file, as: :file
+  = f.input :remote_file_url, as: :string, input_html: {class: 'input-xxlarge'}
+  = f.input :remove_file, as: :boolean unless f.object.new_record?
+  .form-actions
+    = submit_button f
