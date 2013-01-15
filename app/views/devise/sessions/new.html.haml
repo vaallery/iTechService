@@ -1,18 +1,30 @@
-%h2= t '.title', default: 'Sign in'
+%h2
+  = t '.title', default: 'Sign in'
+%ul.nav.nav-pills
+  %li= link_to 'By card', '#card_tab', 'data-toggle' => 'tab'
+  %li.active= link_to 'By password', '#password_tab', 'data-toggle' => 'tab'
 
 = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-inline' }) do |f|
-  
-  = f.input_field :username, required: false, autofocus: true, label: false,
-      placeholder: resource.class.human_attribute_name(:username), class: 'input-medium'
-  
-  = f.input_field :password, required: false, label: false,
-      placeholder: resource.class.human_attribute_name(:password), class: 'input-medium'
-  
+
+  .tab-content
+    #card_tab.tab-pane
+      = f.input_field :card_number, required: false, autofocus: false,
+          placeholder: resource.class.human_attribute_name(:card_number), class: 'input-medium'
+
+      = f.button :submit, t('.signin', default: 'Sign in')
+
+    #password_tab.tab-pane.active
+      = f.input_field :login, required: false, label: false, autofocus: true,
+          placeholder: resource.class.human_attribute_name(:login), class: 'input-medium'
+
+      = f.input_field :password, required: false, label: false,
+          placeholder: resource.class.human_attribute_name(:password), class: 'input-medium'
+
+      = f.button :submit, t('.signin', default: 'Sign in')
+
   - if devise_mapping.rememberable?
     = f.label :remember_me do
       = f.input_field :remember_me, as: :boolean
       = resource.class.human_attribute_name(:remember_me)
-  
-  = f.button :submit, t('.signin', default: 'Sign in')
 
 = render "devise/shared/links"

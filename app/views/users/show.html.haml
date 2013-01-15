@@ -24,7 +24,7 @@
       %dd= human_date @user.hiring_date
 
       %dt= User.human_attribute_name :prepayment
-      %dd= @user.prepayment
+      %dd= @user.prepayment.present? ? @user.prepayment : '-'
 
   #schedule_tab.tab-pane
 
@@ -76,7 +76,7 @@
       %dd= @user.role
 
       %dt= User.human_attribute_name :location
-      %dd= @user.location.try :full_name
+      %dd= @user.location.try(:full_name) || '-'
 
 - if can? :manage, User
   .form-actions

@@ -15,9 +15,12 @@ class User < ActiveRecord::Base
          :recoverable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :role, :username, :email, :password, :password_confirmation, :remember_me, :location_id,
+  attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id,
                   :surname, :name, :patronymic, :birthday, :hiring_date, :salary_date, :prepayment, :wish,
-                  :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes
+                  :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes,
+                  :card_number
+
+  attr_accessor :login
 
   accepts_nested_attributes_for :schedule_days, :duty_days, allow_destroy: true, reject_if: :all_blank
   #accepts_nested_attributes_for :duty_days, allow_destroy: true
@@ -105,6 +108,16 @@ class User < ActiveRecord::Base
       hours[-1] < 20
     else
       false
+    end
+  end
+
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions).where(["lower(username) = :value OR lower(card_number) = :value OR lower(card_number) = :value",
+                               { value: login.downcase }]).first
+    else
+      where(conditions).first
     end
   end
 
