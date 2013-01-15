@@ -10,14 +10,15 @@ ItechService::Application.routes.draw do
   #end
 
   root to: 'dashboard#index'
-  match 'dashboard' => 'dashboard#index', via: 'get'
+  match 'dashboard' => 'dashboard#index', via: :get
+  match 'become/:id' => 'dashboard#become', via: :get, as: 'become'
   #match 'device_info' => 'dashboard#device_info', via: 'get'
 
   resources :users do
     get :duty_calendar, on: :member
   end
-  match 'profile' => 'users#profile', via: 'get'
-  match 'users/:id/update_wish' => 'users#update_wish', via: ['post', 'put'], as: 'update_wish_user'
+  match 'profile' => 'users#profile', via: :get
+  match 'users/:id/update_wish' => 'users#update_wish', via: [:post, :put], as: 'update_wish_user'
 
   resources :clients do
     get :check_phone_number, on: :collection

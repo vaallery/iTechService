@@ -11,7 +11,7 @@ module PricesHelper
   end
 
   def header_link_to_view_prices
-    content_tag(:li, class: 'dropdown') do
+    content_tag(:li, class: 'dropdown '+nav_state_for('prices')) do
       link_to(('Prices'+caret_tag).html_safe, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown') +
       content_tag(:ul, class: 'dropdown-menu') do
         Price.all.map do |price|

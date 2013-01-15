@@ -8,4 +8,11 @@ class DashboardController < ApplicationController
     end
   end
 
+  def become
+    if Rails.env.development?
+      sign_in :user, User.find(params[:id]), bypass: true
+    end
+    redirect_to root_url
+  end
+
 end

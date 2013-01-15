@@ -78,6 +78,13 @@
       %dt= User.human_attribute_name :location
       %dd= @user.location.try(:full_name) || '-'
 
+      - if current_user.admin?
+        %dt= t 'current_sign_in'
+        %dd= "#{@user.current_sign_in_ip} at #{l(@user.current_sign_in_at, format: :long_d)}"
+        %dt= t 'last_sign_in'
+        %dd= "#{@user.last_sign_in_ip} at #{l(@user.last_sign_in_at, format: :long_d)}"
+
+
 - if can? :manage, User
   .form-actions
     = link_to t('.back', :default => t("helpers.links.back")), users_path, class: 'btn'
