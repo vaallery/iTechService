@@ -2,8 +2,6 @@ ItechService::Application.routes.draw do
   
   mount Ckeditor::Engine => '/ckeditor'
 
-  resources :infos
-
   devise_for :users
   #devise_scope :user do
   #  get 'sign_in', to: 'devise/sessions#new'
@@ -12,6 +10,7 @@ ItechService::Application.routes.draw do
   root to: 'dashboard#index'
   match 'dashboard' => 'dashboard#index', via: :get
   match 'become/:id' => 'dashboard#become', via: :get, as: 'become'
+  match 'sign_in_by_card' => 'dashboard#sign_in_by_card', via: :get, as: 'sign_in_by_card'
   #match 'device_info' => 'dashboard#device_info', via: 'get'
 
   resources :users do
@@ -44,6 +43,8 @@ ItechService::Application.routes.draw do
   resources :orders do
     get :history, on: :member, defaults: { format: 'js' }
   end
+
+  resources :infos
 
   resources :stolen_phones, except: :show
 

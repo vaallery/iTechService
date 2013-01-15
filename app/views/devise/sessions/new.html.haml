@@ -1,19 +1,18 @@
 %h2
   = t '.title', default: 'Sign in'
 %ul.nav.nav-pills
-  %li= link_to 'By card', '#card_tab', 'data-toggle' => 'tab'
-  %li.active= link_to 'By password', '#password_tab', 'data-toggle' => 'tab'
+  %li.active= link_to 'By card', '#card_tab', 'data-toggle' => 'tab'
+  %li= link_to 'By password', '#password_tab', 'data-toggle' => 'tab'
 
 = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-inline' }) do |f|
 
   .tab-content
-    #card_tab.tab-pane
-      = f.input_field :card_number, required: false, autofocus: false,
-          placeholder: resource.class.human_attribute_name(:card_number), class: 'input-medium'
+    #card_tab.tab-pane.active
+      -#= link_to icon_tag('credit-card') + t('.signin_by_card', default: 'Sign in'), sign_in_by_card_path,
+      = link_to icon_tag('credit-card') + t('.signin_by_card', default: 'Sign in'), '#',
+          id: 'sign_in_by_card', class: 'btn btn-large', remote: false
 
-      = f.button :submit, t('.signin', default: 'Sign in')
-
-    #password_tab.tab-pane.active
+    #password_tab.tab-pane
       = f.input_field :login, required: false, label: false, autofocus: true,
           placeholder: resource.class.human_attribute_name(:login), class: 'input-medium'
 
