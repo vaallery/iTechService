@@ -33,7 +33,8 @@ jQuery ->
     card_number = ''
     $('body').append "<div id='card_sign_in' class='modal-backdrop fade in'></div>"
     $(document).live 'keydown', '#card_sign_in', (event)->
-      card_number += String.fromCharCode(event.keyCode)
+      unless event.keyCode is 13
+        card_number += String.fromCharCode(event.keyCode).toLowerCase()
 
     setTimeout (->
       unless card_number is ''
