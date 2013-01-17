@@ -20,9 +20,10 @@
   %body
     = yield :header
     = yield :info
+    = yield :announcements
 
     .container-fluid
-      = render partial: 'layouts/flash_messages', flash: flash
+      = bootstrap_flash
       .row-fluid
         .span12
           = yield
@@ -31,6 +32,4 @@
       Javascripts
       \==================================================
     / Placed at the end of the document so the pages load faster
-    -#= jquery_include_tag :google
     = javascript_include_tag "application"
-    -#= javascript_include_tag params[:controller]

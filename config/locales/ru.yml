@@ -259,6 +259,9 @@ ru:
     errors:
       <<: *errors
 
+  announcement:
+    needs_help: нуждается в помощи!!!
+
   dashboard:
     new_device: Новый девайс
     new_info: Создать новость

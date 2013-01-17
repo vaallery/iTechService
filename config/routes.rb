@@ -1,5 +1,5 @@
 ItechService::Application.routes.draw do
-  
+
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -49,6 +49,10 @@ ItechService::Application.routes.draw do
   resources :stolen_phones, except: :show
 
   resources :prices
+
+  resources :announcements
+  match 'call_help' => 'announcements#call_help', via: :post
+  match 'cancel_help' => 'announcements#cancel_help', via: :post
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

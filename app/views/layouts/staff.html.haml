@@ -1,6 +1,6 @@
 - unless devise_controller?
   = render 'layouts/header'
-
   = render 'layouts/info'
-
+  = render 'layouts/announcements'
 = render template: 'layouts/application'
+= subscribe_to '/announcements'

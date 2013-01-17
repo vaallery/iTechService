@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130115044815) do
+ActiveRecord::Schema.define(:version => 20130117062816) do
+
+  create_table "announcements", :force => true do |t|
+    t.string   "content"
+    t.string   "kind",       :null => false
+    t.integer  "user_id",    :null => false
+    t.boolean  "active"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "announcements", ["kind"], :name => "index_announcements_on_kind"
+  add_index "announcements", ["user_id"], :name => "index_announcements_on_user_id"
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false

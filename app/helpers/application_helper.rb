@@ -148,11 +148,6 @@ module ApplicationHelper
     date.present? ? l(date, format: :long_d) : ''
   end
 
-  def profile_link
-    icon_class = current_user.admin? ? 'user-md' : 'user'
-    link_to icon_tag(icon_class) + current_user.username, profile_path
-  end
-
   def date_field form, attr
     content_tag(:div, class: 'input-append') do
       form.text_field(attr, class: 'span5') +

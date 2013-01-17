@@ -37,6 +37,12 @@ module UsersHelper
     DutyDay.where('user_id <> ? AND day > ?', user.id, date).reorder('day asc')
   end
 
+  def profile_link
+    icon_class = current_user.admin? ? 'user-md' : 'user'
+    link_to icon_tag(icon_class) + current_user.username, profile_path, id: 'profile_link',
+            'data-id' => current_user.id, 'data-helpable' => current_user.helpable?
+  end
+
   private
 
   def is_other_duty? user, date

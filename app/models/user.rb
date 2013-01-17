@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :schedule_days, dependent: :destroy
   has_many :duty_days, dependent: :destroy
   has_many :orders, as: :customer
+  has_many :announcements
 
   mount_uploader :photo, PhotoUploader
   
@@ -111,6 +112,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def needs_help?
+    announcements.active_help.any?
+  end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
@@ -119,6 +124,10 @@ class User < ActiveRecord::Base
     else
       where(conditions).first
     end
+  end
+
+  def helpable?
+    Role::HELPABLE.include? role
   end
 
   private
