@@ -17,16 +17,15 @@
           -#= header_link_to_edit_prices
           -#- else
           = header_link_to_view_prices
+        %ul.nav.pull-right
           = header_link_to_help if current_user.helpable?
-        - if user_signed_in?
-          %ul.nav.pull-right
-            %li= profile_link
-            - if Rails.env.development?
-              %li.dropdown
-                = link_to caret_tag, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown'
-                %ul.dropdown-menu
-                  - User.all.map do |user|
-                    %li= link_to user.username, become_path(user)
-            %li
-              = link_to destroy_user_session_path, method: :delete do
-                %i.icon-signout
+          %li= profile_link
+          - if Rails.env.development?
+            %li.dropdown
+              = link_to caret_tag, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown'
+              %ul.dropdown-menu
+                - User.all.map do |user|
+                  %li= link_to user.username, become_path(user)
+          %li
+            = link_to destroy_user_session_path, method: :delete do
+              %i.icon-signout

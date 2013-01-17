@@ -3,6 +3,7 @@
   - publish_to "/announcements" do
     :plain
       if($('#profile_link').data('id') != #{@announcement.user_id}
-         && $('#profile_link').data('helpable') == true){
+         && $('#profile_link').data('helpable') == true)
         $('#announcements').append("#{j render(@announcement)}");
-      }
+
+  setTimeout(function(){$.post("#{cancel_help_path}")}, 30000);

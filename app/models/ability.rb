@@ -15,6 +15,11 @@ Ability
         can :receive, Device
         can :manage, [Device, Client]
       end
+      if user.helpable?
+        #can [:create, :update], Announcement
+        can :call_help, Announcement
+        can :cancel_help, Announcement, user_id: user.id
+      end
       can :read, Info
       can :update, Device
       can :update_wish, User, id: user.id
