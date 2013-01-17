@@ -16,7 +16,7 @@ jQuery ->
     add_fields target, association, content
     event.preventDefault()
 
-  $(document).on 'hidden', '#modal_form', (event) ->
+  $(document).on 'hidden', '#modal_form', ->
     $('html,body').css 'overflow', 'auto'
     $('#modal_form').remove()
 
@@ -29,7 +29,7 @@ jQuery ->
     $('#search_form').submit()
     event.preventDefault()
 
-  $('#sign_in_by_card').click (event)->
+  $('#sign_in_by_card').click ->
     card_number = ''
     $('body').append "<div id='card_sign_in' class='modal-backdrop fade in'></div>"
     $(document).live 'keydown', '#card_sign_in', (event)->
@@ -38,7 +38,7 @@ jQuery ->
 
     setTimeout (->
       unless card_number is ''
-        $.get '/sign_in_by_card?card_number='+card_number, (data)->
+        $.get '/sign_in_by_card?card_number='+card_number, ->
           window.location.reload()
       else
         $('#card_sign_in').remove()
