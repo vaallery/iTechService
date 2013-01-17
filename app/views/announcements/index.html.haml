@@ -1,0 +1,18 @@
+- model_class = Announcement
+= auto_header_tag
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:type)
+      %th= model_class.human_attribute_name(:user_id)
+      %th= model_class.human_attribute_name(:content)
+      %th= model_class.human_attribute_name(:created_at)
+  %tbody
+    - @announcements.each do |announcement|
+      %tr
+        %td= link_to announcement.id, announcement_path(announcement)
+        %td= announcement.type
+        %td= announcement.user_name
+        %td= announcement.content
+        %td= l announcement.created_at, format: :long_d

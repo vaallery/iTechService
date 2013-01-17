@@ -1,0 +1,19 @@
+- model_class = Announcement
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human
+
+%p
+  %strong= model_class.human_attribute_name(:content) + ':'
+  %br
+  = @announcement.content
+%p
+  %strong= model_class.human_attribute_name(:type) + ':'
+  %br
+  = @announcement.type
+%p
+  %strong= model_class.human_attribute_name(:user_id) + ':'
+  %br
+  = @announcement.user_id
+
+.form-actions
+  = link_to_edit @announcement
