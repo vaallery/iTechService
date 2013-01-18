@@ -24,6 +24,7 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new
+    #@client.comments.build
 
     respond_to do |format|
       format.html
@@ -34,6 +35,7 @@ class ClientsController < ApplicationController
 
   def edit
     @client = Client.find(params[:id])
+    #@client.comments.build
     
     respond_to do |format|
       format.html
@@ -43,14 +45,16 @@ class ClientsController < ApplicationController
 
   def create
     @client = Client.new(params[:client])
+    #@client.comments.build
 
     respond_to do |format|
       if @client.save
         format.html { redirect_to @client, notice: 'Client was successfully created.' }
-        format.json { render json: @client, status: :created, location: @client }
         format.js { render 'saved' }
+        format.json { render json: @client, status: :created, location: @client }
       else
         format.html { render action: "new" }
+        format.js { render 'shared/show_modal_form' }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
@@ -58,6 +62,7 @@ class ClientsController < ApplicationController
 
   def update
     @client = Client.find(params[:id])
+    #@client.comments.build
 
     respond_to do |format|
       if @client.update_attributes(params[:client])
@@ -66,6 +71,7 @@ class ClientsController < ApplicationController
         format.js { render 'saved' }
       else
         format.html { render action: "edit" }
+        format.js { render 'shared/show_modal_form' }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
@@ -88,6 +94,11 @@ class ClientsController < ApplicationController
     respond_to do |format|
       format.js
     end
+  end
+
+  def questionnaire
+    pdf = QuestionnairePdf.new view_context
+    send_data pdf.render, filename: 'questionaire.pdf', type: 'application/pdf', disposition: 'inline'
   end
 
 end

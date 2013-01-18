@@ -1,4 +1,19 @@
 = simple_form_for @client, html: { class: 'form-horizontal' } do |f|
-  = render 'fields', f: f
+
+  = f.input :surname, autofocus: true
+  = f.input :name
+  = f.input :patronymic
+  = f.input :birthday, input_html: { class: 'date_field' }
+  = f.input :full_phone_number, as: :phone_number
+  = f.hidden_field :phone_number
+  = f.input :email
+  = f.input :card_number
+  = f.input :admin_info if current_user.admin?
+  = f.input :comment, as: 'text'
+
+  .control-group
+    %label.control-label= t Client.human_attribute_name(:comments)
+    .controls= render @client.comments
+
   .form-actions
     = submit_button f

@@ -2,10 +2,18 @@
   .modal-header
     %a.close{'data-dismiss' => 'modal', href: '#'}
       %i.icon-remove-sign
-    %h3= t "client.#{params[:action]}"
-  
+    %h3= auto_title
+
   .modal-body
-    = render 'fields', f: f
-  
+    = f.input :name, autofocus: true
+    = f.input :surname
+    = f.input :full_phone_number, as: :phone_number
+    = f.hidden_field :phone_number
+    = f.input :card_number
+
+    #client_questionnaire_input.control-group.hidden
+      %label.control-label= t 'client.questionnaire'
+      .controls= link_to icon_tag('print'), questionnaire_clients_path(format: 'pdf'), class: 'btn', target: '_blank'
+
   .modal-footer
     = f.button :submit, class: 'btn-primary'

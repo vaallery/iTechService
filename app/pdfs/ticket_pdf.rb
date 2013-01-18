@@ -8,7 +8,6 @@ class TicketPdf < Prawn::Document
     @view = view
     @font_normal = "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf"
     @font_bold = "#{Rails.root}/app/assets/fonts/droidsans-bold-webfont.ttf"
-    #@bold_font_path = @font_path
     font @font_normal
     font_families.update("DejaVuSans" => {bold: @font_bold, normal: @font_normal})
     client_part

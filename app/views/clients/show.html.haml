@@ -1,13 +1,27 @@
-= auto_header_tag
+.page-header
+  %h1
+    = link_back_to_index
+    = @client.full_name
 
 %dl.dl-horizontal
-  %dt= Client.human_attribute_name :name
-  %dd= @client.name
+
+  %dt= Client.human_attribute_name :birthday
+  %dd= @client.birthday.present? ? human_date(@client.birthday) : '-'
 
   %dt= Client.human_attribute_name :phone_number
   %dd= @client.human_phone_number
 
+  %dt= Client.human_attribute_name :email
+  %dd= @client.email.present? ? @client.email : '-'
+
   %dt= Client.human_attribute_name :card_number
+  %dd= @client.card_number.present? ? @client.card_number : '-'
+
+  %dt= Client.human_attribute_name :admin_info
+  %dd= @client.admin_info.present? ? @client.admin_info : '-'
+
+  %dt= Client.human_attribute_name :comments
+  %dd= render @client.comments
 
 #client_devices
 

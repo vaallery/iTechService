@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :duty_days, dependent: :destroy
   has_many :orders, as: :customer
   has_many :announcements
+  has_many :comments
 
   mount_uploader :photo, PhotoUploader
   

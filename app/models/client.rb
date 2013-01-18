@@ -3,9 +3,12 @@ class Client < ActiveRecord::Base
   
   has_many :devices, inverse_of: :client
   has_many :orders, as: :customer
-  attr_accessible :name, :phone_number, :full_phone_number, :card_number
-  
-  validates :name, :phone_number, presence: true
+  has_many :comments, as: :commentable
+  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number,
+                  :admin_info, :comments_attributes, :comment
+  accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
+  validates :name, :phone_number, :full_phone_number, presence: true
+  validates_associated :comments
   
   def self.search params
     clients = Client.scoped
@@ -18,7 +21,7 @@ class Client < ActiveRecord::Base
   end
 
   def full_name
-    name
+    [surname, name, patronymic].join ' '
   end
   
   def name_phone
@@ -31,6 +34,14 @@ class Client < ActiveRecord::Base
   
   def human_phone_number
     ActionController::Base.helpers.number_to_phone full_phone_number || phone_number, area_code: true
+  end
+
+  def comment=(content)
+    comments.create content: content
+  end
+
+  def comment
+
   end
   
 end

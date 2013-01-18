@@ -1,5 +1,8 @@
 ItechService::Application.routes.draw do
 
+  resources :comments
+
+
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -21,6 +24,7 @@ ItechService::Application.routes.draw do
 
   resources :clients do
     get :check_phone_number, on: :collection
+    get :questionnaire, on: :collection
   end
 
   resources :device_types, except: [:new]
@@ -36,8 +40,8 @@ ItechService::Application.routes.draw do
     get :device_type_select, on: :collection, defaults: { format: 'js' }
     get :check_emei, on: :collection
   end
-  match 'check_device_status' => 'devices#check_status', via: 'get'
-  match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: 'get',
+  match 'check_device_status' => 'devices#check_status', via: :get
+  match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: :get,
       as: :history_device_task, defaults: { format: 'js' }
 
   resources :orders do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117062816) do
+ActiveRecord::Schema.define(:version => 20130117155027) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -48,9 +48,26 @@ ActiveRecord::Schema.define(:version => 20130117062816) do
     t.datetime "updated_at",        :null => false
     t.string   "card_number"
     t.string   "full_phone_number"
+    t.string   "surname"
+    t.string   "patronymic"
+    t.date     "birthday"
+    t.string   "email"
+    t.text     "admin_info"
   end
 
   add_index "clients", ["full_phone_number"], :name => "index_clients_on_full_phone_number"
+
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id",          :null => false
+    t.integer  "commentable_id",   :null => false
+    t.string   "commentable_type", :null => false
+    t.text     "content",          :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "device_tasks", :force => true do |t|
     t.integer  "device_id"

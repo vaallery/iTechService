@@ -19,3 +19,9 @@ jQuery ->
       $('#check_phone_number').removeClass('disabled').addClass('btn-warning')
     else
       $('#check_phone_number').addClass('disabled').removeClass('btn-warning')
+
+  $('#client_card_number').live 'keyup', ->
+    if $(this).val() isnt ''
+      $('#client_questionnaire_input').removeClass 'hidden'
+    else
+      $('#client_questionnaire_input').addClass 'hidden'
