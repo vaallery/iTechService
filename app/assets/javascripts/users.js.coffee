@@ -77,6 +77,11 @@ jQuery ->
     ).fail (result, status) ->
       alert status
 
+  $('.user_color_template').css 'background-color', $('#user_color').val()
+
+  $('#user_color').colorpicker().on 'changeColor', (event)->
+    $('.user_color_template').css 'background-color', event.color.toHex()
+
 
 toggle_schedule_day = (el) ->
   el.toggleClass 'work_hour'

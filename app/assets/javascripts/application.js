@@ -18,6 +18,7 @@
 //= require jquery.jstree
 //= require ckeditor/init
 //= require private_pub
+//= require bootstrap-colorpicker
 // require jasny-bootstrap/jasny-bootstrap.min
 //= require_self
 //= require_tree .

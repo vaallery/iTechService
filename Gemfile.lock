@@ -43,6 +43,8 @@ GEM
       activerecord (>= 2.3.14)
     arel (3.0.2)
     bcrypt-ruby (3.0.1)
+    bootstrap-colorpicker-rails (0.1)
+      railties (>= 3.0)
     builder (3.0.4)
     cancan (1.6.8)
     capybara (2.0.2)
@@ -309,6 +311,7 @@ PLATFORMS
 
 DEPENDENCIES
   ancestry
+  bootstrap-colorpicker-rails
   cancan
   capybara
   carrierwave

@@ -21,12 +21,11 @@
       = f.input :surname
       = f.input :name
       = f.input :patronymic
-      -#= date_field f, :birthday
-      -#= date_field f, :hiring_date
       = f.input :birthday, input_html: { class: 'date_field' }
       = f.input :hiring_date, input_html: { class: 'date_field' }
       -#= f.input :salary_date, input_html: { class: 'date_field' }
       = f.input :prepayment
+      = f.input :color, as: :color
     - unless @user.new_record?
       #schedule_tab.tab-pane
         = f.input :wish, input_html: {rows: 5, class: 'span7'}

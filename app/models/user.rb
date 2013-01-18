@@ -20,7 +20,7 @@ class User < ActiveRecord::Base
   attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id,
                   :surname, :name, :patronymic, :birthday, :hiring_date, :salary_date, :prepayment, :wish,
                   :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes,
-                  :card_number
+                  :card_number, :color
 
   attr_accessor :login
 
