@@ -101,4 +101,8 @@ class ClientsController < ApplicationController
     send_data pdf.render, filename: 'questionaire.pdf', type: 'application/pdf', disposition: 'inline'
   end
 
+  def select_device
+    @device = Device.find params[:device_id]
+  end
+
 end

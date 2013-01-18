@@ -1,0 +1,11 @@
+:plain
+  $('#device_device_type_id').val("#{@device.device_type_id}");
+  $('#device_security_code').val("#{@device.security_code}");
+  $('#device_emei').val("#{@device.emei}");
+  $('#device_serial_number').val("#{@device.serial_number}");
+  $('#device_type_name').text("#{@device.device_type.full_name}");
+  $('#available_for_replacement').text("#{@device.device_type.available_for_replacement}");
+  if(#{@device.device_type.available_for_replacement} > 0)
+    $('#device_replaced').removeAttr('disabled')
+  else
+    $('#device_replaced').addAttr('disabled');

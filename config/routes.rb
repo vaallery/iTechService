@@ -25,6 +25,7 @@ ItechService::Application.routes.draw do
   resources :clients do
     get :check_phone_number, on: :collection
     get :questionnaire, on: :collection
+    get :select_device, on: :member
   end
 
   resources :device_types, except: [:new]
