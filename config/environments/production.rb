@@ -68,7 +68,7 @@ ItechService::Application.configure do
   
   # config.action_mailer.default_url_options = { host: '' }
 
-  config.assets.initialize_on_precompile = false
+  config.assets.initialize_on_precompile = true
 
   #ActionMailer::Base.default from: "noreply@itechstore.ru"
   #config.action_mailer.default_url_options = { host: 'itechservice.herokuapp.com' }
