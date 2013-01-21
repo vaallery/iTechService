@@ -46,7 +46,7 @@ ItechService::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  #config.assets.precompile += %w(  )
+  config.assets.precompile += %w( bootstrap-colorpicker.js, bootstrap-colorpicker.css )
   config.assets.precompile += Ckeditor.assets
 
   # Disable delivery errors, bad email addresses will be ignored
