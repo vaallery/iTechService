@@ -22,6 +22,9 @@ ItechService::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  config.assets.initialize_on_precompile = false
+  #config.assets.initialize_on_precompile = true
+
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
@@ -68,9 +71,6 @@ ItechService::Application.configure do
   config.active_record.auto_explain_threshold_in_seconds = 0.5
   
   # config.action_mailer.default_url_options = { host: '' }
-
-  config.assets.initialize_on_precompile = false
-  #config.assets.initialize_on_precompile = true
 
   #ActionMailer::Base.default from: "noreply@itechstore.ru"
   #config.action_mailer.default_url_options = { host: 'itechservice.herokuapp.com' }
