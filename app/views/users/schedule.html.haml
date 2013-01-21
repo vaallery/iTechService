@@ -43,5 +43,7 @@
               %span.label{style: "background-color: #{user.color_s}",
                           data: {color: user.color_s, 'color-format' => 'hex'}}
                 %i
-            %td.user_name= user.full_name
-            -#TODO add tooltip with wishes
+            %td.user_name
+              = user.full_name
+              - unless user.wish.blank?
+                %i.user_wish.icon-comment-alt{title: user.wish}

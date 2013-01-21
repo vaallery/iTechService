@@ -247,6 +247,9 @@ jQuery ->
       .live 'mouseleave', ->
         $('.user_row.hovered', $legend).removeClass 'hovered'
 
+    $('.user_wish', $legend).tooltip()
+
+
 toggle_schedule_day = (el) ->
   el.toggleClass 'work_hour'
 
