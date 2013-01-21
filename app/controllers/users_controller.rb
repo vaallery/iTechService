@@ -92,6 +92,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def staff_duty_schedule
+    @calendar_month = params[:date].blank? ? Date.current : params[:date].to_date
+  end
+
   def update_wish
     @user = User.find params[:id]
 
@@ -102,6 +106,20 @@ class UsersController < ApplicationController
         format.json { render json: {error: 'error'}}
       end
     end
+  end
+
+  def schedule
+    @users = User.scoped
+    @locations = Location.for_schedule
+    @calendar_month = Date.current.beginning_of_month
+  end
+
+  def add_to_job_schedule
+    @msg = ''
+    @user = User.find params[:id]
+    @day = params[:day]
+    @msg = 'User location not set' if (@location_id = @user.location.try(:id)).nil?
+    @schedule_day = @user.schedule_days.find_by_day @day
   end
 
   private

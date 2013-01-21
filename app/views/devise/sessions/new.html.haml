@@ -8,7 +8,6 @@
 
   .tab-content
     #card_tab.tab-pane.active
-      -#= link_to icon_tag('credit-card') + t('.signin_by_card', default: 'Sign in'), sign_in_by_card_path,
       = link_to icon_tag('credit-card') + t('.signin_by_card', default: 'Sign in'), '#',
           id: 'sign_in_by_card', class: 'btn btn-large', remote: false
 

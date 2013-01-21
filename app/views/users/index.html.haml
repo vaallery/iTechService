@@ -1,2 +1,7 @@
-= auto_header_tag
+.page-header
+  %h1
+    = auto_title
+    %br
+    = link_to_new User
+    %small= link_to t('user.schedule'), schedule_users_path
 #resource_table= render 'table'

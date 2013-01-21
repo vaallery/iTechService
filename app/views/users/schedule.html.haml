@@ -1,0 +1,46 @@
+.page-header
+  %h1
+    = link_back_to_index
+    = t 'user.schedule'
+.row-fluid
+  #staff_schedule.span8
+    %ul.nav.nav-pills
+      %li= link_to t('user.job_schedule'), '#job_schedule_tab', 'data-toggle' => 'tab'
+      %li.active= link_to t('user.duty_schedule'), '#duty_schedule_tab', 'data-toggle' => 'tab'
+
+    .tab-content
+
+      #job_schedule_tab.tab-pane
+        %table#job_schedule_table.table.table-bordered.table-condensed
+          %caption
+            %h4= t 'user.job_schedule'
+          %tbody
+            - (1..7).each do |day|
+              %tr.job_schedule_day{data: {day: day}}
+                %th{colspan: 12}
+                  = t('date.day_names')[day-1]
+                  %span.pull-right= link_to_add_user_hours day
+              %tr.job_schedule_hours
+                - ('10'..'20').each do |hour|
+                  %td.job_schedule_hour{data: {hour: hour}}= hour
+                %td
+              - @locations.each do |location|
+                %tr.job_schedule_location{data: {location: location.id, day: day}}
+                  %td{colspan: 12}
+                    %span= location.name
+                - location.users.working_at(day).each do |user|
+                  = user_hours_row_tag day, user
+
+      #duty_schedule_tab.tab-pane.active
+        = render 'staff_duty_schedule'
+
+  .span4
+    #staff_schedule_legend.well.well-small.affix
+      %table
+        - @users.each do |user|
+          %tr.user_row{data: {user: user.id}}
+            %td.user_color
+              %span.label{style: "background-color: #{user.color_s}",
+                          data: {color: user.color_s, 'color-format' => 'hex'}}
+                %i
+            %td.user_name= user.full_name

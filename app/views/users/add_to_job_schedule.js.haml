@@ -1,0 +1,10 @@
+:plain
+  if("#{@msg}" == ""){
+    $location_row = $(".job_schedule_location[data-day=#{@day}][data-location=#{@location_id}]");
+    $user_hours_row = $location_row.nextUntil(':not(.job_schedule_user_hours)').last();
+    $selector = $user_hours_row.length > 0 ? $user_hours_row : $location_row;
+    $selector.after("#{j user_hours_row_tag(@day, @user, @schedule_day.id)}");
+    $selector.next().addClass('selected');
+  }else{
+    alert("#{@msg}");
+  }

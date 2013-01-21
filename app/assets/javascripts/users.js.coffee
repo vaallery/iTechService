@@ -67,20 +67,147 @@ jQuery ->
     url = $form.attr('action') + '.json'
     data = $form.serialize()
     $.ajax(
-      url: url
-      data: data
-      dataType: 'json'
-      type: 'PUT'
-    ).done((result) ->
-      $("#wish_view").text result.wish
-      $("#wish_view, #wish_edit").toggleClass("hide")
-    ).fail (result, status) ->
-      alert status
+        url: url
+        data: data
+        dataType: 'json'
+        type: 'PUT'
+      ).done((result) ->
+        $("#wish_view").text result.wish
+        $("#wish_view, #wish_edit").toggleClass("hide")
+      ).fail (result, status) ->
+        alert status
+    event.preventDefault()
 
   $('.user_color_template').css 'background-color', $('#user_color').val()
 
   $('#user_color').colorpicker().on 'changeColor', (event)->
     $('.user_color_template').css 'background-color', event.color.toHex()
+
+  if $('#staff_schedule').length > 0
+    $legend = $('#staff_schedule_legend')
+    $table = $('#job_schedule_table')
+    $('.user_name', $legend).click ->
+      $this = $(this)
+      $user_row = $(this).parents('.user_row')
+      user = $user_row.data 'user'
+      $job_schedule_row = $(".job_schedule_user_hours[data-user="+user+"]", $table)
+      selected = $user_row.hasClass 'selected'
+      $('.user_row.selected', $legend).removeClass 'selected'
+      $user_row.addClass 'selected' unless selected
+      $(".job_schedule_user_hours.selected", $table).removeClass 'selected'
+      $job_schedule_row.addClass 'selected' unless selected
+
+    $('.user_color>span', $legend).colorpicker()
+      .on 'changeColor', (event)->
+        $(this).css backgroundColor: event.color.toHex()
+      .on 'hide', (event)->
+        $this = $(this)
+        user_id = $this.parents('.user_row').data 'user'
+        color = event.color.toHex()
+        $.ajax
+          type: 'PUT'
+          url: '/users/'+user_id
+          data: {user: {color: color}}
+          dataType: 'json'
+          success: ->
+            $hours_row = $('.job_schedule_user_hours[data-user='+user_id+']')
+            $hours_row.data('color', color)
+            $(".work_hour", $hours_row).css backgroundColor: color
+          error: (jqXHR, textStatus, errorThrown)->
+            console.log(jqXHR.status+' ('+errorThrown+')')
+
+    $('.job_schedule_user_hours', $table)
+      .live 'mouseenter', ->
+        user = $(this).data 'user'
+        $('.user_row[data-user='+user+']', $legend).addClass 'hovered'
+      .live 'mouseleave', ->
+        $('.user_row.hovered', $legend).removeClass 'hovered'
+
+    $('.add_user_to_job_schedule', $table).click (event)->
+      user = $('#staff_schedule_legend .user_row.selected').data 'user'
+      unless user is undefined
+        $this = $ this
+        day = $this.data 'day'
+        unless $('.job_schedule_user_hours[data-user='+user+'][data-day='+day+']').length > 0
+          $.getScript '/users/'+user+'/add_to_job_schedule?day='+day
+      event.preventDefault()
+
+    $('.job_schedule_user_hour', $table).live 'click', (event)->
+      $this = $ this
+      $this.toggleClass 'work_hour'
+      color = if $this.hasClass('work_hour') then $this.parents('.job_schedule_user_hours').data('color') else 'inherit'
+      $this.css backgroundColor: color
+      event.preventDefault()
+
+    $('.save_job_schedule_hours').live 'click', (event)->
+      $this = $ this
+      $row = $this.parents('.job_schedule_user_hours:first')
+      $cell = $this.parent()
+      $buttons = $('a', $cell)
+      $buttons.fadeOut 100
+      day_id = $row.data('dayid')
+      user_id = $row.data('user')
+      hours = ''
+      $hours = $('.job_schedule_user_hour.work_hour', $row)
+
+      if $hours.length > 0
+        hours = $hours.map( ->
+                  $(this).data('hour')
+                ).get().join()
+
+      $.ajax
+        type: 'PUT'
+        url: '/users/'+user_id
+        data: {user: {schedule_days_attributes: {'0': {id: day_id, hours: hours}}}}
+        dataType: 'json'
+        success: ->
+          $cell.animate(
+            backgroundColor: 'green'
+          , 100).delay(100).animate(
+            backgroundColor: 'inherit'
+          , 100, ->
+            $buttons.fadeIn(100)
+          ).removeAttr('style')
+        error: (jqXHR, textStatus, errorThrown)->
+          $cell.animate(
+            backgroundColor: 'red'
+          , 100).delay(100).animate(
+            backgroundColor: 'inherit'
+          , 100, ->
+            $buttons.fadeIn(100)
+          ).removeAttr('style')
+          console.log(jqXHR.status+' ('+errorThrown+')')
+
+      event.preventDefault()
+
+    $('.delete_job_schedule_hours').live 'click', ->
+      $this = $ this
+      $row = $this.parents('.job_schedule_user_hours:first')
+      $cell = $this.parent()
+      $buttons = $('a', $cell)
+      $buttons.fadeOut 100
+      day_id = $row.data('dayid')
+      user_id = $row.data('user')
+      hours = ''
+
+      $.ajax
+        type: 'PUT'
+        url: '/users/'+user_id
+        data: {user: {schedule_days_attributes: {'0': {id: day_id, hours: hours}}}}
+        dataType: 'json'
+        success: ->
+          $row.slideUp(400).remove()
+        error: (jqXHR, textStatus, errorThrown)->
+          $cell.animate(
+            backgroundColor: 'red'
+          , 100).delay(100).animate(
+            backgroundColor: 'inherit'
+          , 100, ->
+            $buttons.fadeIn(100)
+          ).removeAttr('style')
+          console.log(jqXHR.status+' ('+errorThrown+')')
+
+      event.preventDefault()
 
 
 toggle_schedule_day = (el) ->

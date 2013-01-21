@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
 
   default_scope order('id asc')
   scope :admins, where(role: 'admin')
+  scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
 
   after_initialize do |user|
     if user.schedule_days.empty?
@@ -96,9 +97,10 @@ class User < ActiveRecord::Base
     duty_days.exists? day: date
   end
 
-  def is_work_day? date
-    if (day = schedule_days.find_by_day(date.wday)).present?
-      day.hours.present?
+  def is_work_day? day
+    day = day.respond_to?(:wday) ? day.wday : day.to_i
+    if (schedule_day = schedule_days.find_by_day(day)).present?
+      schedule_day.hours.present?
     else
       false
     end
@@ -129,6 +131,10 @@ class User < ActiveRecord::Base
 
   def helpable?
     Role::HELPABLE.include? role
+  end
+
+  def color_s
+    color.blank? ? '#ffffff' : color
   end
 
   private

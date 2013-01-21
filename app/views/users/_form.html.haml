@@ -33,14 +33,14 @@
           %thead
             %tr
               %th
-              - ('00'..'23').each do |h|
+              - ('10'..'20').each do |h|
                 %th= h
           %tbody
             - (1..7).each do |day|
               %tr.schedule_day{day: day}
                 %td
                   %strong= t('date.abbr_day_names')[day-1]
-                - (0..23).each do |hour|
+                - (10..20).each do |hour|
                   %td.schedule_hour{class: schedule_hour_class_for(@user, day, hour), day: day, hour: hour}
 
         = f.fields_for :schedule_days do |ff|
