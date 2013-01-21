@@ -12,9 +12,11 @@ ItechService::Application.configure do
   config.serve_static_assets = false
 
   # Compress JavaScripts and CSS
-  config.assets.compress = true
+  #config.assets.compress = true
+  config.assets.compress = false
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
+  #config.assets.compile = false
   config.assets.compile = true
 
   # Generate digests for assets URLs
@@ -46,7 +48,6 @@ ItechService::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( bootstrap-colorpicker.js, bootstrap-colorpicker.css )
   config.assets.precompile += Ckeditor.assets
 
   # Disable delivery errors, bad email addresses will be ignored
@@ -68,7 +69,8 @@ ItechService::Application.configure do
   
   # config.action_mailer.default_url_options = { host: '' }
 
-  config.assets.initialize_on_precompile = true
+  config.assets.initialize_on_precompile = false
+  #config.assets.initialize_on_precompile = true
 
   #ActionMailer::Base.default from: "noreply@itechstore.ru"
   #config.action_mailer.default_url_options = { host: 'itechservice.herokuapp.com' }
