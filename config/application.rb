@@ -65,7 +65,7 @@ module ItechService
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.3'
     
-    config.assets.precompile += ['jquery.js']
+    config.assets.precompile += ['jquery.js', 'ckeditor/init.js']
 
     config.assets.initialize_on_precompile = false
     

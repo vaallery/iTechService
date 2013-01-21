@@ -30,10 +30,9 @@
           - days[i].each do |day|
             %td{duty_day_attributes(day, @calendar_month.month)}
               - if day.today?
-                %span.badge.badge-info
-                  = day.day
+                %span.badge.badge-info= day.day
               - else
-                = day.day
+                %span.badge.badge-blank= day.day
 
     %tfoot
       -#- upcoming_duties(@user, Date.current).each do |duty_day|

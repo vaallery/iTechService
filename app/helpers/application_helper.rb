@@ -1,21 +1,5 @@
 module ApplicationHelper
 
-  #def bootstrap_flash
-  #  flash_messages = []
-  #  flash.each do |type, message|
-  #    # Skip Devise :timeout and :timedout flags
-  #    next if type == :timeout
-  #    next if type == :timedout
-  #    type = :success if type == :notice
-  #    type = :error   if type == :alert
-  #    text = content_tag(:div,
-  #                       content_tag(:button, raw("&times;"), :class => "close", "data-dismiss" => "alert") +
-  #                           message, :class => "alert fade in alert-#{type}")
-  #    flash_messages << text if message
-  #  end
-  #  flash_messages.join("\n").html_safe
-  #end
-
   def link_to_add_fields(name, append_to_selector, f, association, options = {})
     new_object = f.object.class.reflect_on_association(association).klass.new
     fields = f.fields_for(association, new_object, child_index: "new_#{association}") do |builder|

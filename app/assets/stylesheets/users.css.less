@@ -36,17 +36,23 @@
   cursor: pointer;
 }
 
+.badge-blank{
+  background-color: #ffffff;
+  color: inherit;
+  font-weight: normal;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
 .calendar_day {
-//  width: 33px;
-  &.today {
-//    background-color: #D9EDF7;
+//  &.today {
     padding-left: 1px;
     padding-right: 1px;
     span {
       padding-left: 5px;
       padding-right: 5px;
     }
-  }
+//  }
   &.duty {
     background-color: #F2DEDE;
   }
@@ -187,6 +193,7 @@ form.user_form{
     }
     &.selected{
       background-color: #0088cc;
+      color: #ffffff;
     }
     .user_color{
       padding-left: 10px;

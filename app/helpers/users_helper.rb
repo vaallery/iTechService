@@ -56,14 +56,18 @@ module UsersHelper
     day_class = 'today' if day.today?
     day_class << (day.month == month ? ' calendar_day' : ' muted')
     day_color = 'inherit'
+    day_id = ''
+    style = ''
     duty_day = DutyDay.find_by_day day
     if duty_day.present? and (duty_user = duty_day.user).present?
+      day_id = duty_day.id
       day_color = duty_user.color
       day_class << ' duty'
+      style = "background-color: #{day_color}" if day_class.include? 'calendar_day'
     else
       day_class << ' empty'
     end
-    {class: day_class, data: {user: duty_user || '', day: day, color: day_color}, style: {backgroundColor: day_color}}
+    {class: day_class, data: {user: duty_user.try(:id) || '', dayid: day_id, day: day, color: day_color}, style: style}
   end
 
   def calendar_month_days(date)

@@ -86,6 +86,7 @@ jQuery ->
   if $('#staff_schedule').length > 0
     $legend = $('#staff_schedule_legend')
     $table = $('#job_schedule_table')
+    $calendar = $('#staff_duty_schedule')
     $('.user_name', $legend).click ->
       $this = $(this)
       $user_row = $(this).parents('.user_row')
@@ -124,7 +125,7 @@ jQuery ->
         $('.user_row.hovered', $legend).removeClass 'hovered'
 
     $('.add_user_to_job_schedule', $table).click (event)->
-      user = $('#staff_schedule_legend .user_row.selected').data 'user'
+      user = $('.user_row.selected', $legend).data 'user'
       unless user is undefined
         $this = $ this
         day = $this.data 'day'
@@ -209,6 +210,42 @@ jQuery ->
 
       event.preventDefault()
 
+    $('.calendar_day>span', $calendar).live 'click', (event)->
+      $this = $(this).parent()
+      if $this.hasClass 'duty'
+        user_id = $this.data 'user'
+        day_id = $this.data 'dayid'
+        $.ajax
+          type: 'PUT'
+          url: '/users/'+user_id
+          data: {user: {duty_days_attributes: {'0': {id: day_id, _destroy: 'true'}}}}
+          dataType: 'json'
+          success: ->
+            $this.removeClass('duty').addClass('empty').attr('data-user', null).css(backgroundColor: 'inherit')
+          error: (jqXHR, textStatus, errorThrown)->
+            console.log(jqXHR.status+' ('+errorThrown+')')
+      else if $this.hasClass 'empty'
+        user_id = $('.user_row.selected', $legend).data 'user'
+        unless user_id is undefined
+          $user = $('.user_row.selected', $legend)
+          color = $('.user_color>span', $user).data 'color'
+          day = $this.data 'day'
+          $.ajax
+            type: 'PUT'
+            url: '/users/'+user_id
+            data: {user: {duty_days_attributes: {'0': {day: day}}}}
+            dataType: 'json'
+            success: ->
+              $this.removeClass('empty').addClass('duty').attr('data-user', user_id).css(backgroundColor: color)
+            error: (jqXHR, textStatus, errorThrown)->
+              console.log(jqXHR.status+' ('+errorThrown+')')
+
+    $('.calendar_day.duty>span', $calendar)
+      .live 'mouseenter', ->
+        user = $(this).parent().data 'user'
+        $('.user_row[data-user='+user+']', $legend).addClass 'hovered'
+      .live 'mouseleave', ->
+        $('.user_row.hovered', $legend).removeClass 'hovered'
 
 toggle_schedule_day = (el) ->
   el.toggleClass 'work_hour'

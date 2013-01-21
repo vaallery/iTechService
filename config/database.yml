@@ -51,7 +51,6 @@ production:
   encoding: unicode
   database: itech_service_production
   pool: 5
-#  username: v
   username: itech_service
   password:
 
