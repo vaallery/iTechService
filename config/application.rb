@@ -66,6 +66,8 @@ module ItechService
     config.assets.version = '1.3'
     
     config.assets.precompile += ['jquery.js']
+
+    config.assets.initialize_on_precompile = false
     
     config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td', 'th', 'thead', 'hbody', 'tfoot'
   end
