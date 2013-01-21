@@ -33,9 +33,12 @@ group :assets do
   gem "less-rails"
   gem 'uglifier', '>= 1.0.3'
 end
+
+group :assets, :production do
   gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
   gem 'bootstrap-colorpicker-rails', :require => 'bootstrap-colorpicker-rails',
       :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
+end
 
 group :development do
   gem 'debugger'
