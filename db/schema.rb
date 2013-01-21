@@ -105,10 +105,10 @@ ActiveRecord::Schema.define(:version => 20130119053155) do
     t.string   "serial_number"
     t.integer  "location_id"
     t.integer  "user_id"
-    t.string   "emei"
-    t.boolean  "replaced",       :default => false
     t.string   "security_code"
     t.string   "status"
+    t.string   "imei"
+    t.boolean  "replaced",       :default => false
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
@@ -213,10 +213,13 @@ ActiveRecord::Schema.define(:version => 20130119053155) do
   add_index "schedule_days", ["user_id"], :name => "index_schedule_days_on_user_id"
 
   create_table "stolen_phones", :force => true do |t|
-    t.string   "emei",       :null => false
+    t.string   "imei",       :null => false
+    t.text     "comment"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "stolen_phones", ["imei"], :name => "index_stolen_phones_on_imei"
 
   create_table "tasks", :force => true do |t|
     t.string   "name"

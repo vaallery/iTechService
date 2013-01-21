@@ -38,14 +38,14 @@ jQuery ->
     if $(this).parents('#clients_autocomplete_list').length is 0
       $('#clients_autocomplete_list').hide()
 
-  $('#device_emei').blur ()->
-    $.getJSON '/devices/check_emei?emei_q='+$(this).val(), (data)->
+  $('#device_imei').blur ()->
+    $.getJSON '/devices/check_imei?imei_q='+$(this).val(), (data)->
       if data.present
-        $('#device_emei').parents('.control-group').addClass 'warning'
-        if $('#device_emei').siblings('.help-inline').length
-          $('#device_emei').siblings('.help-inline').html data.msg
+        $('#device_imei').parents('.control-group').addClass 'warning'
+        if $('#device_imei').siblings('.help-inline').length
+          $('#device_imei').siblings('.help-inline').html data.msg
         else
-          $('#device_emei').parents('.controls').append "<span class='help-inline'>"+data.msg+"</span>"
+          $('#device_imei').parents('.controls').append "<span class='help-inline'>"+data.msg+"</span>"
       else
-        $('#device_emei').parents('.control-group').removeClass 'warning'
-        $('#device_emei').siblings('.help-inline').remove()
+        $('#device_imei').parents('.control-group').removeClass 'warning'
+        $('#device_imei').siblings('.help-inline').remove()
