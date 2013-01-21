@@ -22,6 +22,7 @@ gem 'uuidtools'
 gem 'exception_notification', git: 'git://github.com/alanjds/exception_notification.git'
 gem 'private_pub'
 
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -42,6 +43,7 @@ group :development do
   #gem 'linecache19', '>= 0.5.13'#, :git => 'https://github.com/robmathews/linecache19-0.5.13.git'
   #gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
   #gem 'ruby-debug-ide', '>= 0.4.17.beta14'
+  gem 'seed_dumper'
 end
 
 group :test do

@@ -15,7 +15,7 @@ ItechService::Application.configure do
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Generate digests for assets URLs
   config.assets.digest = true
@@ -70,9 +70,25 @@ ItechService::Application.configure do
 
   config.assets.initialize_on_precompile = false
 
-  config.middleware.use ExceptionNotifier,
-                        email_prefix: "[!!! Exception] ",
-                        sender_address: %{"iTechService" <exception@itechservice.ru>},
-                        exception_recipients: %w{kvn@itechdevs.com}
+  #ActionMailer::Base.default from: "noreply@itechstore.ru"
+  #config.action_mailer.default_url_options = { host: 'itechservice.herokuapp.com' }
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.raise_delivery_errors = false
+  #config.action_mailer.smtp_settings = {
+  #    :address              => "smtp.gmail.com",
+  #    :port                 => 587,
+  #    :domain               => "itechdevs.com",
+  #    :user_name            => "kvn@itechdevs.com",
+  #    :password             => "kvn3163115",
+  #    :authentication       => "plain",
+  #    :enable_starttls_auto => true
+  #}
+
+  #config.action_mailer.perform_deliveries = true
+
+  #config.middleware.use ExceptionNotifier,
+  #                      email_prefix: "[!!! Exception] ",
+  #                      sender_address: %{"iTechService" <kvn@itechdevs.com>},
+  #                      exception_recipients: %w{kvn@itechdevs.com}
 
 end
