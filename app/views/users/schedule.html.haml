@@ -5,12 +5,12 @@
 .row-fluid
   #staff_schedule.span8
     %ul.nav.nav-pills
-      %li= link_to t('user.job_schedule'), '#job_schedule_tab', 'data-toggle' => 'tab'
-      %li.active= link_to t('user.duty_schedule'), '#duty_schedule_tab', 'data-toggle' => 'tab'
+      %li.active= link_to t('user.job_schedule'), '#job_schedule_tab', 'data-toggle' => 'tab'
+      %li= link_to t('user.duty_schedule'), '#duty_schedule_tab', 'data-toggle' => 'tab'
 
     .tab-content
 
-      #job_schedule_tab.tab-pane
+      #job_schedule_tab.tab-pane.active
         %table#job_schedule_table.table.table-bordered.table-condensed
           %caption
             %h4= t 'user.job_schedule'
@@ -31,7 +31,7 @@
                 - location.users.working_at(day).each do |user|
                   = user_hours_row_tag day, user
 
-      #duty_schedule_tab.tab-pane.active
+      #duty_schedule_tab.tab-pane
         = render 'staff_duty_schedule'
 
   .span4
