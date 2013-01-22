@@ -1,7 +1,7 @@
 class StolenPhone < ActiveRecord::Base
 
-  attr_accessible :imei
-  validates :imei, presence: true
+  attr_accessible :imei, :comment
+  validates :imei, presence: true, length: {is: 15}
 
   def self.search params
     stolen_phones = StolenPhone.scoped

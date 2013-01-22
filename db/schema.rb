@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130119053155) do
+ActiveRecord::Schema.define(:version => 20130122012843) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20130119053155) do
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
+  add_index "devices", ["imei"], :name => "index_devices_on_imei"
   add_index "devices", ["location_id"], :name => "index_devices_on_location_id"
   add_index "devices", ["status"], :name => "index_devices_on_status"
   add_index "devices", ["ticket_number"], :name => "index_devices_on_ticket_number"
@@ -214,9 +215,9 @@ ActiveRecord::Schema.define(:version => 20130119053155) do
 
   create_table "stolen_phones", :force => true do |t|
     t.string   "imei",       :null => false
-    t.text     "comment"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.text     "comment"
   end
 
   add_index "stolen_phones", ["imei"], :name => "index_stolen_phones_on_imei"

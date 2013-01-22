@@ -1,5 +1,5 @@
 - if @locations.any?
-  %table.table.table-striped
+  %table.table.table-striped.table-hover
     %thead
       %tr
         %th= Location.human_attribute_name(:id)
@@ -10,8 +10,8 @@
     %tbody
       - @locations.each do |location|
         %tr
-          %td= link_to location.id, location_path(location)
-          %td= link_to location.name, location_path(location)
+          %td= location.id
+          %td= location.name
           %td= location.ancestors_names
           %td= human_datetime location.created_at
           %td

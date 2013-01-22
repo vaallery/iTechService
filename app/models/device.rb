@@ -14,6 +14,7 @@ class Device < ActiveRecord::Base
 
   validates :ticket_number, :client_id, :device_type_id, :location_id, presence: true
   validates :ticket_number, uniqueness: true
+  validates :imei, length: {is: 15}
   validates_associated :device_tasks
   
   before_validation :generate_ticket_number

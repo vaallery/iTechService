@@ -1,4 +1,5 @@
 = simple_form_for @stolen_phone, html: { class: 'form-horizontal' } do |f|
   = f.input :imei, autofocus: true
+  = f.input :comment
   .form-actions
     = submit_button f
