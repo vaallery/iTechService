@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130122012843) do
+ActiveRecord::Schema.define(:version => 20130122093617) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -135,17 +135,14 @@ ActiveRecord::Schema.define(:version => 20130122012843) do
     t.string   "object_type"
     t.string   "column_name"
     t.string   "column_type"
-    t.string   "old_value"
-    t.string   "new_value"
     t.datetime "deleted_at"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.text     "old_value"
+    t.text     "new_value"
   end
 
-  add_index "history_records", ["new_value"], :name => "index_history_records_on_new_value"
   add_index "history_records", ["object_id", "object_type"], :name => "index_history_records_on_object_id_and_object_type"
-  add_index "history_records", ["old_value", "new_value"], :name => "index_history_records_on_old_value_and_new_value"
-  add_index "history_records", ["old_value"], :name => "index_history_records_on_old_value"
   add_index "history_records", ["user_id"], :name => "index_history_records_on_user_id"
 
   create_table "infos", :force => true do |t|
