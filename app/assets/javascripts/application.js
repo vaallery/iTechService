@@ -19,6 +19,7 @@
 //= require ckeditor/init
 //= require private_pub
 //= require bootstrap-colorpicker
+//= require bootstrap-datepicker
 // require jasny-bootstrap/jasny-bootstrap.min
 //= require_self
 //= require_tree .

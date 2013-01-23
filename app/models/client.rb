@@ -15,7 +15,7 @@ class Client < ActiveRecord::Base
     clients = Client.scoped
     unless (client_q = params[:client_q]).blank?
       clients = clients.where 'LOWER(clients.surname) LIKE :q OR clients.name LIKE :q
-                               LOWER(clients.patronymic) LIKE :q OR clients.phone_number LIKE :q
+                               OR LOWER(clients.patronymic) LIKE :q OR clients.phone_number LIKE :q
                                OR clients.full_phone_number LIKE :q OR clients.card_number LIKE :q',
                                q: "%#{client_q.downcase}%"
     end

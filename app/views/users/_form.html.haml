@@ -21,9 +21,9 @@
       = f.input :surname
       = f.input :name
       = f.input :patronymic
-      = f.input :birthday, input_html: { class: 'date_field' }
-      = f.input :hiring_date, input_html: { class: 'date_field' }
-      -#= f.input :salary_date, input_html: { class: 'date_field' }
+      = f.input :birthday, as: :my_date, viewmode: 'years'
+      = f.input :hiring_date, as: :my_date
+      -#= f.input :salary_date, as: :my_date
       = f.input :prepayment
       = f.input :color, as: :color
     - unless @user.new_record?

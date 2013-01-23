@@ -1,9 +1,8 @@
 class ClientInput < SimpleForm::Inputs::StringInput
 
   def input
-    (template.content_tag(:div, id: 'client_input', class: 'input-prepend input-append',
-                          'data-title' => @builder.object.class.human_attribute_name(:devices),
-                          'data-content' => template.client_devices_list(@builder.object.client).to_s) do
+    (
+    template.content_tag(:div, id: 'client_input', class: 'input-prepend input-append') do
       template.content_tag(:span, template.icon_tag(:search), class: 'add-on') +
       template.text_field_tag(:client_search, @builder.object.try(:client).try(:name_phone),
                               placeholder: 'name / phone number', autofocus: true) +
@@ -14,7 +13,19 @@ class ClientInput < SimpleForm::Inputs::StringInput
     end +
     template.content_tag(:ul, id: 'clients_autocomplete_list', class: 'dropdown-menu') do
       template.clients_autocomplete_list
-    end).html_safe
+    end +
+    template.content_tag(:div, id: 'client_devices', class: 'popover fade right in') do
+      template.content_tag(:div, nil, class: 'arrow') +
+      template.content_tag(:div, class: 'popover-inner') do
+        template.content_tag(:h3, class: 'popover-title') do
+          @builder.object.class.human_attribute_name(:devices)
+        end +
+        template.content_tag(:div, class: 'popover-content') do
+          template.client_devices_list(@builder.object.client)
+        end
+      end
+    end
+    ).html_safe
   end
 
 end

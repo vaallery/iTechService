@@ -54,3 +54,16 @@ jQuery ->
     $this = $ this
     params = $this.parents('form:first').serialize()
     event.currentTarget.href = '/clients/questionnaire?' + params
+
+  placeClientDevices()
+
+placeClientDevices = ()->
+  $devices = $('#client_devices')
+  $input = $('#client_input')
+  $('#client_devices').css
+    top: $input.offset().top - 6
+    left: $input.offset().left + $input.outerWidth()
+  if $('.client_devices_list', $devices).length > 0
+    $devices.show()
+  else
+    $devices.hide()

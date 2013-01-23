@@ -1,7 +1,6 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-#= require bootstrap-datepicker
 
 jQuery ->
 
@@ -24,12 +23,6 @@ jQuery ->
     fill_schedule_fields()
     event.preventDefault()
     false
-
-  $('.datepicker').datepicker
-    format: 'dd.mm.yyyy'
-    weekStart: 1
-    viewMode: 'years'
-    minViewMode: 'day'
 
   $('td.calendar_day.work_day.empty', '#calendar.editable').click (event) ->
     $this = $(this)

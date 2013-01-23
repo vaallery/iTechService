@@ -25,10 +25,3 @@ jQuery ->
       $('#client_questionnaire_input').removeClass 'hidden'
     else
       $('#client_questionnaire_input').addClass 'hidden'
-
-  $('#client_input').popover
-    html: true
-    placement: 'right'
-    trigger: 'manual'
-
-  $('#client_input').popover('show') unless $('#client_input').data('content') is ''

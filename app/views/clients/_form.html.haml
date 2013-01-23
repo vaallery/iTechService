@@ -3,7 +3,7 @@
   = f.input :surname, autofocus: true
   = f.input :name
   = f.input :patronymic
-  = f.input :birthday, input_html: { class: 'date_field' }
+  = f.input :birthday, as: :my_date, viewmode: 'years'
   = f.input :full_phone_number, as: :phone_number
   = f.hidden_field :phone_number
   = f.input :email

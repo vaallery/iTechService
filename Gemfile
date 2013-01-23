@@ -21,6 +21,7 @@ gem "ckeditor"
 gem 'uuidtools'
 gem 'exception_notification', git: 'git://github.com/alanjds/exception_notification.git'
 gem 'private_pub'
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 
 
 # Gems used only for assets and not required
@@ -35,7 +36,6 @@ group :assets do
   gem 'bootstrap-colorpicker-rails', :require => 'bootstrap-colorpicker-rails',
       :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
 end
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 
 
 group :development do
