@@ -138,7 +138,11 @@ class DevicesController < ApplicationController
     msg = stolen_phone.present? ? t('device.phone_stolen') : ''
     render json: {present: stolen_phone.present?, msg: msg}
   end
-  
+
+  def device_select
+    @device = Device.find params[:device_id]
+  end
+
   private
   
   def sort_column

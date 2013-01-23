@@ -28,7 +28,6 @@ ItechService::Application.routes.draw do
   resources :clients do
     get :check_phone_number, on: :collection
     get :questionnaire, on: :collection
-    get :select_device, on: :member
   end
 
   resources :device_types, except: [:new]
@@ -42,6 +41,7 @@ ItechService::Application.routes.draw do
     get :select_client, on: :collection
     get :history, on: :member, defaults: { format: 'js' }
     get :device_type_select, on: :collection, defaults: { format: 'js' }
+    get :device_select, on: :collection
     get :check_imei, on: :collection
   end
   match 'check_device_status' => 'devices#check_status', via: :get

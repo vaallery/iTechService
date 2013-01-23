@@ -5,7 +5,14 @@
   $('#device_serial_number').val("#{@device.serial_number}");
   $('#device_type_name').text("#{@device.device_type.full_name}");
   $('#available_for_replacement').text("#{@device.device_type.available_for_replacement}");
-  if(#{@device.device_type.available_for_replacement} > 0)
-    $('#device_replaced').removeAttr('disabled')
-  else
-    $('#device_replaced').addAttr('disabled');
+  if(#{@device.device_type.available_for_replacement} > 0){
+    $('#device_replaced').removeAttr('disabled');
+  }else{
+    $('#device_replaced').attr('disabled', 'disabled');
+  }
+  if(#{@device.has_imei?}){
+    $('.imei_input').removeClass('hidden');
+  }else{
+    $('.imei_input').addClass('hidden');
+    $('#device_imei').val('');
+  }

@@ -14,7 +14,7 @@
 
   = f.input :security_code, as: :security_code
 
-  = f.input :imei
+  = f.input :imei, wrapper_html: {class: @device.has_imei? ? 'imei_input' : 'imei_input hidden'}
 
   = f.input :serial_number
   

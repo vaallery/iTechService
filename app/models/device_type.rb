@@ -14,4 +14,12 @@ class DeviceType < ActiveRecord::Base
     qty_for_replacement - qty_replaced
   end
 
+  def has_imei?
+    %w[iphone ipad].include? root.name.downcase
+  end
+
+  def is_iphone?
+    root.name.downcase == 'iphone'
+  end
+
 end

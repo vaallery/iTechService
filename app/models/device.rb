@@ -138,7 +138,11 @@ class Device < ActiveRecord::Base
   end
 
   def is_iphone?
-    type_name.downcase['iphone'].present? if type_name.present?
+    device_type.is_iphone? if device_type.present?
+  end
+
+  def has_imei?
+    device_type.has_imei? if device_type.present?
   end
 
   private
