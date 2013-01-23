@@ -50,7 +50,7 @@ jQuery ->
         $('#device_imei').parents('.control-group').removeClass 'warning'
         $('#device_imei').siblings('.help-inline').remove()
 
-  $('#questionaire_link').live 'click', (event)->
+  $('#questionnaire_link').live 'click', (event)->
     $this = $ this
     params = $this.parents('form:first').serialize()
     event.currentTarget.href = '/clients/questionnaire?' + params
