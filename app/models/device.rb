@@ -133,7 +133,6 @@ class Device < ActiveRecord::Base
     {
       client: client_presentation,
       device_type: type_name,
-      serial_number: serial_number,
       status: status
     }
   end
