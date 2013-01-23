@@ -13,10 +13,10 @@
           %li{class: nav_state_for('infos')}= link_to 'Infos', infos_path if can? :read, Info
           %li{class: nav_state_for('orders')}= link_to 'Orders', orders_path if can? :read, Order
           %li{class: nav_state_for('stolen_phones')}= link_to 'Black list', stolen_phones_path
-          -#- if can? :manage, Price
-          -#= header_link_to_edit_prices
-          -#- else
-          = header_link_to_view_prices
+          - if can? :manage, Price
+            = header_link_to_edit_prices
+          - else
+            = header_link_to_view_prices
         %ul.nav.pull-right
           = header_link_to_help if current_user.helpable?
           %li= profile_link

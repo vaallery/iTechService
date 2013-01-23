@@ -55,6 +55,9 @@ jQuery ->
     params = $this.parents('form:first').serialize()
     event.currentTarget.href = '/clients/questionnaire?' + params
 
+  $('#client_devices_resize_button').click ->
+    $('.client_devices_list').slideToggle(100)
+
   placeClientDevices()
 
 placeClientDevices = ()->
