@@ -24,7 +24,6 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new
-    #@client.comments.build
 
     respond_to do |format|
       format.html
@@ -35,8 +34,7 @@ class ClientsController < ApplicationController
 
   def edit
     @client = Client.find(params[:id])
-    #@client.comments.build
-    
+
     respond_to do |format|
       format.html
       format.js { render 'shared/show_modal_form' }
@@ -45,7 +43,6 @@ class ClientsController < ApplicationController
 
   def create
     @client = Client.new(params[:client])
-    #@client.comments.build
 
     respond_to do |format|
       if @client.save
@@ -62,7 +59,6 @@ class ClientsController < ApplicationController
 
   def update
     @client = Client.find(params[:id])
-    #@client.comments.build
 
     respond_to do |format|
       if @client.update_attributes(params[:client])

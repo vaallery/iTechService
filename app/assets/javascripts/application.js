@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require twitter/bootstrap
-//= require autocomplete-rails
 //= require jquery.jstree
 //= require ckeditor/init
 //= require private_pub
