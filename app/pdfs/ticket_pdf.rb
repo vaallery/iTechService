@@ -38,8 +38,7 @@ class TicketPdf < Prawn::Document
     font @font_normal
     text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
     move_down 10
-    #text @device.user_name
-    text "Виталий"
+    text @device.user_name
     move_down 5
     text @view.t('ticket.contact_phone')
     move_down 5

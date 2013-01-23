@@ -54,7 +54,7 @@ class Device < ActiveRecord::Base
   end
 
   def user_name
-    user.try :name
+    user.full_name
   end
   
   def presentation

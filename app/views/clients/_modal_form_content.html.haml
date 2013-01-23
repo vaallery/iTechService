@@ -5,17 +5,19 @@
     %h3= auto_title
 
   .modal-body
-    = f.input :name, autofocus: true
-    = f.input :surname
+    = f.input :surname, autofocus: true
+    = f.input :patronymic
+    = f.input :name
     = f.input :full_phone_number, as: :phone_number
     = f.hidden_field :phone_number
     = f.input :card_number
 
     #client_questionnaire_input.hidden
+      = f.input :email
+      = f.input :birthday, as: :date
       .control-group
         %label.control-label= t 'client.questionnaire'
-        .controls= link_to icon_tag('print'), questionnaire_clients_path(format: 'pdf'), class: 'btn', target: '_blank'
-
+        .controls= link_to icon_tag('print'), '#', class: 'btn', id: 'questionaire_link', target: '_blank'
 
   .modal-footer
     = f.button :submit, class: 'btn-primary'

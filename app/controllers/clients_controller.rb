@@ -97,8 +97,8 @@ class ClientsController < ApplicationController
   end
 
   def questionnaire
-    pdf = QuestionnairePdf.new view_context
-    send_data pdf.render, filename: 'questionaire.pdf', type: 'application/pdf', disposition: 'inline'
+    pdf = QuestionnairePdf.new view_context, params[:client]
+    send_data pdf.render, filename: 'anketa.pdf', type: 'application/pdf', disposition: 'inline'
   end
 
   def select_device
