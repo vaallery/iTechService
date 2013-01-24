@@ -26,4 +26,8 @@ class DashboardController < ApplicationController
     redirect_to root_url
   end
 
+  def goods_for_sale
+    @device_types = DeviceType.for_sale
+  end
+
 end

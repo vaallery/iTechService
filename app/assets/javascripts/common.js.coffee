@@ -1,5 +1,10 @@
 jQuery ->
 
+  $('#history').live 'click', '.close_history', (event) ->
+    $history = $('#history')
+    $history.remove()
+    event.preventDefault()
+
   $(document).ready () ->
     $('form[data-remote]').bind 'ajax:before', () ->
       CKEDITOR.instances[instance].updateElement() for instance in CKEDITOR.instances

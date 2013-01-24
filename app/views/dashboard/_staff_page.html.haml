@@ -1,5 +1,6 @@
 .page-header
   = link_to_new Device, t('.new_device') if can? :receive, Device
+  = link_to t('goods_for_sale'), goods_for_sale_path, class: 'btn btn-link btn-large'
 
 - if @device_tasks.any?
   %table.table.table-striped.table-hover

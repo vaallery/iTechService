@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130122093617) do
+ActiveRecord::Schema.define(:version => 20130123132740) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -90,6 +90,10 @@ ActiveRecord::Schema.define(:version => 20130122093617) do
     t.string   "ancestry"
     t.integer  "qty_for_replacement", :default => 0
     t.integer  "qty_replaced",        :default => 0
+    t.integer  "qty_shop"
+    t.integer  "qty_store"
+    t.integer  "qty_reserve"
+    t.integer  "expected_during"
   end
 
   add_index "device_types", ["ancestry"], :name => "index_device_types_on_ancestry"

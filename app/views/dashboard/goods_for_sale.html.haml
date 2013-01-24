@@ -1,0 +1,27 @@
+.page-header
+  %h1
+    = link_back_to_index
+    = t 'dashboard.goods_for_sale'
+
+%table#goods_for_sale_table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th= DeviceType.human_attribute_name(:name)
+      %th= DeviceType.human_attribute_name(:qty_shop)
+      %th= DeviceType.human_attribute_name(:qty_store)
+      %th= DeviceType.human_attribute_name(:qty_reserve)
+      %th= DeviceType.human_attribute_name(:expected_during)
+  %tbody
+    - @device_types.each do |device_type|
+      %tr{data: {device_type_id: device_type.id}}
+        %td= device_type.full_name
+        %td= device_type.qty_shop
+        %td= device_type.qty_store
+        %td.reserve_column
+          .btn-group
+            = link_to icon_tag(:plus), reserve_device_type_path(device_type, direction: '+'), remote: true,
+                      method: :post, class: 'btn btn-mini'
+            %a.reserve_value.btn.btn-mini= device_type.qty_reserve || '0'
+            = link_to icon_tag(:minus), reserve_device_type_path(device_type, direction: '-'), remote: true,
+                      method: :post, class: 'btn btn-mini'
+        %td= device_type.expected_during

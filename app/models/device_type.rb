@@ -1,10 +1,12 @@
 class DeviceType < ActiveRecord::Base
-  attr_accessible :name, :ancestry, :parent_id, :qty_for_replacement, :qty_replaced
+  attr_accessible :name, :ancestry, :parent_id, :qty_for_replacement, :qty_replaced, :qty_shop,
+                  :qty_store, :qty_reserve, :expected_during
   validates :name, presence: true
-  validates :name, uniqueness: true
+  #validates :name, uniqueness: true
   has_ancestry
 
-  #default_scope order('ancestry')
+  #scope :not_root, where('ancestry != NULL')
+  #scope :for_sale, not_root.and(self.arel_table[:descendants_count].eq(0))
 
   def full_name
     path.all.map { |t| t.name }.join ' '
@@ -20,6 +22,10 @@ class DeviceType < ActiveRecord::Base
 
   def is_iphone?
     root.name.downcase == 'iphone'
+  end
+
+  def self.for_sale
+    all.select{|dt|dt.is_childless?}.sort_by!{|dt|dt.full_name}
   end
 
 end

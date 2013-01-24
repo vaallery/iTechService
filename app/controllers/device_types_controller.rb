@@ -49,4 +49,13 @@ class DeviceTypesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def reserve
+    @device_type = DeviceType.find params[:id]
+    new_reserve = @device_type.qty_reserve || 0
+    new_reserve = new_reserve.next if params[:direction] == '+'
+    new_reserve = new_reserve.pred if params[:direction] == '-'
+    @device_type.update_attribute :qty_reserve, new_reserve
+  end
+
 end

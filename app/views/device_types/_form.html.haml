@@ -8,6 +8,10 @@
 
       = f.input :qty_for_replacement
       = f.input :qty_replaced, disabled: true, as: 'string'
+      = f.input :qty_shop
+      = f.input :qty_store
+      = f.input :qty_reserve
+      = f.input :expected_during
 
       .control-group
         .controls= submit_button f
