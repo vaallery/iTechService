@@ -1,0 +1,13 @@
+= simple_form_for @device, html: { class: 'form-horizontal', remote: true } do |f|
+  .modal-header
+    %a.close{'data-dismiss' => 'modal', href: '#'}
+      %i.icon-remove-sign
+    %h3
+      = @device.type_name
+
+  .modal-body
+    = f.input :location_id, collection: available_locations_for(current_user)
+    -#= f.input :location_id, as: :location, user: current_user
+
+  .modal-footer
+    = submit_button f

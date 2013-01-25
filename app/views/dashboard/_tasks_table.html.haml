@@ -1,0 +1,18 @@
+%table#actual_tasks_table.table.table-hover.table-bordered
+  %caption
+    %h3= t 'dashboard.actual_tasks'
+  %thead
+    %tr
+      %th= t 'moved_title'
+      %th= "#{DeviceTask.human_attribute_name(:device)} / #{DeviceTask.human_attribute_name :task}"
+      %th= "#{Device.human_attribute_name(:client)} / #{DeviceTask.human_attribute_name :comment}"
+      %th
+  %tbody
+    - @devices.each do |device|
+      -#- device_tasks = current_user.admin? ? device.device_tasks.pending : device.device_tasks.pending.tasks_for(current_user)
+      - device_tasks = device.device_tasks
+      = device_row_tag device
+      - device_tasks.each do |device_task|
+        = device_task_row_tag device_task
+
+= paginate @devices

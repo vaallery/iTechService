@@ -304,6 +304,8 @@ ru:
     site: 'www.itechstore.ru'
 
   create: Создать
+  moved: "%{user} %{time} назад"
+  moved_title: Переместил
   nothing_found: Ничего не найдено
   phone_placeholder: "6, 7, 10 или 11 цифр"
   save: Сохранить

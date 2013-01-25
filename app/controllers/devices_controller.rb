@@ -1,5 +1,5 @@
-
 class DevicesController < ApplicationController
+  include DevicesHelper
   #before_filter :store_location
   helper_method :sort_column, :sort_direction
   load_and_authorize_resource except: :check_status
@@ -48,6 +48,11 @@ class DevicesController < ApplicationController
 
   def edit
     @device = Device.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.js { render 'shared/show_modal_form' }
+    end
   end
 
   def create
@@ -72,9 +77,11 @@ class DevicesController < ApplicationController
       if @device.update_attributes(params[:device])
         format.html { redirect_to @device, notice: 'Device was successfully updated.' }
         format.json { head :no_content }
+        format.js { render 'update' }
       else
         format.html { render action: "edit" }
         format.json { render json: @device.errors, status: :unprocessable_entity }
+        format.js { render 'shared/show_modal_form' }
       end
     end
   end
@@ -141,6 +148,10 @@ class DevicesController < ApplicationController
 
   def device_select
     @device = Device.find params[:device_id]
+  end
+
+  def movement_history
+    @device = Device.find params[:id]
   end
 
   private

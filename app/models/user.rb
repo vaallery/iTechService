@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   has_many :orders, as: :customer
   has_many :announcements
   has_many :comments
+  has_many :devices, inverse_of: :user
 
   mount_uploader :photo, PhotoUploader
   

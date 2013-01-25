@@ -1,5 +1,6 @@
 class Device < ActiveRecord::Base
-  
+
+  belongs_to :user, inverse_of: :devices
   belongs_to :client, inverse_of: :devices
   belongs_to :device_type
   belongs_to :location
@@ -14,12 +15,13 @@ class Device < ActiveRecord::Base
 
   validates :ticket_number, :client_id, :device_type_id, :location_id, presence: true
   validates :ticket_number, uniqueness: true
-  validates :imei, length: {is: 15}
+  validates :imei, length: {is: 15}, allow_blank: true
   validates_associated :device_tasks
   
   before_validation :generate_ticket_number
   before_validation :check_device_type
   before_validation :check_security_code
+  before_validation :set_user_and_location
   after_save :update_qty_replaced
 
   scope :ordered, order("devices.done_at desc, created_at asc")#, tasks.priority desc")
@@ -28,10 +30,7 @@ class Device < ActiveRecord::Base
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   scope :replaced, where(replaced: true)
 
-  after_initialize do |device|
-    device.location_id ||= User.try(:current).try :location_id
-    device.user_id ||= User.try(:current).try :id
-  end
+  after_initialize :set_user_and_location
   
   def type_name
     device_type.try :full_name
@@ -54,7 +53,7 @@ class Device < ActiveRecord::Base
   end
 
   def user_name
-    user.full_name
+    (user || User.current).full_name
   end
   
   def presentation
@@ -145,6 +144,33 @@ class Device < ActiveRecord::Base
     device_type.has_imei? if device_type.present?
   end
 
+  def moved_at
+    if (rec = history_records.where(column_name: 'location_id').order('updated_at desc').first).present?
+      rec.updated_at
+    else
+      nil
+    end
+  end
+
+  def moved_by
+    if (rec = history_records.where(column_name: 'location_id').order('updated_at desc').first).present?
+      rec.user
+    else
+      nil
+    end
+  end
+
+  def is_actual_for? user
+    device_tasks.any?{|t|t.is_actual_for? user}
+  end
+
+  def movement_history
+    records = history_records.where(column_name: 'location_id').order('created_at desc')
+    records.map do |record|
+      [record.created_at, record.new_value, record.user_id]
+    end
+  end
+
   private
 
   def generate_ticket_number
@@ -169,6 +195,11 @@ class Device < ActiveRecord::Base
     if is_iphone? and security_code.blank?
       errors.add :security_code, I18n.t('.errors.messages.empty')
     end
+  end
+
+  def set_user_and_location
+    location_id ||= User.try(:current).try(:location_id)
+    user_id ||= User.try(:current).try(:id)
   end
 
 end

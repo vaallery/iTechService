@@ -3,3 +3,5 @@
   = link_to icon_tag(:user) + t('.new_user'), new_user_path, class: 'btn btn-success btn-large'
   = link_to_new Device, t('.new_device') if can? :receive, Device
   = link_to t('goods_for_sale'), goods_for_sale_path, class: 'btn btn-link btn-large'
+
+= render 'tasks_table'

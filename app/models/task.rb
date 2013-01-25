@@ -22,4 +22,8 @@ class Task < ActiveRecord::Base
     end
   end
 
+  def is_actual_for? user
+    role == user.role
+  end
+
 end

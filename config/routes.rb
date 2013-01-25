@@ -1,8 +1,5 @@
 ItechService::Application.routes.draw do
 
-  resources :comments
-
-
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -46,10 +43,13 @@ ItechService::Application.routes.draw do
     get :device_type_select, on: :collection, defaults: { format: 'js' }
     get :device_select, on: :collection
     get :check_imei, on: :collection
+    get :movement_history, on: :member
   end
   match 'check_device_status' => 'devices#check_status', via: :get
   match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: :get,
       as: :history_device_task, defaults: { format: 'js' }
+
+  resources :device_tasks, only: [:edit, :update]
 
   resources :orders do
     get :history, on: :member, defaults: { format: 'js' }
@@ -64,6 +64,8 @@ ItechService::Application.routes.draw do
   resources :announcements
   match 'call_help' => 'announcements#call_help', via: :post
   match 'cancel_help' => 'announcements#cancel_help', via: :post
+
+  resources :comments
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

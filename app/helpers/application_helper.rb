@@ -24,7 +24,7 @@ module ApplicationHelper
 
   def sortable(column, title = nil)
     title ||= column.titleize
-    
+
     if column == sort_column
       css_class = "current #{sort_direction} nav nav-pills"
       direction = sort_direction == "asc" ? "desc" : "asc"
@@ -37,18 +37,18 @@ module ApplicationHelper
     title = "#{title} #{icon_tag(icon_name)}".html_safe
     link_to title, params.merge(sort: column, direction: direction, page: nil), {class: css_class, remote: false}
   end
-  
+
   def search_button
     button_tag type: 'submit', class: "btn btn-info" do
       icon_tag(:search) + t(:search)
     end
   end
-  
+
   def timestamp_string_for object
     "[#{object.class.human_attribute_name(:created_at)}: #{l(object.created_at, format: :long_d)} | " +
       "#{object.class.human_attribute_name(:updated_at)}: #{l(object.updated_at, format: :long_d)}]"
   end
-  
+
   def nav_state_for controller
     controller_name == controller ? 'active' : ''
   end
@@ -60,7 +60,7 @@ module ApplicationHelper
       icon_tag(:file) + name
     end
   end
-  
+
   def link_to_show object, options = {}
     options.merge! class: 'btn'
     name = t '.edit', default: t("helpers.links.edit")
@@ -68,7 +68,7 @@ module ApplicationHelper
       icon_tag(:eye) + name
     end
   end
-  
+
   def link_to_edit object, options = {}
     options.merge! class: 'btn'
     name = t '.edit', default: t("helpers.links.edit")
@@ -189,6 +189,10 @@ module ApplicationHelper
 
   def caret_tag
     content_tag(:b, nil, class: 'caret').html_safe
+  end
+
+  def history_link_to(url)
+    link_to icon_tag(:time), url, class: "history_link", remote: true
   end
 
 end

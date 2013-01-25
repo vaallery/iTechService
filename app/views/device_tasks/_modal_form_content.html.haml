@@ -1,0 +1,18 @@
+= simple_form_for @device_task, html: { class: 'form-horizontal', remote: true } do |f|
+  .modal-header
+    %a.close{'data-dismiss' => 'modal', href: '#'}
+      %i.icon-remove-sign
+    %h3
+      = @device_task.device.type_name
+
+  .modal-body
+    .alert.alert-info
+      %strong= @device_task.task_name
+      - unless @device_task.comment.blank?
+        %br
+          %i= @device_task.comment
+    = f.input :cost
+    = f.input :done
+
+  .modal-footer
+    = submit_button f

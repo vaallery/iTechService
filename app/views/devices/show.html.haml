@@ -2,8 +2,7 @@
   %h1
     = link_back_to_index
     = @device.type_name
-    %small
-      = link_to icon_tag(:calendar), history_device_path(@device), style: "text-decoration:none;", remote: true
+    %small= history_link_to history_device_path(@device)
 
   %span.help-block
     %small= timestamp_string_for @device
@@ -63,8 +62,7 @@
         %td= l device_task.created_at, format: :long_d
         %td= l device_task.updated_at, format: :long_d
         %td{style: "background:none;"}
-          = link_to history_device_task_path(@device, device_task), style: "text-decoration:none;", remote: true do
-            %i.icon-calendar
+          = history_link_to history_device_task_path(@device, device_task)
   %tfoot
     %tr
       %td{colspan: 3}= t 'total'

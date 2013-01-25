@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130123132740) do
+ActiveRecord::Schema.define(:version => 20130125065318) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -55,7 +55,13 @@ ActiveRecord::Schema.define(:version => 20130123132740) do
     t.text     "admin_info"
   end
 
+  add_index "clients", ["card_number"], :name => "index_clients_on_card_number"
+  add_index "clients", ["email"], :name => "index_clients_on_email"
   add_index "clients", ["full_phone_number"], :name => "index_clients_on_full_phone_number"
+  add_index "clients", ["name"], :name => "index_clients_on_name"
+  add_index "clients", ["patronymic"], :name => "index_clients_on_patronymic"
+  add_index "clients", ["phone_number"], :name => "index_clients_on_phone_number"
+  add_index "clients", ["surname"], :name => "index_clients_on_surname"
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id",          :null => false
@@ -66,6 +72,7 @@ ActiveRecord::Schema.define(:version => 20130123132740) do
     t.datetime "updated_at",       :null => false
   end
 
+  add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
@@ -81,6 +88,8 @@ ActiveRecord::Schema.define(:version => 20130123132740) do
   end
 
   add_index "device_tasks", ["device_id"], :name => "index_device_tasks_on_device_id"
+  add_index "device_tasks", ["done"], :name => "index_device_tasks_on_done"
+  add_index "device_tasks", ["done_at"], :name => "index_device_tasks_on_done_at"
   add_index "device_tasks", ["task_id"], :name => "index_device_tasks_on_task_id"
 
   create_table "device_types", :force => true do |t|
@@ -97,6 +106,7 @@ ActiveRecord::Schema.define(:version => 20130123132740) do
   end
 
   add_index "device_types", ["ancestry"], :name => "index_device_types_on_ancestry"
+  add_index "device_types", ["name"], :name => "index_device_types_on_name"
 
   create_table "devices", :force => true do |t|
     t.integer  "device_type_id"
@@ -117,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20130123132740) do
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
+  add_index "devices", ["done_at"], :name => "index_devices_on_done_at"
   add_index "devices", ["imei"], :name => "index_devices_on_imei"
   add_index "devices", ["location_id"], :name => "index_devices_on_location_id"
   add_index "devices", ["status"], :name => "index_devices_on_status"
@@ -146,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20130123132740) do
     t.text     "new_value"
   end
 
+  add_index "history_records", ["column_name"], :name => "index_history_records_on_column_name"
   add_index "history_records", ["object_id", "object_type"], :name => "index_history_records_on_object_id_and_object_type"
   add_index "history_records", ["user_id"], :name => "index_history_records_on_user_id"
 
@@ -178,6 +190,7 @@ ActiveRecord::Schema.define(:version => 20130123132740) do
   end
 
   add_index "locations", ["ancestry"], :name => "index_locations_on_ancestry"
+  add_index "locations", ["name"], :name => "index_locations_on_name"
   add_index "locations", ["schedule"], :name => "index_locations_on_schedule"
 
   create_table "orders", :force => true do |t|
@@ -193,6 +206,7 @@ ActiveRecord::Schema.define(:version => 20130123132740) do
     t.datetime "updated_at",    :null => false
   end
 
+  add_index "orders", ["customer_id", "customer_type"], :name => "index_orders_on_customer_id_and_customer_type"
   add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"
   add_index "orders", ["object_kind"], :name => "index_orders_on_object_kind"
   add_index "orders", ["status"], :name => "index_orders_on_status"
@@ -233,6 +247,9 @@ ActiveRecord::Schema.define(:version => 20130123132740) do
     t.string   "role"
   end
 
+  add_index "tasks", ["name"], :name => "index_tasks_on_name"
+  add_index "tasks", ["role"], :name => "index_tasks_on_role"
+
   create_table "users", :force => true do |t|
     t.string   "username"
     t.string   "role"
@@ -267,7 +284,10 @@ ActiveRecord::Schema.define(:version => 20130123132740) do
   add_index "users", ["card_number"], :name => "index_users_on_card_number"
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["location_id"], :name => "index_users_on_location_id"
+  add_index "users", ["name"], :name => "index_users_on_name"
+  add_index "users", ["patronymic"], :name => "index_users_on_patronymic"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["surname"], :name => "index_users_on_surname"
   add_index "users", ["username"], :name => "index_users_on_username"
 
 end

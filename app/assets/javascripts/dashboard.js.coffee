@@ -1,3 +1,10 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
+
+jQuery ->
+
+  $('.device_tasks_toggle').click ->
+    $(this).parents('.device_row').nextAll('.device_task_row.success').toggle()
+
+#  $('.device_movement_column .history_link').click (event)->
+#    $this = $(this)
+##    $.getJSON()
+#    event.preventDefault()

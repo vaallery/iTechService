@@ -1,0 +1,5 @@
+require 'spec_helper'
+
+describe "device_tasks/update.js.haml" do
+  pending "add some examples to (or delete) #{__FILE__}"
+end

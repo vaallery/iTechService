@@ -1,0 +1,13 @@
+:plain
+  $link = $(".history_link[href='#{movement_history_device_path(@device)}']");
+  if($link.next('.popover').length > 0){
+    $link.popover('hide');
+  }else{
+    $link.popover({
+      html: true,
+      title: "#{t 'device.movement_history', default: 'Movement history'}",
+      content: "#{j device_movement_history(@device)}",
+      trigger: 'manual'
+    });
+    $link.popover('show');
+  }
