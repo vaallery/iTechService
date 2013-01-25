@@ -11,7 +11,6 @@ ItechService::Application.routes.draw do
   match 'dashboard' => 'dashboard#index', via: :get
   match 'become/:id' => 'dashboard#become', via: :get, as: 'become'
   match 'sign_in_by_card' => 'dashboard#sign_in_by_card', via: :get, as: 'sign_in_by_card'
-  match 'goods_for_sale' => 'dashboard#goods_for_sale', via: :get
   #match 'device_info' => 'dashboard#device_info', via: 'get'
 
   resources :users do

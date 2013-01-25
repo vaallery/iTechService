@@ -266,6 +266,9 @@ ru:
     new_device: Новый девайс
     new_info: Создать новость
     new_user: Новый пользователь
+    made_devices: "Готовые девайсы"
+    goods_for_sale: "Техника для продажи"
+    actual_tasks: "Текущие задачи"
 
   device:
     information: Информация об устройстве

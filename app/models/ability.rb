@@ -23,9 +23,10 @@ Ability
       can :read, Info
       can :update, Device
       can :update_wish, User, id: user.id
-      cannot :update, DeviceTask
+      #cannot :update, DeviceTask
       cannot :change_location, Device, new_record?: true
       can :manage_device_task, DeviceTask, task: {role: user.role}, done: false
+      can :update, DeviceTask, task: {role: user.role}, done: false
       cannot :remove_device_tasks, Device, new_record?: false
       cannot :change_client, Device
       cannot :change_device_type, Device

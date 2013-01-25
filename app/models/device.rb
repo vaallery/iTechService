@@ -29,6 +29,7 @@ class Device < ActiveRecord::Base
   scope :pending, where(done_at: nil)
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   scope :replaced, where(replaced: true)
+  scope :located_at, lambda {|location| where(location_id: location.id)}
 
   after_initialize :set_user_and_location
   

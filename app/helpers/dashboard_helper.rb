@@ -55,6 +55,21 @@ module DashboardHelper
     end
   end
 
+  def made_device_row_tag(device)
+    content_tag(:tr, class: 'device_row', data: {device_id: device.id}) do
+      content_tag(:td, device_movement_information_tag(device), class: 'device_movement_column') +
+      content_tag(:td) do
+        link_to(device.presentation, device_path(device), target: '_blank')
+      end +
+      content_tag(:td) do
+        link_to(device.client_presentation, client_path(device.client), target: '_blank') +
+        tag(:br, false) +
+        device.comment
+      end +
+      content_tag(:td, link_to_move_device(device))
+    end
+  end
+
   def device_task_row_tag(device_task)
     row_class = device_task.done ? 'success' : (is_actual_task?(device_task) ? 'error' : 'warning')
     content_tag(:tr, class: "device_task_row #{row_class}", data: {device_task_id: device_task.id,
@@ -62,7 +77,7 @@ module DashboardHelper
       content_tag(:td, nil) +
       content_tag(:td, device_task.task_name) +
       content_tag(:td, device_task.comment) +
-      content_tag(:td, link_to_edit_device_task(device_task))
+      content_tag(:td, is_editable_task?(device_task) ? link_to_edit_device_task(device_task) : nil)
     end.html_safe
   end
 

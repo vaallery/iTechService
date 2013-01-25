@@ -1,5 +1,11 @@
 .page-header
-  = link_to_new Device, t('.new_device') if can? :receive, Device
-  = link_to t('goods_for_sale'), goods_for_sale_path, class: 'btn btn-link btn-large'
+  = link_to_if (can? :receive, Device), icon_tag('mobile-phone') + t('dashboard.new_device'), new_device_path,
+        class: 'btn btn-success btn-large'
 
-= render 'tasks_table'
+%h4
+  %ul#dashboard_navigation.nav.nav-pills
+    %li.actual_tasks_nav.active= link_to t('dashboard.actual_tasks'), dashboard_path(tab: 'actual_tasks'), remote: true
+    %li.made_devices_nav= link_to t('dashboard.made_devices'), dashboard_path(tab: 'made_devices'), remote: true
+    %li.goods_for_sale_nav= link_to t('dashboard.goods_for_sale'), dashboard_path(tab: 'goods_for_sale'), remote: true
+
+#dashboard_content= render 'tasks_table'

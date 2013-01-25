@@ -3,12 +3,23 @@ class DashboardController < ApplicationController
   skip_before_filter :authenticate_user!, :set_current_user, only: :sign_in_by_card
 
   def index
-    #@device_tasks = DeviceTask.pending
-    #@device_tasks = @device_tasks.tasks_for current_user unless current_user.admin?
-    #@device_tasks = @device_tasks.page params[:page]
-    @devices = Device.pending.page params[:page]
+    case params[:tab]
+      when 'actual_tasks'
+        @devices = (current_user.admin? ? Device.pending : Device.located_at(current_user.location)).page params[:page]
+        @table_name = 'tasks_table'
+      when 'made_devices'
+        @devices = Device.done.page params[:page]
+        @table_name = 'made_devices'
+      when 'goods_for_sale'
+        @device_types = DeviceType.for_sale
+        @table_name = 'goods_for_sale'
+      else
+        @devices = (current_user.admin? ? Device.pending : Device.located_at(current_user.location)).page params[:page]
+        @table_name ||= 'tasks_table'
+    end
     respond_to do |format|
       format.html { render 'index' }
+      format.js
     end
   end
 
@@ -26,10 +37,6 @@ class DashboardController < ApplicationController
       sign_in :user, User.find(params[:id]), bypass: true
     end
     redirect_to root_url
-  end
-
-  def goods_for_sale
-    @device_types = DeviceType.for_sale
   end
 
 end
