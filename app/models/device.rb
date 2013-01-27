@@ -50,7 +50,7 @@ class Device < ActiveRecord::Base
   end
 
   def client_presentation
-    client.name_phone
+    client.try(:presentation) || ''
   end
 
   def user_name

@@ -21,6 +21,7 @@ gem 'uuidtools'
 gem 'exception_notification', git: 'git://github.com/alanjds/exception_notification.git'
 gem 'private_pub'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'seed_dumper'
 
 
 # Gems used only for assets and not required
@@ -36,15 +37,16 @@ group :assets do
       :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
 end
 
-
 group :development do
   gem 'debugger'
   gem 'debugger-linecache'
   gem "debugger-pry", require: "debugger/pry"
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'meta_request', '0.2.1'
   #gem 'linecache19', '>= 0.5.13'#, :git => 'https://github.com/robmathews/linecache19-0.5.13.git'
   #gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
   #gem 'ruby-debug-ide', '>= 0.4.17.beta14'
-  gem 'seed_dumper'
 end
 
 group :test do
