@@ -39,7 +39,7 @@ class Client < ActiveRecord::Base
   end
 
   def comment=(content)
-    comments.create content: content
+    comments.build content: content unless content.blank?
   end
 
 end
