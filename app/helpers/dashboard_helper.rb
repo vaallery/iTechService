@@ -47,7 +47,7 @@ module DashboardHelper
         link_to(device.presentation, device_path(device), target: '_blank')
       end +
       content_tag(:td) do
-        link_to(device.client_presentation, client_path(device.client), target: '_blank') +
+        (device.client.present? ? link_to(device.client_presentation, client_path(device.client), target: '_blank') : '-') +
         tag(:br, false) +
         device.comment
       end +
