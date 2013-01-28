@@ -7,7 +7,6 @@
       %th
   %tbody
     - @devices.each do |device|
-      -#- device_tasks = current_user.admin? ? device.device_tasks.pending : device.device_tasks.pending.tasks_for(current_user)
       - device_tasks = device.device_tasks
       = device_row_tag device
       - device_tasks.each do |device_task|

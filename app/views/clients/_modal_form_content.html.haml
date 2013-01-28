@@ -5,9 +5,9 @@
     %h3= auto_title
 
   .modal-body
-    = f.input :surname, autofocus: true
+    = f.input :name, autofocus: true
+    = f.input :surname
     = f.input :patronymic
-    = f.input :name
     = f.input :full_phone_number, as: :phone_number
     = f.hidden_field :phone_number
     = f.input :card_number

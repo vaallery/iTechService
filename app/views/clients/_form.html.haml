@@ -1,7 +1,7 @@
 = simple_form_for @client, html: { class: 'form-horizontal' } do |f|
 
-  = f.input :surname, autofocus: true
-  = f.input :name
+  = f.input :name, autofocus: true
+  = f.input :surname
   = f.input :patronymic
   = f.input :birthday, as: :my_date, viewmode: 'years'
   = f.input :full_phone_number, as: :phone_number

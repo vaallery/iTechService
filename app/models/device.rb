@@ -7,13 +7,14 @@ class Device < ActiveRecord::Base
   belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
-  has_many :history_records, as: :object
+  has_many :history_records, as: :object, dependent: :destroy
   attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type, :device_type_id, :status,
                   :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code
   accepts_nested_attributes_for :device_tasks
   #attr_accessible :created_at, :updated_at, :done_at
 
   validates :ticket_number, :client_id, :device_type_id, :location_id, presence: true
+  validates :device_tasks, presence: true
   validates :ticket_number, uniqueness: true
   validates :imei, length: {is: 15}, allow_blank: true
   validates_associated :device_tasks
@@ -24,7 +25,8 @@ class Device < ActiveRecord::Base
   before_validation :set_user_and_location
   after_save :update_qty_replaced
 
-  scope :ordered, order("devices.done_at desc, created_at asc")#, tasks.priority desc")
+  #scope :ordered, order("devices.done_at desc, created_at asc")
+  scope :ordered, order("created_at desc")
   scope :done, where('devices.done_at IS NOT NULL')
   scope :pending, where(done_at: nil)
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)

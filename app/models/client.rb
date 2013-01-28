@@ -1,9 +1,9 @@
 class Client < ActiveRecord::Base
   include ApplicationHelper
   
-  has_many :devices, inverse_of: :client
-  has_many :orders, as: :customer
-  has_many :comments, as: :commentable
+  has_many :devices, inverse_of: :client, dependent: :destroy
+  has_many :orders, as: :customer, dependent: :destroy
+  has_many :comments, as: :commentable, dependent: :destroy
   attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number,
                   :admin_info, :comments_attributes, :comment
   attr_accessor :comment
