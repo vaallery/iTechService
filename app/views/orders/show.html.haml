@@ -2,12 +2,12 @@
 .page-header
   %h1
     = link_back_to_index
-    = "Order №#{@order.number}"
-    %small
-      = link_to icon_tag(:calendar), history_order_path(@order), style: "text-decoration:none;", remote: true
+    = t 'order.order_num', num: @order.number
+    %small= link_to icon_tag(:time), history_order_path(@order), style: "text-decoration:none;", remote: true
 
   %span.help-block
     %small= timestamp_string_for @order
+  = link_to icon_tag(:print) + t('ticket.link'), order_path(@order, format: 'pdf'), class: 'btn btn-info', target: '_blank'
 
 %dl.dl-horizontal
 

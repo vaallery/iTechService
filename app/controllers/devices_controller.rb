@@ -31,7 +31,7 @@ class DevicesController < ApplicationController
       format.pdf do
         pdf = TicketPdf.new @device, view_context
         send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
-                  type: "application/pdf", disposition: "inline"
+                  type: 'application/pdf', disposition: 'inline'
       end
     end
   end

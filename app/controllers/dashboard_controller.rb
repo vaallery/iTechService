@@ -5,7 +5,18 @@ class DashboardController < ApplicationController
   def index
     case params[:tab]
       when 'actual_tasks'
-        @devices = (current_user.admin? ? Device.pending : Device.located_at(current_user.location)).page params[:page]
+        if current_user.admin?
+          if params[:location].present?
+            location = Location.find params[:location]
+            @devices = Device.pending.located_at(location).page params[:page]
+            @location_name = location.full_name
+          else
+            @devices = Device.pending.page params[:page]
+          end
+        else
+          @devices = Device.pending.located_at(current_user.location).page params[:page]
+        end
+        #@devices = (current_user.admin? ? Device.pending : Device.located_at(current_user.location)).page params[:page]
         @table_name = 'tasks_table'
       when 'made_devices'
         @devices = Device.done.page params[:page]

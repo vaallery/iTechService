@@ -1,10 +1,10 @@
 # encoding: utf-8
-class TicketPdf < Prawn::Document
+class OrderPdf < Prawn::Document
   require "prawn/measurement_extensions"
 
-  def initialize(device, view)
+  def initialize(order, view)
     super page_size: [80.mm, 80.mm], page_layout: :portrait, margin: 10
-    @device = device
+    @order = order
     @view = view
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
@@ -21,7 +21,6 @@ class TicketPdf < Prawn::Document
     logo
     vertical_line y-80, y-10, at: 60
     stroke
-    #move_up 50
     font_size 10 do
       text @view.t('ticket.site'), indent_paragraphs: 70
       text @view.t('ticket.email'), indent_paragraphs: 70
@@ -33,11 +32,11 @@ class TicketPdf < Prawn::Document
     end
     move_down 10
     font_size 24 do
-      text "№ #{@device.ticket_number}", align: :center, inlign_format: true, style: :bold
+      text "№ #{@order.number}", align: :center, inlign_format: true, style: :bold
     end
-    text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
+    text @order.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
     move_down 10
-    text @device.user_name
+    text @order.customer_name
     move_down 5
     text @view.t('ticket.contact_phone')
     move_down 5
@@ -54,16 +53,11 @@ class TicketPdf < Prawn::Document
     logo
     move_down 70
     font_size 24 do
-      text "№ #{@device.ticket_number}", align: :center, inlign_format: true, style: :bold
+      text "№ #{@order.number}", align: :center, inlign_format: true, style: :bold
     end
-    text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
+    text @order.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
     move_down 20
-    text @device.client_name
-    move_down 5
-    text @view.t('ticket.operations_list')
-    text @device.tasks.map{|t|t.id}.join(', ')
-    move_down 5
-    text @device.user_name
+    text @order.customer_name
   end
 
   private

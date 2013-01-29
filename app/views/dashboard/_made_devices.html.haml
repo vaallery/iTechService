@@ -4,10 +4,10 @@
       %th= t 'dashboard.moved_title'
       %th= DeviceTask.human_attribute_name(:device)
       %th= Device.human_attribute_name(:client)
+      %th= Device.human_attribute_name(:done_at)
       %th
   %tbody
     - @devices.each do |device|
-      -#- device_tasks = current_user.admin? ? device.device_tasks.pending : device.device_tasks.pending.tasks_for(current_user)
       = made_device_row_tag device
 
 = paginate @devices, remote: true

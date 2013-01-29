@@ -26,8 +26,8 @@ class Device < ActiveRecord::Base
   after_save :update_qty_replaced
 
   #scope :ordered, order("devices.done_at desc, created_at asc")
-  scope :ordered, order("created_at desc")
-  scope :done, where('devices.done_at IS NOT NULL')
+  scope :ordered, order('created_at desc')
+  scope :done, where('devices.done_at IS NOT NULL').order('devices.done_at desc')
   scope :pending, where(done_at: nil)
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   scope :replaced, where(replaced: true)

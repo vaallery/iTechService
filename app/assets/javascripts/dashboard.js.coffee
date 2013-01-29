@@ -5,7 +5,9 @@ jQuery ->
     $(this).parents('.device_row').nextAll('.device_task_row.success').toggle()
 
   $('#dashboard_navigation a').click ->
-    $('#dashboard_content').fadeOut()
+    $(document).ajaxSend ->
+     $('#dashboard_content').fadeOut()
+     $('.actual_tasks_nav.open>a[data-toggle=dropdown]').dropdown('toggle')
     $li = $(this).parent()
     $li.siblings('.active').removeClass('active')
     $li.addClass('active')

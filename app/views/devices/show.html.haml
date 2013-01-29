@@ -6,12 +6,10 @@
 
   %span.help-block
     %small= timestamp_string_for @device
-  = link_to device_path(@device, format: 'pdf'), target: '_blank', class: 'btn btn-info' do
-    %i.icon-print
-    = t 'ticket.link'
-  = link_to '#', target: '_blank', class: 'btn btn-info' do
-    %i.icon-file-alt
-    = t 'agreement'
+  = link_to icon_tag(:print) + t('ticket.link'), device_path(@device, format: 'pdf'), class: 'btn btn-info', target: '_blank'
+  -#= link_to '#', target: '_blank', class: 'btn btn-info' do
+  -#  %i.icon-file-alt
+  -#  = t 'agreement'
 
 %dl.dl-horizontal
 
