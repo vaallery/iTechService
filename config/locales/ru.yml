@@ -252,17 +252,11 @@ ru:
       short: ! '%d %b, %H:%M'
     pm: вечера
 
-  attributes:
-    created_at: Время создания
-    name: Название
-    updated_at: Время обновления
-
   # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
   activemodel:
     errors:
       <<: *errors
   activerecord:
-    models:
-
     errors:
       <<: *errors
+

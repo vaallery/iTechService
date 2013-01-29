@@ -16,8 +16,8 @@
       = f.input :email
       = f.input :birthday, as: :my_date, viewmode: 'years'
       .control-group
-        %label.control-label= t 'client.questionnaire'
+        %label.control-label= t 'clients.questionnaire'
         .controls= link_to icon_tag('print'), '#', class: 'btn', id: 'questionnaire_link', target: '_blank'
 
   .modal-footer
-    = f.button :submit, class: 'btn-primary'
+    = submit_button f

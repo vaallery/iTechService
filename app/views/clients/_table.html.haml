@@ -7,7 +7,7 @@
         %th= Client.human_attribute_name(:name)
         %th= Client.human_attribute_name(:phone_number)
         %th= Client.human_attribute_name(:created_at)
-        %th=t '.actions', :default => t("helpers.actions")
+        %th
     %tbody
       - @clients.each do |client|
         %tr

@@ -46,14 +46,10 @@ jQuery ->
 
     setTimeout (->
       unless card_number is ''
-        $.get '/sign_in_by_card?card_number='+card_number, ->
-          window.location.reload()
+        sign_in_by_card card_number
       else
         $('#card_sign_in').remove()
     ), 3000
-#      else
-#        sign_in_by_card card_number
-#    setTimeout sign_in_by_card(card_number), 3000
 
 add_fields = (target, association, content) ->
   new_id = new Date().getTime()
@@ -61,11 +57,8 @@ add_fields = (target, association, content) ->
   $(target).append content.replace(regexp, new_id)
 
 sign_in_by_card = (card_number)->
-  unless card_number is ''
-    $.get '/sign_in_by_card?card_number='+card_number, ->
-      window.location.reload()
-  else
-    $('#card_sign_in').remove()
+  $.get '/sign_in_by_card?card_number='+card_number, ->
+    window.location.reload()
 
 datepicker_dates =
   days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],

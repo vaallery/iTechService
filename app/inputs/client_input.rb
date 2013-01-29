@@ -20,7 +20,7 @@ class ClientInput < SimpleForm::Inputs::StringInput
       template.content_tag(:div, nil, class: 'arrow') +
       template.content_tag(:div, class: 'popover-inner') do
         template.content_tag(:h3, class: 'popover-title') do
-          template.t('device.client_devices') +
+          template.t('devices.client_devices') +
           template.content_tag(:span, id: 'client_devices_resize_button', href: '#') do
             template.icon_tag('sort')
           end

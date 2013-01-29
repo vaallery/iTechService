@@ -55,7 +55,7 @@ module ApplicationHelper
 
   def link_to_new object_class, name = nil, options = {}
     options.merge! class: 'btn btn-success btn-large'
-    name ||= t '.new', default: t("helpers.links.new")
+    name ||= t('new')
     link_to url_for(controller: object_class.name.tableize, action: 'new'), options do
       icon_tag(:file) + name
     end
@@ -63,7 +63,7 @@ module ApplicationHelper
 
   def link_to_show object, options = {}
     options.merge! class: 'btn'
-    name = t '.edit', default: t("helpers.links.edit")
+    name = t 'show'
     link_to url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options do
       icon_tag(:eye) + name
     end
@@ -71,7 +71,7 @@ module ApplicationHelper
 
   def link_to_edit object, options = {}
     options.merge! class: 'btn'
-    name = t '.edit', default: t("helpers.links.edit")
+    name = t 'edit'
     link_to url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options do
       icon_tag(:edit) + name
     end
@@ -79,8 +79,8 @@ module ApplicationHelper
 
   def link_to_destroy object, options = {}
     options.merge! class: 'btn btn-danger', method: 'delete',
-        data: {confirm: t('helpers.links.confirm', default: 'Are you sure?')}
-    name = t '.destroy', default: t("helpers.links.destroy")
+        data: {confirm: t('confirmation', default: 'Are you sure?')}
+    name = t 'destroy'
     link_to url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options do
       icon_tag(:trash) + name
     end
@@ -91,8 +91,7 @@ module ApplicationHelper
     model_name = form.object.class.model_name
     human_model_name = model_name.human
     action = form.object.new_record? ? 'create' : 'update'
-    name = t "helpers.button.#{model_name}.#{action}", model: human_model_name,
-             default: t("helpers.button.#{action}", model: human_model_name, default: t(action, default: 'Save'))
+    name = t "helpers.button.#{model_name}.#{action}", model: human_model_name, default: t(action, default: 'Save')
     button_tag options do
       icon_tag(:save) + name
     end
@@ -163,12 +162,11 @@ module ApplicationHelper
   def title_for model_class
     case action_name
       when 'index'
-        t '.title', default: model_class.model_name.human.pluralize
+        t '.title'
       when 'show'
         t '.title', default: model_class.model_name.human
       else
-        t '.title', default: t("helpers.titles.#{action_name}", model: model_class.model_name.human,
-                               default: "#{action_name.humanize} #{model_class.model_name.human}")
+        t '.title', default: t("#{action_name.humanize} #{model_class.model_name.human}")
     end
   end
 
@@ -193,6 +191,19 @@ module ApplicationHelper
 
   def history_link_to(url)
     link_to icon_tag(:time), url, class: "history_link", remote: true
+  end
+
+  def store_location
+    session[:return_to] = request.fullpath.gsub(/.js/,'')
+  end
+
+  def clear_return_to
+    session[:return_to] = nil
+  end
+
+  def redirect_back_or(default, options = {})
+    redirect_to session[:return_to] || default, options
+    clear_return_to
   end
 
 end

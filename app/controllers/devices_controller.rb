@@ -126,8 +126,8 @@ class DevicesController < ApplicationController
         format.js { render 'information' }
         format.json { render json: @device.status_info}
       else
-        format.js { render t('device.not_found') }
-        format.json { render json: {error: t('device.not_found')} }
+        format.js { render t('devices.not_found') }
+        format.json { render json: {error: t('devices.not_found')} }
       end
     end
   end
@@ -142,7 +142,7 @@ class DevicesController < ApplicationController
 
   def check_imei
     stolen_phone = StolenPhone.find_by_imei params[:imei_q]
-    msg = stolen_phone.present? ? t('device.phone_stolen') : ''
+    msg = stolen_phone.present? ? t('devices.phone_stolen') : ''
     render json: {present: stolen_phone.present?, msg: msg}
   end
 

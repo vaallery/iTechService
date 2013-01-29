@@ -5,7 +5,7 @@
   }else{
     $link.popover({
       html: true,
-      title: "#{t 'device.movement_history', default: 'Movement history'}",
+      title: "#{t('devices.movement_history', default: 'Movement history')}",
       content: "#{j device_movement_history(@device)}",
       trigger: 'manual'
     });

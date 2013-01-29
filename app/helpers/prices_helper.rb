@@ -6,13 +6,13 @@ module PricesHelper
 
   def header_link_to_edit_prices
     content_tag(:li, class: nav_state_for('prices')) do
-      link_to t('prices'), prices_path
+      link_to t('prices.link', default: 'Prices'), prices_path
     end.html_safe
   end
 
   def header_link_to_view_prices
     content_tag(:li, class: 'dropdown '+nav_state_for('prices')) do
-      link_to((t('prices')+caret_tag).html_safe, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown') +
+      link_to((t('prices.link', default: 'Prices')+caret_tag).html_safe, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown') +
       content_tag(:ul, class: 'dropdown-menu') do
         Price.all.map do |price|
           content_tag :li, link_to_price(price)

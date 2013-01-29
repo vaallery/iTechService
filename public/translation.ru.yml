@@ -1,9 +1,4 @@
 ru:
-  attributes:
-    comment: Комментарий
-    content: Содержание
-    user: :activerecord.models.user
-
   activerecord:
     models:
       announcement: Оповещение
@@ -203,7 +198,17 @@ ru:
         username: Логин
         wish: Пожелание
 
-  announcement:
+
+  attributes:
+    created_at: Время создания
+    name: Название
+    updated_at: Время обновления
+    comment: Комментарий
+    content: Содержание
+    id: №
+    user: :activerecord.models.user
+
+  announcements:
     needs_help: нуждается в помощи!!!
 
   dashboard:
@@ -216,7 +221,7 @@ ru:
     new_user: Новый пользователь
     params: Параметры
 
-  device:
+  devices:
     information: Информация о девайсе
     not_found: Девайс не найден
     enter_ticket_number: Укажите номер талона
@@ -224,7 +229,7 @@ ru:
     moved_by: Переместил(а)
     phone_stolen: этот телефон в чёрном списке!!!
 
-  order:
+  orders:
     order_num: "Заказ №%{num}"
     object_kinds:
       device: Техника
@@ -239,7 +244,7 @@ ru:
       canceled: Отменен
       all_statuses: Все статусы
 
-  ticket:
+  tickets:
     address1: 'г.Владивосток,'
     address2: 'Океанский проспект, 90'
     check_status: 'Вы можете проверить статус устройства по адресу: www.itechstore.ru/check.'
@@ -253,10 +258,119 @@ ru:
     schedule3: 'Вс - выходной'
     site: 'www.itechstore.ru'
 
-  clients: Клиенты
+  announcements:
+    edit:
+      title: Редактирование оповещения
+    new:
+      title: Новое оповещение
+    index:
+      title: Оповещения
+    link: Оповещения
+
+  clients:
+    edit:
+      title: Редактирование клиента
+    new:
+      title: Новый клиент
+    index:
+      title: 'Клиенты'
+      seach_placeholder: Телефон или имя
+    link: Клиенты
+    questionnaire: Анкета
+
+  comments:
+    edit:
+      title: Редактирование комментария
+    new:
+      title: Новый комментарий
+    index:
+      title: Комментарии
+    link: Комментарии
+
+  devices:
+    edit:
+      title: Редактирование девайса
+    new:
+      title: Новый девайс
+    index:
+      title: Девайсы
+    link: Девайсы
+
+  device_types:
+    edit:
+      title: Редактирование типа девайса
+    new:
+      title: Новый тип девайса
+    index:
+      title: Типы девайсов
+    link: Типы девайсов
+
+  infos:
+    edit:
+      title: Редактирование новости
+    new:
+      title: Новая новость
+    index:
+      title: Новости
+    link: Новости
+
+  locations:
+    edit:
+      title: Редактирование локации
+    new:
+      title: Новая локация
+    index:
+      title: Локации
+    link: Локации
+
+  orders:
+    edit:
+      title: Редактирование заказа
+    new:
+      title: Новый заказ
+    index:
+      title: Заказы
+    link: Заказы
+
+  prices:
+    edit:
+      title: Редактирование прайса
+    new:
+      title: Новый прайс
+    index:
+      title: Прайсы
+    link: Прайсы
+
+  stolen_phones:
+     edit:
+      title: Редактирование телефона
+    new:
+      title: Новый тлефон
+    index:
+      title: Чёрный список
+    link: Чёрный список
+
+  tasks:
+    edit:
+      title: Редактирование задачи
+    new:
+      title: Новая задача
+    index:
+      title: Задачи
+    link: Задачи
+
+  users:
+    edit:
+      title: Редактирование клиента
+    new:
+      title: Новый клиент
+    index:
+      title: Клиенты
+    link: Клиенты
+
+  confirmation: Вы уверены?
   create: Создать
-  device_types: Типы девайсов
-  devices: Девайсы
+  edit: Редактировать
   moved: "%{user} %{time} назад"
   moved_title: Переместил
   nothing_found: Ничего не найдено
@@ -264,10 +378,8 @@ ru:
   save: Сохранить
   search: Найти
   update: Сохранить
-  tasks: "Задачи"
-  users: "Пользователи"
-  infos: "Новости"
-  orders: "Заказы"
   black_list: "Чёрный список"
-  prices: "Прайсы"
-  locations: "Локации"
+  new: "Новый"
+  show: "Показать"
+  edit: "Редактировать"
+  destroy: "Удалить"

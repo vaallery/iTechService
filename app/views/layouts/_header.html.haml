@@ -4,13 +4,12 @@
       .container-fluid
         = link_to "iTech Service", root_path, class: 'brand'
         %ul.nav
-          %li{class: nav_state_for('devices')}= link_to t('devices'), devices_path
-          %li{class: nav_state_for('clients')}= link_to t('clients'), clients_path
-          %li{class: nav_state_for('device_types')}= link_to t('device_types'), device_types_path if can? :manage, DeviceType
-          %li{class: nav_state_for('users')}= link_to t('users'), users_path if can? :manage, User
-          %li{class: nav_state_for('infos')}= link_to t('infos'), infos_path if can? :read, Info
-          %li{class: nav_state_for('orders')}= link_to t('orders'), orders_path if can? :read, Order
-          %li{class: nav_state_for('stolen_phones')}= link_to t('black_list'), stolen_phones_path
+          %li{class: nav_state_for('devices')}= link_to t('devices.link', default: 'Devices'), devices_path
+          %li{class: nav_state_for('clients')}= link_to t('clients.link', default: 'Clients'), clients_path
+          %li{class: nav_state_for('device_types')}= link_to t('device_types.link', default: 'Device types'), device_types_path if can? :manage, DeviceType
+          %li{class: nav_state_for('users')}= link_to t('users.link', default: 'Users'), users_path if can? :manage, User
+          %li{class: nav_state_for('infos')}= link_to t('infos.link', default: 'Infos'), infos_path if can? :read, Info
+          %li{class: nav_state_for('orders')}= link_to t('orders.link', default: 'Orders'), orders_path if can? :read, Order
           - if can? :manage, Price
             = header_link_to_edit_prices
           - else
@@ -20,8 +19,9 @@
               = t('dashboard.params')
               = caret_tag
             %ul.dropdown-menu
-              %li{class: nav_state_for('tasks')}= link_to t('tasks'), tasks_path if can? :manage, Task
-              %li{class: nav_state_for('locations')}= link_to t('locations'), locations_path if can? :manage, Location
+              %li{class: nav_state_for('tasks')}= link_to t('tasks.link', default: 'Tasks'), tasks_path if can? :manage, Task
+              %li{class: nav_state_for('locations')}= link_to t('locations.link', default: 'Locations'), locations_path if can? :manage, Location
+              %li{class: nav_state_for('stolen_phones')}= link_to t('stolen_phones.link', default: 'Black list'), stolen_phones_path
         %ul.nav.pull-right
           = header_link_to_help if current_user.helpable?
           %li= profile_link

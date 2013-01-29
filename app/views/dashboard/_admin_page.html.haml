@@ -1,4 +1,5 @@
 .page-header
+
   = link_to icon_tag('file-alt') + t('dashboard.new_info'), new_info_path, class: 'btn btn-success btn-large'
   = link_to_if (can? :receive, Device), icon_tag('mobile-phone') + t('dashboard.new_device'), new_device_path,
       class: 'btn btn-success btn-large'
