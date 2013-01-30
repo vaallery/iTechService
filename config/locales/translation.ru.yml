@@ -250,10 +250,12 @@ ru:
     address1: 'г.Владивосток,'
     address2: 'Океанский проспект, 90'
     check_status: 'Вы можете проверить статус устройства по адресу: www.itechstore.ru/check.'
+    check_status_order: 'Вы можете проверить статус заказа по адресу: www.itechstore.ru/check.'
     contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
     email: 'e-mail: info@itechstore.ru'
     link: Талон
     notice: 'Сохраняйте этот талон до получения Вашего устройства.'
+    notice_order: 'Сохраняйте этот талон до получения Вашего заказа.'
     operations_list: 'Список операций:'
     schedule1: 'Пн-Пт: с 10 до 21'
     schedule2: 'Сб: с 12 до 21'
@@ -356,6 +358,7 @@ ru:
       pending: В ожидании
       done: Выполнен
       canceled: Отменен
+    order_num: "Заказ №%{num}"
 
   prices:
     edit:
