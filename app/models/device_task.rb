@@ -31,7 +31,11 @@ class DeviceTask < ActiveRecord::Base
   def task_name
     task.try :name
   end
-  
+
+  def name
+    task.try :name
+  end
+
   def task_cost
     task.try :cost
   end

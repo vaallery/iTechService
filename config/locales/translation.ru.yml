@@ -222,6 +222,7 @@ ru:
     params: Параметры
 
   devices:
+    add_task: Добавить задачу
     information: Информация о девайсе
     not_found: Девайс не найден
     enter_ticket_number: Укажите номер талона
@@ -362,12 +363,12 @@ ru:
 
   users:
     edit:
-      title: Редактирование клиента
+      title: Редактирование пользователя
     new:
-      title: Новый клиент
+      title: Новый пользователь
     index:
-      title: Клиенты
-    link: Клиенты
+      title: Пользователи
+    link: Пользователи
 
   confirmation: Вы уверены?
   create: Создать

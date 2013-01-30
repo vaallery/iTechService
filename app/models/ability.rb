@@ -28,6 +28,8 @@ Ability
         can :call_help, Announcement
         can :cancel_help, Announcement, user_id: user.id
       end
+      can :check_phone_number, Client
+      can :questionnaire, Client
       can :create, Order
       can :read, Info
       can :update, Device

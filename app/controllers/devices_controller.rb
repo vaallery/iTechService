@@ -2,8 +2,9 @@ class DevicesController < ApplicationController
   include DevicesHelper
   #before_filter :store_location
   helper_method :sort_column, :sort_direction
-  load_and_authorize_resource except: :check_status
-  skip_load_resource only: [:index, :history, :task_history]
+  load_and_authorize_resource only: [:index, :new, :edit, :create, :update, :destroy]
+  skip_load_resource except: [:index, :new, :edit, :create, :update, :destroy]
+  #skip_load_resource only: [:index, :history, :task_history]
   skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
   
   def index
