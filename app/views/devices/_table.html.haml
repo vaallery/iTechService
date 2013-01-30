@@ -23,7 +23,7 @@
             %small= device.serial_number
             %p.device_comment_tooltip{'data-title' => device.comment}
               %i.icon-comment
-          %td= h device.client.name_phone
+          %td= h device.client_presentation
           %td= device.location.try :full_name
           %td= l device.created_at, format: :long_d
           %td

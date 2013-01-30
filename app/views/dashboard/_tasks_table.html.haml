@@ -1,20 +1,3 @@
-.table_filter.navbar.container
-  .navbar-inner
-
-    = form_tag dashboard_path(tab: 'actual_tasks'), method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
-
-      .input-append
-        = text_field_tag :device, params[:device], id: 'search_device_input', class: 'search-query input-medium',
-            placeholder: 'ticket or serial number'
-        %span.add-on.btn.clear_search_input
-          %i.icon-remove
-
-      .input-append
-        = text_field_tag :client, params[:client], id: 'search_client_input', class: 'search-query input-medium',
-            placeholder: 'client (name or phone)'
-        %span.add-on.btn.clear_search_input
-          %i.icon-remove
-
 %table#actual_tasks_table.table.table-hover.table-bordered
   %thead
     %tr

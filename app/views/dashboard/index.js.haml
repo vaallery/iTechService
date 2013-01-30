@@ -4,3 +4,7 @@
     $('.devices_location').text(". #{@location_name}")
   else
     $('.devices_location').text("");
+  if(#{@devices.present?})
+    $('.table_filter').show()
+  else
+    $('.table_filter').hide();

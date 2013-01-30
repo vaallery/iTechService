@@ -1,11 +1,31 @@
 .page-header
   = link_to_if (can? :create, Device), icon_tag('mobile-phone') + t('dashboard.new_device'), new_device_path,
         class: 'btn btn-success btn-large'
+  = link_to_if (can? :create, Order), icon_tag('file-alt') + t('dashboard.new_order'), new_order_path,
+        class: 'btn btn-success btn-large'
 
 %h4
   %ul#dashboard_navigation.nav.nav-pills
     %li.actual_tasks_nav.active= link_to t('dashboard.actual_tasks'), dashboard_path(tab: 'actual_tasks'), remote: true
     %li.made_devices_nav= link_to t('dashboard.made_devices'), dashboard_path(tab: 'made_devices'), remote: true
     %li.goods_for_sale_nav= link_to t('dashboard.goods_for_sale'), dashboard_path(tab: 'goods_for_sale'), remote: true
+
+.table_filter.navbar.container
+  .navbar-inner
+
+    = form_tag dashboard_path(tab: 'actual_tasks'), method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
+
+      .input-append
+        = text_field_tag :device, params[:device], id: 'search_device_input', class: 'search-query input-medium',
+            placeholder: 'ticket or serial number'
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+
+      .input-append
+        = text_field_tag :client, params[:client], id: 'search_client_input', class: 'search-query input-medium',
+            placeholder: 'client (name or phone)'
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+
 
 #dashboard_content= render 'tasks_table'
