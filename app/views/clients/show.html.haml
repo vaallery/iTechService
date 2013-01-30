@@ -27,6 +27,6 @@
 
 .form-actions
   = link_to new_device_path(device: {client_id: @client.id}), class: 'btn' do
-    = icon_tag('plus-sign') + t('add_device')
+    = icon_tag('plus-sign') + t('dashboard.new_device')
   = link_to_edit @client
   = link_to_destroy @client

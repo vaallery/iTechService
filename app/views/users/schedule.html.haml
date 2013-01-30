@@ -1,19 +1,19 @@
 .page-header
   %h1
     = link_back_to_index
-    = t 'user.schedule'
+    = t 'users.schedule'
 .row-fluid
   #staff_schedule.span8
     %ul.nav.nav-pills
-      %li.active= link_to t('user.job_schedule'), '#job_schedule_tab', 'data-toggle' => 'tab'
-      %li= link_to t('user.duty_schedule'), '#duty_schedule_tab', 'data-toggle' => 'tab'
+      %li.active= link_to t('users.job_schedule'), '#job_schedule_tab', 'data-toggle' => 'tab'
+      %li= link_to t('users.duty_schedule'), '#duty_schedule_tab', 'data-toggle' => 'tab'
 
     .tab-content
 
       #job_schedule_tab.tab-pane.active
         %table#job_schedule_table.table.table-bordered.table-condensed
           %caption
-            %h4= t 'user.job_schedule'
+            %h4= t 'users.job_schedule'
           %tbody
             - (1..7).each do |day|
               %tr.job_schedule_day{data: {day: day}}

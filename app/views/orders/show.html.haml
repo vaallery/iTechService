@@ -15,7 +15,7 @@
   %dd= @order.customer_name
 
   %dt= model_class.human_attribute_name :object_kind
-  %dd= t("order.object_kinds.#{@order.object_kind}")
+  %dd= t("orders.object_kinds.#{@order.object_kind}")
 
   %dt= model_class.human_attribute_name :object
   %dd= @order.object
@@ -27,7 +27,7 @@
   %dd= @order.desired_date.present? ? l(@order.desired_date) : '-'
 
   %dt= model_class.human_attribute_name :status
-  %dd= t("order.statuses.#{@order.status}")
+  %dd= t("orders.statuses.#{@order.status}")
 
 - if can? :manage, model_class
   .form-actions

@@ -66,7 +66,7 @@ class Device < ActiveRecord::Base
   end
   
   def done?
-    device_tasks.pending.empty?
+    pending_tasks.empty?
   end
   
   def pending?

@@ -28,22 +28,22 @@
     %ul.nav
       %li.dropdown
         = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-          = t "order.object_kinds.#{params[:object_kind] || 'all_kinds'}"
+          = t "orders.object_kinds.#{params[:object_kind] || 'all_kinds'}"
           %b.caret
         %ul.dropdown-menu
-          %li= link_to t("order.object_kinds.all_kinds"), orders_path#, remote: true
+          %li= link_to t("orders.object_kinds.all_kinds"), orders_path#, remote: true
           - Order::OBJECT_KINDS.each do |object_type|
-            %li= link_to t("order.object_kinds.#{object_type}"), orders_path(object_kind: object_type)#, remote: true
-            -#%li= link_to t("order.object_kinds.#{object_type}"), orders_path(params.update(object_kind: object_type))
+            %li= link_to t("orders.object_kinds.#{object_type}"), orders_path(object_kind: object_type)#, remote: true
+            -#%li= link_to t("orders.object_kinds.#{object_type}"), orders_path(params.update(object_kind: object_type))
 
     %ul.nav
       %li.dropdown
         = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-          = t "order.statuses.#{params[:status] || 'all_statuses'}"
+          = t "orders.statuses.#{params[:status] || 'all_statuses'}"
           %b.caret
         %ul.dropdown-menu
-          %li= link_to t("order.statuses.all_statuses"), orders_path#, remote: true
+          %li= link_to t("orders.statuses.all_statuses"), orders_path#, remote: true
           - Order::STATUSES.each do |status|
-            %li= link_to t("order.statuses.#{status}"), orders_path(status: status)#, remote: true
+            %li= link_to t("orders.statuses.#{status}"), orders_path(status: status)#, remote: true
 
 #resource_table= render 'table'

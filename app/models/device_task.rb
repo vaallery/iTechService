@@ -11,7 +11,7 @@ class DeviceTask < ActiveRecord::Base
   scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id},
                                                                 tasks: {role: user.role}) }
   
-  after_initialize {|dt| dt.cost = task_cost}
+  after_initialize {|dt| dt.cost ||= task_cost; dt.done ||= false}
   
   before_save do |dt|
     old_done = changed_attributes['done']
@@ -37,7 +37,7 @@ class DeviceTask < ActiveRecord::Base
   end
 
   def task_cost
-    task.try :cost
+    task.try(:cost) || 0
   end
   
   def task_duration

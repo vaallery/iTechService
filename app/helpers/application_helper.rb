@@ -114,23 +114,27 @@ module ApplicationHelper
   end
 
   def human_history_value rec #value, type
-    case rec.column_type
-    when 'boolean'
-      icon_class = rec.new_value == 't' ? 'check' : 'check-empty'
-      val = icon_tag icon_class
-    when 'integer'
-      case rec.column_name
-      when 'client_id'
-        val = Client.find(rec.new_value).try :name_phone
-      when 'location_id'
-        val = Location.find(rec.new_value).try :full_name
-      when 'device_id'
-        val = Device.find(rec.new_value).try :presentation
-      when 'task_id'
-        val = Task.find(rec.new_value).try :name
+    if rec.new_value.present?
+      case rec.column_type
+      when 'boolean'
+        icon_class = rec.new_value == 't' ? 'check' : 'check-empty'
+        val = icon_tag icon_class
+      when 'integer'
+        case rec.column_name
+        when 'client_id'
+          val = Client.find(rec.new_value).try(:name_phone)
+        when 'location_id'
+          val = Location.find(rec.new_value).try(:full_name)
+        when 'device_id'
+          val = Device.find(rec.new_value).try(:presentation)
+        when 'task_id'
+          val = Task.find(rec.new_value).try(:name)
+        end
+      else
+        val = rec.new_value
       end
     else
-      val = rec.new_value
+      val = '-'
     end
     val.html_safe
   end

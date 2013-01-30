@@ -73,16 +73,20 @@ ru:
       comment:
         content: Содержание
         user: :activerecord.models.user
+        user_id: :activerecord.models.user
 
       device:
         client: :activerecord.models.client
+        client_id: :activerecord.models.client
         comment: Комментарий
         device_tasks: Список задач
         device_type: :activerecord.models.device_type
+        device_type_id: :activerecord.models.device_type
         done_at: Время завершения
         history_records: История изменений
         imei: IMEI
         location: :activerecord.models.location
+        location_id: :activerecord.models.location
         receiver: Приемщик
         replaced: Заменен
         security_code: Пароль
@@ -91,14 +95,17 @@ ru:
         tasks: Список задач
         ticket_number: Номер талона
         user: :activerecord.models.user
+        user_id: :activerecord.models.user
 
       device_task:
         cost: Стоимость
         device: :activerecord.models.device
+        device_id: :activerecord.models.device
         done: Выполнено
         done_at: Время выполнения
         history_records: История
         task: :activerecord.models.task
+        task_id: :activerecord.models.task
 
       device_type:
         ancestry: Предок
@@ -112,6 +119,7 @@ ru:
       duty_day:
         day: День
         user: user
+        user_id: user
 
       history_record:
         column_name: Название атрибута
@@ -122,6 +130,7 @@ ru:
         object_type: Тип обьекта
         old_value: Прежнее значение
         user: :activerecord.models.user  #g
+        user_id: :activerecord.models.user  #g
 
       info:
         important: Важно
@@ -222,16 +231,6 @@ ru:
     new_user: Новый пользователь
     params: Параметры
 
-  devices:
-    add_task: Добавить задачу
-    information: Информация о девайсе
-    not_found: Девайс не найден
-    enter_ticket_number: Укажите номер талона
-    moved_at: Перемёщен в
-    moved_by: Переместил(а)
-    movement_error: Не все задачи выполнены
-    phone_stolen: этот телефон в чёрном списке!!!
-
   orders:
     order_num: "Заказ №%{num}"
     object_kinds:
@@ -298,6 +297,16 @@ ru:
     index:
       title: Девайсы
     link: Девайсы
+    add_task: Добавить задачу
+    information: Информация о девайсе
+    not_found: Девайс не найден
+    enter_ticket_number: Укажите номер талона
+    moved_at: Перемёщен в
+    moved_by: Переместил(а)
+    movement_error: Не все задачи выполнены
+    phone_stolen: 'этот телефон в чёрном списке!!!'
+    client_placeholder: 'Имя / телефон / карта'
+    client_devices: Девайсы клиента
 
   device_types:
     edit:
@@ -307,6 +316,7 @@ ru:
     index:
       title: Типы девайсов
     link: Типы девайсов
+    available_for_replacement: Доступно для замены
 
   infos:
     edit:
@@ -334,6 +344,18 @@ ru:
     index:
       title: Заказы
     link: Заказы
+    object_kinds:
+      all_kinds: Все типы
+      device: Девайс
+      accessory: Аксессуар
+      soft: Софт
+      misc: Прочее
+    statuses:
+      all_statuses: Все статусы
+      new: Новый
+      pending: В ожидании
+      done: Выполнен
+      canceled: Отменен
 
   prices:
     edit:
@@ -370,6 +392,9 @@ ru:
     index:
       title: Пользователи
     link: Пользователи
+    schedule: График
+    job_schedule: График работы
+    duty_schedule: График дежурств
 
   confirmation: Вы уверены?
   create: Создать
@@ -386,3 +411,4 @@ ru:
   show: "Показать"
   edit: "Редактировать"
   destroy: "Удалить"
+  total: Итого

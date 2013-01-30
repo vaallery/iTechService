@@ -9,7 +9,6 @@ Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
-      cannot :destroy, Client
     elsif user.programmer?
       can :manage, :all
     else
