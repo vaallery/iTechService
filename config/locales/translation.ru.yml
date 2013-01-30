@@ -230,6 +230,7 @@ ru:
     new_order: Новый заказ
     new_user: Новый пользователь
     params: Параметры
+    new_device_message: Новый девайс!!!
 
   orders:
     order_num: "Заказ №%{num}"

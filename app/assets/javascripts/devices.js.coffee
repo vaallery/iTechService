@@ -61,10 +61,19 @@ jQuery ->
 
   $('#print_device_ticket').click (event)->
     event.preventDefault()
+#    win2 = window.open()
+#    win2.location.assign('http://localhost:3000/devices/2009.pdf?part=2')
+#    win1 = window.open()
+#    win1.location.assign('http://localhost:3000/devices/2009.pdf?part=1')
     $('#print_device_ticket2')[0].click()
     setTimeout (->
       $('#print_device_ticket1')[0].click()
     ), 100
+
+  $('#new_device_popup').mouseleave ->
+    setTimeout (->
+      $('#new_device_popup').fadeOut()
+    ), 1000
 
 placeClientDevices = ()->
   $devices = $('#client_devices')
@@ -76,3 +85,7 @@ placeClientDevices = ()->
     $devices.show()
   else
     $devices.hide()
+
+PrivatePub.subscribe '/devices/new', (data, channel)->
+  if data.device.location_id == $('#profile_link').data('location')
+    $('#new_device_popup').fadeIn()

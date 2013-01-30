@@ -5,11 +5,22 @@ jQuery ->
     $(this).parents('.device_row').nextAll('.device_task_row.success').toggle()
 
   $('#dashboard_navigation a').click ->
-    $(document).ajaxSend ->
-     $('#dashboard_content').fadeOut()
-     $('.actual_tasks_nav.open>a[data-toggle=dropdown]').dropdown('toggle')
+    $(document).ajaxSend (event, xhr, options)->
+     if options.url.substr(0, 10) == '/dashboard'
+       $('#dashboard_content').fadeOut()
+       $('.actual_tasks_nav.open>a[data-toggle=dropdown]').dropdown('toggle')
     $li = $(this).parent()
     $li.siblings('.active').removeClass('active')
     $li.addClass('active')
-    $(document).ajaxComplete ->
-      $('#dashboard_content').fadeIn()
+    $(document).ajaxComplete (event, req, options)->
+      if options.url.substr(0, 10) == '/dashboard'
+        $('#dashboard_content').fadeIn()
+
+#pageTime = new Date()
+
+#newDevicesCheck = setInterval (->
+#  time = pageTime.toLocaleString()
+#  $.getJSON '/dashboard.json?time='+time, (data)->
+#    if data.new_devices_exists
+#      $('#new_device_popup').fadeIn()
+#), 5000

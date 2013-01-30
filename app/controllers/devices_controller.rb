@@ -61,6 +61,7 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       if @device.save
+        PrivatePub.publish_to '/devices/new', device: @device
         format.html { redirect_to @device, notice: 'Device was successfully created.' }
         format.json { render json: @device, status: :created, location: @device }
       else
