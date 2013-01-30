@@ -38,23 +38,23 @@ class Device < ActiveRecord::Base
   after_initialize :set_user_and_location
   
   def type_name
-    device_type.try :full_name
+    device_type.try(:full_name) || '-'
   end
 
   def location_name
-    location.try :full_name
+    location.try(:full_name) || '-'
   end
   
   def client_name
-    client.try :name
+    client.try(:name) || '-'
   end
   
   def client_phone
-    client.try :phone_number
+    client.try(:phone_number) || '-'
   end
 
   def client_presentation
-    client.try :presentation
+    client.try(:presentation) || '-'
   end
 
   def user_name
