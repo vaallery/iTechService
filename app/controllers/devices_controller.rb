@@ -4,7 +4,6 @@ class DevicesController < ApplicationController
   helper_method :sort_column, :sort_direction
   load_and_authorize_resource only: [:index, :new, :edit, :create, :update, :destroy]
   skip_load_resource except: [:index, :new, :edit, :create, :update, :destroy]
-  #skip_load_resource only: [:index, :history, :task_history]
   skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
   
   def index
@@ -30,7 +29,7 @@ class DevicesController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @device }
       format.pdf do
-        pdf = TicketPdf.new @device, view_context
+        pdf = TicketPdf.new @device, view_context, params[:part]
         send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
                   type: 'application/pdf', disposition: 'inline'
       end

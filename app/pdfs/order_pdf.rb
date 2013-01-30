@@ -12,8 +12,6 @@ class OrderPdf < Prawn::Document
     }
     font 'DroidSans'
     client_part
-    start_new_page
-    receiver_part
     encrypt_document permissions: { modify_contents: false }
   end
 
@@ -22,13 +20,13 @@ class OrderPdf < Prawn::Document
     vertical_line y-80, y-10, at: 60
     stroke
     font_size 10 do
-      text @view.t('ticket.site'), indent_paragraphs: 70
-      text @view.t('ticket.email'), indent_paragraphs: 70
-      text @view.t('ticket.address1'), indent_paragraphs: 70
-      text @view.t('ticket.address2'), indent_paragraphs: 70
-      text @view.t('ticket.schedule1'), indent_paragraphs: 70
-      text @view.t('ticket.schedule2'), indent_paragraphs: 70
-      text @view.t('ticket.schedule3'), indent_paragraphs: 70
+      text @view.t('tickets.site'), indent_paragraphs: 70
+      text @view.t('tickets.email'), indent_paragraphs: 70
+      text @view.t('tickets.address1'), indent_paragraphs: 70
+      text @view.t('tickets.address2'), indent_paragraphs: 70
+      text @view.t('tickets.schedule1'), indent_paragraphs: 70
+      text @view.t('tickets.schedule2'), indent_paragraphs: 70
+      text @view.t('tickets.schedule3'), indent_paragraphs: 70
     end
     move_down 10
     font_size 24 do
@@ -38,26 +36,15 @@ class OrderPdf < Prawn::Document
     move_down 10
     text @order.customer_name
     move_down 5
-    text @view.t('ticket.contact_phone')
+    text @view.t('tickets.contact_phone')
     move_down 5
     horizontal_line 0, 205#, at: y
     stroke
     move_down 5
     font_size 10 do
-      text @view.t('ticket.notice')
-      text @view.t('ticket.check_status')
+      text @view.t('tickets.notice')
+      text @view.t('tickets.check_status')
     end
-  end
-
-  def receiver_part
-    logo
-    move_down 70
-    font_size 24 do
-      text "№ #{@order.number}", align: :center, inlign_format: true, style: :bold
-    end
-    text @order.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
-    move_down 20
-    text @order.customer_name
   end
 
   private

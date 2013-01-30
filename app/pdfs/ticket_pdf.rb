@@ -2,7 +2,7 @@
 class TicketPdf < Prawn::Document
   require "prawn/measurement_extensions"
 
-  def initialize(device, view)
+  def initialize(device, view, part=nil)
     super page_size: [80.mm, 80.mm], page_layout: :portrait, margin: 10
     @device = device
     @view = view
@@ -11,9 +11,9 @@ class TicketPdf < Prawn::Document
       bold: "#{Rails.root}/app/assets/fonts/droidsans-bold-webfont.ttf"
     }
     font 'DroidSans'
-    client_part
-    start_new_page
-    receiver_part
+    client_part unless part.to_i == 2
+    start_new_page if part.nil?
+    receiver_part unless part.to_i == 1
     encrypt_document permissions: { modify_contents: false }
   end
 

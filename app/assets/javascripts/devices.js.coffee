@@ -59,6 +59,12 @@ jQuery ->
 
     placeClientDevices()
 
+  $('#print_device_ticket').click (event)->
+    event.preventDefault()
+    $('#print_device_ticket2')[0].click()
+    setTimeout (->
+      $('#print_device_ticket1')[0].click()
+    ), 100
 
 placeClientDevices = ()->
   $devices = $('#client_devices')
