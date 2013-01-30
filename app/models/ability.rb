@@ -5,35 +5,36 @@ Ability
   def initialize(user)
     # Define abilities for the passed in user here. For example:
     #
+    alias_action :create, :update, to: :modify
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
       #can :manage, Device
       #cannot :remove_device_tasks, Device
+    elsif user.programmer?
+      can :manage, :all
     else
       if user.software?
-        can :receive, Device
-        can :manage, [Device, Client]
+        can :modify, [Device, Client]
+      end
+      def user.media?
+        can :modify, [Device, Client]
+      end
+      if user.marketing?
+        can :manage, Price
+        can :manage, DeviceType
+        can :manage, Order
       end
       if user.helpable?
-        #can [:create, :update], Announcement
         can :call_help, Announcement
         can :cancel_help, Announcement, user_id: user.id
       end
+      can :create, Order
       can :read, Info
       can :update, Device
       can :update_wish, User, id: user.id
-      #cannot :update, DeviceTask
-      cannot :change_location, Device, new_record?: true
-      can :manage_device_task, DeviceTask, task: {role: user.role}, done: false
       can :update, DeviceTask, task: {role: user.role}, done: false
-      cannot :remove_device_tasks, Device, new_record?: false
-      cannot :change_client, Device
-      cannot :change_device_type, Device
-      cannot :change_serial_number, Device
-      cannot :change_device_comment, Device
       can :read, :all
-      #cannot :destroy, Device
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

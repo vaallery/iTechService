@@ -16,7 +16,7 @@ class DashboardController < ApplicationController
         else
           @devices = Device.pending.located_at(current_user.location).page params[:page]
         end
-        #@devices = (current_user.admin? ? Device.pending : Device.located_at(current_user.location)).page params[:page]
+        @devices = @devices.search params
         @table_name = 'tasks_table'
       when 'made_devices'
         @devices = Device.done.page params[:page]
@@ -38,8 +38,8 @@ class DashboardController < ApplicationController
     if (user = User.find_by_card_number params[:card_number]).present?
       sign_in :user, user
       #render root_url
-      #redirect_to root_url
-      redirect_back_or root_url
+      redirect_to root_url
+      #redirect_back_or root_url
     else
       redirect_to new_user_session_url
     end

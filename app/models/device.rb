@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Device < ActiveRecord::Base
 
   belongs_to :user, inverse_of: :devices
@@ -23,6 +24,7 @@ class Device < ActiveRecord::Base
   before_validation :check_device_type
   before_validation :check_security_code
   before_validation :set_user_and_location
+  before_validation :validate_location
   after_save :update_qty_replaced
 
   #scope :ordered, order("devices.done_at desc, created_at asc")
@@ -201,8 +203,14 @@ class Device < ActiveRecord::Base
   end
 
   def set_user_and_location
-    location_id ||= User.try(:current).try(:location_id)
-    user_id ||= User.try(:current).try(:id)
+    self.location_id ||= User.try(:current).try(:location_id)
+    self.user_id ||= User.try(:current).try(:id)
+  end
+
+  def validate_location
+    if self.location.name == 'Готово' and self.pending?
+      self.errors.add :location_id, I18n.t('devices.movement_error')
+    end
   end
 
 end

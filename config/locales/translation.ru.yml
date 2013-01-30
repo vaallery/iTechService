@@ -1,0 +1,386 @@
+ru:
+  activerecord:
+    models:
+      announcement: Оповещение
+      #ckeditor/asset: ckeditor/asset
+      #ckeditor/attachment_file: ckeditor/attachment_file
+      #ckeditor/picture: ckeditor/picture
+      client: Клиент
+      comment: Комментарий
+      device: Девайс
+      device_task: Задача
+      device_type: Тип девайса
+      duty_day: Дежурство
+      history_record: history_record
+      info: Новость
+      karma: Карма
+      location: Локация
+      object: Обьект
+      order: Заказ
+      price: Прайс
+      schedule_day: Рабочий день
+      stolen_phone: Краденый телефон
+      task: Задача
+      user: Пользователь
+
+    attributes:
+      announcement:
+        active: Ативный
+        kind: Тип
+        user: Пользователь
+
+      ckeditor/asset:
+        assetable: :activerecord.models.assetable
+        assetable_type: assetable_type
+        data_content_type: data_content_type
+        data_file_name: data_file_name
+        data_file_size: data_file_size
+        height: height
+        width: width
+
+      ckeditor/attachment_file:
+        assetable: assetable
+        assetable_type: assetable_type  #g
+        data_content_type: data_content_type  #g
+        data_file_name: data_file_name  #g
+        data_file_size: data_file_size  #g
+        height: height  #g
+        width: width  #g
+
+      ckeditor/picture:
+        assetable: assetable  #g
+        assetable_type: assetable_type  #g
+        data_content_type: data_content_type  #g
+        data_file_name: data_file_name  #g
+        data_file_size: data_file_size  #g
+        height: height  #g
+        width: width  #g
+
+      client:
+        admin_info: Информация админа
+        birthday: День рождения
+        card_number: Номер карты
+        comments: Комментарии
+        devices: Девайсы
+        email: E-mail
+        full_phone_number: Федеральный телефонный номер
+        name: Имя
+        orders: Заказы
+        patronymic: Отчество
+        phone_number: Телефонный номер
+        surname: Фамилия
+
+      comment:
+        content: Содержание
+        user: user
+
+      device:
+        client: client #:activerecord.models.client
+        comment: Комментарий
+        device_tasks: Список задач
+        device_type: device_type
+        done_at: Время завершения
+        history_records: История изменений
+        imei: IMEI
+        location: location
+        receiver: Приемщик
+        replaced: Заменен
+        security_code: Пароль
+        serial_number: Серийный номер
+        status: Статус
+        tasks: Список задач
+        ticket_number: Номер талона
+        user: user
+
+      device_task:
+        cost: Стоимость
+        device: device
+        done: Выполнено
+        done_at: Время выполнения
+        history_records: История
+        task: task
+
+      device_type:
+        ancestry: Предок
+        expected_during: Ожидается в течении
+        qty_for_replacement: Доступно для замены
+        qty_replaced: Заменено
+        qty_reserve: Зарезервировано
+        qty_shop: На магазине
+        qty_store: На складе
+
+      duty_day:
+        day: День
+        user: user
+
+      history_record:
+        column_name: Название атрибута
+        column_type: Тип атрибута
+        deleted_at: Время удаления
+        new_value: Новое значение
+        object: object  #g
+        object_type: Тип обьекта
+        old_value: Прежнее значение
+        user: user  #g
+
+      info:
+        important: Важно
+        title: Заголовок
+
+      karma:
+        good: good  #g
+        user: user  #g
+
+      location:
+        ancestry: Предок
+        name: Название
+        schedule: Отображать в календаре
+        users: Пользователи
+
+      order:
+        customer: Заказчик
+        customer_type: Тип заказчика
+        desired_date: Желаемая дата
+        history_records: История
+        number: Номер
+        object: Обьект
+        object_kind: Тип обьекта
+        status: Статус
+
+      price:
+        file: Файл
+
+      schedule_day:
+        day: День
+        hours: Часы
+
+      stolen_phone:
+        imei: IMEI
+
+      task:
+        cost: Стоимость
+        devices: Девайсы
+        duration: Длительность
+        name: Название
+        priority: Приоритет
+        role: Роль
+
+      user:
+        announcements: Оповещение
+        authentication_token: authentication_token  #g
+        birthday: День рождения
+        card_number: Номер карты
+        color: Цвет
+        comments: Комментарии
+        current_sign_in_at: Время авторизации
+        current_sign_in_ip: IP авторизации
+        devices: Девайсы
+        duty_days: Дежурные дни
+        email: E-mail
+        encrypted_password: encrypted_password  #g
+        hiring_date: Дата приема на работу
+        history_records: history_records  #g
+        last_sign_in_at: Время предыдущей авторизации
+        last_sign_in_ip: IP предыдущей авторизации
+        location: location  #g
+        name: Имя
+        orders: Заказы
+        patronymic: Отчество
+        photo: Фотография
+        prepayment: Аванс
+        remember_created_at: remember_created_at  #g
+        reset_password_sent_at: reset_password_sent_at  #g
+        reset_password_token: reset_password_token  #g
+        role: Роль
+        salary_date: Дата зарплаты
+        schedule_days: Рабочие дни
+        surname: Фамилия
+        username: Логин
+        wish: Пожелание
+
+
+  attributes:
+    created_at: Время создания
+    name: Название
+    updated_at: Время обновления
+    comment: Комментарий
+    content: Содержание
+    id: '№'
+    user: user
+
+  announcements:
+    needs_help: нуждается в помощи!!!
+
+  dashboard:
+    actual_tasks: "Текущие задачи"
+    goods_for_sale: "Техника для продажи"
+    made_devices: "Готовые девайсы"
+    moved_title: Перемещен
+    new_device: Новый девайс
+    new_info: Создать новость
+    new_user: Новый пользователь
+    params: Параметры
+
+  devices:
+    information: Информация о девайсе
+    not_found: Девайс не найден
+    enter_ticket_number: Укажите номер талона
+    moved_at: Перемёщен в
+    moved_by: Переместил(а)
+    movement_error: Не все задачи выполнены
+    phone_stolen: этот телефон в чёрном списке!!!
+
+  orders:
+    order_num: "Заказ №%{num}"
+    object_kinds:
+      device: Техника
+      accessory: Аксессуар
+      soft: Софт
+      misc: Прочее
+      all_kinds: Все типы
+    statuses:
+      new: Новый
+      pending: Выполняется
+      done: Выполнен
+      canceled: Отменен
+      all_statuses: Все статусы
+
+  tickets:
+    address1: 'г.Владивосток,'
+    address2: 'Океанский проспект, 90'
+    check_status: 'Вы можете проверить статус устройства по адресу: www.itechstore.ru/check.'
+    contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
+    email: 'e-mail: info@itechstore.ru'
+    link: Талон
+    notice: 'Сохраняйте этот талон до получения Вашего устройства.'
+    operations_list: 'Список операций:'
+    schedule1: 'Пн-Пт: с 10 до 21'
+    schedule2: 'Сб: с 12 до 21'
+    schedule3: 'Вс - выходной'
+    site: 'www.itechstore.ru'
+
+  announcements:
+    edit:
+      title: Редактирование оповещения
+    new:
+      title: Новое оповещение
+    index:
+      title: Оповещения
+    link: Оповещения
+
+  clients:
+    edit:
+      title: Редактирование клиента
+    new:
+      title: Новый клиент
+    index:
+      title: 'Клиенты'
+      seach_placeholder: Телефон или имя
+    link: Клиенты
+    questionnaire: Анкета
+
+  comments:
+    edit:
+      title: Редактирование комментария
+    new:
+      title: Новый комментарий
+    index:
+      title: Комментарии
+    link: Комментарии
+
+  devices:
+    edit:
+      title: Редактирование девайса
+    new:
+      title: Новый девайс
+    index:
+      title: Девайсы
+    link: Девайсы
+
+  device_types:
+    edit:
+      title: Редактирование типа девайса
+    new:
+      title: Новый тип девайса
+    index:
+      title: Типы девайсов
+    link: Типы девайсов
+
+  infos:
+    edit:
+      title: Редактирование новости
+    new:
+      title: Новая новость
+    index:
+      title: Новости
+    link: Новости
+
+  locations:
+    edit:
+      title: Редактирование локации
+    new:
+      title: Новая локация
+    index:
+      title: Локации
+    link: Локации
+
+  orders:
+    edit:
+      title: Редактирование заказа
+    new:
+      title: Новый заказ
+    index:
+      title: Заказы
+    link: Заказы
+
+  prices:
+    edit:
+      title: Редактирование прайса
+    new:
+      title: Новый прайс
+    index:
+      title: Прайсы
+    link: Прайсы
+
+  stolen_phones:
+    edit:
+      title: Редактирование телефона
+    new:
+      title: Новый телефон
+    index:
+      title: Чёрный список
+    link: Чёрный список
+
+  tasks:
+    edit:
+      title: Редактирование задачи
+    new:
+      title: Новая задача
+    index:
+      title: Задачи
+    link: Задачи
+
+  users:
+    edit:
+      title: Редактирование клиента
+    new:
+      title: Новый клиент
+    index:
+      title: Клиенты
+    link: Клиенты
+
+  confirmation: Вы уверены?
+  create: Создать
+  edit: Редактировать
+  moved: "%{user} %{time} назад"
+  moved_title: Переместил
+  nothing_found: Ничего не найдено
+  phone_placeholder: "6, 7, 10 или 11 цифр"
+  save: Сохранить
+  search: Найти
+  update: Сохранить
+  black_list: "Чёрный список"
+  new: "Новый"
+  show: "Показать"
+  edit: "Редактировать"
+  destroy: "Удалить"

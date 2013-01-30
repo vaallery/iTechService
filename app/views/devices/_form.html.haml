@@ -2,12 +2,12 @@
 
   = f.full_error :ticket_number
 
-  - if can? :change_client, @device or can? :receive, @device
+  - if can? :update, @device
     = f.input :client_id, as: :client, wrapper_html: {id: 'client_fields'}
   - else
     = f.input :client, as: :string, disabled: true, input_html: {class: 'input-xlarge'}
 
-  - if can? :change_device_type, @device or can? :receive, @device
+  - if can? :update, @device
     = f.input :device_type_id, as: :device_type
   - else
     = f.input :device_type, as: :string, disabled: true, input_html: {class: 'input-xlarge'}
@@ -18,11 +18,11 @@
 
   = f.input :serial_number
   
-  = f.input :comment, input_html: {rows: 5}, disabled: (cannot?(:change_device_comment, @device) and cannot?(:receive, @device))
+  = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)
 
   = f.input :replaced, as: :replaced, disabled: true
 
-  - if can? :change_location, @device or can? :receive, @device
+  - if can? :update, @device
     = f.input :location_id, as: :location, user: current_user
   - else
     = text_field_tag :location, @device.location.try(:full_name), disabled: true, class: 'input-xlarge'

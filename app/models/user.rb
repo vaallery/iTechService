@@ -72,6 +72,14 @@ class User < ActiveRecord::Base
   def media?
     has_role? 'media'
   end
+
+  def marketing?
+    has_role? 'marketing'
+  end
+
+  def programmer?
+    has_role? 'programmer'
+  end
   
   def has_role? role
     if role.is_a? Array
