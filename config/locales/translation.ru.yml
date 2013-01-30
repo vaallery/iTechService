@@ -72,17 +72,17 @@ ru:
 
       comment:
         content: Содержание
-        user: user
+        user: :activerecord.models.user
 
       device:
-        client: client #:activerecord.models.client
+        client: :activerecord.models.client
         comment: Комментарий
         device_tasks: Список задач
-        device_type: device_type
+        device_type: :activerecord.models.device_type
         done_at: Время завершения
         history_records: История изменений
         imei: IMEI
-        location: location
+        location: :activerecord.models.location
         receiver: Приемщик
         replaced: Заменен
         security_code: Пароль
@@ -90,15 +90,15 @@ ru:
         status: Статус
         tasks: Список задач
         ticket_number: Номер талона
-        user: user
+        user: :activerecord.models.user
 
       device_task:
         cost: Стоимость
-        device: device
+        device: :activerecord.models.device
         done: Выполнено
         done_at: Время выполнения
         history_records: История
-        task: task
+        task: :activerecord.models.task
 
       device_type:
         ancestry: Предок
@@ -121,7 +121,7 @@ ru:
         object: object  #g
         object_type: Тип обьекта
         old_value: Прежнее значение
-        user: user  #g
+        user: :activerecord.models.user  #g
 
       info:
         important: Важно
@@ -129,7 +129,7 @@ ru:
 
       karma:
         good: good  #g
-        user: user  #g
+        user: :activerecord.models.user  #g
 
       location:
         ancestry: Предок
@@ -182,7 +182,7 @@ ru:
         history_records: history_records  #g
         last_sign_in_at: Время предыдущей авторизации
         last_sign_in_ip: IP предыдущей авторизации
-        location: location  #g
+        location: :activerecord.models.location  #g
         name: Имя
         orders: Заказы
         patronymic: Отчество
@@ -206,7 +206,7 @@ ru:
     comment: Комментарий
     content: Содержание
     id: '№'
-    user: user
+    user: Пользователь
 
   announcements:
     needs_help: нуждается в помощи!!!

@@ -34,7 +34,7 @@ Ability
       can :read, Info
       can :update, Device
       can :update_wish, User, id: user.id
-      can :update, DeviceTask, task: {role: user.role}, done: false
+      can :update, DeviceTask, task: {role: user.role}#, done: false
       can :read, :all
     end
     #

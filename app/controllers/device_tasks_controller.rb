@@ -4,6 +4,7 @@ class DeviceTasksController < ApplicationController
 
   def edit
     #@device_task = DeviceTask.find params[:id]
+
     render 'shared/show_modal_form'
   end
 
