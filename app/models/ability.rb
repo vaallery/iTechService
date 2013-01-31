@@ -32,6 +32,7 @@ Ability
       can :create, Order
       can :read, Info
       can :update, Device
+      can :profile, User, id: user.id
       can :update_wish, User, id: user.id
       can :update, DeviceTask, task: {role: user.role}#, done: false
       can :modify, Comment
