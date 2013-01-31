@@ -1,11 +1,11 @@
 .page-header
   #news
-    %h3= link_to t('news'), infos_path
+    %h3= link_to t('infos.index.title'), infos_path
     #news_table= render 'infos/table_read'
 %ul.nav.nav-tabs
-  %li.active= link_to t("info"), "#info_tab", 'data-toggle' => 'tab'
-  %li= link_to t('shedule'), '#schedule_tab', 'data-toggle' => 'tab'
-  %li= link_to t("account"), "#account_tab", 'data-toggle' => 'tab'
+  %li.active= link_to t("users.info"), "#info_tab", 'data-toggle' => 'tab'
+  %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
+  %li= link_to t("users.account"), "#account_tab", 'data-toggle' => 'tab'
 
 .tab-content
   #info_tab.tab-pane.active

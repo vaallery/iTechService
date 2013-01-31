@@ -4,7 +4,7 @@
   %table.table.table-bordered.table-condensed
     %caption
       %h4
-        = t 'duty_days'
+        = t 'users.duty_schedule'
     %thead
       %tr
         %th{colspan: 8}
@@ -13,7 +13,8 @@
               = link_to duty_calendar_user_path(@user, date: @calendar_month.prev_month), remote: true do
                 &larr;
             %li
-              %span= @calendar_month.strftime "%B %Y"
+              %span= "#{t('date.month_names_single')[@calendar_month.month]} #{@calendar_month.year}"
+              -#%span= @calendar_month.strftime "%B %Y"
             %li.next
               = link_to duty_calendar_user_path(@user, date: @calendar_month.next_month), remote: true do
                 &rarr;

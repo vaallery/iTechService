@@ -182,7 +182,7 @@ module ApplicationHelper
     model_class = controller_name.classify.constantize
     content_tag :div, class: 'page-header' do
       if action_name == 'index'
-        content_tag(:h1, auto_title) + link_to_new(model_class)
+        content_tag(:h1, auto_title) + ((can?(:create, model_class)) ? link_to_new(model_class) : '')
       else
         content_tag :h1, link_back_to_index + auto_title
       end

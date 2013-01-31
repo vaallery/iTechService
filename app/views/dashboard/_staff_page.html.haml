@@ -1,8 +1,8 @@
 .page-header
-  = link_to_if (can? :create, Device), icon_tag('mobile-phone') + t('dashboard.new_device'), new_device_path,
-        class: 'btn btn-success btn-large'
-  = link_to_if (can? :create, Order), icon_tag('file-alt') + t('dashboard.new_order'), new_order_path,
-        class: 'btn btn-success btn-large'
+  = link_to icon_tag('mobile-phone') + t('dashboard.new_device'), new_device_path,
+        class: 'btn btn-success btn-large' if can? :create, Device
+  = link_to icon_tag('file-alt') + t('dashboard.new_order'), new_order_path,
+        class: 'btn btn-success btn-large' if can? :create, Order
 
 %h4
   %ul#dashboard_navigation.nav.nav-pills

@@ -22,6 +22,8 @@ Ability
         can :manage, Price
         can :manage, DeviceType
         can :manage, Order
+        can :modify, Client
+        cannot :modify, Device
       end
       if user.helpable?
         can :call_help, Announcement
@@ -34,6 +36,7 @@ Ability
       can :update, Device
       can :profile, User, id: user.id
       can :update_wish, User, id: user.id
+      can :duty_calendar, User, id: user.id
       can :update, DeviceTask, task: {role: user.role}#, done: false
       can :modify, Comment
       can :read, :all

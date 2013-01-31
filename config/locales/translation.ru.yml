@@ -161,6 +161,7 @@ ru:
 
       price:
         file: Файл
+        remote_file_url: Ссылка на файл
 
       schedule_day:
         day: День
@@ -194,10 +195,13 @@ ru:
         history_records: history_records  #g
         last_sign_in_at: Время предыдущей авторизации
         last_sign_in_ip: IP предыдущей авторизации
+        login: Логин
         location: :activerecord.models.location  #g
         name: Имя
         orders: Заказы
         patronymic: Отчество
+        password: Пароль
+        password_confirmation: Подтверждение пароля
         photo: Фотография
         prepayment: Аванс
         remember_created_at: remember_created_at  #g
@@ -213,11 +217,12 @@ ru:
 
   attributes:
     created_at: Время создания
-    name: Название
-    updated_at: Время обновления
     comment: Комментарий
     content: Содержание
+    fio: ФИО
     id: '№'
+    name: Название
+    updated_at: Время обновления
     user: Пользователь
 
   dashboard:
@@ -396,33 +401,36 @@ ru:
     link: Задачи
 
   users:
-    created: Пользователь создан
-    updated: Пользователь изменён
+    index:
+      title: Пользователи
     edit:
       title: Редактирование пользователя
     new:
       title: Новый пользователь
-    index:
-      title: Пользователи
+    account: Учётка
+    created: Пользователь создан
+    duty_schedule: График дежурств
+    info: Информация
+    job_schedule: График работы
     link: Пользователи
     schedule: График
-    job_schedule: График работы
-    duty_schedule: График дежурств
+    updated: Пользователь изменён
 
+  back: Назад
+  black_list: "Чёрный список"
   client_input_placeholder: 'Имя / телефон / карта'
   confirmation: Вы уверены?
   create: Создать
+  destroy: "Удалить"
   edit: Редактировать
   moved: "%{user} %{time} назад"
   moved_title: Переместил
+  new: "Новый"
   nothing_found: Ничего не найдено
   phone_placeholder: "6, 7, 10 или 11 цифр"
+  remove_photo: Удалить фото
   save: Сохранить
   search: Найти
-  update: Сохранить
-  black_list: "Чёрный список"
-  new: "Новый"
   show: "Показать"
-  edit: "Редактировать"
-  destroy: "Удалить"
   total: Итого
+  update: Сохранить

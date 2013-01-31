@@ -26,8 +26,11 @@ ru:
       welcome: Добро пожаловать
     sessions:
       new:
-        title: Авторизация
+        by_card: По карте
+        by_password: По паролю
+        signin: Авторизоваться
         submit: Авторизоваться
+        title: Авторизация
       signed_in: 'Вы успешно авторизованы.'
       signed_out: Сеанс завершен.
     passwords:
