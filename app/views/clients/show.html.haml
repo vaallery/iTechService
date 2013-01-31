@@ -26,7 +26,11 @@
 #client_devices
 
 .form-actions
-  = link_to new_device_path(device: {client_id: @client.id}), class: 'btn' do
-    = icon_tag('plus-sign') + t('dashboard.new_device')
+  - if can? :create, Device
+    = link_to new_device_path(device: {client_id: @client.id}), class: 'btn' do
+      = icon_tag('plus-sign') + t('dashboard.new_device')
+  -#- if can? :create, Order
+  -#  = link_to new_order_path(order: {customer_type: 'Client', customer_id: @client.id}), class: 'btn' do
+  -#    = icon_tag('plus-sign') + t('dashboard.new_order')
   = link_to_edit @client
   = link_to_destroy @client

@@ -1,0 +1,15 @@
+= paginate @orders, remote: true
+%table#actual_orders_table.table.table-hover.table-bordered
+  %thead
+    %tr
+      %th= Order.human_attribute_name :number
+      %th= Order.human_attribute_name :object_kind
+      %th= Order.human_attribute_name :object
+      %th= Order.human_attribute_name :customer
+      %th= Order.human_attribute_name(:created_at)
+      %th
+  %tbody
+    - @orders.each do |order|
+      = order_row_tag(order)
+
+= paginate @orders, remote: true

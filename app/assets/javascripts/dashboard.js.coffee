@@ -16,9 +16,7 @@ jQuery ->
       if options.url.substr(0, 10) == '/dashboard'
         $('#dashboard_content').fadeIn()
 
-#pageTime = new Date()
-
-#newDevicesCheck = setInterval (->
+#timeOutCheck = setInterval (->
 #  time = pageTime.toLocaleString()
 #  $.getJSON '/dashboard.json?time='+time, (data)->
 #    if data.new_devices_exists

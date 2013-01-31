@@ -226,6 +226,7 @@ ru:
     user: Пользователь
 
   dashboard:
+    actual_orders: Текущие заказы
     actual_tasks: "Текущие задачи"
     goods_for_sale: "Техника для продажи"
     made_devices: "Готовые девайсы"

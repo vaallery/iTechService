@@ -19,6 +19,7 @@ class Order < ActiveRecord::Base
   scope :pending_orders, where(status: 'pending')
   scope :done_orders, where(status: 'done')
   scope :canceled_orders, where(status: 'canceled')
+  scope :actual_orders, where(status: %w[new pending])
   scope :device, where(object_kind: 'device')
   scope :accessory, where(object_kind: 'accessory')
   scope :soft, where(object_kind: 'soft')

@@ -9,7 +9,7 @@ module DashboardHelper
           end
       ).html_safe
     else
-      t('dashboard.device_not_found', default: 'Device not found')
+      t('devices.not_found', default: 'Device not found')
     end
   end
 

@@ -3,6 +3,7 @@ class DashboardController < ApplicationController
   skip_before_filter :authenticate_user!, :set_current_user, only: :sign_in_by_card
 
   def index
+    params[:tab] ||= 'actual_orders' if current_user.marketing?
     case params[:tab]
       when 'actual_tasks'
         if current_user.admin?
@@ -24,6 +25,9 @@ class DashboardController < ApplicationController
       when 'goods_for_sale'
         @device_types = DeviceType.for_sale
         @table_name = 'goods_for_sale'
+      when 'actual_orders'
+        @orders = Order.ordered.actual_orders.page params[:page]
+        @table_name = 'orders_table'
       else
         @devices = (current_user.admin? ? Device.pending : Device.located_at(current_user.location)).page params[:page]
         @table_name ||= 'tasks_table'
