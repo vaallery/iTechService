@@ -1,50 +1,44 @@
 class CommentsController < ApplicationController
-  # GET /comments
-  # GET /comments.json
+  helper_method :sort_column, :sort_direction
+  load_and_authorize_resource
+  skip_load_resource only: [:index]
+
   def index
-    @comments = Comment.all
+    if params.has_key? :sort and params.has_key? :direction
+      @comments = Comment.scoped.order 'comments.'+sort_column + ' ' + sort_direction
+    else
+      @comments = Comment.ordered.page params[:page]
+    end
+    @comments = @comments.page params[:page]
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @comments }
     end
   end
 
-  # GET /comments/1
-  # GET /comments/1.json
   def show
-    @comment = Comment.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @comment }
     end
   end
 
-  # GET /comments/new
-  # GET /comments/new.json
   def new
-    @comment = Comment.new
-
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @comment }
     end
   end
 
-  # GET /comments/1/edit
   def edit
     @comment = Comment.find(params[:id])
   end
 
-  # POST /comments
-  # POST /comments.json
   def create
-    @comment = Comment.new(params[:comment])
-
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        format.html { redirect_to @comment, notice: t('comments.created') }
         format.json { render json: @comment, status: :created, location: @comment }
       else
         format.html { render action: "new" }
@@ -53,14 +47,10 @@ class CommentsController < ApplicationController
     end
   end
 
-  # PUT /comments/1
-  # PUT /comments/1.json
   def update
-    @comment = Comment.find(params[:id])
-
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to @comment, notice: t('comments.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -69,10 +59,7 @@ class CommentsController < ApplicationController
     end
   end
 
-  # DELETE /comments/1
-  # DELETE /comments/1.json
   def destroy
-    @comment = Comment.find(params[:id])
     @comment.destroy
 
     respond_to do |format|
@@ -80,4 +67,15 @@ class CommentsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def sort_column
+    Comment.column_names.include?(params[:sort]) ? params[:sort] : ''
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
+  end
+
 end

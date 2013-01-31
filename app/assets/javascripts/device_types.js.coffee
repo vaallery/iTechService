@@ -58,6 +58,9 @@ jQuery ->
     .bind  'loaded.jstree', (e, data) ->
       $('#device_types_tree').jstree('open_all', $('li.device_type'), false)
 
+  $('#new_device_type_link').click (event)->
+    event.preventDefault()
+    $('#new_device_type form').fadeToggle()
 
 #  $('#device_types_tree .label').live 'click', () ->
 #    $('#device_types_tree .label').removeClass('label-info')

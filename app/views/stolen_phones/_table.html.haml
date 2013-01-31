@@ -8,16 +8,18 @@
         %th= model_class.human_attribute_name(:id)
         %th= model_class.human_attribute_name(:imei)
         %th= model_class.human_attribute_name(:created_at)
-        %th
+        - if can? :manage, StolenPhone
+          %th
     %tbody
       - @stolen_phones.each do |stolen_phone|
         %tr
           %td= stolen_phone.id
           %td= stolen_phone.imei
           %td=l stolen_phone.created_at, format: :long_d
-          %td.btn-group
-            = link_to_edit_small stolen_phone
-            = link_to_destroy_small stolen_phone
+          - if can? :manage, StolenPhone
+            %td.btn-group
+              = link_to_edit_small stolen_phone
+              = link_to_destroy_small stolen_phone
 
   = paginate @stolen_phones
 

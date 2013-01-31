@@ -6,6 +6,7 @@ class Comment < ActiveRecord::Base
   before_validation do |comment|
     comment.user_id = User.current.id
   end
+  scope :ordered, order("comments.created_at desc")
 
   def user_name
     user.full_name

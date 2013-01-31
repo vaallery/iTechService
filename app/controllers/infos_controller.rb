@@ -48,7 +48,7 @@ class InfosController < ApplicationController
 
     respond_to do |format|
       if @info.save
-        format.html { redirect_to @info, notice: 'Info was successfully created.' }
+        format.html { redirect_to @info, notice: t('infos.created') }
         format.json { render json: @info, status: :created, location: @info }
       else
         format.html { render action: "new" }
@@ -62,7 +62,7 @@ class InfosController < ApplicationController
 
     respond_to do |format|
       if @info.update_attributes(params[:info])
-        format.html { redirect_to @info, notice: 'Info was successfully updated.' }
+        format.html { redirect_to @info, notice: t('infos.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

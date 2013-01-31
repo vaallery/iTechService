@@ -3,7 +3,7 @@ class DeviceTypesController < ApplicationController
 
   def index
     @device_types = DeviceType.order('ancestry asc').page params[:page]
-
+    @device_type = DeviceType.new
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @device_types }
@@ -15,6 +15,7 @@ class DeviceTypesController < ApplicationController
 
     respond_to do |format|
       if @device_type.save
+        format.html { redirect_to device_types_path, notice: t('device_types.created') }
         format.json { render json: @device_type, status: :created, location: @device_type }
       else
         format.html { render action: "new" }

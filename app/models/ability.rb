@@ -35,6 +35,7 @@ Ability
       can :update_wish, User, id: user.id
       can :update, DeviceTask, task: {role: user.role}#, done: false
       can :read, :all
+      cannot [:create, :update, :destroy], StolenPhone
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

@@ -25,6 +25,10 @@ class Client < ActiveRecord::Base
   def full_name
     [surname, name, patronymic].join ' '
   end
+
+  def short_name
+    [name, surname].join ' '
+  end
   
   def name_phone
     "#{self.name} / #{self.human_phone_number}"

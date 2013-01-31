@@ -103,6 +103,12 @@ class User < ActiveRecord::Base
     res
   end
 
+  def short_name
+    res = [name, surname].join ' '
+    res = username if res.blank?
+    res
+  end
+
   def is_duty_day? date
     duty_days.exists? day: date
   end

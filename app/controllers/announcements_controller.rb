@@ -38,7 +38,7 @@ class AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @announcement.save
-        format.html { redirect_to @announcement, notice: 'Announcement was successfully created.' }
+        format.html { redirect_to @announcement, notice: t('announcements.created') }
         format.json { render json: @announcement, status: :created, location: @announcement }
       else
         format.html { render action: "new" }
@@ -52,7 +52,7 @@ class AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @announcement.update_attributes(params[:announcement])
-        format.html { redirect_to @announcement, notice: 'Announcement was successfully updated.' }
+        format.html { redirect_to @announcement, notice: t('announcements.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

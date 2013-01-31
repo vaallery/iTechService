@@ -217,9 +217,6 @@ ru:
     id: '№'
     user: Пользователь
 
-  announcements:
-    needs_help: нуждается в помощи!!!
-
   dashboard:
     actual_tasks: "Текущие задачи"
     goods_for_sale: "Техника для продажи"
@@ -231,21 +228,6 @@ ru:
     new_user: Новый пользователь
     params: Параметры
     new_device_message: Новый девайс!!!
-
-  orders:
-    order_num: "Заказ №%{num}"
-    object_kinds:
-      device: Техника
-      accessory: Аксессуар
-      soft: Софт
-      misc: Прочее
-      all_kinds: Все типы
-    statuses:
-      new: Новый
-      pending: Выполняется
-      done: Выполнен
-      canceled: Отменен
-      all_statuses: Все статусы
 
   tickets:
     address1: 'г.Владивосток,'
@@ -264,6 +246,8 @@ ru:
     site: 'www.itechstore.ru'
 
   announcements:
+    created: Оповещение создано
+    updated: Оповещение изменено
     edit:
       title: Редактирование оповещения
     new:
@@ -271,8 +255,11 @@ ru:
     index:
       title: Оповещения
     link: Оповещения
+    needs_help: нуждается в помощи!!!
 
   clients:
+    created: Клиент создан
+    updated: Клиент изменён
     edit:
       title: Редактирование клиента
     new:
@@ -284,6 +271,8 @@ ru:
     questionnaire: Анкета
 
   comments:
+    created: Комментарий создан
+    updated: Комментарий изменён
     edit:
       title: Редактирование комментария
     new:
@@ -293,6 +282,8 @@ ru:
     link: Комментарии
 
   devices:
+    created: Девайс создан
+    updated: Девайс изменён
     edit:
       title: Редактирование девайса
     new:
@@ -312,6 +303,8 @@ ru:
     client_devices: Девайсы клиента
 
   device_types:
+    created: Тип девайса создан
+    updated: Тип девайса изменён
     edit:
       title: Редактирование типа девайса
     new:
@@ -322,6 +315,8 @@ ru:
     available_for_replacement: Доступно для замены
 
   infos:
+    created: Новость создана
+    updated: Новость изменена
     edit:
       title: Редактирование новости
     new:
@@ -331,6 +326,8 @@ ru:
     link: Новости
 
   locations:
+    created: Локация создана
+    updated: Локация изменена
     edit:
       title: Редактирование локации
     new:
@@ -340,6 +337,8 @@ ru:
     link: Локации
 
   orders:
+    created: Заказ создан
+    updated: Заказ изменён
     edit:
       title: Редактирование заказа
     new:
@@ -348,20 +347,22 @@ ru:
       title: Заказы
     link: Заказы
     object_kinds:
-      all_kinds: Все типы
-      device: Девайс
+      device: Техника
       accessory: Аксессуар
       soft: Софт
       misc: Прочее
+      all_kinds: Все типы
     statuses:
-      all_statuses: Все статусы
       new: Новый
-      pending: В ожидании
+      pending: Выполняется
       done: Выполнен
       canceled: Отменен
+      all_statuses: Все статусы
     order_num: "Заказ №%{num}"
 
   prices:
+    created: Прайс создан
+    updated: Прайс изменён
     edit:
       title: Редактирование прайса
     new:
@@ -371,6 +372,8 @@ ru:
     link: Прайсы
 
   stolen_phones:
+    created: Телефон создан
+    updated: Телефон изменён
     edit:
       title: Редактирование телефона
     new:
@@ -380,6 +383,8 @@ ru:
     link: Чёрный список
 
   tasks:
+    created: Задача создана
+    updated: Задача изменена
     edit:
       title: Редактирование задачи
     new:
@@ -389,6 +394,8 @@ ru:
     link: Задачи
 
   users:
+    created: Пользователь создан
+    updated: Пользователь изменён
     edit:
       title: Редактирование пользователя
     new:

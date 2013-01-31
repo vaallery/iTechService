@@ -48,7 +48,11 @@ class Device < ActiveRecord::Base
   def client_name
     client.try(:name) || '-'
   end
-  
+
+  def client_short_name
+    client.try(:short_name) || '-'
+  end
+
   def client_phone
     client.try(:phone_number) || '-'
   end
@@ -58,9 +62,17 @@ class Device < ActiveRecord::Base
   end
 
   def user_name
+    (user || User.current).name
+  end
+
+  def user_short_name
+    (user || User.current).short_name
+  end
+
+  def user_full_name
     (user || User.current).full_name
   end
-  
+
   def presentation
     serial_number.blank? ? type_name : [type_name, serial_number].join(' / ')
   end

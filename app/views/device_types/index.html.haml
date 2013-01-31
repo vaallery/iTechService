@@ -3,3 +3,10 @@
     %ul= nested_device_types device_types
 
   #device_type_form
+
+.row-fluid#new_device_type
+  = link_to icon_tag(:plus) + t('new'), '#', id: 'new_device_type_link', class: 'btn btn-success btn-small', remote: true
+  = simple_form_for @device_type, html: { class: 'form-inline' } do |f|
+    .input-append
+      = f.input_field :name, class: 'input-small', placeholder: DeviceType.human_attribute_name(:name)
+      = submit_button f

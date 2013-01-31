@@ -30,7 +30,7 @@ class StolenPhonesController < ApplicationController
 
     respond_to do |format|
       if @stolen_phone.save
-        format.html { redirect_to stolen_phones_url, notice: 'Stolen phone was successfully created.' }
+        format.html { redirect_to stolen_phones_url, notice: t('stolen_phones.created') }
         format.json { render json: @stolen_phone, status: :created, location: @stolen_phone }
       else
         format.html { render action: "new" }
@@ -44,7 +44,7 @@ class StolenPhonesController < ApplicationController
 
     respond_to do |format|
       if @stolen_phone.update_attributes(params[:stolen_phone])
-        format.html { redirect_to stolen_phones_url, notice: 'Stolen phone was successfully updated.' }
+        format.html { redirect_to stolen_phones_url, notice: t('stolen_phones.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
