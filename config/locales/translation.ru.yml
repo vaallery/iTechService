@@ -148,6 +148,7 @@ ru:
 
       order:
         customer: Заказчик
+        customer_id: Заказчик
         customer_type: Тип заказчика
         desired_date: Желаемая дата
         history_records: История
@@ -155,6 +156,8 @@ ru:
         object: Обьект
         object_kind: Тип обьекта
         status: Статус
+        user: :activerecord.models.user
+        user_comment: Комментарий товароведа
 
       price:
         file: Файл
@@ -271,8 +274,6 @@ ru:
     questionnaire: Анкета
 
   comments:
-    created: Комментарий создан
-    updated: Комментарий изменён
     edit:
       title: Редактирование комментария
     new:
@@ -280,16 +281,18 @@ ru:
     index:
       title: Комментарии
     link: Комментарии
+    created: Комментарий создан
+    updated: Комментарий изменён
 
   devices:
-    created: Девайс создан
-    updated: Девайс изменён
     edit:
       title: Редактирование девайса
-    new:
-      title: Новый девайс
     index:
       title: Девайсы
+    new:
+      title: Новый девайс
+    created: Девайс создан
+    updated: Девайс изменён
     link: Девайсы
     add_task: Добавить задачу
     information: Информация о девайсе
@@ -299,7 +302,6 @@ ru:
     moved_by: Переместил(а)
     movement_error: Не все задачи выполнены
     phone_stolen: 'этот телефон в чёрном списке!!!'
-    client_placeholder: 'Имя / телефон / карта'
     client_devices: Девайсы клиента
 
   device_types:
@@ -337,8 +339,6 @@ ru:
     link: Локации
 
   orders:
-    created: Заказ создан
-    updated: Заказ изменён
     edit:
       title: Редактирование заказа
     new:
@@ -358,6 +358,8 @@ ru:
       done: Выполнен
       canceled: Отменен
       all_statuses: Все статусы
+    created: Заказ создан
+    updated: Заказ изменён
     order_num: "Заказ №%{num}"
 
   prices:
@@ -407,6 +409,7 @@ ru:
     job_schedule: График работы
     duty_schedule: График дежурств
 
+  client_input_placeholder: 'Имя / телефон / карта'
   confirmation: Вы уверены?
   create: Создать
   edit: Редактировать

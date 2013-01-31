@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   helper_method :sort_column, :sort_direction
   load_and_authorize_resource
-  skip_load_resource only: [:index, :history]
+  skip_load_resource only: [:index, :new, :history]
 
   def index
     @orders = Order.search params
@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @order = Order.new(customer_type: 'User', customer_id: current_user.id, status: 'new')
+    @order = Order.new(customer_type: 'Client', status: 'new')
 
     respond_to do |format|
       format.html

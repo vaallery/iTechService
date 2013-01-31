@@ -33,16 +33,6 @@ module DevicesHelper
     end.html_safe
   end
 
-  def clients_autocomplete_list clients = []
-    if clients.any?
-      clients.collect do |client|
-        content_tag :li, link_to(client.presentation, select_client_devices_path(client_id: client.id), remote: true)
-      end.join.html_safe
-    else
-      content_tag(:li, link_to(t(:nothing_found), '#', remote: true)).html_safe
-    end
-  end
-
   def device_movement_history(device)
     history = device.movement_history
     content_tag(:table, class: 'movement_history ') do

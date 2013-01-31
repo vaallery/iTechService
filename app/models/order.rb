@@ -1,10 +1,18 @@
 class Order < ActiveRecord::Base
 
   belongs_to :customer, polymorphic: true
+  belongs_to :user
   has_many :history_records, as: :object
-  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status
+  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id,
+                  :user_comment
   validates :customer_id, :object, :object_kind, presence: true
   before_validation :generate_number
+  before_validation do |order|
+    if order.customer_id.blank?
+      order.customer_id = User.current.id
+      order.customer_type = 'User'
+    end
+  end
 
   scope :ordered, order("orders.created_at desc")
   scope :new_orders, where(status: 'new')
@@ -19,8 +27,20 @@ class Order < ActiveRecord::Base
   OBJECT_KINDS = %w[device accessory soft misc]
   STATUSES = %w[new pending done canceled]
 
-  def customer_name
+  def customer_full_name
     customer.try :full_name
+  end
+
+  def customer_short_name
+    customer.try :short_name
+  end
+
+  def customer_presentation
+    customer_type == 'User' ? customer_full_name : customer.presentation
+  end
+
+  def client
+    customer
   end
 
   def self.search params

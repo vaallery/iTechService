@@ -135,14 +135,6 @@ class DevicesController < ApplicationController
     end
   end
 
-  def autocomplete_client
-    @clients = Client.search(params).limit(10)
-  end
-
-  def select_client
-    @client = Client.find params[:client_id]
-  end
-
   def check_imei
     stolen_phone = StolenPhone.find_by_imei params[:imei_q]
     msg = stolen_phone.present? ? t('devices.phone_stolen') : ''

@@ -21,7 +21,7 @@
         %tr{class: row_class_for_order(order)}
           %td= link_to order.id, order_path(order)
           %td= link_to order.number, order_path(order)
-          %td= order.customer_name
+          %td= order.customer_full_name
           %td= t("orders.object_kinds.#{order.object_kind}")
           %td= order.object
           %td= t("orders.statuses.#{order.status}")

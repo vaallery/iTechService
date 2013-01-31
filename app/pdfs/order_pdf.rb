@@ -36,7 +36,7 @@ class OrderPdf < Prawn::Document
     move_down 4
     text @order.object, style: :bold
     move_down 5
-    text @view.current_user.short_name
+    text (@order.user || @view.current_user).short_name
     text @view.t('tickets.contact_phone')
     move_down 5
     horizontal_line 0, 205#, at: y

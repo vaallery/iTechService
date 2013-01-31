@@ -97,4 +97,12 @@ class ClientsController < ApplicationController
     send_data pdf.render, filename: 'anketa.pdf', type: 'application/pdf', disposition: 'inline'
   end
 
+  def autocomplete
+    @clients = Client.search(params).limit(10)
+  end
+
+  def select
+    @client = Client.find params[:id]
+  end
+
 end

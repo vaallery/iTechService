@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130125065318) do
+ActiveRecord::Schema.define(:version => 20130131041552) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -204,12 +204,15 @@ ActiveRecord::Schema.define(:version => 20130125065318) do
     t.text     "comment"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "user_id"
+    t.text     "user_comment"
   end
 
   add_index "orders", ["customer_id", "customer_type"], :name => "index_orders_on_customer_id_and_customer_type"
   add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"
   add_index "orders", ["object_kind"], :name => "index_orders_on_object_kind"
   add_index "orders", ["status"], :name => "index_orders_on_status"
+  add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
 
   create_table "prices", :force => true do |t|
     t.string   "file"

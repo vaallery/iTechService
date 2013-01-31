@@ -25,3 +25,39 @@ jQuery ->
       $('#client_questionnaire_input').removeClass 'hidden'
     else
       $('#client_questionnaire_input').addClass 'hidden'
+
+  $client_input = $('#client_input')
+  if $client_input.length > 0
+
+    $(document).on 'click', (event)->
+      if $(this).parents('#clients_autocomplete_list').length is 0
+        $('#clients_autocomplete_list').hide()
+
+    $('#client_search').keyup ()->
+      $this = $(this)
+      if $this.val() is ''
+        $('#device_client_id').val("");
+        $('#order_customer_id').val("");
+      else
+        $.getScript '/clients/autocomplete.js?client_q='+$this.val()
+
+    if $('#clients_autocomplete_list').length
+      $('#clients_autocomplete_list').css
+        left: $('#client_input').offset().left
+        top: $('#client_input').offset().top + $('#client_input').outerHeight()
+
+    $('#client_devices_resize_button').click ->
+      $('.client_devices_list').slideToggle(100)
+
+    placeClientDevices()
+
+placeClientDevices = ()->
+  $devices = $('#client_devices')
+  $input = $('#client_input')
+  $('#client_devices').css
+    top: $input.offset().top - 6
+    left: $input.offset().left + $input.outerWidth()
+  if $('.client_devices_list', $devices).length > 0
+    $devices.show()
+  else
+    $devices.hide()
