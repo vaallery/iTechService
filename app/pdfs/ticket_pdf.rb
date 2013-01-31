@@ -3,7 +3,7 @@ class TicketPdf < Prawn::Document
   require "prawn/measurement_extensions"
 
   def initialize(device, view, part=nil)
-    super page_size: [80.mm, 80.mm], page_layout: :portrait, margin: 10
+    super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: 10
     @device = device
     @view = view
     font_families.update 'DroidSans' => {
@@ -35,9 +35,10 @@ class TicketPdf < Prawn::Document
       text "№ #{@device.ticket_number}", align: :center, inlign_format: true, style: :bold
     end
     text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
-    move_down 10
-    text @device.user_short_name
     move_down 5
+    text @device.user_short_name
+    #move_down 5
+    text @device.tasks.map{|t|t.id}.join('-'), size: 10
     text @view.t('tickets.contact_phone')
     move_down 5
     horizontal_line 0, 205#, at: y
