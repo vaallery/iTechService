@@ -1,0 +1,15 @@
+:plain
+  $target = $(".comments_link[href='#{request.fullpath}']");
+  if($target.next('.popover').length > 0){
+    $target.popover('destroy');
+  }else{
+    $('.comments_link').popover('destroy');
+    content = "#{j(render(@comments))}" + "#{j(new_comment_form(@commentable))}";
+    $target.popover({
+      html: true,
+      placement: 'right',
+      trigger: 'manual',
+      content: content,
+    });
+    $target.popover('show');
+  }

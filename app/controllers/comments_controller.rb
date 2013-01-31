@@ -4,16 +4,25 @@ class CommentsController < ApplicationController
   skip_load_resource only: [:index]
 
   def index
-    if params.has_key? :sort and params.has_key? :direction
-      @comments = Comment.scoped.order 'comments.'+sort_column + ' ' + sort_direction
+    if (commentable_type = params[:commentable_type]).present? and
+        (commentable_id = params[:commentable_id]).present?
+      if commentable_type.constantize.respond_to? :find
+        @commentable = commentable_type.constantize.find commentable_id
+        @comments = @commentable.comments
+      end
     else
-      @comments = Comment.ordered.page params[:page]
+      if params.has_key? :sort and params.has_key? :direction
+        @comments = Comment.scoped.order 'comments.'+sort_column + ' ' + sort_direction
+      else
+        @comments = Comment.ordered.page params[:page]
+      end
+      @comments = @comments.page params[:page]
     end
-    @comments = @comments.page params[:page]
 
     respond_to do |format|
       format.html
       format.json { render json: @comments }
+      format.js
     end
   end
 
@@ -40,6 +49,7 @@ class CommentsController < ApplicationController
       if @comment.save
         format.html { redirect_to @comment, notice: t('comments.created') }
         format.json { render json: @comment, status: :created, location: @comment }
+        format.js
       else
         format.html { render action: "new" }
         format.json { render json: @comment.errors, status: :unprocessable_entity }

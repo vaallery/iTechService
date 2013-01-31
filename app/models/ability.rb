@@ -34,6 +34,7 @@ Ability
       can :update, Device
       can :update_wish, User, id: user.id
       can :update, DeviceTask, task: {role: user.role}#, done: false
+      can :modify, Comment
       can :read, :all
       cannot [:create, :update, :destroy], StolenPhone
     end
