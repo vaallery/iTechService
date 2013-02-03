@@ -90,6 +90,20 @@ class OrdersController < ApplicationController
     render 'shared/show_history'
   end
 
+  def check_status
+    @order = Order.find_by_number params[:ticket_number]
+
+    respond_to do |format|
+      if @order.present?
+        format.js { render 'information' }
+        format.json { render text: "orderStatus({'status':'#{@order.status_for_client}'})" }
+      else
+        format.js { render t('orders.not_found') }
+        format.json { render js: "orderStatus({'status':'not_found'})" }
+      end
+    end
+  end
+
   private
 
   def sort_column

@@ -371,6 +371,7 @@ ru:
     updated: Заказ изменён
     order_num: "Заказ №%{num}"
 
+    not_found: "Заказ не найден"
   prices:
     created: Прайс создан
     updated: Прайс изменён

@@ -45,6 +45,7 @@ ItechService::Application.routes.draw do
     get :movement_history, on: :member
   end
   match 'check_device_status' => 'devices#check_status', via: :get
+  match 'check_order_status' => 'orders#check_status', via: :get
   match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: :get,
       as: :history_device_task, defaults: { format: 'js' }
 

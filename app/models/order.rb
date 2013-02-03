@@ -71,6 +71,10 @@ class Order < ActiveRecord::Base
     orders
   end
 
+  def status_for_client
+    status == 'done' ? 'done' : 'undone'
+  end
+
   private
 
   def generate_number

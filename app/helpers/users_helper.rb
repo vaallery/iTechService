@@ -25,7 +25,7 @@ module UsersHelper
         end
       end
     end
-    {style: "background-color: #{color}", class: hour_class, data: {hour: hour}}
+    {style: "background-color: #{color}", class: hour_class, data: {hour: hour}, title: user.short_name}
   end
 
   def hours_attributes_for(user, day, day_id=nil)
@@ -67,7 +67,8 @@ module UsersHelper
     else
       day_class << ' empty'
     end
-    {class: day_class, data: {user: duty_user.try(:id) || '', dayid: day_id, day: day, color: day_color}, style: style}
+    {class: day_class, data: {user: duty_user.try(:id) || '', dayid: day_id, day: day, color: day_color},
+     style: style, title: duty_user.try(:short_name)}
   end
 
   def calendar_month_days(date)
