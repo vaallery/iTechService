@@ -274,7 +274,7 @@ ru:
       title: Новый клиент
     index:
       title: 'Клиенты'
-      seach_placeholder: Телефон или имя
+      search_placeholder: Телефон или имя
     link: Клиенты
     questionnaire: Анкета
 

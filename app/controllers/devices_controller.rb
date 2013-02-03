@@ -30,6 +30,7 @@ class DevicesController < ApplicationController
       format.json { render json: @device }
       format.pdf do
         pdf = TicketPdf.new @device, view_context, params[:part]
+        #pdf = TicketPdfBig.new @device, view_context, params[:part]
         send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
                   type: 'application/pdf', disposition: 'inline'
       end
@@ -127,10 +128,10 @@ class DevicesController < ApplicationController
     respond_to do |format|
       if @device.present?
         format.js { render 'information' }
-        format.json { render json: @device.status_info}
+        format.json { render text: "deviceStatus({'status':'#{@device.status}'})" }
       else
         format.js { render t('devices.not_found') }
-        format.json { render json: {error: t('devices.not_found')} }
+        format.json { render js: "deviceStatus({'status':'not_found'})" }
       end
     end
   end

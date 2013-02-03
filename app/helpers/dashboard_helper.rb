@@ -63,7 +63,11 @@ module DashboardHelper
     content_tag(:tr, class: 'device_row', data: {device_id: device.id}) do
       content_tag(:td, device_movement_information_tag(device), class: 'device_movement_column') +
       content_tag(:td) do
-        link_to(device.presentation, device_path(device), target: '_blank')
+        link_to(device.presentation, device_path(device), target: '_blank') +
+        tag(:br, false) +
+        content_tag(:span, class: 'device_ticket_number') do
+          "#{Device.human_attribute_name(:ticket_number)}: #{device.ticket_number}"
+        end
       end +
       content_tag(:td) do
         link_to(device.client_presentation, client_path(device.client), target: '_blank') +

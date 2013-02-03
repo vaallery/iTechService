@@ -34,6 +34,7 @@ class Device < ActiveRecord::Base
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   scope :replaced, where(replaced: true)
   scope :located_at, lambda {|location| where(location_id: location.id)}
+  scope :at_done, where(location_id: Location.find_by_name('Готово')).order('devices.done_at desc')
 
   after_initialize :set_user_and_location
   
@@ -90,11 +91,6 @@ class Device < ActiveRecord::Base
     
     unless (status_q = params[:status]).blank?
       devices = devices.send status_q if %w[done pending important].include? status_q
-      #case status
-      #  when 'done' then devices = devices.done
-      #  when 'pending' then devices = devices.pending
-      #  when 'important' then devices = devices.important
-      #end
     end
 
     unless (location_q = params[:location]).blank?
@@ -108,10 +104,16 @@ class Device < ActiveRecord::Base
     unless (device_q = params[:device]).blank?
       devices = devices.where 'LOWER(devices.serial_number) LIKE ?', "%#{device_q.downcase}%"
     end
-    
+
+    unless (device_q = params[:device_q]).blank?
+      devices = devices.where 'LOWER(devices.serial_number) LIKE ? OR
+                              ', "%#{device_q.downcase}%"
+    end
+
     unless (client_q = params[:client]).blank?
-      devices = devices.joins(:client).where 'LOWER(clients.name) LIKE :q OR clients.phone_number LIKE :q',
-          q: "%#{client_q.downcase}%"
+      devices = devices.joins(:client).where 'LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q
+                                              OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q',
+                                              q: "%#{client_q.downcase}%"
     end
     
     devices
@@ -142,13 +144,15 @@ class Device < ActiveRecord::Base
   end
 
   def status
-    location_name
+    #done? ? I18n.t('done') : I18n.t('undone')
+    #location.try(:name) == 'Готово' ? I18n.t('done') : I18n.t('undone')
+    location.try(:name) == 'Готово' ? 'done' : 'undone'
   end
 
   def status_info
     {
-      client: client_presentation,
-      device_type: type_name,
+      #client: client_presentation,
+      #device_type: type_name,
       status: status
     }
   end
@@ -220,8 +224,15 @@ class Device < ActiveRecord::Base
   end
 
   def validate_location
-    if self.location.name == 'Готово' and self.pending?
+    old_location = changed_attributes[:location_id].present? ? Location.find(changed_attributes[:location_id]) : nil
+    if self.location.try(:name) == 'Готово' and self.pending?
       self.errors.add :location_id, I18n.t('devices.movement_error')
+    end
+    if self.location.try(:name) == 'Архив' and old_location.try(:name) != 'Готово'
+      self.errors.add :location_id, I18n.t('devices.movement_error_not_done')
+    end
+    if old_location.try(:name) == 'Архив' and User.current.not_admin?
+      self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
     end
   end
 

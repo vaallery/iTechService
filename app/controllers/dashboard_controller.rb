@@ -9,18 +9,18 @@ class DashboardController < ApplicationController
         if current_user.admin?
           if params[:location].present?
             location = Location.find params[:location]
-            @devices = Device.pending.located_at(location).page params[:page]
+            @devices = Device.pending.located_at(location)
             @location_name = location.full_name
           else
-            @devices = Device.pending.page params[:page]
+            @devices = Device.pending
           end
         else
-          @devices = Device.pending.located_at(current_user.location).page params[:page]
+          @devices = Device.pending.located_at(current_user.location)
         end
-        @devices = @devices.search params
+        @devices = @devices.search(params).page params[:page]
         @table_name = 'tasks_table'
       when 'made_devices'
-        @devices = Device.done.page params[:page]
+        @devices = Device.at_done.search(params).page params[:page]
         @table_name = 'made_devices'
       when 'goods_for_sale'
         @device_types = DeviceType.for_sale

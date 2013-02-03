@@ -1,3 +1,4 @@
+# encoding: utf-8
 module DevicesHelper
   
   def row_class_for_task task

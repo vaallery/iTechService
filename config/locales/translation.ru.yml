@@ -275,7 +275,7 @@ ru:
       title: Новый клиент
     index:
       title: 'Клиенты'
-      seach_placeholder: Телефон или имя
+      search_placeholder: Телефон или имя
     link: Клиенты
     questionnaire: Анкета
 
@@ -297,18 +297,21 @@ ru:
       title: Девайсы
     new:
       title: Новый девайс
-    created: Девайс создан
-    updated: Девайс изменён
-    link: Девайсы
     add_task: Добавить задачу
-    information: Информация о девайсе
-    not_found: Девайс не найден
+    client_devices: Девайсы клиента
+    created: Девайс создан
     enter_ticket_number: Укажите номер талона
+    information: Информация о девайсе
+    link: Девайсы
+    not_found: Устройство не найдено
     moved_at: Перемёщен в
     moved_by: Переместил(а)
     movement_error: Не все задачи выполнены
+    movement_error_not_done: Девайс не готов
+    movement_error_not_allowed: Вы не можете переместить девайс.
     phone_stolen: 'этот телефон в чёрном списке!!!'
-    client_devices: Девайсы клиента
+    search_placeholder: Талон или серийный номер
+    updated: Девайс изменён
 
   device_types:
     created: Тип девайса создан
@@ -423,6 +426,7 @@ ru:
   confirmation: Вы уверены?
   create: Создать
   destroy: "Удалить"
+  done: "Готово"
   edit: Редактировать
   moved: "%{user} %{time} назад"
   moved_title: Переместил
@@ -434,4 +438,5 @@ ru:
   search: Найти
   show: "Показать"
   total: Итого
+  undone: "Не готово"
   update: Сохранить
