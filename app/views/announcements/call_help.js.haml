@@ -1,9 +1,0 @@
-== $('#help_button').replaceWith("#{j header_link_to_help}");
-- if @announcement.present?
-  - publish_to "/announcements" do
-    :plain
-      if($('#profile_link').data('id') != #{@announcement.user_id}
-         && $('#profile_link').data('helpable') == true)
-        $('#announcements').append("#{j render(@announcement)}");
-
-  setTimeout(function(){$.post("#{cancel_help_path}")}, 30000);

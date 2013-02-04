@@ -1,0 +1,13 @@
+:plain
+  $('#announce_button').replaceWith("#{j header_link_to_announce}");
+- if @announcement.present?
+  - publish_to "/announcements" do
+    :plain
+      if($('#profile_link').data('id') != #{@announcement.user_id}
+         && $('#profile_link').data('role') == '#{@announcement.visible_for}')
+        $('#announcements').append("#{j render(@announcement)}");
+
+  - if @announcement.for_coffee?
+    $('#coffer_order_link').popover('hide');
+  - else
+    setTimeout(function(){$.post("#{cancel_announce_path(kind: @announcement.kind)}")}, 300000);

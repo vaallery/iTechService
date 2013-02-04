@@ -1,4 +1,4 @@
 = content_for :announcements do
   #announcements
     - Announcement.active.each do |announcement|
-      = render announcement if display_announcement_for_user? announcement, current_user
+      = render announcement if announcement.visible_for? current_user

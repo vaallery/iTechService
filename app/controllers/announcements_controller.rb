@@ -3,20 +3,11 @@ class AnnouncementsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @announcements = Announcement.all
+    @announcements = Announcement.scoped.page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @announcements }
-    end
-  end
-
-  def show
-    @announcement = Announcement.find(params[:id])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @announcement }
     end
   end
 
@@ -38,7 +29,7 @@ class AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @announcement.save
-        format.html { redirect_to @announcement, notice: t('announcements.created') }
+        format.html { redirect_to announcements_path, notice: t('announcements.created') }
         format.json { render json: @announcement, status: :created, location: @announcement }
       else
         format.html { render action: "new" }
@@ -52,7 +43,7 @@ class AnnouncementsController < ApplicationController
 
     respond_to do |format|
       if @announcement.update_attributes(params[:announcement])
-        format.html { redirect_to @announcement, notice: t('announcements.updated') }
+        format.html { redirect_to announcements_path, notice: t('announcements.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -71,13 +62,19 @@ class AnnouncementsController < ApplicationController
     end
   end
 
-  def call_help
-    @announcement = current_user.needs_help? ? nil : current_user.announcements.create
+  def make_announce
+    if params[:kind] == 'for_coffee'
+      @announcement = current_user.announcements.create kind: params[:kind], content: params[:content], active: true
+    else
+      @announcement = current_user.announced? ? nil : current_user.announcements.create(kind: params[:kind], active: true)
+    end
   end
 
-  def cancel_help
-    if (@announcement = current_user.announcements.active_help.first).present?
-      @announcement.update_attribute :active, false
+  def cancel_announce
+    if (@announcements = current_user.announcements.active.where(kind: params[:kind])).any?
+      @announcements.each do |announcement|
+        announcement.update_attributes active: false
+      end
     end
   end
 

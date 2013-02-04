@@ -15,7 +15,7 @@ Ability
       if user.software?
         can :modify, [Device, Client]
       end
-      def user.media?
+      if user.media?
         can :modify, [Device, Client]
       end
       if user.marketing?
@@ -26,8 +26,8 @@ Ability
         cannot :modify, Device
       end
       if user.helpable?
-        can :call_help, Announcement
-        can :cancel_help, Announcement, user_id: user.id
+        can :make_announce, Announcement
+        can :cancel_announce, Announcement, user_id: user.id
       end
       can :check_phone_number, Client
       can :questionnaire, Client

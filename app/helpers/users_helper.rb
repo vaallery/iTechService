@@ -99,7 +99,8 @@ module UsersHelper
   def profile_link
     icon_class = current_user.admin? ? 'user-md' : 'user'
     link_to icon_tag(icon_class) + current_user.username, profile_path, id: 'profile_link',
-            data: {id: current_user.id, helpable: current_user.helpable?, location: current_user.location_id}
+            data: {id: current_user.id, helpable: current_user.helpable?,
+                   location: current_user.location_id, role: current_user.role}
   end
 
   private

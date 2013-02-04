@@ -4,15 +4,24 @@
   %thead
     %tr
       %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:active)
       %th= model_class.human_attribute_name(:kind)
       %th= model_class.human_attribute_name(:user_id)
       %th= model_class.human_attribute_name(:content)
       %th= model_class.human_attribute_name(:created_at)
+      %th
   %tbody
     - @announcements.each do |announcement|
       %tr
         %td= link_to announcement.id, announcement_path(announcement)
+        %td= announcement.active
         %td= announcement.kind
-        %td= announcement.user_name
+        %td= announcement.user.short_name
         %td= announcement.content
         %td= l announcement.created_at, format: :long_d
+        %td
+          .btn-group
+            = link_to_edit_small announcement
+            = link_to_destroy_small announcement
+
+= paginate @announcements

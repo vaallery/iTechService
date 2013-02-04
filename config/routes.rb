@@ -61,9 +61,9 @@ ItechService::Application.routes.draw do
 
   resources :prices
 
-  resources :announcements
-  match 'call_help' => 'announcements#call_help', via: :post
-  match 'cancel_help' => 'announcements#cancel_help', via: :post
+  resources :announcements, except: :show
+  match 'make_announce' => 'announcements#make_announce', via: :post
+  match 'cancel_announce' => 'announcements#cancel_announce', via: :post
 
   resources :comments
 

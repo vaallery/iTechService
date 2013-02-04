@@ -1,2 +1,6 @@
-#PrivatePub.subscribe 'announcements', (data, channel)->
-#  alert data.announcement.content
+jQuery ->
+
+  $('#coffer_order_link').popover()
+
+  $(document).on 'click', '.close_announcement_button', ->
+    $(this).parent().hide()

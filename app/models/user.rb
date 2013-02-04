@@ -131,8 +131,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  def needs_help?
-    announcements.active_help.any?
+  def announced?
+    case role
+      when 'software' then announcements.active_help.any?
+      when 'media' then announcements.active_coffee.any?
+      when 'technician' then announcements.active_protector.any?
+      else false
+    end
   end
 
   def self.find_first_by_auth_conditions(warden_conditions)

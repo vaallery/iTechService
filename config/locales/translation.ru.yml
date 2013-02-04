@@ -255,16 +255,22 @@ ru:
     site: 'www.itechstore.ru'
 
   announcements:
-    created: Оповещение создано
-    updated: Оповещение изменено
     edit:
       title: Редактирование оповещения
-    new:
-      title: Новое оповещение
     index:
       title: Оповещения
+    new:
+      title: Новое оповещение
+    close_orders: Закрыть заказы
+    coffee_made: Кофе готов!
+    coffee_order: "Кофе %{content}"
+    coffee_order_popover_title: Какой кофе приготовить?
+    created: Оповещение создано
     link: Оповещения
     needs_help: нуждается в помощи!!!
+    protector_made: Плёночка наклеена!
+    updated: Оповещение изменено
+
 
   clients:
     created: Клиент создан
