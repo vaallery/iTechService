@@ -10,4 +10,4 @@
   - if @announcement.for_coffee?
     $('#coffer_order_link').popover('hide');
   - else
-    setTimeout(function(){$.post("#{cancel_announce_path(kind: @announcement.kind)}")}, 300000);
+    setTimeout(function(){$.post("#{cancel_announce_path(kind: @announcement.kind)}")}, 30000);
