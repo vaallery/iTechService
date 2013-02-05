@@ -37,9 +37,9 @@ group :assets do
 end
 
 group :development do
-  gem 'debugger'
-  gem 'debugger-linecache'
-  gem "debugger-pry", require: "debugger/pry"
+#  gem 'debugger'
+#  gem 'debugger-linecache'
+#  gem "debugger-pry", require: "debugger/pry"
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request', '0.2.1'
@@ -73,7 +73,7 @@ end
 # gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
 
 # To use debugger
 # gem 'debugger'
