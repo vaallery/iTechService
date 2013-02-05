@@ -2,26 +2,25 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 
-gem 'pg'
-gem 'thin'
-gem "haml-rails"
-gem 'jquery-rails'
-gem 'jquery-rails-cdn'
-gem 'simple_form'
-gem 'json_builder'
-gem 'devise'
-gem 'cancan'
-gem 'kaminari'
-gem 'ancestry'
-gem 'prawn'
-gem 'carrierwave'
-gem "mini_magick"
-gem "ckeditor"
-gem 'uuidtools'
-gem 'exception_notification', git: 'git://github.com/alanjds/exception_notification.git'
-gem 'private_pub'
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
-gem 'seed_dumper'
+gem 'pg', '~> 0.14.1'
+gem 'thin', '~> 1.5.0'
+gem "haml-rails", '~> 0.3.5'
+gem 'jquery-rails', '~> 2.1.4'
+gem 'simple_form', '~> 2.0.4'
+gem 'json_builder', '~> 3.1.7'
+gem 'devise', '~> 2.2.1'
+gem 'cancan', '~> 1.6.8'
+gem 'kaminari', '~> 0.14.1'
+gem 'ancestry', '~> 1.3.0'
+gem 'prawn', '~> 0.12.0'
+gem 'carrierwave', '~> 0.8.0'
+gem "mini_magick", '~> 3.4'
+gem "ckeditor", '~> 3.7.3'
+gem 'uuidtools', '~> 2.1.3'
+gem 'exception_notification', '~> 2.6.1'#, git: 'git://github.com/alanjds/exception_notification.git'
+gem 'private_pub', '~> 1.0.3'
+gem 'twitter-bootstrap-rails', '~> 2.2.0'#, :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'seed_dumper', '~> 0.1.3'
 
 
 # Gems used only for assets and not required
@@ -31,7 +30,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', :platforms => :ruby
-  gem "less-rails"
+  gem "less-rails", '~> 2.2.6'
   gem 'uglifier', '>= 1.0.3'
   gem 'bootstrap-colorpicker-rails', :require => 'bootstrap-colorpicker-rails',
       :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'

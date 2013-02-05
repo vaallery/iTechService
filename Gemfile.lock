@@ -351,7 +351,7 @@ DEPENDENCIES
   less-rails
   meta_request (= 0.2.1)
   mini_magick
-  pg
+  pg (~> 0.14.1)
   prawn
   private_pub
   rails (= 3.2.11)
