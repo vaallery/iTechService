@@ -144,7 +144,7 @@ class User < ActiveRecord::Base
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
       where(conditions).where(["lower(username) = :value OR lower(card_number) = :value OR lower(card_number) = :value",
-                               { value: login.downcase }]).first
+                               { value: login.mb_chars.downcase.to_s }]).first
     else
       where(conditions).first
     end

@@ -33,13 +33,15 @@ jQuery ->
       if $(this).parents('#clients_autocomplete_list').length is 0
         $('#clients_autocomplete_list').hide()
 
-    $('#client_search').keyup ()->
-      $this = $(this)
-      if $this.val() is ''
-        $('#device_client_id').val("");
-        $('#order_customer_id').val("");
-      else
-        $.getScript '/clients/autocomplete.js?client_q='+$this.val()
+    $(document).on 'keydown', '#client_search', (event)->
+      setTimeout (->
+        $input = $('#client_search')
+        if $input.val() is ''
+          $('#device_client_id').val("");
+          $('#order_customer_id').val("");
+        else
+          $.getScript '/clients/autocomplete.js?client_q='+$input.val()
+        ), 200
 
     if $('#clients_autocomplete_list').length
       $('#clients_autocomplete_list').css

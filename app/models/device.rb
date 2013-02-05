@@ -102,18 +102,18 @@ class Device < ActiveRecord::Base
     end
     
     unless (device_q = params[:device]).blank?
-      devices = devices.where 'LOWER(devices.serial_number) LIKE ?', "%#{device_q.downcase}%"
+      devices = devices.where 'LOWER(devices.serial_number) LIKE ?', "%#{device_q.mb_chars.downcase.to_s}%"
     end
 
     unless (device_q = params[:device_q]).blank?
       devices = devices.where 'LOWER(devices.serial_number) LIKE ? OR
-                              ', "%#{device_q.downcase}%"
+                              ', "%#{device_q.mb_chars.downcase.to_s}%"
     end
 
     unless (client_q = params[:client]).blank?
       devices = devices.joins(:client).where 'LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q
                                               OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q',
-                                              q: "%#{client_q.downcase}%"
+                                              q: "%#{client_q.mb_chars.downcase.to_s}%"
     end
     
     devices
@@ -224,7 +224,7 @@ class Device < ActiveRecord::Base
   end
 
   def validate_location
-    old_location = changed_attributes[:location_id].present? ? Location.find(changed_attributes[:location_id]) : nil
+    old_location = changed_attributes['location_id'].present? ? Location.find(changed_attributes['location_id']) : nil
     if self.location.try(:name) == 'Готово' and self.pending?
       self.errors.add :location_id, I18n.t('devices.movement_error')
     end

@@ -32,14 +32,13 @@ group :assets do
   gem 'therubyracer', :platforms => :ruby
   gem "less-rails", '~> 2.2.6'
   gem 'uglifier', '>= 1.0.3'
-  gem 'bootstrap-colorpicker-rails', :require => 'bootstrap-colorpicker-rails',
-      :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
+  gem 'bootstrap-colorpicker-rails', :require => 'bootstrap-colorpicker-rails'#, :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
 end
 
 group :development do
-#  gem 'debugger'
-#  gem 'debugger-linecache'
-#  gem "debugger-pry", require: "debugger/pry"
+  gem 'debugger'
+  gem 'debugger-linecache'
+  gem "debugger-pry", require: "debugger/pry"
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request', '0.2.1'

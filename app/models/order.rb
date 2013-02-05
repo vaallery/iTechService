@@ -65,7 +65,7 @@ class Order < ActiveRecord::Base
 
     unless (customer_q = params[:customer]).blank?
       orders = orders.joins(:client, :user).where 'LOWER(clients.name) LIKE :q OR LOWER(users.name) LIKE :q
-          OR LOWER(users.surname) LIKE :q OR LOWER(users.username) LIKE :q', q: "%#{customer_q.downcase}%"
+          OR LOWER(users.surname) LIKE :q OR LOWER(users.username) LIKE :q', q: "%#{customer_q.mb_chars.downcase.to_s}%"
     end
 
     orders
