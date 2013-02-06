@@ -35,8 +35,9 @@ module DashboardHelper
     task.is_actual_for?(current_user)
   end
 
-  def is_editable_task?(task)
-    current_user.admin? ? true : task.is_actual_for?(current_user)
+  def is_editable_task?(device_task)
+    #current_user.admin? ? true : can?(:update, device_task)
+    current_user.admin? ? true : device_task.is_actual_for?(current_user)
   end
 
   def device_row_tag(device)

@@ -35,11 +35,11 @@ Ability
       #can :select, Client
       can :create, Order
       can :read, Info
-      can :update, Device
+      can :update, Device#, location_id: user.location_id
       can :profile, User, id: user.id
       can :update_wish, User, id: user.id
       can :duty_calendar, User, id: user.id
-      can :update, DeviceTask, task: {role: user.role}#, done: false
+      can :update, DeviceTask, task: {role: user.role}#, device: {location_id: user.location_id}#, done: false
       can :modify, Comment
       can :read, :all
       cannot [:create, :update, :destroy], StolenPhone

@@ -106,8 +106,7 @@ class Device < ActiveRecord::Base
     end
 
     unless (device_q = params[:device_q]).blank?
-      devices = devices.where 'LOWER(devices.serial_number) LIKE ? OR
-                              ', "%#{device_q.mb_chars.downcase.to_s}%"
+      devices = devices.where 'LOWER(devices.serial_number) LIKE ?', "%#{device_q.mb_chars.downcase.to_s}%"
     end
 
     unless (client_q = params[:client]).blank?
