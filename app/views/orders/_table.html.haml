@@ -26,7 +26,7 @@
           %td= t("orders.object_kinds.#{order.object_kind}")
           %td= order.object
           %td= t("orders.statuses.#{order.status}")
-          %td= l order.desired_date
+          %td= order.desired_date.present? ? l(order.desired_date) : '-'
           %td= l order.created_at, format: :long_d
           - if can? :modify, Order
             %td
