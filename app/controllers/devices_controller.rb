@@ -31,10 +31,14 @@ class DevicesController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @device }
       format.pdf do
-        pdf = TicketPdf.new @device, view_context, params[:part]
-        #pdf = TicketPdfBig.new @device, view_context, params[:part]
-        send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
-                  type: 'application/pdf', disposition: 'inline'
+        if (@device.user_id == current_user.id) or current_user.admin?
+          pdf = TicketPdf.new @device, view_context, params[:part]
+          #pdf = TicketPdfBig.new @device, view_context, params[:part]
+          send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
+                    type: 'application/pdf', disposition: 'inline'
+        else
+          render nothing: true
+        end
       end
     end
   end

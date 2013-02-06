@@ -35,4 +35,4 @@
 - if can? :manage, model_class
   .form-actions
     = link_to_edit @order
-    = link_to_destroy @order
+    = link_to_destroy @order if can? :destroy, @order
