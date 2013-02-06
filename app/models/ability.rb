@@ -29,8 +29,10 @@ Ability
         can :make_announce, Announcement
         can :cancel_announce, Announcement, user_id: user.id
       end
-      can :check_phone_number, Client
-      can :questionnaire, Client
+      #can :check_phone_number, Client
+      #can :questionnaire, Client
+      #can :autocomplete, Client
+      #can :select, Client
       can :create, Order
       can :read, Info
       can :update, Device

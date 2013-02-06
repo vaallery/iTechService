@@ -4,8 +4,9 @@ class DevicesController < ApplicationController
   helper_method :sort_column, :sort_direction
   load_and_authorize_resource only: [:index, :new, :edit, :create, :update, :destroy]
   skip_load_resource except: [:index, :new, :edit, :create, :update, :destroy]
+  skip_authorize_resource only: :check_status
   skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
-  
+
   def index
     @devices = Device.search params
     
@@ -14,6 +15,7 @@ class DevicesController < ApplicationController
     end
     @devices = @devices.ordered.page params[:page]
     @location_name = params[:location].present? ? Location.find(params[:location]).full_name : 'everywhere'
+    @locations = Location.scoped
 
     respond_to do |format|
       format.html

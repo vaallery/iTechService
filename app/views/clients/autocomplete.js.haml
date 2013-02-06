@@ -1,4 +1,5 @@
 :plain
-  //$('#clients_autocomplete_list').hide();
-  $('#clients_autocomplete_list').html("#{j(clients_autocomplete_list(@clients))}");
-  $('#clients_autocomplete_list').show();
+  setTimeout(function(){
+    $('#clients_autocomplete_list').html("#{j(clients_autocomplete_list(@clients))}");
+    $('#clients_autocomplete_list').show();
+  }, 100);

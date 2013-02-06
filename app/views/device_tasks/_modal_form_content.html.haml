@@ -8,9 +8,7 @@
   .modal-body
     .alert.alert-info
       %strong= @device_task.task_name
-      - unless @device_task.comment.blank?
-        %br
-          %i= @device_task.comment
+    = f.input :comment, input_html: {rows: 3}
     = f.input :cost
     = f.input :done
 

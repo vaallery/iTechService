@@ -303,6 +303,11 @@ ru:
       title: Девайсы
     new:
       title: Новый девайс
+    status:
+      all: Все статусы
+      done: Готово
+      pending: Не готово
+      important: Важно
     add_task: Добавить задачу
     client_devices: Девайсы клиента
     created: Девайс создан
@@ -435,6 +440,7 @@ ru:
   destroy: "Удалить"
   done: "Готово"
   edit: Редактировать
+  everywhere: "Везде"
   moved: "%{user} %{time} назад"
   moved_title: Переместил
   new: "Новый"
