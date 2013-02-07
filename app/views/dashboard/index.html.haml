@@ -1,1 +1,34 @@
-#dashboard= render current_user.admin? ? 'admin_page' : 'staff_page'
+#dashboard
+  .page-header
+    = link_to icon_tag('file-alt') + t('dashboard.new_info'), new_info_path,
+        class: 'btn btn-success btn-large' if can? :create, Info
+    = link_to icon_tag('mobile-phone') + t('dashboard.new_device'), new_device_path,
+        class: 'btn btn-success btn-large' if can? :create, Device
+    = link_to icon_tag('file-alt') + t('dashboard.new_order'), new_order_path,
+        class: 'btn btn-success btn-large' if can? :create, Order
+    = link_to icon_tag(:user) + t('dashboard.new_user'), new_user_path,
+        class: 'btn btn-success btn-large' if can? :create, User
+
+%h4
+  %ul#dashboard_navigation.nav.nav-pills
+    - if current_user.marketing?
+      %li.actual_orders_nav.active= link_to t('dashboard.actual_orders'), actual_orders_path, remote: true
+    - else
+      - if current_user.admin?
+        %li.dropdown.actual_tasks_nav.active
+          = link_to '#', 'data-toggle' => 'dropdown' do
+            = t('dashboard.actual_tasks')
+            %span.devices_location= ". #{@location_name}" if @location_name.present?
+            %b.caret
+          %ul.dropdown-menu
+            %li= link_to t('everywhere'), actual_tasks_path, remote: true
+            %li.divider
+            - Location.find_each do |location|
+              %li= link_to location.full_name, actual_tasks_path(location: location.id), remote: true
+      - else
+        %li.actual_tasks_nav.active= link_to t('dashboard.actual_tasks'), actual_tasks_path, remote: true
+      %li.ready_devices_nav= link_to t('dashboard.ready_devices'), ready_devices_path, remote: true
+    %li.goods_for_sale_nav= link_to t('dashboard.goods_for_sale'), goods_for_sale_path, remote: true
+
+#dashboard_table_filter= render 'tasks_table_filter'
+#dashboard_content= render 'tasks_table'

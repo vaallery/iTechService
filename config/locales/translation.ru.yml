@@ -229,7 +229,7 @@ ru:
     actual_orders: Текущие заказы
     actual_tasks: "Текущие задачи"
     goods_for_sale: "Техника для продажи"
-    made_devices: "Готовые девайсы"
+    ready_devices: "Готовые девайсы"
     moved_title: Перемещен
     new_device: Новый девайс
     new_info: Создать новость
@@ -348,15 +348,15 @@ ru:
     link: Новости
 
   locations:
-    created: Локация создана
-    updated: Локация изменена
     edit:
       title: Редактирование локации
     new:
       title: Новая локация
     index:
       title: Локации
+    created: Локация создана
     link: Локации
+    updated: Локация изменена
 
   orders:
     edit:

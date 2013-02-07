@@ -1,4 +1,4 @@
-%table#made_devices_table.table.table-hover.table-bordered
+%table#ready_devices_table.table.table-hover.table-bordered
   %thead
     %tr
       %th= t 'dashboard.moved_title'
@@ -8,6 +8,6 @@
       %th
   %tbody
     - @devices.each do |device|
-      = made_device_row_tag device
+      = ready_device_row_tag device
 
 = paginate @devices, remote: true

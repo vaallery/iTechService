@@ -1,0 +1,5 @@
+:plain
+  $('#dashboard_content').html("#{j(render(partial: 'orders_table'))}");
+  $('.devices_location').text("");
+  if($('#orders_table_filter').length == 0)
+    $('#dashboard_table_filter').html("#{j(render(partial: 'orders_table_filter'))}");

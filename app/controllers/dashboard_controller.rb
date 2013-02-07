@@ -3,65 +3,43 @@ class DashboardController < ApplicationController
   skip_before_filter :authenticate_user!, :set_current_user, only: :sign_in_by_card
 
   def index
-    params[:tab] ||= 'actual_orders' if current_user.marketing?
-    case params[:tab]
-      when 'actual_tasks'
-        if current_user.admin?
-          if params[:location].present?
-            location = Location.find params[:location]
-            @devices = Device.pending.located_at(location)
-            @location_name = location.full_name
-          else
-            @devices = Device.pending
-          end
-        else
-          @devices = Device.pending.located_at(current_user.location)
-        end
-        @devices = @devices.search(params).page params[:page]
-        @table_name = 'tasks_table'
-      when 'made_devices'
-        @devices = Device.at_done.search(params).page params[:page]
-        @table_name = 'made_devices'
-      when 'goods_for_sale'
-        @device_types = DeviceType.for_sale
-        @table_name = 'goods_for_sale'
-      when 'actual_orders'
-        @orders = Order.ordered.actual_orders.page params[:page]
-        @table_name = 'orders_table'
-      else
-        @devices = (current_user.admin? ? Device.pending : Device.located_at(current_user.location)).page params[:page]
-        @table_name ||= 'tasks_table'
+    if current_user.marketing?
+      load_actual_orders
+      @table_name = 'orders_table'
+    else
+      load_actual_devices
+      @table_name = 'tasks_table'
     end
     respond_to do |format|
-      format.html { render 'index' }
+      format.html
       format.js
     end
   end
 
   def actual_orders
+    load_actual_orders
     respond_to do |format|
-      format.html
       format.js
     end
   end
 
   def actual_tasks
+    load_actual_devices
     respond_to do |format|
-      format.html
       format.js
     end
   end
 
   def ready_devices
+    @devices = Device.at_done.search(params).page params[:page]
     respond_to do |format|
-      format.html
       format.js
     end
   end
 
   def goods_for_sale
+    @device_types = DeviceType.for_sale
     respond_to do |format|
-      format.html
       format.js
     end
   end
@@ -82,6 +60,27 @@ class DashboardController < ApplicationController
       sign_in :user, User.find(params[:id])#, bypass: true
     end
     redirect_to root_url
+  end
+
+  private
+
+  def load_actual_devices
+    if current_user.admin?
+      if params[:location].present?
+        location = Location.find params[:location]
+        @devices = Device.pending.located_at(location)
+        @location_name = location.full_name
+      else
+        @devices = Device.pending
+      end
+    else
+      @devices = Device.pending.located_at(current_user.location)
+    end
+    @devices = @devices.search(params).page params[:page]
+  end
+
+  def load_actual_orders
+    @orders = Order.actual_orders.search(params).page params[:page]
   end
 
 end

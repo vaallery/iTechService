@@ -60,7 +60,7 @@ module DashboardHelper
     end
   end
 
-  def made_device_row_tag(device)
+  def ready_device_row_tag(device)
     content_tag(:tr, class: 'device_row', data: {device_id: device.id}) do
       content_tag(:td, device_movement_information_tag(device), class: 'device_movement_column') +
       content_tag(:td) do
