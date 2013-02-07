@@ -56,15 +56,15 @@ class Order < ActiveRecord::Base
     end
 
     unless (number_q = params[:order_number]).blank?
-      orders = orders.where number: number_q
+      orders = orders.where 'number LIKE :q', q: "%#{number_q}%"
     end
 
     unless (object_q = params[:object]).blank?
-      orders = orders.where object: object_q
+      orders = orders.where 'LOWER(object) LIKE :q', q: "%#{object_q.mb_chars.downcase.to_s}%"
     end
 
     unless (customer_q = params[:customer]).blank?
-      orders = orders.joins(:client, :user).where 'LOWER(clients.name) LIKE :q OR LOWER(users.name) LIKE :q
+      orders = orders.joins(:customer).where 'LOWER(clients.name) LIKE :q OR LOWER(users.name) LIKE :q
           OR LOWER(users.surname) LIKE :q OR LOWER(users.username) LIKE :q', q: "%#{customer_q.mb_chars.downcase.to_s}%"
     end
 
