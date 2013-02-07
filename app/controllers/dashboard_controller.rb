@@ -38,6 +38,34 @@ class DashboardController < ApplicationController
     end
   end
 
+  def actual_orders
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def actual_tasks
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def ready_devices
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def goods_for_sale
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   def sign_in_by_card
     if (user = User.find_by_card_number params[:card_number]).present?
       sign_in :user, user

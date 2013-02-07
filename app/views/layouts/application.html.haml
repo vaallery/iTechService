@@ -29,6 +29,10 @@
           = yield
 
     = yield :new_device_popup
+
+    - if Rails.env.development?
+      = debug params
+      = debug flash
     
     /
       Javascripts

@@ -17,11 +17,11 @@ class DeviceType < ActiveRecord::Base
   end
 
   def has_imei?
-    %w[iphone ipad].include? root.name.mb_chars.downcase.to_s
+    %w[iphone ipad].any?{|a|root.name.mb_chars.downcase.to_s.start_with?(a)}
   end
 
   def is_iphone?
-    root.name.mb_chars.downcase.to_s == 'iphone'
+    root.name.mb_chars.downcase.to_s.start_with? 'iphone'
   end
 
   def self.for_sale

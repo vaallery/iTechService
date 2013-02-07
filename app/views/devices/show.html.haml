@@ -6,7 +6,7 @@
 
   %span.help-block
     %small= timestamp_string_for @device
-  -if @device.user_id == current_user.id
+  -if (@device.user_id == current_user.id) or current_user.admin?
     = link_to icon_tag(:print) + t('tickets.link'), device_path(@device, format: 'pdf', part: 1), class: 'btn btn-info', target: '_blank', id: 'print_device_ticket'
     -#= link_to icon_tag(:print) + t('tickets.link'), device_path(@device, format: 'pdf', part: 1), class: 'hidden', target: '_blank', id: 'print_device_ticket1'
     -#= link_to icon_tag(:print) + t('tickets.link'), device_path(@device, format: 'pdf', part: 2), class: 'hidden', target: '_blank', id: 'print_device_ticket2'
