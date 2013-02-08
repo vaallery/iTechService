@@ -12,6 +12,7 @@ ItechService::Application.routes.draw do
   match 'actual_tasks' => 'dashboard#actual_tasks', via: :get
   match 'ready_devices' => 'dashboard#ready_devices', via: :get
   match 'goods_for_sale' => 'dashboard#goods_for_sale', via: :get
+  match 'reports' => 'dashboard#reports', via: :get
 
   resources :users do
     get :duty_calendar, on: :member

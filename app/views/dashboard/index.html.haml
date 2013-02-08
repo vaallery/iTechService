@@ -8,6 +8,8 @@
         class: 'btn btn-success btn-large' if can? :create, Order
     = link_to icon_tag(:user) + t('dashboard.new_user'), new_user_path,
         class: 'btn btn-success btn-large' if can? :create, User
+    = link_to icon_tag('bar-chart') + t('dashboard.reports'), reports_path,
+        class: 'btn btn-link btn-medium btn-large pull-right' if current_user.admin?
 
 %h4
   %ul#dashboard_navigation.nav.nav-pills

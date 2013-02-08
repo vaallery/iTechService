@@ -232,11 +232,21 @@ ru:
     ready_devices: "Готовые девайсы"
     moved_title: Перемещен
     new_device: Новый девайс
+    new_device_message: Новый девайс!!!
     new_info: Создать новость
     new_order: Новый заказ
     new_user: Новый пользователь
     params: Параметры
-    new_device_message: Новый девайс!!!
+    reports: Отчёты
+
+  reports:
+    includes: Из них
+    period: Период
+    received: Принято
+    received_done: готовы
+    received_archived: выданы
+    sum: Сумма
+    total: Всего
 
   tickets:
     address1: 'г.Владивосток,'

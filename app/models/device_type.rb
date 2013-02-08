@@ -1,4 +1,5 @@
 class DeviceType < ActiveRecord::Base
+  has_many :devices
   attr_accessible :name, :ancestry, :parent_id, :qty_for_replacement, :qty_replaced, :qty_shop,
                   :qty_store, :qty_reserve, :expected_during
   validates :name, presence: true
