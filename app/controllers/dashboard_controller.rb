@@ -68,6 +68,7 @@ class DashboardController < ApplicationController
     @end_date = params[:end_date] || DateTime.current.yesterday
     period = [@start_date.beginning_of_day..@end_date.end_of_day]
     @received_devices = Device.where(created_at: period)
+    received_ids = @received_devices.map{|d|d.id}
     @report = {}
     @report[:devices_received_count] = @received_devices.count
     @report[:devices_received_done_count] = @received_devices.at_done.count
@@ -75,13 +76,15 @@ class DashboardController < ApplicationController
     @report[:device_types] = []
     @received_devices.group('device_type_id').count('id').each_pair do |key, val|
       if key.present? and (device_type = DeviceType.find key).present?
-        @report[:device_types] << [device_type.full_name, val, device_type.devices.at_done.count, device_type.devices.at_archive.count]
+        devices = @received_devices.where(device_type_id: key)
+        @report[:device_types] << [device_type.full_name, val, devices.at_done.count, devices.at_archive.count]
       end
     end
     @report[:users] = []
     @received_devices.group('user_id').count('id').each_pair do |key, val|
       if key.present? and (user = User.find key).present?
-        @report[:users] << [user.short_name, val, user.devices.at_done.count, user.devices.at_archive.count]
+        devices = @received_devices.where(user_id: key)
+        @report[:users] << [user.short_name, val, devices.at_done.count, devices.at_archive.count]
       end
     end
 
@@ -91,7 +94,7 @@ class DashboardController < ApplicationController
         @report[:tasks] << [task.name, val]
       end
     end
-    @report[:tasks_sum] = DeviceTask.where(device_id: @received_devices.map{|d|d.id}).done.sum(:cost)
+    @report[:tasks_sum] = DeviceTask.where(device_id: received_ids).done.sum(:cost)
   end
 
   private
