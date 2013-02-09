@@ -14,7 +14,9 @@
     - @announcements.each do |announcement|
       %tr
         %td= link_to announcement.id, announcement_path(announcement)
-        %td= announcement.active
+        %td
+          %i{class: "change_announce_state_button icon-#{(announcement.active ? 'check' : 'check-empty')}",
+              data: {id: announcement.id, state: announcement.active.to_s}}
         %td= announcement.kind
         %td= announcement.user.short_name
         %td= announcement.content

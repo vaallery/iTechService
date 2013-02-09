@@ -230,6 +230,7 @@ ru:
     actual_tasks: "Текущие задачи"
     goods_for_sale: "Техника для продажи"
     ready_devices: "Готовые девайсы"
+    misc: Прочее
     moved_title: Перемещен
     new_device: Новый девайс
     new_device_message: Новый девайс!!!

@@ -44,7 +44,7 @@ class AnnouncementsController < ApplicationController
     respond_to do |format|
       if @announcement.update_attributes(params[:announcement])
         format.html { redirect_to announcements_path, notice: t('announcements.updated') }
-        format.json { head :no_content }
+        format.json { render json: @announcement }
       else
         format.html { render action: "edit" }
         format.json { render json: @announcement.errors, status: :unprocessable_entity }
