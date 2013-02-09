@@ -64,8 +64,8 @@ class DashboardController < ApplicationController
 
   def reports
     render nothing: true unless current_user.admin?
-    @start_date = params[:start_date] || DateTime.current.yesterday
-    @end_date = params[:end_date] || DateTime.current.yesterday
+    @start_date = (params[:start_date] || DateTime.current.yesterday).to_datetime
+    @end_date = (params[:end_date] || DateTime.current.yesterday).to_datetime
     period = [@start_date.beginning_of_day..@end_date.end_of_day]
     @received_devices = Device.where(created_at: period)
     received_ids = @received_devices.map{|d|d.id}
