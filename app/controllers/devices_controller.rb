@@ -34,6 +34,7 @@ class DevicesController < ApplicationController
         if (@device.user_id == current_user.id) or current_user.admin?
           pdf = TicketPdf.new @device, view_context, params[:part]
           #pdf = TicketPdfBig.new @device, view_context, params[:part]
+          system 'lpr', pdf.render_file(Rails.root.to_s+'/tmp/ticket.pdf').path if params[:print]
           send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
                     type: 'application/pdf', disposition: 'inline'
         else

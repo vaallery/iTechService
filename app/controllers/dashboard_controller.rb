@@ -103,13 +103,13 @@ class DashboardController < ApplicationController
     if current_user.admin?
       if params[:location].present?
         location = Location.find params[:location]
-        @devices = Device.pending.located_at(location)
+        @devices = Device.located_at(location)
         @location_name = location.full_name
       else
         @devices = Device.pending
       end
     else
-      @devices = Device.pending.located_at(current_user.location)
+      @devices = Device.located_at(current_user.location)
     end
     @devices = @devices.search(params).page params[:page]
   end

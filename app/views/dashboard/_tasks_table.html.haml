@@ -12,7 +12,7 @@
       = device_row_tag device
       - device_tasks.each do |device_task|
         = device_task_row_tag device_task
-      %tr
+      %tr.empty_row
         %td{colspan: 4}
 
 = paginate @devices, remote: true

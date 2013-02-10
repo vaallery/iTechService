@@ -2,16 +2,60 @@
   width: 160px;
 }
 
+.border-top-thick(){
+  border-top: 4px solid #444;
+}
+
+.border-right-thick(){
+  border-right: 4px solid #444;
+}
+
+.border-bottom-thick(){
+  border-bottom: 4px solid #444;
+}
+
+.border-left-thick(){
+  border-left: 4px solid #444;
+}
+
 #actual_tasks_table{
+  th{
+    border-right: 1px solid #dddddd;
+  }
   .device_row{
     .device_tasks_toggle{
       cursor: pointer;
       float: right;
     }
+    td{
+      .border-top-thick();
+      &:first-child{
+        .border-left-thick();
+      }
+      &:last-child{
+        .border-right-thick();
+      }
+    }
   }
-  .device_task_row.success{
-    display: none;
+  .device_task_row{
+    &.success{
+      display: none;
+    }
+    td:first-child{
+      .border-left-thick();
+    }
+    td:last-child{
+      .border-right-thick();
+    }
   }
+  .empty_row>td{
+    .border-top-thick();
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  border-right: 0;
+  border-collapse: collapse;
 }
 
 .device_movement_column{
