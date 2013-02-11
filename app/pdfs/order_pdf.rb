@@ -3,7 +3,7 @@ class OrderPdf < Prawn::Document
   require "prawn/measurement_extensions"
 
   def initialize(order, view)
-    super page_size: [80.mm, 80.mm], page_layout: :portrait, margin: 10
+    super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: 10
     @order = order
     @view = view
     font_families.update 'DroidSans' => {
@@ -30,7 +30,8 @@ class OrderPdf < Prawn::Document
     end
     move_down 4
     font_size 24 do
-      text "№ #{@order.number}", align: :center, inlign_format: true, style: :bold
+      text @view.t('orders.order_num', num: @order.number), align: :center, inlign_format: true, style: :bold
+      #text "№ #{@order.number}", align: :center, inlign_format: true, style: :bold
     end
     text @order.created_at.strftime('%H:%M %d.%m.%Y'), align: :center, size: 10
     move_down 4
