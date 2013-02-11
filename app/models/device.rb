@@ -234,6 +234,9 @@ class Device < ActiveRecord::Base
     if old_location.try(:name) == 'Архив' and User.current.not_admin?
       self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
     end
+    if self.location.try(:name) == 'Гарантийники' and old_location.try(:name) == 'Ремонт'
+      self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
+    end
   end
 
 end

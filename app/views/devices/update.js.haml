@@ -1,4 +1,6 @@
 :plain
   $("#modal_form").modal('hide');
-  $(".device_task_row[data-device-id=#{@device.id}]", '#actual_tasks_table').fadeOut();
-  $device_row = $(".device_row[data-device-id=#{@device.id}]", '#actual_tasks_table').fadeOut();
+  $(".device_task_row[data-device-id=#{@device.id}]", '#actual_tasks_table').remove();
+  $device_row = $(".device_row[data-device-id=#{@device.id}]", '#actual_tasks_table');
+  $device_row.next('.empty_row').remove();
+  $device_row.remove();

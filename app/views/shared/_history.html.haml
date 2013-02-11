@@ -17,4 +17,4 @@
           %td= rec.column_name.humanize
           -#%td= human_history_value rec.old_value, rec.column_type
           %td= human_history_value rec#.new_value, rec.column_type
-          %td= rec.user.try :username
+          %td= rec.user.try :short_name
