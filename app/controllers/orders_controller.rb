@@ -35,7 +35,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @order = Order.new(customer_type: 'Client', status: 'new')
+    @order = Order.new(customer_type: 'User', customer_id: current_user.id, status: 'new')
 
     respond_to do |format|
       format.html

@@ -109,6 +109,10 @@ class User < ActiveRecord::Base
     res
   end
 
+  def presentation
+    short_name
+  end
+
   def is_duty_day? date
     duty_days.exists? day: date
   end

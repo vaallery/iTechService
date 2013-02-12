@@ -4,7 +4,7 @@ class ClientInput < SimpleForm::Inputs::StringInput
     (
     template.content_tag(:div, id: 'client_input', class: 'input-prepend input-append') do
       template.content_tag(:span, template.icon_tag(:search), class: 'add-on') +
-      template.text_field_tag(:client_search, @builder.object.try(:client).try(:name_phone),
+      template.text_field_tag(:client_search, @builder.object.try(:client).try(:presentation),
                               placeholder: template.t('client_input_placeholder').html_safe, autofocus: true, autocomplete: 'off') +
       @builder.hidden_field(attribute_name) +
       template.link_to(template.icon_tag(:plus),

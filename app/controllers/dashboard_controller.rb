@@ -88,6 +88,7 @@ class DashboardController < ApplicationController
       end
     end
 
+    # TODO Отчет по девайсам, переданным в архив
     @report[:tasks] = []
     DeviceTask.where(device_id: @received_devices.map{|d|d.id}).done.group(:task_id).sum(:cost).each_pair do |key, val|
       if key.present? and (task = Task.find key).present?

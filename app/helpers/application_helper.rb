@@ -122,7 +122,7 @@ module ApplicationHelper
       when 'integer'
         case rec.column_name
         when 'client_id'
-          val = Client.find(rec.new_value).try(:name_phone)
+          val = Client.find(rec.new_value).try(:full_name)
         when 'location_id'
           val = Location.find(rec.new_value).try(:full_name)
         when 'device_id'

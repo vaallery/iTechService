@@ -27,7 +27,7 @@
   %dd= @device.serial_number.present? ? @device.serial_number : '-'
 
   %dt= Device.human_attribute_name :client_id
-  %dd= @device.client.name_phone
+  %dd= @device.client.presentation
 
   %dt= Device.human_attribute_name :comment
   %dd= @device.comment.present? ? @device.comment : '-'
