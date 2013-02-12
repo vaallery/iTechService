@@ -10,7 +10,7 @@
           data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
 
 #reports_tables
-  %table.table.table-bordered.table-hover
+  %table#device_types_reports.table.table-bordered.table-hover
     %thead
       %tr
         %th.center{rowspan: 2}= Device.human_attribute_name :device_type
@@ -22,10 +22,10 @@
     %tbody
       - @report[:device_types].each do |device_type|
         %tr
-          %td= device_type[0]
-          %td= device_type[1]
-          %td= device_type[2]
-          %td= device_type[3]
+          %td= device_type[:name]
+          %td= device_type[:qty]
+          %td= device_type[:qty_done]
+          %td= device_type[:qty_archived]
     %tfoot
       %tr
         %td= t('reports.total')
@@ -33,7 +33,7 @@
         %td= @report[:devices_received_done_count]
         %td= @report[:devices_received_archived_count]
 
-  %table.table.table-bordered.table-hover
+  %table#users_report.table.table-bordered.table-hover
     %thead
       %tr
         %th.center{rowspan: 2}= Device.human_attribute_name :user
@@ -43,13 +43,12 @@
         %th.center= t('reports.received_done')
         %th.center= t('reports.received_archived')
     %tbody
-      %tr
       - @report[:users].each do |user|
         %tr
-          %td= user[0]
-          %td= user[1]
-          %td= user[2]
-          %td= user[3]
+          %td= user[:name]
+          %td= user[:qty]
+          %td= user[:qty_done]
+          %td= user[:qty_archived]
     %tfoot
       %tr
         %td= t('reports.total')
@@ -57,18 +56,28 @@
         %td= @report[:devices_received_done_count]
         %td= @report[:devices_received_archived_count]
 
-  %table.table.table-bordered.table-hover
+  %table#tasks_report.table.table-bordered.table-hover
     %thead
       %tr
         %th= DeviceTask.human_attribute_name :task
         %th= t('reports.sum')
+        %th= t 'reports.qty'
+        %th= t 'reports.qty_free'
     %tbody
-      %tr
       - @report[:tasks].each do |task|
-        %tr
-          %td= task[0]
-          %td= number_to_currency task[1], unit: '', precision: 0
+        %tr.task_row
+          %td= task[:name]
+          %td= link_to number_to_currency(task[:sum], unit: '', precision: 0), '#', class: 'report_task_details'
+          %td= task[:qty]
+          %td= task[:qty_free]
+        - task[:devices].each do |device|
+          %tr.device_row
+            %td.device_name= link_to device[:name], device_path(device[:id])
+            %td.task_cost= number_to_currency device[:cost], unit: '', precision: 0
+            %td{colspan: 2}
     %tfoot
       %tr
         %td= t('reports.total')
         %td= number_to_currency @report[:tasks_sum], unit: '', precision: 0
+        %td= @report[:tasks_qty]
+        %td= @report[:tasks_qty_free]

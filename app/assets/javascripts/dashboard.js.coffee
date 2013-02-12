@@ -16,6 +16,11 @@ jQuery ->
       if options.url.substr(0, 10) == '/dashboard'
         $('#dashboard_content').fadeIn()
 
+  $('.report_task_details').click ->
+    $task_row = $(this).parents('.task_row')
+    $task_row.nextUntil('.task_row').slideToggle()
+    false
+
 #timeOutCheck = setInterval (->
 #  time = pageTime.toLocaleString()
 #  $.getJSON '/dashboard.json?time='+time, (data)->

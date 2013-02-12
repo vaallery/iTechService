@@ -243,6 +243,8 @@ ru:
   reports:
     includes: Из них
     period: Период
+    qty: Количество
+    qty_free: Из них бесплатных
     received: Принято
     received_done: готовы
     received_archived: выданы

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class Location < ActiveRecord::Base
 
   has_many :users
@@ -14,6 +15,38 @@ class Location < ActiveRecord::Base
 
   def ancestors_names
     ancestors.all.map{|l|l.name}.join ' / '
+  end
+
+  def self.done
+    Location.find_by_name 'Готово'
+  end
+
+  def self.archive
+    Location.find_by_name 'Архив'
+  end
+
+  def self.repair
+    Location.find_by_name 'Ремонт'
+  end
+
+  def self.warranty
+    Location.find_by_name 'Гарантийники'
+  end
+
+  def is_done?
+    name == 'Готов'
+  end
+
+  def is_archive?
+    name == 'Архив'
+  end
+
+  def is_repair?
+    name == 'Ремонт'
+  end
+
+  def is_warranty?
+    name == 'Гарантийники'
   end
 
 end

@@ -79,10 +79,10 @@ ActiveRecord::Schema.define(:version => 20130131063408) do
   create_table "device_tasks", :force => true do |t|
     t.integer  "device_id"
     t.integer  "task_id"
-    t.boolean  "done"
+    t.boolean  "done",       :default => false
     t.text     "comment"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.decimal  "cost"
     t.datetime "done_at"
   end
@@ -119,10 +119,10 @@ ActiveRecord::Schema.define(:version => 20130131063408) do
     t.string   "serial_number"
     t.integer  "location_id"
     t.integer  "user_id"
-    t.string   "security_code"
-    t.string   "status"
     t.string   "imei"
     t.boolean  "replaced",       :default => false
+    t.string   "security_code"
+    t.string   "status"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
@@ -253,10 +253,11 @@ ActiveRecord::Schema.define(:version => 20130131063408) do
   add_index "tasks", ["role"], :name => "index_tasks_on_role"
 
   create_table "users", :force => true do |t|
-    t.string   "username"
+    t.string   "username",               :default => "", :null => false
     t.string   "role"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.string   "email",                  :default => ""
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -267,7 +268,6 @@ ActiveRecord::Schema.define(:version => 20130131063408) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "authentication_token"
-    t.string   "email",                  :default => ""
     t.integer  "location_id"
     t.string   "photo"
     t.string   "surname"
@@ -290,6 +290,6 @@ ActiveRecord::Schema.define(:version => 20130131063408) do
   add_index "users", ["patronymic"], :name => "index_users_on_patronymic"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["surname"], :name => "index_users_on_surname"
-  add_index "users", ["username"], :name => "index_users_on_username"
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
 end

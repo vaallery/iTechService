@@ -36,6 +36,7 @@ class Device < ActiveRecord::Base
   scope :located_at, lambda {|location| where(location_id: location.id)}
   scope :at_done, where(location_id: Location.find_by_name('Готово'))
   scope :at_archive, where(location_id: Location.find_by_name('Архив'))
+  #scope :archived_at
 
   after_initialize :set_user_and_location
   
@@ -225,16 +226,16 @@ class Device < ActiveRecord::Base
 
   def validate_location
     old_location = changed_attributes['location_id'].present? ? Location.find(changed_attributes['location_id']) : nil
-    if self.location.try(:name) == 'Готово' and self.pending?
+    if self.location.is_done? and self.pending?
       self.errors.add :location_id, I18n.t('devices.movement_error')
     end
-    if self.location.try(:name) == 'Архив' and old_location.try(:name) != 'Готово'
+    if self.location.is_archive? and !old_location.try(:is_repair?)
       self.errors.add :location_id, I18n.t('devices.movement_error_not_done')
     end
-    if old_location.try(:name) == 'Архив' and User.current.not_admin?
+    if old_location.is_archive? and User.current.not_admin?
       self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
     end
-    if self.location.try(:name) == 'Гарантийники' and old_location.try(:name) == 'Ремонт'
+    if self.location.is_warranty? and old_location.try(:is_repair?)
       self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
     end
   end
