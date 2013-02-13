@@ -7,7 +7,6 @@ class Task < ActiveRecord::Base
   IMPORTANCE_BOUND = 5
   
   scope :important, where('priority > ?', IMPORTANCE_BOUND)
-
   scope :tasks_for, lambda { |user| where(task: {role: user.role}) }
 
   def is_important?
@@ -24,6 +23,10 @@ class Task < ActiveRecord::Base
 
   def is_actual_for? user
     role == user.role
+  end
+
+  def responcible_users
+    User.where role: role
   end
 
 end

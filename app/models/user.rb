@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
 
   cattr_accessor :current
 
-  default_scope order('id asc')
+  #default_scope order('id asc')
   scope :admins, where(role: 'admin')
   scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
 

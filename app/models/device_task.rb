@@ -11,16 +11,16 @@ class DeviceTask < ActiveRecord::Base
   scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id},
                                                                 tasks: {role: user.role}) }
   
-  after_initialize {|dt| dt.cost ||= task_cost; dt.done ||= false}
+  #after_initialize {|dt| dt.cost ||= task_cost; dt.done ||= false}
   
   before_save do |dt|
+    dt.done = false if dt.done.nil?
     old_done = changed_attributes['done']
     if dt.done and (!old_done or old_done.nil?)
-      done_at_val = Time.now
+      dt.done_at = Time.now
     elsif !dt.done and old_done
-      done_at_val = nil
+      dt.done_at = nil
     end
-    dt.done_at = done_at_val
   end
   
   after_commit do |dt|

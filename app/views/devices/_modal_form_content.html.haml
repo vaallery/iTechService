@@ -6,7 +6,7 @@
       = @device.type_name
 
   .modal-body
-    = f.input :location_id, collection: available_locations_for(current_user)
+    = f.input :location_id, collection: Location.allowed_for(current_user, @device)
 
     %table#device_tasks_small.table.table-bordered.table-condensed.table-hover
       %caption

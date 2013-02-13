@@ -5,8 +5,8 @@ class Location < ActiveRecord::Base
   has_ancestry
   attr_accessible :name, :ancestry, :parent_id, :schedule
   default_scope order('ancestry asc')
-  scope :allowed_for, lambda { |user| where("ancestry LIKE ? OR ancestry is NULL",
-                                            "#{user.location.ancestor_ids.join('/')}%") }
+  #scope :allowed_for, lambda { |user| where("ancestry LIKE ? OR ancestry is NULL",
+  #                                          "#{user.location.ancestor_ids.join('/')}%") }
   scope :for_schedule, where(schedule: true)
 
   def full_name
@@ -31,6 +31,23 @@ class Location < ActiveRecord::Base
 
   def self.warranty
     Location.find_by_name 'Гарантийники'
+  end
+
+  def self.allowed_for(user, device)
+    if user.admin?
+      all
+    elsif user.location.nil?
+      []
+    else
+      #locations = Location.where("ancestry LIKE ? OR ancestry is NULL", "#{user.location.ancestor_ids.join('/')}%")
+      locations = Location.where("ancestry LIKE ?", "#{user.location.ancestor_ids.join('/')}%")
+      locations = locations.joins(:users).uniq
+      unless device.new_record?
+        locations << Location.archive if device.location.is_done?
+        locations << Location.done if device.pending_tasks.empty?
+      end
+      locations
+    end
   end
 
   def is_done?

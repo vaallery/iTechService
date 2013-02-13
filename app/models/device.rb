@@ -27,7 +27,6 @@ class Device < ActiveRecord::Base
   before_validation :validate_location
   after_save :update_qty_replaced
 
-  #scope :ordered, order("devices.done_at desc, created_at asc")
   scope :ordered, order('created_at desc')
   scope :done, where('devices.done_at IS NOT NULL').order('devices.done_at desc')
   scope :pending, where(done_at: nil)
@@ -36,7 +35,6 @@ class Device < ActiveRecord::Base
   scope :located_at, lambda {|location| where(location_id: location.id)}
   scope :at_done, where(location_id: Location.find_by_name('Готово'))
   scope :at_archive, where(location_id: Location.find_by_name('Архив'))
-  #scope :archived_at
 
   after_initialize :set_user_and_location
   
@@ -235,7 +233,7 @@ class Device < ActiveRecord::Base
     if old_location.try(:is_archive?) and User.current.not_admin?
       self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
     end
-    if self.location.is_warranty? and old_location.try(:is_repair?)
+    if self.location.is_warranty? and !old_location.try(:is_repair?)
       self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
     end
   end
