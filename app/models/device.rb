@@ -229,7 +229,7 @@ class Device < ActiveRecord::Base
     if self.location.is_done? and self.pending?
       self.errors.add :location_id, I18n.t('devices.movement_error')
     end
-    if self.location.is_archive? and !old_location.try(:is_repair?)
+    if self.location.is_archive? and !old_location.try(:is_done?)
       self.errors.add :location_id, I18n.t('devices.movement_error_not_done')
     end
     if old_location.try(:is_archive?) and User.current.not_admin?
