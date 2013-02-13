@@ -37,7 +37,6 @@ class TicketPdf < Prawn::Document
     text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
     move_down 5
     text @device.user_short_name
-    #move_down 5
     text @device.tasks.map{|t|t.id}.join('-'), size: 10
     text @view.t('tickets.contact_phone')
     move_down 5

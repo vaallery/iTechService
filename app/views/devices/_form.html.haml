@@ -31,6 +31,8 @@
     .control-group.required.error
       .controls
         %p= f.full_error :device_tasks, class: 'text-error'
+        %p
+          %span.help-inline.text-error= f.object.device_tasks.map{|dt|dt.errors.full_messages}.join ', '
 
   = render @device.new_record? ? 'device_tasks_fields' : 'device_tasks', f: f
 

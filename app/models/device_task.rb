@@ -3,7 +3,8 @@ class DeviceTask < ActiveRecord::Base
   belongs_to :task
   has_many :history_records, as: :object
   attr_accessible :done, :comment, :cost, :task, :device, :device_id, :task_id
-  validates :task_id, presence: true
+  validates :task_id, :cost, presence: true
+  validates :cost, numericality: true
   
   scope :ordered, joins(:task).order("done asc, tasks.priority desc")
   scope :done, where(done: true)
