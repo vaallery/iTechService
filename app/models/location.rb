@@ -45,6 +45,7 @@ class Location < ActiveRecord::Base
       unless device.new_record?
         locations << Location.archive if device.location.is_done?
         locations << Location.done if device.pending_tasks.empty?
+        locations << Location.warranty if device.location.is_repair?
       end
       locations
     end
