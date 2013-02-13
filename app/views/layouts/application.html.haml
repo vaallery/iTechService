@@ -30,8 +30,7 @@
 
     = yield :new_device_popup
 
-    %footer#footer
-      .user_name= current_user.short_name
+    = yield :footer
 
     - if Rails.env.development?
       = debug params
