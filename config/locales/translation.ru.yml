@@ -244,7 +244,8 @@ ru:
     includes: Из них
     period: Период
     qty: Количество
-    qty_free: Из них бесплатных
+    qty_paid: платных
+    qty_free: бесплатных
     received: Принято
     received_done: готовы
     received_archived: выданы

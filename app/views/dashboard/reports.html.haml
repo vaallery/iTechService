@@ -62,6 +62,7 @@
         %th= DeviceTask.human_attribute_name :task
         %th= t('reports.sum')
         %th= t 'reports.qty'
+        %th= t 'reports.qty_paid'
         %th= t 'reports.qty_free'
     %tbody
       - @report[:tasks].each do |task|
@@ -69,15 +70,17 @@
           %td= task[:name]
           %td= link_to number_to_currency(task[:sum], unit: '', precision: 0), '#', class: 'report_task_details'
           %td= task[:qty]
+          %td= task[:qty_paid]
           %td= task[:qty_free]
         - task[:devices].each do |device|
           %tr.device_row
             %td.device_name= link_to device[:name], device_path(device[:id])
             %td.task_cost= number_to_currency device[:cost], unit: '', precision: 0
-            %td{colspan: 2}
+            %td{colspan: 3}
     %tfoot
       %tr
         %td= t('reports.total')
         %td= number_to_currency @report[:tasks_sum], unit: '', precision: 0
         %td= @report[:tasks_qty]
+        %td= @report[:tasks_qty_paid]
         %td= @report[:tasks_qty_free]

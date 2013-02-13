@@ -137,15 +137,18 @@ class DashboardController < ApplicationController
         same_tasks = tasks.where(task_id: task_id)
         task_sum = same_tasks.sum(:cost)
         task_count = same_tasks.count
+        task_paid_count = same_tasks.where('cost > 0').count
         task_free_count = same_tasks.where(cost: [0,nil]).count
         devices = same_tasks.collect do |same_task|
           {id: same_task.device_id, name: same_task.device.type_name, cost: same_task.cost}
         end
-        @report[:tasks] << {name: task_name, sum: task_sum, qty: task_count, qty_free: task_free_count, devices: devices}
+        @report[:tasks] << {name: task_name, sum: task_sum, qty: task_count, qty_paid: task_paid_count,
+                            qty_free: task_free_count, devices: devices}
       end
 
       @report[:tasks_sum] = tasks.sum(:cost)
       @report[:tasks_qty] = tasks.count
+      @report[:tasks_qty_paid] = tasks.where('cost > 0').count
       @report[:tasks_qty_free] = tasks.where(cost: [0,nil]).count
     end
   end
