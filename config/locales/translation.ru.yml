@@ -61,6 +61,7 @@ ru:
         birthday: День рождения
         card_number: Номер карты
         comments: Комментарии
+        device: Девайс
         devices: Девайсы
         email: E-mail
         full_phone_number: Федеральный телефонный номер
@@ -299,6 +300,8 @@ ru:
     link: Клиенты
     questionnaire: Анкета
 
+    show:
+      date: "Дата"
   comments:
     edit:
       title: Редактирование комментария
