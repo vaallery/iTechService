@@ -4,14 +4,14 @@
 
 jQuery ->
 
-  $('#check_phone_number').live 'click', (event) ->
+  $(document).on 'click', '#check_phone_number', (event) ->
     unless $(this).hasClass 'disabled'
       number = $('#client_full_phone_number').val()
       $.get '/clients/check_phone_number.js',
         number: number
     event.preventDefault()
 
-  $('#client_full_phone_number').live 'keyup', (event) ->
+  $(document).on 'keyup', '#client_full_phone_number', (event) ->
     $('#check_phone_number').removeClass('btn-success').removeClass('btn-warning')
     count = $('#client_full_phone_number').val().length
     $('#phone_length').text(count)
@@ -20,7 +20,7 @@ jQuery ->
     else
       $('#check_phone_number').addClass('disabled').removeClass('btn-warning')
 
-  $('#client_card_number').live 'keyup', ->
+  $(document).on 'keyup', '#client_card_number', ->
     if $(this).val() isnt ''
       $('#client_questionnaire_input').removeClass 'hidden'
     else

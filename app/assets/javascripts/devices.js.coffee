@@ -10,7 +10,7 @@ jQuery ->
 
   if $device_form.length > 0
 
-    $('.device_task_task').live 'change', () ->
+    $(document).on 'change', '.device_task_task', () ->
       task_id = $(this).val()
       task_cost = $(this).parents('.device_task').find('.device_task_cost')
       $.getJSON '/tasks/'+task_id+'.json', (data) ->
@@ -37,21 +37,16 @@ jQuery ->
           $('#device_imei').parents('.control-group').removeClass 'warning'
           $('#device_imei').siblings('.help-inline').remove()
 
-    $('#questionnaire_link').live 'click', (event)->
+    $(document).on 'click', '#questionnaire_link', (event)->
       $this = $ this
       params = $this.parents('form:first').serialize()
       event.currentTarget.href = '/clients/questionnaire?' + params
 
-#  $('#print_device_ticket').click (event)->
-#    event.preventDefault()
-##    win2 = window.open()
-##    win2.location.assign('http://localhost:3000/devices/2009.pdf?part=2')
-##    win1 = window.open()
-##    win1.location.assign('http://localhost:3000/devices/2009.pdf?part=1')
-#    $('#print_device_ticket2')[0].click()
-#    setTimeout (->
-#      $('#print_device_ticket1')[0].click()
-#    ), 100
+    $('#device_serial_number').keydown (event)->
+      $this = $(this)
+      if event.keyCode in [65..90]
+        $this.val($this.val()+String.fromCharCode(event.keyCode))
+        event.preventDefault()
 
   $('#new_device_popup').mouseleave ->
     setTimeout (->

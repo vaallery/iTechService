@@ -1,6 +1,6 @@
 jQuery ->
 
-  $('#history').live 'click', '.close_history', (event) ->
+  $(document).on 'click', '#history .close_history', (event) ->
     $history = $('#history')
     $history.remove()
     event.preventDefault()
@@ -34,13 +34,13 @@ jQuery ->
     $('#search_form').submit()
     event.preventDefault()
 
-  $('.datepicker').live 'focus', ->
+  $(document).on 'focus', '.datepicker', ->
     $(this).datepicker().dates = datepicker_dates
 
   $('#sign_in_by_card').click ->
     card_number = ''
     $('body').append "<div id='card_sign_in' class='modal-backdrop fade in'></div>"
-    $(document).live 'keydown', '#card_sign_in', (event)->
+    $(document).on 'keydown', '#card_sign_in', (event)->
       unless event.keyCode is 13
         card_number += String.fromCharCode(event.keyCode).toLowerCase()
 

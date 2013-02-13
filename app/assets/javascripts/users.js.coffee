@@ -106,12 +106,11 @@ jQuery ->
           error: (jqXHR, textStatus, errorThrown)->
             console.log(jqXHR.status+' ('+errorThrown+')')
 
-    $('.job_schedule_user_hours', $table)
-      .live 'mouseenter', ->
-        user = $(this).data 'user'
-        $('.user_row[data-user='+user+']', $legend).addClass 'hovered'
-      .live 'mouseleave', ->
-        $('.user_row.hovered', $legend).removeClass 'hovered'
+    $(document).on 'mouseenter', '#job_schedule_table .job_schedule_user_hours', ->
+      user = $(this).data 'user'
+      $('.user_row[data-user='+user+']', $legend).addClass 'hovered'
+    $(document).on 'mouseleave', '#job_schedule_table .job_schedule_user_hours', ->
+      $('.user_row.hovered', $legend).removeClass 'hovered'
 
     $('.add_user_to_job_schedule', $table).click (event)->
       user = $('.user_row.selected', $legend).data 'user'
@@ -122,14 +121,14 @@ jQuery ->
           $.getScript '/users/'+user+'/add_to_job_schedule?day='+day
       event.preventDefault()
 
-    $('.job_schedule_user_hour', $table).live 'click', (event)->
+    $(document).on 'click', '#job_schedule_table .job_schedule_user_hour', (event)->
       $this = $ this
       $this.toggleClass 'work_hour'
       color = if $this.hasClass('work_hour') then $this.parents('.job_schedule_user_hours').data('color') else 'inherit'
       $this.css backgroundColor: color
       event.preventDefault()
 
-    $('.save_job_schedule_hours').live 'click', (event)->
+    $(document).on 'click', '.save_job_schedule_hours', (event)->
       $this = $ this
       $row = $this.parents('.job_schedule_user_hours:first')
       $cell = $this.parent()
@@ -170,7 +169,7 @@ jQuery ->
 
       event.preventDefault()
 
-    $('.delete_job_schedule_hours').live 'click', ->
+    $(document).on 'click', '.delete_job_schedule_hours', ->
       $this = $ this
       $row = $this.parents('.job_schedule_user_hours:first')
       $cell = $this.parent()
@@ -199,7 +198,7 @@ jQuery ->
 
       event.preventDefault()
 
-    $('.calendar_day>span', $calendar).live 'click', (event)->
+    $(document).on 'click', '#staff_duty_schedule .calendar_day>span', (event)->
       $this = $(this).parent()
       if $this.hasClass 'duty'
         user_id = $this.data 'user'
@@ -229,12 +228,11 @@ jQuery ->
             error: (jqXHR, textStatus, errorThrown)->
               console.log(jqXHR.status+' ('+errorThrown+')')
 
-    $('.calendar_day.duty>span', $calendar)
-      .live 'mouseenter', ->
-        user = $(this).parent().data 'user'
-        $('.user_row[data-user='+user+']', $legend).addClass 'hovered'
-      .live 'mouseleave', ->
-        $('.user_row.hovered', $legend).removeClass 'hovered'
+    $(document).on 'mouseenter', '#staff_duty_schedule .calendar_day.duty>span', ->
+      user = $(this).parent().data 'user'
+      $('.user_row[data-user='+user+']', $legend).addClass 'hovered'
+    $(document).on 'mouseleave', '#staff_duty_schedule .calendar_day.duty>span', ->
+      $('.user_row.hovered', $legend).removeClass 'hovered'
 
     $('.user_wish', $legend).tooltip()
 
