@@ -236,6 +236,10 @@ class Device < ActiveRecord::Base
     if self.location.is_warranty? and !old_location.try(:is_repair?)
       self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
     end
+
+    #if User.current.not_admin? and old_location != User.current.location
+    #  self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
+    #end
   end
 
 end
