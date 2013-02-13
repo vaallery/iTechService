@@ -34,7 +34,7 @@ class Location < ActiveRecord::Base
   end
 
   def is_done?
-    name == 'Готов'
+    name == 'Готово'
   end
 
   def is_archive?
