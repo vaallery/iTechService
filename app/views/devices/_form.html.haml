@@ -16,7 +16,7 @@
 
   = f.input :imei, wrapper_html: {class: @device.has_imei? ? 'imei_input' : 'imei_input'}
 
-  = f.input :serial_number
+  = f.input :serial_number, input_html: {autocomplete: 'off'}
   
   = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)
 
