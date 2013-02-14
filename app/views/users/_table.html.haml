@@ -7,6 +7,7 @@
       %tr
         %th= User.human_attribute_name(:id)
         %th= User.human_attribute_name(:username)
+        %th= User.human_attribute_name(:name)
         %th= User.human_attribute_name(:role)
         %th= User.human_attribute_name(:location)
         %th= User.human_attribute_name(:created_at)
@@ -16,6 +17,7 @@
         %tr
           %td= link_to user.id, user_path(user)
           %td= link_to user.username, user_path(user)
+          %td= link_to user.short_name, user_path(user)
           %td= user.role
           %td= user.location.try :full_name
           %td=l user.created_at, format: :long_d

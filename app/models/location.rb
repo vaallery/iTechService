@@ -31,6 +31,10 @@ class Location < ActiveRecord::Base
     Location.find_by_name 'Гарантийники'
   end
 
+  def self.popov
+    Location.find 10
+  end
+
   def self.allowed_for(user, device)
     if user.admin?
       all
@@ -44,6 +48,7 @@ class Location < ActiveRecord::Base
         locations << Location.archive if device.location.is_done?
         locations << Location.done if device.pending_tasks.empty?
         locations << Location.warranty if device.location.is_repair?
+        locations << Location.popov
       end
       locations
     end
@@ -63,6 +68,10 @@ class Location < ActiveRecord::Base
 
   def is_warranty?
     name == 'Гарантийники'
+  end
+
+  def is_popov?
+    id == 10
   end
 
 end
