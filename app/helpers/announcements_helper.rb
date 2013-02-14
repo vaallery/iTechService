@@ -6,9 +6,18 @@ module AnnouncementsHelper
       when 'coffee' then text = ": #{t('announcements.coffee_made')}"
       when 'for_coffee' then text = ": #{t('announcements.coffee_order', content: announcement.content)}"
       when 'protector' then text = ": #{t('announcements.protector_made')}"
+      when 'birthday'
+        text = ''
+        if (birthday = announcement.user.birthday).present?
+          text = t('announcements.birthday', user: announcement.user.short_name, time: l(birthday, format: :short))
+        end
       else text = ": #{announcement.content}"
     end
-    "[#{l(announcement.created_at, format: :long_d)}] #{announcement.user.short_name}" + text
+    if announcement.birthday?
+      text
+    else
+      "[#{l(announcement.created_at, format: :long_d)}] #{announcement.user.short_name}" + text
+    end
   end
 
   def header_link_to_announce

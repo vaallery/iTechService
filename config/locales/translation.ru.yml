@@ -276,6 +276,7 @@ ru:
       title: Оповещения
     new:
       title: Новое оповещение
+    birthday: "%{time} день рождения у %{user}"
     close_orders: Закрыть заказы
     coffee_made: Кофе готов!
     coffee_order: "Кофе %{content}"
@@ -467,6 +468,7 @@ ru:
   save: Сохранить
   search: Найти
   show: "Показать"
+  today: Сегодня
   total: Итого
   undone: "Не готово"
   update: Сохранить

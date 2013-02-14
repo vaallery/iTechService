@@ -36,6 +36,8 @@ class User < ActiveRecord::Base
   #default_scope order('id asc')
   scope :admins, where(role: 'admin')
   scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
+  scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
+  scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
 
   after_initialize do |user|
     if user.schedule_days.empty?
@@ -144,6 +146,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def announced_birthday?
+    announcements.active_birthdays.any?
+  end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
@@ -160,6 +166,15 @@ class User < ActiveRecord::Base
 
   def color_s
     color.blank? ? '#ffffff' : color
+  end
+
+  def upcoming_birthday?
+    today = Date.current
+    birthday.present? and (0..3).include? (birthday.change(year: today.year) - today).to_i
+  end
+
+  def birthday_announcement
+    announcements.find_or_create_by_kind(kind: 'birthday', active: false)
   end
 
   private
