@@ -13,7 +13,7 @@ class LocationInput < SimpleForm::Inputs::Base
       end +
       template.content_tag(:ul, id: 'locations_list', class: 'dropdown-menu') do
         Location.allowed_for(user, @builder.object).map do |location|
-          template.content_tag(:li, template.link_to(location.full_name, '#', location_id: location.id))
+          template.content_tag(:li, template.link_to(location.full_name, '#', location_id: location.id)) if location.present?
         end.join.html_safe
       end
     end
