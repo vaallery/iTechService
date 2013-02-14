@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :authenticate_user!, :set_current_user
   before_filter :store_location, except: [:create, :update, :destroy]
-  before_filter :check_birthdays
+  before_filter :check_birthdays, if: :user_signed_in?
   layout 'staff'
   #check_authorization unless: :devise_controller?
   
