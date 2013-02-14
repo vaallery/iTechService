@@ -44,7 +44,7 @@ jQuery ->
 
     $('#device_serial_number').keydown (event)->
       $this = $(this)
-      if event.keyCode in [65..90]
+      if (event.keyCode in [65..90]) and (event.metaKey is false) and (event.ctrlKey is false) and (event.altKey is false)
         $this.val($this.val()+String.fromCharCode(event.keyCode))
         event.preventDefault()
 
