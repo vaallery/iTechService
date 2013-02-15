@@ -2,10 +2,8 @@
   -#= f.hidden_field :customer_id
   = f.input :number, disabled: true, input_html: { class: 'input-xlarge' }
   - if @order.new_record?
-    = f.input :customer_type, as: :radio_buttons, collection: %w[User Client], input_html: { class: 'input-xlarge' }
-    = f.input :customer_id, as: :client, wrapper_html: {id: 'client_fields'}, no_devices: true, wrapper_html: {class: 'hidden'}
+    = f.input :customer_id, as: :client, wrapper_html: {id: 'client_fields'}, no_devices: true
   - else
-    = f.hidden_field :customer_type
     .control-group.string.disabled.optional
       %label.control-label.string.optional= Order.human_attribute_name :customer
       .controls= text_field_tag :customer, @order.customer.presentation, class: 'input-xlarge', disabled: true

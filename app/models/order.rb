@@ -11,7 +11,10 @@ class Order < ActiveRecord::Base
     if order.customer_id.blank?
       order.customer_id = User.current.id
       order.customer_type = 'User'
+    else
+      order.customer_type = 'Client'
     end
+    order.user_id ||= User.current.id
   end
 
   scope :ordered, order("orders.created_at desc")

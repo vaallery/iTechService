@@ -12,7 +12,11 @@
 %dl.dl-horizontal
 
   %dt= model_class.human_attribute_name :customer
-  %dd= link_to @order.customer_presentation, url_for(controller: @order.customer_type.tableize, action: :show)
+  %dd
+    - if @order.customer_type == 'Client'
+      = link_to @order.customer_presentation, client_path(@order.customer)
+    - else
+      = @order.customer_presentation
 
   %dt= model_class.human_attribute_name :object_kind
   %dd= t("orders.object_kinds.#{@order.object_kind}")
