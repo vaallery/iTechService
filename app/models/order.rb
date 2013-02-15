@@ -8,14 +8,18 @@ class Order < ActiveRecord::Base
   validates :customer_id, :object, :object_kind, presence: true
   before_validation :generate_number
   before_validation do |order|
-    if order.customer_id.blank?
-      order.customer_id = User.current.id
-      order.customer_type = 'User'
-    else
-      order.customer_type = 'Client'
+    if order.new_record?
+      if order.customer_id.blank?
+        order.customer_id = User.current.id
+        order.customer_type = 'User'
+      else
+        order.customer_type = 'Client'
+      end
+      order.user_id ||= User.current.id
     end
-    order.user_id ||= User.current.id
   end
+
+  after_update :make_announcement
 
   scope :ordered, order("orders.created_at desc")
   scope :new_orders, where(status: 'new')
@@ -40,11 +44,15 @@ class Order < ActiveRecord::Base
   end
 
   def customer_presentation
-    customer.presentation
+    customer.try :presentation
   end
 
   def client
     customer
+  end
+
+  def done?
+    status == 'done'
   end
 
   def self.search params
@@ -84,6 +92,15 @@ class Order < ActiveRecord::Base
     if self.number.blank?
       begin num = UUIDTools::UUID.random_create.hash.to_s end while Order.exists? number: num
       self.number = num
+    end
+  end
+
+  def make_announcement
+    unless changed_attributes[:status].present?
+      if (announcement = Announcement.create(user_id: user_id, kind: (done? ? 'order_done' : 'order_status'), active: true,
+          content: "#{I18n.t('orders.order_num', num: number)} #{I18n.t('orders.statuses.'+status)}")).present?
+        PrivatePub.publish_to '/announcements', "$.getScript('/announcements/#{announcement.id}');"
+      end
     end
   end
 

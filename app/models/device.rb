@@ -25,7 +25,10 @@ class Device < ActiveRecord::Base
   before_validation :check_security_code
   before_validation :set_user_and_location
   before_validation :validate_location
+
   after_save :update_qty_replaced
+  after_update :device_update_announce
+  after_create :new_device_announce
 
   scope :ordered, order('created_at desc')
   scope :done, where('devices.done_at IS NOT NULL').order('devices.done_at desc')
@@ -240,6 +243,14 @@ class Device < ActiveRecord::Base
     #if User.current.not_admin? and old_location != User.current.location
     #  self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
     #end
+  end
+
+  def new_device_announce
+    PrivatePub.publish_to '/devices/new', device: self
+  end
+
+  def device_update_announce
+    PrivatePub.publish_to '/devices/new', device: self unless changed_attributes[:location_id].present?
   end
 
 end

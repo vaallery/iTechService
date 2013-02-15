@@ -22,7 +22,7 @@
               %li{class: nav_state_for('tasks')}= link_to t('tasks.link', default: 'Tasks'), tasks_path if can? :manage, Task
               %li{class: nav_state_for('locations')}= link_to t('locations.link', default: 'Locations'), locations_path if can? :manage, Location
               %li{class: nav_state_for('stolen_phones')}= link_to t('stolen_phones.link', default: 'Black list'), stolen_phones_path
-              %li{class: nav_state_for('announcements')}= link_to t('announcements.link', default: 'Announcements'), announcements_path
+              %li{class: nav_state_for('announcements')}= link_to t('announcements.link', default: 'Announcements'), announcements_path if current_user.admin?
         %ul.nav.pull-right
           = header_link_for_coffee
           = header_link_to_announce

@@ -3,9 +3,7 @@
 - if @announcement.present?
   - publish_to "/announcements" do
     :plain
-      if($('#profile_link').data('id') != #{@announcement.user_id}
-         && $('#profile_link').data('role') == '#{@announcement.visible_for}')
-        $('#announcements').append("#{j render(@announcement)}");
+      $.getScript("#{announcement_path(@announcement)}");
 
   - if @announcement.for_coffee?
     $('#coffer_order_link').popover('hide');

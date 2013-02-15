@@ -70,7 +70,6 @@ class DevicesController < ApplicationController
 
     respond_to do |format|
       if @device.save
-        PrivatePub.publish_to '/devices/new', device: @device
         format.html { redirect_to @device, notice: t('devices.created') }
         format.json { render json: @device, status: :created, location: @device }
       else
@@ -82,11 +81,9 @@ class DevicesController < ApplicationController
 
   def update
     @device = Device.find(params[:id])
-    old_location_id = @device.location_id
 
     respond_to do |format|
       if @device.update_attributes(params[:device])
-        PrivatePub.publish_to '/devices/new', device: @device unless @device.location_id == old_location_id
         format.html { redirect_to @device, notice: t('devices.updated') }
         format.json { head :no_content }
         format.js { render 'update' }

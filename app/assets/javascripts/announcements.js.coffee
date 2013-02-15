@@ -5,6 +5,7 @@ jQuery ->
   $(document).on 'click', '.close_announcement_button', ->
     $(this).parent().hide()
 
+
   $(document).on 'click', '.change_announce_state_button', ->
     $this = $(this)
     state = !$this.data('state')

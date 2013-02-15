@@ -11,9 +11,11 @@ module AnnouncementsHelper
         if (birthday = announcement.user.birthday).present?
           text = t('announcements.birthday', user: announcement.user.short_name, time: l(birthday, format: :short))
         end
+      when 'order_status' then text = "[#{l(announcement.created_at, format: :long_d)}] #{announcement.content}"
+      when 'order_done' then text = "[#{l(announcement.created_at, format: :long_d)}] #{announcement.content}"
       else text = ": #{announcement.content}"
     end
-    if announcement.birthday?
+    if announcement.birthday? or announcement.order_status? or announcement.order_done?
       text
     else
       "[#{l(announcement.created_at, format: :long_d)}] #{announcement.user.short_name}" + text

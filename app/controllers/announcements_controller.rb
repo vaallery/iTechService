@@ -6,8 +6,14 @@ class AnnouncementsController < ApplicationController
     @announcements = Announcement.scoped.page params[:page]
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @announcements }
+    end
+  end
+
+  def show
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -45,9 +51,11 @@ class AnnouncementsController < ApplicationController
       if @announcement.update_attributes(params[:announcement])
         format.html { redirect_to announcements_path, notice: t('announcements.updated') }
         format.json { render json: @announcement }
+        format.js { render nothing: false }
       else
         format.html { render action: "edit" }
         format.json { render json: @announcement.errors, status: :unprocessable_entity }
+        format.js { render nothing: false }
       end
     end
   end

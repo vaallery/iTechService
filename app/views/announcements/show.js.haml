@@ -1,0 +1,3 @@
+- if @announcement.visible_for? current_user
+  :plain
+    $('#announcements').append("#{j render(@announcement)}");

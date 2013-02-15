@@ -1,5 +1,5 @@
 class Announcement < ActiveRecord::Base
-  KINDS = %w[help coffee for_coffee protector info birthday]
+  KINDS = %w[help coffee for_coffee protector info birthday order_status order_done]
 
   belongs_to :user
   attr_accessible :content, :kind, :user_id, :active
@@ -40,24 +40,27 @@ class Announcement < ActiveRecord::Base
     kind == 'birthday'
   end
 
-  def visible_for
-    case kind
-      when 'help' then return 'software'
-      when 'coffee' then return 'software'
-      when 'for_coffee' then return 'media'
-      when 'protector' then return 'software'
-      when 'birthday' then return 'admin'
-      else return ''
-    end
+  def order_status?
+    kind == 'order_status'
+  end
+
+  def order_done?
+    kind == 'order_done'
   end
 
   def visible_for?(user)
-    if user_id != user.id
-      (user.software? and %w[help coffee protector].include?(kind)) or (for_coffee? and user.media?) or
-          (user.admin? and birthday?)
-    else
-      false
-    end
+    return (user_id != user.id and user.software?) if help?
+    return user.software? if coffee?
+    return user.media? if for_coffee?
+    return user.software? if protector?
+    return user.admin? if birthday?
+    return user_id == user.id if order_status?
+    return (user_id == user.id or user.media?) if order_done?
+    false
+  end
+
+  def closeable_by?(user)
+    (order_done? or order_status?) and (user_id == user.id)
   end
 
 end

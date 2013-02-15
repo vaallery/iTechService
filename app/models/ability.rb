@@ -21,19 +21,19 @@ Ability
       if user.marketing?
         can :manage, Price
         can :manage, DeviceType
-        can :manage, Order
+        can :modify, Order
         can :modify, Client
         cannot :modify, Device
       end
-      if user.helpable?
-        can :make_announce, Announcement
-        can :cancel_announce, Announcement, user_id: user.id
-      end
+      can :make_announce, Announcement
+      can :cancel_announce, Announcement, user_id: user.id
+      can :update, Announcement, user_id: user.id
       #can :check_phone_number, Client
       #can :questionnaire, Client
       #can :autocomplete, Client
       #can :select, Client
       can :create, Order
+      can :destroy, Order, user_id: user.id
       can :read, Info
       can :update, Device#, location_id: user.location_id
       can :profile, User, id: user.id

@@ -28,12 +28,11 @@
           %td= t("orders.statuses.#{order.status}")
           %td= order.desired_date.present? ? l(order.desired_date) : '-'
           %td= l order.created_at, format: :long_d
-          - if can? :modify, Order
-            %td
-              .btn-group
-                = link_to_show_small order
-                = link_to_edit_small order
-                = link_to_destroy_small order
+          %td
+            .btn-group
+              = link_to_show_small order
+              = link_to_edit_small order if can? :edit, order
+              = link_to_destroy_small order if can? :destroy, order
 
   = paginate @orders
 
