@@ -35,7 +35,7 @@ class DevicesController < ApplicationController
           pdf = TicketPdf.new @device, view_context, params[:part]
           #pdf = TicketPdfBig.new @device, view_context, params[:part]
           user_ip = request.ip
-          system 'lpr', pdf.render_file(Rails.root.to_s+'/tmp/ticket.pdf').path if params[:print]
+          system 'lpr', pdf.render_file(Rails.root.to_s+"/tmp/ticket_#{@device.ticket_number}.pdf").path if params[:print]
           send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
                     type: 'application/pdf', disposition: 'inline'
         else
