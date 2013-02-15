@@ -37,7 +37,7 @@ class Order < ActiveRecord::Base
   end
 
   def customer_presentation
-    customer_type == 'User' ? customer_full_name : customer.presentation
+    customer.presentation
   end
 
   def client
