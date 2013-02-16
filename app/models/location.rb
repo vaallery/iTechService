@@ -32,26 +32,29 @@ class Location < ActiveRecord::Base
   end
 
   def self.popov
-    Location.find 10
+    Location.where(id: 10).try(:first)
   end
 
   def self.allowed_for(user, device)
-    if user.admin?
-      all
-    elsif user.location.nil?
-      []
-    else
+    #if user.admin?
+    #  scoped
+    #elsif user.location.nil?
+    #  []
+    #else
       #locations = Location.where("ancestry LIKE ? OR ancestry is NULL", "#{user.location.ancestor_ids.join('/')}%")
-      locations = Location.where("ancestry LIKE ?", "#{user.location.ancestor_ids.join('/')}%")
-      locations = locations.joins(:users).uniq
-      unless device.new_record?
-        locations << Location.archive if device.location.is_done?
-        locations << Location.done if device.pending_tasks.empty?
-        locations << Location.warranty if device.location.is_repair?
-        locations << Location.popov
-      end
-      locations
-    end
+      #locations = Location.where("ancestry LIKE ?", "#{user.location.ancestor_ids.join('/')}%")
+      #locations = locations.joins(:users).uniq
+      #locations_ids = []
+      #locations_ids << Location.popov.id if Location.popov.present?
+      #unless device.new_record?
+      #  locations_ids << Location.archive.id if device.location.is_done? and Location.archive.present?
+      #  locations_ids << Location.done.id if device.pending_tasks.empty? and Location.done.present?
+      #  locations_ids << Location.warranty.id if device.location.is_repair? and Location.warranty.present?
+      #end
+      #locations = locations.where locations: {id: locations_ids}
+      #locations
+    #end
+    scoped
   end
 
   def is_done?

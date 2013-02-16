@@ -23,8 +23,4 @@ module LocationsHelper
     end.html_safe
   end
 
-  def available_locations_for(user, device)
-    Location.allowed_for(user, device)
-  end
-
 end

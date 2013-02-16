@@ -10,7 +10,7 @@
   = f.input :object_kind, as: :object_kind
   = f.input :object, input_html: { class: 'input-xlarge' }
   = f.input :comment, input_html: {rows: 5, class: 'input-xlarge'}
-  = f.input :user_comment, input_html: {rows: 5, class: 'input-xlarge'}
+  = f.input :user_comment, input_html: {rows: 5, class: 'input-xlarge'} if current_user.marketing?
   = f.input :desired_date, as: :my_date
   - if f.object.new_record?
     = f.hidden_field :status

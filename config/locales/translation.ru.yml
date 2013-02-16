@@ -393,7 +393,7 @@ ru:
     statuses:
       new: Новый
       pending: Выполняется
-      done: Выполнен
+      done: Выполнен (отправлен в магазин)
       canceled: Отменен
       all_statuses: Все статусы
     created: Заказ создан
