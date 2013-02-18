@@ -19,6 +19,7 @@ Ability
         can :modify, [Device, Client]
       end
       if user.marketing?
+        can :modify, Info
         can :manage, Price
         can :manage, DeviceType
         can :modify, Order
