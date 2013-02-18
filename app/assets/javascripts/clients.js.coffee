@@ -39,6 +39,7 @@ jQuery ->
         if $input.val() is ''
           $('#device_client_id').val("");
           $('#order_customer_id').val("");
+          $('#edit_client_link').attr('href', "#");
         else
           $.getScript '/clients/autocomplete.js?client_q='+$input.val()
         ), 200

@@ -1,11 +1,14 @@
 :plain
   $('#client_search').val("#{@client.presentation}");
   $('#device_client_id').val("#{@client.id}");
+  $('#order_customer_id').val("#{@client.id}");
   $('#edit_client_link').attr('href', "#{edit_client_path(@client)}");
   $devices = $('#client_devices');
-  $('.popover-content', $devices).html("#{j(client_devices_list(@client))}");
-  if($('.client_devices_list', $devices).length > 0)
-    $devices.show()
-  else
-    $devices.hide();
+  if($devices.length > 0){
+    $('.popover-content', $devices).html("#{j(client_devices_list(@client))}");
+    if($('.client_devices_list', $devices).length > 0)
+      $devices.show()
+    else
+      $devices.hide();
+  }
   $("#modal_form").modal('hide');
