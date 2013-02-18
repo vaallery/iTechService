@@ -5,7 +5,7 @@ class Client < ActiveRecord::Base
   has_many :orders, as: :customer, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
   attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number,
-                  :admin_info, :comments_attributes, :comment
+                  :admin_info, :comments_attributes, :comment, :contact_phone
   attr_accessor :comment
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
   validates :name, :phone_number, :full_phone_number, presence: true

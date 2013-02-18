@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131063408) do
+ActiveRecord::Schema.define(:version => 20130218085652) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(:version => 20130131063408) do
     t.date     "birthday"
     t.string   "email"
     t.text     "admin_info"
+    t.string   "contact_phone"
   end
 
   add_index "clients", ["card_number"], :name => "index_clients_on_card_number"
