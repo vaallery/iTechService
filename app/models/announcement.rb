@@ -4,7 +4,8 @@ class Announcement < ActiveRecord::Base
   belongs_to :user
   attr_accessible :content, :kind, :user_id, :active
   validates :kind, :user_id, presence: true
-  scope :ordered, order('created_at desc')
+  scope :newest, order('created_at desc')
+  scope :oldest, order('created_at asc')
   scope :active, where(active: true)
   scope :active_help, where(active: true, kind: 'help')
   scope :active_coffee, where(active: true, kind: 'coffee')

@@ -4,8 +4,8 @@ class Info < ActiveRecord::Base
 
   validates :title, :content, presence: true
 
-  default_scope order('created_at desc')
-  scope :ordered, order('created_at desc')
+  scope :newest, order('created_at desc')
+  scope :oldest, order('created_at asc')
   scope :grouped_by_date
   scope :important, where(important: true)
 

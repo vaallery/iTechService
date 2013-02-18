@@ -45,14 +45,14 @@ module DashboardHelper
       content_tag(:td, device_movement_information_tag(device), class: 'device_movement_column') +
         content_tag(:td, class: 'device_task_column') do
         content_tag(:span, device.progress, class: "device_tasks_toggle #{progress_badge_class_for_device(device)}") +
-        link_to(device.presentation, device_path(device), target: '_blank') +
+        link_to(device.presentation, device_path(device)) +
         tag(:br, false) +
         content_tag(:span, class: 'device_ticket_number') do
           "#{Device.human_attribute_name(:ticket_number)}: #{device.ticket_number}"
         end
       end +
       content_tag(:td, class: 'client_comment_column') do
-        (device.client.present? ? link_to(device.client_presentation, client_path(device.client), target: '_blank') : '-').html_safe +
+        (device.client.present? ? link_to(device.client_presentation, client_path(device.client)) : '-').html_safe +
         tag(:br, false) +
         device.comment
       end +
@@ -64,14 +64,14 @@ module DashboardHelper
     content_tag(:tr, class: 'device_row', data: {device_id: device.id}) do
       content_tag(:td, device_movement_information_tag(device), class: 'device_movement_column') +
       content_tag(:td) do
-        link_to(device.presentation, device_path(device), target: '_blank') +
+        link_to(device.presentation, device_path(device)) +
         tag(:br, false) +
         content_tag(:span, class: 'device_ticket_number') do
           "#{Device.human_attribute_name(:ticket_number)}: #{device.ticket_number}"
         end
       end +
       content_tag(:td) do
-        link_to(device.client_presentation, client_path(device.client), target: '_blank') +
+        link_to(device.client_presentation, client_path(device.client)) +
         tag(:br, false) +
         device.comment
       end +

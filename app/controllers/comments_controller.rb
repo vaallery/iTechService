@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
       if params.has_key? :sort and params.has_key? :direction
         @comments = Comment.scoped.order 'comments.'+sort_column + ' ' + sort_direction
       else
-        @comments = Comment.ordered.page params[:page]
+        @comments = Comment.newest.page params[:page]
       end
       @comments = @comments.page params[:page]
     end

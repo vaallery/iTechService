@@ -92,11 +92,11 @@ class DashboardController < ApplicationController
     else
       @devices = Device.located_at(current_user.location)
     end
-    @devices = @devices.search(params).page params[:page]
+    @devices = @devices.search(params).oldest.page params[:page]
   end
 
   def load_actual_orders
-    @orders = Order.actual_orders.search(params).page params[:page]
+    @orders = Order.actual_orders.search(params).oldest.page params[:page]
   end
 
   def make_report_by_device_types

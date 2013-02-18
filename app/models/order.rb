@@ -21,19 +21,20 @@ class Order < ActiveRecord::Base
 
   after_update :make_announcement
 
-  scope :ordered, order("orders.created_at desc")
+  scope :newest, order("orders.created_at desc")
+  scope :oldest, order("orders.created_at asc")
   scope :new_orders, where(status: 'new')
   scope :pending_orders, where(status: 'pending')
   scope :done_orders, where(status: 'done')
   scope :canceled_orders, where(status: 'canceled')
-  scope :actual_orders, where(status: %w[new pending])
+  scope :actual_orders, where(status: %w[new pending notified done])
   scope :device, where(object_kind: 'device')
   scope :accessory, where(object_kind: 'accessory')
   scope :soft, where(object_kind: 'soft')
   scope :misc, where(object_kind: 'misc')
 
   OBJECT_KINDS = %w[device accessory soft misc]
-  STATUSES = %w[new pending done canceled]
+  STATUSES = %w[new pending done canceled notified archive]
 
   def customer_full_name
     customer.try :full_name

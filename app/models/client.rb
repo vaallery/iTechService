@@ -9,6 +9,7 @@ class Client < ActiveRecord::Base
   attr_accessor :comment
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
   validates :name, :phone_number, :full_phone_number, presence: true
+  validates :full_phone_number, uniqueness: true
   validates_associated :comments
   
   def self.search params
@@ -31,7 +32,7 @@ class Client < ActiveRecord::Base
   end
   
   def name_phone
-    "#{self.name} / #{self.human_phone_number}"
+    "#{self.short_name} / #{self.human_phone_number}"
   end
 
   def presentation

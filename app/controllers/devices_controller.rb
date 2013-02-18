@@ -13,7 +13,7 @@ class DevicesController < ApplicationController
     if params.has_key? :sort and params.has_key? :direction
       @devices = @devices.reorder 'devices.'+sort_column + ' ' + sort_direction
     end
-    @devices = @devices.ordered.page params[:page]
+    @devices = @devices.newest.page params[:page]
     @location_name = params[:location].present? ? Location.find(params[:location]).full_name : 'everywhere'
     @locations = Location.scoped
 

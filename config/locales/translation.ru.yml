@@ -395,6 +395,8 @@ ru:
       pending: Выполняется
       done: Выполнен (отправлен в магазин)
       canceled: Отменен
+      notified: Уведомлён (позвонили)
+      archive: Архив
       all_statuses: Все статусы
     created: Заказ создан
     updated: Заказ изменён

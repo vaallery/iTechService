@@ -5,7 +5,7 @@ class InfosController < ApplicationController
 
   def index
     if can? :manage, Info
-      @infos = Info.ordered
+      @infos = Info.newest
       unless sort_column.blank? and sort_direction.blank?
         @infos = @infos.reorder(sort_column + ' ' + sort_direction)
       end

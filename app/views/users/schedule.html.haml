@@ -22,7 +22,7 @@
                   %span.pull-right= link_to_add_user_hours day
               %tr.job_schedule_hours
                 - ('10'..'20').each do |hour|
-                  %td.job_schedule_hour{data: {hour: hour}}= hour
+                  %td.job_schedule_hour{data: {hour: hour}}= "#{hour} - #{hour.to_i+1}"
                 %td
               - @locations.each do |location|
                 %tr.job_schedule_location{data: {location: location.id, day: day}}

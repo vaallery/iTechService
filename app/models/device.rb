@@ -30,7 +30,8 @@ class Device < ActiveRecord::Base
   after_update :device_update_announce
   after_create :new_device_announce
 
-  scope :ordered, order('created_at desc')
+  scope :newest, order('created_at desc')
+  scope :oldest, order('created_at asc')
   scope :done, where('devices.done_at IS NOT NULL').order('devices.done_at desc')
   scope :pending, where(done_at: nil)
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
