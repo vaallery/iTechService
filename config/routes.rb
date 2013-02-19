@@ -13,6 +13,7 @@ ItechService::Application.routes.draw do
   match 'ready_devices' => 'dashboard#ready_devices', via: :get
   match 'goods_for_sale' => 'dashboard#goods_for_sale', via: :get
   match 'reports' => 'dashboard#reports', via: :get
+  match 'check_session_status' => 'dashboard#check_session_status', via: :get
 
   resources :users do
     get :duty_calendar, on: :member

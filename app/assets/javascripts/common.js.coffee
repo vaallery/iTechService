@@ -42,7 +42,6 @@ jQuery ->
     scanCard()
 
   $('#lock_session').click (event)->
-    event.preventDefault()
     $('#card_sign_in').show().addClass('in')
 
 add_fields = (target, association, content) ->

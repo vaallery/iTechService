@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
 
-  skip_before_filter :authenticate_user!, :set_current_user, only: :sign_in_by_card
+  skip_before_filter :authenticate_user!, :set_current_user, only: [:sign_in_by_card, :check_session_status]
 
   def index
     if current_user.marketing?
@@ -75,6 +75,10 @@ class DashboardController < ApplicationController
     make_report_by_users
     make_report_by_tasks
     make_report_by_clients
+  end
+
+  def check_session_status
+    render json: {timeout: !user_signed_in?}
   end
 
   private

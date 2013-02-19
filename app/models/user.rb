@@ -177,6 +177,10 @@ class User < ActiveRecord::Base
     announcements.find_or_create_by_kind(kind: 'birthday', active: false)
   end
 
+  #def timeout_in
+  #  10.seconds
+  #end
+
   private
   
   def ensure_an_admin_remains
