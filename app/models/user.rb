@@ -153,7 +153,7 @@ class User < ActiveRecord::Base
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(card_number) = :value OR lower(card_number) = :value",
+      where(conditions).where(["lower(username) = :value OR lower(card_number) = :value",
                                { value: login.mb_chars.downcase.to_s }]).first
     else
       where(conditions).first

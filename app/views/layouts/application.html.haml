@@ -21,16 +21,14 @@
     = yield :header
     = yield :info
     = yield :announcements
-
     .container-fluid
       = bootstrap_flash
       .row-fluid
         .span12
           = yield
-
     = yield :new_device_popup
-
     = yield :footer
+    #card_sign_in.modal-backdrop.fade
 
     - if Rails.env.development?
       = debug params

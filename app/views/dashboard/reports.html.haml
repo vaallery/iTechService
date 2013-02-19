@@ -84,3 +84,11 @@
         %td= @report[:tasks_qty]
         %td= @report[:tasks_qty_paid]
         %td= @report[:tasks_qty_free]
+
+  %table#clients_report.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th= t 'reports.clients_count'
+        %th= t 'reports.new_clients_count'
+    %tbody
+      %tr

@@ -243,11 +243,13 @@ ru:
     reports: Отчёты
 
   reports:
+    clients_count: Количество клиентов
     includes: Из них
     period: Период
     qty: Количество
     qty_paid: платных
     qty_free: бесплатных
+    new_clients_count: Количество новых клиентов
     received: Принято
     received_done: готовы
     received_archived: выданы

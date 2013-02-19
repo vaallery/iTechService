@@ -76,6 +76,7 @@ class DashboardController < ApplicationController
     make_report_by_device_types
     make_report_by_users
     make_report_by_tasks
+    make_report_by_clients
   end
 
   private
@@ -151,6 +152,11 @@ class DashboardController < ApplicationController
       @report[:tasks_qty_paid] = tasks.where('cost > 0').count
       @report[:tasks_qty_free] = tasks.where(cost: [0,nil]).count
     end
+  end
+
+  def make_report_by_clients
+    @report[:clients_count] = Client.count
+    @report[:new_clients_count] = Client.where(created_at: @period).count
   end
 
 end

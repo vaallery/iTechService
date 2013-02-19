@@ -145,7 +145,7 @@ GEM
     http_parser.rb (0.5.3)
     i18n (0.6.1)
     journey (1.0.4)
-    jquery-rails (2.1.4)
+    jquery-rails (2.2.1)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.7.7)
@@ -321,7 +321,7 @@ DEPENDENCIES
   exception_notification (~> 2.6.1)
   factory_girl_rails
   haml-rails (~> 0.3.5)
-  jquery-rails (~> 2.1.4)
+  jquery-rails (~> 2.2.1)
   json (= 1.7.7)
   json_builder (~> 3.1.7)
   kaminari (~> 0.14.1)

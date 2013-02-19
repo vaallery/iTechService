@@ -37,19 +37,24 @@ jQuery ->
   $(document).on 'focus', '.datepicker', ->
     $(this).datepicker().dates = datepicker_dates
 
-  $('#sign_in_by_card').click ->
-    card_number = ''
-    $('body').append "<div id='card_sign_in' class='modal-backdrop fade in'></div>"
-    $(document).on 'keydown', '#card_sign_in', (event)->
-      unless event.keyCode is 13
+  $(document).on 'keydown', (event)->
+    if $('#card_sign_in.in:visible').length > 0
+      if event.keyCode is 13 and card_number isnt ''
+        sign_in_by_card card_number
+      else
         card_number += String.fromCharCode(event.keyCode).toLowerCase()
 
+  $('#sign_in_by_card').click ->
+    card_number = ''
+    $('#card_sign_in').show().addClass('in')
     setTimeout (->
       unless card_number is ''
         sign_in_by_card card_number
       else
-        $('#card_sign_in').remove()
+        $('#card_sign_in').removeClass('in').hide()
     ), 3000
+
+card_number = ''
 
 add_fields = (target, association, content) ->
   new_id = new Date().getTime()
@@ -58,6 +63,7 @@ add_fields = (target, association, content) ->
 
 sign_in_by_card = (card_number)->
   $.get '/sign_in_by_card?card_number='+card_number, ->
+    card_number = ''
     window.location.reload()
 
 datepicker_dates =
