@@ -29,6 +29,9 @@
     = yield :new_device_popup
     = yield :footer
     #card_sign_in.modal-backdrop.fade
+      - if user_signed_in?
+        %a#unlock_session= icon_tag(:unlock)
+        = current_user.short_name
 
     - if Rails.env.development?
       = debug params

@@ -47,9 +47,7 @@ class DashboardController < ApplicationController
   def sign_in_by_card
     if (user = User.find_by_card_number params[:card_number]).present?
       sign_in :user, user
-      #render root_url
-      redirect_to root_url
-      #redirect_back_or root_url
+      render json: user
     else
       redirect_to new_user_session_url
     end

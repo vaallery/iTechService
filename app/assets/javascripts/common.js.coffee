@@ -37,34 +37,46 @@ jQuery ->
   $(document).on 'focus', '.datepicker', ->
     $(this).datepicker().dates = datepicker_dates
 
-  $(document).on 'keydown', (event)->
-    if $('#card_sign_in.in:visible').length > 0
-      if event.keyCode is 13 and card_number isnt ''
-        sign_in_by_card card_number
-      else
-        card_number += String.fromCharCode(event.keyCode).toLowerCase()
+  $('#sign_in_by_card, #unlock_session').click (event)->
+    event.preventDefault()
+    scanCard()
 
-  $('#sign_in_by_card').click ->
-    card_number = ''
+  $('#lock_session').click (event)->
+    event.preventDefault()
     $('#card_sign_in').show().addClass('in')
-    setTimeout (->
-      unless card_number is ''
-        sign_in_by_card card_number
-      else
-        $('#card_sign_in').removeClass('in').hide()
-    ), 3000
-
-card_number = ''
 
 add_fields = (target, association, content) ->
   new_id = new Date().getTime()
   regexp = new RegExp "new_" + association, "g"
   $(target).append content.replace(regexp, new_id)
 
-sign_in_by_card = (card_number)->
-  $.get '/sign_in_by_card?card_number='+card_number, ->
+sign_in_by_card = (number)->
+  current_user_id = $('#profile_link').data('id')
+  $.getJSON '/sign_in_by_card', {card_number: number, current_user: current_user_id}, (data)->
+    if window.location.pathname is "/users/sign_in"
+      window.location.assign '/'
+    else
+      if data.id == current_user_id
+        $('#card_sign_in').removeClass('in').hide()
+      else
+        window.location.assign '/'
+
+scanCard = ->
+  card_number = ''
+  $('#card_sign_in').show().addClass('in')
+  $(document).on 'keydown', (event)->
+    if $('#card_sign_in.in:visible').length > 0
+      if event.keyCode is 13 and card_number isnt ''
+        sign_in_by_card card_number
+      else
+        card_number += String.fromCharCode(event.keyCode).toLowerCase()
+  setTimeout (->
+    unless card_number is ''
+      sign_in_by_card card_number
+    else
+      $('#card_sign_in').removeClass('in').hide() if window.location.pathname is "/users/sign_in"
     card_number = ''
-    window.location.reload()
+   ), 3000
 
 datepicker_dates =
   days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
