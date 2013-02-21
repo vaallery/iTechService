@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :load_infos, only: [:show, :profile]
 
   def index
-    @users = User.scoped.page params[:page]
+    @users = User.order('id asc').page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb
