@@ -1,0 +1,4 @@
+:plain
+  close_karma_popovers();
+  $("#user_karmas>.#{@karma.kind}").append("#{j(render(@karma))}");
+  $("#user_karma_#{@karma.id}").tooltip({title: "#{@karma.comment}"});

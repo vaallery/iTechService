@@ -195,6 +195,7 @@ ru:
         encrypted_password: encrypted_password  #g
         hiring_date: Дата приема на работу
         history_records: history_records  #g
+        karmas: Карма
         last_sign_in_at: Время предыдущей авторизации
         last_sign_in_ip: IP предыдущей авторизации
         login: Логин
@@ -447,6 +448,7 @@ ru:
     new:
       title: Новый пользователь
     account: Учётка
+    add_karma: Карма
     created: Пользователь создан
     duty_schedule: График дежурств
     info: Информация

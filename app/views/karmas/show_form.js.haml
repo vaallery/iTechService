@@ -1,0 +1,15 @@
+- if @karma.new_record?
+  == $target = $(".new_karma_link.#{@karma.good ? 'good' : 'bad'}");
+- else
+  == $target = $("#user_karma_#{@karma.id}");
+:plain
+  close_karma_popovers();
+  $target.popover({
+    html: true,
+    placement: 'top',
+    title: "#{j(button_to_close_popover)}",
+    content: "#{j(render('form'))}",
+    container: '#karma_popover_container'
+  });
+  $target.popover('show');
+  $('#karma_comment').focus();

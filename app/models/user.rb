@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :announcements
   has_many :comments
   has_many :devices, inverse_of: :user
+  has_many :karmas, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
   
@@ -21,11 +22,12 @@ class User < ActiveRecord::Base
   attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id,
                   :surname, :name, :patronymic, :birthday, :hiring_date, :salary_date, :prepayment, :wish,
                   :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes,
-                  :card_number, :color
+                  :card_number, :color, :karmas_attributes
 
   attr_accessor :login
 
   accepts_nested_attributes_for :schedule_days, :duty_days, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :karmas, allow_destroy: true
   #accepts_nested_attributes_for :duty_days, allow_destroy: true
 
   validates :username, :role, presence: true

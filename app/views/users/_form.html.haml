@@ -26,6 +26,16 @@
       -#= f.input :salary_date, as: :my_date
       = f.input :prepayment
       = f.input :color, as: :color
+      .control-group
+        %label.control-label= User.human_attribute_name :karmas
+        .controls
+          #user_karmas
+            .good= render @user.karmas.good
+            .bad= render @user.karmas.bad
+          #karma_popover_container
+          = link_to icon_tag('thumbs-up'), new_karma_path(karma: {user_id: @user.id, good: true}), remote: true, class: 'new_karma_link good'
+          = link_to icon_tag('thumbs-down'), new_karma_path(karma: {user_id: @user.id, good: false}), remote: true, class: 'new_karma_link bad'
+
     - unless @user.new_record?
       #schedule_tab.tab-pane
         = f.input :wish, input_html: {rows: 5, class: 'span7'}

@@ -1,5 +1,11 @@
 ItechService::Application.routes.draw do
 
+  get "karmas/new"
+
+  get "karmas/edit"
+
+  get "karmas/destroy"
+
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -21,6 +27,7 @@ ItechService::Application.routes.draw do
     get :add_to_job_schedule, on: :member
     get :staff_duty_schedule, on: :collection
   end
+  resources :karmas, except: [:index, :show]
   match 'profile' => 'users#profile', via: :get
   match 'users/:id/update_wish' => 'users#update_wish', via: [:post, :put], as: 'update_wish_user'
 

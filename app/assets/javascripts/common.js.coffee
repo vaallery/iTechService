@@ -44,6 +44,11 @@ jQuery ->
   $('#lock_session').click (event)->
     $('#card_sign_in').show().addClass('in')
 
+  $(document).on 'click', '.close_popover_button', (event)->
+    $popover = $(this).parents('.popover')
+    $popover.prev().popover('hide')
+    false
+
 add_fields = (target, association, content) ->
   new_id = new Date().getTime()
   regexp = new RegExp "new_" + association, "g"

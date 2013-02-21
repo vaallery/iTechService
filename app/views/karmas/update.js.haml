@@ -1,0 +1,4 @@
+:plain
+  close_karma_popovers();
+  $("#user_karma_#{@karma.id}").replaceWith("#{j(render(@karma))}");
+  $("#user_karma_#{@karma.id}").tooltip({title: "#{@karma.comment}"});

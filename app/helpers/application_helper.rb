@@ -210,4 +210,8 @@ module ApplicationHelper
     clear_return_to
   end
 
+  def button_to_close_popover
+    link_to "&times;".html_safe, '#', class: 'close_popover_button'
+  end
+
 end
