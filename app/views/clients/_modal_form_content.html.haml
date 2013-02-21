@@ -1,10 +1,10 @@
-= simple_form_for @client, html: { class: 'form-horizontal', remote: true } do |f|
+= simple_form_for @client, html: { id: 'client_form', class: 'form-horizontal', remote: true } do |f|
   .modal-header
-    %a.close{'data-dismiss' => 'modal', href: '#'}
+    %a.close#close_client_form_button{href: '#'}
       %i.icon-remove-sign
     %h3= auto_title
 
-  .modal-body
+  .form-body
     = f.input :name, autofocus: true
     = f.input :surname
     = f.input :patronymic

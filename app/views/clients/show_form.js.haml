@@ -1,0 +1,5 @@
+:plain
+  $form_place = $("#client_form_place");
+  $form_place.html("#{j(render('modal_form_content'))}");
+  $form_place.css({top: $('#client_input').offset().top,
+    left: $('#client_input').offset().left + $('#client_input').outerWidth() + 20}).fadeIn();

@@ -54,6 +54,11 @@ jQuery ->
 
     placeClientDevices()
 
+  $(document).on 'click', '#close_client_form_button', (event)->
+    event.preventDefault()
+    $('#client_form_place').fadeOut()
+    $('#client_form').remove()
+
 placeClientDevices = ()->
   $devices = $('#client_devices')
   $input = $('#client_input')

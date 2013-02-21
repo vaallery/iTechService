@@ -6,7 +6,6 @@
     = f.input :client_id, as: :client, wrapper_html: {id: 'client_fields'}
   - else
     = f.input :client, as: :string, disabled: true, input_html: {class: 'input-xlarge'}
-
   - if can? :update, @device
     = f.input :device_type_id, as: :device_type
   - else
@@ -38,3 +37,5 @@
 
   .form-actions
     = submit_button f
+
+#client_form_place.well.well-small

@@ -29,7 +29,7 @@ class ClientsController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @client }
-      format.js { render 'shared/show_modal_form' }
+      format.js { render 'show_form' }
     end
   end
 
@@ -38,7 +38,7 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'shared/show_modal_form' }
+      format.js { render 'show_form' }
     end
   end
 
@@ -52,7 +52,7 @@ class ClientsController < ApplicationController
         format.json { render json: @client, status: :created, location: @client }
       else
         format.html { render action: "new" }
-        format.js { render 'shared/show_modal_form' }
+        format.js { render 'show_form' }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
@@ -68,7 +68,7 @@ class ClientsController < ApplicationController
         format.js { render 'saved' }
       else
         format.html { render action: "edit" }
-        format.js { render 'shared/show_modal_form' }
+        format.js { render 'show_form' }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
     end
