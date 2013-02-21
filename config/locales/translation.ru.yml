@@ -333,6 +333,7 @@ ru:
     add_task: Добавить задачу
     client_devices: Девайсы клиента
     created: Девайс создан
+    device_tasks_error: Слишком много однотипных задач
     enter_ticket_number: Укажите номер талона
     information: Информация о девайсе
     link: Девайсы

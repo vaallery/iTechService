@@ -11,8 +11,8 @@
     $('#device_replaced').attr('disabled', 'disabled');
   }
   if(#{@device.has_imei?}){
-    $('.imei_input').show();
+    $('.imei_input').removeClass('hidden');
   }else{
     $('#device_imei').val('');
-    $('.imei_input').hide();
+    $('.imei_input').addClass('hidden')();
   }

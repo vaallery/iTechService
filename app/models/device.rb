@@ -12,7 +12,6 @@ class Device < ActiveRecord::Base
   attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type, :device_type_id, :status,
                   :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code
   accepts_nested_attributes_for :device_tasks
-  #attr_accessible :created_at, :updated_at, :done_at
 
   validates :ticket_number, :client_id, :device_type_id, :location_id, presence: true
   validates :device_tasks, presence: true
@@ -21,10 +20,11 @@ class Device < ActiveRecord::Base
   validates_associated :device_tasks
   
   before_validation :generate_ticket_number
-  before_validation :check_device_type
-  before_validation :check_security_code
+  before_validation :validate_device_type
+  before_validation :validate_security_code
   before_validation :set_user_and_location
   before_validation :validate_location
+  before_validation :validate_device_tasks
 
   after_save :update_qty_replaced
   after_update :device_update_announce
@@ -204,7 +204,7 @@ class Device < ActiveRecord::Base
     end
   end
 
-  def check_device_type
+  def validate_device_type
     self.device_type_id = DeviceType.find_or_create_by_name(type_name).id
   end
 
@@ -215,7 +215,7 @@ class Device < ActiveRecord::Base
     end
   end
 
-  def check_security_code
+  def validate_security_code
     if is_iphone? and security_code.blank?
       errors.add :security_code, I18n.t('.errors.messages.empty')
     end
@@ -252,6 +252,17 @@ class Device < ActiveRecord::Base
 
   def device_update_announce
     PrivatePub.publish_to '/devices/new', device: self unless changed_attributes[:location_id].present?
+  end
+
+  def validate_device_tasks
+    roles = []
+    device_tasks.each do |dt|
+      if roles.include? dt.role
+        self.errors.add(:device_tasks, I18n.t('devices.device_tasks_error'))
+      else
+        roles << dt.role
+      end
+    end
   end
 
 end

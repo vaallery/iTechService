@@ -9,10 +9,10 @@
     if(#{@device_type.available_for_replacement} > 0)
       $('#device_replaced').removeAttr('disabled');
     if(#{@device_type.has_imei?}){
-      $('.imei_input').show();
+      $('.imei_input').removeClass('hidden');
     }else{
       $('#device_imei').val('');
-      $('.imei_input').hide();
+      $('.imei_input').addClass('hidden');
     }
   }
   $('#device_type_name').text("#{@device_type.full_name}");
