@@ -47,7 +47,6 @@ class DevicesController < ApplicationController
 
   def new
     @device = Device.new(params[:device])
-    #@device.location = current_user.location
 
     respond_to do |format|
       format.html
@@ -65,7 +64,6 @@ class DevicesController < ApplicationController
   end
 
   def create
-    #params[:device].merge! user_id: current_user.id
     @device = Device.new(params[:device])
 
     respond_to do |format|

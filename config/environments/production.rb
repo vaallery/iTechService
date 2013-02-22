@@ -73,25 +73,25 @@ ItechService::Application.configure do
   
   # config.action_mailer.default_url_options = { host: '' }
 
-  #ActionMailer::Base.default from: "noreply@itechstore.ru"
-  #config.action_mailer.default_url_options = { host: 'itechservice.herokuapp.com' }
-  #config.action_mailer.delivery_method = :smtp
-  #config.action_mailer.raise_delivery_errors = false
-  #config.action_mailer.smtp_settings = {
-  #    :address              => "smtp.gmail.com",
-  #    :port                 => 587,
-  #    :domain               => "itechdevs.com",
-  #    :user_name            => "kvn@itechdevs.com",
-  #    :password             => "kvn3163115",
-  #    :authentication       => "plain",
-  #    :enable_starttls_auto => true
-  #}
+  ActionMailer::Base.default from: "noreply@itechstore.ru"
+  config.action_mailer.default_url_options = { host: '5.100.75.201:3000' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+      :address              => "smtp.yandex.ru",
+      :port                 => 25,
+      :domain               => "itechstore.ru",
+      :user_name            => "noreply@itechstore.ru",
+      :password             => "GpCp3k7N",
+      :authentication       => "plain",
+      :enable_starttls_auto => true
+  }
 
-  #config.action_mailer.perform_deliveries = true
+  config.action_mailer.perform_deliveries = true
 
-  #config.middleware.use ExceptionNotifier,
-  #                      email_prefix: "[!!! Exception] ",
-  #                      sender_address: %{"iTechService" <kvn@itechdevs.com>},
-  #                      exception_recipients: %w{kvn@itechdevs.com}
+  config.middleware.use ExceptionNotifier,
+                        email_prefix: "[!!! Exception iTechService] ",
+                        sender_address: %{"iTechService" <noreply@itechstore.ru>},
+                        exception_recipients: %w{kvn@itechdevs.com}
 
 end
