@@ -13,7 +13,7 @@ class DeviceTask < ActiveRecord::Base
                                                                 tasks: {role: user.role}) }
   
   #after_initialize {|dt| dt.cost ||= task_cost; dt.done ||= false}
-  
+
   before_save do |dt|
     dt.done = false if dt.done.nil?
     old_done = changed_attributes['done']

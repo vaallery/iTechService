@@ -176,6 +176,7 @@ ru:
         cost: Стоимость
         devices: Девайсы
         duration: Длительность
+        location: Локация
         name: Название
         priority: Приоритет
         role: Роль
@@ -406,8 +407,8 @@ ru:
     created: Заказ создан
     updated: Заказ изменён
     order_num: "Заказ №%{num}"
-
     not_found: "Заказ не найден"
+
   prices:
     created: Прайс создан
     updated: Прайс изменён
@@ -418,6 +419,14 @@ ru:
     index:
       title: Прайсы
     link: Прайсы
+
+  roles:
+    admin: Админ
+    marketing: Маркетолог
+    media: Медийщик
+    programmer: Прогер
+    software: Софтер
+    technician: Технарь
 
   stolen_phones:
     created: Телефон создан

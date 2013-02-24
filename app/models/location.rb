@@ -1,8 +1,9 @@
 # encoding: utf-8
 class Location < ActiveRecord::Base
 
-  has_many :users
   has_ancestry
+  has_many :users
+  has_many :tasks
   attr_accessible :name, :ancestry, :parent_id, :schedule
   default_scope order('ancestry asc')
   scope :for_schedule, where(schedule: true)

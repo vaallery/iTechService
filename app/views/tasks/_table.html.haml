@@ -8,9 +8,10 @@
         %th= Task.human_attribute_name(:id)
         %th= Task.human_attribute_name(:name)
         %th= Task.human_attribute_name(:role)
-        %th= Task.human_attribute_name(:priority)
+        -#%th= Task.human_attribute_name :location
+        -#%th= Task.human_attribute_name(:priority)
         %th= Task.human_attribute_name(:cost)
-        %th= Task.human_attribute_name(:duration)
+        -#%th= Task.human_attribute_name(:duration)
         %th= Task.human_attribute_name(:created_at)
         %th
     %tbody
@@ -19,9 +20,10 @@
           %td= task.id
           %td= task.name
           %td= task.role
-          %td= task.priority
+          -#%td= task.location_name
+          -#%td= task.priority
           %td= task.cost
-          %td= task.duration
+          -#%td= task.duration
           %td=l task.created_at, format: :long_d
           %td.btn-group
             = link_to_edit_small task

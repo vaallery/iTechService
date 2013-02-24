@@ -29,4 +29,8 @@ class Task < ActiveRecord::Base
     User.where role: role
   end
 
+  def location_name
+    location.try(:full_name) || '-'
+  end
+
 end
