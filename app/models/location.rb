@@ -24,6 +24,10 @@ class Location < ActiveRecord::Base
     Location.find_by_name 'Архив'
   end
 
+  def self.archive_id
+    Location.find_by_name('Архив').try :id
+  end
+
   def self.repair
     Location.find_by_name 'Ремонт'
   end

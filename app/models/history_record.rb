@@ -6,7 +6,7 @@ class HistoryRecord < ActiveRecord::Base
   
   default_scope order('created_at desc')
   scope :devices, where(object_type: 'Device')
-  scope :movements_to_archive, where(column_name: 'location_id', new_value: Location.archive.id.to_s)
+  scope :movements_to_archive, where(column_name: 'location_id', new_value: Location.archive_id.to_s)
   scope :in_period, lambda {|period| where(created_at: period)}
   
 end
