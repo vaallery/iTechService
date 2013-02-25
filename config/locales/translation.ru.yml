@@ -228,6 +228,7 @@ ru:
     name: Название
     updated_at: Время обновления
     user: Пользователь
+    user_comment: Комментарий сотрудника
 
   dashboard:
     actual_orders: Текущие заказы
