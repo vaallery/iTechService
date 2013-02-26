@@ -1,0 +1,15 @@
+---
+chdir: /Applications/rubystack/projects/itech_service
+environment: production
+address: 127.0.0.1
+port: 3001
+timeout: 30
+log: log/thin.log
+pid: tmp/pids/thin.pid
+max_conns: 1024
+max_persistent_conns: 100
+require: []
+wait: 30
+servers: 5
+prefix: /
+daemonize: true

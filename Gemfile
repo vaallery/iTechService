@@ -22,6 +22,7 @@ gem 'private_pub', '~> 1.0.3'
 gem 'twitter-bootstrap-rails', '~> 2.2.0'#, :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'seed_dumper', '~> 0.1.3'
 gem 'json', '1.7.7'
+gem 'taps'
 
 # Gems used only for assets and not required
 # in production environments by default.
