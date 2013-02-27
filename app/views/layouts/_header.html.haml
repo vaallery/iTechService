@@ -4,6 +4,7 @@
       .container-fluid
         = link_to "iTech Service", root_path, class: 'brand'
         %ul.nav
+          %li{class: nav_state_for('wiki_pages')}= link_to t("wiki.link"), wiki_all_path if can? :read, WikiPage
           %li{class: nav_state_for('devices')}= link_to t('devices.link', default: 'Devices'), devices_path
           %li{class: nav_state_for('clients')}= link_to t('clients.link', default: 'Clients'), clients_path
           %li{class: nav_state_for('device_types')}= link_to t('device_types.link', default: 'Device types'), device_types_path if can? :manage, DeviceType
