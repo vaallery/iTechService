@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :devices, inverse_of: :user
   has_many :karmas, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
   
@@ -83,6 +84,10 @@ class User < ActiveRecord::Base
 
   def programmer?
     has_role? 'programmer'
+  end
+
+  def supervisor?
+    has_role? 'supervisor'
   end
   
   def has_role? role

@@ -76,6 +76,8 @@ ItechService::Application.routes.draw do
 
   resources :comments
 
+  resources :messages, except: [:show, :new, :edit, :update]
+
   wiki_root '/wiki'
 
 end

@@ -1,0 +1,4 @@
+- is_my = message.user_id == current_user.id
+%div[message]{class: (is_my ? 'my' : '')}
+  %small{style: "color: #{message.user.color}"}= "#{message.user.short_name} [#{l(message.created_at, format: :long_d)}]"
+  %p= message.content

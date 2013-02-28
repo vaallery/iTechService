@@ -295,8 +295,6 @@ ru:
 
 
   clients:
-    created: Клиент создан
-    updated: Клиент изменён
     edit:
       title: Редактирование клиента
     new:
@@ -304,11 +302,20 @@ ru:
     index:
       title: 'Клиенты'
       search_placeholder: Телефон или имя
-    link: Клиенты
-    questionnaire: Анкета
-
     show:
       date: "Дата"
+    created: Клиент создан
+    link: Клиенты
+    questionnaire: Анкета
+    updated: Клиент изменён
+
+  chat:
+    all: Все сообщения
+    created: Сообщение создано
+    message: Сообщение
+    send: Отправить
+    title: Чат
+
   comments:
     edit:
       title: Редактирование комментария
@@ -427,6 +434,7 @@ ru:
     media: Медийщик
     programmer: Прогер
     software: Софтер
+    supervisor: Супервайзер
     technician: Технарь
 
   stolen_phones:
@@ -499,6 +507,7 @@ ru:
     title: Заголовок
     version: Версия
 
+  app_name: Айс
   back: Назад
   black_list: "Чёрный список"
   client_input_placeholder: 'Имя / телефон / карта'

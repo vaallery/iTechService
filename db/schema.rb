@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130226122321) do
+ActiveRecord::Schema.define(:version => 20130228061721) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -194,6 +194,18 @@ ActiveRecord::Schema.define(:version => 20130226122321) do
   add_index "locations", ["ancestry"], :name => "index_locations_on_ancestry"
   add_index "locations", ["name"], :name => "index_locations_on_name"
   add_index "locations", ["schedule"], :name => "index_locations_on_schedule"
+
+  create_table "messages", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "content"
+    t.integer  "recipient_id"
+    t.string   "recipient_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "messages", ["recipient_id"], :name => "index_messages_on_recipient_id"
+  add_index "messages", ["user_id"], :name => "index_messages_on_user_id"
 
   create_table "orders", :force => true do |t|
     t.string   "number"
