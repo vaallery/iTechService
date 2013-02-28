@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130218085652) do
+ActiveRecord::Schema.define(:version => 20130228061721) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -80,12 +80,13 @@ ActiveRecord::Schema.define(:version => 20130218085652) do
   create_table "device_tasks", :force => true do |t|
     t.integer  "device_id"
     t.integer  "task_id"
-    t.boolean  "done",       :default => false
+    t.boolean  "done",         :default => false
     t.text     "comment"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.decimal  "cost"
     t.datetime "done_at"
+    t.text     "user_comment"
   end
 
   add_index "device_tasks", ["device_id"], :name => "index_device_tasks_on_device_id"
@@ -194,6 +195,18 @@ ActiveRecord::Schema.define(:version => 20130218085652) do
   add_index "locations", ["name"], :name => "index_locations_on_name"
   add_index "locations", ["schedule"], :name => "index_locations_on_schedule"
 
+  create_table "messages", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "content"
+    t.integer  "recipient_id"
+    t.string   "recipient_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "messages", ["recipient_id"], :name => "index_messages_on_recipient_id"
+  add_index "messages", ["user_id"], :name => "index_messages_on_user_id"
+
   create_table "orders", :force => true do |t|
     t.string   "number"
     t.integer  "customer_id"
@@ -292,5 +305,32 @@ ActiveRecord::Schema.define(:version => 20130218085652) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["surname"], :name => "index_users_on_surname"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+
+  create_table "wiki_page_versions", :force => true do |t|
+    t.integer  "page_id",    :null => false
+    t.integer  "updator_id"
+    t.integer  "number"
+    t.string   "comment"
+    t.string   "path"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "updated_at"
+  end
+
+  add_index "wiki_page_versions", ["page_id"], :name => "index_wiki_page_versions_on_page_id"
+  add_index "wiki_page_versions", ["updator_id"], :name => "index_wiki_page_versions_on_updator_id"
+
+  create_table "wiki_pages", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "updator_id"
+    t.string   "path"
+    t.string   "title"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "wiki_pages", ["creator_id"], :name => "index_wiki_pages_on_creator_id"
+  add_index "wiki_pages", ["path"], :name => "index_wiki_pages_on_path", :unique => true
 
 end

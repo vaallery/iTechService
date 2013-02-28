@@ -28,7 +28,7 @@ class DevicesController < ApplicationController
     @device = Device.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # show.html.haml
       format.json { render json: @device }
       format.pdf do
         if (@device.user_id == current_user.id) or current_user.admin?

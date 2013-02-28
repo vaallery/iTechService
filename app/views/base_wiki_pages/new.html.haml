@@ -1,0 +1,21 @@
+= wiki_page_style
+
+.page-header
+  %h1= wt 'new_title'
+
+= wiki_page_form do |f|
+  = f.hidden_field :previous_version_number, value: f.object.last_version_number
+  
+  %p
+    = wt('title')+':'
+    %br
+    = f.text_field :title
+  %p
+    = wt('content')+':'
+    %br
+    = f.text_area :content
+  = f.hidden_field :comment, value: 'First Revision'
+  = hidden_field_tag :path, @page.path
+
+  .form-actions
+    = submit_tag wt('create'), class: 'submit btn btn-primary'

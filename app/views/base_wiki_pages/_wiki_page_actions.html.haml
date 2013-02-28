@@ -1,0 +1,5 @@
+.wiki_page_actions.btn-group
+  = link_to wt('history'), wiki_page_history_path(@page), class: 'btn btn-info' if history_allowed?
+  = link_to wt('edit'), wiki_page_edit_path(@page), class: 'btn' if edit_allowed?
+  = link_to wt('destroy'), wiki_page_path(@page), method: :delete, class: 'btn btn-danger',
+    data: {confirm: wt("destroy_confirmation")} if destroy_allowed?

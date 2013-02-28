@@ -1,0 +1,13 @@
+= wiki_page_style
+
+.page-header
+  %h1
+    = wt 'all_pages'
+    -#%br
+    -#= link_to icon_tag('file-alt') + t('wiki.new_page'), new_wiki_page_path, class: 'btn btn-success btn-large'
+
+%h4
+  %ul.unstyled
+    - wiki_paginate @pages do
+      - @pages.each do |page|
+        %li= link_to page.title, wiki_page_path( page )

@@ -1,0 +1,9 @@
+.page-header
+  = form_tag messages_path, method: :post, remote: true, id: 'message_form' do
+    .input-append
+      = text_field_tag 'message[content]', nil, class: 'span5', placeholder: t('chat.message'), autofocus: true
+      = submit_tag t('chat.send'), class: 'btn btn-primary'
+
+#messages.span6= render @messages
+
+.row-fluid.span12= link_to t('chat.all'), messages_path(range: 'all')

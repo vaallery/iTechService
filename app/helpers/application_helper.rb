@@ -19,7 +19,7 @@ module ApplicationHelper
   end
 
   def link_back_to_index
-    link_to icon_tag('chevron-left'), url_for(action: 'index', controller: controller_name), style: "text-decoration:none;"
+    link_to icon_tag('chevron-left'), url_for(action: 'index', controller: controller_name), class: "link_back"
   end
 
   def sortable(column, title = nil)

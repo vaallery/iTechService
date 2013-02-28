@@ -75,4 +75,9 @@ ItechService::Application.routes.draw do
   match 'cancel_announce' => 'announcements#cancel_announce', via: :post
 
   resources :comments
+
+  resources :messages, except: [:show, :new, :edit, :update]
+
+  wiki_root '/wiki'
+
 end

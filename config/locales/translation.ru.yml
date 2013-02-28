@@ -295,8 +295,6 @@ ru:
 
 
   clients:
-    created: Клиент создан
-    updated: Клиент изменён
     edit:
       title: Редактирование клиента
     new:
@@ -304,11 +302,20 @@ ru:
     index:
       title: 'Клиенты'
       search_placeholder: Телефон или имя
-    link: Клиенты
-    questionnaire: Анкета
-
     show:
       date: "Дата"
+    created: Клиент создан
+    link: Клиенты
+    questionnaire: Анкета
+    updated: Клиент изменён
+
+  chat:
+    all: Все сообщения
+    created: Сообщение создано
+    message: Сообщение
+    send: Отправить
+    title: Чат
+
   comments:
     edit:
       title: Редактирование комментария
@@ -427,6 +434,7 @@ ru:
     media: Медийщик
     programmer: Прогер
     software: Софтер
+    supervisor: Супервайзер
     technician: Технарь
 
   stolen_phones:
@@ -460,14 +468,46 @@ ru:
       title: Новый пользователь
     account: Учётка
     add_karma: Карма
+    author: Автор
+    comment: Комментарий
     created: Пользователь создан
+    date: Дата
     duty_schedule: График дежурств
     info: Информация
     job_schedule: График работы
     link: Пользователи
     schedule: График
     updated: Пользователь изменён
+    version: Версия
 
+  wiki:
+    all_pages: Wiki
+    cancel: Отмена
+    author: Автор
+    change_list: Список изменений
+    сhanges_in_content: Изменения в содержании
+    comment: Комментарий
+    сomment_on_change: 'Комментарий к изменениям (не обязательно)'
+    compare: Сравнить выбранные версии
+    content: Содержание
+    create: Создать страницу
+    date: Дата
+    destroy: Удалить
+    destroy_confirmation: Удалённая страница не может быть восстановлена. Вы уверены?
+    edit: Редактировать
+    edit_title: Редактирование страницы
+    history: История
+    link: Wiki
+    new_page: Новая страница
+    new_title: Создание новой страницы
+    no_page: Такой страницы не существует
+    not_allowed: Вам не разрешено быть здесь.
+    preview: Предпросмотр
+    save_page: Сохранить страницу
+    title: Заголовок
+    version: Версия
+
+  app_name: Айс
   back: Назад
   black_list: "Чёрный список"
   client_input_placeholder: 'Имя / телефон / карта'

@@ -26,6 +26,13 @@ Ability
         can :modify, Client
         cannot :modify, Device
       end
+      if user.supervisor?
+        can :read, :all
+        cannot :update, Device
+        cannot :make_announce, Announcement
+        cannot :create, Order
+        cannot [:modify, :destroy], Comment
+      end
       can :make_announce, Announcement
       can :cancel_announce, Announcement, user_id: user.id
       can :update, Announcement, user_id: user.id
@@ -35,13 +42,15 @@ Ability
       #can :select, Client
       can :create, Order
       can :destroy, Order, user_id: user.id
-      can :read, Info
+      #can :read, Info
       can :update, Device#, location_id: user.location_id
       can :profile, User, id: user.id
       can :update_wish, User, id: user.id
       can :duty_calendar, User, id: user.id
       can :update, DeviceTask, task: {role: user.role}#, device: {location_id: user.location_id}#, done: false
-      can :modify, Comment
+      can :create, Comment
+      can :update, Comment, user_id: user.id
+      can :create, Message
       can :read, :all
       cannot [:create, :update, :destroy], StolenPhone
     end
