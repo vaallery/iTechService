@@ -1,9 +1,7 @@
 = wiki_page_style
 
 .page-header
-  %h1
-    = link_to icon_tag('chevron-left'), wiki_all_path, class: 'link_back'
-    = wt 'new_title'
+  %h1= wt 'new_title'
 
 = wiki_page_form do |f|
   = f.hidden_field :previous_version_number, value: f.object.last_version_number
@@ -19,4 +17,5 @@
   = f.hidden_field :comment, value: 'First Revision'
   = hidden_field_tag :path, @page.path
 
-  = submit_tag wt('create'), class: 'submit btn btn-primary'
+  .form-actions
+    = submit_tag wt('create'), class: 'submit btn btn-primary'

@@ -32,9 +32,9 @@
     %br
     = f.text_field :comment
 
-
-  %input{type: :submit, name: "cancel", value: wt('cancel'), class: "submit btn"}
-  %input{type: :submit, name: "preview", value: wt('preview'), class: "submit btn btn-info"}
-  %input{type: :submit, name: "save", value: wt('save_page'), class: "submit btn btn-primary"}
+  .form-actions
+    %input{type: :submit, name: "cancel", value: wt('cancel'), class: "submit btn"}
+    %input{type: :submit, name: "preview", value: wt('preview'), class: "submit btn btn-info"}
+    %input{type: :submit, name: "save", value: wt('save_page'), class: "submit btn btn-primary"}
 
 = wiki_page_attachments @page
