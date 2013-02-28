@@ -1,0 +1,1 @@
+thin -C /Applications/rubystack/projects/itech_service/config/private_pub_thin.yml restart
