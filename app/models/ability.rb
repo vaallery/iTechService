@@ -28,7 +28,6 @@ Ability
       end
       if user.supervisor?
         can :read, :all
-        can :manage, WikiPage
         cannot :update, Device
         cannot :make_announce, Announcement
         cannot :create, Order
