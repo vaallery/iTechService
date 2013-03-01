@@ -58,7 +58,7 @@ class DeviceTask < ActiveRecord::Base
   end
 
   def role
-    task.role
+    task.try :role
   end
 
   def is_actual_for? user
