@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130228061721) do
+ActiveRecord::Schema.define(:version => 20130302053556) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -257,12 +257,14 @@ ActiveRecord::Schema.define(:version => 20130228061721) do
     t.string   "name"
     t.integer  "duration"
     t.decimal  "cost"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-    t.integer  "priority",   :default => 0
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "priority",    :default => 0
     t.string   "role"
+    t.integer  "location_id"
   end
 
+  add_index "tasks", ["location_id"], :name => "index_tasks_on_location_id"
   add_index "tasks", ["name"], :name => "index_tasks_on_name"
   add_index "tasks", ["role"], :name => "index_tasks_on_role"
 

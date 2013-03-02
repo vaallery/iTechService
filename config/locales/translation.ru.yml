@@ -177,6 +177,7 @@ ru:
         devices: Девайсы
         duration: Длительность
         location: Локация
+        location_id: :activerecord.attributes.task.location
         name: Название
         priority: Приоритет
         role: Роль
@@ -246,6 +247,7 @@ ru:
     reports: Отчёты
 
   reports:
+    average_duration: Средняя длительность, мин.
     clients_count: Количество клиентов
     includes: Из них
     period: Период
