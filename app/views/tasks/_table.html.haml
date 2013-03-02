@@ -19,7 +19,7 @@
         %tr
           %td= task.id
           %td= task.name
-          %td= task.role
+          %td= t "users.roles.#{task.role}"
           %td= task.location_name
           -#%td= task.priority
           %td= task.cost

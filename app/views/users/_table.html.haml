@@ -18,7 +18,7 @@
           %td= link_to user.id, user_path(user)
           %td= link_to user.username, user_path(user)
           %td= link_to user.short_name, user_path(user)
-          %td= user.role
+          %td= t "users.roles.#{user.role}"
           %td= user.location.try :full_name
           %td=l user.created_at, format: :long_d
           %td.btn-group

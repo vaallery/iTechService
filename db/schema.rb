@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130302053556) do
+ActiveRecord::Schema.define(:version => 20130302100102) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -296,6 +296,7 @@ ActiveRecord::Schema.define(:version => 20130302053556) do
     t.text     "wish"
     t.string   "card_number"
     t.string   "color"
+    t.integer  "abilities_mask"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

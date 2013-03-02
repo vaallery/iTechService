@@ -66,7 +66,17 @@
 
     #account_tab.tab-pane
       = f.input :username
-      = f.input :role, collection: Role::ROLES, value_method: :to_s, label_method: :humanize
+      = f.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
+
+      .control-group
+        %label.control-label= User.human_attribute_name :abilities
+        .controls
+          - User::ABILITIES.each do |ability|
+            = label_tag "user_abilities_#{ability}", class: 'checkbox' do
+              = check_box_tag "user[abilities][#{ability}]", ability, @user.able?(ability), {name: "user[abilities][]"}
+              = t("users.abilities.#{ability}")
+          = hidden_field_tag 'user[abilities][]', ''
+
       = f.association :location, label_method: :full_name
       = f.input :password
       = f.input :password_confirmation
