@@ -16,8 +16,4 @@ class WikiPagesController < ApplicationController
     can? :manage, WikiPage
   end
 
-  #def current_user
-  #  current_user
-  #end
-
 end

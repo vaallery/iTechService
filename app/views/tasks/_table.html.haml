@@ -8,7 +8,7 @@
         %th= Task.human_attribute_name(:id)
         %th= Task.human_attribute_name(:name)
         %th= Task.human_attribute_name(:role)
-        -#%th= Task.human_attribute_name :location
+        %th= Task.human_attribute_name :location
         -#%th= Task.human_attribute_name(:priority)
         %th= Task.human_attribute_name(:cost)
         -#%th= Task.human_attribute_name(:duration)
@@ -19,8 +19,8 @@
         %tr
           %td= task.id
           %td= task.name
-          %td= task.role
-          -#%td= task.location_name
+          %td= t "users.roles.#{task.role}"
+          %td= task.location_name
           -#%td= task.priority
           %td= task.cost
           -#%td= task.duration

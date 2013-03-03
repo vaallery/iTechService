@@ -177,11 +177,13 @@ ru:
         devices: Девайсы
         duration: Длительность
         location: Локация
+        location_id: :activerecord.attributes.task.location
         name: Название
         priority: Приоритет
         role: Роль
 
       user:
+        abilities: Возможности
         announcements: Оповещение
         authentication_token: authentication_token  #g
         birthday: День рождения
@@ -246,6 +248,7 @@ ru:
     reports: Отчёты
 
   reports:
+    average_duration: Средняя длительность, мин.
     clients_count: Количество клиентов
     includes: Из них
     period: Период
@@ -428,15 +431,6 @@ ru:
       title: Прайсы
     link: Прайсы
 
-  roles:
-    admin: Админ
-    marketing: Маркетолог
-    media: Медийщик
-    programmer: Прогер
-    software: Софтер
-    supervisor: Супервайзер
-    technician: Технарь
-
   stolen_phones:
     created: Телефон создан
     updated: Телефон изменён
@@ -460,12 +454,22 @@ ru:
     link: Задачи
 
   users:
+    abilities:
+      manage_wiki: Редактировать Wiki
     index:
       title: Пользователи
     edit:
       title: Редактирование пользователя
     new:
       title: Новый пользователь
+    roles:
+      admin: Админ
+      marketing: Маркетолог
+      media: Медийщик
+      programmer: Прогер
+      software: Софтер
+      supervisor: Супервайзер
+      technician: Технарь
     account: Учётка
     add_karma: Карма
     author: Автор

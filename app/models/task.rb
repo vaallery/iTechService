@@ -1,7 +1,8 @@
 class Task < ActiveRecord::Base
   has_many :device_tasks, dependent: :destroy
   has_many :devices, through: :device_tasks
-  attr_accessible :cost, :duration, :name, :priority, :role
+  belongs_to :location
+  attr_accessible :cost, :duration, :name, :priority, :role, :location_id
   validates :name, presence: true
   
   IMPORTANCE_BOUND = 5

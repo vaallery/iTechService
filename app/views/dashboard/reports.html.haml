@@ -94,3 +94,14 @@
       %tr
         %td= @report[:clients_count]
         %td= @report[:new_clients_count]
+
+  %table#tasks_durations_report.table.table-bordered.table-hover
+    %thead
+      %tr
+        %th= t 'activerecord.models.task'
+        %th= t 'reports.average_duration'
+    %tbody
+      - @report[:tasks_durations].each do |task_duration|
+        %tr
+          %td= task_duration[:task]
+          %td= task_duration[:duration]

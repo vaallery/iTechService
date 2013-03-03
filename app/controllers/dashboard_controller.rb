@@ -75,6 +75,7 @@ class DashboardController < ApplicationController
     make_report_by_users
     make_report_by_tasks
     make_report_by_clients
+    make_report_by_tasks_durations
   end
 
   def check_session_status
@@ -161,9 +162,28 @@ class DashboardController < ApplicationController
     @report[:new_clients_count] = Client.where(created_at: @period).count
   end
 
-  def make_report_by_tasks_duration
-    @report[:tasks_duration] = []
-
+  def make_report_by_tasks_durations
+    @report[:tasks_durations] = []
+    #device_tasks = []
+    Task.find_each do |task|
+      task_durations = []
+      HistoryRecord.devices.movements_to(task.location_id).in_period(@period).each do |hr|
+        moved_at = hr.created_at
+        durations = []
+        hr.object.device_tasks.done.where(task_id: task.id).each do |dt|
+          done_at = dt.done_at
+          dt_duration = done_at - moved_at
+          durations << dt_duration.to_i/60
+          #device_tasks << {id: dt.id, task_id: task.id, moved_at: moved_at, done_at: done_at, duration: dt_duration}
+        end
+        unless durations.empty?
+          task_durations << (durations.sum/durations.size)
+        end
+      end
+      unless task_durations.empty?
+        @report[:tasks_durations] << {task: task.name, duration: task_durations.sum/task_durations.size}
+      end
+    end
   end
 
 end

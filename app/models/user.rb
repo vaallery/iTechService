@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
 
+  ROLES = %w[admin software media technician marketing programmer supervisor]
+  HELPABLE = %w[software media technician]
+  ABILITIES = %w[manage_wiki]
+
   belongs_to :location
   has_many :history_records, as: :object
   has_many :schedule_days, dependent: :destroy
@@ -23,7 +27,7 @@ class User < ActiveRecord::Base
   attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id,
                   :surname, :name, :patronymic, :birthday, :hiring_date, :salary_date, :prepayment, :wish,
                   :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes,
-                  :card_number, :color, :karmas_attributes
+                  :card_number, :color, :karmas_attributes, :abilities
 
   attr_accessor :login
 
@@ -168,7 +172,7 @@ class User < ActiveRecord::Base
   end
 
   def helpable?
-    Role::HELPABLE.include? role
+    User::HELPABLE.include? role
   end
 
   def color_s
@@ -184,9 +188,21 @@ class User < ActiveRecord::Base
     announcements.find_or_create_by_kind(kind: 'birthday', active: false)
   end
 
-  #def timeout_in
-  #  10.seconds
-  #end
+  def timeout_in
+    Rails.env.production? ? 1.minute : 1.day
+  end
+
+  def abilities=(abilities)
+    self.abilities_mask = (abilities & ABILITIES).map { |a| 2**ABILITIES.index(a) }.inject(0, :+)
+  end
+
+  def abilities
+    ABILITIES.reject { |a| ((abilities_mask || 0) & 2**ABILITIES.index(a)).zero? }
+  end
+
+  def able?(ability)
+    abilities.include? ability.to_s
+  end
 
   private
   

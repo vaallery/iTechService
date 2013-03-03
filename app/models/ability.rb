@@ -33,6 +33,7 @@ Ability
         cannot :create, Order
         cannot [:modify, :destroy], Comment
       end
+      can :manage, WikiPage if user.able? :manage_wiki
       can :make_announce, Announcement
       can :cancel_announce, Announcement, user_id: user.id
       can :update, Announcement, user_id: user.id
