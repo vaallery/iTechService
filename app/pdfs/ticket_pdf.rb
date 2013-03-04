@@ -40,7 +40,7 @@ class TicketPdf < Prawn::Document
     text @device.tasks.map{|t|t.id}.join('-'), size: 10
     text @view.t('tickets.contact_phone')
     move_down 5
-    horizontal_line 0, 205#, at: y
+    horizontal_line 0, 205
     stroke
     move_down 5
     font_size 10 do
