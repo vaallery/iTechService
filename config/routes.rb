@@ -70,7 +70,7 @@ ItechService::Application.routes.draw do
 
   resources :comments
 
-  resources :messages, path: 'chat', except: [:show, :new, :edit, :update]
+  resources :messages, path: 'chat', except: [:new, :edit, :update]
 
   wiki_root '/wiki'
 

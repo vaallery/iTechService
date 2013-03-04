@@ -1,6 +1,4 @@
 == $('#message_content').val('');
 - publish_to '/chat/new' do
   :plain
-    $('#messages').prepend("#{j(render(@message))}");
-    if(!$('.nav_chat').hasClass('active') && $('.nav_chat i').length == 0)
-      $('.nav_chat>a').prepend("<i class='icon-envelope'></i> ");
+    $.getScript("#{message_path(@message)}");

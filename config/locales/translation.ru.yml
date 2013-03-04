@@ -521,6 +521,7 @@ ru:
   done: "Готово"
   edit: Редактировать
   everywhere: "Везде"
+  me: Я
   moved: "%{user} %{time} назад"
   moved_title: Переместил
   new: "Новый"
