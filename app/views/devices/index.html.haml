@@ -32,7 +32,7 @@
     %ul.nav
       %li.dropdown
         = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-          = t(params[:status] || 'all statuses')
+          = t (params[:status].present? ? params[:status] : 'all statuses')
           %b.caret
         %ul.dropdown-menu
           %li= link_to t('devices.status.all'), devices_path#, remote: true
