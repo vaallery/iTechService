@@ -1,0 +1,6 @@
+:plain
+  if($('#messages').length > 0)
+    $('#messages').prepend("#{j(render(@message))}")
+  else
+    if(!$('.nav_chat').hasClass('active') && $('.nav_chat i').length == 0)
+      $('.nav_chat>a').prepend("<i class='icon-envelope'></i> ");

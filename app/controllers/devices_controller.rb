@@ -28,14 +28,16 @@ class DevicesController < ApplicationController
     @device = Device.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.haml
+      format.html
       format.json { render json: @device }
       format.pdf do
         if (@device.user_id == current_user.id) or current_user.admin?
-          pdf = TicketPdf.new @device, view_context, params[:part]
-          #pdf = TicketPdfBig.new @device, view_context, params[:part]
-          user_ip = request.ip
-          system 'lpr', pdf.render_file(Rails.root.to_s+"/tmp/ticket_#{@device.ticket_number}.pdf").path if params[:print]
+          if params[:print]
+            pdf = TicketPdf.new @device, view_context
+            system 'lp', pdf.render_file(Rails.root.to_s+"/tmp/tickets/ticket_#{@device.ticket_number}.pdf").path
+          else
+            pdf = TicketPdf.new @device, view_context, params[:part]
+          end
           send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
                     type: 'application/pdf', disposition: 'inline'
         else

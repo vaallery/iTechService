@@ -7,7 +7,7 @@
 
   %span.help-block
     %small= timestamp_string_for @order
-  = link_to icon_tag(:print) + t('tickets.link'), order_path(@order, format: 'pdf'), class: 'btn btn-info', target: '_blank'
+  = link_to icon_tag(:print) + t('tickets.link'), order_path(@order, format: 'pdf'), class: 'btn btn-primary', target: '_blank'
 
 %dl.dl-horizontal
 

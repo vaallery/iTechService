@@ -14,6 +14,12 @@ class MessagesController < ApplicationController
     end
   end
 
+  def show
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def create
     @message = Message.new(params[:message])
 

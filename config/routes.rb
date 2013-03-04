@@ -1,11 +1,5 @@
 ItechService::Application.routes.draw do
 
-  get "karmas/new"
-
-  get "karmas/edit"
-
-  get "karmas/destroy"
-
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -76,7 +70,7 @@ ItechService::Application.routes.draw do
 
   resources :comments
 
-  resources :messages, except: [:show, :new, :edit, :update]
+  resources :messages, path: 'chat', except: [:new, :edit, :update]
 
   wiki_root '/wiki'
 

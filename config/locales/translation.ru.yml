@@ -262,22 +262,6 @@ ru:
     sum: Сумма
     total: Всего
 
-  tickets:
-    address1: 'г.Владивосток,'
-    address2: 'Океанский проспект, 90'
-    check_status: 'Вы можете проверить статус устройства по адресу: www.itechstore.ru/check.'
-    check_status_order: 'Вы можете проверить статус заказа по адресу: www.itechstore.ru/check.'
-    contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
-    email: 'e-mail: info@itechstore.ru'
-    link: Талон
-    notice: 'Сохраняйте этот талон до получения Вашего устройства.'
-    notice_order: 'Сохраняйте этот талон до получения Вашего заказа.'
-    operations_list: 'Список операций:'
-    schedule1: 'Пн-Пт: с 10 до 21'
-    schedule2: 'Сб: с 12 до 21'
-    schedule3: 'Вс - выходной'
-    site: 'www.itechstore.ru'
-
   announcements:
     edit:
       title: Редактирование оповещения
@@ -453,6 +437,22 @@ ru:
       title: Задачи
     link: Задачи
 
+  tickets:
+    address1: 'г.Владивосток,'
+    address2: 'Океанский проспект, 90'
+    check_status: 'Вы можете проверить статус устройства по адресу: www.itechstore.ru/check.'
+    check_status_order: 'Вы можете проверить статус заказа по адресу: www.itechstore.ru/check.'
+    contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
+    email: 'e-mail: info@itechstore.ru'
+    link: Талон
+    notice: 'Сохраняйте этот талон до получения Вашего устройства.'
+    notice_order: 'Сохраняйте этот талон до получения Вашего заказа.'
+    operations_list: 'Список операций:'
+    schedule1: 'Пн-Пт: с 10 до 21'
+    schedule2: 'Сб: с 12 до 21'
+    schedule3: 'Вс - выходной'
+    site: 'www.itechstore.ru'
+
   users:
     abilities:
       manage_wiki: Редактировать Wiki
@@ -521,6 +521,7 @@ ru:
   done: "Готово"
   edit: Редактировать
   everywhere: "Везде"
+  me: Я
   moved: "%{user} %{time} назад"
   moved_title: Переместил
   new: "Новый"

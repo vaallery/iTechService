@@ -257,7 +257,7 @@ class Device < ActiveRecord::Base
   def validate_device_tasks
     roles = []
     device_tasks.each do |dt|
-      if roles.include? dt.role
+      if roles.include? dt.role and dt.role == 'software'
         self.errors.add(:device_tasks, I18n.t('devices.device_tasks_error'))
       else
         roles << dt.role
