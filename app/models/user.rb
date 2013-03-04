@@ -58,10 +58,6 @@ class User < ActiveRecord::Base
     false
   end
   
-  def timeout_in
-    10.hours
-  end
-  
   def admin?
     has_role? 'admin'
   end
