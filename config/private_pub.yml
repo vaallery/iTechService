@@ -8,4 +8,4 @@ production:
   server: "http://example.com/faye"
   secret_token: "606f112a64d8b87f02e2a259d81184055ef04cc3e504106f16f68c89f52ef474"
   signature_expiration: 3600 # one hour
-daemonize: true
+#daemonize: true
