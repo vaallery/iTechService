@@ -29,14 +29,18 @@ module DeviceTypesHelper
     @device_types = DeviceType.where(ancestry: nil)
   end
 
-  def device_type_name_for device_type
+  def device_type_name_for(device_type)
     ancestors = device_type.ancestors.all.map { |t| t.name }.join ' '
     (ancestors + content_tag(:strong, ' '+device_type.name)).html_safe
   end
 
-  def make_device_types_list device_types
+  def make_device_types_list(device_types, resource=nil)
     device_types.map do |device_type|
-      content_tag :li, link_to(device_type.name, device_type_select_devices_path(device_type_id: device_type.id), remote: true)
+      if resource.to_s == 'order'
+        content_tag :li, link_to(device_type.name, device_type_select_orders_path(device_type_id: device_type.id), remote: true)
+      else
+        content_tag :li, link_to(device_type.name, device_type_select_devices_path(device_type_id: device_type.id), remote: true)
+      end
     end.join.html_safe
   end
 

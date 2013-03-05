@@ -1,0 +1,8 @@
+:plain
+  if(#{@device_type.has_children?}){
+    $('#device_types_list').html("#{j(make_device_types_list(@device_type.children, :order))}");
+    $('#order_device_type_select_btn').dropdown('toggle');
+  }else{
+    $('#order_device_type_select_btn').attr('disabled','disabled').addClass('btn-success');
+  }
+  $('#order_object').val("#{@device_type.full_name}");

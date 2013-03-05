@@ -1,0 +1,4 @@
+:plain
+  $('#device_types_list').html("#{j(make_device_types_list(root_device_types, :order))}");
+  $('#order_device_type_select_btn').removeAttr('disabled').removeClass('btn-success');
+  $('#order_object').val("");

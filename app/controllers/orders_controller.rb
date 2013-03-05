@@ -107,6 +107,15 @@ class OrdersController < ApplicationController
     end
   end
 
+  def device_type_select
+    if params[:device_type_id].blank?
+      render 'device_type_refresh'
+    else
+      @device_type = DeviceType.find params[:device_type_id]
+      render 'device_type_select'
+    end
+  end
+
   private
 
   def sort_column

@@ -1,5 +1,4 @@
 = simple_form_for @order, html: { id: 'order_form', class: 'form-horizontal' } do |f|
-  -#= f.hidden_field :customer_id
   = f.input :number, disabled: true, input_html: { class: 'input-xlarge' }
   - if @order.new_record?
     = f.input :customer_id, as: :client, wrapper_html: {id: 'client_fields'}, no_devices: true
@@ -8,7 +7,7 @@
       %label.control-label.string.optional= Order.human_attribute_name :customer
       .controls= text_field_tag :customer, @order.customer.presentation, class: 'input-xlarge', disabled: true
   = f.input :object_kind, as: :object_kind
-  = f.input :object, input_html: { class: 'input-xlarge' }
+  = f.input :object, as: :object
   = f.input :comment, input_html: {rows: 5, class: 'input-xlarge'}
   = f.input :user_comment, input_html: {rows: 5, class: 'input-xlarge'} if current_user.marketing?
   = f.input :desired_date, as: :my_date

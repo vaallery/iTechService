@@ -9,7 +9,7 @@ class DeviceTypeInput < SimpleForm::Inputs::Base
                            remote: true) +
           template.content_tag(:button, id: 'device_type_select_button', class: 'btn dropdown-toggle',
                       'data-toggle' => 'dropdown') do
-          template.content_tag(:span, id: 'device_type_name', class: 'pull-left') do
+            template.content_tag(:span, id: 'device_type_name', class: 'pull-left') do
               @builder.object.device_type.blank? ? '-' : @builder.object.device_type.try(:full_name)
             end +
             template.content_tag(:span, nil, class: 'caret pull-right')
