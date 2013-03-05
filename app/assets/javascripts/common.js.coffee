@@ -84,11 +84,12 @@ scanCard = ->
 
 auth_timeout = auth_count = 5*60
 
-setInterval (->
-  auth_count -= 1
-  if auth_count < 1 and $('#card_sign_in.in:visible').length == 0
-    $('#lock_session').click()
-), 1000
+if $('#profile_link').data('role') is 'software'
+  setInterval (->
+    auth_count -= 1
+    if auth_count < 1 and $('#card_sign_in.in:visible').length is 0
+      $('#lock_session').click()
+  ), 1000
 
 $(document).on 'click keydown mousemove', ->
   auth_count = auth_timeout
