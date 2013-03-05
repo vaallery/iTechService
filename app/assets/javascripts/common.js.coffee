@@ -82,6 +82,17 @@ scanCard = ->
     card_number = ''
    ), 3000
 
+auth_timeout = auth_count = 5*60
+
+setInterval (->
+  auth_count -= 1
+  if auth_count < 1 and $('#card_sign_in.in:visible').length == 0
+    $('#lock_session').click()
+), 1000
+
+$(document).on 'click keydown mousemove', ->
+  auth_count = auth_timeout
+
 datepicker_dates =
   days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
   daysShort: ["Вск", "Пнд", "Втр", "Срд", "Чтв", "Птн", "Суб", "Вск"],
