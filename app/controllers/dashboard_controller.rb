@@ -163,26 +163,29 @@ class DashboardController < ApplicationController
   end
 
   def make_report_by_tasks_durations
+    #было бы не плохо посмотреть из чего эти задачи состоят или минуты.
+    # То есть нажимаешь на цифру и видишь какие устройства где лежат.
     @report[:tasks_durations] = []
-    #device_tasks = []
     Task.find_each do |task|
       task_durations = []
+      device_tasks = []
       HistoryRecord.devices.movements_to(task.location_id).in_period(@period).each do |hr|
         moved_at = hr.created_at
         durations = []
         hr.object.device_tasks.done.where(task_id: task.id).each do |dt|
           done_at = dt.done_at
-          dt_duration = done_at - moved_at
-          durations << dt_duration.to_i/60
-          #device_tasks << {id: dt.id, task_id: task.id, moved_at: moved_at, done_at: done_at, duration: dt_duration}
+          dt_duration = ((done_at - moved_at).to_i/60).round
+          durations << dt_duration
+          device_tasks << {device: dt.device_presentation, device_id: dt.device_id, moved_at: moved_at,
+                           done_at: done_at, duration: dt_duration, moved_by: hr.user_name, done_by: dt.performer_name,
+                           device_location: dt.device.location_name}
         end
         unless durations.empty?
-          task_durations << (durations.sum/durations.size)
+          task_durations << (durations.sum/durations.size).round
         end
       end
-      unless task_durations.empty?
-        @report[:tasks_durations] << {task: task.name, duration: task_durations.sum/task_durations.size}
-      end
+      average_duration = task_durations.present? ? (task_durations.sum/task_durations.size).round : 0
+      @report[:tasks_durations] << {task_name: task.name, average_duration: average_duration, device_tasks: device_tasks}
     end
   end
 

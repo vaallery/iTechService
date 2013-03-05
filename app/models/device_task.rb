@@ -50,7 +50,7 @@ class DeviceTask < ActiveRecord::Base
   end
 
   def device_presentation
-    device.presentation
+    device.present? ? device.presentation : ''
   end
 
   def client_presentation
@@ -63,6 +63,18 @@ class DeviceTask < ActiveRecord::Base
 
   def is_actual_for? user
     task.is_actual_for? user
+  end
+
+  def performer
+    if (completions = history_records.task_completions).any?
+      completions.last.try :user
+    else
+      nil
+    end
+  end
+
+  def performer_name
+    performer.present? ? performer.short_name : ''
   end
 
 end

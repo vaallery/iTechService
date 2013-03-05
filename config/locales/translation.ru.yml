@@ -247,21 +247,6 @@ ru:
     params: Параметры
     reports: Отчёты
 
-  reports:
-    average_duration: Средняя длительность, мин.
-    clients_count: Количество клиентов
-    includes: Из них
-    period: Период
-    qty: Количество
-    qty_paid: платных
-    qty_free: бесплатных
-    new_clients_count: Количество новых клиентов
-    received: Принято
-    received_done: готовы
-    received_archived: выданы
-    sum: Сумма
-    total: Всего
-
   announcements:
     edit:
       title: Редактирование оповещения
@@ -414,6 +399,24 @@ ru:
     index:
       title: Прайсы
     link: Прайсы
+
+  reports:
+    average_duration: Средняя длительность, мин.
+    clients_count: Количество клиентов
+    done_at: Выполнен
+    duration: Длительность, мин.
+    includes: Из них
+    qty: Количество
+    qty_paid: платных
+    qty_free: бесплатных
+    moved_at: Перемещен
+    new_clients_count: Количество новых клиентов
+    period: Период
+    received: Принято
+    received_done: готовы
+    received_archived: выданы
+    sum: Сумма
+    total: Всего
 
   stolen_phones:
     created: Телефон создан
