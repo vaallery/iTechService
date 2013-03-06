@@ -20,7 +20,6 @@ class Device < ActiveRecord::Base
   validates_associated :device_tasks
   
   before_validation :generate_ticket_number
-  #before_validation :validate_device_type
   before_validation :validate_security_code
   before_validation :set_user_and_location
   before_validation :validate_location
@@ -202,10 +201,6 @@ class Device < ActiveRecord::Base
       begin number = UUIDTools::UUID.random_create.hash.to_s end while Device.exists? ticket_number: number
       self.ticket_number = number
     end
-  end
-
-  def validate_device_type
-    self.device_type_id = DeviceType.find_or_create_by_name(type_name).id
   end
 
   def update_qty_replaced
