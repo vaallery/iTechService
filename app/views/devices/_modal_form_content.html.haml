@@ -21,7 +21,11 @@
           %tr.device_task{class: row_class_for_task(task)}
             %td.task_name_column= task.name
             %td.task_cost_column= task.cost
-            %td.task_comment_column= task.comment
+            %td.task_comment_column
+              %span.client_comment= task.comment
+              %br
+              %span.user_comment= task.user_comment
+
 
     = link_to_add_fields t('devices.add_task'), '#device_tasks_small tbody', f, :device_tasks
 

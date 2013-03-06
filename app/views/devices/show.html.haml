@@ -40,24 +40,24 @@
     %tr
       %th= Task.human_attribute_name :name
       %th= DeviceTask.human_attribute_name :comment
-      %th= Task.human_attribute_name :duration
+      %th= DeviceTask.human_attribute_name :user_comment
+      -#%th= Task.human_attribute_name :duration
       %th= DeviceTask.human_attribute_name :cost
       %th= DeviceTask.human_attribute_name :done_at
       %th= DeviceTask.human_attribute_name :created_at
-      %th= DeviceTask.human_attribute_name :updated_at
+      -#%th= DeviceTask.human_attribute_name :updated_at
       %th
   %tbody
     - @device.device_tasks.ordered.each do |device_task|
       %tr{class: row_class_for_task(device_task)}
         %td= device_task.task_name
-        %td
-          %p.device_comment_tooltip{'data-title' => device_task.comment}
-            = h device_task.comment.truncate(30, separator: ' ')
-        %td= device_task.task_duration
+        %td= h device_task.comment
+        %td= h device_task.user_comment
+        -#%td= device_task.task_duration
         %td.align_right= device_task.cost
         %td= l device_task.done_at, format: :long_d unless device_task.done_at.blank?
         %td= l device_task.created_at, format: :long_d
-        %td= l device_task.updated_at, format: :long_d
+        -#%td= l device_task.updated_at, format: :long_d
         %td{style: "background:none;"}
           = history_link_to history_device_task_path(@device, device_task)
   %tfoot
