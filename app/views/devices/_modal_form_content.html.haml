@@ -24,7 +24,7 @@
             %td.task_comment_column
               %span.client_comment= task.comment
               %br
-              %span.user_comment= task.user_comment
+              %strong.user_comment= task.user_comment
 
 
     = link_to_add_fields t('devices.add_task'), '#device_tasks_small tbody', f, :device_tasks
