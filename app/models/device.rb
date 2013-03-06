@@ -9,7 +9,7 @@ class Device < ActiveRecord::Base
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
   has_many :history_records, as: :object, dependent: :destroy
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type, :device_type_id, :status,
+  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status,
                   :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code
   accepts_nested_attributes_for :device_tasks
 
@@ -20,7 +20,7 @@ class Device < ActiveRecord::Base
   validates_associated :device_tasks
   
   before_validation :generate_ticket_number
-  before_validation :validate_device_type
+  #before_validation :validate_device_type
   before_validation :validate_security_code
   before_validation :set_user_and_location
   before_validation :validate_location
