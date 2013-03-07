@@ -214,4 +214,10 @@ module ApplicationHelper
     link_to "&times;".html_safe, '#', class: 'close_popover_button'
   end
 
+  def humanize_duration(val)
+    h = val/60
+    m = val%60
+    h > 0 ? t('hour_min', hour: h, min: m) : t('min', min: m)
+  end
+
 end

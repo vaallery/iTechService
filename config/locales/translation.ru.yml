@@ -546,7 +546,9 @@ ru:
   done: "Готово"
   edit: Редактировать
   everywhere: "Везде"
+  hour_min: "%{hour} ч %{min} мин."
   me: Я
+  min: "%{min} мин."
   moved: "%{user} %{time} назад"
   moved_title: Переместил
   new: "Новый"

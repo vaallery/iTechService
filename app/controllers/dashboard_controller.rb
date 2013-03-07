@@ -107,9 +107,9 @@ class DashboardController < ApplicationController
     @report[:device_types] = []
     if @received_devices.any?
       @received_devices.group('device_type_id').count('id').each_pair do |key, val|
-        if key.present? and (device_type = DeviceType.find key).present?
+        if key.present? and (device_type = DeviceType.where(id: key).first).present?
           devices = @received_devices.where(device_type_id: key)
-          @report[:device_types] << {name: device_type.full_name, qty: val, qty_done: devices.at_done.count, qty_archived: devices.at_archive.count}
+          @report[:device_types] << {name: device_type.try(:full_name), qty: val, qty_done: devices.at_done.count, qty_archived: devices.at_archive.count}
         end
       end
     end
@@ -163,8 +163,6 @@ class DashboardController < ApplicationController
   end
 
   def make_report_by_tasks_durations
-    #было бы не плохо посмотреть из чего эти задачи состоят или минуты.
-    # То есть нажимаешь на цифру и видишь какие устройства где лежат.
     @report[:tasks_durations] = []
     Task.find_each do |task|
       task_durations = []

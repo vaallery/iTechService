@@ -105,7 +105,7 @@
       - @report[:tasks_durations].each do |task|
         %tr.task_row.detailable
           %td.task_name= task[:task_name]
-          %td= task[:average_duration]
+          %td= "#{humanize_duration(task[:average_duration])} (#{task[:device_tasks].count})"
         - task[:device_tasks].each do |device_task|
           %tr.device_task_row.details
             %td
@@ -113,7 +113,7 @@
               %br
               %small= "#{Device.human_attribute_name(:location)}: #{device_task[:device_location]}"
             %td
-              = device_task[:duration]
+              = humanize_duration device_task[:duration]
               %br
               %small= "#{t('reports.moved_at')}: #{l device_task[:moved_at], format: :long_d} #{device_task[:moved_by]}"
               %br
