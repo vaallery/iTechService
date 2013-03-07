@@ -18,6 +18,7 @@ ru:
       object: Обьект
       order: Заказ
       price: Прайс
+      sale: Продажа
       schedule_day: Рабочий день
       stolen_phone: Краденый телефон
       task: Задача
@@ -111,6 +112,7 @@ ru:
 
       device_type:
         ancestry: Предок
+        code_1c: Код 1С
         expected_during: Ожидается в течении
         qty_for_replacement: Доступно для замены
         qty_replaced: Заменено
@@ -164,6 +166,12 @@ ru:
       price:
         file: Файл
         remote_file_url: Ссылка на файл
+
+      sale:
+        device_type: Тип девайса
+        device_type_id: :activerecord.attributes.sale.device_type
+        quantity: Количество
+        sold_at: Продан
 
       schedule_day:
         day: День
@@ -227,7 +235,9 @@ ru:
     content: Содержание
     fio: ФИО
     id: '№'
+    imei: IMEI
     name: Название
+    serial_number: Серийный номер
     updated_at: Время обновления
     user: Пользователь
     user_comment: Комментарий сотрудника
@@ -326,6 +336,7 @@ ru:
     movement_error_not_allowed: Вы не можете переместить девайс.
     phone_stolen: 'этот телефон в чёрном списке!!!'
     search_placeholder: Талон или серийный номер
+    seach_sales_btn: Искать продажи
     updated: Девайс изменён
 
   device_types:
@@ -339,6 +350,10 @@ ru:
       title: Типы девайсов
     link: Типы девайсов
     available_for_replacement: Доступно для замены
+
+  imports:
+    do_import: Импортировать
+    importing: Импортирую...
 
   infos:
     created: Новость создана
@@ -417,6 +432,13 @@ ru:
     received_archived: выданы
     sum: Сумма
     total: Всего
+
+  sales:
+    index:
+      import_link: Импорт
+      title: Проданные девайсы
+      search_placeholder: "Серийник или IMEI"
+    link: Проданные девайсы
 
   stolen_phones:
     created: Телефон создан

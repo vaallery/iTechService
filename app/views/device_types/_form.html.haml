@@ -5,7 +5,7 @@
     %hr
     = simple_form_for @device_type, html: { class: 'form-horizontal span8', remote: true },
                       defaults: { input_html: {class: 'span12'} } do |f|
-
+      = f.input :code_1c
       = f.input :qty_for_replacement
       = f.input :qty_replaced, disabled: true, as: 'string'
       = f.input :qty_shop

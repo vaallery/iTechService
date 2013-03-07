@@ -2,7 +2,7 @@
   #navbar.navbar.navbar-static-top
     .navbar-inner
       .container-fluid
-        = link_to icon_tag('home'), root_path, class: 'brand'
+        = link_to image_tag('logo.png'), root_path, class: 'brand'
         %ul.nav
           %li{class: nav_state_for('messages') + ' nav_chat'}= link_to t('chat.title'), messages_path
           %li{class: nav_state_for('wiki_pages')}= link_to t("wiki.link"), wiki_all_path if can? :read, WikiPage
@@ -24,6 +24,7 @@
               %li{class: nav_state_for('tasks')}= link_to t('tasks.link', default: 'Tasks'), tasks_path if can? :manage, Task
               %li{class: nav_state_for('locations')}= link_to t('locations.link', default: 'Locations'), locations_path if can? :manage, Location
               %li{class: nav_state_for('stolen_phones')}= link_to t('stolen_phones.link', default: 'Black list'), stolen_phones_path
+              %li{class: nav_state_for('sales')}= link_to t('sales.link', default: 'Sold devices'), sales_path
               %li{class: nav_state_for('announcements')}= link_to t('announcements.link', default: 'Announcements'), announcements_path if current_user.admin?
         %ul.nav.pull-right
           = header_link_for_coffee

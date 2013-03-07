@@ -1,0 +1,17 @@
+.page-header
+  %h1
+    = t '.title'
+    = link_to icon_tag('upload-alt') + t('.import_link', default: "Import"), new_sales_import_path,
+        class: 'btn btn-link btn-large' if can? :modify, Sale
+
+.table_filter.navbar.container
+  .navbar-inner
+    = form_tag sales_path, method: :get, id: 'search_form', class: 'navbar-search form-search', remote: true do
+      .input-append
+        = text_field_tag :search, params[:search] || '', id: 'search_sale_input', class: 'search-query input-medium',
+            placeholder: t('.search_placeholder')
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+
+#resource_table
+  = render 'table' if can? :modify, Sale

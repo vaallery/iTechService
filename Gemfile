@@ -25,6 +25,7 @@ gem 'json', '1.7.7'
 gem 'taps'
 gem 'irwi', git: 'git://github.com/alno/irwi.git'
 gem 'RedCloth'
+gem 'roo'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -48,6 +48,24 @@ jQuery ->
         $this.val($this.val()+String.fromCharCode(event.keyCode))
         event.preventDefault()
 
+    $('#device_imei_search, #device_serial_number_search').click (event)->
+      $this = $(this)
+      val = $this.prev('input').val()
+      if val isnt ''
+        $.getJSON '/sales?search='+val, (res)->
+          info_tag = "<span class='help-inline sales_info'>"
+          if res.length > 0
+            for r in res
+              d = new Date(r.sold_at)
+              info_tag += '[' + d.toLocaleDateString() + ': '
+              info_tag += r.quantity + '] '
+          else
+            info_tag += 'Not found'
+          info_tag += "</span>"
+          $this.parent().siblings('.sales_info').remove()
+          $this.parent().after info_tag
+      false
+
   $('#new_device_popup').mouseleave ->
     setTimeout (->
       $('#new_device_popup').fadeOut()

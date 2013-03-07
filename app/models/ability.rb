@@ -24,6 +24,8 @@ Ability
         can :manage, DeviceType
         can :modify, Order
         can :modify, Client
+        can :modify, Sale
+        can :modify, SalesImport
         cannot :modify, Device
       end
       if user.supervisor?

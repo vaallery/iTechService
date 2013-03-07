@@ -222,23 +222,25 @@ class Device < ActiveRecord::Base
   end
 
   def validate_location
-    old_location = changed_attributes['location_id'].present? ? Location.find(changed_attributes['location_id']) : nil
-    if self.location.is_done? and self.pending?
-      self.errors.add :location_id, I18n.t('devices.movement_error')
-    end
-    if self.location.is_archive? and !old_location.try(:is_done?)
-      self.errors.add :location_id, I18n.t('devices.movement_error_not_done')
-    end
-    if old_location.try(:is_archive?) and User.current.not_admin?
-      self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
-    end
-    if self.location.is_warranty? and !old_location.try(:is_repair?)
-      self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
-    end
+    if self.location.present?
+      old_location = changed_attributes['location_id'].present? ? Location.find(changed_attributes['location_id']) : nil
+      if self.location.is_done? and self.pending?
+        self.errors.add :location_id, I18n.t('devices.movement_error')
+      end
+      if self.location.is_archive? and !old_location.try(:is_done?)
+        self.errors.add :location_id, I18n.t('devices.movement_error_not_done')
+      end
+      if old_location.try(:is_archive?) and User.current.not_admin?
+        self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
+      end
+      if self.location.is_warranty? and !old_location.try(:is_repair?)
+        self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
+      end
 
-    #if User.current.not_admin? and old_location != User.current.location
-    #  self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
-    #end
+      #if User.current.not_admin? and old_location != User.current.location
+      #  self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
+      #end
+    end
   end
 
   def new_device_announce

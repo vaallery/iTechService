@@ -1,0 +1,23 @@
+- if can?(:manage, Sale) or params[:search].present?
+  - model_class = Sale
+  = paginate @sales
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th= model_class.human_attribute_name(:id)
+        %th= model_class.human_attribute_name(:device_type_id)
+        %th= model_class.human_attribute_name(:serial_number)
+        %th= model_class.human_attribute_name(:imei)
+        %th= model_class.human_attribute_name(:sold_at)
+        %th= model_class.human_attribute_name(:quantity)
+        %th= model_class.human_attribute_name(:created_at)
+    %tbody
+      - @sales.each do |sale|
+        %tr
+          %td= link_to sale.id, sale_path(sale)
+          %td= sale.device_type_name
+          %td= sale.serial_number
+          %td= sale.imei
+          %td= sale.sold_at.present? ? l(sale.sold_at, format: :date) : '-'
+          %td= sale.quantity
+          %td= l sale.created_at, format: :long_d

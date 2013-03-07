@@ -260,6 +260,7 @@ ru:
   time:
     am: утра
     formats:
+      date: ! '%d.%m.%Y'
       default: ! '%a, %d %b %Y, %H:%M:%S %z'
       long: ! '%d %B %Y, %H:%M'
       long_d: ! '%d.%m.%Y %H:%M'

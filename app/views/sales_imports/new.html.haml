@@ -1,0 +1,12 @@
+= simple_form_for @sales_import, html: {class: 'form-inline'} do |f|
+  - if @sales_import.errors.any?
+    #error_explanation
+      %ul
+        - @sales_import.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.input :file, as: :file
+  = f.submit t('imports.do_import'), disable_with: t('imports.importing'), class: 'btn btn-primary'
+
+- if @sales_import.import_logs.any?
+  #logs= render 'logs'
