@@ -2,7 +2,7 @@ jQuery ->
 
   $device_form = $('form.device_form')
 
-  $('.device_comment_tooltip').tooltip()
+  $('.device_comment_tooltip i').tooltip()
 
   $('.device_progress').tooltip
     placement: 'left'
