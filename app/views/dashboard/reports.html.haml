@@ -11,6 +11,8 @@
 
 #reports_tables
   %table#device_types_reports.table.table-bordered.table-hover
+    %caption
+      %h4= t 'reports.device_types_reports'
     %thead
       %tr
         %th.center{rowspan: 2}= Device.human_attribute_name :device_type
@@ -34,6 +36,8 @@
         %td= @report[:devices_received_archived_count]
 
   %table#users_report.table.table-bordered.table-hover
+    %caption
+      %h4= t 'reports.users_report'
     %thead
       %tr
         %th.center{rowspan: 2}= Device.human_attribute_name :user
@@ -57,6 +61,8 @@
         %td= @report[:devices_received_archived_count]
 
   %table#tasks_report.table.table-bordered.table-hover
+    %caption
+      %h4= t 'reports.tasks_report'
     %thead
       %tr
         %th= DeviceTask.human_attribute_name :task
@@ -87,16 +93,26 @@
         %td= @report[:tasks_qty_free]
 
   %table#clients_report.table.table-bordered.table-hover
+    %caption
+      %h4= t 'reports.new_clients_report'
     %thead
       %tr
-        %th= t 'reports.clients_count'
-        %th= t 'reports.new_clients_count'
+        %th= t Client.human_attribute_name :created_at
+        %th= t 'activerecord.models.client'
+        %th= t 'activerecord.models.device'
     %tbody
-      %tr
-        %td= @report[:clients_count]
-        %td= @report[:new_clients_count]
+      - @report[:new_clients].each do |client|
+        %tr
+          %td= l client.created_at, format: :long_d
+          %td= link_to client.presentation, client_path(client)
+          %td
+            - client.devices.where(created_at: @period).each do |device|
+              = link_to device.presentation, device_path(device)
+              %br
 
   %table#tasks_durations_report.table.table-bordered.table-hover
+    %caption
+      %h4= t 'reports.tasks_durations_report'
     %thead
       %tr
         %th= "#{t('activerecord.models.task')} / #{t('activerecord.models.device')}"

@@ -418,6 +418,7 @@ ru:
   reports:
     average_duration: Средняя длительность, мин.
     clients_count: Количество клиентов
+    device_types_reports: Принятые девайсы по типам
     done_at: Выполнен
     duration: Длительность, мин.
     includes: Из них
@@ -426,12 +427,16 @@ ru:
     qty_free: бесплатных
     moved_at: Перемещен
     new_clients_count: Количество новых клиентов
+    new_clients_report: Новые клиенты
     period: Период
     received: Принято
     received_done: готовы
     received_archived: выданы
     sum: Сумма
+    tasks_durations_report: Длительность выполнения задач
+    tasks_report: Выполненные задачи
     total: Всего
+    users_report: Принятые девайсы по сотрудникам
 
   sales:
     index:

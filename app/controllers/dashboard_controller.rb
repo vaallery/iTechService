@@ -159,7 +159,8 @@ class DashboardController < ApplicationController
 
   def make_report_by_clients
     @report[:clients_count] = Client.count
-    @report[:new_clients_count] = Client.where(created_at: @period).count
+    #@report[:new_clients_count] = Client.where(created_at: @period).count
+    @report[:new_clients] = Client.where(created_at: @period)
   end
 
   def make_report_by_tasks_durations
