@@ -1,0 +1,24 @@
+%table#device_types_report.table.table-bordered.table-hover
+  %caption
+    %h4= t 'reports.device_types_report'
+  %thead
+    %tr
+      %th.center{rowspan: 2}= Device.human_attribute_name :device_type
+      %th.center{rowspan: 2}= t('reports.received')
+      %th.center{colspan: 2}= t('reports.includes')
+    %tr
+      %th.center= t('reports.received_done')
+      %th.center= t('reports.received_archived')
+  %tbody
+    - @report[:device_types].each do |device_type|
+      %tr
+        %td= device_type[:name]
+        %td= device_type[:qty]
+        %td= device_type[:qty_done]
+        %td= device_type[:qty_archived]
+  %tfoot
+    %tr
+      %td= t('reports.total')
+      %td= @report[:devices_received_count]
+      %td= @report[:devices_received_done_count]
+      %td= @report[:devices_received_archived_count]

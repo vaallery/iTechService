@@ -71,11 +71,13 @@ class DashboardController < ApplicationController
     @report[:devices_received_done_count] = @received_devices.at_done.count
     @report[:devices_received_archived_count] = @received_devices.at_archive.count
 
-    make_report_by_device_types
-    make_report_by_users
-    make_report_by_tasks
-    make_report_by_clients
-    make_report_by_tasks_durations
+    case params[:report]
+      when 'device_types_report' then make_report_by_device_types
+      when 'users_report' then make_report_by_users
+      when 'tasks_report' then make_report_by_tasks
+      when 'clients_report' then make_report_by_clients
+      when 'tasks_durations_report' then make_report_by_tasks_durations
+    end
   end
 
   def check_session_status

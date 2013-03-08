@@ -24,3 +24,8 @@ jQuery ->
   $('#reports_tables .detailable>td').click ->
     $row = $(this).parents('tr')
     $row.nextUntil('.detailable').toggle()
+
+  $('#reports_select a').click ->
+    $this = $(this)
+    $('#selected_report span').text $this.text()
+    $('#reports_filter #report').val $this.data('report')

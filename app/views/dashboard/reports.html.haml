@@ -1,6 +1,7 @@
 #reports_filter.navbar.container
   .navbar-inner
-    = form_tag reports_path, method: :get, class: 'navbar-form form-search' do
+    = form_tag reports_path, method: :get, id: 'search_form', class: 'navbar-search form-search' do
+      = hidden_field_tag :report, params[:report]
       %button.btn.btn-info.btn-small
         %i.icon-filter
       = text_field_tag :start_date, @start_date.strftime('%d.%m.%Y'), class: 'datepicker input-small',
@@ -9,128 +10,16 @@
       = text_field_tag :end_date, @end_date.strftime('%d.%m.%Y'), class: 'datepicker input-small',
           data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
 
-#reports_tables
-  %table#device_types_reports.table.table-bordered.table-hover
-    %caption
-      %h4= t 'reports.device_types_reports'
-    %thead
-      %tr
-        %th.center{rowspan: 2}= Device.human_attribute_name :device_type
-        %th.center{rowspan: 2}= t('reports.received')
-        %th.center{colspan: 2}= t('reports.includes')
-      %tr
-        %th.center= t('reports.received_done')
-        %th.center= t('reports.received_archived')
-    %tbody
-      - @report[:device_types].each do |device_type|
-        %tr
-          %td= device_type[:name]
-          %td= device_type[:qty]
-          %td= device_type[:qty_done]
-          %td= device_type[:qty_archived]
-    %tfoot
-      %tr
-        %td= t('reports.total')
-        %td= @report[:devices_received_count]
-        %td= @report[:devices_received_done_count]
-        %td= @report[:devices_received_archived_count]
+    %ul.nav
+      %li.dropdown
+        = link_to '#', id: 'selected_report', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+          %span= t "reports.#{params[:report] || 'choose'}"
+          %b.caret
+        %ul#reports_select.dropdown-menu
+          %li= link_to t('reports.device_types_report'), '#', remote: true, data: {report: 'device_types_report'}
+          %li= link_to t('reports.users_report'), '#', remote: true, data: {report: 'users_report'}
+          %li= link_to t('reports.tasks_report'), '#', remote: true, data: {report: 'tasks_report'}
+          %li= link_to t('reports.clients_report'), '#', remote: true, data: {report: 'clients_report'}
+          %li= link_to t('reports.tasks_durations_report'), '#', remote: true, data: {report: 'tasks_durations_report'}
 
-  %table#users_report.table.table-bordered.table-hover
-    %caption
-      %h4= t 'reports.users_report'
-    %thead
-      %tr
-        %th.center{rowspan: 2}= Device.human_attribute_name :user
-        %th.center{rowspan: 2}= t('reports.received')
-        %th.center{colspan: 2}= t('reports.includes')
-      %tr
-        %th.center= t('reports.received_done')
-        %th.center= t('reports.received_archived')
-    %tbody
-      - @report[:users].each do |user|
-        %tr
-          %td= user[:name]
-          %td= user[:qty]
-          %td= user[:qty_done]
-          %td= user[:qty_archived]
-    %tfoot
-      %tr
-        %td= t('reports.total')
-        %td= @report[:devices_received_count]
-        %td= @report[:devices_received_done_count]
-        %td= @report[:devices_received_archived_count]
-
-  %table#tasks_report.table.table-bordered.table-hover
-    %caption
-      %h4= t 'reports.tasks_report'
-    %thead
-      %tr
-        %th= DeviceTask.human_attribute_name :task
-        %th= t('reports.sum')
-        %th= t 'reports.qty'
-        %th= t 'reports.qty_paid'
-        %th= t 'reports.qty_free'
-    %tbody
-      - @report[:tasks].each do |task|
-        %tr.task_row.detailable
-          %td= task[:name]
-          -#%td= link_to number_to_currency(task[:sum], unit: '', precision: 0), '#', class: 'report_task_details'
-          %td= number_to_currency(task[:sum], unit: '', precision: 0)
-          %td= task[:qty]
-          %td= task[:qty_paid]
-          %td= task[:qty_free]
-        - task[:devices].each do |device|
-          %tr.device_row.details
-            %td.device_name= link_to device[:name], device_path(device[:id])
-            %td.task_cost= number_to_currency device[:cost], unit: '', precision: 0
-            %td{colspan: 3}
-    %tfoot
-      %tr
-        %td= t('reports.total')
-        %td= number_to_currency @report[:tasks_sum], unit: '', precision: 0
-        %td= @report[:tasks_qty]
-        %td= @report[:tasks_qty_paid]
-        %td= @report[:tasks_qty_free]
-
-  %table#clients_report.table.table-bordered.table-hover
-    %caption
-      %h4= t 'reports.new_clients_report'
-    %thead
-      %tr
-        %th= t Client.human_attribute_name :created_at
-        %th= t 'activerecord.models.client'
-        %th= t 'activerecord.models.device'
-    %tbody
-      - @report[:new_clients].each do |client|
-        %tr
-          %td= l client.created_at, format: :long_d
-          %td= link_to client.presentation, client_path(client)
-          %td
-            - client.devices.where(created_at: @period).each do |device|
-              = link_to device.presentation, device_path(device)
-              %br
-
-  %table#tasks_durations_report.table.table-bordered.table-hover
-    %caption
-      %h4= t 'reports.tasks_durations_report'
-    %thead
-      %tr
-        %th= "#{t('activerecord.models.task')} / #{t('activerecord.models.device')}"
-        %th= t 'reports.duration'
-    %tbody
-      - @report[:tasks_durations].each do |task|
-        %tr.task_row.detailable
-          %td.task_name= task[:task_name]
-          %td= "#{humanize_duration(task[:average_duration])} (#{task[:device_tasks].count})"
-        - task[:device_tasks].each do |device_task|
-          %tr.device_task_row.details
-            %td
-              = link_to device_task[:device], device_path(device_task[:device_id])
-              %br
-              %small= "#{Device.human_attribute_name(:location)}: #{device_task[:device_location]}"
-            %td
-              = humanize_duration device_task[:duration]
-              %br
-              %small= "#{t('reports.moved_at')}: #{l device_task[:moved_at], format: :long_d} #{device_task[:moved_by]}"
-              %br
-              %small= "#{t('reports.done_at')}: #{l device_task[:done_at], format: :long_d} #{device_task[:done_by]}"
+#reports_tables= render "dashboard/reports/#{params[:report]}" if params[:report].present?
