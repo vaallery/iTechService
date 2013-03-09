@@ -72,7 +72,7 @@ class DashboardController < ApplicationController
     @report[:devices_received_archived_count] = @received_devices.at_archive.count
 
     case params[:report]
-      when 'device_types_report' then make_report_by_device_types
+      when 'device_types_report' then make_report_by_device_types params[:device_type]
       when 'users_report' then make_report_by_users
       when 'tasks_report' then make_report_by_tasks
       when 'clients_report' then make_report_by_clients
@@ -105,15 +105,39 @@ class DashboardController < ApplicationController
     @orders = Order.actual_orders.search(params).oldest.page params[:page]
   end
 
-  def make_report_by_device_types
+  def make_report_by_device_types_1
     @report[:device_types] = []
     if @received_devices.any?
       @received_devices.group('device_type_id').count('id').each_pair do |key, val|
         if key.present? and (device_type = DeviceType.where(id: key).first).present?
           devices = @received_devices.where(device_type_id: key)
-          @report[:device_types] << {name: device_type.try(:full_name), qty: val, qty_done: devices.at_done.count, qty_archived: devices.at_archive.count}
+          @report[:device_types] << {name: device_type.try(:full_name), qty: val, qty_done: devices.at_done.count,
+                                     qty_archived: devices.at_archive.count}
         end
       end
+    end
+  end
+
+  def make_report_by_device_types(device_type_id)
+    @report[:device_types] = []
+    @current_device_type = DeviceType.find(device_type_id) if device_type_id.present?
+    device_types = device_type_id.present? ? @current_device_type.children : DeviceType.roots
+    device_types.each do |device_type|
+      device_ids = []
+      device_type.descendants.each do |sub_device_type|
+        if sub_device_type.is_childless?
+          device_ids << sub_device_type.devices.where(created_at: @period).map{|d|d.id}
+        end
+      end
+      received_devices = Device.where id: device_ids
+      qty_received = received_devices.count
+      qty_done = received_devices.at_done.count
+      qty_archived = received_devices.at_archive.count
+      @report[:device_types] << {device_type: device_type, qty: qty_received,
+                                 qty_done: qty_done, qty_archived: qty_archived}
+      @report[:devices_received_count] += qty_received
+      @report[:devices_received_done_count] += qty_done
+      @report[:devices_received_archived_count] += qty_archived
     end
   end
 

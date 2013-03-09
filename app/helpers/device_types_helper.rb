@@ -11,6 +11,12 @@ module DeviceTypesHelper
     end.join.html_safe
   end
 
+  #def nested_device_types_rows(device_types)
+  #  device_types.map do |device_type|
+  #
+  #  end
+  #end
+
   #def nested_device_types(device_types, opened, form)
   #  device_types.map do |device_type, sub_device_types|
   #    li_class = opened.include?(device_type.id) ? 'opened' : 'closed'
