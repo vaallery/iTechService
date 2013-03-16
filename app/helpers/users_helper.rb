@@ -103,6 +103,19 @@ module UsersHelper
                    location: current_user.location_id, role: current_user.role}
   end
 
+  def karma_tag(user)
+    badge_class = 'badge'
+    good_count = user.karmas.good.count
+    bad_count = user.karmas.bad.count
+    if good_count > 0 or bad_count > 0
+      diff = good_count - bad_count
+      badge_class << ' badge-success' if diff > 1
+      badge_class << ' badge-important' if diff < -1
+      badge_class << ' badge-warning' if diff.between? -1, 1
+    end
+    content_tag :span, "#{good_count} / #{bad_count}", class: badge_class
+  end
+
   private
 
   def is_other_duty?(user, date)
