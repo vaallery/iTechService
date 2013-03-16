@@ -1,0 +1,30 @@
+= hidden_field_tag :direction, params[:direction]
+= hidden_field_tag :sort, params[:sort]
+%table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th= sortable 'id', GiftCertificate.human_attribute_name(:id)
+      %th= GiftCertificate.human_attribute_name :number
+      %th= sortable 'nominal', GiftCertificate.human_attribute_name(:nominal)
+      %th= sortable 'status', GiftCertificate.human_attribute_name(:status)
+      %th= sortable 'updated_at', GiftCertificate.human_attribute_name(:updated_at)
+      %th= sortable 'created_at', GiftCertificate.human_attribute_name(:created_at)
+      - if can? :manage, GiftCertificate
+        %th
+  - @gift_certificates.each do |gift_certificate|
+    %tr[gift_certificate]
+      %td.id_col= link_to gift_certificate.id, gift_certificate_path(gift_certificate)
+      %td.number_col= link_to gift_certificate.number, gift_certificate_path(gift_certificate)
+      %td.nominal_col= gift_certificate.nominal_h
+      %td.status_col= gift_certificate.status_h
+      %td.updated_at_col= l gift_certificate.updated_at, format: :long_d
+      %td.created_at_col= l gift_certificate.created_at, format: :long_d
+      - if can? :manage, GiftCertificate
+        %td
+          .btn-group
+            = link_to icon_tag('certificate'), refresh_gift_certificate_path(gift_certificate), remote: true,
+                method: :post, class: 'btn btn-small', title: t('gift_certificates.refresh') if gift_certificate.used?
+            = link_to_edit_small gift_certificate
+            = link_to_destroy_small gift_certificate
+
+= paginate @gift_certificates

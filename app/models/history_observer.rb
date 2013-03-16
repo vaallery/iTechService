@@ -13,6 +13,8 @@ class HistoryObserver < ActiveRecord::Observer
           prepayment wish photo]
     elsif model.is_a? Order
       tracked_attributes = %w[status comment]
+    elsif model.is_a? GiftCertificate
+      tracked_attributes = %w[status nominal]
     end
     
     unless (changed_attributes_keys = tracked_attributes & model.changed_attributes.keys).empty?
