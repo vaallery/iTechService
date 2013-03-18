@@ -41,6 +41,7 @@ class GiftCertificatesController < ApplicationController
       if @gift_certificate.save
         format.html do
           @gift_certificate = GiftCertificate.new nominal: @gift_certificate.nominal
+          flash.now[:notice] = t('gift_certificates.created')
           render 'new', notice: t('gift_certificates.created')
           #redirect_to gift_certificates_path, notice: 'Gift certificate was successfully created.'
         end

@@ -4,12 +4,12 @@ class GiftCertificate < ActiveRecord::Base
   NOMINALS = %w[1500r 3000r 5000r 10000r 15000r]
 
   attr_accessible :number, :nominal, :status
-  validates :number, presence: true
+  validates :number, presence: true, uniqueness: {case_sensitive: false}
   before_validation do |cert|
     cert.status ||= 0
   end
 
-  before_validation :validate_status
+  before_validation :validate_status, on: :update
 
   def self.search(params)
     certificates = GiftCertificate.scoped
