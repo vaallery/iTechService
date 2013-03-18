@@ -11,11 +11,17 @@
       %th.center= t('reports.received_archived')
   %tbody
     - @report[:users].each do |user|
-      %tr
+      %tr.detailable
         %td= user[:name]
         %td= user[:qty]
         %td= user[:qty_done]
         %td= user[:qty_archived]
+      - user[:devices].each do |device|
+        %tr.details
+          %td= link_to device.presentation, device_path(device)
+          %td= l device.created_at, format: :long_d
+          %td= icon_tag(:ok) if device.at_done?
+          %td= icon_tag(:ok) if device.in_archive?
   %tfoot
     %tr
       %td= t('reports.total')
