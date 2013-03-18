@@ -18,7 +18,10 @@
         %td= user[:qty_archived]
       - user[:devices].each do |device|
         %tr.details
-          %td= link_to device.presentation, device_path(device)
+          %td
+            = link_to device.presentation, device_path(device)
+            %br
+            = link_to device.client_presentation, client_path(device.client)
           %td= l device.created_at, format: :long_d
           %td= icon_tag(:ok) if device.at_done?
           %td= icon_tag(:ok) if device.in_archive?
