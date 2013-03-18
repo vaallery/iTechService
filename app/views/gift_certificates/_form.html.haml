@@ -2,10 +2,10 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :number, input_html: {autofocus: true}
     = f.input :nominal, collection: GiftCertificate::NOMINALS,
                         value_method: lambda{|n|GiftCertificate::NOMINALS.index(n)},
                         label_method: lambda{|n|t("gift_certificates.nominals.#{n}")}
+    = f.input :number
 
     - unless @gift_certificate.new_record?
       = f.input :status, collection: GiftCertificate::STATUSES,
