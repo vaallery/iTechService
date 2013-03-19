@@ -14,7 +14,7 @@
     %tbody
       - @sales.each do |sale|
         %tr
-          %td= link_to sale.id, sale_path(sale)
+          %td= sale.id
           %td= sale.device_type_name
           %td= sale.serial_number
           %td= sale.imei

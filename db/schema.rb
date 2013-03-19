@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130307175002) do
+ActiveRecord::Schema.define(:version => 20130318100206) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -147,6 +147,17 @@ ActiveRecord::Schema.define(:version => 20130307175002) do
 
   add_index "duty_days", ["day"], :name => "index_duty_days_on_day"
   add_index "duty_days", ["user_id"], :name => "index_duty_days_on_user_id"
+
+  create_table "gift_certificates", :force => true do |t|
+    t.string   "number"
+    t.integer  "nominal"
+    t.integer  "status"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.integer  "consumed"
+  end
+
+  add_index "gift_certificates", ["number"], :name => "index_gift_certificates_on_number"
 
   create_table "history_records", :force => true do |t|
     t.integer  "user_id"
@@ -324,6 +335,15 @@ ActiveRecord::Schema.define(:version => 20130307175002) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["surname"], :name => "index_users_on_surname"
   add_index "users", ["username"], :name => "index_users_on_username"
+
+  create_table "wiki_page_attachments", :force => true do |t|
+    t.integer  "page_id",                           :null => false
+    t.string   "wiki_page_attachment_file_name"
+    t.string   "wiki_page_attachment_content_type"
+    t.integer  "wiki_page_attachment_file_size"
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
 
   create_table "wiki_page_versions", :force => true do |t|
     t.integer  "page_id",    :null => false

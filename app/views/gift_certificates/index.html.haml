@@ -1,0 +1,46 @@
+.page-header
+  %h1
+    = t '.title'
+    %br
+    = link_to_new GiftCertificate if can? :manage, GiftCertificate
+= link_to t('gift_certificates.index.issue'), '#', remote: true, id: 'issue_gift_certificate_link',
+          class: 'btn btn-info btn-large', data: {url: '/gift_certificates/issue'}
+= link_to t('gift_certificates.index.partly_use'), '#', remote: true, id: 'partly_use_gift_certificate_link',
+              class: 'btn btn-primary btn-large', data: {url: '/gift_certificates/activate'}
+= link_to t('gift_certificates.index.activate'), '#', remote: true, id: 'activate_gift_certificate_link',
+          class: 'btn btn-primary btn-large', data: {url: '/gift_certificates/activate'}
+%hr
+- if can? :manage, GiftCertificate
+  .table_filter.navbar.container
+    .navbar-inner
+      = form_tag gift_certificates_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
+        = hidden_field_tag :nominal, params[:nominal]
+        = hidden_field_tag :status, params[:status]
+        .input-append
+          = text_field_tag :search_q, params[:search_q], id: 'search_gift_cert_input', class: 'search-query input-medium',
+              placeholder: t('.search_placeholder')
+          %span.add-on.btn.clear_search_input
+            %i.icon-remove
+
+    -#%ul.nav
+    -#  %li.dropdown
+    -#    = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+    -#      = t "gift_certificates.nominals.#{params[:nominal].present? ? params[:nominal] : 'all'}"
+    -#      %b.caret
+    -#    %ul.dropdown-menu
+    -#
+    -#      - GiftCertificate::NOMINALS.each do |nominal|
+    -#        %li= link_to
+
+  #resource_table= render 'table'
+
+#gift_certificate_reader.modal-backdrop.fade
+-##gift_certificate_form
+-#  = form_tag issue_gift_certificates_path, class: 'form-inline' do
+-#    .alert
+-#    #gift_certificate_nominal
+-#    #gift_certificate_consumed
+-#    #gift_certificate_balance
+-#    = hidden_field_tag :number
+-#    = number_field_tag :consume, nil, placeholder: t('.consume_placeholder')
+-#    = submit_tag 'OK', class: 'btn btn-primary'

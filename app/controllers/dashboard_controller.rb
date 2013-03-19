@@ -105,19 +105,6 @@ class DashboardController < ApplicationController
     @orders = Order.actual_orders.search(params).oldest.page params[:page]
   end
 
-  def make_report_by_device_types_1
-    @report[:device_types] = []
-    if @received_devices.any?
-      @received_devices.group('device_type_id').count('id').each_pair do |key, val|
-        if key.present? and (device_type = DeviceType.where(id: key).first).present?
-          devices = @received_devices.where(device_type_id: key)
-          @report[:device_types] << {name: device_type.try(:full_name), qty: val, qty_done: devices.at_done.count,
-                                     qty_archived: devices.at_archive.count}
-        end
-      end
-    end
-  end
-
   def make_report_by_device_types(device_type_id)
     @report[:device_types] = []
     @current_device_type = DeviceType.find(device_type_id) if device_type_id.present?
@@ -147,7 +134,9 @@ class DashboardController < ApplicationController
       @received_devices.group('user_id').count('id').each_pair do |key, val|
         if key.present? and (user = User.find key).present?
           devices = @received_devices.where(user_id: key)
-          @report[:users] << {name: user.short_name, qty: val, qty_done: devices.at_done.count, qty_archived: devices.at_archive.count}
+          #user_devices = devices.map{|d|{id: d.id, presentation: d.presentation}}
+          @report[:users] << {name: user.short_name, qty: val, qty_done: devices.at_done.count,
+                              qty_archived: devices.at_archive.count, devices: devices}
         end
       end
     end

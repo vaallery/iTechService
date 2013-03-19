@@ -1,0 +1,17 @@
+#gift_certificate_form
+  - if @gift_certificate.present?
+    = form_for @gift_certificate, url: @form_path, method: :post, class: 'form-inline' do |f|
+      .modal-header= t "gift_certificates.index.#{@operation}"
+      .modal-body
+        #gift_certificate_nominal= "#{GiftCertificate.human_attribute_name(:nominal)}: #{@gift_certificate.nominal_h}"
+        - unless @operation == 'issue'
+          #gift_certificate_consumed= "#{GiftCertificate.human_attribute_name(:consumed)}: #{number_to_currency(@gift_certificate.consumed || 0, precision: 0)}"
+          #gift_certificate_balance= "#{t('gift_certificates.balance')}: #{number_to_currency (@gift_certificate.balance), precision: 0}"
+        %br
+        = hidden_field_tag :number, @gift_certificate.number
+        - if @operation == 'partly_use'
+          = number_field_tag :consume, nil, placeholder: t('gift_certificates.consume_placeholder'), autofocus: true
+      .modal-footer
+        = submit_tag t('gift_certificates.submit'), class: 'btn btn-primary'
+  - else
+    .modal-body= @error

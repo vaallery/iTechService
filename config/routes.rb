@@ -77,6 +77,13 @@ ItechService::Application.routes.draw do
 
   resources :sales_imports, only: [:new, :create]
 
+  resources :gift_certificates do
+    post :issue, on: :collection
+    post :activate, on: :collection
+    post :refresh, on: :member
+    get :scan, on: :collection
+  end
+
   wiki_root '/wiki'
 
 end

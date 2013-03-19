@@ -26,6 +26,7 @@ gem 'taps'
 gem 'irwi', git: 'git://github.com/alno/irwi.git'
 gem 'RedCloth'
 gem 'roo'
+gem 'paperclip'
 
 # Gems used only for assets and not required
 # in production environments by default.

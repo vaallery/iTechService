@@ -194,6 +194,14 @@ class Device < ActiveRecord::Base
     end
   end
 
+  def at_done?
+    location.is_done?
+  end
+
+  def in_archive?
+    location.is_archive?
+  end
+
   private
 
   def generate_ticket_number
