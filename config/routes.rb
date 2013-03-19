@@ -81,6 +81,7 @@ ItechService::Application.routes.draw do
     post :issue, on: :collection
     post :activate, on: :collection
     post :refresh, on: :member
+    get :scan, on: :collection
   end
 
   wiki_root '/wiki'

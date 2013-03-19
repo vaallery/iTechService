@@ -14,6 +14,7 @@ Ability
     else
       if user.software?
         can :modify, [Device, Client]
+        can [:issue, :activate, :scan], GiftCertificate
       end
       if user.media?
         can :modify, [Device, Client]

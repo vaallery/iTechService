@@ -12,5 +12,7 @@
                          value_method: lambda{|s|GiftCertificate::STATUSES.index(s)},
                          label_method: lambda{|s|t("gift_certificates.statuses.#{s}")}
 
+      = f.input :consumed
+
   .form-actions
     = submit_button f

@@ -3,11 +3,13 @@
     = t '.title'
     %br
     = link_to_new GiftCertificate if can? :manage, GiftCertificate
-    = link_to t('gift_certificates.index.issue'), '#', remote: true, id: 'issue_gift_certificate_link',
-              class: 'btn btn-info btn-large', data: {url: '/gift_certificates/issue'}
-    = link_to t('gift_certificates.index.activate'), '#', remote: true, id: 'activate_gift_certificate_link',
+= link_to t('gift_certificates.index.issue'), '#', remote: true, id: 'issue_gift_certificate_link',
+          class: 'btn btn-info btn-large', data: {url: '/gift_certificates/issue'}
+= link_to t('gift_certificates.index.partly_use'), '#', remote: true, id: 'partly_use_gift_certificate_link',
               class: 'btn btn-primary btn-large', data: {url: '/gift_certificates/activate'}
-
+= link_to t('gift_certificates.index.activate'), '#', remote: true, id: 'activate_gift_certificate_link',
+          class: 'btn btn-primary btn-large', data: {url: '/gift_certificates/activate'}
+%hr
 - if can? :manage, GiftCertificate
   .table_filter.navbar.container
     .navbar-inner
@@ -30,10 +32,15 @@
     -#      - GiftCertificate::NOMINALS.each do |nominal|
     -#        %li= link_to
 
-
   #resource_table= render 'table'
 
 #gift_certificate_reader.modal-backdrop.fade
-  = form_tag issue_gift_certificates_path do
-    = hidden_field_tag :number
-    -#= submit_tag 'Submit'
+-##gift_certificate_form
+-#  = form_tag issue_gift_certificates_path, class: 'form-inline' do
+-#    .alert
+-#    #gift_certificate_nominal
+-#    #gift_certificate_consumed
+-#    #gift_certificate_balance
+-#    = hidden_field_tag :number
+-#    = number_field_tag :consume, nil, placeholder: t('.consume_placeholder')
+-#    = submit_tag 'OK', class: 'btn btn-primary'

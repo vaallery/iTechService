@@ -77,6 +77,23 @@ class GiftCertificatesController < ApplicationController
     end
   end
 
+  def scan
+    if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
+      if @operation == 'issue' and !@gift_certificate.available?
+        @error = t 'gift_certificates.errors.not_available'
+      elsif ['activate', 'partly_use'].include? @operation and !@gift_certificate.issued?
+        @error = t 'gift_certificates.errors.not_issued'
+      end
+        @operation = params[:operation]
+        @form_path = (@operation == 'issue') ? issue_gift_certificates_path : activate_gift_certificates_path
+    else
+      @error = t('gift_certificates.errors.not_found')
+    end
+    respond_to do |format|
+      format.js { render 'shared/show_modal_form' }
+    end
+  end
+
   def issue
     respond_to do |format|
       if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
@@ -100,8 +117,13 @@ class GiftCertificatesController < ApplicationController
   def activate
     respond_to do |format|
       if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
-        if @gift_certificate.update_attributes status: 2
-          msg = flash.now[:notice] = t('gift_certificates.activated', nominal: @gift_certificate.nominal_h)
+        new_attributes = (consume = params[:consume]).present? ? {consume: consume.to_i} :
+                                                                 {status: 2}
+        if @gift_certificate.update_attributes new_attributes
+          msg = flash.now[:notice] = params[:consume].present? ?
+                    t('gift_certificates.consumed', value: number_to_currency(params[:consume].to_i, precision: 0),
+                      balance: number_to_currency(@gift_certificate.balance, precision: 0)) :
+                    t('gift_certificates.activated', nominal: @gift_certificate.nominal_h)
           format.html { redirect_to gift_certificates_path, notice: msg }
           format.js { render 'status_changed' }
         else
@@ -121,7 +143,7 @@ class GiftCertificatesController < ApplicationController
     @gift_certificate = GiftCertificate.find params[:id]
 
     respond_to do |format|
-      if @gift_certificate.update_attributes status: 0
+      if @gift_certificate.update_attributes status: 0, consumed: 0
         msg = flash.now[:notice] = t('gift_certificates.refreshed', nominal:  @gift_certificate.nominal_h)
         format.html { redirect_to gift_certificates_path, notice: msg }
         format.js { render 'status_changed' }

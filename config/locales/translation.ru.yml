@@ -127,6 +127,7 @@ ru:
         user_id: user
 
       gift_certificate:
+        consumed: Израсходовано
         nominal: Номинал
 
       history_record:
@@ -364,6 +365,7 @@ ru:
       already_available: Подарочный сертификат уже доступен
       already_issued: Подарочный сертификат уже открыт
       already_used: Подарочный сертификат уже закрыт
+      consumption_exceeded: Расходы должны быть меньше номинала
       not_available: Подарочный сертификат не доступен
       not_found: Подарочный сертификат не найден
       not_issued: Подарочный сертификат не открыт
@@ -371,7 +373,8 @@ ru:
     index:
       activate: Закрытие Подарочного сертификата
       issue: Открытие Подарочного сертификата
-      search_placeholder: Номер карты
+      partly_use: Частичное закрытие Подарочного сертификата
+      search_placeholder: Номер сертификата
       title: Подарочные сертификаты
     new:
       title: Новый Подарочный сертификат
@@ -388,11 +391,15 @@ ru:
       issued: Открыт
       used: Закрыт
     activated: "Подарочный сертификат номиналом %{nominal} закрыт."
+    balance: Доступно
+    consume_placeholder: Списать
+    consumed: "Списано: %{value}. Осталось: %{balance}"
     created: Подарочный сертификат создан.
     issued: "Подарочный сертификат номиналом %{nominal} открыт."
     link: Подарочные сертификаты
     refresh: Восстановить
     refreshed: "Подарочный сертификат номиналом %{nominal} восстановлен."
+    submit: Выполнить
     updated: Подарочный сертификат изменен.
 
   imports:
