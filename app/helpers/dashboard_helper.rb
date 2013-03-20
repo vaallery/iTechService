@@ -86,7 +86,11 @@ module DashboardHelper
                  device_id: device_task.device_id, task_id: device_task.task_id}) do
       content_tag(:td, nil) +
       content_tag(:td, device_task.task_name) +
-      content_tag(:td, device_task.comment) +
+      content_tag(:td) do
+        content_tag(:span, h(device_task.comment)) +
+        tag(:br) +
+        content_tag(:strong, h(device_task.user_comment), class: 'user_comment').html_safe
+      end +
       content_tag(:td, is_editable_task?(device_task) ? link_to_edit_device_task(device_task) : nil)
     end.html_safe
   end
