@@ -38,7 +38,7 @@
                 = day.day
 
     %tfoot
-      - next_other_duties(@user, Date.current).each do |duty_day|
+      - next_duties(Date.current).each do |duty_day|
         %tr
           %td{colspan: 2}
             = duty_day.day.strftime '%d.%m.%y'

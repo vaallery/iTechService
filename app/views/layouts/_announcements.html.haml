@@ -1,5 +1,4 @@
 = content_for :announcements do
   #announcements
     - Announcement.active.each do |announcement|
-      -#- debugger if announcement.birthday?
       = render announcement if announcement.visible_for? current_user
