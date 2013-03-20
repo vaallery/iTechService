@@ -96,6 +96,10 @@ module UsersHelper
     DutyDay.where('user_id <> ? AND day > ?', user.id, date).reorder('day asc')
   end
 
+  def next_duties(date)
+    DutyDay.where('day >= ?', date).reorder('day asc')
+  end
+
   def profile_link
     icon_class = current_user.admin? ? 'user-md' : 'user'
     link_to icon_tag(icon_class) + current_user.username, profile_path, id: 'profile_link',
@@ -114,6 +118,12 @@ module UsersHelper
       badge_class << ' badge-warning' if diff.between? -1, 1
     end
     content_tag :span, "#{good_count} / #{bad_count}", class: badge_class
+  end
+
+  def duty_info_tag
+    content_tag :div, id: 'duty_info', class: 'alert alert-block' do
+      content_tag :h4, t('users.duty_info')
+    end
   end
 
   private

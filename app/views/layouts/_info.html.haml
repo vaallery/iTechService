@@ -1,3 +1,6 @@
 = content_for :info do
   - if (info = Info.important.first).present?
-    #important_info= link_to info.content.html_safe, info_path(info)
+    #important_info
+      = link_to info.content.html_safe, info_path(info)
+
+  = duty_info_tag if current_user.is_duty_today?

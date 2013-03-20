@@ -126,6 +126,10 @@ class User < ActiveRecord::Base
     duty_days.exists? day: date
   end
 
+  def is_duty_today?
+    duty_days.exists? day: Date.current
+  end
+
   def is_work_day? day
     day = day.respond_to?(:wday) ? day.wday : day.to_i
     if (schedule_day = schedule_days.find_by_day(day)).present?
