@@ -27,6 +27,7 @@ doc/
 /public/assets/
 /uploads
 /public/uploads
+/public/system
 .idea/*
 .powrc
 .idea/misc.xml
