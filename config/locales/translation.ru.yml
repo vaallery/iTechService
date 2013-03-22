@@ -438,11 +438,12 @@ ru:
       title: Заказы
     link: Заказы
     object_kinds:
-      device: Техника
       accessory: Аксессуар
-      soft: Софт
-      misc: Прочее
       all_kinds: Все типы
+      device: Техника
+      misc: Прочее
+      soft: Софт
+      spare_part: Запчасть
     statuses:
       new: Новый
       pending: Выполняется

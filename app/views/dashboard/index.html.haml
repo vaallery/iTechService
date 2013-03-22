@@ -29,6 +29,8 @@
               %li= link_to location.full_name, actual_tasks_path(location: location.id), remote: true
       - else
         %li.actual_tasks_nav.active= link_to t('dashboard.actual_tasks'), actual_tasks_path, remote: true
+        - if current_user.technician?
+          %li.actual_orders_nav= link_to t('dashboard.actual_orders'), actual_orders_path, remote: true
       %li.ready_devices_nav= link_to t('dashboard.ready_devices'), ready_devices_path, remote: true
     %li.goods_for_sale_nav= link_to t('dashboard.goods_for_sale'), goods_for_sale_path, remote: true
 

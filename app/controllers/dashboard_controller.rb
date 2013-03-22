@@ -102,7 +102,11 @@ class DashboardController < ApplicationController
   end
 
   def load_actual_orders
-    @orders = Order.actual_orders.search(params).oldest.page params[:page]
+    if current_user.technician?
+      @orders = Order.actual_orders.technician_orders.search(params).oldest.page params[:page]
+    else
+      @orders = Order.actual_orders.marketing_orders.search(params).oldest.page params[:page]
+    end
   end
 
   def make_report_by_device_types(device_type_id)

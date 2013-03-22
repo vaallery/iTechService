@@ -81,7 +81,7 @@ class GiftCertificate < ActiveRecord::Base
 
   def history_since_issue
     if issued?
-      history_records.where('created_at >= ? AND column_name IN (?)', issued_at, ['status', 'consumed'])
+      history_records.where('created_at >= ? AND column_name IN (?)', issued_at, %w[status consumed])
     else
       []
     end

@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
                   :user_comment
   validates :customer_id, :object, :object_kind, presence: true
   before_validation :generate_number
+
   before_validation do |order|
     if order.new_record?
       if order.customer_id.blank?
@@ -28,12 +29,15 @@ class Order < ActiveRecord::Base
   scope :done_orders, where(status: 'done')
   scope :canceled_orders, where(status: 'canceled')
   scope :actual_orders, where(status: %w[new pending notified done])
+  scope :technician_orders, where(object_kind: 'spare_part')
+  scope :marketing_orders, where("object_kind <> 'spare_part'")
   scope :device, where(object_kind: 'device')
   scope :accessory, where(object_kind: 'accessory')
   scope :soft, where(object_kind: 'soft')
   scope :misc, where(object_kind: 'misc')
+  scope :spares, where(object_kind: 'spares')
 
-  OBJECT_KINDS = %w[device accessory soft misc]
+  OBJECT_KINDS = %w[device accessory soft misc spare_part]
   STATUSES = %w[new pending done canceled notified archive]
 
   def customer_full_name
