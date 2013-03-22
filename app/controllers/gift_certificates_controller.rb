@@ -122,7 +122,14 @@ class GiftCertificatesController < ApplicationController
           msg = flash.now[:notice] = @gift_certificate.used? ?
                     t('gift_certificates.activated', nominal: @gift_certificate.nominal_h) :
                     t('gift_certificates.consumed', value: params[:consume], balance: @gift_certificate.balance)
-          format.html { redirect_to gift_certificates_path, notice: msg }
+          pdf = GiftCertificatePdf.new @gift_certificate, view_context, params[:consume]
+          if Rails.env.production?
+            system 'lp', pdf.render_file(Rails.root.to_s+"/tmp/tickets/cert_#{@gift_certificate.number}.pdf").path
+            format.html { redirect_to gift_certificates_path, notice: msg }
+          else
+            format.html { send_data pdf.render, filename: "cert_#{@gift_certificate.number}.pdf",
+                                    type: 'application/pdf', disposition: 'inline' }
+          end
           format.js { render 'status_changed' }
         else
           msg = flash.now[:alert] = @gift_certificate.errors.full_messages.join '. '
