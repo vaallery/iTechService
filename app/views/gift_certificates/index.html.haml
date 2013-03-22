@@ -4,9 +4,9 @@
     %br
     = link_to_new GiftCertificate if can? :manage, GiftCertificate
 = link_to t('gift_certificates.index.issue'), '#', remote: true, id: 'issue_gift_certificate_link',
-          class: 'btn btn-info btn-large', data: {url: '/gift_certificates/issue'}
-= link_to t('gift_certificates.index.partly_use'), '#', remote: true, id: 'partly_use_gift_certificate_link',
-              class: 'btn btn-primary btn-large', data: {url: '/gift_certificates/activate'}
+          class: 'btn btn-success btn-large', data: {url: '/gift_certificates/issue'}
+= link_to t('gift_certificates.index.check'), '#', remote: true, id: 'check_gift_certificate_link',
+              class: 'btn btn-info btn-large', data: {url: '/gift_certificates/check'}
 = link_to t('gift_certificates.index.activate'), '#', remote: true, id: 'activate_gift_certificate_link',
           class: 'btn btn-primary btn-large', data: {url: '/gift_certificates/activate'}
 %hr

@@ -1,7 +1,7 @@
 class HistoryObserver < ActiveRecord::Observer
   include DeviseHelper
   
-  observe :device, :device_task, :order, :user
+  observe :device, :device_task, :order, :user, :gift_certificate
   
   def after_save model
     if model.is_a? Device
