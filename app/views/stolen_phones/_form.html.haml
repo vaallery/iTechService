@@ -1,5 +1,6 @@
 = simple_form_for @stolen_phone, html: { class: 'form-horizontal' } do |f|
-  = f.object.errors.full_messages
+  - if f.object.errors.any?
+    .alert.alert-error= f.object.errors.full_messages.join('. ')
   = f.input :imei, autofocus: true
   -#= f.input :comment, as: 'text', input_html: {rows: 5}
   .form-actions

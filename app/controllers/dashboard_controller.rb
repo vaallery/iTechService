@@ -72,11 +72,12 @@ class DashboardController < ApplicationController
     @report[:devices_received_archived_count] = @received_devices.at_archive.count
 
     case params[:report]
-      when 'device_types_report' then make_report_by_device_types params[:device_type]
-      when 'users_report' then make_report_by_users
-      when 'tasks_report' then make_report_by_tasks
-      when 'clients_report' then make_report_by_clients
-      when 'tasks_durations_report' then make_report_by_tasks_durations
+      when 'device_types_report' then make_device_types_report params[:device_type]
+      when 'users_report' then make_users_report
+      when 'tasks_report' then make_done_tasks_report
+      when 'clients_report' then make_clients_report
+      when 'tasks_durations_report' then make_tasks_duration_report
+      when 'done_orders_report' then make_done_orders_report
     end
   end
 
@@ -102,10 +103,14 @@ class DashboardController < ApplicationController
   end
 
   def load_actual_orders
-    @orders = Order.actual_orders.search(params).oldest.page params[:page]
+    if current_user.technician?
+      @orders = Order.actual_orders.technician_orders.search(params).oldest.page params[:page]
+    else
+      @orders = Order.actual_orders.marketing_orders.search(params).oldest.page params[:page]
+    end
   end
 
-  def make_report_by_device_types(device_type_id)
+  def make_device_types_report(device_type_id)
     @report[:device_types] = []
     @current_device_type = DeviceType.find(device_type_id) if device_type_id.present?
     device_types = device_type_id.present? ? @current_device_type.children : DeviceType.roots
@@ -128,7 +133,7 @@ class DashboardController < ApplicationController
     end
   end
 
-  def make_report_by_users
+  def make_users_report
     @report[:users] = []
     if @received_devices.any?
       @received_devices.group('user_id').count('id').each_pair do |key, val|
@@ -142,7 +147,7 @@ class DashboardController < ApplicationController
     end
   end
 
-  def make_report_by_tasks
+  def make_done_tasks_report
     archived_devices_ids = HistoryRecord.devices.movements_to_archive.in_period(@period).collect{|hr|hr.object_id}.uniq
     @report[:tasks] = []
     @report[:tasks_sum] = 0
@@ -172,18 +177,18 @@ class DashboardController < ApplicationController
     end
   end
 
-  def make_report_by_clients
+  def make_clients_report
     @report[:clients_count] = Client.count
     #@report[:new_clients_count] = Client.where(created_at: @period).count
     @report[:new_clients] = Client.where(created_at: @period)
   end
 
-  def make_report_by_tasks_durations
+  def make_tasks_duration_report
     @report[:tasks_durations] = []
     Task.find_each do |task|
       task_durations = []
       device_tasks = []
-      HistoryRecord.devices.movements_to(task.location_id).in_period(@period).each do |hr|
+      HistoryRecord.devices.movements_to(task.location_id).in_period(@period).find_each do |hr|
         moved_at = hr.created_at
         durations = []
         hr.object.device_tasks.done.where(task_id: task.id).each do |dt|
@@ -201,6 +206,15 @@ class DashboardController < ApplicationController
       average_duration = task_durations.present? ? (task_durations.sum/task_durations.size).round : 0
       @report[:tasks_durations] << {task_name: task.name, average_duration: average_duration, device_tasks: device_tasks}
     end
+  end
+
+  def make_done_orders_report
+    @report[:orders] = []
+    done_orders = Order.done_at @period
+    done_orders.find_each do |order|
+      @report[:orders] << {order: order, done_at: order.done_at}
+    end
+    @report[:done_orders_count] = done_orders.count
   end
 
 end

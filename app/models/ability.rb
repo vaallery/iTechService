@@ -36,17 +36,15 @@ Ability
         cannot :create, Order
         cannot [:modify, :destroy], Comment
       end
+      if user.technician?
+        can :modify, Order
+      end
       can :manage, WikiPage if user.able? :manage_wiki
       can :make_announce, Announcement
       can :cancel_announce, Announcement, user_id: user.id
       can :update, Announcement, user_id: user.id
-      #can :check_phone_number, Client
-      #can :questionnaire, Client
-      #can :autocomplete, Client
-      #can :select, Client
       can :create, Order
       can :destroy, Order, user_id: user.id
-      #can :read, Info
       can :update, Device#, location_id: user.location_id
       can :profile, User, id: user.id
       can :update_wish, User, id: user.id
@@ -55,6 +53,7 @@ Ability
       can :create, Comment
       can :update, Comment, user_id: user.id
       can :create, Message
+      can :read, Info, recipient_id: [nil, user.id]
       can :read, :all
       cannot [:create, :update, :destroy], StolenPhone
     end

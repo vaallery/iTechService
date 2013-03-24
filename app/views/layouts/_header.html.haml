@@ -22,8 +22,8 @@
               = t('dashboard.misc')
               = caret_tag
             %ul.dropdown-menu
-              -#%li{class: nav_state_for('gift_certificates')}
-              -#  = link_to t('gift_certificates.link'), gift_certificates_path
+              %li{class: nav_state_for('gift_certificates')}
+                = link_to t('gift_certificates.link'), gift_certificates_path
               %li{class: nav_state_for('tasks')}= link_to t('tasks.link', default: 'Tasks'), tasks_path if can? :manage, Task
               %li{class: nav_state_for('locations')}= link_to t('locations.link', default: 'Locations'), locations_path if can? :manage, Location
               %li{class: nav_state_for('stolen_phones')}= link_to t('stolen_phones.link', default: 'Black list'), stolen_phones_path

@@ -6,7 +6,13 @@ class OrdersController < ApplicationController
   skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
 
   def index
-    @orders = Order.search params
+    if current_user.technician?
+      @orders = Order.technician_orders.search params
+    elsif current_user.marketing?
+      @orders = Order.marketing_orders.search params
+    else
+      @orders = Order.search params
+    end
 
     if params.has_key? :sort and params.has_key? :direction
       @orders = @orders.reorder 'orders.'+sort_column + ' ' + sort_direction

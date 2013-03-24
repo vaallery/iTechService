@@ -2,9 +2,20 @@
   %h1
     = link_back_to_index
     = @info.title
-    %small.muted= "[#{human_datetime @info.created_at}]"
+    %small.muted
+      = "[#{human_datetime @info.created_at}]"
+      = "<#{@info.recipient_presentation}>" if @info.recipient.present?
 
 = @info.content.html_safe
+
+%hr
+#info_comments
+  .comments
+    %h5= t('comments.index.title')+':'
+    = render @info.comments.oldest
+  .new_comment
+    %h5= t 'comments.new.title'
+    = new_comment_form_for @info
 
 - if can? :manage, Info
   .form-actions

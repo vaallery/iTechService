@@ -11,7 +11,7 @@ class InfosController < ApplicationController
       end
       @infos = @infos.page(params[:page])
     else
-      @infos = Info.grouped_by_date
+      @infos = Info.available_for(current_user).grouped_by_date
     end
 
     respond_to do |format|

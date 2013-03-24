@@ -143,6 +143,8 @@ ru:
 
       info:
         important: Важно
+        recipient: Адресант
+        recipient_id: :activerecord.attributes.info.recipient
         title: Заголовок
 
       karma:
@@ -365,13 +367,14 @@ ru:
       already_available: Подарочный сертификат уже доступен
       already_issued: Подарочный сертификат уже открыт
       already_used: Подарочный сертификат уже закрыт
-      consumption_exceeded: Расходы должны быть меньше номинала
+      consumption_exceeded: Превышен номинал
       not_available: Подарочный сертификат не доступен
       not_found: Подарочный сертификат не найден
       not_issued: Подарочный сертификат не открыт
       not_used: Подарочный сертификат не закрыт
     index:
       activate: Закрытие Подарочного сертификата
+      check: Проверка Продарочного сертификата
       issue: Открытие Подарочного сертификата
       partly_use: Частичное закрытие Подарочного сертификата
       search_placeholder: Номер сертификата
@@ -393,7 +396,7 @@ ru:
     activated: "Подарочный сертификат номиналом %{nominal} закрыт."
     balance: Доступно
     consume_placeholder: Списать
-    consumed: "Списано: %{value}. Осталось: %{balance}"
+    consumed: "Списано: %{value}. Осталось: %{balance}."
     created: Подарочный сертификат создан.
     issued: "Подарочный сертификат номиналом %{nominal} открыт."
     link: Подарочные сертификаты
@@ -437,11 +440,12 @@ ru:
       title: Заказы
     link: Заказы
     object_kinds:
-      device: Техника
       accessory: Аксессуар
-      soft: Софт
-      misc: Прочее
       all_kinds: Все типы
+      device: Техника
+      misc: Прочее
+      soft: Софт
+      spare_part: Запчасть
     statuses:
       new: Новый
       pending: Выполняется
@@ -480,6 +484,7 @@ ru:
     qty_free: бесплатных
     moved_at: Перемещен
     new_clients_count: Количество новых клиентов
+    done_orders_report: Выполненные заказы
     period: Период
     received: Принято
     received_done: готовы

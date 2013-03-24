@@ -21,5 +21,6 @@
           %li= link_to t('reports.tasks_report'), '#', remote: true, data: {report: 'tasks_report'}
           %li= link_to t('reports.clients_report'), '#', remote: true, data: {report: 'clients_report'}
           %li= link_to t('reports.tasks_durations_report'), '#', remote: true, data: {report: 'tasks_durations_report'}
+          -#%li= link_to t('reports.done_orders_report'), '#', remote: true, data: {report: 'done_orders_report'}
 
 #reports_tables= render "dashboard/reports/#{params[:report]}" if params[:report].present?

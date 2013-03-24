@@ -3,6 +3,8 @@ class GiftCertificate < ActiveRecord::Base
   STATUSES = %w[available issued used]
   NOMINALS = %w[1500r 3000r 5000r 10000r 15000r]
 
+  has_many :history_records, as: :object, dependent: :destroy
+
   attr_accessible :number, :nominal, :status, :consumed, :consume
   attr_accessor :consume
   validates :number, presence: true, uniqueness: {case_sensitive: false}
@@ -44,6 +46,14 @@ class GiftCertificate < ActiveRecord::Base
     I18n.t("gift_certificates.statuses.#{status_s}")
   end
 
+  def issue
+    update_attributes status: 1
+  end
+
+  def refresh
+    update_attributes status: 0, consumed: 0
+  end
+
   def available?
     status == 0
   end
@@ -65,6 +75,18 @@ class GiftCertificate < ActiveRecord::Base
     nominal_val - (consumed || 0)
   end
 
+  def issued_at
+    history_records.where(column_name: 'status', new_value: '1').last.try(:created_at)
+  end
+
+  def history_since_issue
+    if issued?
+      history_records.where('created_at >= ? AND column_name IN (?)', issued_at, %w[status consumed])
+    else
+      []
+    end
+  end
+
   private
 
   def validate_status
@@ -72,23 +94,18 @@ class GiftCertificate < ActiveRecord::Base
       errors.add :base, I18n.t('gift_certificates.errors.not_available') if issued? and old_status != 0
       errors.add :base, I18n.t('gift_certificates.errors.not_issued') if used? and old_status != 1
       errors.add :base, I18n.t('gift_certificates.errors.not_used') if available? and old_status != 2
-    #elsif changed_attributes['consume'].blank?
-    #  debugger
-    #  errors.add :base, I18n.t('gift_certificates.errors.already_issued') if issued?
-    #  errors.add :base, I18n.t('gift_certificates.errors.already_used') if used?
-    #  errors.add :base, I18n.t('gift_certificates.errors.already_available') if available?
     end
   end
 
   def validate_consumption
-    if issued?
-      old_consumed = changed_attributes['consumed'].present? ? changed_attributes['consumed'].to_i : 0
-      funds_left = nominal_val - old_consumed
-      unless (consumed || 0) <= funds_left
-        errors.add :base, I18n.t('gift_certificates.errors.consumption_exceeded')
+    if changed_attributes['consumed'].present?
+      if issued? or used?
+        unless (consumed || 0) <= nominal_val
+          errors.add :base, I18n.t('gift_certificates.errors.consumption_exceeded')
+        end
+      elsif consumed != 0
+        errors.add :base, I18n.t('gift_certificates.errors.not_issued')
       end
-    else
-      errors.add :base, I18n.t('gift_certificates.errors.not_issued')
     end
   end
 

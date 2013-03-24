@@ -1,0 +1,14 @@
+%dl.dl-horizontal
+  %dt= GiftCertificate.human_attribute_name(:status)
+  %dd= @gift_certificate.status_h
+
+  %dt= GiftCertificate.human_attribute_name(:nominal)
+  %dd= @gift_certificate.nominal_h
+
+  %dt= GiftCertificate.human_attribute_name(:consumed)
+  %dd= number_to_currency(@gift_certificate.consumed || 0, precision: 0)
+
+  %dt= t('gift_certificates.balance')
+  %dd= number_to_currency (@gift_certificate.balance), precision: 0
+
+  .well.well-small= gift_certificate_history_tag @gift_certificate, true
