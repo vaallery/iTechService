@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130318100206) do
+ActiveRecord::Schema.define(:version => 20130324055536) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -177,13 +177,15 @@ ActiveRecord::Schema.define(:version => 20130318100206) do
   add_index "history_records", ["user_id"], :name => "index_history_records_on_user_id"
 
   create_table "infos", :force => true do |t|
-    t.string   "title",                         :null => false
-    t.text     "content",                       :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.boolean  "important",  :default => false
+    t.string   "title",                           :null => false
+    t.text     "content",                         :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.boolean  "important",    :default => false
+    t.integer  "recipient_id"
   end
 
+  add_index "infos", ["recipient_id"], :name => "index_infos_on_recipient_id"
   add_index "infos", ["title"], :name => "index_infos_on_title"
 
   create_table "karmas", :force => true do |t|

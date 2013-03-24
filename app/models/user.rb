@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_many :devices, inverse_of: :user
   has_many :karmas, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :infos, inverse_of: :recipient, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
   
@@ -33,14 +34,12 @@ class User < ActiveRecord::Base
 
   accepts_nested_attributes_for :schedule_days, :duty_days, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :karmas, allow_destroy: true
-  #accepts_nested_attributes_for :duty_days, allow_destroy: true
 
   validates :username, :role, presence: true
   validates :password, presence: true, confirmation: true, if: :password_required?
 
   cattr_accessor :current
 
-  #default_scope order('id asc')
   scope :admins, where(role: 'admin')
   scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
   scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})

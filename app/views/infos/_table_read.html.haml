@@ -1,5 +1,5 @@
 - if @infos.any?
-  %table
+  %table#news_table
     - date = nil
     - @infos.each do |info|
       - unless date == info.created_at.to_date
@@ -10,5 +10,5 @@
       %tr{class: info.important ? 'warning' : ''}
         %td.time_col
           = info.created_at.strftime '%H:%M'
-        %td
+        %td.info_col{class: info.type_s}
           = link_to info.title, info_path(info)

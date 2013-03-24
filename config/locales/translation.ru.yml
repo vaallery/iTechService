@@ -143,6 +143,8 @@ ru:
 
       info:
         important: Важно
+        recipient: Адресант
+        recipient_id: :activerecord.attributes.info.recipient
         title: Заголовок
 
       karma:

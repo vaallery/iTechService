@@ -2,7 +2,9 @@
   %h1
     = link_back_to_index
     = @info.title
-    %small.muted= "[#{human_datetime @info.created_at}]"
+    %small.muted
+      = "[#{human_datetime @info.created_at}]"
+      = "<#{@info.recipient_presentation}>" if @info.recipient.present?
 
 = @info.content.html_safe
 

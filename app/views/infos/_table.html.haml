@@ -6,6 +6,7 @@
       %tr
         %th= sortable 'id', Info.human_attribute_name(:id)
         %th= sortable 'title', Info.human_attribute_name(:title)
+        %th= sortable 'recipient', Info.human_attribute_name(:recipient)
         %th= sortable 'created_at', Info.human_attribute_name(:created_at)
         %th
     %tbody
@@ -13,6 +14,7 @@
         %tr{class: info.important ? 'warning' : ''}
           %td= link_to info.id, info_path(info)
           %td= link_to info.title, info_path(info)
+          %td= info.recipient.present? ? link_to(info.recipient_presentation, user_path(info.recipient)) : '-'
           %td= human_datetime info.created_at
           %td.btn-group
             = link_to_show_small info
