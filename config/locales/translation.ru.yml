@@ -482,6 +482,7 @@ ru:
     qty_free: бесплатных
     moved_at: Перемещен
     new_clients_count: Количество новых клиентов
+    done_orders_report: Выполненные заказы
     period: Период
     received: Принято
     received_done: готовы

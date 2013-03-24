@@ -1,0 +1,13 @@
+%table#orders_report.table.table-bordered.table-hover
+  %caption
+    %h4= t 'reports.done_orders_report'
+  %thead
+    %tr
+      %th
+  %tbody
+    - @report[:orders].each do |order|
+      %tr.order_row
+        %td
+  %tfoot
+    %tr
+      %td

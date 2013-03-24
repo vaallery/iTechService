@@ -36,6 +36,8 @@ class Order < ActiveRecord::Base
   scope :soft, where(object_kind: 'soft')
   scope :misc, where(object_kind: 'misc')
   scope :spares, where(object_kind: 'spares')
+  scope :done_at, lambda { |period| joins(:history_records).where(history_records: {column_name: 'status',
+                            new_value: 'done', created_at: period}) }
 
   OBJECT_KINDS = %w[device accessory soft misc spare_part]
   STATUSES = %w[new pending done canceled notified archive]
@@ -58,6 +60,10 @@ class Order < ActiveRecord::Base
 
   def done?
     status == 'done'
+  end
+
+  def done_at
+    history_records.where({column_name: 'status', new_value: 'done'}).last.try :created_at
   end
 
   def self.search params
