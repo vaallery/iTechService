@@ -8,13 +8,13 @@ module CommentsHelper
                  class: 'btn btn-mini pull-right new_comment_link hidden')}"}
   end
 
-  def new_comment_form(commentable)
+  def new_comment_form_for(commentable)
     comment = commentable.comments.build
     form_for comment, remote: true, class: 'new_comment_form', id: 'new_comment_form' do |f|
       f.hidden_field(:commentable_type) +
       f.hidden_field(:commentable_id) +
       f.text_area(:content, rows: 3) +
-      f.submit(class: 'btn')
+      f.submit(class: 'btn btn-primary')
     end.html_safe
   end
 

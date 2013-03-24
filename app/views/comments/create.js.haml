@@ -1,2 +1,6 @@
 :plain
   $('form#new_comment').parents('.popover').prev().popover('destroy');
+  if($('.comments').length > 0){
+    $('.comments').append("#{j(render(@comment))}");
+    $('form#new_comment #comment_content').val('');
+  }

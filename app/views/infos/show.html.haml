@@ -6,6 +6,15 @@
 
 = @info.content.html_safe
 
+%hr
+#info_comments
+  .comments
+    %h5= t('comments.index.title')+':'
+    = render @info.comments.oldest
+  .new_comment
+    %h5= t 'comments.new.title'
+    = new_comment_form_for @info
+
 - if can? :manage, Info
   .form-actions
     = link_to_edit @info
