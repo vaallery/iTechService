@@ -21,7 +21,7 @@ class GiftCertificate < ActiveRecord::Base
     certificates = GiftCertificate.scoped
 
     if (search_q = params[:search_q]).present?
-      certificates = certificates.where 'LOWER(number) LIKE ?', "%#{search_q.mb_chars.downcase.to_s}%"
+      certificates = certificates.where 'LOWER(number) = ? OR id = ?', search_q.mb_chars.downcase.to_s, search_q.to_i
     end
     certificates
   end
