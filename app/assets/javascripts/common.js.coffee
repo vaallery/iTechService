@@ -1,5 +1,4 @@
 jQuery ->
-
   $(document).on 'click', '#history .close_history', (event) ->
     $history = $('#history')
     $history.remove()
@@ -42,6 +41,7 @@ jQuery ->
     scanCard()
 
   $('#lock_session').click (event)->
+    event.preventDefault()
     $('#card_sign_in').show().addClass('in')
 
   $(document).on 'click', '.close_popover_button', (event)->
@@ -80,16 +80,16 @@ scanCard = ->
     else
       $('#card_sign_in').removeClass('in').hide() if window.location.pathname is "/users/sign_in"
     card_number = ''
-   ), 3000
+             ), 3000
 
-auth_timeout = auth_count = 5*60
+auth_timeout = auth_count = 5 * 60
 
 if $('#profile_link').data('role') is 'software'
   setInterval (->
     auth_count -= 1
     if auth_count < 1 and $('#card_sign_in.in:visible').length is 0
       $('#lock_session').click()
-  ), 1000
+              ), 1000
 
 $(document).on 'click keydown mousemove', ->
   auth_count = auth_timeout
@@ -98,6 +98,7 @@ datepicker_dates =
   days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
   daysShort: ["Вск", "Пнд", "Втр", "Срд", "Чтв", "Птн", "Суб", "Вск"],
   daysMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
-  months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+  months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь",
+           "Декабрь"],
   monthsShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
   today: "Сегодня"

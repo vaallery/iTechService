@@ -10,12 +10,12 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
-  flash[:error] = exception.message
+    flash[:error] = exception.message
     redirect_back_or root_url, alert: exception.message
   end
-  
+
   private
-  
+
   def set_current_user
     User.current = current_user
   end
@@ -35,5 +35,5 @@ class ApplicationController < ActionController::Base
   def load_personal_infos
     @personal_infos = Info.addressed_to current_user
   end
-  
+
 end

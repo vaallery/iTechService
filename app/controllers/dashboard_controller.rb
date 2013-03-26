@@ -45,11 +45,17 @@ class DashboardController < ApplicationController
   end
 
   def sign_in_by_card
-    if (user = User.find_by_card_number params[:card_number]).present?
-      sign_in :user, user
-      render json: user
-    else
-      redirect_to new_user_session_url
+    respond_to do |format|
+      if (user = User.find_by_card_number params[:card_number]).present?
+        if params[:current_user].to_i == user.id
+          sign_in :user, user, bypass: true
+        else
+          sign_in :user, user
+        end
+        format.json { render json: user }
+      else
+        format.json { redirect_to new_user_session_url }
+      end
     end
   end
 
@@ -72,12 +78,18 @@ class DashboardController < ApplicationController
     @report[:devices_received_archived_count] = @received_devices.at_archive.count
 
     case params[:report]
-      when 'device_types_report' then make_device_types_report params[:device_type]
-      when 'users_report' then make_users_report
-      when 'tasks_report' then make_done_tasks_report
-      when 'clients_report' then make_clients_report
-      when 'tasks_durations_report' then make_tasks_duration_report
-      when 'done_orders_report' then make_done_orders_report
+      when 'device_types_report' then
+        make_device_types_report params[:device_type]
+      when 'users_report' then
+        make_users_report
+      when 'tasks_report' then
+        make_done_tasks_report
+      when 'clients_report' then
+        make_clients_report
+      when 'tasks_durations_report' then
+        make_tasks_duration_report
+      when 'done_orders_report' then
+        make_done_orders_report
     end
   end
 
@@ -118,7 +130,7 @@ class DashboardController < ApplicationController
       device_ids = []
       device_type.descendants.each do |sub_device_type|
         if sub_device_type.is_childless?
-          device_ids << sub_device_type.devices.where(created_at: @period).map{|d|d.id}
+          device_ids << sub_device_type.devices.where(created_at: @period).map { |d| d.id }
         end
       end
       received_devices = Device.where id: device_ids
@@ -148,21 +160,21 @@ class DashboardController < ApplicationController
   end
 
   def make_done_tasks_report
-    archived_devices_ids = HistoryRecord.devices.movements_to_archive.in_period(@period).collect{|hr|hr.object_id}.uniq
+    archived_devices_ids = HistoryRecord.devices.movements_to_archive.in_period(@period).collect { |hr| hr.object_id }.uniq
     @report[:tasks] = []
     @report[:tasks_sum] = 0
     @report[:tasks_qty] = 0
     @report[:tasks_qty_free] = 0
     if archived_devices_ids.any?
       tasks = DeviceTask.where device_id: archived_devices_ids
-      tasks.collect{|t|t.task_id}.uniq.each do |task_id|
+      tasks.collect { |t| t.task_id }.uniq.each do |task_id|
         task = Task.find task_id
         task_name = task.name
         same_tasks = tasks.where(task_id: task_id)
         task_sum = same_tasks.sum(:cost)
         task_count = same_tasks.count
         task_paid_count = same_tasks.where('cost > 0').count
-        task_free_count = same_tasks.where(cost: [0,nil]).count
+        task_free_count = same_tasks.where(cost: [0, nil]).count
         devices = same_tasks.collect do |same_task|
           {id: same_task.device_id, name: same_task.device.type_name, cost: same_task.cost}
         end
@@ -173,7 +185,7 @@ class DashboardController < ApplicationController
       @report[:tasks_sum] = tasks.sum(:cost)
       @report[:tasks_qty] = tasks.count
       @report[:tasks_qty_paid] = tasks.where('cost > 0').count
-      @report[:tasks_qty_free] = tasks.where(cost: [0,nil]).count
+      @report[:tasks_qty_free] = tasks.where(cost: [0, nil]).count
     end
   end
 
@@ -188,7 +200,7 @@ class DashboardController < ApplicationController
     Task.find_each do |task|
       task_durations = []
       device_tasks = []
-      HistoryRecord.devices.movements_to(task.location_id).in_period(@period).find_each do |hr|
+      HistoryRecord.devices.movements_to(task.location_id).in_period(@period).each do |hr|
         moved_at = hr.created_at
         durations = []
         hr.object.device_tasks.done.where(task_id: task.id).each do |dt|
