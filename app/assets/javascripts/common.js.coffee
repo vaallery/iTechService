@@ -74,22 +74,22 @@ scanCard = ->
         sign_in_by_card card_number
       else
         card_number += String.fromCharCode(event.keyCode).toLowerCase()
-  setTimeout((->
+  setTimeout (->
     unless card_number is ''
       sign_in_by_card card_number
     else
       $('#card_sign_in').removeClass('in').hide() if window.location.pathname is "/users/sign_in"
     card_number = ''
-             ), 3000)
+             ), 3000
 
 auth_timeout = auth_count = 5 * 60
 
 if $('#profile_link').data('role') is 'software'
-  setInterval((->
+  setInterval (->
     auth_count -= 1
     if auth_count < 1 and $('#card_sign_in.in:visible').length is 0
       $('#lock_session').click()
-              ), 1000)
+              ), 1000
 
 $(document).on 'click keydown mousemove', ->
   auth_count = auth_timeout
