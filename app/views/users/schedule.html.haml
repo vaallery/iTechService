@@ -48,6 +48,6 @@
                             data: {color: user.color_s, 'color-format' => 'hex'}}
                   %i
               %td.user_name
-                = user.full_name
+                = user.short_name
                 - unless user.wish.blank?
                   %i.user_wish.icon-comment-alt{title: user.wish}
