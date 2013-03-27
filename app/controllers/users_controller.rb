@@ -109,7 +109,7 @@ class UsersController < ApplicationController
   end
 
   def schedule
-    @users = User.scoped
+    @users = User.schedulable
     @locations = Location.for_schedule
     @calendar_month = Date.current.beginning_of_month
   end

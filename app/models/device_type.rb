@@ -32,7 +32,6 @@ class DeviceType < ActiveRecord::Base
   def self.search_by_full_name(search)
     res = nil
     all.select do |dt|
-      #res = dt if dt.is_childless? and dt.full_name == search
       res = dt if dt.ancestry.present? and dt.is_childless? and dt.full_name == search
     end
     res

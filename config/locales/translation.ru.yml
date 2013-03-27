@@ -230,6 +230,7 @@ ru:
         reset_password_token: reset_password_token  #g
         role: Роль
         salary_date: Дата зарплаты
+        schedule: Отображать график
         schedule_days: Рабочие дни
         surname: Фамилия
         username: Логин

@@ -3,8 +3,7 @@
 
   %ul.nav.nav-tabs
     %li.active= link_to t("users.info"), "#info_tab", 'data-toggle' => 'tab'
-    - unless @user.new_record?
-      %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
+    %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
     %li= link_to t("users.account"), "#account_tab", 'data-toggle' => 'tab'
 
   .tab-content
@@ -37,8 +36,9 @@
           = link_to icon_tag('thumbs-up'), new_karma_path(karma: {user_id: @user.id, good: true}), remote: true, class: 'new_karma_link good'
           = link_to icon_tag('thumbs-down'), new_karma_path(karma: {user_id: @user.id, good: false}), remote: true, class: 'new_karma_link bad'
 
-    - unless @user.new_record?
-      #schedule_tab.tab-pane
+    #schedule_tab.tab-pane
+      = f.input :schedule
+      - if !@user.new_record? and @user.schedule?
         = f.input :wish, input_html: {rows: 5, class: 'span7'}
         %table#schedule_table.table.table-bordered.table-condensed
           %thead
