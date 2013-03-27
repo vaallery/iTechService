@@ -18,7 +18,7 @@ class DeviceType < ActiveRecord::Base
   end
 
   def has_imei?
-    %w[iphone ipad].any?{|a|root.name.mb_chars.downcase.to_s.start_with?(a)}
+    is_childless? and /iPhone|iPad.*Cellular/i === full_name
   end
 
   def is_iphone?
