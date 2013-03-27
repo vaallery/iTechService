@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id,
                   :surname, :name, :patronymic, :birthday, :hiring_date, :salary_date, :prepayment, :wish,
                   :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes,
-                  :card_number, :color, :karmas_attributes, :abilities
+                  :card_number, :color, :karmas_attributes, :abilities, :schedule
 
   attr_accessor :login
 
@@ -44,6 +44,7 @@ class User < ActiveRecord::Base
   scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
   scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
   scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
+  scope :schedulable, where(schedule: true)
 
   after_initialize do |user|
     if user.schedule_days.empty?

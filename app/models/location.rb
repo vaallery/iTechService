@@ -12,6 +12,10 @@ class Location < ActiveRecord::Base
     path.all.map{|l|l.name}.join ' / '
   end
 
+  def presentation
+    full_name
+  end
+
   def ancestors_names
     ancestors.all.map{|l|l.name}.join ' / '
   end
