@@ -9,7 +9,7 @@ class HistoryRecord < ActiveRecord::Base
   scope :device_tasks, where(object_type: 'DeviceTask')
   scope :task_completions, where(object_type: 'DeviceTask', column_name: 'done')
   scope :movements, where(column_name: 'location_id')
-  scope :movements_to, lambda { |location| where(column_name: 'location_id', new_value: (location.is_a?(Location) ? location.id : location)) }
+  scope :movements_to, lambda { |location| where(column_name: 'location_id', new_value: (location.is_a?(Location) ? location.id.to_s : location.to_s)) }
   scope :movements_to_archive, where(column_name: 'location_id', new_value: Location.archive_id.to_s)
   scope :in_period, lambda {|period| where(created_at: period)}
 
