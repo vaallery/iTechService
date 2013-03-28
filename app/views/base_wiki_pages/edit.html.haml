@@ -26,7 +26,8 @@
   %p
     = wt('content')+':'
     %br
-    = f.text_area(:content, value: f.object.content.gsub("\n", '&#x000A;').gsub("\r",'')).html_safe
+    -#= f.text_area(:content, value: f.object.content.gsub("\n", '&#x000A;').gsub("\r",'')).html_safe
+    = f.text_area(:content)
   %p
     = wt('сomment_on_change')+':'
     %br
