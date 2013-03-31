@@ -1,0 +1,25 @@
+#$:.unshift(File.expand_path('./lib', ENV['rvm_path']))
+#require "rvm/capistrano"
+#set :rvm_ruby_string, '1.9.3'
+#
+#require 'capistrano-deploy'
+#use_recipes :git, :rails, :bundle, :unicorn
+#
+#server '5.100.75.201', :web, :app, :db, :primary => true
+#set :user, 'itech'
+#set :deploy_to, '/Users/itech/sites/itech_service'
+#set :repository, 'git@bitbucket.org:itechdevs/itechservice.git'
+#
+#after 'deploy:update', 'bundle:install'
+#after 'deploy:restart', 'unicorn:stop'
+
+require 'capistrano-deploy'
+use_recipes :git, :bundle, :rails, :rails_assets, :unicorn
+
+server '5.100.75.201', :web, :app, :db, primary: true
+set :user, 'itech'
+set :deploy_to, '/Users/itech/sites/itech_service'
+set :repository, 'git@bitbucket.org:itechdevs/itechservice.git'
+
+after 'deploy:update', 'bundle:install'
+after 'deploy:update', 'deploy:assets:precompile'

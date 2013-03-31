@@ -47,6 +47,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request', '0.2.1'
+  gem "capistrano-deploy", "~> 0.3.2"
   #gem 'i18n_generators'
   #gem 'linecache19', '>= 0.5.13', :git => 'https://github.com/robmathews/linecache19-0.5.13.git'
   #gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
