@@ -1,14 +1,14 @@
-- if @infos.any?
-  %table#news_table
-    - date = nil
+= hidden_field_tag :direction, params[:direction]
+= hidden_field_tag :sort, params[:sort]
+%table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th= sortable 'title', Info.human_attribute_name(:title)
+      %th= sortable 'created_at', Info.human_attribute_name(:created_at)
+  %tbody
     - @infos.each do |info|
-      - unless date == info.created_at.to_date
-        - date = info.created_at.to_date
-        %tr
-          %td{colspan: 1}
-            %strong= date.strftime '%d.%m.%Y'
-      %tr{class: info.important ? 'warning' : ''}
-        %td.time_col
-          = info.created_at.strftime '%H:%M'
-        %td.info_col{class: info.type_s}
-          = link_to info.title, info_path(info)
+      %tr{class: info_row_class(info)}
+        %td= link_to info.title, info_path(info)
+        %td= human_datetime info.created_at
+
+= paginate @infos

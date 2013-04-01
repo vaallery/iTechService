@@ -9,10 +9,10 @@ class InfosController < ApplicationController
       unless sort_column.blank? and sort_direction.blank?
         @infos = @infos.reorder(sort_column + ' ' + sort_direction)
       end
-      @infos = @infos.page(params[:page])
     else
-      @infos = Info.available_for(current_user).grouped_by_date
+      @infos = Info.newest.available_for(current_user)
     end
+    @infos = @infos.page(params[:page])
 
     respond_to do |format|
       format.html
