@@ -12,6 +12,11 @@
 
 %dl.dl-horizontal
 
+  %dt= t 'devices.itunes_string'
+  %dd= text_field_tag 'itunes_string', itunes_string_for(@device)
+
+  %br
+
   %dt= Device.human_attribute_name :ticket_number
   %dd= @device.ticket_number
 

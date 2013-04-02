@@ -122,11 +122,11 @@ class Device < ActiveRecord::Base
   end
   
   def done_tasks
-    device_tasks.where done: true
+    device_tasks.done
   end
   
   def pending_tasks
-    device_tasks.where done: false
+    device_tasks.pending
   end
   
   def is_important?
@@ -168,7 +168,7 @@ class Device < ActiveRecord::Base
   end
 
   def moved_at
-    if (rec = history_records.where(column_name: 'location_id').order('updated_at desc').first).present?
+    if (rec = history_records.movements.order('updated_at desc').first).present?
       rec.updated_at
     else
       nil
@@ -176,7 +176,7 @@ class Device < ActiveRecord::Base
   end
 
   def moved_by
-    if (rec = history_records.where(column_name: 'location_id').order('updated_at desc').first).present?
+    if (rec = history_records.movements.order('updated_at desc').first).present?
       rec.user
     else
       nil
@@ -188,7 +188,7 @@ class Device < ActiveRecord::Base
   end
 
   def movement_history
-    records = history_records.where(column_name: 'location_id').order('created_at desc')
+    records = history_records.movements.order('created_at desc')
     records.map do |record|
       [record.created_at, record.new_value, record.user_id]
     end

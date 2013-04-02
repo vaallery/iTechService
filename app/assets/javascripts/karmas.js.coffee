@@ -1,6 +1,7 @@
 jQuery ->
   $('.user_karma_link').each (i, el)->
     $(el).tooltip
+      html: true
       title: $(this).data('comment')
 
   $(document).on 'click', '.submit_karma_form', (event)->

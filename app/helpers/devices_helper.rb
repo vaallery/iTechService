@@ -58,4 +58,8 @@ module DevicesHelper
         content_tag(:span, text)
   end
 
+  def itunes_string_for(device)
+    "#{device.ticket_number} #{device.client.name} #{l device.created_at, format: :date_short}"
+  end
+
 end

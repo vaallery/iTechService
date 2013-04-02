@@ -236,7 +236,6 @@ ru:
         username: Логин
         wish: Пожелание
 
-
   attributes:
     created_at: Время создания
     comment: Комментарий
@@ -337,6 +336,7 @@ ru:
     device_tasks_error: Слишком много однотипных задач
     enter_ticket_number: Укажите номер талона
     information: Информация о девайсе
+    itunes_string: Строка для iTunes
     link: Девайсы
     not_found: Устройство не найдено
     moved_at: Перемёщен в
@@ -569,6 +569,7 @@ ru:
     info: Информация
     job_schedule: График работы
     link: Пользователи
+    rating: Рейтинг
     schedule: График
     updated: Пользователь изменён
     version: Версия

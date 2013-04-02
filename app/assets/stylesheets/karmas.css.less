@@ -1,7 +1,8 @@
 #user_karma_form{
-  textarea{
+  #karma_comment{
     width: 184px;
     margin-top: 3px;
+    margin-bottom: 0;
   }
   .actions{
     .btn-group{
@@ -26,8 +27,10 @@
     text-decoration: none;
   }
   &.good{
-    margin-right: 20px;
     color: green;
+  }
+  &.good.large{
+    margin-right: 20px;
   }
   &.bad{
     color: red;
@@ -41,8 +44,11 @@
   }
   .user_karma_link{
     font-size: 30px;
-    &:hover{
-      text-decoration: none;
-    }
+  }
+}
+
+.user_karma_link {
+  &:hover {
+    text-decoration: none;
   }
 }

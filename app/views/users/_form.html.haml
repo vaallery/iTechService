@@ -33,8 +33,8 @@
             .good= render @user.karmas.good
             .bad= render @user.karmas.bad
           #karma_popover_container
-          = link_to icon_tag('thumbs-up'), new_karma_path(karma: {user_id: @user.id, good: true}), remote: true, class: 'new_karma_link good'
-          = link_to icon_tag('thumbs-down'), new_karma_path(karma: {user_id: @user.id, good: false}), remote: true, class: 'new_karma_link bad'
+          = link_to_add_karma @user, true, class: 'large'
+          = link_to_add_karma @user, false, class: 'large'
 
     #schedule_tab.tab-pane
       = f.input :schedule

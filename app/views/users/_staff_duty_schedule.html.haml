@@ -28,16 +28,4 @@
           %td
             %strong= i+1
           - days[i].each do |day|
-            %td{duty_day_attributes(day, @calendar_month.month)}
-              - if day.today?
-                %span.badge.badge-info= day.day
-              - else
-                %span.badge.badge-blank= day.day
-
-    -#%tfoot
-      -#- upcoming_duties(@user, Date.current).each do |duty_day|
-      -#  %tr
-      -#    %td{colspan: 2}
-      -#      = duty_day.day.strftime '%d.%m.%y'
-      -#    %td{colspan: 6}
-      -#      = duty_day.user.full_name.blank? ? duty_day.user.username : duty_day.user.full_name
+            = duty_day_cell(day, @calendar_month.month)

@@ -30,6 +30,10 @@ class Info < ActiveRecord::Base
     recipient_id.present? ? 'personal' : 'public'
   end
 
+  def private?
+    recipient_id.present? and recipient_id == User.current.try(:id)
+  end
+
   private
 
   def grouped_by_date

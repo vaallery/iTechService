@@ -1,3 +1,3 @@
 = link_to (can?(:manage, karma) ? edit_karma_path(karma) : '#'), remote: true, class: 'user_karma_link',
-    id: "user_karma_#{karma.id}", data: {comment: karma.comment} do
+    id: "user_karma_#{karma.id}", data: {comment: karma_comment(karma)} do
   %i{class: "icon-thumbs-#{karma.good ? 'up' : 'down'}"}
