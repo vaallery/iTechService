@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :load_infos, only: [:show, :profile]
 
   def index
-    @users = User.order('id asc').page params[:page]
+    @users = User.order('id asc').page(params[:page]).per(50)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -120,6 +120,10 @@ class UsersController < ApplicationController
     @day = params[:day]
     @msg = 'User location not set' if (@location_id = @user.location.try(:id)).nil?
     @schedule_day = @user.schedule_days.find_by_day @day
+  end
+
+  def rating
+    @users = User.staff.order('id asc')
   end
 
   private

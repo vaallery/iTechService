@@ -1,5 +1,5 @@
 - if @karma.new_record?
-  == $target = $(".new_karma_link.#{@karma.good ? 'good' : 'bad'}");
+  == $target = $("#new_#{@karma.good ? 'good' : 'bad'}_karma_for_#{@karma.user_id}");
 - else
   == $target = $("#user_karma_#{@karma.id}");
 :plain

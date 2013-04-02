@@ -54,6 +54,7 @@ Ability
       can :update, Comment, user_id: user.id
       can :create, Message
       can :read, Info, recipient_id: [nil, user.id]
+      can :rating, User
       can :read, :all
       cannot [:create, :update, :destroy], StolenPhone
     end

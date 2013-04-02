@@ -1,0 +1,14 @@
+.page-header
+  %h1= t 'users.rating'
+
+%table.table.table-striped.table-hover
+  %tbody
+    - @users.sort_by{|u|u.rating}.reverse.each do |user|
+      %tr
+        %td= user.rating
+        %td= link_to user.short_name, user_path(user)
+        %td
+          - user.karmas.good.each do |karma|
+            = render karma
+          - user.karmas.bad.each do |karma|
+            = render karma

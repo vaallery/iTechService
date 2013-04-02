@@ -1,4 +1,6 @@
 = form_for @karma, remote: true, html: {id: 'user_karma_form'} do |f|
+  - unless @karma.new_record?
+    = "#{@karma.user_presentation} [#{l @karma.created_at, format: :date_short}]"
   = f.hidden_field :user_id
   = f.hidden_field :good
   = f.text_area :comment, rows: 3, class: 'input-medium'

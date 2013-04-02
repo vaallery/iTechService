@@ -45,6 +45,7 @@ class User < ActiveRecord::Base
   scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
   scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
   scope :schedulable, where(schedule: true)
+  scope :staff, where('role <> ?', 'admin')
 
   after_initialize do |user|
     if user.schedule_days.empty?
@@ -202,6 +203,16 @@ class User < ActiveRecord::Base
 
   def able?(ability)
     abilities.include? ability.to_s
+  end
+
+  def location_name(full=false)
+    location.blank? ? '' : (full ? location.full_name : location.name)
+  end
+
+  def rating
+    good_count = karmas.good.count
+    bad_count = karmas.bad.count
+    (good_count > 0 or bad_count > 0) ? (good_count - bad_count) : 0
   end
 
   private

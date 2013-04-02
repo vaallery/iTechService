@@ -1,3 +1,5 @@
 = content_for :footer do
   %footer#footer
-    .user_name= current_user.short_name
+    %span.user_name= current_user.short_name
+    - unless current_user.admin?
+      %span= link_to karma_tag(current_user), rating_users_path

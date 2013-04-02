@@ -1,34 +1,17 @@
 = hidden_field_tag :direction, params[:direction]
 = hidden_field_tag :sort, params[:sort]
-- if @users.any?
+%table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th= User.human_attribute_name(:id)
+      %th= User.human_attribute_name(:username)
+      %th= User.human_attribute_name(:name)
+      %th= User.human_attribute_name(:role)
+      %th= User.human_attribute_name(:location)
+      %th= User.human_attribute_name(:created_at)
+      %th
+  %tbody
+    - @users.each do |user|
+      = user_row_tag user
 
-  %table.table.table-striped.table-hover
-    %thead
-      %tr
-        %th= User.human_attribute_name(:id)
-        %th= User.human_attribute_name(:username)
-        %th= User.human_attribute_name(:name)
-        %th= User.human_attribute_name(:role)
-        %th= User.human_attribute_name(:location)
-        %th= User.human_attribute_name(:created_at)
-        %th
-    %tbody
-      - @users.each do |user|
-        %tr
-          %td= link_to user.id, user_path(user)
-          %td= link_to user.username, user_path(user)
-          %td
-            = link_to user.short_name, user_path(user)
-            = karma_tag user
-          %td= t "users.roles.#{user.role}"
-          %td= user.location.try :full_name
-          %td=l user.created_at, format: :long_d
-          %td.btn-group
-            = link_to_show_small user
-            = link_to_edit_small user
-            = link_to_destroy_small user
-
-  = paginate @users
-  
-- else
-  = render 'shared/empty'
+= paginate @users

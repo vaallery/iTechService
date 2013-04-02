@@ -20,6 +20,7 @@ ItechService::Application.routes.draw do
     get :schedule, on: :collection
     get :add_to_job_schedule, on: :member
     get :staff_duty_schedule, on: :collection
+    get :rating, on: :collection
   end
   resources :karmas, except: [:index, :show]
   match 'profile' => 'users#profile', via: :get

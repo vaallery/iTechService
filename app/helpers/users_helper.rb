@@ -1,5 +1,30 @@
 module UsersHelper
 
+  def user_row_tag(user)
+    content_tag(:tr, id: "user_row_#{user.id}", class: 'user_row') do
+      content_tag(:td, link_to(user.id, user_path(user))) +
+      content_tag(:td, link_to(user.username, user_path(user))) +
+      content_tag(:td) do
+        link_to(user.short_name, user_path(user)) + ' ' +
+        karma_tag(user)
+      end +
+      content_tag(:td, t("users.roles.#{user.role}")) +
+      content_tag(:td, user.location_name(true)) +
+      content_tag(:td, l(user.created_at, format: :long_d)) +
+      content_tag(:td) do
+        content_tag(:div, class: 'btn-group') do
+          link_to_add_karma(user, true, class: 'btn btn-small') +
+          link_to_add_karma(user, false, class: 'btn btn-small')
+        end +
+        content_tag(:div, class: 'btn-group') do
+          link_to_show_small(user) +
+          link_to_edit_small(user) +
+          link_to_destroy_small(user)
+        end
+      end
+    end.html_safe
+  end
+
   def schedule_hour_class_for(user, day, hour)
     schedule_hour_class = ''
     if (schedule_day = user.schedule_days.find_by_day day).present?
