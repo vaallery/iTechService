@@ -126,6 +126,20 @@ class UsersController < ApplicationController
     @users = User.staff.order('id asc')
   end
 
+  def create_duty_day
+    @duty_day = DutyDay.new params[:duty_day]
+    @duty_day.save
+    @day = @duty_day.day
+    render 'update_duty_day'
+  end
+
+  def destroy_duty_day
+    duty_day = DutyDay.find params[:duty_day_id]
+    @day = duty_day.day
+    duty_day.destroy
+    render 'update_duty_day'
+  end
+
   private
 
   def load_infos

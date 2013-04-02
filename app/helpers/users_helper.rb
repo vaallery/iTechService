@@ -76,6 +76,16 @@ module UsersHelper
     link_to icon_tag('plus-sign'), '#', remote: true, class: 'add_user_to_job_schedule', data: {day: day}
   end
 
+  def duty_day_cell(day, month)
+    content_tag(:td, duty_day_attributes(day, month)) do
+      if day.today?
+        content_tag :span, day.day, class: 'badge badge-info'
+      else
+        content_tag :span, day.day, class: 'badge badge-blank'
+      end
+    end.html_safe
+  end
+
   def duty_day_attributes(day, month)
     day_class = ''
     day_class = 'today' if day.today?
@@ -92,7 +102,7 @@ module UsersHelper
     else
       day_class << ' empty'
     end
-    {class: day_class, data: {user: duty_user.try(:id) || '', dayid: day_id, day: day, color: day_color},
+    {class: day_class, data: {user: duty_user.try(:id) || '', dayid: day_id, day: day.to_s, color: day_color},
      style: style, title: duty_user.try(:short_name)}
   end
 

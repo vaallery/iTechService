@@ -21,6 +21,8 @@ ItechService::Application.routes.draw do
     get :add_to_job_schedule, on: :member
     get :staff_duty_schedule, on: :collection
     get :rating, on: :collection
+    post :create_duty_day, on: :collection
+    post :destroy_duty_day, on: :collection
   end
   resources :karmas, except: [:index, :show]
   match 'profile' => 'users#profile', via: :get

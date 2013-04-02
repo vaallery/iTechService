@@ -199,34 +199,17 @@ jQuery ->
       event.preventDefault()
 
     $(document).on 'click', '#staff_duty_schedule .calendar_day>span', (event)->
+      event.preventDefault()
       $this = $(this).parent()
       if $this.hasClass 'duty'
-        user_id = $this.data 'user'
         day_id = $this.data 'dayid'
-        $.ajax
-          type: 'PUT'
-          url: '/users/'+user_id
-          data: {user: {duty_days_attributes: {'0': {id: day_id, _destroy: 'true'}}}}
-          dataType: 'json'
-          success: ->
-            $this.removeClass('duty').addClass('empty').attr('data-user', null).css(backgroundColor: 'inherit')
-          error: (jqXHR, textStatus, errorThrown)->
-            console.log(jqXHR.status+' ('+errorThrown+')')
+        $.post '/users/destroy_duty_day', {duty_day_id: day_id}
       else if $this.hasClass 'empty'
         user_id = $('.user_row.selected', $legend).data 'user'
-        unless user_id is undefined
+        unless user_id is null
           $user = $('.user_row.selected', $legend)
           color = $('.user_color>span', $user).data 'color'
           day = $this.data 'day'
-          $.ajax
-            type: 'PUT'
-            url: '/users/'+user_id
-            data: {user: {duty_days_attributes: {'0': {day: day}}}}
-            dataType: 'json'
-            success: ->
-              $this.removeClass('empty').addClass('duty').attr('data-user', user_id).css(backgroundColor: color)
-            error: (jqXHR, textStatus, errorThrown)->
-              console.log(jqXHR.status+' ('+errorThrown+')')
 
     $(document).on 'mouseenter', '#staff_duty_schedule .calendar_day.duty>span', ->
       user = $(this).parent().data 'user'
