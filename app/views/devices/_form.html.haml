@@ -19,6 +19,11 @@
   
   = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)
 
+  - if @device.new_record? or current_user.admin?
+    = f.input :notify_client
+  - elsif @device.notify_client?
+    = f.input :client_notified
+
   = f.input :replaced, as: :replaced, disabled: true
 
   - if can? :update, @device

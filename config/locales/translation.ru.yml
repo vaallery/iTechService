@@ -82,6 +82,7 @@ ru:
       device:
         client: :activerecord.models.client
         client_id: :activerecord.models.client
+        client_notified: Клиент уведомлён
         comment: Комментарий
         device_tasks: Список задач
         device_type: :activerecord.models.device_type
@@ -91,6 +92,7 @@ ru:
         imei: IMEI
         location: :activerecord.models.location
         location_id: :activerecord.models.location
+        notify_client: Позвонить клиенту по готовности
         receiver: Приемщик
         replaced: Заменен
         security_code: Пароль
@@ -321,6 +323,11 @@ ru:
   devices:
     edit:
       title: Редактирование девайса
+    errors:
+      client_notification: Нужно уведомить клиента
+      pending_tasks: Не все задачи выполнены
+      not_done: Девайс не готов
+      not_allowed: Вы не можете переместить девайс.
     index:
       title: Девайсы
     new:
@@ -341,9 +348,6 @@ ru:
     not_found: Устройство не найдено
     moved_at: Перемёщен в
     moved_by: Переместил(а)
-    movement_error: Не все задачи выполнены
-    movement_error_not_done: Девайс не готов
-    movement_error_not_allowed: Вы не можете переместить девайс.
     phone_stolen: 'этот телефон в чёрном списке!!!'
     search_placeholder: Талон или серийный номер
     seach_sales_btn: Искать продажи

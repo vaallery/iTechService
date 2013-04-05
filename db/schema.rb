@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130327043411) do
+ActiveRecord::Schema.define(:version => 20130405024156) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -117,16 +117,18 @@ ActiveRecord::Schema.define(:version => 20130327043411) do
     t.string   "ticket_number"
     t.integer  "client_id"
     t.text     "comment"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.datetime "done_at"
     t.string   "serial_number"
     t.integer  "location_id"
     t.integer  "user_id"
     t.string   "imei"
-    t.boolean  "replaced",       :default => false
+    t.boolean  "replaced",        :default => false
     t.string   "security_code"
     t.string   "status"
+    t.boolean  "notify_client",   :default => false
+    t.boolean  "client_notified", :default => false
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"

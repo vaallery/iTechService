@@ -9,8 +9,9 @@ class Device < ActiveRecord::Base
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
   has_many :history_records, as: :object, dependent: :destroy
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status,
-                  :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code
+  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id,
+                  :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client,
+                  :client_notified
   accepts_nested_attributes_for :device_tasks
 
   validates :ticket_number, :client_id, :device_type_id, :location_id, presence: true
@@ -233,16 +234,19 @@ class Device < ActiveRecord::Base
     if self.location.present?
       old_location = changed_attributes['location_id'].present? ? Location.find(changed_attributes['location_id']) : nil
       if self.location.is_done? and self.pending?
-        self.errors.add :location_id, I18n.t('devices.movement_error')
+        self.errors.add :location_id, I18n.t('devices.errors.pending_tasks')
+      end
+      if self.location.is_done? and self.notify_client? and !self.client_notified?
+        self.errors.add :client_notified, I18n.t('devices.errors.client_notification')
       end
       if self.location.is_archive? and !old_location.try(:is_done?)
-        self.errors.add :location_id, I18n.t('devices.movement_error_not_done')
+        self.errors.add :location_id, I18n.t('devices.errors.not_done')
       end
       if old_location.try(:is_archive?) and User.current.not_admin?
-        self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
+        self.errors.add :location_id, I18n.t('devices.errors.not_allowed')
       end
       if self.location.is_warranty? and !old_location.try(:is_repair?)
-        self.errors.add :location_id, I18n.t('devices.movement_error_not_allowed')
+        self.errors.add :location_id, I18n.t('devices.errors.not_allowed')
       end
 
       #if User.current.not_admin? and old_location != User.current.location
@@ -252,11 +256,11 @@ class Device < ActiveRecord::Base
   end
 
   def new_device_announce
-    PrivatePub.publish_to '/devices/new', device: self
+    PrivatePub.publish_to '/devices/new', device: self if Rails.env.production?
   end
 
   def device_update_announce
-    PrivatePub.publish_to '/devices/new', device: self unless changed_attributes[:location_id].present?
+    PrivatePub.publish_to '/devices/new', device: self if changed_attributes[:location_id].blank? and Rails.env.production?
   end
 
   def validate_device_tasks
