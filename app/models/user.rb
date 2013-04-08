@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   has_many :infos, inverse_of: :recipient, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
-  
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :registerable, :rememberable,
   # :lockable, :timeoutable and :omniauthable
@@ -54,11 +54,11 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
+
   def email_required?
     false
   end
-  
+
   def admin?
     has_role? 'admin'
   end

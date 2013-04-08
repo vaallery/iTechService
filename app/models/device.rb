@@ -212,7 +212,7 @@ class Device < ActiveRecord::Base
   def generate_ticket_number
     if self.ticket_number.blank?
       begin number = UUIDTools::UUID.random_create.hash.to_s end while Device.exists? ticket_number: number
-      self.ticket_number = number
+      self.ticket_number = Setting.ticket_prefix + number
     end
   end
 

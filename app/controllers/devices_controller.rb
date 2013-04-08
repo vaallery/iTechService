@@ -38,7 +38,6 @@ class DevicesController < ApplicationController
           else
             pdf = TicketPdf.new @device, view_context, params[:part]
           end
-          #pdf = generate_barcode_to pdf, @device.ticket_number
           send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
                     type: 'application/pdf', disposition: 'inline'
         else

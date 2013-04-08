@@ -88,6 +88,8 @@ ItechService::Application.routes.draw do
     get :scan, on: :collection
   end
 
+  resources :settings, except: [:show]
+
   wiki_root '/wiki'
 
 end

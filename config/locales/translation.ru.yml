@@ -21,6 +21,7 @@ ru:
       price: Прайс
       sale: Продажа
       schedule_day: Рабочий день
+      setting: Параметр
       stolen_phone: Краденый телефон
       task: Задача
       user: Пользователь
@@ -185,6 +186,11 @@ ru:
       schedule_day:
         day: День
         hours: Часы
+
+      setting:
+        presentation: Представление
+        value: Значение
+        value_type: Тип значения
 
       stolen_phone:
         imei: IMEI
@@ -507,15 +513,26 @@ ru:
       search_placeholder: "Серийник или IMEI"
     link: Проданные девайсы
 
+  settings:
+    edit:
+      title: Редактирование параметра
+    index:
+      title: Параметры
+    new:
+      title: Новый параметр
+    created: Параметр создан
+    link: Параметры
+    updated: Параметр изменён
+
   stolen_phones:
     created: Телефон создан
     updated: Телефон изменён
     edit:
       title: Редактирование телефона
-    new:
-      title: Новый телефон
     index:
       title: Чёрный список
+    new:
+      title: Новый телефон
     link: Чёрный список
 
   tasks:
