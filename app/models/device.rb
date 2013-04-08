@@ -203,6 +203,10 @@ class Device < ActiveRecord::Base
     location.is_archive?
   end
 
+  def barcode_num
+    '0'*(12-ticket_number.length) + ticket_number
+  end
+
   private
 
   def generate_ticket_number

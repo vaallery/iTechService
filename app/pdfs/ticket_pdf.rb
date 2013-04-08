@@ -1,6 +1,10 @@
 # encoding: utf-8
 class TicketPdf < Prawn::Document
-  require "prawn/measurement_extensions"
+  require 'prawn/measurement_extensions'
+  #require 'barby/barcode/ean_13'
+  #require 'barby/outputter/prawn_outputter'
+  #require 'barby/outputter/pdfwriter_outputter'
+  #require 'barby/outputter/png_outputter'
 
   def initialize(device, view, part=nil)
     super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: 10
@@ -47,6 +51,7 @@ class TicketPdf < Prawn::Document
       text @view.t('tickets.notice')
       text @view.t('tickets.check_status')
     end
+    #barcode
   end
 
   def receiver_part
@@ -69,6 +74,19 @@ class TicketPdf < Prawn::Document
 
   def logo
     image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 50, height: 50, at: [0, cursor-10]
+  end
+
+  def barcode
+    #@bar = Barby::PrawnOutputter.new(@device.ticket_number).to_pdf()
+    num = @device.ticket_number
+    code = '0'*(12-num.length) + num
+    code = Barby::EAN13.new code
+    outputter = Barby::PDFWriterOutputter.new code
+    debugger
+    outputter.annotate_pdf self
+    #bar = Barby::PngOutputter.new(code).to_png
+    #img = File.open(Rails.root.to_s+"/tmp/tickets/ticket_#{@device.ticket_number}_barcode.png") { |f| f.write bar }
+    #image img
   end
 
 end

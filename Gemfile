@@ -28,6 +28,7 @@ gem 'RedCloth'
 gem 'roo'
 gem 'paperclip'
 gem 'backup'
+gem 'barby'
 
 # Gems used only for assets and not required
 # in production environments by default.
