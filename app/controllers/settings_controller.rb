@@ -16,7 +16,6 @@ class SettingsController < ApplicationController
   end
 
   def edit
-    @setting = Setting.find(params[:id])
   end
 
   def create
