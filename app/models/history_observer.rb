@@ -5,7 +5,7 @@ class HistoryObserver < ActiveRecord::Observer
   
   def after_save model
     if model.is_a? Device
-      tracked_attributes = %w[client_id device_task_ids comment location_id]
+      tracked_attributes = %w[client_id device_task_ids comment location_id notify_client client_notified]
     elsif model.is_a? DeviceTask
       tracked_attributes = %w[done comment user_comment cost device_id task_id]
     elsif model.is_a? User

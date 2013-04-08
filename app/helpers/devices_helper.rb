@@ -59,7 +59,7 @@ module DevicesHelper
   end
 
   def itunes_string_for(device)
-    "#{device.ticket_number} #{device.client.name} #{l device.created_at, format: :date_short}"
+    "#{l device.created_at, format: :date_short}  #{device.ticket_number}  #{device.client.name}"
   end
 
 end

@@ -38,6 +38,16 @@
   %dt= Device.human_attribute_name :location
   %dd= @device.location_name
 
+  - if @device.notify_client?
+    %br
+    %dt
+    %dd
+      %strong= Device.human_attribute_name :notify_client
+
+    - if @device.client_notified?
+      %dt
+      %dd= Device.human_attribute_name :client_notified
+
 %table.table.table-bordered.table-condensed.table-hover
   %caption
     %h4= Device.human_attribute_name :tasks

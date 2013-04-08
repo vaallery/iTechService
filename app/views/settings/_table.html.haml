@@ -1,0 +1,36 @@
+- if @settings.any?
+
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th= Setting.human_attribute_name :presentation
+        %th= Setting.human_attribute_name :name
+        %th= Setting.human_attribute_name :value
+        %th
+    %tbody
+      - @settings.each do |setting|
+        %tr
+          %td= setting.presentation
+          %td= setting.name
+          %td= setting.value
+          %td= link_to_edit_small setting
+
+
+  -#- @settings.each do |setting|
+  -#  = simple_form_for setting, html: { class: "well form-inline #{setting.name}" , remote: true } do |f|
+  -#    .control-group
+  -#      = f.label :presentation, "#{setting.presentation} [#{setting.name}]: ", class: 'control-lebel'
+  -#      .controls
+  -#        - case setting.value_type
+  -#        - when 'boolean'
+  -#          = f.check_box :value, { class: 'checkbox setting_value', id: "setting_value_#{setting.id}" }, 'true', 'false'
+  -#        - when 'string'
+  -#          = f.text_field :value, { class: 'setting_value span4', id: "setting_value_#{setting.id}" }
+  -#        - when 'integer'
+  -#          = f.number_field :value, { class: 'setting_value span4', id: "setting_value_#{setting.id}" }
+  -#        - when 'text'
+  -#          = f.text_area :value, { class: 'setting_value span4', id: "setting_value_#{setting.id}" }
+  -#    = f.submit t(:save), class: 'btn btn-primary btn-mini hidden'
+
+- else
+  = render 'shared/empty'
