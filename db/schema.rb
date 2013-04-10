@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130327043411) do
+ActiveRecord::Schema.define(:version => 20130408052601) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -117,8 +117,8 @@ ActiveRecord::Schema.define(:version => 20130327043411) do
     t.string   "ticket_number"
     t.integer  "client_id"
     t.text     "comment"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.datetime "done_at"
     t.string   "serial_number"
     t.integer  "location_id"
@@ -126,7 +126,9 @@ ActiveRecord::Schema.define(:version => 20130327043411) do
     t.string   "security_code"
     t.string   "status"
     t.string   "imei"
-    t.boolean  "replaced",       :default => false
+    t.boolean  "replaced",        :default => false
+    t.boolean  "notify_client",   :default => false
+    t.boolean  "client_notified", :default => false
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
@@ -273,6 +275,17 @@ ActiveRecord::Schema.define(:version => 20130327043411) do
 
   add_index "schedule_days", ["day"], :name => "index_schedule_days_on_day"
   add_index "schedule_days", ["user_id"], :name => "index_schedule_days_on_user_id"
+
+  create_table "settings", :force => true do |t|
+    t.string   "name"
+    t.string   "presentation"
+    t.string   "value"
+    t.string   "value_type"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "settings", ["name"], :name => "index_settings_on_name"
 
   create_table "stolen_phones", :force => true do |t|
     t.string   "imei",       :null => false
