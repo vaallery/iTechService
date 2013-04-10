@@ -1,0 +1,18 @@
+%dl.dl-horizontal
+
+  %dt= Salary.human_attribute_name :created_at
+  %dd= l @salary.created_at, format: :long_d
+
+  %dt= Salary.human_attribute_name :user
+  %dd= @salary.user.short_name
+
+  %dt= Salary.human_attribute_name :amount
+  %dd= @salary.amount
+
+%hr
+
+#salary_comments.comments
+  - @salary.comments.oldest.each do |comment|
+    = render comment
+
+= new_comment_form_for @salary

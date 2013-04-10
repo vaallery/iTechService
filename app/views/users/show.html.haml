@@ -1,11 +1,19 @@
 .page-header
-  #news
-    %h3= link_to t('infos.index.title'), infos_path
-    #news_table= render 'infos/table_read'
+  - if @user.id == current_user.id
+    #news
+      %h3= link_to t('infos.index.title'), infos_path
+      #news_table= render 'infos/table_read'
+  - else
+    %h2
+      = link_back_to_index
+      = @user.short_name
+
 %ul.nav.nav-tabs
   %li.active= link_to t("users.info"), "#info_tab", 'data-toggle' => 'tab'
   %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
-  %li= link_to t("users.account"), "#account_tab", 'data-toggle' => 'tab'
+  -#- if can? :manage, Salary
+  -#  %li= link_to t('salaries.index.title'), '#salary_tab', 'data-toggle' => 'tab'
+  %li= link_to t("users.account"), '#account_tab', 'data-toggle' => 'tab'
 
 .tab-content
   #info_tab.tab-pane.active
@@ -83,10 +91,13 @@
         %dt= t 'last_sign_in'
         %dd= "#{@user.last_sign_in_ip} at #{l(@user.last_sign_in_at, format: :long_d)}" unless @user.last_sign_in_at.blank?
 
+  -##salary_tab.tab-pane
+  -#  - @salaries = @user.salaries
+  -#  = render 'salary_table'
 
 - if can? :manage, User
   .form-actions
-    = link_to t('back'), users_path, class: 'btn'
     - if can? :manage, @user
       = link_to_edit @user
-      = link_to_destroy @user
+    - if can? :manage, Salary
+      = link_to (icon_tag(:money) + ' ' + t('salaries.issue')), new_salary_path(user_id: @user.id), class: 'btn'

@@ -1,0 +1,22 @@
+- if @user.present?
+  .welll.welll-small
+    %dl.dl-horizontal
+      %dt= User.human_attribute_name :karmas
+      %dd
+        #user_karmas
+          .good= render @user.karmas.good
+          .bad= render @user.karmas.bad
+      - if @user.prepayment.present?
+        %dt= User.human_attribute_name(:prepayment)
+        %dd= @user.prepayment
+
+= simple_form_for @salary, html: { class: 'form-horizontal' } do |f|
+  - if f.object.errors.any?
+    .alert.alert-error= f.object.errors.full_messages.join('. ')
+
+  .form-inputs
+    = f.association :user, label_method: :short_name
+    = f.input :amount
+
+  .form-actions
+    = submit_button f

@@ -1,0 +1,17 @@
+%table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th= t 'attributes.created_at'
+      %th= Salary.human_attribute_name :amount
+      %th
+  %tbody
+    - @salaries.each do |salary|
+      %tr
+        %td= link_to l(salary.created_at, format: :long_d), salary_path(salary)
+        %td= salary.amount
+        %td
+          .btn-group
+            = link_to_comments_for salary, class: 'btn'
+            = link_to_show_small salary
+            = link_to_edit_small salary
+            = link_to_destroy_small salary

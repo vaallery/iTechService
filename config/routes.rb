@@ -90,6 +90,8 @@ ItechService::Application.routes.draw do
 
   resources :settings, except: [:show]
 
+  resources :salaries
+
   wiki_root '/wiki'
 
 end

@@ -19,6 +19,7 @@ ru:
       object: Обьект
       order: Заказ
       price: Прайс
+      salary: Зарплата
       sale: Продажа
       schedule_day: Рабочий день
       setting: Параметр
@@ -177,6 +178,11 @@ ru:
         file: Файл
         remote_file_url: Ссылка на файл
 
+      salary:
+        amount: Сумма
+        #created_at: Выдано
+        user: Сотрудник
+
       sale:
         device_type: Тип девайса
         device_type_id: :activerecord.attributes.sale.device_type
@@ -291,7 +297,6 @@ ru:
     needs_help: нуждается в помощи!!!
     protector_made: Плёночка наклеена!
     updated: Оповещение изменено
-
 
   clients:
     edit:
@@ -506,6 +511,18 @@ ru:
     total: Всего
     users_report: Принятые девайсы по сотрудникам
 
+  salaries:
+    edit:
+      title: Редактирование зарплаты
+    index:
+      title: Зарплата
+    new:
+      title: Выдача зарплаты
+    created: Создано
+    issue: Выдать зарплату
+    popover_title: Скоро зарплата
+    updated: Изменено
+
   sales:
     index:
       import_link: Импорт
@@ -625,6 +642,7 @@ ru:
     title: Заголовок
     version: Версия
 
+  in_time: через
   ago: назад
   app_name: Айс
   back: Назад
