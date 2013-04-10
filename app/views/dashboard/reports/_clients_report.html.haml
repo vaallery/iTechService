@@ -18,4 +18,4 @@
   %tfoot
     %tr
       %td= t 'total'
-      %td{colspan: 2}= @report[:clients_count]
+      %td{colspan: 2}= "#{@report[:new_clients_count]} (#{@report[:clients_count]})"
