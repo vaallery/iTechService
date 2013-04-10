@@ -191,7 +191,7 @@ class DashboardController < ApplicationController
 
   def make_clients_report
     @report[:clients_count] = Client.count
-    #@report[:new_clients_count] = Client.where(created_at: @period).count
+    @report[:new_clients_count] = Client.where(created_at: @period).count
     @report[:new_clients] = Client.where(created_at: @period)
   end
 
