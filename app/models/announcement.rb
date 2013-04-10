@@ -1,5 +1,5 @@
 class Announcement < ActiveRecord::Base
-  KINDS = %w[help coffee for_coffee protector info birthday order_status order_done]
+  KINDS = %w[help coffee for_coffee protector info birthday order_status order_done salary]
 
   belongs_to :user
   attr_accessible :content, :kind, :user_id, :active
@@ -14,7 +14,6 @@ class Announcement < ActiveRecord::Base
 
   after_initialize do |announcement|
     announcement.kind ||= 'info'
-    #announcement.active = false if announcement.active.nil?
   end
 
   def user_name
@@ -47,6 +46,10 @@ class Announcement < ActiveRecord::Base
 
   def order_done?
     kind == 'order_done'
+  end
+
+  def salary?
+    kind == 'salary'
   end
 
   def visible_for?(user)

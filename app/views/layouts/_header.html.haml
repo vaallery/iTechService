@@ -24,15 +24,17 @@
             %ul.dropdown-menu
               %li= link_to t('users.rating'), rating_users_path
               %li= link_to t('gift_certificates.link'), gift_certificates_path
+              %li= link_to t('salaries.index.title'), salaries_path if can? :manage, Salary
+              %li= link_to t('sales.link'), sales_path
+              %li= link_to t('stolen_phones.link'), stolen_phones_path
+              %li= link_to t('announcements.link'), announcements_path if current_user.admin?
               %li= link_to t('tasks.link'), tasks_path if can? :manage, Task
               %li= link_to t('locations.link'), locations_path if can? :manage, Location
-              %li= link_to t('stolen_phones.link'), stolen_phones_path
-              %li= link_to t('sales.link'), sales_path
-              %li= link_to t('announcements.link'), announcements_path if current_user.admin?
               %li= link_to t('settings.link'), settings_path if can? :manage, Setting
         %ul.nav.pull-right
           = header_link_for_coffee
           = header_link_to_announce
+          = header_link_to_salaries if can? :manage, Salary
           %li= profile_link
           - if Rails.env.development?
             %li.dropdown

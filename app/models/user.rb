@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   has_many :karmas, dependent: :destroy
   has_many :messages, dependent: :destroy
   has_many :infos, inverse_of: :recipient, dependent: :destroy
+  has_many :salaries, inverse_of: :user, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
 
@@ -46,6 +47,7 @@ class User < ActiveRecord::Base
   scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
   scope :schedulable, where(schedule: true)
   scope :staff, where('role <> ?', 'admin')
+  #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
   after_initialize do |user|
     if user.schedule_days.empty?
@@ -181,8 +183,14 @@ class User < ActiveRecord::Base
   end
 
   def upcoming_birthday?
-    today = Date.current
-    birthday.present? and (0..3).include? (birthday.change(year: today.year) - today).to_i
+    if birthday.present?
+      today = Date.current
+      date = birthday.change(year: today.year)
+      date = date.next_year if date < today
+      date.between? today, 3.days.from_now.end_of_day.to_datetime
+    else
+      false
+    end
   end
 
   def birthday_announcement
@@ -213,6 +221,25 @@ class User < ActiveRecord::Base
     good_count = karmas.good.count
     bad_count = karmas.bad.count
     (good_count > 0 or bad_count > 0) ? (good_count - bad_count) : 0
+  end
+
+  def upcoming_salary_date
+    today = Date.current
+    date = hiring_date.change month: today.month, year: today.year
+    date < today ? date.next_month : date
+  end
+
+  def self.oncoming_salary
+    today = Date.current
+    User.all.keep_if do |user|
+      if user.hiring_date.present?
+        upcoming_salary_date = user.upcoming_salary_date
+        upcoming_salary_date.between?(today, 2.days.from_now.end_of_day.to_datetime) and
+            user.salaries.where(created_at: today..upcoming_salary_date, user_id: user.id).empty?
+      end
+    end.sort_by! do |user|
+      user.upcoming_salary_date - today
+    end
   end
 
   private

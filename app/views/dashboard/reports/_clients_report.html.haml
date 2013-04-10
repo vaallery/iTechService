@@ -15,3 +15,7 @@
           - client.devices.where(created_at: @period).each do |device|
             = link_to device.presentation, device_path(device)
             %br
+  %tfoot
+    %tr
+      %td= t 'total'
+      %td{colspan: 2}= @report[:clients_count]

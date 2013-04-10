@@ -18,8 +18,7 @@ module UsersHelper
         end +
         content_tag(:div, class: 'btn-group') do
           link_to_show_small(user) +
-          link_to_edit_small(user) +
-          link_to_destroy_small(user)
+          link_to_edit_small(user)
         end
       end
     end.html_safe

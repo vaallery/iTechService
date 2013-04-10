@@ -4,7 +4,7 @@
     $target.popover('destroy');
   }else{
     $('.comments_link').popover('destroy');
-    content = "#{j(render(@comments))}" + "#{j(new_comment_form_for(@commentable))}";
+    content = "<div class='popover_comments'>#{j(render(@comments))}</div>" + "#{j(new_comment_form_for(@commentable))}";
     $target.popover({
       html: true,
       placement: 'right',
