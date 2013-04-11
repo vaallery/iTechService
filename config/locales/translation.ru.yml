@@ -492,12 +492,14 @@ ru:
     clients_count: Количество клиентов
     clients_report: Новые клиенты
     device_types_report: Принятые девайсы по типам
+    devices_movements_report: Перемещения девайсов
     done_at: Выполнен
     duration: Длительность, мин.
     includes: Из них
     qty: Количество
     qty_paid: платных
     qty_free: бесплатных
+    moved: Перемещено
     moved_at: Перемещен
     new_clients_count: Количество новых клиентов
     done_orders_report: Выполненные заказы

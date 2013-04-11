@@ -1,0 +1,22 @@
+%table#users_report.table.table-bordered.table-hover
+  %caption
+    %h4= t 'reports.devices_movements_report'
+  %thead
+    %tr
+      %th.center= t 'activerecord.models.user'
+      %th.center= t 'reports.moved'
+  %tbody
+    - @report[:users_mv].each do |user|
+      %tr.detailable
+        %td= user[:user]
+        %td= user[:qty]
+      - user[:devices].each do |device|
+        %tr.details
+          %td
+            = link_to device[:device_presentation], device_path(device[:device_id])
+            %br
+            = link_to device[:client_presentation], client_path(device[:client_id])
+          %td
+            = device[:location]
+            %br
+            = l device[:date], format: :long_d

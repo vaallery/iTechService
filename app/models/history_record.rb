@@ -4,7 +4,7 @@ class HistoryRecord < ActiveRecord::Base
   belongs_to :object, polymorphic: true
   attr_accessible :column_name, :column_type, :deleted_at, :new_value, :old_value, :user, :object
   
-  default_scope order('created_at desc')
+  scope :order_by_newest, order('created_at desc')
   scope :devices, where(object_type: 'Device')
   scope :device_tasks, where(object_type: 'DeviceTask')
   scope :task_completions, where(object_type: 'DeviceTask', column_name: 'done')
@@ -12,9 +12,11 @@ class HistoryRecord < ActiveRecord::Base
   scope :movements_to, lambda { |location| where(column_name: 'location_id', new_value: (location.is_a?(Location) ? location.id.to_s : location.to_s)) }
   scope :movements_to_archive, where(column_name: 'location_id', new_value: Location.archive_id.to_s)
   scope :in_period, lambda {|period| where(created_at: period)}
+  scope :by_user, lambda {|user| where(user_id: (user.is_a?(User) ? user.id : user.to_i))}
+  scope :devices_movements, devices.movements
 
   def user_name
     user.present? ? user.short_name : ''
   end
-  
+
 end

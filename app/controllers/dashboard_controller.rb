@@ -90,6 +90,8 @@ class DashboardController < ApplicationController
         make_tasks_duration_report
       when 'done_orders_report' then
         make_done_orders_report
+      when 'devices_movements_report' then
+        make_devices_movements_report
     end
   end
 
@@ -227,6 +229,28 @@ class DashboardController < ApplicationController
       @report[:orders] << {order: order, done_at: order.done_at}
     end
     @report[:done_orders_count] = done_orders.count
+  end
+
+  def make_devices_movements_report
+    @report[:users_mv] = []
+    movements = HistoryRecord.devices_movements.in_period(@period)
+    if movements.any?
+      movements.group('user_id').count('id').each_pair do |key, val|
+        if key.present? and (user = User.find key).present?
+          user_movements = movements.by_user(user)
+          devices = []
+          user_movements.each do |movement|
+            if (device = Device.find(movement.object_id)).present?
+              location = Location.find movement.new_value.to_i
+              devices << {date: movement.created_at, location: location.name,
+                            device_id: device.id, device_presentation: device.presentation,
+                            client_id: device.client_id, client_presentation: device.client_presentation}
+            end
+          end
+          @report[:users_mv] << {user: user.short_name, qty: val, devices: devices}
+        end
+      end
+    end
   end
 
 end
