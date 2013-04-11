@@ -20,8 +20,28 @@ class Location < ActiveRecord::Base
     ancestors.all.map{|l|l.name}.join ' / '
   end
 
+  def self.bar
+    Location.find_by_name 'Бар'
+  end
+
+  def self.bar_id
+    Location.find_by_name('Бар').try(:id)
+  end
+
+  def self.content
+    Location.find_by_name 'Обновление контента'
+  end
+
+  def self.content_id
+    Location.find_by_name('Обновление контента').try(:id)
+  end
+
   def self.done
     Location.find_by_name 'Готово'
+  end
+
+  def self.done_id
+    Location.find_by_name('Готово').try(:id)
   end
 
   def self.archive
@@ -34,6 +54,10 @@ class Location < ActiveRecord::Base
 
   def self.repair
     Location.find_by_name 'Ремонт'
+  end
+
+  def self.repair_id
+    Location.find_by_name('Ремонт').try(:id)
   end
 
   def self.warranty

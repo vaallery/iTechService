@@ -35,7 +35,7 @@ class Order < ActiveRecord::Base
   scope :accessory, where(object_kind: 'accessory')
   scope :soft, where(object_kind: 'soft')
   scope :misc, where(object_kind: 'misc')
-  scope :spares, where(object_kind: 'spares')
+  scope :spare_part, where(object_kind: 'spare_part')
   scope :done_at, lambda { |period| joins(:history_records).where(history_records: {column_name: 'status',
                             new_value: 'done', created_at: period}) }
 

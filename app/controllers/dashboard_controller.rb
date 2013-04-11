@@ -233,21 +233,30 @@ class DashboardController < ApplicationController
 
   def make_devices_movements_report
     @report[:users_mv] = []
-    movements = HistoryRecord.devices_movements.in_period(@period)
+    movements = HistoryRecord.in_period(@period)
+    movements = movements.movements_from(Location.bar_id)
+    movements = movements.movements_to([Location.content_id, Location.repair_id])
     if movements.any?
       movements.group('user_id').count('id').each_pair do |key, val|
         if key.present? and (user = User.find key).present?
           user_movements = movements.by_user(user)
           devices = []
+          user_durations = []
           user_movements.each do |movement|
             if (device = Device.find(movement.object_id)).present?
-              location = Location.find movement.new_value.to_i
-              devices << {date: movement.created_at, location: location.name,
-                            device_id: device.id, device_presentation: device.presentation,
-                            client_id: device.client_id, client_presentation: device.client_presentation}
+              old_location = Location.find movement.old_value.to_i
+              new_location = Location.find movement.new_value.to_i
+              duration = ((movement.created_at - device.created_at).to_i/60).round
+              user_durations << duration
+              devices << {moved_at: movement.created_at, created_at: device.created_at,
+                          old_location: old_location.name, new_location: new_location.name,
+                          device_id: device.id, device_presentation: device.presentation,
+                          client_id: device.client_id, client_presentation: device.client_presentation,
+                          duration: duration}
             end
           end
-          @report[:users_mv] << {user: user.short_name, qty: val, devices: devices}
+          avarage_duration = (user_durations.sum / user_durations.size).round
+          @report[:users_mv] << {user: user.short_name, avarage_duration: avarage_duration, qty: val, devices: devices}
         end
       end
     end

@@ -8,15 +8,15 @@
   %tbody
     - @report[:users_mv].each do |user|
       %tr.detailable
-        %td= user[:user]
-        %td= user[:qty]
+        %td.user= user[:user]
+        %td.movement= "#{humanize_duration user[:avarage_duration]} (#{user[:qty]})"
       - user[:devices].each do |device|
         %tr.details
-          %td
+          %td.device
             = link_to device[:device_presentation], device_path(device[:device_id])
             %br
             = link_to device[:client_presentation], client_path(device[:client_id])
-          %td
-            = device[:location]
+          %td.movement
+            = device[:new_location]
             %br
-            = l device[:date], format: :long_d
+            = humanize_duration device[:duration]
