@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
                   :card_number, :color, :karmas_attributes, :abilities, :schedule
 
   attr_accessor :login
+  cattr_accessor :current
 
   accepts_nested_attributes_for :schedule_days, :duty_days, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :karmas, allow_destroy: true
@@ -39,7 +40,6 @@ class User < ActiveRecord::Base
   validates :username, :role, presence: true
   validates :password, presence: true, confirmation: true, if: :password_required?
 
-  cattr_accessor :current
 
   scope :admins, where(role: 'admin')
   scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
