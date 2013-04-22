@@ -25,8 +25,9 @@ jQuery ->
     $('#modal_form').remove()
 
   $(document).on 'keyup', '#search_form .search-query', (event) ->
-    $('#search_form').submit()
-    event.preventDefault()
+    if event.keyCode is 13
+      $('#search_form').submit()
+      event.preventDefault()
 
   $(document).on 'click', '#search_form .clear_search_input', (event) ->
     $(this).siblings('.search-query').val ''

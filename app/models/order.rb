@@ -28,6 +28,8 @@ class Order < ActiveRecord::Base
   scope :pending_orders, where(status: 'pending')
   scope :done_orders, where(status: 'done')
   scope :canceled_orders, where(status: 'canceled')
+  scope :notified_orders, where(status: 'notified')
+  scope :archive_orders, where(status: 'archive')
   scope :actual_orders, where(status: %w[new pending notified done])
   scope :technician_orders, where(object_kind: 'spare_part')
   scope :marketing_orders, where("object_kind <> 'spare_part'")
