@@ -24,7 +24,7 @@ class Device < ActiveRecord::Base
   before_validation :validate_security_code
   before_validation :set_user_and_location
   before_validation :validate_location
-  before_validation :validate_device_tasks
+  #before_validation :validate_device_tasks
 
   after_save :update_qty_replaced
   after_update :device_update_announce
