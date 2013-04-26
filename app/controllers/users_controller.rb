@@ -140,6 +140,14 @@ class UsersController < ApplicationController
     render 'update_duty_day'
   end
 
+  def actions
+    @user = User.find params[:id]
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
   private
 
   def load_infos

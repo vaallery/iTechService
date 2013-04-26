@@ -21,6 +21,7 @@ ItechService::Application.routes.draw do
     get :add_to_job_schedule, on: :member
     get :staff_duty_schedule, on: :collection
     get :rating, on: :collection
+    get :actions, on: :member
     post :create_duty_day, on: :collection
     post :destroy_duty_day, on: :collection
   end

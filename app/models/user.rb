@@ -198,7 +198,8 @@ class User < ActiveRecord::Base
   end
 
   def timeout_in
-    (Rails.env.production? and software?) ? 5.minutes : 1.day
+    #(Rails.env.production? and software?) ? 5.minutes : 1.day
+    1.day
   end
 
   def abilities=(abilities)
