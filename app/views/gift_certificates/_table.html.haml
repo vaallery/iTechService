@@ -15,7 +15,10 @@
   - @gift_certificates.each do |gift_certificate|
     %tr[gift_certificate]
       %td.id_col= link_to gift_certificate.id, gift_certificate_path(gift_certificate)
-      %td.number_col= link_to gift_certificate.number, gift_certificate_path(gift_certificate)
+      %td.number_col
+        = link_to gift_certificate.number, gift_certificate_path(gift_certificate)
+        - if can? :manage, GiftCertificate
+          = link_to icon_tag(:time), history_gift_certificate_path(gift_certificate), style: 'text-decoration:none;', remote: true
       %td.nominal_col= gift_certificate.nominal_h
       %td.consumed_col= number_to_currency gift_certificate.consumed, precision: 0
       %td.status_col= gift_certificate.status_h

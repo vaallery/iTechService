@@ -12,6 +12,11 @@ Ability
     elsif user.programmer?
       can :manage, :all
     else
+      if user.manager?
+        can :manage, :all
+        cannot [:modify, :destroy], User
+        cannot :manage, Salary
+      end
       if user.software?
         can :modify, [Device, Client]
         can [:issue, :activate, :scan], GiftCertificate

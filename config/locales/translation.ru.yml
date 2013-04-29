@@ -592,6 +592,7 @@ ru:
       title: Новый пользователь
     roles:
       admin: Админ
+      manager: Менеджер
       marketing: Маркетолог
       media: Медийщик
       programmer: Прогер

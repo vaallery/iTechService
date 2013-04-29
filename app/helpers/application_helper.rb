@@ -121,14 +121,20 @@ module ApplicationHelper
         val = icon_tag icon_class
       when 'integer'
         case rec.column_name
-        when 'client_id'
-          val = Client.find(rec.new_value).try(:full_name)
-        when 'location_id'
-          val = Location.find(rec.new_value).try(:full_name)
-        when 'device_id'
-          val = Device.find(rec.new_value).try(:presentation)
-        when 'task_id'
-          val = Task.find(rec.new_value).try(:name)
+          when 'client_id'
+            val = Client.find(rec.new_value).try(:full_name)
+          when 'location_id'
+            val = Location.find(rec.new_value).try(:full_name)
+          when 'device_id'
+            val = Device.find(rec.new_value).try(:presentation)
+          when 'task_id'
+            val = Task.find(rec.new_value).try(:name)
+          when 'nominal'
+            val = rec.object.is_a?(GiftCertificate) ? rec.object.nominal_h : rec.new_value
+          when 'status'
+            val = rec.object.is_a?(GiftCertificate) ? rec.object.status_h : rec.new_value
+          else
+            val = rec.new_value
         end
       else
         val = rec.new_value
@@ -136,7 +142,8 @@ module ApplicationHelper
     else
       val = '-'
     end
-    val.html_safe
+    #val.html_safe
+    val
   end
 
   def attribute_changed_by object, attribute

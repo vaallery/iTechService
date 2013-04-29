@@ -17,8 +17,9 @@ module UsersHelper
           link_to_add_karma(user, false, class: 'btn btn-small')
         end +
         content_tag(:div, class: 'btn-group') do
-          link_to_show_small(user) +
-          link_to_edit_small(user)
+          content = link_to_show_small(user)
+          content += link_to_edit_small(user) if can? :edit, user
+          content
         end
       end
     end.html_safe

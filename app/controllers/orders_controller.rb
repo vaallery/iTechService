@@ -92,7 +92,6 @@ class OrdersController < ApplicationController
     end
   end
 
-
   def history
     order = Order.find params[:id]
     @records = order.history_records

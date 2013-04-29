@@ -87,6 +87,7 @@ ItechService::Application.routes.draw do
     post :refresh, on: :member
     get :check, on: :collection
     get :scan, on: :collection
+    get :history, on: :member, defaults: {format: 'js'}
   end
 
   resources :settings, except: [:show]

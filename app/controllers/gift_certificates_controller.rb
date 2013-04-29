@@ -160,6 +160,12 @@ class GiftCertificatesController < ApplicationController
     end
   end
 
+  def history
+    gift_certificate = GiftCertificate.find params[:id]
+    @records = gift_certificate.history_records
+    render 'shared/show_history'
+  end
+
   private
 
   def sort_column
