@@ -43,7 +43,7 @@ group :assets do
 end
 
 group :development do
-  #gem 'debugger'
+  #gem 'debugger' unless ENV["RM_INFO"]
   #gem 'debugger-linecache'
   #gem 'debugger-pry', require: 'debugger/pry'
   gem 'better_errors'
@@ -54,7 +54,9 @@ group :development do
   #gem 'linecache19', '>= 0.5.13', :git => 'https://github.com/robmathews/linecache19-0.5.13.git'
   #gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
   #gem 'ruby-debug-ide', '>= 0.4.17.beta14'
-  #gem 'ruby-debug'
+  #gem 'ruby-debug19'
+  #gem 'ruby-debug-base19x', '0.11.30.pre11', :require => 'ruby-debug-base', :path => '/Applications/RubyMine.app/rb/gems'
+  #gem 'ruby-debug-ide', '0.4.17.beta16', :require => 'ruby-debug-ide', :path => '/Applications/RubyMine.app/rb/gems'
 end
 
 group :test do

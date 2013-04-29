@@ -27,7 +27,11 @@
           %td= order.object
           %td= t("orders.statuses.#{order.status}")
           %td= order.desired_date.present? ? l(order.desired_date) : '-'
-          %td= l order.created_at, format: :long_d
+          %td
+            = l order.created_at, format: :long_d
+            - if order.user.present?
+              %br
+              = order.user.short_name
           %td
             .btn-group
               = link_to_show_small order

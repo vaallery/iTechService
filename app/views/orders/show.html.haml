@@ -11,6 +11,10 @@
 
 %dl.dl-horizontal
 
+  - if @order.user.present?
+    %dt= model_class.human_attribute_name :user
+    %dd= @order.user.short_name
+
   %dt= model_class.human_attribute_name :customer
   %dd
     - if @order.customer_type == 'Client'

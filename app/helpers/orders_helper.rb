@@ -24,7 +24,10 @@ module OrdersHelper
         tag(:br, false) +
         order.comment
       end +
-      content_tag(:td, l(order.created_at, format: :long_d), class: 'order_created_at_column') +
+      content_tag(:td, class: 'order_created_at_column') do
+        l(order.created_at, format: :long_d).html_safe +
+        (order.user.present? ? (tag(:br, false) + order.user.short_name) : '')
+      end +
       content_tag(:td, class: 'order_actions_column') do
         link_to(icon_tag('edit'), edit_order_path(order), class: 'btn btn-small')
       end

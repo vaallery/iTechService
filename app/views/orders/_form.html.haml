@@ -1,4 +1,10 @@
 = simple_form_for @order, html: { id: 'order_form', class: 'form-horizontal' } do |f|
+
+  - if @order.user.present?
+    .control-group.string.disabled.optional
+      %label.control-label.string.optional= Order.human_attribute_name :user
+      .controls= text_field_tag 'order_user', @order.user.short_name, class: 'input-xlarge', disabled: true
+
   = f.input :number, disabled: true, input_html: { class: 'input-xlarge' }
   - if @order.new_record?
     = f.input :customer_id, as: :client, wrapper_html: {id: 'client_fields'}, no_devices: true
