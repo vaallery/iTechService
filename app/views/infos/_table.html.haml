@@ -9,7 +9,7 @@
       - if can? :manage, Info
         %th= sortable 'recipient', Info.human_attribute_name(:recipient)
       %th= sortable 'created_at', Info.human_attribute_name(:created_at)
-      - if can? :manage, Info
+      - if can? :modify, Info
         %th
   %tbody
     - @infos.each do |info|
@@ -20,7 +20,7 @@
         - if can? :manage, Info
           %td= info.recipient.present? ? link_to(info.recipient_presentation, user_path(info.recipient)) : '-'
         %td= human_datetime info.created_at
-        - if can? :manage, Info
+        - if can? :modify, Info
           %td.btn-group
             = link_to_show_small info
             = link_to_edit_small info

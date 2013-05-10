@@ -17,7 +17,7 @@
     %h5= t 'comments.new.title'
     = new_comment_form_for @info
 
-- if can? :manage, Info
+- if can? :modify, Info
   .form-actions
     = link_to_edit @info
     = link_to_destroy @info
