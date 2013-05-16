@@ -34,3 +34,4 @@ doc/
 .powrc
 .idea/misc.xml
 .elasticbeanstalk/
+Gemfile.lock
