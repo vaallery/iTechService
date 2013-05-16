@@ -26,7 +26,7 @@ gem 'taps'
 gem 'irwi', git: 'git://github.com/alno/irwi.git'
 gem 'RedCloth'
 gem 'roo'
-gem 'paperclip'
+gem 'paperclip', '3.4.0'
 gem 'backup'
 gem 'barby'
 
@@ -46,17 +46,16 @@ group :development do
   #gem 'debugger' unless ENV["RM_INFO"]
   #gem 'debugger-linecache'
   #gem 'debugger-pry', require: 'debugger/pry'
+  gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request', '0.2.1'
   gem 'capistrano-deploy', '~> 0.3.2'
-  #gem 'i18n_generators'
-  #gem 'linecache19', '>= 0.5.13', :git => 'https://github.com/robmathews/linecache19-0.5.13.git'
-  #gem 'ruby-debug-base19x', '>= 0.11.30.pre10'
-  #gem 'ruby-debug-ide', '>= 0.4.17.beta14'
-  #gem 'ruby-debug19'
-  #gem 'ruby-debug-base19x', '0.11.30.pre11', :require => 'ruby-debug-base', :path => '/Applications/RubyMine.app/rb/gems'
-  #gem 'ruby-debug-ide', '0.4.17.beta16', :require => 'ruby-debug-ide', :path => '/Applications/RubyMine.app/rb/gems'
+
+  gem 'linecache19', '>= 0.5.13'#, path: '/Users/v/projects/rails/_gems'
+  gem 'ruby-debug19'
+  gem 'ruby-debug-base19x', '0.11.30.pre12', require: 'ruby-debug-base' #, path: '/Applications/RubyMine.app/rb/gems'
+  gem 'ruby-debug-ide', '0.4.17.beta17', require: 'ruby-debug-ide' #, path: '/Applications/RubyMine.app/rb/gems'
 end
 
 group :test do
