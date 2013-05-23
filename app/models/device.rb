@@ -37,8 +37,9 @@ class Device < ActiveRecord::Base
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   scope :replaced, where(replaced: true)
   scope :located_at, lambda {|location| where(location_id: location.id)}
-  scope :at_done, where(location_id: Location.find_by_name('Готово'))
-  scope :at_archive, where(location_id: Location.find_by_name('Архив'))
+  scope :at_done, where(location_id: Location.done_id)
+  scope :at_archive, where(location_id: Location.archive_id)
+  scope :unarchived, where('devices.location_id <> ?', Location.archive_id)
 
   after_initialize :set_user_and_location
   
