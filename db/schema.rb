@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130523090127) do
+ActiveRecord::Schema.define(:version => 20130523110318) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -204,9 +204,10 @@ ActiveRecord::Schema.define(:version => 20130523090127) do
   create_table "locations", :force => true do |t|
     t.string   "name"
     t.string   "ancestry"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.boolean  "schedule"
+    t.integer  "position",   :default => 0
   end
 
   add_index "locations", ["ancestry"], :name => "index_locations_on_ancestry"

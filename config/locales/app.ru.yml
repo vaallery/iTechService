@@ -159,6 +159,7 @@ ru:
       location:
         ancestry: Предок
         name: Название
+        position: Позиция
         schedule: Отображать в календаре
         users: Пользователи
 
