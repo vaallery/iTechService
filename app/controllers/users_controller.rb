@@ -77,6 +77,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = current_user
+    @devices = @user.devices.unarchived
 
     respond_to do |format|
       format.html { render 'show' }
