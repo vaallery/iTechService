@@ -147,6 +147,7 @@ ru:
 
       info:
         important: Важно
+        is_archived: В архиве
         recipient: Адресант
         recipient_id: :activerecord.attributes.info.recipient
         title: Заголовок
@@ -433,6 +434,9 @@ ru:
     new:
       title: Новая новость
     index:
+      archive_link: Архив
+      archive_title: Архив новостей
+      actual_news_link: Актуальные новости
       title: Новости
     link: Новости
 

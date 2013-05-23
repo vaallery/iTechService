@@ -151,7 +151,7 @@ class UsersController < ApplicationController
   private
 
   def load_infos
-    @infos = Info.available_for(current_user).grouped_by_date.limit 20
+    @infos = Info.unarchived.available_for(current_user).grouped_by_date.limit 20
   end
 
 end
