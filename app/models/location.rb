@@ -65,7 +65,8 @@ class Location < ActiveRecord::Base
   end
 
   def self.popov
-    Location.where(id: 10).try(:first)
+    #Location.where(id: 10).try(:first)
+    Location.where('LOWER(name) LIKE ?', "попов%").try(:first)
   end
 
   def self.allowed_for(user, device)
@@ -107,7 +108,8 @@ class Location < ActiveRecord::Base
   end
 
   def is_popov?
-    id == 10
+    #id == 10
+    name.mb_chars.downcase.to_s.start_with? 'попов'
   end
 
 end

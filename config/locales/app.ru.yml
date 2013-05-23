@@ -645,6 +645,10 @@ ru:
     title: Заголовок
     version: Версия
 
+  mail:
+    movement:
+      subject: "Новый девайс %{device}"
+
   in_time: через
   ago: назад
   app_name: Айс
