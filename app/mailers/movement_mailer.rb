@@ -1,4 +1,5 @@
 class MovementMailer < ActionMailer::Base
+  include ApplicationHelper
 
   def notice(device)
     @device = device

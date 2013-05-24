@@ -461,6 +461,10 @@ ru:
     new:
       title: Новый заказ
     index:
+      search_number_placeholder: "Номер заказа"
+      search_customer_placeholder: "Заказчик"
+      search_object_placeholder: "Объект"
+      search_user_placeholder: "Сотрудник"
       title: Заказы
     link: Заказы
     object_kinds:
