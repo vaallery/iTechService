@@ -2,10 +2,11 @@
   %table.table.table-striped.table-hover
     %thead
       %tr
-        %th= Location.human_attribute_name(:id)
-        %th= Location.human_attribute_name(:name)
-        %th= Location.human_attribute_name(:ancestry)
-        %th= Location.human_attribute_name(:created_at)
+        %th= Location.human_attribute_name :id
+        %th= Location.human_attribute_name :name
+        %th= Location.human_attribute_name :ancestry
+        %th= Location.human_attribute_name :position
+        %th= Location.human_attribute_name :created_at
         %th
     %tbody
       - @locations.each do |location|
@@ -13,6 +14,7 @@
           %td= location.id
           %td= location.name
           %td= location.ancestors_names
+          %td= location.position
           %td= human_datetime location.created_at
           %td
             .btn-group

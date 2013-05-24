@@ -37,8 +37,9 @@ class Device < ActiveRecord::Base
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   scope :replaced, where(replaced: true)
   scope :located_at, lambda {|location| where(location_id: location.id)}
-  scope :at_done, where(location_id: Location.find_by_name('Готово'))
-  scope :at_archive, where(location_id: Location.find_by_name('Архив'))
+  scope :at_done, where(location_id: Location.done_id)
+  scope :at_archive, where(location_id: Location.archive_id)
+  scope :unarchived, where('devices.location_id <> ?', Location.archive_id)
 
   after_initialize :set_user_and_location
   
@@ -104,20 +105,13 @@ class Device < ActiveRecord::Base
     unless (ticket_q = params[:ticket]).blank?
       devices = devices.where 'devices.ticket_number LIKE ?', "%#{ticket_q}%"
     end
-    
-    unless (device_q = params[:device]).blank?
-      devices = devices.where 'LOWER(devices.serial_number) LIKE ?', "%#{device_q.mb_chars.downcase.to_s}%"
-    end
 
-    unless (device_q = params[:device_q]).blank?
-      devices = devices.where 'LOWER(devices.serial_number) LIKE :q OR LOWER(devices.imei) LIKE :q',
-                              q: "%#{device_q.mb_chars.downcase.to_s}%"
+    unless (device_q = (params[:device] || params[:device_q])).blank?
+      devices = devices.where 'LOWER(devices.serial_number) LIKE :q OR LOWER(devices.imei) LIKE :q', q: "%#{device_q.mb_chars.downcase.to_s}%"
     end
 
     unless (client_q = params[:client]).blank?
-      devices = devices.joins(:client).where 'LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q
-                                              OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q',
-                                              q: "%#{client_q.mb_chars.downcase.to_s}%"
+      devices = devices.joins(:client).where 'LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q', q: "%#{client_q.mb_chars.downcase.to_s}%"
     end
     
     devices
@@ -252,6 +246,9 @@ class Device < ActiveRecord::Base
       end
       if self.location.is_warranty? and !old_location.try(:is_repair?)
         self.errors.add :location_id, I18n.t('devices.errors.not_allowed')
+      end
+      if self.location.is_popov? and old_location.present?
+        MovementMailer.notice(self).deliver
       end
 
       #if User.current.not_admin? and old_location != User.current.location

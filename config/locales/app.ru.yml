@@ -147,6 +147,7 @@ ru:
 
       info:
         important: Важно
+        is_archived: В архиве
         recipient: Адресант
         recipient_id: :activerecord.attributes.info.recipient
         title: Заголовок
@@ -158,6 +159,7 @@ ru:
       location:
         ancestry: Предок
         name: Название
+        position: Позиция
         schedule: Отображать в календаре
         users: Пользователи
 
@@ -340,6 +342,8 @@ ru:
       not_done: Девайс не готов
       not_allowed: Вы не можете переместить девайс.
     index:
+      client_search_placeholder: "Клиент: телефон | имя | карта"
+      device_search_placeholder: "Девайс: серийник | IMEI"
       title: Девайсы
     new:
       title: Новый девайс
@@ -360,6 +364,7 @@ ru:
     moved_at: Перемёщен в
     moved_by: Переместил(а)
     phone_stolen: 'этот телефон в чёрном списке!!!'
+    received: Принят
     search_placeholder: Талон или серийный номер
     seach_sales_btn: Искать продажи
     updated: Девайс изменён
@@ -433,6 +438,9 @@ ru:
     new:
       title: Новая новость
     index:
+      archive_link: Архив
+      archive_title: Архив новостей
+      actual_news_link: Актуальные новости
       title: Новости
     link: Новости
 
@@ -453,6 +461,10 @@ ru:
     new:
       title: Новый заказ
     index:
+      search_number_placeholder: "Номер заказа"
+      search_customer_placeholder: "Заказчик"
+      search_object_placeholder: "Объект"
+      search_user_placeholder: "Сотрудник"
       title: Заказы
     link: Заказы
     object_kinds:
@@ -644,6 +656,10 @@ ru:
     save_page: Сохранить страницу
     title: Заголовок
     version: Версия
+
+  mail:
+    movement:
+      subject: "Новый девайс %{device}"
 
   in_time: через
   ago: назад

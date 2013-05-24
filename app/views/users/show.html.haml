@@ -9,14 +9,44 @@
       = @user.short_name
 
 %ul.nav.nav-tabs
-  %li.active= link_to t("users.info"), "#info_tab", 'data-toggle' => 'tab'
+  %li.active= link_to User.human_attribute_name(:devices), "#devices_tab", 'data-toggle' => 'tab'
+  %li= link_to t("users.info"), "#info_tab", 'data-toggle' => 'tab'
   %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
   -#- if can? :manage, Salary
   -#  %li= link_to t('salaries.index.title'), '#salary_tab', 'data-toggle' => 'tab'
   %li= link_to t("users.account"), '#account_tab', 'data-toggle' => 'tab'
 
 .tab-content
-  #info_tab.tab-pane.active
+  #devices_tab.tab-pane.active
+    - if @devices.any?
+      %table.table.table-condensed.table-hover
+        %thead
+          %tr
+            %th= t 'devices.received'
+            %th= Device.human_attribute_name(:ticket_number)
+            %th= t 'activerecord.models.device'
+            %th= Device.human_attribute_name(:client)
+            %th= Device.human_attribute_name(:location)
+            %th
+        %tbody
+          - @devices.each do |device|
+            %tr{class: row_class_for_device(device)}
+              %td= t 'moved', user: '', time: distance_of_time_in_words_to_now(device.created_at)
+              %td= link_to device.ticket_number, device_path(device)
+              %td
+                = link_to device.type_name, device_path(device)
+                %small= device.serial_number
+                %p.device_comment_tooltip{'data-title' => device.comment}
+                  %i.icon-comment
+              %td= h device.client_presentation
+              %td= device.location.try :full_name
+              %td
+                .btn-group
+                  = link_to_show_small device
+                  = link_to_edit_small device# if can? :update, device
+                  = link_to_destroy_small device if can? :destroy, device
+
+  #info_tab.tab-pane
     %dl.dl-horizontal
 
       %dt
