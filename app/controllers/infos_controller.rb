@@ -4,13 +4,14 @@ class InfosController < ApplicationController
   skip_load_resource only: :index
 
   def index
+    @infos = params[:archive].present? ? Info.archived.newest : Info.unarchived.newest
     if can? :manage, Info
-      @infos = Info.newest
+      @infos = @infos.newest
       unless sort_column.blank? and sort_direction.blank?
         @infos = @infos.reorder(sort_column + ' ' + sort_direction)
       end
     else
-      @infos = Info.newest.available_for(current_user)
+      @infos = @infos.newest.available_for(current_user)
     end
     @infos = @infos.page(params[:page])
 

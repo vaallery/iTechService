@@ -1,2 +1,11 @@
-= auto_header_tag
+.page-header
+  %h1
+    - if params[:archive].blank?
+      = t '.title'
+      %small= link_to t('.archive_link'), infos_path(archive: true)
+    - else
+      = t '.archive_title'
+      %small= link_to t('.actual_news_link'), infos_path
+  = link_to_new Info if can?(:create, Info)
+
 #resource_table= render 'table'

@@ -1,0 +1,50 @@
+!!!
+%html{style: "font-family:'Helvetica-Neue', 'Helvetica', sans-serif;"}
+  %head
+    %meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
+
+  %body
+    %h4= @device.presentation
+
+    %p
+      %strong= t 'devices.received'
+      = l @device.created_at, format: :long_d
+
+    %p
+      %strong= Device.human_attribute_name :ticket_number
+      = @device.ticket_number
+
+    %p
+      %strong= Device.human_attribute_name :client
+      = @device.client.presentation
+
+    %p
+      %strong= Device.human_attribute_name :comment
+      = @device.comment
+
+    %table
+      %caption
+        %h4= Device.human_attribute_name :tasks
+      %thead
+        %tr
+          %th= Task.human_attribute_name :name
+          %th= DeviceTask.human_attribute_name :comment
+          %th= DeviceTask.human_attribute_name :user_comment
+          %th= DeviceTask.human_attribute_name :cost
+          %th= DeviceTask.human_attribute_name :done_at
+          %th= DeviceTask.human_attribute_name :created_at
+      %tbody
+        - @device.device_tasks.ordered.each do |device_task|
+          %tr
+            %td= device_task.task_name
+            %td= h device_task.comment
+            %td
+              %strong= h device_task.user_comment
+            %td= device_task.cost
+            %td= l device_task.done_at, format: :long_d unless device_task.done_at.blank?
+            %td= l device_task.created_at, format: :long_d
+      %tfoot
+        %tr
+          %td{colspan: 3}= t 'total'
+          %td= @device.tasks_cost
+          %td{colspan: 4}

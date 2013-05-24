@@ -29,11 +29,11 @@ class ApplicationController < ActionController::Base
   end
 
   def load_important_info
-    @important_info = Info.important.first
+    @important_info = Info.unarchived.important.first
   end
 
   def load_personal_infos
-    @personal_infos = Info.addressed_to current_user
+    @personal_infos = Info.unarchived.addressed_to current_user
   end
 
 end

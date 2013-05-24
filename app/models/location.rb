@@ -4,8 +4,9 @@ class Location < ActiveRecord::Base
   has_ancestry
   has_many :users
   has_many :tasks
-  attr_accessible :name, :ancestry, :parent_id, :schedule
-  default_scope order('ancestry asc')
+  attr_accessible :name, :ancestry, :parent_id, :schedule, :position
+  default_scope order('position asc')
+  scope :sorted, order('position asc')
   scope :for_schedule, where(schedule: true)
 
   def full_name
@@ -65,7 +66,8 @@ class Location < ActiveRecord::Base
   end
 
   def self.popov
-    Location.where(id: 10).try(:first)
+    #Location.where(id: 10).try(:first)
+    Location.where('LOWER(name) LIKE ?', "попов%").try(:first)
   end
 
   def self.allowed_for(user, device)
@@ -107,7 +109,8 @@ class Location < ActiveRecord::Base
   end
 
   def is_popov?
-    id == 10
+    #id == 10
+    name.mb_chars.downcase.to_s.start_with? 'попов'
   end
 
 end

@@ -71,25 +71,30 @@ class Order < ActiveRecord::Base
   def self.search params
     orders = Order.scoped
 
-    unless (status_q = params[:status]).blank?
+    if (status_q = params[:status]).present?
       orders = orders.send status_q+'_orders' if STATUSES.include? status_q
     end
 
-    unless (object_kind_q = params[:object_kind]).blank?
+    if (object_kind_q = params[:object_kind]).present?
       orders = orders.send object_kind_q if OBJECT_KINDS.include? object_kind_q
     end
 
-    unless (number_q = params[:order_number]).blank?
+    if (number_q = params[:order_number]).present?
       orders = orders.where 'number LIKE :q', q: "%#{number_q}%"
     end
 
-    unless (object_q = params[:object]).blank?
+    if (object_q = params[:object]).present?
       orders = orders.where 'LOWER(object) LIKE :q', q: "%#{object_q.mb_chars.downcase.to_s}%"
     end
 
-    unless (customer_q = params[:customer]).blank?
-      orders = orders.joins(:customer).where 'LOWER(clients.name) LIKE :q OR LOWER(users.name) LIKE :q
-          OR LOWER(users.surname) LIKE :q OR LOWER(users.username) LIKE :q', q: "%#{customer_q.mb_chars.downcase.to_s}%"
+    if (customer_q = params[:customer]).present?
+      client_ids = Client.where('LOWER(name) LIKE :q', q: "%#{customer_q.mb_chars.downcase.to_s}%").map { |c| c.id }
+      user_ids = User.where('LOWER(name) LIKE :q OR LOWER(surname) LIKE :q OR LOWER(username) LIKE :q', q: "%#{customer_q.mb_chars.downcase.to_s}%").select(:id).map { |u| u.id }
+      orders = orders.where{(customer_type.eq 'Client') & (customer_id.in client_ids) | (customer_type.eq 'User') & (customer_id.in user_ids)}
+    end
+
+    if (user_q = params[:user]).present?
+      orders = orders.joins(:user).where 'LOWER(users.name) LIKE :q OR LOWER(users.surname) LIKE :q OR LOWER(users.username) LIKE :q', q: "%#{user_q.mb_chars.downcase.to_s}%"
     end
 
     orders
@@ -110,8 +115,7 @@ class Order < ActiveRecord::Base
 
   def make_announcement
     unless changed_attributes[:status].present?
-      if (announcement = Announcement.create(user_id: user_id, kind: (done? ? 'order_done' : 'order_status'), active: true,
-          content: "#{I18n.t('orders.order_num', num: number)} #{I18n.t('orders.statuses.'+status)}")).present?
+      if (announcement = Announcement.create(user_id: user_id, kind: (done? ? 'order_done' : 'order_status'), active: true, content: "#{I18n.t('orders.order_num', num: number)} #{I18n.t('orders.statuses.'+status)}")).present?
         PrivatePub.publish_to '/announcements', "$.getScript('/announcements/#{announcement.id}');"
       end
     end

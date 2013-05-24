@@ -77,6 +77,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = current_user
+    @devices = @user.devices.unarchived
 
     respond_to do |format|
       format.html { render 'show' }
@@ -151,7 +152,7 @@ class UsersController < ApplicationController
   private
 
   def load_infos
-    @infos = Info.available_for(current_user).grouped_by_date.limit 20
+    @infos = Info.unarchived.available_for(current_user).grouped_by_date.limit 20
   end
 
 end

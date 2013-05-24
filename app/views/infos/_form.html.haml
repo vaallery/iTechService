@@ -4,5 +4,6 @@
   = f.input :content, as: :ckeditor, input_html: { toolbar: 'Full', width: 800, height: 400 }
   = f.input :important
   = f.association :recipient, label_method: :short_name
+  = f.input :is_archived
   .form-actions
     = submit_button f
