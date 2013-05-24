@@ -5,7 +5,7 @@ class Location < ActiveRecord::Base
   has_many :users
   has_many :tasks
   attr_accessible :name, :ancestry, :parent_id, :schedule, :position
-  default_scope order('position asc')
+  #default_scope order('position asc')
   scope :sorted, order('position asc')
   scope :for_schedule, where(schedule: true)
 
