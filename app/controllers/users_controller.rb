@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   load_and_authorize_resource
-  before_filter :load_infos, :load_devices, only: [:show, :profile]
+  before_filter :load_infos, only: [:show, :profile]
 
   def index
     @users = User.order('id asc').page(params[:page]).per(50)
@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @devices = @user.devices.unarchived
 
     respond_to do |format|
       format.html # show.html.haml
@@ -77,6 +78,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = current_user
+    @devices = @user.devices.unarchived
 
     respond_to do |format|
       format.html { render 'show' }
@@ -152,10 +154,6 @@ class UsersController < ApplicationController
 
   def load_infos
     @infos = Info.unarchived.available_for(current_user).grouped_by_date.limit 20
-  end
-
-  def load_devices
-    @devices = @user.devices.unarchived
   end
 
 end
