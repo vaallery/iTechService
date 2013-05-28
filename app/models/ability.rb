@@ -9,6 +9,7 @@ Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
+      cannot :manage, Salary unless user.able_to? :manage_salary
     elsif user.programmer?
       can :manage, :all
     else
@@ -44,7 +45,7 @@ Ability
       if user.technician?
         can :modify, Order
       end
-      can :manage, WikiPage if user.able? :manage_wiki
+      can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement
       can :cancel_announce, Announcement, user_id: user.id
       can :update, Announcement, user_id: user.id
