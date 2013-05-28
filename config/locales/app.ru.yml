@@ -595,6 +595,7 @@ ru:
 
   users:
     abilities:
+      manage_salary: Редактировать зарплату
       manage_wiki: Редактировать Wiki
     index:
       title: Пользователи

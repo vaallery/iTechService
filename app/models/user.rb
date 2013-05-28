@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 
   ROLES = %w[admin software media technician marketing programmer supervisor manager]
   HELPABLE = %w[software media technician]
-  ABILITIES = %w[manage_wiki]
+  ABILITIES = %w[manage_wiki manage_salary]
 
   belongs_to :location
   has_many :history_records, as: :object
@@ -214,7 +214,7 @@ class User < ActiveRecord::Base
     ABILITIES.reject { |a| ((abilities_mask || 0) & 2**ABILITIES.index(a)).zero? }
   end
 
-  def able?(ability)
+  def able_to?(ability)
     abilities.include? ability.to_s
   end
 
