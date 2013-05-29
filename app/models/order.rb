@@ -90,7 +90,7 @@ class Order < ActiveRecord::Base
     if (customer_q = params[:customer]).present?
       client_ids = Client.where('LOWER(name) LIKE :q', q: "%#{customer_q.mb_chars.downcase.to_s}%").map { |c| c.id }
       user_ids = User.where('LOWER(name) LIKE :q OR LOWER(surname) LIKE :q OR LOWER(username) LIKE :q', q: "%#{customer_q.mb_chars.downcase.to_s}%").select(:id).map { |u| u.id }
-      orders = orders.where{(customer_type.eq 'Client') & (customer_id.in client_ids) | (customer_type.eq 'User') & (customer_id.in user_ids)}
+      orders = orders.where('(customer_type = ? AND customer_id IN (?)) OR (customer_type = ? AND customer_id IN (?))', 'Client', client_ids, 'User', user_ids)
     end
 
     if (user_q = params[:user]).present?

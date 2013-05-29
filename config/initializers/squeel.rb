@@ -1,4 +1,4 @@
-Squeel.configure do |config|
+#Squeel.configure do |config|
   # To load hash extensions (to allow for AND (&), OR (|), and NOT (-) against
   # hashes of conditions):
   #
@@ -21,4 +21,4 @@ Squeel.configure do |config|
   # "less_than_any" and "less_than_all" as well:
   #
   # config.alias_predicate :less_than, :lt
-end
+#end
