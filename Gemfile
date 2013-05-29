@@ -30,7 +30,6 @@ gem 'roo'
 gem 'paperclip', '3.4.0'
 gem 'backup'
 gem 'barby'
-#gem 'squeel'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -54,7 +53,7 @@ group :development do
   gem 'meta_request', '0.2.1'
   gem 'capistrano-deploy', '~> 0.3.2'
   gem 'mailcatcher'
-  gem 'linecache19', '>= 0.5.13'#, git: 'https://github.com/robmathews/linecache19-0.5.13.git'#, path: '../_gems/'
+  gem 'linecache19', '>= 0.5.13', git: 'https://github.com/robmathews/linecache19-0.5.13.git'#, path: '../_gems/'
   gem 'ruby-debug19'
   gem 'ruby-debug-base19x', '0.11.30.pre12', require: 'ruby-debug-base' #, path: '/Applications/RubyMine.app/rb/gems'
   gem 'ruby-debug-ide', '0.4.17.beta17', require: 'ruby-debug-ide' #, path: '/Applications/RubyMine.app/rb/gems'
