@@ -113,7 +113,7 @@ class DashboardController < ApplicationController
     elsif current_user.location.present?
       @devices = Device.located_at(current_user.location)
     else
-      @devices = []
+      @devices = Device.where location_id: nil
     end
     @devices = @devices.search(params).oldest.page params[:page]
   end

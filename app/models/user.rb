@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 
-  ROLES = %w[admin software media technician marketing programmer supervisor manager]
+  ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin]
   HELPABLE = %w[software media technician]
   ABILITIES = %w[manage_wiki manage_salary]
 
@@ -39,9 +39,9 @@ class User < ActiveRecord::Base
 
   validates :username, :role, presence: true
   validates :password, presence: true, confirmation: true, if: :password_required?
+  before_validation :validate_rights_changing
 
-
-  scope :admins, where(role: 'admin')
+  scope :superadmins, where(role: 'superadmin')
   scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
   scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
   scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
   end
 
   def not_admin?
-    !admin?
+    !admin? and !superadmin?
   end
 
   def technician?
@@ -95,6 +95,10 @@ class User < ActiveRecord::Base
 
   def manager?
     has_role? 'manager'
+  end
+
+  def superadmin?
+    has_role? 'superadmin'
   end
   
   def has_role? role
@@ -248,9 +252,15 @@ class User < ActiveRecord::Base
   end
 
   private
-  
+
+  def validate_rights_changing
+    if (changed_attributes[:role].present? or changed_attributes[:abilities].present?) and !User.current.superadmin?
+      errors[:base] << 'Rights changing denied!'
+    end
+  end
+
   def ensure_an_admin_remains
-    errors[:base] << I18n::t('users.deny_destroing') and return false if User.admins.count == 1
+    errors[:base] << I18n::t('users.deny_destroing') and return false if User.superadmins.count == 1
   end
 
   def password_required?

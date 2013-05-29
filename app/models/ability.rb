@@ -7,9 +7,12 @@ Ability
     #
     alias_action :create, :update, to: :modify
     user ||= User.new # guest user (not logged in)
-    if user.admin?
+    if user.superadmin?
+      can :manage, :all
+    elsif user.admin?
       can :manage, :all
       cannot :manage, Salary unless user.able_to? :manage_salary
+      cannot :manage_rights, User
     elsif user.programmer?
       can :manage, :all
     else
