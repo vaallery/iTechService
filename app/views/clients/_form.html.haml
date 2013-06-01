@@ -9,7 +9,7 @@
   = f.input :contact_phone
   = f.input :email
   = f.input :card_number
-  = f.input :admin_info if current_user.admin?
+  = f.input :admin_info if current_user.any_admin?
   = f.input :comment, as: 'text'
 
   .control-group

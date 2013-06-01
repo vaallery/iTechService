@@ -12,14 +12,12 @@
       - @clients.each do |client|
         %tr
           %td= link_to client.id, client_path(client)
-          %td= link_to client.name, client_path(client)
+          %td= link_to client.short_name, client_path(client)
           %td= client.human_phone_number
           %td=l client.created_at, format: :long_d
           %td.btn-group
             - if can? :create, Device
               = link_to icon_tag('plus-sign'), new_device_path(device: {client_id: client.id}), class: 'btn btn-small'
-            -#- if can? :create, Order
-            -#  = link_to icon_tag('plus-sign'), new_order_path(order: {customer_type: 'Client', customer_id: client.id}), class: 'btn btn-small'
             = link_to_show_small client
             = link_to_edit_small client
             = link_to_destroy_small client

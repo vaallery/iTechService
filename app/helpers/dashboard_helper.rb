@@ -28,7 +28,7 @@ module DashboardHelper
   end
 
   def is_movable_device?(device)
-    current_user.admin? ? true : device.is_actual_for?(current_user)
+    current_user.any_admin? ? true : device.is_actual_for?(current_user)
   end
 
   def is_actual_task?(task)
@@ -36,8 +36,7 @@ module DashboardHelper
   end
 
   def is_editable_task?(device_task)
-    #current_user.admin? ? true : can?(:update, device_task)
-    current_user.admin? ? true : device_task.is_actual_for?(current_user)
+    current_user.any_admin? ? true : device_task.is_actual_for?(current_user)
   end
 
   def device_row_tag(device)
