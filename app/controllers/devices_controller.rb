@@ -31,7 +31,7 @@ class DevicesController < ApplicationController
       format.html
       format.json { render json: @device }
       format.pdf do
-        if (@device.user_id == current_user.id) or current_user.admin?
+        if (@device.user_id == current_user.id) or current_user.any_admin?
           if params[:print]
             pdf = TicketPdf.new @device, view_context
             system 'lp', pdf.render_file(Rails.root.to_s+"/tmp/tickets/ticket_#{@device.ticket_number}.pdf").path

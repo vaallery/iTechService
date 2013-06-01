@@ -67,7 +67,7 @@ class DashboardController < ApplicationController
   end
 
   def reports
-    render nothing: true unless current_user.admin?
+    render nothing: true unless current_user.can_view_reports?
     @start_date = (params[:start_date] || 1.day.ago).to_datetime
     @end_date = (params[:end_date] || 1.day.ago).to_datetime
     @period = [@start_date.beginning_of_day..@end_date.end_of_day]
@@ -78,20 +78,14 @@ class DashboardController < ApplicationController
     @report[:devices_received_archived_count] = @received_devices.at_archive.count
 
     case params[:report]
-      when 'device_types_report' then
-        make_device_types_report params[:device_type]
-      when 'users_report' then
-        make_users_report
-      when 'tasks_report' then
-        make_done_tasks_report
-      when 'clients_report' then
-        make_clients_report
-      when 'tasks_durations_report' then
-        make_tasks_duration_report
-      when 'done_orders_report' then
-        make_done_orders_report
-      when 'devices_movements_report' then
-        make_devices_movements_report
+      when 'device_types_report' then make_device_types_report params[:device_type]
+      when 'users_report' then make_users_report
+      when 'tasks_report' then make_done_tasks_report
+      when 'clients_report' then make_clients_report
+      when 'tasks_durations_report' then make_tasks_duration_report
+      when 'done_orders_report' then make_done_orders_report
+      when 'devices_movements_report' then make_devices_movements_report
+      when 'salaries_report' then can?(:manage, Salary) ? make_salaries_report : render(nothing: true)
     end
   end
 
@@ -102,7 +96,7 @@ class DashboardController < ApplicationController
   private
 
   def load_actual_devices
-    if current_user.admin?
+    if current_user.any_admin?
       if params[:location].present?
         location = Location.find params[:location]
         @devices = Device.located_at(location)
@@ -262,6 +256,15 @@ class DashboardController < ApplicationController
         end
       end
     end
+  end
+
+  def make_salaries_report
+    @report[:salaries] = []
+    salaries = Salary.issued_at @period
+    salaries.find_each do |salary|
+      @report[:salaries] << { issued_at: salary.issued_at, user: salary.user.short_name, amount: salary.amount }
+    end
+    @report[:salaries_sum] = salaries.sum :amount
   end
 
 end

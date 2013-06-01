@@ -27,7 +27,7 @@
               %li= link_to t('salaries.index.title'), salaries_path if can? :manage, Salary
               %li= link_to t('sales.link'), sales_path
               %li= link_to t('stolen_phones.link'), stolen_phones_path
-              %li= link_to t('announcements.link'), announcements_path if current_user.admin?
+              %li= link_to t('announcements.link'), announcements_path if current_user.any_admin?
               %li= link_to t('tasks.link'), tasks_path if can? :manage, Task
               %li= link_to t('locations.link'), locations_path if can? :manage, Location
               %li= link_to t('settings.link'), settings_path if can? :manage, Setting

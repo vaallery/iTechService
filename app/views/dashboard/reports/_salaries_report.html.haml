@@ -1,0 +1,18 @@
+%table#salaries_report.table.table-bordered.table-hover
+  %caption
+    %h4= t 'reports.salaries_report'
+  %thead
+    %tr
+      %th= Salary.human_attribute_name :issued_at
+      %th= Salary.human_attribute_name :user
+      %th= Salary.human_attribute_name :amount
+  %tbody
+    - @report[:salaries].each do |salary|
+      %tr
+        %td= human_datetime salary[:issued_at]
+        %td= salary[:user]
+        %td= salary[:amount]
+  %tfoot
+    %tr
+      %td{colspan: 2}= t 'total'
+      %td= @report[:salaries_sum]

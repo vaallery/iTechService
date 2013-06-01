@@ -16,12 +16,14 @@
           %span= t "reports.#{params[:report] || 'choose'}"
           %b.caret
         %ul#reports_select.dropdown-menu
-          %li= link_to t('reports.device_types_report'), '#', remote: true, data: {report: 'device_types_report'}
-          %li= link_to t('reports.users_report'), '#', remote: true, data: {report: 'users_report'}
-          %li= link_to t('reports.tasks_report'), '#', remote: true, data: {report: 'tasks_report'}
-          %li= link_to t('reports.clients_report'), '#', remote: true, data: {report: 'clients_report'}
-          %li= link_to t('reports.tasks_durations_report'), '#', remote: true, data: {report: 'tasks_durations_report'}
-          %li= link_to t('reports.devices_movements_report'), '#', remote: true, data: {report: 'devices_movements_report'}
+          %li= link_to t('reports.device_types_report'), '#', remote: true, data: { report: 'device_types_report' }
+          %li= link_to t('reports.users_report'), '#', remote: true, data: { report: 'users_report' }
+          %li= link_to t('reports.tasks_report'), '#', remote: true, data: { report: 'tasks_report' }
+          %li= link_to t('reports.clients_report'), '#', remote: true, data: { report: 'clients_report' }
+          %li= link_to t('reports.tasks_durations_report'), '#', remote: true, data: { report: 'tasks_durations_report' }
+          %li= link_to t('reports.devices_movements_report'), '#', remote: true, data: { report: 'devices_movements_report' }
           -#%li= link_to t('reports.done_orders_report'), '#', remote: true, data: {report: 'done_orders_report'}
+          - if can? :manage, Salary
+            %li= link_to t('reports.salaries_report'), '#', remote: true, data: { report: 'salaries_report' }
 
 #reports_tables= render "dashboard/reports/#{params[:report]}" if params[:report].present?
