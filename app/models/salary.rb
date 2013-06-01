@@ -1,13 +1,14 @@
 class Salary < ActiveRecord::Base
 
+  attr_accessible :amount, :user, :user_id, :issued_at#, :comments_attributes
   belongs_to :user, inverse_of: :salaries
   has_many :comments, as: :commentable, dependent: :destroy
-  attr_accessible :amount, :user, :user_id#, :comments_attributes
   validates_presence_of :user, :amount
   #accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
   #validates_associated :comments
 
   scope :ordered, order('created_at desc')
+  scope :issued_at, lambda { |period| where(issued_at: period) }
 
   def comment=(content)
     comments.build content: content unless content.blank?

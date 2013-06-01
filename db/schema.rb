@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130523110318) do
+ActiveRecord::Schema.define(:version => 20130601030514) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -258,6 +258,7 @@ ActiveRecord::Schema.define(:version => 20130523110318) do
     t.integer  "amount"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.datetime "issued_at"
   end
 
   add_index "salaries", ["user_id"], :name => "index_salaries_on_user_id"

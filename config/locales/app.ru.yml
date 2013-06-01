@@ -182,7 +182,7 @@ ru:
 
       salary:
         amount: Сумма
-        #created_at: Выдано
+        issued_at: Выдана
         user: Сотрудник
 
       sale:
@@ -519,6 +519,7 @@ ru:
     received: Принято
     received_done: готовы
     received_archived: выданы
+    salaries_report: Отчет по зарплате
     sum: Сумма
     tasks_durations_report: Длительность выполнения задач
     tasks_report: Выполненные задачи

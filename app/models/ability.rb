@@ -9,8 +9,10 @@ Ability
     user ||= User.new # guest user (not logged in)
     if user.superadmin?
       can :manage, :all
+      can :view_reports
     elsif user.admin?
       can :manage, :all
+      can :view_reports
       cannot :manage, Salary unless user.able_to? :manage_salary
       cannot :manage_rights, User
     elsif user.programmer?

@@ -108,7 +108,15 @@ class User < ActiveRecord::Base
       self.role == role
     end
   end
-  
+
+  def any_admin?
+    has_role? %w[admin superadmin]
+  end
+
+  def can_view_reports?
+    has_role? %w[admin superadmin]
+  end
+
   def self.search search
     if search
       where "username LIKE ?", "%#{search}%"
