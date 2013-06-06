@@ -1,0 +1,21 @@
+%table.table.table-striped
+  %thead
+    %tr
+      %th= Discount.human_attribute_name(:id)
+      %th= Discount.human_attribute_name(:value)
+      %th= Discount.human_attribute_name(:limit)
+      %th= Discount.human_attribute_name(:created_at)
+      - if can? :manage, Discount
+        %th
+  %tbody
+    - @discounts.each do |discount|
+      %tr
+        %td= discount.id
+        %td= human_percent discount.value
+        %td= human_currency discount.limit
+        %td= human_datetime discount.created_at
+        - if can? :manage, Discount
+          %td.btn-group
+            = link_to_show_small discount
+            = link_to_edit_small discount
+            = link_to_destroy_small discount

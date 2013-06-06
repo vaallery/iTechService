@@ -30,6 +30,7 @@
               %li= link_to t('announcements.link'), announcements_path if current_user.any_admin?
               %li= link_to t('tasks.link'), tasks_path if can? :manage, Task
               %li= link_to t('locations.link'), locations_path if can? :manage, Location
+              %li= link_to t('discounts.link'), discounts_path
               %li= link_to t('settings.link'), settings_path if can? :manage, Setting
         %ul.nav.pull-right
           = header_link_for_coffee

@@ -1,0 +1,10 @@
+= simple_form_for @sale, html: { class: 'form-horizontal' } do |f|
+  = f.input :client_id, as: :client, wrapper_html: { id: 'client_fields' }
+  = f.input :sold_at, input_html: { class: 'input-small' }
+  = f.input :device_type_id, as: :device_type
+  = f.input :serial_number, as: :serial_number, input_html: { autocomplete: 'off' }
+  = f.input :imei, as: :imei
+  = f.input :value
+  = f.input :quantity
+  .form-actions
+    = submit_button f

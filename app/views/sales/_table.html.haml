@@ -4,13 +4,15 @@
   %table.table.table-striped.table-hover
     %thead
       %tr
-        %th= model_class.human_attribute_name(:id)
-        %th= model_class.human_attribute_name(:device_type_id)
-        %th= model_class.human_attribute_name(:serial_number)
-        %th= model_class.human_attribute_name(:imei)
-        %th= model_class.human_attribute_name(:sold_at)
-        %th= model_class.human_attribute_name(:quantity)
-        %th= model_class.human_attribute_name(:created_at)
+        %th= model_class.human_attribute_name :id
+        %th= model_class.human_attribute_name :device_type_id
+        %th= model_class.human_attribute_name :serial_number
+        %th= model_class.human_attribute_name :imei
+        %th= model_class.human_attribute_name :sold_at
+        %th= model_class.human_attribute_name :value
+        %th= model_class.human_attribute_name :quantity
+        %th= model_class.human_attribute_name :created_at
+        %th
     %tbody
       - @sales.each do |sale|
         %tr
@@ -18,6 +20,11 @@
           %td= sale.device_type_name
           %td= sale.serial_number
           %td= sale.imei
-          %td= sale.sold_at.present? ? l(sale.sold_at, format: :date) : '-'
+          %td= sale.sold_at.present? ? human_datetime(sale.sold_at) : '-'
+          %td= human_currency sale.value
           %td= sale.quantity
-          %td= l sale.created_at, format: :long_d
+          %td= human_datetime sale.created_at
+          %td.btn-group
+            = link_to_show_small sale
+            = link_to_edit_small sale if can? :edit, Sale
+            = link_to_destroy_small sale if can? :destroy, Sale

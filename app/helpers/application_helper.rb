@@ -185,11 +185,11 @@ module ApplicationHelper
     title_for controller_name.classify.constantize
   end
 
-  def auto_header_tag
+  def auto_header_tag(button_name=nil)
     model_class = controller_name.classify.constantize
     content_tag :div, class: 'page-header' do
       if action_name == 'index'
-        content_tag(:h1, auto_title) + ((can?(:create, model_class)) ? link_to_new(model_class) : '')
+        content_tag(:h1, auto_title) + ((can?(:create, model_class)) ? link_to_new(model_class, button_name) : '')
       else
         content_tag :h1, link_back_to_index + auto_title
       end
@@ -201,7 +201,7 @@ module ApplicationHelper
   end
 
   def history_link_to(url)
-    link_to icon_tag(:time), url, class: "history_link", remote: true
+    link_to icon_tag(:time), url, class: 'history_link', remote: true
   end
 
   def store_location
@@ -225,6 +225,14 @@ module ApplicationHelper
     h = val/60
     m = val%60
     h > 0 ? t('hour_min', hour: h, min: m) : t('min', min: m)
+  end
+
+  def human_percent(value)
+    number_to_percentage value, precision: 0
+  end
+
+  def human_currency(value)
+    number_to_currency value, precision: 0, delimiter: ' ', separator: ','
   end
 
 end
