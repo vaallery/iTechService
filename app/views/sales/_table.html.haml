@@ -29,7 +29,8 @@
           %td= sale.quantity
           %td= human_datetime sale.sold_at
           %td= human_datetime sale.created_at
-          %td.btn-group
-            = link_to_show_small sale
-            = link_to_edit_small sale if can? :edit, Sale
-            = link_to_destroy_small sale if can? :destroy, Sale
+          %td
+            .btn-group
+              = link_to_show_small sale
+              = link_to_edit_small sale if can? :edit, Sale
+              = link_to_destroy_small sale if can? :destroy, Sale

@@ -197,7 +197,7 @@ ru:
         device_type: Тип девайса
         device_type_id: :activerecord.attributes.sale.device_type
         quantity: Количество
-        sold_at: Продан
+        sold_at: Время продажи
         value: "Цена"
 
       schedule_day:
