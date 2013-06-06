@@ -9,13 +9,13 @@
     %dd= @sale.device_type_name
   %p
     %dt= Sale.human_attribute_name :imei
-    %dd= @sale.imei
+    %dd= @sale.imei.present? ? @sale.imei : '-'
   %p
     %dt= Sale.human_attribute_name :serial_number
-    %dd= @sale.serial_number
+    %dd= @sale.serial_number.present? ? @sale.serial_number : '-'
   %p
     %dt= Sale.human_attribute_name :value
-    %dd= human_currency @sale.value
+    %dd= @sale.value.present? ? human_currency(@sale.value) : '-'
   %p
     %dt= Sale.human_attribute_name :client
     %dd= @sale.client.present? ? link_to(@sale.client_presentation, client_path(@sale.client)) : '-'

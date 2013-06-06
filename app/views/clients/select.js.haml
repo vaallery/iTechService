@@ -12,3 +12,6 @@
     else
       $devices.hide();
   }
+  if ($('#sale_value').length > 0) {
+    $('#sale_value').next('.help-block').text("#{t('clients.available_discount')}: #{human_percent(@client.discount_value)}")
+  }

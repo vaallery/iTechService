@@ -15,9 +15,15 @@ class Sale < ActiveRecord::Base
 
   def self.search(params)
     sales = Sale.scoped
+
     if (search = params[:search]).present?
-      sales.where 'LOWER(sales.serial_number) = :s OR LOWER(sales.imei) = :s', s: "#{search.mb_chars.downcase.to_s}"
+      sales = sales.where 'LOWER(sales.serial_number) = :s OR LOWER(sales.imei) = :s', s: "#{search.mb_chars.downcase.to_s}"
     end
+
+    if (client_q = params[:client]).present?
+      sales = sales.joins(:client).where 'LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q', q: "%#{client_q.mb_chars.downcase.to_s}%"
+    end
+
     sales
   end
 

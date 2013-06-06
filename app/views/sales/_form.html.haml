@@ -4,7 +4,8 @@
   = f.input :device_type_id, as: :device_type
   = f.input :serial_number, as: :serial_number, input_html: { autocomplete: 'off' }
   = f.input :imei, as: :imei
-  = f.input :value
-  = f.input :quantity
+  = f.input :value, hint: "#{t('clients.available_discount')}: #{@sale.client.present? ? human_percent(@sale.client.discount_value) : '-'}"
+  = f.input :quantity, input_html: { class: 'input-small' }
+
   .form-actions
     = submit_button f

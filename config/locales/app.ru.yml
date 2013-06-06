@@ -193,6 +193,7 @@ ru:
       sale:
         client: "Покупатель"
         client_id: :activerecord.attributes.sale.client
+        device: :activerecord.models.device
         device_type: Тип девайса
         device_type_id: :activerecord.attributes.sale.device_type
         quantity: Количество
@@ -569,7 +570,8 @@ ru:
     index:
       import_link: Импорт
       title: Проданные девайсы
-      search_placeholder: "Серийник или IMEI"
+      client_search_placeholder: "Клиент: телефон | имя | карта"
+      device_search_placeholder: "Девайс: серийник | IMEI"
     new:
       title: "Новая продажа"
     link: Проданные девайсы
