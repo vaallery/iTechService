@@ -30,60 +30,60 @@ jQuery ->
       params = $this.parents('form:first').serialize()
       event.currentTarget.href = '/clients/questionnaire?' + params
 
-    $('#device_serial_number').keydown (event)->
-      $this = $(this)
-      if (event.keyCode in [65..90]) and (event.metaKey is false) and (event.ctrlKey is false) and (event.altKey is false)
-        $this.val($this.val()+String.fromCharCode(event.keyCode))
-        event.preventDefault()
+  $('#device_serial_number').keydown (event)->
+    $this = $(this)
+    if (event.keyCode in [65..90]) and (event.metaKey is false) and (event.ctrlKey is false) and (event.altKey is false)
+      $this.val($this.val()+String.fromCharCode(event.keyCode))
+      event.preventDefault()
 
-    $('#device_imei').blur ()->
-      $.getJSON '/devices/check_imei?imei_q='+$(this).val(), (data)->
-        if data.present
-          $('#device_imei').parents('.control-group').addClass 'warning'
-          if $('#device_imei').siblings('.help-inline').length
-            $('#device_imei').siblings('.help-inline').html data.msg
-          else
-            $('#device_imei').parents('.controls').append "<span class='help-inline'>"+data.msg+"</span>"
+  $('#device_imei').blur ()->
+    $.getJSON '/devices/check_imei?imei_q='+$(this).val(), (data)->
+      if data.present
+        $('#device_imei').parents('.control-group').addClass 'warning'
+        if $('#device_imei').siblings('.help-inline').length
+          $('#device_imei').siblings('.help-inline').html data.msg
         else
-          $('#device_imei').parents('.control-group').removeClass 'warning'
-          $('#device_imei').siblings('.help-inline').remove()
-
-    $('#device_imei, #device_serial_number').blur ()->
-      $this = $(this)
-      val = $this.val()
-      if val isnt ''
-        $.getJSON '/sales?search='+val, (res)->
-          info_tag = "<span class='help-inline sales_info'>"
-          if res.length > 0
-            for r in res
-              d = new Date(r.sold_at)
-              info_tag += '[' + d.toLocaleDateString() + ': '
-              info_tag += r.quantity + '] '
-          else
-            info_tag += 'Not found'
-          info_tag += "</span>"
-          $this.parent().siblings('.sales_info').remove()
-          $this.parent().after info_tag
+          $('#device_imei').parents('.controls').append "<span class='help-inline'>"+data.msg+"</span>"
       else
-        $this.parent().siblings('.sales_info').remove()
+        $('#device_imei').parents('.control-group').removeClass 'warning'
+        $('#device_imei').siblings('.help-inline').remove()
 
-    $('#device_imei_search, #device_serial_number_search').click (event)->
-      $this = $(this)
-      val = $this.prev('input').val()
-      if val isnt ''
-        $.getJSON '/sales?search='+val, (res)->
-          info_tag = "<span class='help-inline sales_info'>"
-          if res.length > 0
-            for r in res
-              d = new Date(r.sold_at)
-              info_tag += '[' + d.toLocaleDateString() + ': '
-              info_tag += r.quantity + '] '
-          else
-            info_tag += 'Not found'
-          info_tag += "</span>"
-          $this.parent().siblings('.sales_info').remove()
-          $this.parent().after info_tag
-      false
+  $('#device_imei, #device_serial_number').blur ()->
+    $this = $(this)
+    val = $this.val()
+    if val isnt ''
+      $.getJSON '/sales?search='+val, (res)->
+        info_tag = "<span class='help-inline sales_info'>"
+        if res.length > 0
+          for r in res
+            d = new Date(r.sold_at)
+            info_tag += '[' + d.toLocaleDateString() + ': '
+            info_tag += r.quantity + '] '
+        else
+          info_tag += 'Not found'
+        info_tag += "</span>"
+        $this.parent().siblings('.sales_info').remove()
+        $this.parent().after info_tag
+    else
+      $this.parent().siblings('.sales_info').remove()
+
+  $('#device_imei_search, #device_serial_number_search').click (event)->
+    $this = $(this)
+    val = $this.prev('input').val()
+    if val isnt ''
+      $.getJSON '/sales?search='+val, (res)->
+        info_tag = "<span class='help-inline sales_info'>"
+        if res.length > 0
+          for r in res
+            d = new Date(r.sold_at)
+            info_tag += '[' + d.toLocaleDateString() + ': '
+            info_tag += r.quantity + '] '
+        else
+          info_tag += 'Not found'
+        info_tag += "</span>"
+        $this.parent().siblings('.sales_info').remove()
+        $this.parent().after info_tag
+    false
 
   $('#new_device_popup').mouseleave ->
     setTimeout (->

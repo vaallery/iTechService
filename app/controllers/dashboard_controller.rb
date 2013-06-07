@@ -85,6 +85,7 @@ class DashboardController < ApplicationController
       when 'tasks_durations_report' then make_tasks_duration_report
       when 'done_orders_report' then make_done_orders_report
       when 'devices_movements_report' then make_devices_movements_report
+      when 'sales_report' then make_sales_report
       when 'salaries_report' then can?(:manage, Salary) ? make_salaries_report : render(nothing: true)
     end
   end
@@ -265,6 +266,29 @@ class DashboardController < ApplicationController
       @report[:salaries] << { issued_at: salary.issued_at, user: salary.user.short_name, amount: salary.amount }
     end
     @report[:salaries_sum] = salaries.sum :amount
+  end
+
+  def make_sales_report
+    @report[:sales] = []
+    sales_sum = 0
+    sales_count = 0
+    sales = Sale.sold_at(@period)
+    users_sales = sales.where('sales.user_id IS NOT NULL').group('sales.user_id').sum('sales.value')
+    users_sales.each_pair do |user_id, sum|
+      if (user = User.find user_id).present?
+        user_sales = sales.where user_id: user_id
+        user_sales_hash = []
+        user_sales.each do |sale|
+          client_hash = sale.client.present? ? { id: sale.client_id, name: sale.client_presentation } : {}
+          user_sales_hash << { sold_at: sale.sold_at, device_type: sale.device_type_name, serial_number: sale.serial_number, imei: sale.imei, value: sale.value, id: sale.id, client: client_hash }
+          sales_sum = sales_sum + sale.value
+          sales_count = sales_count.next
+        end
+        @report[:sales] << { user: { id: user.id, name: user.short_name }, sum: sum, count: user_sales.count, sales: user_sales_hash }
+      end
+    end
+    @report[:sales_sum] = sales_sum
+    @report[:sales_count] = sales_count
   end
 
 end

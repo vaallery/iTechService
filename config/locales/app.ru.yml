@@ -10,6 +10,7 @@ ru:
       device: Девайс
       device_task: Задача
       device_type: Тип девайса
+      discount: Скидка
       duty_day: Дежурство
       gift_certificate: Подарочный сертификат
       history_record: history_record
@@ -125,6 +126,10 @@ ru:
         qty_shop: На магазине
         qty_store: На складе
 
+      discount:
+        value: Величина
+        limit: Лимит
+
       duty_day:
         day: День
         user: user
@@ -186,10 +191,14 @@ ru:
         user: Сотрудник
 
       sale:
+        client: "Покупатель"
+        client_id: :activerecord.attributes.sale.client
+        device: :activerecord.models.device
         device_type: Тип девайса
         device_type_id: :activerecord.attributes.sale.device_type
         quantity: Количество
-        sold_at: Продан
+        sold_at: Время продажи
+        value: "Цена"
 
       schedule_day:
         day: День
@@ -281,6 +290,7 @@ ru:
     new_user: Новый пользователь
     params: Параметры
     reports: Отчёты
+    sale: "Продажа"
 
   announcements:
     edit:
@@ -310,11 +320,14 @@ ru:
       search_placeholder: Телефон или имя
     show:
       date: "Дата"
+      new_device: "Новый девайс"
+      new_sale: "Новая продажа"
     created: Клиент создан
     link: Клиенты
     questionnaire: Анкета
     updated: Клиент изменён
 
+    available_discount: "Доступная скидка"
   chat:
     all: Все сообщения
     created: Сообщение создано
@@ -380,6 +393,18 @@ ru:
       title: Типы девайсов
     link: Типы девайсов
     available_for_replacement: Доступно для замены
+
+  discounts:
+    edit:
+      title: "Редактирование скидки"
+    index:
+      title: "Скидки"
+      new: "Новая скидка"
+    new:
+      title: "Новая скидка"
+    link: "Скидки"
+    created: "Скидка создана"
+    updated: "Скидка изменена"
 
   gift_certificates:
     edit:
@@ -525,6 +550,7 @@ ru:
     tasks_report: Выполненные задачи
     total: Всего
     users_report: Принятые девайсы по сотрудникам
+    sales_report: "Отчет по продажам"
 
   salaries:
     edit:
@@ -539,11 +565,18 @@ ru:
     updated: Изменено
 
   sales:
+    edit:
+      title: "Редактирование продажы"
     index:
       import_link: Импорт
       title: Проданные девайсы
-      search_placeholder: "Серийник или IMEI"
+      client_search_placeholder: "Клиент: телефон | имя | карта"
+      device_search_placeholder: "Девайс: серийник | IMEI"
+    new:
+      title: "Новая продажа"
     link: Проданные девайсы
+    created: "Продажа создана"
+    updated: "Продажа изменена"
 
   settings:
     edit:
@@ -630,6 +663,8 @@ ru:
     updated: Пользователь изменён
     version: Версия
 
+    serviced_devices: "Обслуживаемые девайсы"
+    purchased_devices: "Купленные девайсы"
   wiki:
     add_attachment: Добавить файл
     all_pages: Wiki

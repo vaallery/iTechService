@@ -1,13 +1,16 @@
 class Client < ActiveRecord::Base
   include ApplicationHelper
   
+  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone
+
   has_many :devices, inverse_of: :client, dependent: :destroy
   has_many :orders, as: :customer, dependent: :destroy
+  has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
+
   has_many :comments, as: :commentable, dependent: :destroy
-  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number,
-                  :admin_info, :comments_attributes, :comment, :contact_phone
   attr_accessor :comment
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
+
   validates :name, :phone_number, :full_phone_number, presence: true
   validates :full_phone_number, uniqueness: true
   validates_associated :comments
@@ -45,6 +48,14 @@ class Client < ActiveRecord::Base
 
   def comment=(content)
     comments.build content: content unless content.blank?
+  end
+
+  def purchases_sum
+    purchases.sum :value
+  end
+
+  def discount_value
+    Discount.for_sum purchases_sum
   end
 
 end

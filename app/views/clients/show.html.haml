@@ -25,11 +25,14 @@
 
 #client_devices
   %table.table.table-bordered.table-hover.table-condensed
+    %caption
+      %h4= t 'users.serviced_devices'
     %thead
       %tr
         %th= t '.date'
         %th= Client.human_attribute_name :devices
         %th= Device.human_attribute_name :tasks
+        %th= Device.human_attribute_name :location
     %tbody
       - @client.devices.each do |device|
         %tr
@@ -39,13 +42,46 @@
             %ul.unstyled
               - device.device_tasks.each do |device_task|
                 %li= device_task.name
+          %td= device.location_name
+
+#purchases
+  %table.table.table-bordered.table-condensed.table-hover
+    %caption
+      %h4= t 'users.purchased_devices'
+    %thead
+      %tr
+        %th= t '.date'
+        %th= t 'activerecord.models.device'
+        %th= Sale.human_attribute_name :value
+    %tbody
+      - @client.purchases.each do |purchase|
+        %tr
+          %td= human_datetime purchase.sold_at
+          %td
+            = purchase.device_type_name
+            %br
+            %small= [purchase.serial_number, purchase.imei].join ' | '
+          %td= human_currency purchase.value
+    %tfoot
+      %tr
+        %td{colspan: 2}
+          %strong= t 'total'
+        %td= human_currency @client.purchases_sum
+      - if @client.discount_value.present?
+        %tr
+          %td{colspan: 2}
+            %strong= t 'clients.available_discount'
+          %td= human_percent @client.discount_value
 
 .form-actions
   - if can? :create, Device
     = link_to new_device_path(device: {client_id: @client.id}), class: 'btn' do
-      = icon_tag('plus-sign') + t('dashboard.new_device')
-  -#- if can? :create, Order
-  -#  = link_to new_order_path(order: {customer_type: 'Client', customer_id: @client.id}), class: 'btn' do
-  -#    = icon_tag('plus-sign') + t('dashboard.new_order')
+      = icon_tag('plus-sign') + t('.new_device')
+  -#- if can? :create, Sale
+  -#  = link_to new_sale_path(sale: {client_id: @client.id}), class: 'btn' do
+  -#    = icon_tag('plus-sign') + t('.new_sale')
+  - if can? :create, Order
+    = link_to new_order_path(order: {customer_type: 'Client', customer_id: @client.id}), class: 'btn' do
+      = icon_tag('plus-sign') + t('dashboard.new_order')
   = link_to_edit @client
   = link_to_destroy @client

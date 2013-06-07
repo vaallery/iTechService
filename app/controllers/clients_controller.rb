@@ -67,7 +67,7 @@ class ClientsController < ApplicationController
         format.json { head :no_content }
         format.js { render 'saved' }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.js { render 'show_form' }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end

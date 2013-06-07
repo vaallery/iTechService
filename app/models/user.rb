@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 
   ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin]
+  ROLES_FOR_ADMIN = %w[admin software media technician marketing programmer supervisor manager]
   HELPABLE = %w[software media technician]
   ABILITIES = %w[manage_wiki manage_salary]
 

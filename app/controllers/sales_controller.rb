@@ -1,6 +1,6 @@
 class SalesController < ApplicationController
   load_and_authorize_resource
-  skip_load_resource only: :index
+  skip_load_resource only: [:index, :new]
 
   def index
     @sales = Sale.search(params).order('sold_at desc').page params[:page]
@@ -13,11 +13,51 @@ class SalesController < ApplicationController
   end
 
   def show
-    @sale = Sale.find(params[:id])
-
     respond_to do |format|
       format.html
       format.json { render json: @sale }
+    end
+  end
+
+  def new
+    @sale = Sale.new params[:sale]
+
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def edit
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def create
+    respond_to do |format|
+      if @sale.save
+        format.html { redirect_to sales_path, notice: t('sales.created') }
+      else
+        format.html { render 'new' }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @sale.update_attributes params[:sale]
+        format.html { redirect_to sales_path, notice: t('sales.updated') }
+      else
+        format.html { render 'edit' }
+      end
+    end
+  end
+
+  def destroy
+    @sale.destroy
+
+    respond_to do |format|
+      format.html
     end
   end
 
