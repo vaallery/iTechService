@@ -17,7 +17,7 @@ development:
   encoding: unicode
   database: itech_service_development
   pool: 5
-  username: v
+  username: vova
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -43,7 +43,7 @@ test: &test
   encoding: unicode
   database: itech_service_test
   pool: 5
-  username: v
+  username: vova
   password:
 
 production:

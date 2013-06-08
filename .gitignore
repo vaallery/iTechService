@@ -35,3 +35,4 @@ doc/
 .idea/misc.xml
 .elasticbeanstalk/
 Gemfile.lock
+/config/database.yml
