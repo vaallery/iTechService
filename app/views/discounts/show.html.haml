@@ -1,0 +1,13 @@
+- model_class = Discount
+= auto_header_tag
+
+%dl.dl-horizontal
+  %dt= model_class.human_attribute_name :value
+  %dd= human_percent @discount.value
+
+  %dt= model_class.human_attribute_name :limit
+  %dd= human_currency @discount.limit
+
+.form-actions
+  = link_to_edit @discount
+  = link_to_destroy @discount

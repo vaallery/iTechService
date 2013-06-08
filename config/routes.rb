@@ -77,7 +77,7 @@ ItechService::Application.routes.draw do
 
   resources :messages, path: 'chat', except: [:new, :edit, :update]
 
-  resources :sales, only: [:index, :show]
+  resources :sales
 
   resources :sales_imports, only: [:new, :create]
 
@@ -93,6 +93,8 @@ ItechService::Application.routes.draw do
   resources :settings, except: [:show]
 
   resources :salaries
+
+  resources :discounts
 
   wiki_root '/wiki'
 

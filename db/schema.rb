@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601030514) do
+ActiveRecord::Schema.define(:version => 20130608044045) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(:version => 20130601030514) do
     t.string   "imei"
     t.boolean  "replaced",        :default => false
     t.boolean  "notify_client",   :default => false
-    t.boolean  "client_notified", :default => false
+    t.boolean  "client_notified"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
@@ -139,6 +139,15 @@ ActiveRecord::Schema.define(:version => 20130601030514) do
   add_index "devices", ["status"], :name => "index_devices_on_status"
   add_index "devices", ["ticket_number"], :name => "index_devices_on_ticket_number"
   add_index "devices", ["user_id"], :name => "index_devices_on_user_id"
+
+  create_table "discounts", :force => true do |t|
+    t.integer  "value"
+    t.integer  "limit"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "discounts", ["limit"], :name => "index_discounts_on_limit"
 
   create_table "duty_days", :force => true do |t|
     t.integer  "user_id"
@@ -271,11 +280,16 @@ ActiveRecord::Schema.define(:version => 20130601030514) do
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.integer  "quantity"
+    t.integer  "client_id"
+    t.integer  "value"
+    t.integer  "user_id"
   end
 
+  add_index "sales", ["client_id"], :name => "index_sales_on_client_id"
   add_index "sales", ["device_type_id"], :name => "index_sales_on_device_type_id"
   add_index "sales", ["imei"], :name => "index_sales_on_imei"
   add_index "sales", ["serial_number"], :name => "index_sales_on_serial_number"
+  add_index "sales", ["user_id"], :name => "index_sales_on_user_id"
 
   create_table "schedule_days", :force => true do |t|
     t.integer  "user_id"

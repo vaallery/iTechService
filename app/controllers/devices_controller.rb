@@ -48,7 +48,7 @@ class DevicesController < ApplicationController
   end
 
   def new
-    @device = Device.new(params[:device])
+    @device = Device.new params[:device]
 
     respond_to do |format|
       format.html

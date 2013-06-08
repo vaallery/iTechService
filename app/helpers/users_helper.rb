@@ -161,6 +161,10 @@ module UsersHelper
     end
   end
 
+  def accessible_roles
+    current_user.superadmin? ? User::ROLES : User::ROLES_FOR_ADMIN
+  end
+
   private
 
   def is_other_duty?(user, date)
