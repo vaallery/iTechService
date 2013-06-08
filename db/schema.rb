@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130605061624) do
+ActiveRecord::Schema.define(:version => 20130608044045) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(:version => 20130605061624) do
     t.string   "security_code"
     t.string   "status"
     t.boolean  "notify_client",   :default => false
-    t.boolean  "client_notified", :default => false
+    t.boolean  "client_notified"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
