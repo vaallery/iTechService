@@ -19,10 +19,8 @@
   
   = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)
 
-  - if @device.new_record? or current_user.any_admin?
-    = f.input :notify_client
-  - elsif @device.notify_client?
-    = f.input :client_notified
+  = f.input :notify_client if @device.new_record? or current_user.any_admin?
+  = f.input :client_notified, as: :radio_buttons, collection: [[true, t('yep')], [false, t('not_accessible')]], required: true, value_method: :first, label_method: :last if @device.notify_client?
 
   = f.input :replaced, as: :replaced, disabled: true
 
