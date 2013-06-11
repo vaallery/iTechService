@@ -29,7 +29,7 @@ Ability
         can :modify, Sale
       end
       if user.media?
-        can :modify, [Device, Client]
+        can :modify, [Device, Client, Order]
       end
       if user.marketing?
         can :modify, Info
