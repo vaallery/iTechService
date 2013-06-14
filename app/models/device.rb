@@ -235,7 +235,7 @@ class Device < ActiveRecord::Base
       if self.location.is_done? and self.pending?
         self.errors.add :location_id, I18n.t('devices.errors.pending_tasks')
       end
-      if self.location.is_done? and self.notify_client? and !self.client_notified?
+      if self.location.is_done? and self.notify_client? and self.client_notified.nil?
         self.errors.add :client_notified, I18n.t('devices.errors.client_notification')
       end
       if self.location.is_archive? and !old_location.try(:is_done?)
