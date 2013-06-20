@@ -17,7 +17,7 @@ class Announcement < ActiveRecord::Base
   end
 
   def user_name
-    user.short_name
+    user.present? ? user.short_name : '-'
   end
 
   def help?
