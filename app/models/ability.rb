@@ -68,6 +68,11 @@ Ability
       can :read, Info, recipient_id: [nil, user.id]
       can :rating, User
       can :read, :all
+
+      can :close, Announcement do |announce|
+        user.any_admin? or (announce.order_done? or announce.order_status?) and ((announce.user_id == user.id) or (user.technician?))
+      end
+
       cannot [:create, :update, :destroy], StolenPhone
       cannot :read, Salary
     end

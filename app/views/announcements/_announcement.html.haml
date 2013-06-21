@@ -1,5 +1,5 @@
 = div_for announcement, class: announcement.kind do
-  - if announcement.closeable_by? current_user
+  - if can? :close, announcement
     = link_to announcement_path(announcement, announcement: {active: false}), method: :put, remote: true,
         class: 'close close_announcement_button' do
       &times;

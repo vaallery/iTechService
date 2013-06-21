@@ -63,8 +63,4 @@ class Announcement < ActiveRecord::Base
     false
   end
 
-  def closeable_by?(user)
-    (order_done? or order_status?) and (user_id == user.id)
-  end
-
 end
