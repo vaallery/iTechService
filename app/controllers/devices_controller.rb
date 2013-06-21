@@ -8,7 +8,7 @@ class DevicesController < ApplicationController
   skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
 
   def index
-    @devices = (params[:location].blank?) ? Device.unarchived.search(params) : Device.search(params)
+    @devices = Device.search(params)
     
     if params.has_key? :sort and params.has_key? :direction
       @devices = @devices.reorder 'devices.'+sort_column + ' ' + sort_direction

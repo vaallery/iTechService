@@ -9,8 +9,12 @@ module DevicesHelper
     end
   end
   
-  def row_class_for_device device
-    device.done? ? 'success' : device.is_important? ? 'error' : 'warning'
+  def row_class_for_device(device)
+    if device.at_done?
+      'success'
+    elsif device.in_archive?
+      'info'
+    end
   end
 
   def progress_badge_class_for_device device
@@ -43,8 +47,8 @@ module DevicesHelper
         user = h[2].present? ? User.find(h[2]).try(:full_name) || '-' : '-'
         content_tag(:tr) do
           content_tag(:td, time) +
-          content_tag(:td, location) +
-          content_tag(:td, user)
+              content_tag(:td, location) +
+              content_tag(:td, user)
         end
       end.join.html_safe
     end.html_safe
@@ -53,7 +57,7 @@ module DevicesHelper
   def device_movement_information_tag(device)
     user, time = device.moved_by, device.moved_at
     text = (user.present? and time.present?) ? t('moved', user: user.full_name, time:
-                                                 distance_of_time_in_words_to_now(time)) : '-'
+        distance_of_time_in_words_to_now(time)) : '-'
     history_link_to(movement_history_device_path(device)) +
         content_tag(:span, text)
   end
