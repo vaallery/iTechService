@@ -22,23 +22,19 @@ class OrderPdf < Prawn::Document
     font_size 10 do
       text @view.t('tickets.site'), indent_paragraphs: 70
       text @view.t('tickets.email'), indent_paragraphs: 70
-      text @view.t('tickets.address1'), indent_paragraphs: 70
-      text @view.t('tickets.address2'), indent_paragraphs: 70
-      text @view.t('tickets.schedule1'), indent_paragraphs: 70
-      text @view.t('tickets.schedule2'), indent_paragraphs: 70
-      text @view.t('tickets.schedule3'), indent_paragraphs: 70
+      text Setting.get_value(:address), indent_paragraphs: 70
+      text Setting.get_value(:schedule), indent_paragraphs: 70
     end
     move_down 4
     font_size 24 do
       text @view.t('orders.order_num', num: @order.number), align: :center, inlign_format: true, style: :bold
-      #text "№ #{@order.number}", align: :center, inlign_format: true, style: :bold
     end
     text @order.created_at.strftime('%H:%M %d.%m.%Y'), align: :center, size: 10
     move_down 4
     text @order.object, style: :bold
     move_down 5
     text (@order.user || @view.current_user).short_name
-    text @view.t('tickets.contact_phone')
+    text Setting.get_value(:contact_phone)
     move_down 5
     horizontal_line 0, 205#, at: y
     stroke
