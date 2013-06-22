@@ -18,4 +18,8 @@ class Setting < ActiveRecord::Base
     (setting = Setting.find_by_name('ticket_prefix')).present? ? setting.value : 'VL'
   end
 
+  def self.get_value(name)
+    (setting = Setting.find_by_name(name.to_s)).present? ? setting.value : ''
+  end
+
 end

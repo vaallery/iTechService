@@ -28,11 +28,8 @@ class TicketPdf < Prawn::Document
     font_size 10 do
       text @view.t('tickets.site'), indent_paragraphs: 70
       text @view.t('tickets.email'), indent_paragraphs: 70
-      text @view.t('tickets.address1'), indent_paragraphs: 70
-      text @view.t('tickets.address2'), indent_paragraphs: 70
-      text @view.t('tickets.schedule1'), indent_paragraphs: 70
-      text @view.t('tickets.schedule2'), indent_paragraphs: 70
-      text @view.t('tickets.schedule3'), indent_paragraphs: 70
+      text Setting.get_value(:address), indent_paragraphs: 70
+      text Setting.get_value(:schedule), indent_paragraphs: 70
     end
     move_down 10
     font_size 24 do
@@ -42,7 +39,7 @@ class TicketPdf < Prawn::Document
     move_down 5
     text @device.user_short_name
     move_down 5
-    text @view.t('tickets.contact_phone')
+    text Setting.get_value(:contact_phone)
     move_down 5
     horizontal_line 0, 205
     stroke
