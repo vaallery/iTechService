@@ -53,7 +53,9 @@ Ability
       end
       can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement
-      can :cancel_announce, Announcement, user_id: user.id
+      can :cancel_announce, Announcement do |announcement|
+        user.any_admin? or (announcement.user_id == user.id) or ((announcement.order_done? or announcement.order_status?) and (user.media?))
+      end
       can :update, Announcement, user_id: user.id
       can :create, Order
       can :destroy, Order, user_id: user.id
@@ -68,11 +70,6 @@ Ability
       can :read, Info, recipient_id: [nil, user.id]
       can :rating, User
       can :read, :all
-
-      can :close, Announcement do |announce|
-        user.any_admin? or (announce.order_done? or announce.order_status?) and ((announce.user_id == user.id) or (user.technician?))
-      end
-
       cannot [:create, :update, :destroy], StolenPhone
       cannot :read, Salary
     end
