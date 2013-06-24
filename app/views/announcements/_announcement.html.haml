@@ -1,6 +1,5 @@
 = div_for announcement, class: announcement.kind do
   - if can? :cancel_announce, announcement
-    = link_to announcement_path(announcement, announcement: {active: false}), method: :put, remote: true,
-        class: 'close close_announcement_button' do
+    = link_to announcement_path(announcement, announcement: {active: false}), method: :put, remote: true, class: 'close close_announcement_button' do
       &times;
   %span.announcement_content= announcement_content announcement

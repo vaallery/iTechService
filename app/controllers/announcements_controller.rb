@@ -51,11 +51,11 @@ class AnnouncementsController < ApplicationController
       if @announcement.update_attributes(params[:announcement])
         format.html { redirect_to announcements_path, notice: t('announcements.updated') }
         format.json { render json: @announcement }
-        format.js { render nothing: false }
+        format.js { render nothing: true }
       else
         format.html { render action: "edit" }
         format.json { render json: @announcement.errors, status: :unprocessable_entity }
-        format.js { render nothing: false }
+        format.js { render nothing: true }
       end
     end
   end

@@ -3,5 +3,5 @@
   $('#coffer_order_link').popover('hide');
 - if @announcements.any?
   - @announcements.each do |announcement|
-    - publish_to "/announcements" do
+    - publish_to '/announcements' do
       == $("#announcement_#{announcement.id}").remove();
