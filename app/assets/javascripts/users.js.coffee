@@ -20,7 +20,7 @@ jQuery ->
     event.preventDefault()
     false
 
-  $('td.calendar_day.work_day.empty', '#calendar.editable').click (event) ->
+  $(document).on 'click', '.user_calendar.editable td.calendar_day.work_day.empty', (event)->
     $this = $(this)
     $fields = $('#duty_days_fields')
     this_date = $this.attr('date')
@@ -75,7 +75,6 @@ jQuery ->
   if $('#staff_schedule').length > 0
     $legend = $('#staff_schedule_legend')
     $table = $('#job_schedule_table')
-    $calendar = $('#staff_duty_schedule')
     $('.user_name', $legend).click ->
       $this = $(this)
       $user_row = $(this).parents('.user_row')
@@ -198,24 +197,27 @@ jQuery ->
 
       event.preventDefault()
 
-    $(document).on 'click', '#staff_duty_schedule .calendar_day>span', (event)->
+    $(document).on 'click', '.staff_calendar .calendar_day>span', (event)->
       event.preventDefault()
       $this = $(this).parent()
       if $this.hasClass 'duty'
-        day_id = $this.data 'dayid'
+        day_id = $this.data('dayid')
         $.post '/users/destroy_duty_day', {duty_day_id: day_id}
-      else if $this.hasClass 'empty'
-        user_id = $('.user_row.selected', $legend).data 'user'
+      else if $this.hasClass('empty')
+        user_id = $('.user_row.selected', $legend).data('user')
         unless user_id is null
           $user = $('.user_row.selected', $legend)
-          color = $('.user_color>span', $user).data 'color'
-          day = $this.data 'day'
+          color = $('.user_color>span', $user).data('color')
+          day = $this.data('day')
+          kind = $this.parents('.staff_calendar').data('kind')
+          $.post '/users/create_duty_day', {duty_day: {day: day, user_id: user_id, kind: kind}}
 
-    $(document).on 'mouseenter', '#staff_duty_schedule .calendar_day.duty>span', ->
-      user = $(this).parent().data 'user'
-      $('.user_row[data-user='+user+']', $legend).addClass 'hovered'
-    $(document).on 'mouseleave', '#staff_duty_schedule .calendar_day.duty>span', ->
-      $('.user_row.hovered', $legend).removeClass 'hovered'
+    $(document).on 'mouseenter', '.staff_calendar .calendar_day.duty>span', ->
+      user = $(this).parent().data('user')
+      $('.user_row[data-user='+user+']', $legend).addClass('hovered')
+
+    $(document).on 'mouseleave', '.staff_calendar .calendar_day.duty>span', ->
+      $('.user_row.hovered', $legend).removeClass('hovered')
 
     $('.user_wish', $legend).tooltip()
 

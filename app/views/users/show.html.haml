@@ -102,7 +102,8 @@
               %td{class: schedule_hour_class_for(@user, day, hour), day: day, hour: hour}
 
     #duty_days
-      = render 'calendar'
+      - DutyDay::KINDS.each do |kind|
+        = duty_calendar(kind, Date.current.beginning_of_month, @user)
 
   #account_tab.tab-pane
     %dl.dl-horizontal

@@ -5,6 +5,18 @@ class User < ActiveRecord::Base
   HELPABLE = %w[software media technician]
   ABILITIES = %w[manage_wiki manage_salary]
 
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable, :registerable, :rememberable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :token_authenticatable, :timeoutable,
+         :recoverable, :trackable, :validatable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id,
+                  :surname, :name, :patronymic, :birthday, :hiring_date, :salary_date, :prepayment, :wish,
+                  :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes,
+                  :card_number, :color, :karmas_attributes, :abilities, :schedule
+
   belongs_to :location
   has_many :history_records, as: :object
   has_many :schedule_days, dependent: :destroy
@@ -19,18 +31,6 @@ class User < ActiveRecord::Base
   has_many :salaries, inverse_of: :user, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
-
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :registerable, :rememberable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :token_authenticatable, :timeoutable,
-         :recoverable, :trackable, :validatable
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id,
-                  :surname, :name, :patronymic, :birthday, :hiring_date, :salary_date, :prepayment, :wish,
-                  :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes,
-                  :card_number, :color, :karmas_attributes, :abilities, :schedule
 
   attr_accessor :login
   cattr_accessor :current

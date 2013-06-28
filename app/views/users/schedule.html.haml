@@ -32,7 +32,8 @@
                   = user_hours_row_tag day, user
 
       #duty_schedule_tab.tab-pane
-        = render 'staff_duty_schedule'
+        - DutyDay::KINDS.each do |kind|
+          = duty_calendar(kind, Date.current.beginning_of_month)
 
   .span4
     #staff_schedule_legend.well.well-small.affix

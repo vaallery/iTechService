@@ -19,7 +19,7 @@
   }
 }
 
-#calendar table {
+.calendar table {
   width: 200px;
   tbody td, thead th {
     max-width: 25px;
@@ -33,10 +33,70 @@
   td, th {
     cursor: default;
   }
+
+  .calendar_day {
+    padding-left: 1px;
+    padding-right: 1px;
+    span {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    &.duty {
+      background-color: #F2DEDE;
+    }
+    &.other_duty {
+      background-color: #FCF8E3;
+    }
+  }
+
 }
 
-#calendar.editable td.calendar_day.work_day.empty {
+.user_calendar.editable td.calendar_day.work_day.empty>span {
   cursor: pointer;
+}
+
+.staff_calendar.editable td.calendar_day>span {
+  cursor: pointer;
+}
+
+#staff_schedule_legend {
+  background-color: white;
+  margin-right: 20px;
+  padding: 3px 0;
+  overflow-y: scroll;
+  bottom: 30px;
+  top: 180px;
+  .user_row {
+    cursor: pointer;
+    &.hovered {
+      background-color: #cdcdcd;
+    }
+    &.selected {
+      background-color: #0088cc;
+      color: #ffffff;
+    }
+    .user_color {
+      padding-left: 10px;
+      span {
+        width: 20px;
+        height: 10px;
+        margin-bottom: -2px;
+        margin-left: 2px;
+      }
+    }
+    .user_name {
+      width: 100%;
+    }
+  }
+  .location_row {
+    cursor: default;
+    font-weight: bold;
+  }
+}
+
+#duty_info {
+  padding: 6px 40px 6px 40px;
+  margin-bottom: 4px;
 }
 
 .badge-blank{
@@ -45,21 +105,6 @@
   font-weight: normal;
   padding-left: 5px;
   padding-right: 5px;
-}
-
-.calendar_day {
-  padding-left: 1px;
-  padding-right: 1px;
-  span {
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-  &.duty {
-    background-color: #F2DEDE;
-  }
-  &.other_duty {
-    background-color: #FCF8E3;
-  }
 }
 
 #calendar_month_select, #calendar_year_select {
@@ -159,66 +204,4 @@ form.user_form{
       }
     }
   }
-}
-
-#staff_duty_schedule{
-  table {
-    width: 200px;
-    tbody td, thead th {
-      max-width: 25px;
-      min-width: 25px;
-      text-align: center;
-    }
-    .pager {
-      margin-top: 5px;
-      margin-bottom: 5px;
-    }
-    td, th {
-      cursor: default;
-    }
-  }
-
-  .calendar_day>span {
-    cursor: pointer;
-  }
-}
-
-#staff_schedule_legend{
-  background-color: white;
-  margin-right: 20px;
-  padding: 3px 0;
-  overflow-y: scroll;
-  bottom: 30px;
-  top: 180px;
-  .user_row{
-    cursor: pointer;
-    &.hovered{
-      background-color: #cdcdcd;
-    }
-    &.selected{
-      background-color: #0088cc;
-      color: #ffffff;
-    }
-    .user_color{
-      padding-left: 10px;
-      span{
-        width: 20px;
-        height: 10px;
-        margin-bottom: -2px;
-        margin-left: 2px;
-      }
-    }
-    .user_name{
-      width: 100%;
-    }
-  }
-  .location_row{
-    cursor: default;
-    font-weight: bold;
-  }
-}
-
-#duty_info{
-  padding: 6px 40px 6px 40px;
-  margin-bottom: 4px;
 }

@@ -76,8 +76,74 @@ module UsersHelper
     link_to icon_tag('plus-sign'), '#', remote: true, class: 'add_user_to_job_schedule', data: {day: day}
   end
 
-  def duty_day_cell(day, month)
-    content_tag(:td, duty_day_attributes(day, month)) do
+  def duty_calendar(kind, month, user=nil)
+    days = calendar_month_days(month).in_groups_of(7)
+    table_caption = "#{t('users.duty_schedule')} #{t('duty_days.kinds.'+kind.to_s)}"
+    container_class = 'calendar'
+    if user.nil?
+      container_id = 'staff_duty_schedule'
+      container_class << ' editable staff_calendar'
+      prev_link = link_to('&larr;'.html_safe, staff_duty_schedule_users_path(date: month.prev_month, kind: kind), remote: true)
+      #prev_link = link_to(glyph('long-arrow-left'), staff_duty_schedule_users_path(date: month.prev_month, kind: kind), remote: true)
+      next_link = link_to('&rarr;'.html_safe, staff_duty_schedule_users_path(date: month.next_month, kind: kind), remote: true)
+      #next_link = link_to(glyph('long-arrow-right'), staff_duty_schedule_users_path(date: month.next_month, kind: kind), remote: true)
+    else
+      container_id = 'calendar'
+      container_class << (action_name == 'edit' ? ' user_calendar editable' : ' user_calendar')
+      prev_link = link_to('&larr;'.html_safe, duty_calendar_user_path(user, date: month.prev_month, kind: kind), remote: true)
+      #prev_link = link_to(glyph('long-arrow-left'), duty_calendar_user_path(user, date: month.prev_month, kind: kind), remote: true)
+      next_link = link_to('&rarr;'.html_safe, duty_calendar_user_path(user, date: month.next_month, kind: kind), remote: true)
+      #next_link = link_to(glyph('long-arrow-right'), duty_calendar_user_path(user, date: month.next_month, kind: kind), remote: true)
+    end
+    container_id << "_#{kind}"
+
+    content_tag(:div, id: container_id, class: container_class, data: {kind: kind}) do
+      content_tag(:table, class: 'table table-bordered table-condensed') do
+        content_tag(:caption) do
+          content_tag(:h4, table_caption)
+        end <<
+        content_tag(:thead) do
+          content_tag(:tr) do
+            content_tag(:th, colspan: 8) do
+              content_tag(:ul, class: 'pager') do
+                content_tag(:li, prev_link, class: 'previous') <<
+                content_tag(:li, content_tag(:span, "#{t('date.month_names_single')[month.month]} #{month.year}")) <<
+                content_tag(:li, next_link, class: 'next')
+              end
+            end
+          end <<
+          content_tag(:tr) do
+            tag(:th) <<
+            t('date.abbr_day_names').map do |day|
+              content_tag(:th, content_tag(:strong, day))
+            end.join.html_safe
+          end
+        end <<
+        content_tag(:tbody) do
+          rows_tag = ''
+          days.each_index do |w|
+            rows_tag << content_tag(:tr) do
+              content_tag(:td, content_tag(:strong, w+1)) <<
+              days[w].map do |day|
+                duty_day_cell(kind, day, month.month, user)
+              end.join.html_safe
+            end
+          end
+          rows_tag.html_safe
+        end << (user.nil? ? '' : content_tag(:tfoot) do
+          next_duties(Date.current, kind).map do |duty_day|
+            content_tag(:tr) do
+              content_tag(:td, duty_day.day.strftime('%d.%m.%y'), colspan: 2) <<
+              content_tag(:td, (duty_day.user.full_name.blank? ? duty_day.user.username : duty_day.user.full_name), colspan: 6)
+            end
+          end.join.html_safe
+        end)
+      end
+    end
+  end
+
+  def duty_day_cell(kind, day, month, user=nil)
+    content_tag(:td, duty_day_attributes(kind, day, month, user)) do
       if day.today?
         content_tag :span, day.day, class: 'badge badge-info'
       else
@@ -86,30 +152,28 @@ module UsersHelper
     end.html_safe
   end
 
-  def duty_day_attributes(day, month)
-    day_class = ''
-    day_class = 'today' if day.today?
-    day_class << (day.month == month ? ' calendar_day' : ' muted')
-    day_color = 'inherit'
-    day_id = ''
-    style = ''
-    duty_day = DutyDay.find_by_day day
-    if duty_day.present? and (duty_user = duty_day.user).present?
-      day_id = duty_day.id
-      day_color = duty_user.color
-      day_class << ' duty'
-      style = "background-color: #{day_color}" if day_class.include? 'calendar_day'
+  def duty_day_attributes(kind, day, month, user=nil)
+    if user.nil?
+      day_class = ''
+      day_class = 'today' if day.today?
+      day_class << (day.month == month ? ' calendar_day' : ' muted')
+      day_color = 'inherit'
+      day_id = ''
+      style = ''
+      duty_day = DutyDay.find_by_day_and_kind day, kind
+      if duty_day.present? and (duty_user = duty_day.user).present?
+        day_id = duty_day.id
+        day_color = duty_user.color
+        day_class << ' duty'
+        style = "background-color: #{day_color}" if day_class.include? 'calendar_day'
+      else
+        day_class << ' empty'
+      end
+      {class: day_class, data: {user: duty_user.try(:id) || '', dayid: day_id, day: day.to_s, color: day_color},
+       style: style, title: duty_user.try(:short_name)}
     else
-      day_class << ' empty'
+      {class: calendar_day_class(user, day, month)}
     end
-    {class: day_class, data: {user: duty_user.try(:id) || '', dayid: day_id, day: day.to_s, color: day_color},
-     style: style, title: duty_user.try(:short_name)}
-  end
-
-  def calendar_month_days(date)
-    start_day = date.beginning_of_month.beginning_of_week
-    end_day = date.end_of_month.end_of_week
-    (start_day..end_day).to_a
   end
 
   def calendar_day_class(user, day, month)
@@ -118,7 +182,6 @@ module UsersHelper
     day_class << ' work_day' if user.is_work_day? day
     day_class << ' shortened' if user.is_shortened_day? day
     day_class << ' duty' if user.is_duty_day? day
-    #day_class << (is_other_duty?(user, day) ? ' other_duty' : ' empty')
     if is_other_duty? user, day
       day_class << ' other_duty'
     else
@@ -127,12 +190,18 @@ module UsersHelper
     day_class << (day.month == month ? ' calendar_day' : ' muted')
   end
 
+  def calendar_month_days(date)
+    start_day = date.beginning_of_month.beginning_of_week
+    end_day = date.end_of_month.end_of_week
+    (start_day..end_day).to_a
+  end
+
   def next_other_duties(user, date)
     DutyDay.where('user_id <> ? AND day > ?', user.id, date).reorder('day asc')
   end
 
-  def next_duties(date)
-    DutyDay.where('day >= ?', date).reorder('day asc')
+  def next_duties(date, kind)
+    DutyDay.where('day >= ? AND kind = ?', date, kind).reorder('day asc')
   end
 
   def profile_link
