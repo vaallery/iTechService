@@ -1,2 +1,2 @@
 :plain
-  $("#staff_duty_schedule td.calendar_day[data-day=#{@day}]").replaceWith("#{j(duty_day_cell(@day, @day.month))}");
+  $("#staff_duty_schedule_#{@kind} td.calendar_day[data-day=#{@day}]").replaceWith("#{j(duty_day_cell(@kind, @day, @day.month))}");

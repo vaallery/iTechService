@@ -132,6 +132,7 @@ ru:
 
       duty_day:
         day: День
+        kind: Тип
         user: user
         user_id: user
 
@@ -276,22 +277,6 @@ ru:
     user: Пользователь
     user_comment: Комментарий сотрудника
 
-  dashboard:
-    actual_orders: Текущие заказы
-    actual_tasks: "Текущие задачи"
-    goods_for_sale: "Техника для продажи"
-    ready_devices: "Готовые девайсы"
-    misc: Прочее
-    moved_title: Перемещен
-    new_device: Новый девайс
-    new_device_message: Новый девайс!!!
-    new_info: Создать новость
-    new_order: Новый заказ
-    new_user: Новый пользователь
-    params: Параметры
-    reports: Отчёты
-    sale: "Продажа"
-
   announcements:
     edit:
       title: Редактирование оповещения
@@ -345,6 +330,22 @@ ru:
     link: Комментарии
     created: Комментарий создан
     updated: Комментарий изменён
+
+  dashboard:
+    actual_orders: Текущие заказы
+    actual_tasks: "Текущие задачи"
+    goods_for_sale: "Техника для продажи"
+    ready_devices: "Готовые девайсы"
+    misc: Прочее
+    moved_title: Перемещен
+    new_device: Новый девайс
+    new_device_message: Новый девайс!!!
+    new_info: Создать новость
+    new_order: Новый заказ
+    new_user: Новый пользователь
+    params: Параметры
+    reports: Отчёты
+    sale: "Продажа"
 
   devices:
     edit:
@@ -405,6 +406,11 @@ ru:
     link: "Скидки"
     created: "Скидка создана"
     updated: "Скидка изменена"
+
+  duty_days:
+    kinds:
+      kitchen: "на кухне"
+      salesroom: "в зале"
 
   gift_certificates:
     edit:

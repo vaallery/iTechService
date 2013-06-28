@@ -1,1 +1,2 @@
-== $('#calendar').replaceWith("#{j(render('calendar'))}");
+:plain
+  $("#calendar_#{params[:kind]}").replaceWith("#{j(duty_calendar(params[:kind], params[:date].blank? ? Date.current : params[:date].to_date, @user))}");

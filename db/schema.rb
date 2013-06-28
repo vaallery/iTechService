@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130622072213) do
+ActiveRecord::Schema.define(:version => 20130627060132) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -80,10 +80,10 @@ ActiveRecord::Schema.define(:version => 20130622072213) do
   create_table "device_tasks", :force => true do |t|
     t.integer  "device_id"
     t.integer  "task_id"
-    t.boolean  "done"
+    t.boolean  "done",         :default => false
     t.text     "comment"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.decimal  "cost"
     t.datetime "done_at"
     t.text     "user_comment"
@@ -123,10 +123,10 @@ ActiveRecord::Schema.define(:version => 20130622072213) do
     t.string   "serial_number"
     t.integer  "location_id"
     t.integer  "user_id"
-    t.string   "security_code"
-    t.string   "status"
     t.string   "imei"
     t.boolean  "replaced",        :default => false
+    t.string   "security_code"
+    t.string   "status"
     t.boolean  "notify_client",   :default => false
     t.boolean  "client_notified"
   end
@@ -154,9 +154,11 @@ ActiveRecord::Schema.define(:version => 20130622072213) do
     t.date     "day"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "kind"
   end
 
   add_index "duty_days", ["day"], :name => "index_duty_days_on_day"
+  add_index "duty_days", ["kind"], :name => "index_duty_days_on_kind"
   add_index "duty_days", ["user_id"], :name => "index_duty_days_on_user_id"
 
   create_table "gift_certificates", :force => true do |t|
@@ -337,10 +339,11 @@ ActiveRecord::Schema.define(:version => 20130622072213) do
   add_index "tasks", ["role"], :name => "index_tasks_on_role"
 
   create_table "users", :force => true do |t|
-    t.string   "username"
+    t.string   "username",               :default => "", :null => false
     t.string   "role"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.string   "email",                  :default => ""
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -351,7 +354,6 @@ ActiveRecord::Schema.define(:version => 20130622072213) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "authentication_token"
-    t.string   "email",                  :default => ""
     t.integer  "location_id"
     t.string   "photo"
     t.string   "surname"
@@ -377,7 +379,7 @@ ActiveRecord::Schema.define(:version => 20130622072213) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["schedule"], :name => "index_users_on_schedule"
   add_index "users", ["surname"], :name => "index_users_on_surname"
-  add_index "users", ["username"], :name => "index_users_on_username"
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
   create_table "wiki_page_attachments", :force => true do |t|
     t.integer  "page_id",                           :null => false
