@@ -8,7 +8,12 @@
   .modal-body
 
     = f.input :client_notified, as: :radio_buttons, collection: [[true, t('yep')], [false, t('not_accessible')]], required: true, value_method: :first, label_method: :last if @device.notify_client?
-    -#= f.collection_radio_buttons :client_notified, [[nil, 'No'], [true, 'Yes'], [false, 'Not accessible']], :first, :last
+
+    - if @device.persisted? and @device.client.contact_phone.present?
+      .control-group
+        = label_tag 'contact_phone', Client.human_attribute_name(:contact_phone), class: 'control-label'
+        .controls
+          = text_field_tag 'contact_phone', human_phone(@device.client.contact_phone), class: 'input-medium', disabled: true
 
     = f.input :location_id, collection: Location.allowed_for(current_user, @device)
 
