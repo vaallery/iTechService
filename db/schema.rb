@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627060132) do
+ActiveRecord::Schema.define(:version => 20130701120740) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -337,6 +337,20 @@ ActiveRecord::Schema.define(:version => 20130627060132) do
   add_index "tasks", ["location_id"], :name => "index_tasks_on_location_id"
   add_index "tasks", ["name"], :name => "index_tasks_on_name"
   add_index "tasks", ["role"], :name => "index_tasks_on_role"
+
+  create_table "timesheet_days", :force => true do |t|
+    t.date     "date"
+    t.integer  "user_id"
+    t.string   "status"
+    t.integer  "work_mins"
+    t.time     "appearance"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "timesheet_days", ["date"], :name => "index_timesheet_days_on_date"
+  add_index "timesheet_days", ["status"], :name => "index_timesheet_days_on_status"
+  add_index "timesheet_days", ["user_id"], :name => "index_timesheet_days_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "username",               :default => "", :null => false

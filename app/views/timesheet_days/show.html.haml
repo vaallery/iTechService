@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Date:
+  = @timesheet_day.date
+%p
+  %b User:
+  = @timesheet_day.user
+%p
+  %b Status:
+  = @timesheet_day.status
+%p
+  %b Work mins:
+  = @timesheet_day.work_mins
+%p
+  %b Appearance:
+  = @timesheet_day.appearance
+
+= link_to 'Edit', edit_timesheet_day_path(@timesheet_day)
+\|
+= link_to 'Back', timesheet_days_path

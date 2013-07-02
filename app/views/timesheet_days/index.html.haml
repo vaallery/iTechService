@@ -1,0 +1,27 @@
+%h1 Listing timesheet_days
+
+%table
+  %tr
+    %th Date
+    %th User
+    %th Status
+    %th Work mins
+    %th Appearance
+    %th
+    %th
+    %th
+
+  - @timesheet_days.each do |timesheet_day|
+    %tr
+      %td= timesheet_day.date
+      %td= timesheet_day.user
+      %td= timesheet_day.status
+      %td= timesheet_day.work_mins
+      %td= timesheet_day.appearance
+      %td= link_to 'Show', timesheet_day
+      %td= link_to 'Edit', edit_timesheet_day_path(timesheet_day)
+      %td= link_to 'Destroy', timesheet_day, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Timesheet day', new_timesheet_day_path

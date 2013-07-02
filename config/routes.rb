@@ -1,5 +1,8 @@
 ItechService::Application.routes.draw do
 
+  resources :timesheet_days
+
+
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users

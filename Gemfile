@@ -57,7 +57,7 @@ group :development do
   #gem 'linecache19', '>= 0.5.13', path: '../_gems/'
   gem 'ruby-debug19'
   gem 'ruby-debug-base19x', '0.11.30.pre12', require: 'ruby-debug-base' #, path: '/Applications/RubyMine.app/rb/gems'
-  gem 'ruby-debug-ide', '0.4.17.beta17', require: 'ruby-debug-ide' #, path: '/Applications/RubyMine.app/rb/gems'
+  gem 'ruby-debug-ide', require: 'ruby-debug-ide' #, path: '/Applications/RubyMine.app/rb/gems'
 end
 
 group :test do

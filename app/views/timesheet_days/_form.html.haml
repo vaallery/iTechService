@@ -1,0 +1,12 @@
+= simple_form_for(@timesheet_day) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :date
+    = f.association :user
+    = f.input :status
+    = f.input :work_mins
+    = f.input :appearance
+
+  .form-actions
+    = f.button :submit

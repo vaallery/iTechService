@@ -281,7 +281,7 @@ GEM
     ruby-debug-base19x (0.11.30.pre12)
       debugger-ruby_core_source (>= 1.1.4)
       rake (>= 0.8.1)
-    ruby-debug-ide (0.4.17.beta17)
+    ruby-debug-ide (0.4.17)
       rake (>= 0.8.1)
     ruby-debug19 (0.11.6)
       columnize (>= 0.3.1)
@@ -405,7 +405,7 @@ DEPENDENCIES
   roo
   rspec-rails
   ruby-debug-base19x (= 0.11.30.pre12)
-  ruby-debug-ide (= 0.4.17.beta17)
+  ruby-debug-ide
   ruby-debug19
   sass-rails (~> 3.2.3)
   seed_dumper (~> 0.1.3)
