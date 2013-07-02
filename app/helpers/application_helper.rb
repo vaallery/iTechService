@@ -235,4 +235,8 @@ module ApplicationHelper
     number_to_currency value, precision: 0, delimiter: ' ', separator: ','
   end
 
+  def human_phone(value)
+    number_to_phone value, area_code: true
+  end
+
 end

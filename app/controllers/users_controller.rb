@@ -87,8 +87,9 @@ class UsersController < ApplicationController
   end
 
   def duty_calendar
-    @calendar_month = params[:date].blank? ? Date.current : params[:date].to_date
-
+    @user = User.find params[:id]
+    #@calendar_month = params[:date].blank? ? Date.current : params[:date].to_date
+    #@kind = params[:kind]
     respond_to do |format|
       format.js
     end
@@ -96,6 +97,10 @@ class UsersController < ApplicationController
 
   def staff_duty_schedule
     @calendar_month = params[:date].blank? ? Date.current : params[:date].to_date
+    #@kind = params[:kind]
+    respond_to do |format|
+      format.js
+    end
   end
 
   def update_wish
@@ -113,7 +118,6 @@ class UsersController < ApplicationController
   def schedule
     @users = User.schedulable
     @locations = Location.for_schedule
-    @calendar_month = Date.current.beginning_of_month
   end
 
   def add_to_job_schedule
@@ -132,12 +136,14 @@ class UsersController < ApplicationController
     @duty_day = DutyDay.new params[:duty_day]
     @duty_day.save
     @day = @duty_day.day
+    @kind = @duty_day.kind
     render 'update_duty_day'
   end
 
   def destroy_duty_day
     duty_day = DutyDay.find params[:duty_day_id]
     @day = duty_day.day
+    @kind = duty_day.kind
     duty_day.destroy
     render 'update_duty_day'
   end

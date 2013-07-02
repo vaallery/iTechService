@@ -14,7 +14,6 @@
                 &larr;
             %li
               %span= "#{t('date.month_names_single')[@calendar_month.month]} #{@calendar_month.year}"
-              -#%span= @calendar_month.strftime "%B %Y"
             %li.next
               = link_to duty_calendar_user_path(@user, date: @calendar_month.next_month), remote: true do
                 &rarr;

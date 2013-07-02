@@ -9,8 +9,8 @@
   = f.input :contact_phone
   = f.input :email
   = f.input :card_number
-  = f.input :admin_info if current_user.any_admin?
-  = f.input :comment, as: 'text'
+  = f.input :admin_info, input_html: {rows: 5} if current_user.any_admin?
+  = f.input :comment, as: 'text', input_html: {rows: 5}
 
   .control-group
     %label.control-label= t Client.human_attribute_name(:comments)

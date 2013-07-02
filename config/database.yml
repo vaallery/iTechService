@@ -51,12 +51,20 @@ production:
   encoding: unicode
   database: itech_service_production
   pool: 5
-  username: itech_service
-  password: qeda
-  host: localhost
-#  port: 5432
-  socket: /Applications/rubystack-1.9.3-5/postgres/.s.PGSQL.5432
-#  socket: /Applications/rubystack/postgresql/.s.PGSQL.5432
+  username: v
+  password:
+
+#production:
+#  adapter: postgresql
+#  encoding: unicode
+#  database: itech_service_production
+#  pool: 5
+#  username: itech_service
+#  password: qeda
+#  host: localhost
+##  port: 5432
+#  socket: /Applications/rubystack-1.9.3-5/postgres/.s.PGSQL.5432
+##  socket: /Applications/rubystack/postgresql/.s.PGSQL.5432
 
 cucumber:
   <<: *test

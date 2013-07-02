@@ -11,6 +11,10 @@
   %dt= Client.human_attribute_name :phone_number
   %dd= @client.human_phone_number
 
+  - if @client.contact_phone.present?
+    %dt= Client.human_attribute_name :contact_phone
+    %dd= human_phone @client.contact_phone
+
   %dt= Client.human_attribute_name :email
   %dd= @client.email.present? ? @client.email : '-'
 

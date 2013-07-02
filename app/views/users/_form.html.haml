@@ -57,7 +57,8 @@
           = ff.hidden_field :hours, class: "schedule_day_#{ff.object.day}"
 
         #duty_days
-          = render 'calendar'
+          - DutyDay::KINDS.each do |kind|
+            = duty_calendar(kind, Date.current.beginning_of_month, @user)
 
           #duty_days_fields
             = f.fields_for :duty_days do |ff|
