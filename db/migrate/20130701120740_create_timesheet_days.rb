@@ -5,7 +5,7 @@ class CreateTimesheetDays < ActiveRecord::Migration
       t.references :user
       t.string :status
       t.integer :work_mins
-      t.time :appearance
+      t.time :time
 
       t.timestamps
     end

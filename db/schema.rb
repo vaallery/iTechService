@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130701120740) do
+ActiveRecord::Schema.define(:version => 20130703062701) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -343,7 +343,7 @@ ActiveRecord::Schema.define(:version => 20130701120740) do
     t.integer  "user_id"
     t.string   "status"
     t.integer  "work_mins"
-    t.time     "appearance"
+    t.time     "time"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -382,11 +382,16 @@ ActiveRecord::Schema.define(:version => 20130701120740) do
     t.string   "color"
     t.integer  "abilities_mask"
     t.boolean  "schedule"
+    t.boolean  "is_fired"
+    t.integer  "position"
+    t.string   "job_title"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["card_number"], :name => "index_users_on_card_number"
   add_index "users", ["email"], :name => "index_users_on_email"
+  add_index "users", ["is_fired"], :name => "index_users_on_is_fired"
+  add_index "users", ["job_title"], :name => "index_users_on_job_title"
   add_index "users", ["location_id"], :name => "index_users_on_location_id"
   add_index "users", ["name"], :name => "index_users_on_name"
   add_index "users", ["patronymic"], :name => "index_users_on_patronymic"

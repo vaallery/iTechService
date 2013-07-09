@@ -1,8 +1,5 @@
 ItechService::Application.routes.draw do
 
-  resources :timesheet_days
-
-
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -98,6 +95,8 @@ ItechService::Application.routes.draw do
   resources :salaries
 
   resources :discounts
+
+  resources :timesheet_days, path: 'timesheet', except: :show
 
   wiki_root '/wiki'
 

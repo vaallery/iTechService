@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     @users = User.order('id asc').page(params[:page]).per(50)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @users }
     end
   end
@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     @devices = @user.devices.unarchived
 
     respond_to do |format|
-      format.html # show.html.haml
+      format.html
       format.json { render json: @user }
     end
   end
@@ -25,7 +25,7 @@ class UsersController < ApplicationController
     @user = User.new
 
     respond_to do |format|
-      format.html # new.html.haml
+      format.html
       format.json { render json: @user }
     end
   end

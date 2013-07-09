@@ -1,12 +1,16 @@
-= simple_form_for(@timesheet_day) do |f|
+= simple_form_for @timesheet_day, remote: true, html: { id: 'timesheet_day_form', class: 'form-inline' } do |f|
   = f.error_notification
 
-  .form-inputs
-    = f.input :date
-    = f.association :user
-    = f.input :status
-    = f.input :work_mins
-    = f.input :appearance
+  = f.hidden_field :date
+  = f.hidden_field :user_id
+  .control-group
+    = f.input_field :status, collection: TimesheetDay::STATUSES.map { |status| [t("timesheet_days.statuses_abbr.#{status}"), status] }, prompt: false
+    = f.input_field :work_hours, class: 'input-mini'
+  .control-group.time_input{class: "#{%w[presence_late presence_leave].include?(@timesheet_day.status) ? '' : 'hidden'}"}
+    = f.input_field :time, class: 'input-mini', minute_step: 5
 
-  .form-actions
-    = f.button :submit
+  .actions
+    %b.btn.close_timesheet_popover
+      %i.icon-remove
+    = f.submit t(:save), remote: true, class: 'btn btn-primary'
+    = link_to glyph(:trash), @timesheet_day, method: :delete, remote: true, class: 'btn btn-danger', data: {confirm: t('confirmation', default: 'Are you sure?')} unless @timesheet_day.new_record?

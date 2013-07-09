@@ -95,7 +95,7 @@ auth_timeout = auth_count = 5 * 60
 $(document).on 'click keydown mousemove', ->
   auth_count = auth_timeout
 
-datepicker_dates =
+window.datepicker_dates =
   days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
   daysShort: ["Вск", "Пнд", "Втр", "Срд", "Чтв", "Птн", "Суб", "Вск"],
   daysMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],

@@ -1,0 +1,15 @@
+%table#timesheet_table.table.table-bordered.table-hover
+  %thead
+    %th= t 'attributes.id'
+    %th= t 'attributes.fio'
+    %th= User.human_attribute_name :job_title
+    - (@timesheet_date..@timesheet_date.end_of_month).each do |date|
+      %th= date.day
+    %th= t 'timesheet_days.days_count'
+    %th= t 'timesheet_days.hours_count'
+    %th= t 'timesheet_days.sickness_day'
+    %th= t 'timesheet_days.lateness'
+  %tbody
+    - row_num = 0
+    - @users.each do |user|
+      = timesheet_row user, @timesheet_date, (row_num = row_num.next)

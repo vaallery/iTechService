@@ -19,7 +19,7 @@ module ApplicationHelper
   end
 
   def link_back_to_index
-    link_to icon_tag('chevron-left'), url_for(action: 'index', controller: controller_name), class: "link_back"
+    link_to glyph('chevron-left'), url_for(action: 'index', controller: controller_name), class: "link_back"
   end
 
   def sortable(column, title = nil)
@@ -87,11 +87,15 @@ module ApplicationHelper
   end
 
   def submit_button form, options = {}
-    options.merge! class: 'submit_button btn btn-primary', type: 'submit'
+    options.merge! class: 'submit_button btn btn-primary ' + (options[:class] || ''), type: 'submit'
     model_name = form.object.class.model_name
     human_model_name = model_name.human
     action = form.object.new_record? ? 'create' : 'update'
-    name = t "helpers.button.#{model_name}.#{action}", model: human_model_name, default: t(action, default: 'Save')
+    if options[:name] == false
+      name = nil
+    else
+      name = options[:name] || t("helpers.button.#{model_name}.#{action}", model: human_model_name, default: t(action, default: 'Save'))
+    end
     button_tag options do
       icon_tag(:save) + name
     end
@@ -161,7 +165,7 @@ module ApplicationHelper
   def date_field form, attr
     content_tag(:div, class: 'input-append') do
       form.text_field(attr, class: 'span5') +
-          link_to(icon_tag(:calendar), '#', class: 'btn datepicker')
+          link_to(glyph(:calendar), '#', class: 'btn datepicker')
     end
   end
 

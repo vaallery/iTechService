@@ -1,0 +1,17 @@
+- if @timesheet_day.new_record?
+  :plain
+    $cell = $("tr.timesheet_row[data-user=#{@timesheet_day.user_id}]>td.timesheet_day[data-date=#{@timesheet_day.date.to_s}]");
+- else
+  :plain
+    $cell = $("td#timesheet_day_#{@timesheet_day.id}");
+
+:plain
+  close_timesheet_popover();
+  $cell.popover({
+    html: true,
+    placement: 'top',
+    content: "#{j(render('form'))}",
+    container: '#timesheet_popover_container'
+  });
+  $cell.addClass('editing');
+  $cell.popover('show');

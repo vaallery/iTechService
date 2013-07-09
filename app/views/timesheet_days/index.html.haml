@@ -1,27 +1,8 @@
-%h1 Listing timesheet_days
+.page-header
+  %h2
+    = link_to glyph('chevron-left'), users_path, class: 'link_back'
+    %span#timesheet_title= "#{t('.title')} #{t('from_date', date: l(@timesheet_date, format: :long))}"
+    = link_to glyph(:calendar), '#', remote: true, id: 'timesheet_datepicker', class: 'btn-link', 'data-date' => @timesheet_date.to_s, 'data-date-language' => 'ru', 'data-date-format' => 'd mm yyyy', 'data-date-weekStart' => 1, 'data-date-viewMode' => 'months', 'data-date-minViewMode' => 'months', 'data-url' => timesheet_days_path
 
-%table
-  %tr
-    %th Date
-    %th User
-    %th Status
-    %th Work mins
-    %th Appearance
-    %th
-    %th
-    %th
-
-  - @timesheet_days.each do |timesheet_day|
-    %tr
-      %td= timesheet_day.date
-      %td= timesheet_day.user
-      %td= timesheet_day.status
-      %td= timesheet_day.work_mins
-      %td= timesheet_day.appearance
-      %td= link_to 'Show', timesheet_day
-      %td= link_to 'Edit', edit_timesheet_day_path(timesheet_day)
-      %td= link_to 'Destroy', timesheet_day, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Timesheet day', new_timesheet_day_path
+#timesheet_popover_container
+#timesheet_table_container= render 'table'

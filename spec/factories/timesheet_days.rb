@@ -2,10 +2,10 @@
 
 FactoryGirl.define do
   factory :timesheet_day do
-    date "2013-07-01"
-    user nil
-    status "MyString"
-    work_mins 1
-    appearance "2013-07-01 23:07:40"
+    date '2013-07-01'
+    user
+    status 'presence'
+    work_mins 480
+    time '23:07'
   end
 end

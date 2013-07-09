@@ -1,3 +1,30 @@
-// Place all the styles related to the TimesheetDays controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+#timesheet_datepicker {
+  text-decoration: none;
+}
+
+#timesheet_table {
+  th {
+    white-space: nowrap;
+  }
+  td.fio_col, td.job_title_col {
+    white-space: nowrap;
+  }
+  td.timesheet_day {
+    min-width: 36px;
+    height: 40px;
+    padding: 4px 2px;
+    cursor: pointer;
+    text-align: center;
+    &.empty {
+      background-color: #ffc7c5;
+    }
+  }
+}
+
+#timesheet_day_form {
+  margin: 0;
+  min-width: 158px;
+  #timesheet_day_status {
+    width: 80px;
+  }
+}
