@@ -9,12 +9,6 @@ GIT
       diff-lcs (>= 1.1.2)
       rails_autolink (>= 1.0)
 
-GIT
-  remote: https://github.com/robmathews/linecache19-0.5.13.git
-  revision: c0804efc995a2212118b005a300b71c9ddd41b2b
-  specs:
-    linecache19 (0.5.13)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -179,6 +173,8 @@ GEM
       actionpack (>= 3.1)
       less (~> 2.2.0)
     libv8 (3.11.8.17)
+    linecache19 (0.5.12)
+      ruby_core_source (>= 0.1.4)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -396,7 +392,7 @@ DEPENDENCIES
   json_builder (~> 3.1.7)
   kaminari (~> 0.14.1)
   less-rails (~> 2.2.6)
-  linecache19 (>= 0.5.13)!
+  linecache19
   mailcatcher
   meta_request (= 0.2.1)
   mini_magick (~> 3.4)
