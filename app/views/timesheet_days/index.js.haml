@@ -1,0 +1,3 @@
+:plain
+  $('#timesheet_title').text("#{t('.title')} #{t('from_date', date: l(@timesheet_date, format: :long))}");
+  $('#timesheet_table_container').html("#{j(render('table'))}").slideDown('fast');

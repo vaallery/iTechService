@@ -32,7 +32,7 @@ ru:
     - воскресенье
     formats:
       default: ! '%d.%m.%Y'
-      long: ! '%d %B %Y'
+      long: ! '%d %B %Y г.'
       short: ! '%d %b'
     month_names:
     -

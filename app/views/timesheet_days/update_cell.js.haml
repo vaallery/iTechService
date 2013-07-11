@@ -1,0 +1,9 @@
+:plain
+  close_timesheet_popover();
+  $row = $("tr.timesheet_row[data-user=#{@data[:user].id}]");
+  $cell = $("td.timesheet_day[data-date=#{@data[:date].to_s}]", $row);
+  $cell.replaceWith("#{j(timesheet_cell(@data[:user], @data[:date]))}");
+  $('.work_days_count', $row).text(#{@data[:user].work_days_in(@data[:date])});
+  $('.work_hours_count', $row).text(#{@data[:user].work_hours_in(@data[:date])});
+  $('.sickness_days_count', $row).text(#{@data[:user].sickness_days_in(@data[:date])});
+  $('.lateness_count', $row).text(#{@data[:user].latenesses_in(@data[:date])});

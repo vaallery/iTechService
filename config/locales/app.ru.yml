@@ -223,6 +223,13 @@ ru:
         priority: Приоритет
         role: Роль
 
+      timesheet_day:
+        date: "Дата"
+        status: "Статус"
+        time: "Время"
+        work_hours: "Рабочие часы"
+        work_mins: "Рабочие минуты"
+
       user:
         abilities: Возможности
         announcements: Оповещение
@@ -239,6 +246,7 @@ ru:
         encrypted_password: encrypted_password  #g
         hiring_date: Дата приема на работу
         history_records: history_records  #g
+        job_title: "Должность"
         karmas: Карма
         last_sign_in_at: Время предыдущей авторизации
         last_sign_in_ip: IP предыдущей авторизации
@@ -250,6 +258,7 @@ ru:
         password: Пароль
         password_confirmation: Подтверждение пароля
         photo: Фотография
+        position: "Порядок"
         prepayment: Аванс
         remember_created_at: remember_created_at  #g
         reset_password_sent_at: reset_password_sent_at  #g
@@ -633,6 +642,34 @@ ru:
     schedule3: 'Вс - выходной'
     site: 'www.itechstore.ru'
 
+  timesheet_days:
+    index:
+      title: "Табель учёта рабочего времени"
+    days_count: "Кол-во дней"
+    hours_count: "Кол-во часов"
+    sickness_day: "Больничный"
+    lateness: "Опоздание"
+    statuses:
+      presence: "Явка"
+      presence_late: "Явка с опозданием"
+      presence_leave: "Явка, отпросился"
+      presence_sickness: "Явка, больничный"
+      sickness: "Больничный"
+      free: "Выходной"
+      fired: "Увольнение"
+      business_trip: "Командировка"
+      training: "Обучение"
+    statuses_abbr:
+      presence: "Я"
+      presence_late: "Я/ОП"
+      presence_leave: "Я/ОТ"
+      presence_sickness: "Я/Б"
+      sickness: "Б"
+      free: "В"
+      fired: "УВ"
+      business_trip: "К"
+      training: "ОБ"
+
   users:
     abilities:
       manage_salary: Редактировать зарплату
@@ -666,6 +703,7 @@ ru:
     link: Пользователи
     rating: Рейтинг
     schedule: График
+    timesheet: "Табель"
     updated: Пользователь изменён
     version: Версия
 
@@ -711,12 +749,14 @@ ru:
   back: Назад
   black_list: "Чёрный список"
   client_input_placeholder: 'Имя / телефон / карта'
+  close: "Закрыть"
   confirmation: Вы уверены?
   create: Создать
   destroy: "Удалить"
   done: "Готово"
   edit: Редактировать
   everywhere: "Везде"
+  from_date: "от %{date}"
   hour_min: "%{hour} ч %{min} мин."
   me: Я
   min: "%{min} мин."

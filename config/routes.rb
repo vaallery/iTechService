@@ -96,6 +96,8 @@ ItechService::Application.routes.draw do
 
   resources :discounts
 
+  resources :timesheet_days, path: 'timesheet', except: :show
+
   wiki_root '/wiki'
 
 end

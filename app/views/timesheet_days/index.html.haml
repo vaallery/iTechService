@@ -1,0 +1,8 @@
+.page-header
+  %h2
+    = link_to glyph('chevron-left'), users_path, class: 'link_back'
+    %span#timesheet_title= "#{t('.title')} #{t('from_date', date: l(@timesheet_date, format: :long))}"
+    = link_to glyph(:calendar), '#', remote: true, id: 'timesheet_datepicker', class: 'btn-link', 'data-date' => @timesheet_date.to_s, 'data-date-language' => 'ru', 'data-date-format' => 'd mm yyyy', 'data-date-weekStart' => 1, 'data-date-viewMode' => 'months', 'data-date-minViewMode' => 'months', 'data-url' => timesheet_days_path
+
+#timesheet_popover_container
+#timesheet_table_container= render 'table'

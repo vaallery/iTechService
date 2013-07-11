@@ -12,10 +12,7 @@ class User < ActiveRecord::Base
          :recoverable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id,
-                  :surname, :name, :patronymic, :birthday, :hiring_date, :salary_date, :prepayment, :wish,
-                  :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes,
-                  :card_number, :color, :karmas_attributes, :abilities, :schedule
+  attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position
 
   belongs_to :location
   has_many :history_records, as: :object
@@ -29,6 +26,7 @@ class User < ActiveRecord::Base
   has_many :messages, dependent: :destroy
   has_many :infos, inverse_of: :recipient, dependent: :destroy
   has_many :salaries, inverse_of: :user, dependent: :destroy
+  has_many :timesheet_days, inverse_of: :user, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
 
@@ -42,13 +40,18 @@ class User < ActiveRecord::Base
   validates :password, presence: true, confirmation: true, if: :password_required?
   before_validation :validate_rights_changing
 
+  scope :ordered, order('position asc')
   scope :superadmins, where(role: 'superadmin')
   scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
   scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
   scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
   scope :schedulable, where(schedule: true)
   scope :staff, where('role <> ?', 'admin')
+  scope :fired, where(fired: true)
+  scope :active, where(fired: [false, nil])
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
+
+  acts_as_list
 
   after_initialize do |user|
     if user.schedule_days.empty?
@@ -258,6 +261,24 @@ class User < ActiveRecord::Base
     end.sort_by! do |user|
       user.upcoming_salary_date - today
     end
+  end
+
+  def work_days_in(date)
+    timesheet_days.in_period(date).work.count
+  end
+
+  def work_hours_in(date)
+    timesheet_days.in_period(date).work.sum do |day|
+      day.actual_work_hours
+    end
+  end
+
+  def sickness_days_in(date)
+    timesheet_days.in_period(date).sickness.count
+  end
+
+  def latenesses_in(date)
+    timesheet_days.in_period(date).lateness.count
   end
 
   private
