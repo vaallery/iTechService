@@ -8,14 +8,21 @@ module AnnouncementsHelper
       when 'protector' then text = ": #{t('announcements.protector_made')}"
       when 'birthday'
         text = ''
-        if (birthday = announcement.user.birthday).present?
+        if (birthday = announcement.user.try(:birthday)).present?
           text = t('announcements.birthday', user: announcement.user.short_name, time: l(birthday, format: :short))
         end
       when 'order_status' then text = "[#{l(announcement.created_at, format: :long_d)}] #{announcement.content}"
       when 'order_done' then text = "[#{l(announcement.created_at, format: :long_d)}] #{announcement.content}"
+      when 'device_return'
+        if (device = announcement.device).present?
+          time = l(device.return_at, format: device.return_at.today? ? :time : :short_r)
+          text = t('announcements.device_return', device: device.type_name, time: time)
+        else
+          text = ''
+        end
       else text = ": #{announcement.content}"
     end
-    if announcement.birthday? or announcement.order_status? or announcement.order_done?
+    if announcement.birthday? or announcement.order_status? or announcement.order_done? or announcement.device_return?
       text
     else
       "[#{l(announcement.created_at, format: :long_d)}] #{announcement.user.short_name}" + text
@@ -37,7 +44,7 @@ module AnnouncementsHelper
       link_path = make_announce_path(kind: kind)
     end
     content_tag(:li, id: 'announce_button', class: state_class) do
-      link_to icon_tag(icon), link_path, method: :post, remote: true, id: 'announce_link', class: state_class
+      link_to glyph(icon), link_path, method: :post, remote: true, id: 'announce_link', class: state_class
     end.html_safe
   end
 
@@ -54,21 +61,10 @@ module AnnouncementsHelper
       end.gsub('\n', '')
 
       content_tag(:li, id: 'coffee_order_button') do
-        link_to icon_tag('coffee'), '#', remote: true, id: 'coffer_order_link',
-                data: {html: true, placement: 'bottom', title: t('announcements.coffee_order_popover_title'),
-                content: coffee_order_form}
+        link_to glyph('coffee'), '#', rel: 'popover', id: 'coffer_order_link', data: {html: true, placement: 'bottom', title: t('announcements.coffee_order_popover_title'), content: coffee_order_form}
       end
     else
       nil
-    end
-  end
-
-  def header_link_to_salaries
-    users = User.oncoming_salary
-    notify_class = users.any? ? 'notify' : ''
-    content_tag(:li, id: 'salary_announce', class: notify_class) do
-      link_to icon_tag(:money), '#', remote: true, id: 'salary_announce_link', data: {html: true, placement: 'bottom',
-          title: t('salaries.popover_title'), content: oncoming_salaries_list(users).gsub('\n', '')}
     end
   end
 

@@ -50,6 +50,27 @@ jQuery ->
     $popover.prev().popover('hide')
     false
 
+cursorX = $('#spinner').outerWidth() / 2
+cursorY = $('#spinner').outerHeight() / 2
+
+$(document).on 'mousemove', '*', (event)->
+  cursorX = event.pageX
+  cursorY = event.pageY
+
+$(document).on 'keydown', 'input[type=text]', ->
+  cursorX = this.offsetLeft + $('#spinner').outerWidth() / 2
+  cursorY = this.offsetTop + this.clientHeight / 2
+
+$(document).on 'keydown', 'textarea', ->
+  cursorX = this.offsetLeft + $('#spinner').outerWidth() / 2
+  cursorY = this.offsetTop + $('#spinner').outerHeight() / 2
+
+$(document).ajaxSend ->
+  showSpinner()
+
+$(document).ajaxComplete ->
+  hideSpinner()
+
 add_fields = (target, association, content) ->
   new_id = new Date().getTime()
   regexp = new RegExp "new_" + association, "g"
@@ -94,6 +115,17 @@ auth_timeout = auth_count = 5 * 60
 
 $(document).on 'click keydown mousemove', ->
   auth_count = auth_timeout
+
+showSpinner = ()->
+  $spinner = $('#spinner')
+  $spinner.css
+    left: cursorX-$spinner.outerWidth()/2,
+    top: cursorY-$spinner.outerHeight()/2
+  $spinner.fadeIn()
+
+
+hideSpinner = ->
+  $('#spinner').fadeOut()
 
 window.datepicker_dates =
   days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],

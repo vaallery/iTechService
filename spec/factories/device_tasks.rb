@@ -1,14 +1,14 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :device_task, :class => 'DeviceTask' do
-    device
-    task
+
+  factory :device_task do
     cost 100
     done false
-    done_at nil
     comment 'comment'
-    
+    task
+    device { build_stubbed(:device) }
+
     trait :done do
       done true
       done_at Time.now
@@ -17,14 +17,7 @@ FactoryGirl.define do
     trait :important do
       association :task, :important
     end
-    
-    factory :device_task_without_device do
-      device nil
-    end
-    
-    factory :device_task_without_task do
-      task nil
-    end
-    
+
   end
+
 end

@@ -1,7 +1,10 @@
 :plain
   $('#announce_button').replaceWith("#{j header_link_to_announce}");
   $('#coffer_order_link').popover('hide');
-- if @announcements.any?
+- if @announcements.present?
   - @announcements.each do |announcement|
     - publish_to '/announcements' do
       == $("#announcement_#{announcement.id}").remove();
+
+- if @announcement.present?
+  == $("#announcement_#{@announcement.id}").remove();

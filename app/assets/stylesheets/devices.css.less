@@ -23,43 +23,45 @@ form.device_form{
     min-width: 318px;
   }
 
-  #clients_autocomplete_list{
+  #clients_autocomplete_list {
     width: 319px;
   }
 
-  #device_tasks{
-    .task_type{
+  #device_tasks {
+    .task_type {
       width: 220px;
     }
-    .task_cost{
+    .task_cost {
       width: 110px;
     }
-    .task_comment{
+    .task_comment {
       width: 220px;
     }
-    .task_actions{
+    .task_actions {
       width: 30px;
     }
     width: 625px;
   }
 
-  #device_security_code{
+  #device_security_code {
     width: 246px;
   }
 
   #device_imei,
-  #device_serial_number{
+  #device_serial_number {
     width: 266px;
   }
 
-  #device_comment{
+  #device_comment,
+  #device_service_duration,
+  #device_return_at {
     width: 305px;
   }
 
 }
 
-#actual_tasks_table{
-  table.movement_history{
+#actual_tasks_table {
+  table.movement_history {
     &>tbody{
       &>tr{
         &>td{
@@ -147,6 +149,32 @@ form.device_form{
       a{
         text-decoration: none;
       }
+    }
+  }
+}
+
+#device_returning {
+  margin-left: 1px;
+  margin-right: 1px;
+  &.notify {
+    background-color: #ffc7c5;
+    &:hover {
+      background-color: #eeb6b4;
+    }
+  }
+  .popover {
+    max-width: 360px;
+    .popover-content {
+      width: 340px;
+    }
+  }
+}
+
+#returning_devices_list {
+  .returning_device_tooltip+.tooltip>.tooltip-inner {
+    font-size: 14px;
+    strong {
+      white-space: nowrap;
     }
   }
 }

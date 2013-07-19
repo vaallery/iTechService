@@ -98,8 +98,10 @@ ru:
         notify_client: Позвонить клиенту по готовности
         receiver: Приемщик
         replaced: Заменен
+        return_at: "Время возврата"
         security_code: Пароль
         serial_number: Серийный номер
+        service_duration: "Длительность обслуживания"
         status: Статус
         tasks: Список задач
         ticket_number: Номер талона
@@ -299,6 +301,7 @@ ru:
     coffee_order: "Кофе %{content}"
     coffee_order_popover_title: Какой кофе приготовить?
     created: Оповещение создано
+    device_return: "Возврат %{device} в %{time}."
     link: Оповещения
     needs_help: нуждается в помощи!!!
     protector_made: Плёночка наклеена!
@@ -388,8 +391,10 @@ ru:
     moved_by: Переместил(а)
     phone_stolen: 'этот телефон в чёрном списке!!!'
     received: Принят
+    returning_popover_title: "Напоминание о возврате девайсов"
     search_placeholder: Талон или серийный номер
     seach_sales_btn: Искать продажи
+    service_duration_placeholder: "м | ч.м | д.ч.м"
     updated: Девайс изменён
 
   device_types:

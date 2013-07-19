@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe Task do
   
-  it "is valid with valid attributes" do
+  it 'is valid with valid attributes' do
     task = create :task
     task.should be_valid
   end
   
   it "is not valid without 'name'" do
-    task = build :task_without_name
+    task = build :task, name: ''
     task.should_not be_valid
   end
   
@@ -19,9 +19,9 @@ describe Task do
       task.should respond_to :devices
     end
     
-    it "should have a 'user' attribute" do
+    it "should have a 'location' attribute" do
       task = create :task
-      task.should respond_to :user
+      task.should respond_to :location
     end
     
   end

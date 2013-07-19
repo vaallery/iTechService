@@ -150,31 +150,31 @@ module ApplicationHelper
     val
   end
 
-  def attribute_changed_by object, attribute
+  def attribute_changed_by(object, attribute)
     object.history_records
   end
 
-  def human_date date
+  def human_date(date)
     date.present? ? l(date, format: :default) : ''
   end
 
-  def human_datetime date
+  def human_datetime(date)
     date.present? ? l(date, format: :long_d) : ''
   end
 
-  def date_field form, attr
+  def date_field(form, attr)
     content_tag(:div, class: 'input-append') do
       form.text_field(attr, class: 'span5') +
           link_to(glyph(:calendar), '#', class: 'btn datepicker')
     end
   end
 
-  def icon_tag name, type = nil
+  def icon_tag(name, type = nil)
     white_class = type.to_s == 'white' ? 'icon-white' : ''
     "<i class='icon-#{name.to_s} #{white_class}'></i> ".html_safe
   end
 
-  def title_for model_class
+  def title_for(model_class)
     case action_name
       when 'index'
         t '.title'
@@ -241,6 +241,10 @@ module ApplicationHelper
 
   def human_phone(value)
     number_to_phone value, area_code: true
+  end
+
+  def spinner_tag
+    content_tag(:b, glyph('spinner'), id: 'spinner')
   end
 
 end

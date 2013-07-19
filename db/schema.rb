@@ -11,12 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130703062701) do
+ActiveRecord::Schema.define(:version => 20130719095844) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
     t.string   "kind",       :null => false
-    t.integer  "user_id",    :null => false
+    t.integer  "user_id"
     t.boolean  "active"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -24,6 +24,11 @@ ActiveRecord::Schema.define(:version => 20130703062701) do
 
   add_index "announcements", ["kind"], :name => "index_announcements_on_kind"
   add_index "announcements", ["user_id"], :name => "index_announcements_on_user_id"
+
+  create_table "announcements_users", :force => true do |t|
+    t.integer "announcement_id"
+    t.integer "user_id"
+  end
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -77,6 +82,22 @@ ActiveRecord::Schema.define(:version => 20130703062701) do
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "device_tasks", :force => true do |t|
     t.integer  "device_id"
     t.integer  "task_id"
@@ -129,6 +150,7 @@ ActiveRecord::Schema.define(:version => 20130703062701) do
     t.boolean  "replaced",        :default => false
     t.boolean  "notify_client",   :default => false
     t.boolean  "client_notified"
+    t.datetime "return_at"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"

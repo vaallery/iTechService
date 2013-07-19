@@ -90,6 +90,13 @@ jQuery ->
       $('#new_device_popup').fadeOut()
     ), 1000
 
+$(document).on 'click', '.returning_device_tooltip', ->
+  $(this).tooltip()
+  $(this).tooltip('toggle')
+
 PrivatePub.subscribe '/devices/new', (data, channel)->
   if data.device.location_id == $('#profile_link').data('location')
     $('#new_device_popup').fadeIn()
+
+PrivatePub.subscribe '/devices/returning_alert', (data, channel)->
+  $.getScript '/announcements/'+data.announcement_id

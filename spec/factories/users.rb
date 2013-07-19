@@ -2,10 +2,11 @@
 
 FactoryGirl.define do
   factory :user do
-    username "Staff"
-    role "staff"
+    sequence(:username) { |n| "User #{n}" }
+    role 'software'
     password 'password'
-    
+
+
     factory :user_without_username do
       username nil
     end

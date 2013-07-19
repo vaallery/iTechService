@@ -42,6 +42,9 @@
   %dt= Device.human_attribute_name :location
   %dd= @device.location_name
 
+  %dt= Device.human_attribute_name :return_at
+  %dd= human_datetime @device.return_at
+
   - if @device.notify_client?
     %br
     %dt
