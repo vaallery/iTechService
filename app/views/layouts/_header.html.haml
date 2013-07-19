@@ -37,6 +37,7 @@
               %li= link_to t('discounts.link'), discounts_path
               %li= link_to t('settings.link'), settings_path if can? :manage, Setting
         %ul.nav.pull-right
+          = header_link_for_device_returning
           = header_link_for_coffee
           = header_link_to_announce
           = header_link_to_salaries if can? :manage, Salary

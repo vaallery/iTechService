@@ -100,4 +100,6 @@ ItechService::Application.routes.draw do
 
   wiki_root '/wiki'
 
+  match '/delayed_job' => DelayedJobWeb, anchor: false
+
 end

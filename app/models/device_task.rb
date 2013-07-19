@@ -2,15 +2,14 @@ class DeviceTask < ActiveRecord::Base
   belongs_to :device
   belongs_to :task
   has_many :history_records, as: :object
-  attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id
-  validates :task_id, :cost, presence: true
+  attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task
+  validates :task, :cost, presence: true
   validates :cost, numericality: true # except repair
   
   scope :ordered, joins(:task).order("done asc, tasks.priority desc")
   scope :done, where(done: true)
   scope :pending, where(done: false)
-  scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id},
-                                                                tasks: {role: user.role}) }
+  scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
   
   #after_initialize {|dt| dt.cost ||= task_cost; dt.done ||= false}
 
@@ -76,5 +75,16 @@ class DeviceTask < ActiveRecord::Base
   def performer_name
     performer.present? ? performer.short_name : ''
   end
+
+  #def validate_device_tasks
+  #  roles = []
+  #  device_tasks.each do |dt|
+  #    if roles.include? dt.role and dt.role == 'software'
+  #      self.errors.add(:device_tasks, I18n.t('devices.device_tasks_error'))
+  #    else
+  #      roles << dt.role
+  #    end
+  #  end
+  #end
 
 end

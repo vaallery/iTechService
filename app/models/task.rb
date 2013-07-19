@@ -1,4 +1,5 @@
 class Task < ActiveRecord::Base
+
   has_many :device_tasks, dependent: :destroy
   has_many :devices, through: :device_tasks
   belongs_to :location

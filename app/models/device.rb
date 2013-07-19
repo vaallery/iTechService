@@ -9,26 +9,26 @@ class Device < ActiveRecord::Base
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
   has_many :history_records, as: :object, dependent: :destroy
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id,
-                  :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client,
-                  :client_notified
-  accepts_nested_attributes_for :device_tasks
 
-  validates :ticket_number, :client_id, :device_type_id, :location_id, presence: true
-  validates :device_tasks, presence: true
+  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration
+  accepts_nested_attributes_for :device_tasks
+  attr_accessor :service_duration
+
+  validates :ticket_number, :client, :device_type, :location, :device_tasks, :return_at, presence: true
   validates :ticket_number, uniqueness: true
   validates :imei, length: {is: 15}, allow_blank: true
+  #validates :service_duration, format: { with: /[\D.]+\z/ }
   validates_associated :device_tasks
   
   before_validation :generate_ticket_number
   before_validation :validate_security_code
   before_validation :set_user_and_location
   before_validation :validate_location
-  #before_validation :validate_device_tasks
 
   after_save :update_qty_replaced
   after_update :device_update_announce
   after_create :new_device_announce
+  after_create :create_alert
 
   scope :newest, order('created_at desc')
   scope :oldest, order('created_at asc')
@@ -40,6 +40,7 @@ class Device < ActiveRecord::Base
   scope :at_done, where(location_id: Location.done_id)
   scope :at_archive, where(location_id: Location.archive_id)
   scope :unarchived, where('devices.location_id <> ?', Location.archive_id)
+  scope :for_returning, -> { unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
   after_initialize :set_user_and_location
   
@@ -59,8 +60,16 @@ class Device < ActiveRecord::Base
     client.try(:short_name) || '-'
   end
 
+  def client_full_name
+    client.try(:full_name) || '-'
+  end
+
   def client_phone
     client.try(:phone_number) || '-'
+  end
+
+  def client_contact_phone
+    client.try(:contact_phone) || client.try(:phone_number) || '-'
   end
 
   def client_presentation
@@ -142,15 +151,11 @@ class Device < ActiveRecord::Base
   end
 
   def status
-    #done? ? I18n.t('done') : I18n.t('undone')
-    #location.try(:name) == 'Готово' ? I18n.t('done') : I18n.t('undone')
     location.try(:name) == 'Готово' ? 'done' : 'undone'
   end
 
   def status_info
     {
-      #client: client_presentation,
-      #device_type: type_name,
       status: status
     }
   end
@@ -200,6 +205,21 @@ class Device < ActiveRecord::Base
 
   def barcode_num
     '0'*(12-ticket_number.length) + ticket_number
+  end
+
+  def service_duration=(duration)
+    if duration.is_a? String
+      array = duration.split '.'
+      array.map! { |d| d.to_i }
+      now = DateTime.current.change sec: 0
+      self.return_at = now.advance minutes: array[-1], hours: array[-2], days: array[-3]
+    end
+  end
+
+  def returning_alert
+    recipient_ids = User.active.map { |user| user.id }
+    announcement = Announcement.create kind: 'device_return', active: true, recipient_ids: recipient_ids, content: self.id
+    PrivatePub.publish_to '/devices/returning_alert', announcement_id: announcement.id
   end
 
   private
@@ -262,17 +282,18 @@ class Device < ActiveRecord::Base
   end
 
   def device_update_announce
-    PrivatePub.publish_to '/devices/new', device: self if changed_attributes[:location_id].blank? and Rails.env.production?
+    PrivatePub.publish_to '/devices/update', device: self if changed_attributes[:location_id].blank? and Rails.env.production?
   end
 
-  def validate_device_tasks
-    roles = []
-    device_tasks.each do |dt|
-      if roles.include? dt.role and dt.role == 'software'
-        self.errors.add(:device_tasks, I18n.t('devices.device_tasks_error'))
-      else
-        roles << dt.role
-      end
+  def create_alert
+    # service duration in minutes
+    duration = (self.return_at.to_i - self.created_at.to_i)/60
+    if duration > 30
+      alert_times = []
+      alert_times.push self.return_at.advance minutes: -30 if duration < 300
+      alert_times.push self.return_at.advance hours: -1 if duration >= 300
+      alert_times.push self.return_at.advance days: -1 if duration > 1440
+      alert_times.each { |alert_time| self.delay(run_at: alert_time).returning_alert }
     end
   end
 

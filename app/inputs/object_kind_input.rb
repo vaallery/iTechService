@@ -12,8 +12,7 @@ class ObjectKindInput < SimpleForm::Inputs::Base
       end +
       template.content_tag(:ul, id: 'object_kinds_list', class: 'dropdown-menu') do
         Order::OBJECT_KINDS.map do |object_kind|
-          template.content_tag(:li, template.link_to(template.t("orders.object_kinds.#{object_kind}").html_safe, '#',
-                                object_kind: object_kind))
+          template.content_tag(:li, template.link_to(template.t("orders.object_kinds.#{object_kind}").html_safe, '#', object_kind: object_kind))
         end.join.html_safe
       end
     end

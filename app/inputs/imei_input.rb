@@ -4,8 +4,7 @@ class ImeiInput < SimpleForm::Inputs::StringInput
     t = template
     t.content_tag(:div, class: 'input-append') do
       @builder.input_field(attribute_name, class: 'input-large', autocomplete: 'off') +
-      t.link_to(t.icon_tag('search'), '#', id: 'device_imei_search', class: 'btn btn-info', remote: true,
-      title: t.t('devices.seach_sales_btn'))
+      t.link_to(t.icon_tag('search'), '#', id: 'device_imei_search', class: 'btn btn-info', title: t.t('devices.seach_sales_btn'))
     end.html_safe
   end
 

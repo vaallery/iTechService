@@ -8,8 +8,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :registerable, :rememberable,
   # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :token_authenticatable, :timeoutable,
-         :recoverable, :trackable, :validatable
+  devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position
@@ -27,6 +26,7 @@ class User < ActiveRecord::Base
   has_many :infos, inverse_of: :recipient, dependent: :destroy
   has_many :salaries, inverse_of: :user, dependent: :destroy
   has_many :timesheet_days, inverse_of: :user, dependent: :destroy
+  has_and_belongs_to_many :announcements
 
   mount_uploader :photo, PhotoUploader
 
@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
 
   validates :username, :role, presence: true
   validates :password, presence: true, confirmation: true, if: :password_required?
+  validates :role, inclusion: { in: ROLES }
   before_validation :validate_rights_changing
 
   scope :ordered, order('position asc')
@@ -47,8 +48,8 @@ class User < ActiveRecord::Base
   scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
   scope :schedulable, where(schedule: true)
   scope :staff, where('role <> ?', 'admin')
-  scope :fired, where(fired: true)
-  scope :active, where(fired: [false, nil])
+  scope :fired, where(is_fired: true)
+  scope :active, where(is_fired: [false, nil])
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
   acts_as_list
@@ -214,7 +215,7 @@ class User < ActiveRecord::Base
   end
 
   def birthday_announcement
-    announcements.find_or_create_by_kind(kind: 'birthday', active: false)
+    announcements.find_or_create_by_kind(kind: 'birthday', active: false, user: self)
   end
 
   def timeout_in

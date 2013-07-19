@@ -3,6 +3,7 @@
   $('#device_client_id, #sale_client_id').val("#{@client.id}");
   $('#order_customer_id').val("#{@client.id}");
   $('#edit_client_link').attr('href', "#{edit_client_path(@client)}");
+  $('#edit_client_link').attr('data-remote', true);
   $('#clients_autocomplete_list').hide();
   $devices = $('#client_devices');
   if($devices.length > 0){

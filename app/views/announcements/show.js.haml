@@ -1,3 +1,6 @@
 - if @announcement.visible_for? current_user
   :plain
-    $('#announcements').append("#{j render(@announcement)}");
+    $('#announcements').append("#{j(render(@announcement))}");
+  - if @announcement.device_return?
+    :plain
+      $('#device_returning').replaceWith("#{j(header_link_for_device_returning)}");

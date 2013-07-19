@@ -3,34 +3,22 @@
 FactoryGirl.define do
 
   factory :device, aliases: [:valid_device] do
+    ticket_number '1234567890'
+    service_duration '2.30'
     device_type
     client
-    
+    location
+
+    #before(:create) { |device| device.device_tasks.build(attributes_for(:device_task)) }
+    before(:create) { |device| device.device_tasks << create_list(:device_task, 3, device: device) }
+
     factory :device_2 do
       association :device_type, factory: :device_type, name: "iPhone 5 16GB"
     end
-    
-    factory :invalid_device do
-      device_type nil
-      ticket_number nil
-      client nil
-    end
-    
-    factory :device_without_device_type do
-      device_type nil
-    end
-    
-    factory :device_without_client do
-      client nil
-    end
-    
-    factory :device_without_ticket_number do
-      ticket_number ''
-    end
-    
-    factory :device_with_pending_tasks do
+
+    trait :with_tasks do
       ignore do
-        device_tasks_count 5
+        device_tasks_count 3
       end
       
       after(:create) do |device, evaluator|
@@ -38,9 +26,9 @@ FactoryGirl.define do
       end
     end
     
-    factory :device_with_important_tasks do
+    trait :with_important_tasks do
       ignore do
-        device_tasks_count 5
+        device_tasks_count 3
       end
       
       after(:create) do |device, evaluator|
@@ -48,9 +36,9 @@ FactoryGirl.define do
       end
     end
     
-    factory :device_with_done_tasks do
+    trait :with_done_tasks do
       ignore do
-        device_tasks_count 5
+        device_tasks_count 3
       end
       
       after(:create) do |device, evaluator|

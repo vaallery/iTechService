@@ -31,6 +31,8 @@ gem 'paperclip', '3.4.0'
 gem 'backup'
 gem 'barby'
 gem 'acts_as_list'
+gem 'delayed_job_active_record'
+gem 'delayed_job_web'
 
 # Gems used only for assets and not required
 # in production environments by default.
