@@ -215,11 +215,10 @@ class User < ActiveRecord::Base
   end
 
   def birthday_announcement
-    announcements.find_or_create_by_kind(kind: 'birthday', active: false, user: self)
+    self.announcements.find_or_create_by_kind(kind: 'birthday', active: false, user: self)
   end
 
   def timeout_in
-    #(Rails.env.production? and software?) ? 5.minutes : 1.day
     1.day
   end
 
