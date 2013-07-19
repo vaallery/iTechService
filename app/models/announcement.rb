@@ -1,7 +1,7 @@
 class Announcement < ActiveRecord::Base
   KINDS = %w[help coffee for_coffee protector info birthday order_status order_done salary device_return]
 
-  belongs_to :user, reverse_of: :announcements
+  belongs_to :user, inverse_of: :announcements
   has_and_belongs_to_many :recipients, class_name: 'User'#, association_foreign_key: 'recipient_ids'
   attr_accessible :content, :kind, :user_id, :user, :active, :recipient_ids
   validates :kind, presence: true
