@@ -25,7 +25,7 @@ module AnnouncementsHelper
     if announcement.birthday? or announcement.order_status? or announcement.order_done? or announcement.device_return?
       text
     else
-      "[#{l(announcement.created_at, format: :long_d)}] #{announcement.user.short_name}" + text
+      "[#{l(announcement.created_at, format: :long_d)}] #{announcement.user.try(:short_name)}" + text
     end
   end
 
@@ -52,6 +52,7 @@ module AnnouncementsHelper
     if current_user.software?
       coffee_order_form = form_tag(make_announce_path, remote: true, id: 'coffee_order_form', class: 'form-inline') do
         content_tag(:div, class: 'input-append') do
+          hidden_field_tag(:user, current_user) +
           hidden_field_tag(:kind, 'for_coffee') +
           text_field_tag(:content, nil, class: 'input-medium', autofocus: true) +
           submit_tag('OK', class: 'btn btn-primary')
