@@ -38,8 +38,9 @@
 
   - if @device.new_record?
     = f.input :service_duration, input_html: { class: 'input-xlarge', placeholder: t('devices.service_duration_placeholder') }
-  - else
-    = f.input :return_at, as: :string, input_html: {class: 'input-xlarge'}
+  -#- else
+  = f.input :return_at, as: :my_date, input_html: {class: 'datepicker'}
+
 
   -if f.error(:device_tasks).present?
     .control-group.required.error
