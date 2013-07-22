@@ -6,8 +6,9 @@ class Client < ActiveRecord::Base
   has_many :devices, inverse_of: :client, dependent: :destroy
   has_many :orders, as: :customer, dependent: :destroy
   has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
-
+  has_many :history_records, as: :object
   has_many :comments, as: :commentable, dependent: :destroy
+
   attr_accessor :comment
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
 
@@ -56,6 +57,10 @@ class Client < ActiveRecord::Base
 
   def discount_value
     Discount.for_sum purchases_sum
+  end
+
+  def creator
+    self.history_records.first.try :user
   end
 
 end

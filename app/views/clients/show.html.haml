@@ -2,6 +2,11 @@
   %h1
     = link_back_to_index
     = @client.full_name
+  %small
+    = timestamp_string_for @client
+    - if @client.creator.present?
+      = "#{t('attributes.user')}: "
+      = link_to(@client.creator.short_name, user_path(@client.creator))
 
 %dl.dl-horizontal
 
