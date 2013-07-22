@@ -90,6 +90,7 @@ jQuery ->
       $('#new_device_popup').fadeOut()
     ), 1000
 
+
 $(document).on 'click', '.returning_device_tooltip', ->
   $(this).tooltip()
   $(this).tooltip('toggle')

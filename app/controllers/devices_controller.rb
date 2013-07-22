@@ -68,15 +68,15 @@ class DevicesController < ApplicationController
   def create
     @device = Device.new(params[:device])
 
-    respond_to do |format|
-      if @device.save
-        format.html { redirect_to @device, notice: t('devices.created') }
-        format.json { render json: @device, status: :created, location: @device }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @device.errors, status: :unprocessable_entity }
-      end
-    end
+    #respond_to do |format|
+    #  if @device.save
+    #    format.html { redirect_to @device, notice: t('devices.created') }
+    #    format.json { render json: @device, status: :created, location: @device }
+    #  else
+    #    format.html { render action: "new" }
+    #    format.json { render json: @device.errors, status: :unprocessable_entity }
+    #  end
+    #end
   end
 
   def update

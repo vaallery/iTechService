@@ -13,6 +13,7 @@
  *= require jstree/apple/style
  *= require bootstrap-colorpicker
  *= require datepicker
+ *= require bootstrap-datetimepicker.min
  * require jasny-bootstrap/jasny-bootstrap.min
  *= require_tree .
  */
