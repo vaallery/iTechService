@@ -48,7 +48,7 @@ jQuery ->
   $(document).on 'click', '.close_popover_button', (event)->
     $popover = $(this).parents('.popover')
     $popover.prev().popover('hide')
-    false
+    event.preventDefault()
 
 cursorX = $('#spinner').outerWidth() / 2
 cursorY = $('#spinner').outerHeight() / 2
@@ -116,15 +116,14 @@ auth_timeout = auth_count = 5 * 60
 $(document).on 'click keydown mousemove', ->
   auth_count = auth_timeout
 
-showSpinner = ()->
+window.showSpinner = ()->
   $spinner = $('#spinner')
   $spinner.css
     left: cursorX-$spinner.outerWidth()/2,
     top: cursorY-$spinner.outerHeight()/2
   $spinner.fadeIn()
 
-
-hideSpinner = ->
+window.hideSpinner = ->
   $('#spinner').fadeOut()
 
 window.datepicker_dates =

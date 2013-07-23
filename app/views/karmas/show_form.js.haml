@@ -1,15 +1,15 @@
 - if @karma.new_record?
-  == $target = $("#new_#{@karma.good ? 'good' : 'bad'}_karma_for_#{@karma.user_id}");
+  == $owner = $("#new_#{@karma.good ? 'good' : 'bad'}_karma_for_#{@karma.user_id}");
 - else
-  == $target = $("#user_karma_#{@karma.id}");
+  == $owner = $("#user_karma_#{@karma.id}");
 :plain
   close_karma_popovers();
-  $target.popover({
+  $owner.popover({
     html: true,
     placement: 'top',
-    title: "#{j(button_to_close_popover)}",
+    title: "<a href='#' class='close_karma_popover_button close_popover_button' data-owner="+$owner.selector+">&times;<\/a>",
     content: "#{j(render('form'))}",
     container: '#karma_popover_container'
   });
-  $target.popover('show');
+  $owner.popover('show');
   $('#karma_comment').focus();

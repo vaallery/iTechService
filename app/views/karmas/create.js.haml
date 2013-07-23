@@ -1,5 +1,12 @@
 :plain
   close_karma_popovers();
-  $("#user_karmas>.#{@karma.kind}").append("#{j(render(@karma))}");
-  $("#user_karma_#{@karma.id}").tooltip({title: "#{@karma.comment}"});
-  $("#user_row_#{@karma.user_id}").replaceWith("#{j(user_row_tag(@karma.user))}");
+  if($("#user_karmas").length > 0){
+    $("#user_karmas>.#{@karma.kind}").append("#{j(render(@karma))}");
+  }
+  if($("#user_karma_#{@karma.id}").length > 0) {
+    $("#user_karma_#{@karma.id}").tooltip({title: "#{@karma.comment}"});
+  }
+  if($("#user_row_#{@karma.user_id}").length > 0) {
+    $("#user_row_#{@karma.user_id}").replaceWith("#{j(user_row_tag(@karma.user))}");
+  }
+  hideSpinner();
