@@ -1,4 +1,4 @@
-= simple_form_for @client, html: { id: 'client_form', class: 'form-horizontal', remote: true } do |f|
+= simple_form_for @client, remote: true, html: { id: 'client_form', class: 'form-horizontal' } do |f|
   .form-header
     %a.close#close_client_form_button{href: '#'}
       %i.icon-remove-sign

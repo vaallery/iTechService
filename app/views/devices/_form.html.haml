@@ -1,3 +1,4 @@
+#client_form_place.well.well-small
 = simple_form_for @device, html: { class: 'form-horizontal device_form' } do |f|
 
   = f.full_error :ticket_number
@@ -36,9 +37,6 @@
   - else
     = text_field_tag :location, @device.location.try(:full_name), disabled: true, class: 'input-xlarge'
 
-  -#- if @device.new_record?
-  -#  = f.input :service_duration, input_html: { class: 'input-xlarge', placeholder: t('devices.service_duration_placeholder') }
-  -#- else
   = f.input :return_at, as: :my_datetime
 
   -if f.error(:device_tasks).present?
@@ -52,5 +50,3 @@
 
   .form-actions
     = submit_button f
-
-#client_form_place.well.well-small
