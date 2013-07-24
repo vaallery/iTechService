@@ -54,7 +54,7 @@ Ability
       can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement
       can [:cancel_announce, :update], Announcement do |announcement|
-        user.any_admin? or (announcement.user_id == user.id) or ((announcement.order_done? or announcement.order_status?) and (user.media?))
+        user.any_admin? or (announcement.user_id == user.id) or ((announcement.order_done? or announcement.order_status?) and (user.media?)) or (announcement.recipient_ids.include?(user.id))
       end
       can :update, Announcement, user_id: user.id
       can :create, Order
