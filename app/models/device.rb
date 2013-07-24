@@ -14,7 +14,7 @@ class Device < ActiveRecord::Base
   accepts_nested_attributes_for :device_tasks
   attr_accessor :service_duration
 
-  validates :ticket_number, :client, :device_type, :location, :device_tasks, :return_at, presence: true
+  validates :ticket_number, :client, :device_type, :location, :device_tasks, presence: true
   validates :ticket_number, uniqueness: true
   validates :imei, length: {is: 15}, allow_blank: true
   #validates :service_duration, format: { with: /[\D.]+\z/ }
