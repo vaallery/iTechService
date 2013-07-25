@@ -21,7 +21,6 @@
  = require bootstrap-colorpicker
  = require bootstrap-datepicker
  = require bootstrap-datetimepicker.min
- require jasny-bootstrap/jasny-bootstrap.min
  = require_self
  = require_tree .
  */

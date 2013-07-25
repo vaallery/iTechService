@@ -41,6 +41,7 @@
           = header_link_for_coffee
           = header_link_to_announce
           = header_link_to_salaries if can? :manage, Salary
+          = header_karma_button if can? :manage, Karma
           %li= profile_link
           - if Rails.env.development?
             %li.dropdown
