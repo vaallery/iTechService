@@ -34,10 +34,6 @@
         %a#unlock_session= icon_tag(:unlock)
         = current_user.short_name
 
-    - if Rails.env.development?
-      = debug params
-      = debug flash
-    
     /
       Javascripts
       \==================================================
