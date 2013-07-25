@@ -110,7 +110,11 @@ class DashboardController < ApplicationController
     else
       @devices = Device.where location_id: nil
     end
-    @devices = @devices.search(params).oldest.page params[:page]
+    if current_user.able_to? :print_receipt
+      @devices = @devices.search(params).newest.page params[:page]
+    else
+      @devices = @devices.search(params).oldest.page params[:page]
+    end
   end
 
   def load_actual_orders

@@ -6,7 +6,7 @@
 
   %span.help-block
     %small= timestamp_string_for @device
-  -if (@device.user_id == current_user.id) or current_user.any_admin?
+  -if can? :print_receipt, @device
     = link_to icon_tag(:print) + t('tickets.link'), device_path(@device, format: 'pdf', print: true), class: 'btn btn-primary', target: '_blank', id: 'print_device_ticket'
     = link_to icon_tag('eye-open') + t('tickets.link'), device_path(@device, format: 'pdf', part: 1), class: 'btn btn-info pull-right', target: '_blank', id: 'print_device_ticket'
 

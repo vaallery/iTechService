@@ -679,6 +679,7 @@ ru:
     abilities:
       manage_salary: Редактировать зарплату
       manage_wiki: Редактировать Wiki
+      print_receipt: "Печатать чеки"
     index:
       title: Пользователи
     edit:

@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin]
   ROLES_FOR_ADMIN = %w[admin software media technician marketing programmer supervisor manager]
   HELPABLE = %w[software media technician]
-  ABILITIES = %w[manage_wiki manage_salary]
+  ABILITIES = %w[manage_wiki manage_salary print_receipt]
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :registerable, :rememberable,
