@@ -58,12 +58,16 @@ $(document).on 'mousemove', '*', (event)->
   cursorY = event.pageY
 
 $(document).on 'keydown', 'input[type=text]', ->
-  cursorX = this.offsetLeft + $('#spinner').outerWidth() / 2
-  cursorY = this.offsetTop + this.clientHeight / 2
+#  cursorX = this.offsetLeft + $('#spinner').outerWidth() / 2
+  cursorY = $(this).offset().left + $('#spinner').outerWidth() / 2
+#  cursorY = this.offsetTop + this.clientHeight / 2
+  cursorY = $(this).offset().top + this.clientHeight / 2
 
 $(document).on 'keydown', 'textarea', ->
-  cursorX = this.offsetLeft + $('#spinner').outerWidth() / 2
-  cursorY = this.offsetTop + $('#spinner').outerHeight() / 2
+#  cursorX = this.offsetLeft + $('#spinner').outerWidth() / 2
+  cursorX = $(this).offset().left + $('#spinner').outerWidth() / 2
+#  cursorY = this.offsetTop + $('#spinner').outerHeight() / 2
+  cursorY = $(this).offset().top + $('#spinner').outerHeight() / 2
 
 $(document).ajaxSend ->
   showSpinner()

@@ -1,0 +1,26 @@
+- users_list = User.active.map { |user| [user.short_name, user.id] }
+= form_tag(karmas_path, method: :post, remote: true, id: 'header_karma_form') do
+  = select :karma, :user_id, users_list, { include_blank: true }
+  -#= text_field :karma, :user, id: 'header_karma_user', autofocus: true
+  -#= text_field_tag('karma[user]', nil, id: 'header_karma_user', data: { provide: 'typeahead', source: users_list })
+
+  = hidden_field :karma, :good, id: 'header_karma_good'
+  .btn-group(data-toggle='buttons-radio')
+    %button(type='button' class='btn btn-success' id='header_karma_good_true')
+      %i.icon-thumbs-up
+    %button(type='button' class='btn btn-danger' id='header_karma_good_false')
+      %i.icon-thumbs-down
+
+  -#= text_area :karma, :comment, rows: 3
+  = text_area_tag 'karma[comment]', nil, rows: 3
+
+  = button_tag glyph(:save)+' '+t('save'), class: 'btn btn-primary'
+
+-#:javascript
+-#  $('#header_karma_user').typeahead({
+-#    source: function(query, process){
+-#      return $.get('/users', {name: query}, function(data){
+-#        return process(data.users);
+-#      }, 'json');
+-#    }
+-#  });

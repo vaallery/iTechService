@@ -3,11 +3,11 @@ class UsersController < ApplicationController
   before_filter :load_infos, only: [:show, :profile]
 
   def index
-    @users = User.order('id asc').page(params[:page]).per(50)
+    @users = User.search(params).order('id asc').page(params[:page]).per(50)
 
     respond_to do |format|
       format.html
-      format.json { render json: @users }
+      format.json { render json: {users: @users.map { |u| u.short_name }} }
     end
   end
 

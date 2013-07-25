@@ -100,7 +100,7 @@ class Device < ActiveRecord::Base
     !done?
   end
   
-  def self.search params
+  def self.search(params)
     devices = Device.includes :device_tasks, :tasks
     
     unless (status_q = params[:status]).blank?

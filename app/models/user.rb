@@ -122,12 +122,12 @@ class User < ActiveRecord::Base
     has_role? %w[admin superadmin]
   end
 
-  def self.search search
-    if search
-      where "username LIKE ?", "%#{search}%"
-    else
-      scoped
+  def self.search(params)
+    users = User.scoped
+    unless (q_name = params[:name]).blank?
+      users = users.where 'username LIKE :q or name LIKE :q or surname LIKE :q', q: "%#{q_name}%"
     end
+    users
   end
 
   def full_name
