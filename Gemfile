@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 #source 'http://gems.rubyforge.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '3.2.14'
 
 gem 'pg', '~> 0.14.1'
 gem 'thin', '~> 1.5.0'
