@@ -6,7 +6,9 @@
     - @users.sort_by{|u|u.rating}.reverse.each do |user|
       %tr
         %td= user.rating
-        %td= link_to user.short_name, user_path(user)
+        %td
+          = link_to user.short_name, user_path(user)
+          = karma_tag(user)
         %td
           - user.karmas.good.each do |karma|
             = render karma
