@@ -1,8 +1,10 @@
 .page-header
   %h1
     = auto_title
-    %small= link_to t('users.schedule'), schedule_users_path
-    %small= link_to t('users.timesheet'), timesheet_days_path
+    - if can? :manage, User
+      %small= link_to t('users.schedule'), schedule_users_path
+    - if can? :manage, TimesheetDay
+      %small= link_to t('users.timesheet'), timesheet_days_path
     %br
     = link_to_new User
 #karma_popover_container

@@ -680,6 +680,7 @@ ru:
       manage_salary: Редактировать зарплату
       manage_wiki: Редактировать Wiki
       print_receipt: "Печатать чеки"
+      manage_timesheet: "Редактировать табель"
     index:
       title: Пользователи
     edit:

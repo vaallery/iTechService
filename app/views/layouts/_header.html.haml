@@ -23,6 +23,7 @@
               %li= link_to t('users.rating'), rating_users_path
               - if can? :manage, User
                 %li= link_to t('users.schedule'), schedule_users_path
+              - if can? :manage, TimesheetDay
                 %li= link_to t('users.timesheet'), timesheet_days_path
               %li= link_to t('salaries.index.title'), salaries_path if can? :manage, Salary
               %li= link_to t('announcements.link'), announcements_path if current_user.any_admin?
