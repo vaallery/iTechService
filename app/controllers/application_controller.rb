@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   def check_birthdays
     if current_user.any_admin?
-      User.find_each do |user|
+      User.active.find_each do |user|
         user.birthday_announcement.update_attributes active: user.upcoming_birthday?
       end
     end

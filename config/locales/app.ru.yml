@@ -248,6 +248,7 @@ ru:
         encrypted_password: encrypted_password  #g
         hiring_date: Дата приема на работу
         history_records: history_records  #g
+        is_fired: Уволен
         job_title: "Должность"
         karmas: Карма
         last_sign_in_at: Время предыдущей авторизации
@@ -699,6 +700,7 @@ ru:
       technician: Технарь
     account: Учётка
     add_karma: Карма
+    all: Все
     author: Автор
     comment: Комментарий
     created: Пользователь создан

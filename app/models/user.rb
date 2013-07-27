@@ -123,7 +123,7 @@ class User < ActiveRecord::Base
   end
 
   def self.search(params)
-    users = User.scoped
+    users = params[:all].present? ? User.scoped : User.active
     unless (q_name = params[:name]).blank?
       users = users.where 'username LIKE :q or name LIKE :q or surname LIKE :q', q: "%#{q_name}%"
     end
@@ -252,7 +252,7 @@ class User < ActiveRecord::Base
 
   def self.oncoming_salary
     today = Date.current
-    User.all.keep_if do |user|
+    User.active.all.keep_if do |user|
       if user.hiring_date.present?
         upcoming_salary_date = user.upcoming_salary_date
         upcoming_salary_date.between?(today, 2.days.from_now.end_of_day.to_datetime) and
