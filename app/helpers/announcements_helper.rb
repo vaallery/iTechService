@@ -16,7 +16,9 @@ module AnnouncementsHelper
       when 'device_return'
         if (device = announcement.device).present?
           time = l(device.return_at, format: device.return_at.today? ? :time : :short_r)
-          text = t('announcements.device_return', device: device.type_name, time: time)
+          dist = (device.return_at - Time.current) / 60
+          term = dist > 0 ? humanize_duration(dist) : humanize_duration(0)
+          text = t('announcements.device_return', time: time, device: device.type_name, ticket: device.ticket_number, term: term)
         else
           text = ''
         end
