@@ -3,7 +3,7 @@ class TimesheetDaysController < ApplicationController
   skip_load_resource only: [:index, :new]
 
   def index
-    @users = User.ordered
+    @users = User.schedulable.ordered
     @timesheet_date = (params[:date].present? ? params[:date].to_date : Date.current).beginning_of_month
 
     respond_to do |format|
