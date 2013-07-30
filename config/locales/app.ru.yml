@@ -297,6 +297,7 @@ ru:
     new:
       title: Новое оповещение
     birthday: "%{time} день рождения у %{user}"
+    close_all: "Закрыть все оповещения"
     close_orders: Закрыть заказы
     coffee_made: Кофе готов!
     coffee_order: "Кофе %{content}"

@@ -1,4 +1,9 @@
 = content_for :header do
+  #current_user_row
+    %span.user_name= profile_link
+    - unless current_user.any_admin?
+      %span= link_to karma_tag(current_user), rating_users_path
+
   #navbar.navbar.navbar-static-top
     .navbar-inner
       .container-fluid
@@ -43,12 +48,12 @@
           = header_link_to_announce
           = header_link_to_salaries if can? :manage, Salary
           = header_karma_button if can? :manage, Karma
-          %li= profile_link
+          = header_link_to_close_announcements
+          %li= link_to icon_tag(:lock), destroy_user_session_path, method: :delete, remote: true, id: 'lock_session'
           - if Rails.env.development?
             %li.dropdown
               = link_to caret_tag, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown'
               %ul.dropdown-menu
                 - User.all.map do |user|
                   %li= link_to user.username, become_path(user)
-          %li= link_to icon_tag(:lock), destroy_user_session_path, method: :delete, remote: true, id: 'lock_session'
           %li= link_to icon_tag(:signout), destroy_user_session_path, method: :delete

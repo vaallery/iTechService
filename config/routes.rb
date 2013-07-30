@@ -69,9 +69,13 @@ ItechService::Application.routes.draw do
 
   resources :prices
 
-  resources :announcements
+  resources :announcements do
+    post :close, on: :member
+    post :close_all, on: :collection
+  end
   match 'make_announce' => 'announcements#make_announce', via: :post
   match 'cancel_announce' => 'announcements#cancel_announce', via: :post
+  #match 'close_all' => 'announcements#close_all', via: :post
 
   resources :comments
 

@@ -79,16 +79,24 @@ class AnnouncementsController < ApplicationController
   end
 
   def cancel_announce
-    if (params[:kind] == 'device_return')
-      @announcement = Announcement.find params[:id]
-      user = User.find params[:user_id]
-      @announcement.exclude_recipient user
-    else
-      if (@announcements = current_user.announcements.active.where(kind: params[:kind])).any?
-        @announcements.each do |announcement|
-          announcement.update_attributes active: false
-        end
+    if (@announcements = current_user.announcements.active.where(kind: params[:kind])).any?
+      @announcements.find_each do |announcement|
+        announcement.update_attributes active: false
       end
+    end
+  end
+
+  def close
+    @announcement = Announcement.find params[:id]
+    @announcement.exclude_recipient current_user
+  end
+
+  def close_all
+    user = current_user
+    user_announcements = user.addressed_announcements
+    @announcement_ids = user_announcements.map { |a| a.id }
+    user_announcements.find_each do |announcement|
+      announcement.exclude_recipient(user)
     end
   end
 

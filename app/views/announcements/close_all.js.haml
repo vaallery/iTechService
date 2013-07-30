@@ -1,0 +1,3 @@
+- if @announcement_ids.present?
+  - @announcement_ids.each do |id|
+    == $("#announcement_#{id}").remove();

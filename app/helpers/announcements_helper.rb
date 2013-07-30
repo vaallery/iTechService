@@ -69,4 +69,10 @@ module AnnouncementsHelper
     end
   end
 
+  def header_link_to_close_announcements
+    content_tag :li do
+      link_to glyph('remove-sign'), close_all_announcements_path, method: :post, remote: true, id: 'close_all_announcements_link', rel: 'tooltip', data: { title: t('announcements.close_all'), placement: 'bottom' }
+    end
+  end
+
 end

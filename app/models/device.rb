@@ -69,7 +69,7 @@ class Device < ActiveRecord::Base
   end
 
   def client_contact_phone
-    client.try(:contact_phone) || client.try(:phone_number) || '-'
+    client.contact_phone.blank? ? client.full_phone_number : client.contact_phone
   end
 
   def client_presentation

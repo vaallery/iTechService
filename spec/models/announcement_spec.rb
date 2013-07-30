@@ -26,6 +26,20 @@ describe Announcement do
       expect(announcement.active).to be false
     end
 
+    it 'should be visible for recipient' do
+      recipient = create :user
+      announcement = create :announcement, recipient_ids: [recipient.id]
+      expect(announcement.visible_for?(recipient)).to be true
+    end
+
+    it "should be visible for other softers if its kind is 'help'" do
+      user1 = create :user, role: 'software'
+      user2 = create :user, role: 'software'
+      announcement = create :announcement, kind: 'help', user: user1, recipient_ids: [user2.id]
+      expect(announcement.visible_for?(user1)).to be false
+      expect(announcement.visible_for?(user2)).to be true
+    end
+
   end
 
 end

@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   has_many :infos, inverse_of: :recipient, dependent: :destroy
   has_many :salaries, inverse_of: :user, dependent: :destroy
   has_many :timesheet_days, inverse_of: :user, dependent: :destroy
-  has_and_belongs_to_many :announcements
+  has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users'
 
   mount_uploader :photo, PhotoUploader
 
@@ -42,7 +42,15 @@ class User < ActiveRecord::Base
   before_validation :validate_rights_changing
 
   scope :ordered, order('position asc')
+  scope :any_admin, where(role: %w[admin superadmin])
   scope :superadmins, where(role: 'superadmin')
+  scope :software, where(role: 'software')
+  scope :media, where(role: 'media')
+  scope :technician, where(role: 'technician')
+  scope :marketing, where(role: 'marketing')
+  scope :programmer, where(role: 'programmer')
+  scope :supervisor, where(role: 'supervisor')
+  scope :manager, where(role: 'manager')
   scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
   scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
   scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})

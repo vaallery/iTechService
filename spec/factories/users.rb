@@ -16,13 +16,40 @@ FactoryGirl.define do
     end
   end
   
-  factory :admin, class: User do
+  trait :admin do
     username 'Admin'
     role 'admin'
   end
-  
-  factory :technician, class: User do
-    username 'Technician'
+
+  trait :software do
+    role 'software'
+  end
+
+  trait :media do
+    role 'media'
+  end
+
+  trait :technician do
     role 'technician'
+  end
+
+  trait :marketing do
+    role 'marketing'
+  end
+
+  trait :programmer do
+    role 'programmer'
+  end
+
+  trait :supervisor do
+    role 'supervisor'
+  end
+
+  trait :manager do
+    role 'manager'
+  end
+
+  trait :superadmin do
+    role 'superadmin'
   end
 end

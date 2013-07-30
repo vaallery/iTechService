@@ -53,10 +53,13 @@ Ability
       end
       can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement
-      can [:cancel_announce, :update], Announcement do |announcement|
-        user.any_admin? or (announcement.user_id == user.id) or ((announcement.order_done? or announcement.order_status?) and (user.media?)) or (announcement.recipient_ids.include?(user.id))
+      can :close_all, Announcement
+      can :close, Announcement do |announcement|
+        announcement.recipient_ids.include?(user.id)
       end
-      can :update, Announcement, user_id: user.id
+      can [:cancel_announce, :update], Announcement do |announcement|
+        user.any_admin? or (announcement.user_id == user.id) or ((announcement.order_done? or announcement.order_status?) and (user.media?))
+      end
       can :create, Order
       can :destroy, Order, user_id: user.id
       can :update, Device#, location_id: user.location_id
