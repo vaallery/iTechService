@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   #before_filter :check_birthdays, if: :user_signed_in?
   before_filter :load_important_info, if: :user_signed_in?
   before_filter :load_personal_infos, if: :user_signed_in?
+  before_filter :load_announcements, if: :user_signed_in?
   layout 'staff'
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -34,6 +35,12 @@ class ApplicationController < ActionController::Base
 
   def load_personal_infos
     @personal_infos = Info.unarchived.addressed_to current_user
+  end
+
+  def load_announcements
+    @announcements = Announcement.active.keep_if do |announcement|
+      announcement.visible_for? current_user
+    end
   end
 
 end

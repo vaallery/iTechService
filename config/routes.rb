@@ -33,7 +33,7 @@ ItechService::Application.routes.draw do
     get :check_phone_number, on: :collection
     get :questionnaire, on: :collection
     get :autocomplete, on: :collection
-    get :select2, on: :member
+    get :select, on: :member
   end
 
   resources :device_types, except: [:new] do

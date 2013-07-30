@@ -68,29 +68,21 @@ class Announcement < ActiveRecord::Base
   end
 
   def visible_for?(user)
-    recipient_ids.include?(user.id) ||
-      case kind
-        when 'help' then (user_id != user.id and user.software?)
-        when 'coffee' then user.software?
-        when 'for_coffee' then user.media?
-        when 'protector' then user.software?
-        when 'birthday' then user.any_admin?
-        when 'order_status' then user_id == user.id
-        when 'order_done' then user_id == user.id or user.media?
-      end
+    if self.device_return? and user.technician?
+      self.device.location.is_repair?
+    else
+      recipient_ids.include?(user.id) ||
+          case kind
+            when 'help' then (user_id != user.id and user.software?)
+            when 'coffee' then user.software?
+            when 'for_coffee' then user.media?
+            when 'protector' then user.software?
+            when 'birthday' then user.any_admin?
+            when 'order_status' then user_id == user.id
+            when 'order_done' then user_id == user.id or user.media?
+          end
+    end
   end
-
-  #def visible_for?(user)
-  #  return recipient_ids.include?(user.id) or (user_id != user.id and user.software?) if help?
-  #  return recipient_ids.include?(user.id) or user.software? if coffee?
-  #  return recipient_ids.include?(user.id) or user.media? if for_coffee?
-  #  return recipient_ids.include?(user.id) or user.software? if protector?
-  #  return recipient_ids.include?(user.id) or user.admin? if birthday?
-  #  return recipient_ids.include?(user.id) or user_id == user.id if order_status?
-  #  return recipient_ids.include?(user.id) or (user_id == user.id or user.media?) if order_done?
-  #  return recipient_ids.include?(user.id) if device_return?
-  #  false
-  #end
 
   def exclude_recipient(recipient)
     self.recipients.destroy recipient

@@ -38,9 +38,10 @@ class Device < ActiveRecord::Base
   scope :replaced, where(replaced: true)
   scope :located_at, lambda {|location| where(location_id: location.id)}
   scope :at_done, where(location_id: Location.done_id)
+  scope :not_at_done, where('devices.location_id <> ?', Location.done_id)
   scope :at_archive, where(location_id: Location.archive_id)
   scope :unarchived, where('devices.location_id <> ?', Location.archive_id)
-  scope :for_returning, -> { unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
+  scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
   after_initialize :set_user_and_location
   

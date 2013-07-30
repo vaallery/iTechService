@@ -303,7 +303,7 @@ ru:
     coffee_order: "Кофе %{content}"
     coffee_order_popover_title: Какой кофе приготовить?
     created: Оповещение создано
-    device_return: "Возврат %{device} в %{time}."
+    device_return: "Обещали вернуть в %{time} %{device} %{ticket} осталось %{term}."
     link: Оповещения
     needs_help: нуждается в помощи!!!
     protector_made: Плёночка наклеена!
