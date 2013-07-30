@@ -1,7 +1,7 @@
 class ClientsController < ApplicationController
   load_and_authorize_resource
   skip_load_resource only: :index
-  skip_authorize_resource only: [:check_phone_number, :questionnaire, :autocomplete, :select2]
+  skip_authorize_resource only: [:check_phone_number, :questionnaire, :autocomplete, :select]
 
   def index
     @clients = Client.search params
