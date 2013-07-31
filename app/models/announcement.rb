@@ -80,6 +80,7 @@ class Announcement < ActiveRecord::Base
             when 'birthday' then user.any_admin?
             when 'order_status' then user_id == user.id
             when 'order_done' then user_id == user.id or user.media?
+            when 'device_return' then !(self.device.at_done? or self.device.in_archive?)
           end
     end
   end
