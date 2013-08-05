@@ -39,3 +39,4 @@ Gemfile.lock
 # Ignore application configuration
 /config/application.yml
 /coverage/*
+/projectFilesBackup
