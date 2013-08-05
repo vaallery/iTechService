@@ -226,8 +226,8 @@ module ApplicationHelper
   end
 
   def humanize_duration(val)
-    h = val/60
-    m = val%60
+    h = (val/60).round
+    m = (val%60).round
     h > 0 ? t('hour_min', hour: h, min: m) : t('min', min: m)
   end
 
