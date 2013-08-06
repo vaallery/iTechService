@@ -116,7 +116,7 @@ class Announcement < ActiveRecord::Base
       else
         recipients = []
     end
-    self.recipient_ids = recipients.map { |r| r.id } if recipients.any?
+    self.recipient_ids = recipients.all.map { |r| r.id } if recipients.any?
   end
 
 end
