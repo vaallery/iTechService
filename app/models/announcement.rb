@@ -106,10 +106,10 @@ class Announcement < ActiveRecord::Base
       when 'birthday'
         recipients = User.any_admin
       when 'order_status'
-        recipients = User.where(id: self.user_id)
+        recipients = User.where(id: self.user_id) if self.user_id.present?
       when 'order_done'
         recipients = User.media
-        recipients << User.where(id: self.user_id)
+        recipients << User.where(id: self.user_id) if self.user_id.present?
       when 'device_return'
         recipients = User.software.media
         recipients << User.technician if self.device.present? and self.device.location.is_repair?
