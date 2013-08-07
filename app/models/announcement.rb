@@ -96,27 +96,27 @@ class Announcement < ActiveRecord::Base
   def define_recipients
     case self.kind
       when 'help'
-        recipients = User.software
+        recipients = User.software.to_a
       when 'coffee'
-        recipients = User.software
+        recipients = User.software.to_a
       when 'for_coffee'
-        recipients = User.media
+        recipients = User.media.to_a
       when 'protector'
-        recipients = User.software
+        recipients = User.software.to_a
       when 'birthday'
-        recipients = User.any_admin
+        recipients = User.any_admin.to_a
       when 'order_status'
-        recipients = User.where(id: self.user_id) if self.user_id.present?
+        recipients = User.where(id: self.user_id).to_a if self.user_id.present?
       when 'order_done'
-        recipients = User.media
-        recipients << User.where(id: self.user_id) if self.user_id.present?
+        recipients = User.media.to_a
+        recipients = recipients + User.where(id: self.user_id).to_a if self.user_id.present?
       when 'device_return'
-        recipients = User.software.media
-        recipients << User.technician if self.device.present? and self.device.location.is_repair?
+        recipients = User.software.media.to_a
+        recipients = recipients + User.technician.to_a if self.device.present? and self.device.location.is_repair?
       else
         recipients = []
     end
-    self.recipient_ids = recipients.all.map { |r| r.id } if recipients.any?
+    self.recipient_ids = recipients.uniq.map { |r| r.id } if recipients.any?
   end
 
 end

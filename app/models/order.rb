@@ -3,8 +3,7 @@ class Order < ActiveRecord::Base
   belongs_to :customer, polymorphic: true
   belongs_to :user
   has_many :history_records, as: :object
-  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id,
-                  :user_comment
+  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment
   validates :customer_id, :object, :object_kind, presence: true
   before_validation :generate_number
 
@@ -115,7 +114,7 @@ class Order < ActiveRecord::Base
 
   def make_announcement
     unless changed_attributes[:status].present?
-      if (announcement = Announcement.create(user_id: user_id, kind: (done? ? 'order_done' : 'order_status'), active: true, content: "#{I18n.t('orders.order_num', num: number)} #{I18n.t('orders.statuses.'+status)}")).present?
+      if (announcement = Announcement.create(user_id: self.user_id, kind: (done? ? 'order_done' : 'order_status'), active: true, content: "#{I18n.t('orders.order_num', num: number)} #{I18n.t('orders.statuses.'+status)}")).present?
         PrivatePub.publish_to '/announcements', "$.getScript('/announcements/#{announcement.id}');"
       end
     end
