@@ -430,7 +430,7 @@ DEPENDENCIES
   taps
   therubyracer
   thin (~> 1.5.0)
-  twitter-bootstrap-rails (~> 2.2.0)
+  twitter-bootstrap-rails (~> 2.2.7)
   uglifier (>= 1.0.3)
   unicorn
   uuidtools (~> 2.1.3)

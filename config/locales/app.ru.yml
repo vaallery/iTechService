@@ -15,6 +15,8 @@ ru:
       gift_certificate: Подарочный сертификат
       history_record: history_record
       info: Новость
+      installment_plan: Рассрочка
+      installment: Взнос
       karma: Карма
       location: Локация
       object: Обьект
@@ -160,6 +162,16 @@ ru:
         recipient_id: :activerecord.attributes.info.recipient
         title: Заголовок
 
+      installment_plan:
+        cost: Стоимость
+        issued_at: Выдана
+
+      installment:
+        installment_plan: :activerecord.models.installment_plan
+        installment_plan_id: :activerecord.models.installment_plan
+        paid_at: Внесен
+        value: Сумма
+
       karma:
         good: good  #g
         user: :activerecord.models.user  #g
@@ -190,6 +202,7 @@ ru:
 
       salary:
         amount: Сумма
+        is_prepayment: Аванс
         issued_at: Выдана
         user: Сотрудник
 
@@ -283,6 +296,7 @@ ru:
     imei: IMEI
     name: Название
     number: Номер
+    object: Объект
     serial_number: Серийный номер
     status: Статус
     updated_at: Время обновления
@@ -566,7 +580,7 @@ ru:
     received: Принято
     received_done: готовы
     received_archived: выданы
-    salaries_report: Отчет по зарплате
+    salary_report: Отчет по зарплате
     sum: Сумма
     tasks_durations_report: Длительность выполнения задач
     tasks_report: Выполненные задачи

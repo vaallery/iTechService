@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position
+  attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
 
   belongs_to :location
   has_many :history_records, as: :object
@@ -27,14 +27,19 @@ class User < ActiveRecord::Base
   has_many :salaries, inverse_of: :user, dependent: :destroy
   has_many :timesheet_days, inverse_of: :user, dependent: :destroy
   has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users'
+  has_many :installment_plans, inverse_of: :user, dependent: :destroy
+  #has_many :installments, through: :installment_plans
 
   mount_uploader :photo, PhotoUploader
 
   attr_accessor :login
+  attr_accessor :installment
   cattr_accessor :current
 
   accepts_nested_attributes_for :schedule_days, :duty_days, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :karmas, allow_destroy: true
+  accepts_nested_attributes_for :salaries, reject_if: lambda { |attrs| attrs['amount'].blank? or attrs['issued_at'].blank? }
+  accepts_nested_attributes_for :installment_plans, reject_if: lambda { |attrs| (attrs['object'].blank? or attrs['cost'].blank? or attrs['issued_at'].blank?) and (attrs['installments_attributes'].blank?) }
 
   validates :username, :role, presence: true
   validates :password, presence: true, confirmation: true, if: :password_required?
@@ -287,6 +292,18 @@ class User < ActiveRecord::Base
 
   def latenesses_in(date)
     timesheet_days.in_period(date).lateness.count
+  end
+
+  def installment=(params)
+    if params[:installment_plan_id].present? and params[:value].present? and params[:paid_at].present?
+      if (installment_plan = self.installment_plans.find(params[:installment_plan_id]))
+        installment_plan.installments.create value: params[:value], paid_at: params[:paid_at]
+      end
+    end
+  end
+
+  def installments
+    Installment.where installment_plan_id: self.installment_plan_ids
   end
 
   private

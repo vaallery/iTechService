@@ -97,7 +97,7 @@ module ApplicationHelper
       name = options[:name] || t("helpers.button.#{model_name}.#{action}", model: human_model_name, default: t(action, default: 'Save'))
     end
     button_tag options do
-      icon_tag(:save) + name
+      glyph(:save) + ' ' + name
     end
   end
 
@@ -223,6 +223,10 @@ module ApplicationHelper
 
   def button_to_close_popover
     link_to "&times;".html_safe, '#', class: 'close_popover_button'
+  end
+
+  def button_to_close_modal
+    content_tag(:a, glyph('remove-sign'), class: 'close_modal_button', 'data-dismiss' => 'modal', href: '#')
   end
 
   def humanize_duration(val)

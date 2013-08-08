@@ -1,5 +1,11 @@
 ItechService::Application.routes.draw do
 
+  resources :installments
+
+
+  resources :installment_plans
+
+
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -22,6 +28,7 @@ ItechService::Application.routes.draw do
     get :staff_duty_schedule, on: :collection
     get :rating, on: :collection
     get :actions, on: :member
+    get :finance, on: :member
     post :create_duty_day, on: :collection
     post :destroy_duty_day, on: :collection
   end

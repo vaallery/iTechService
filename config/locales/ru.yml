@@ -33,6 +33,7 @@ ru:
     formats:
       default: ! '%d.%m.%Y'
       long: ! '%d %B %Y г.'
+      long_d: ! '%a, %d %b %Y'
       short: ! '%d %b'
     month_names:
     -
@@ -262,6 +263,7 @@ ru:
     formats:
       date: ! '%d.%m.%Y'
       date_short: ! '%d.%m.%y'
+      date_long: ! '%a, %d %b %Y'
       default: ! '%a, %d %b %Y, %H:%M:%S %z'
       long: ! '%d %B %Y, %H:%M'
       long_d: ! '%d.%m.%Y %H:%M'

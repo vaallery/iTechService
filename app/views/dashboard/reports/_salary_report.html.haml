@@ -1,0 +1,35 @@
+%table#salaries_report.table.table-bordered.table-hover
+  %caption
+    %h4= t 'reports.salary_report'
+  %thead
+    %tr
+      %th= t 'activerecord.models.user'
+      - 5.downto(0) do |n|
+        %th= t('date.month_names_single')[n.months.ago.month]
+  %tbody
+    - @report[:salary].each do |record|
+
+      %tr
+        %td
+          %strong= link_to record[:user_name], user_path(record[:user_id]), target: '_blank'
+        - 0.upto(5) do |n|
+          %td
+            = record[:salaries][n][:amount]
+
+      %tr
+        %td= Salary.human_attribute_name :is_prepayment
+        - 0.upto(5) do |n|
+          %td
+            - if record[:prepayments][n][:details].any?
+              = link_to record[:prepayments][n][:amount], '#', rel: 'popover', data: { html: true, placement: 'top', content: prepayment_details_content(record[:prepayments][n][:details]) }
+            - else
+              = record[:prepayments][n][:amount]
+
+      %tr
+        %td= t 'activerecord.models.installment_plan'
+        - 0.upto(5) do |n|
+          %td
+            - if record[:installments][n][:details].any?
+              = link_to record[:installments][n][:sum], '#', rel: 'popover', data: { html: true, placement: 'top', content: installment_details_content(record[:installments][n][:details]) }
+            - else
+              = record[:installments][n][:sum]

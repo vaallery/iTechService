@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @installment_plan.user
+%p
+  %b Object:
+  = @installment_plan.object
+%p
+  %b Cost:
+  = @installment_plan.cost
+%p
+  %b Issued at:
+  = @installment_plan.issued_at
+
+= link_to 'Edit', edit_installment_plan_path(@installment_plan)
+\|
+= link_to 'Back', installment_plans_path

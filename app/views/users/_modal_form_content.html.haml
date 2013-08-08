@@ -1,0 +1,102 @@
+= form_for @user, remote: true, html: { class: 'form-inline user_modal_form' } do |f|
+  .modal-header
+    = button_to_close_modal
+    %h3= @user.short_name
+
+  .modal-body
+
+    %ul.nav.nav-tabs
+      %li.active= link_to t('activerecord.models.salary'), '#salary_tab', 'data-toggle' => 'tab'
+      %li= link_to t('activerecord.models.installment'), '#installment_tab', 'data-toggle' => 'tab'
+      %li= link_to t('activerecord.models.installment_plan'), '#installment_plan_tab', 'data-toggle' => 'tab'
+
+    .tab-content
+
+      #salary_tab.tab-pane.active
+        %label.checkbox
+          = check_box_tag 'user[salaries_attributes][0][is_prepayment]'
+          = Salary.human_attribute_name(:is_prepayment)
+        = text_field_tag 'user[salaries_attributes][0][amount]', nil, placeholder: Salary.human_attribute_name(:amount), class: 'input-medium'
+        .input-prepend
+          %span.add-on= glyph :calendar
+          = text_field_tag 'user[salaries_attributes][0][issued_at]', Time.current.strftime('%d.%m.%Y'), class: 'datepicker input-medium', data: { 'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1, 'date-viewmode' => 'days' }
+        = text_area_tag 'user[salaries_attributes][0][comment]', nil, id: 'user_salary_comment', placeholder: Salary.human_attribute_name(:comment), rows: 3
+
+        %hr
+
+        %table#user_salaries_table.table.table-condensed
+          %caption= t 'activerecord.models.salary'
+          %thead
+            %tr
+              - 5.downto(0) do |n|
+                %th= t('date.month_names_single')[n.months.ago.month]
+          %tbody
+            %tr
+              - 5.downto(0) do |n|
+                - date = n.months.ago
+                - period = date.beginning_of_month..date.end_of_month
+                - month_salaries = @salaries.salary.issued_at period
+                %td
+                  - if month_salaries.many?
+                    %strong= month_salaries.sum(:amount)
+                    - month_salaries.each do |salary|
+                      = link_to "#{salary.amount} [#{salary.issued_at.day}]", salary_path(salary), target: '_blank', title: l(salary.issued_at, format: :date_long)
+                  - elsif month_salaries.any?
+                    - salary = month_salaries.first
+                    %strong= link_to "#{salary.amount} [#{salary.issued_at.day}]", salary_path(salary), target: '_blank', title: l(salary.issued_at, format: :date_long)
+
+        %table#user_prepayments_table.table.table-condensed
+          %caption= Salary.human_attribute_name :is_prepayment
+          %thead
+            %tr
+              - 5.downto(0) do |n|
+                %th= t('date.month_names_single')[n.months.ago.month]
+          %tbody
+            %tr
+              - 5.downto(0) do |n|
+                - date = n.months.ago
+                - period = date.beginning_of_month..date.end_of_month
+                - month_prepayments = @salaries.prepayment.issued_at period
+                %td
+                  - if month_prepayments.many?
+                    %strong.text-info= month_prepayments.sum(:amount)
+                    - month_prepayments.each do |prepayment|
+                      = link_to "#{prepayment.amount} [#{prepayment.issued_at.day}]", salary_path(prepayment), target: '_blank', title: l(prepayment.issued_at, format: :date_long)
+                  - elsif month_prepayments.any?
+                    - prepayment = month_prepayments.first
+                    %strong= link_to "#{prepayment.amount} [#{prepayment.issued_at.day}]", salary_path(prepayment), target: '_blank', title: l(prepayment.issued_at, format: :date_long)
+
+      #installment_tab.tab-pane
+        = select_tag 'user[installment][installment_plan_id]', options_from_collection_for_select(@user.installment_plans.not_closed, :id, :presentation), include_blank: false
+        %br
+        = text_field_tag 'user[installment][value]', nil, placeholder: Installment.human_attribute_name(:value), class: 'input-small'
+        .input-prepend
+          %span.add-on= glyph :calendar
+          = text_field_tag 'user[installment][paid_at]', Time.current.strftime('%d.%m.%Y'), class: 'datepicker input-medium', data: { 'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1, 'date-viewmode' => 'days' }
+
+        %hr
+
+        %table#user_installments_table.table.table-condensed
+          %thead
+            %tr
+              - 5.downto(0) do |n|
+                %th= t('date.month_names_single')[n.months.ago.month]
+          %tbody
+            %tr
+              - 5.downto(0) do |n|
+                - date = n.months.ago
+                - period = date.beginning_of_month..date.end_of_month
+                - month_installments = @installments.paid_at(period).order('paid_at desc')
+                %td
+                  %strong.text-info= month_installments.sum(:value)
+                  - month_installments.each do |installment|
+                    %span.text-warning{title: "#{l(installment.paid_at, format: :long_d)} - #{installment.installment_plan.presentation}"}= installment.value
+
+      #installment_plan_tab.tab-pane
+        = text_field_tag 'user[installment_plans_attributes][0][object]', nil, id: 'user_installment_plan_object', placeholder: InstallmentPlan.human_attribute_name(:object)
+        = text_field_tag 'user[installment_plans_attributes][0][cost]', nil, placeholder: InstallmentPlan.human_attribute_name(:cost), class: 'input-small'
+        .input-prepend
+          %span.add-on= glyph :calendar
+          = text_field_tag 'user[installment_plans_attributes][0][issued_at]', Time.current.strftime('%d.%m.%Y'), class: 'datepicker input-medium', id: 'user_installment_plan_issued_at', data: { 'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1, 'date-viewmode' => 'days' }
+
+  .modal-footer= submit_button f
