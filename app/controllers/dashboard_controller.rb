@@ -86,7 +86,7 @@ class DashboardController < ApplicationController
       when 'done_orders_report' then make_done_orders_report
       when 'devices_movements_report' then make_devices_movements_report
       when 'sales_report' then make_sales_report
-      when 'salaries_report' then can?(:manage, Salary) ? make_salaries_report : render(nothing: true)
+      when 'salary_report' then can?(:manage, Salary) ? make_salary_report : render(nothing: true)
     end
   end
 
@@ -249,11 +249,7 @@ class DashboardController < ApplicationController
               new_location = Location.find movement.new_value.to_i
               duration = ((movement.created_at - device.created_at).to_i/60).round
               user_durations << duration
-              devices << {moved_at: movement.created_at, created_at: device.created_at,
-                          old_location: old_location.name, new_location: new_location.name,
-                          device_id: device.id, device_presentation: device.presentation,
-                          client_id: device.client_id, client_presentation: device.client_presentation,
-                          duration: duration}
+              devices << {moved_at: movement.created_at, created_at: device.created_at, old_location: old_location.name, new_location: new_location.name, device_id: device.id, device_presentation: device.presentation, client_id: device.client_id, client_presentation: device.client_presentation, duration: duration}
             end
           end
           avarage_duration = (user_durations.sum / user_durations.size).round
@@ -263,13 +259,43 @@ class DashboardController < ApplicationController
     end
   end
 
-  def make_salaries_report
-    @report[:salaries] = []
-    salaries = Salary.issued_at @period
-    salaries.find_each do |salary|
-      @report[:salaries] << { issued_at: salary.issued_at, user: salary.user.short_name, amount: salary.amount }
+  def make_salary_report
+    @report[:salary] = []
+    users = User.active
+
+    users.find_each do |user|
+      user_salaries = []
+      user_prepayments = []
+      user_installments = []
+      5.downto(0) do |n|
+        date = n.months.ago
+        period = date.beginning_of_month..date.end_of_month
+        user_prepayment_details = []
+        user_installment_details = []
+        user_month_salaries = user.salaries.salary.issued_at period
+        user_month_prepayments = user.salaries.prepayment.issued_at period
+        user_month_installments = user.installments.paid_at period
+        user_month_installment_plans = user.installment_plans.issued_at period
+
+        user_salaries << { amount: user_month_salaries.sum(:amount) }
+
+        user_month_prepayments.each do |prepayment|
+          user_prepayment_details << { amount: prepayment.amount, date: prepayment.issued_at, comment: prepayment.comment }
+        end
+        user_prepayments << { amount: user_month_prepayments.sum(:amount), details: user_prepayment_details }
+
+        user_month_installment_plans.find_each do |installment_plan|
+          user_installment_details << { value: installment_plan.cost, date: installment_plan.issued_at, object: installment_plan.object }
+        end
+        user_month_installments.find_each do |installment|
+          user_installment_details << { value: - installment.value, date: installment.paid_at, object: installment.object }
+        end
+        user_installments << { sum: user_month_installment_plans.sum(:cost) - user_month_installments.sum(:value), details: user_installment_details }
+
+      end
+      @report[:salary] << { user_name: user.short_name, user_id: user.id, salaries: user_salaries, prepayments: user_prepayments, installments: user_installments }
     end
-    @report[:salaries_sum] = salaries.sum :amount
+
   end
 
   def make_sales_report

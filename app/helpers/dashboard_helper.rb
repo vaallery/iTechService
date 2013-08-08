@@ -81,8 +81,7 @@ module DashboardHelper
 
   def device_task_row_tag(device_task)
     row_class = device_task.done ? 'success' : (is_actual_task?(device_task) ? 'error' : 'warning')
-    content_tag(:tr, class: "device_task_row #{row_class}", data: {device_task_id: device_task.id,
-                 device_id: device_task.device_id, task_id: device_task.task_id}) do
+    content_tag(:tr, class: "device_task_row #{row_class}", data: {device_task_id: device_task.id, device_id: device_task.device_id, task_id: device_task.task_id}) do
       content_tag(:td, nil) +
       content_tag(:td, device_task.task_name) +
       content_tag(:td) do
@@ -92,6 +91,30 @@ module DashboardHelper
       end +
       content_tag(:td, is_editable_task?(device_task) ? link_to_edit_device_task(device_task) : nil)
     end.html_safe
+  end
+
+  def prepayment_details_content(details)
+    content_tag(:table, class: 'table table-condensed') do
+      details.map do |detail|
+        content_tag(:tr) do
+          content_tag(:td, detail[:date].strftime('%d.%m.%y')) +
+          content_tag(:td, detail[:amount]) +
+          content_tag(:td, detail[:comment])
+        end
+      end.join.html_safe
+    end.gsub('\n', '')
+  end
+
+  def installment_details_content(details)
+    content_tag(:table, class: 'table table-condensed') do
+      details.map do |detail|
+        content_tag(:tr) do
+          content_tag(:td, detail[:date].strftime('%d.%m.%y')) +
+          content_tag(:td, detail[:value]) +
+          content_tag(:td, detail[:object])
+        end
+      end.join.html_safe
+    end.gsub('\n', '')
   end
 
 end

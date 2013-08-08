@@ -59,9 +59,13 @@ class UsersController < ApplicationController
       if @user.update_attributes(params[:user])
         format.html { redirect_to @user, notice: t('users.updated') }
         format.json { head :no_content }
+        format.js { render 'shared/close_modal_form' }
       else
+        @salaries = @user.salaries
+        @installments = @user.installments
         format.html { render action: "edit" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.js { render 'shared/show_modal_form' }
       end
     end
   end
@@ -88,8 +92,6 @@ class UsersController < ApplicationController
 
   def duty_calendar
     @user = User.find params[:id]
-    #@calendar_month = params[:date].blank? ? Date.current : params[:date].to_date
-    #@kind = params[:kind]
     respond_to do |format|
       format.js
     end
@@ -97,7 +99,6 @@ class UsersController < ApplicationController
 
   def staff_duty_schedule
     @calendar_month = params[:date].blank? ? Date.current : params[:date].to_date
-    #@kind = params[:kind]
     respond_to do |format|
       format.js
     end
@@ -153,6 +154,16 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html
+    end
+  end
+
+  def finance
+    @user = User.find params[:id]
+    @salaries = @user.salaries
+    @installments = @user.installments
+
+    respond_to do |format|
+      format.js { render 'shared/show_modal_form' }
     end
   end
 

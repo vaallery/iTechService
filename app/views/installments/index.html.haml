@@ -1,0 +1,23 @@
+%h1 Listing installments
+
+%table
+  %tr
+    %th Installment plan
+    %th Value
+    %th Paid at
+    %th
+    %th
+    %th
+
+  - @installments.each do |installment|
+    %tr
+      %td= installment.installment_plan
+      %td= installment.value
+      %td= installment.paid_at
+      %td= link_to 'Show', installment
+      %td= link_to 'Edit', edit_installment_path(installment)
+      %td= link_to 'Destroy', installment, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Installment', new_installment_path

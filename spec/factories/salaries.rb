@@ -2,7 +2,14 @@
 
 FactoryGirl.define do
   factory :salary do
-    user nil
-    amount 1
+    user
+    amount 10000
+    is_prepayment false
+    issued_at Time.current
+
+    factory :prepayment do
+      is_prepayment true
+      amount 1000
+    end
   end
 end
