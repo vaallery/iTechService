@@ -1,1 +1,0 @@
-thin -C /Applications/rubystack/projects/itech_service/config/thin.yml restart
