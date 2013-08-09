@@ -21,6 +21,8 @@ class Order < ActiveRecord::Base
 
   after_update :make_announcement
 
+
+
   scope :newest, order("orders.created_at desc")
   scope :oldest, order("orders.created_at asc")
   scope :new_orders, where(status: 'new')
@@ -37,11 +39,19 @@ class Order < ActiveRecord::Base
   scope :soft, where(object_kind: 'soft')
   scope :misc, where(object_kind: 'misc')
   scope :spare_part, where(object_kind: 'spare_part')
-  scope :done_at, lambda { |period| joins(:history_records).where(history_records: {column_name: 'status',
-                            new_value: 'done', created_at: period}) }
+  scope :done_at, lambda { |period| joins(:history_records).where(history_records: {column_name: 'status', new_value: 'done', created_at: period}) }
 
   OBJECT_KINDS = %w[device accessory soft misc spare_part]
   STATUSES = %w[new pending done canceled notified archive]
+
+  def self.order_by_status
+    ret = "CASE"
+    STATUSES.each_with_index do |s, i|
+      ret << " WHEN status = '#{s}' THEN #{i}"
+    end
+    ret << " END"
+  end
+  scope :by_status, order: order_by_status
 
   def customer_full_name
     customer.try :full_name

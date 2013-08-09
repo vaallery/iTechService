@@ -16,8 +16,10 @@ class OrdersController < ApplicationController
 
     if params.has_key? :sort and params.has_key? :direction
       @orders = @orders.reorder 'orders.'+sort_column + ' ' + sort_direction
+    else
+      @orders = @orders.by_status
     end
-    @orders = @orders.newest.page params[:page]
+    @orders = @orders.page params[:page]
 
     respond_to do |format|
       format.html
