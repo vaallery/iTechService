@@ -1,0 +1,1 @@
+#!/bin/shcd /Users/itech/sites/itech_service; RAILS_ENV=production script/delayed_job start
