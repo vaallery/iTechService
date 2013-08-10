@@ -1,0 +1,25 @@
+%h1 Listing installment_plans
+
+%table
+  %tr
+    %th User
+    %th Object
+    %th Cost
+    %th Issued at
+    %th
+    %th
+    %th
+
+  - @installment_plans.each do |installment_plan|
+    %tr
+      %td= installment_plan.user
+      %td= installment_plan.object
+      %td= installment_plan.cost
+      %td= installment_plan.issued_at
+      %td= link_to 'Show', installment_plan
+      %td= link_to 'Edit', edit_installment_plan_path(installment_plan)
+      %td= link_to 'Destroy', installment_plan, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Installment plan', new_installment_plan_path

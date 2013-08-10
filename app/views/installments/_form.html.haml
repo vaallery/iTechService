@@ -1,0 +1,10 @@
+= simple_form_for(@installment) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :installment_plan
+    = f.input :value
+    = f.input :paid_at
+
+  .form-actions
+    = f.button :submit

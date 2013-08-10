@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Installment plan:
+  = @installment.installment_plan
+%p
+  %b Value:
+  = @installment.value
+%p
+  %b Paid at:
+  = @installment.paid_at
+
+= link_to 'Edit', edit_installment_path(@installment)
+\|
+= link_to 'Back', installments_path

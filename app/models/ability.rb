@@ -13,6 +13,7 @@ Ability
     elsif user.admin?
       can :manage, :all
       can :view_reports
+      can :finance, User if user.able_to? :manage_salary
       cannot :manage, Salary unless user.able_to? :manage_salary
       cannot :manage_rights, User
     elsif user.programmer?

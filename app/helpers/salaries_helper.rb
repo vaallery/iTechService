@@ -9,9 +9,8 @@ module SalariesHelper
             time_text = user.upcoming_salary_date.today? ? t(:today)
             : "#{t(:in_time)} #{distance_of_time_in_words(today, user.upcoming_salary_date)}"
             content_tag(:td, time_text) +
-                content_tag(:td, link_to(user.short_name, user_path(user))) +
-                content_tag(:td, link_to(icon_tag(:money), new_salary_path(user_id: user), class: 'new_salary_link',
-                                         title: t('salaries.issue')))
+            content_tag(:td, link_to(user.short_name, user_path(user))) +
+            content_tag(:td, link_to(icon_tag(:money), finance_user_path(user), remote: true, class: 'new_salary_link', title: t('salaries.issue')))
           end
         end.join.html_safe
       end.html_safe

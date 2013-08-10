@@ -1,1 +1,0 @@
-#!/bin/shcd /Users/itech/sites/itech_service; rackup private_pub.ru -s thin -E production
