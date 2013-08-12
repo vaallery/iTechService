@@ -268,8 +268,7 @@ class User < ActiveRecord::Base
     User.active.all.keep_if do |user|
       if user.hiring_date.present?
         upcoming_salary_date = user.upcoming_salary_date
-        upcoming_salary_date.between?(today, 2.days.from_now.end_of_day.to_datetime) and
-            user.salaries.where(created_at: today..upcoming_salary_date, user_id: user.id).empty?
+        upcoming_salary_date.between?(today, 2.days.from_now.end_of_day.to_datetime) and user.salaries.where(created_at: today..upcoming_salary_date, user_id: user.id).empty?
       end
     end.sort_by! do |user|
       user.upcoming_salary_date - today
