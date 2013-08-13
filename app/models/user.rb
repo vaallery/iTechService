@@ -306,6 +306,17 @@ class User < ActiveRecord::Base
     Installment.where installment_plan_id: self.installment_plan_ids
   end
 
+  def self.check_birthdays
+    User.active.find_each do |user|
+      announcement = user.birthday_announcement
+      announcement.update_attributes active: user.upcoming_birthday?
+      if announcement.active?
+        announcement.recipient_ids = User.any_admin.map { |u| u.id }
+        announcement.save
+      end
+    end
+  end
+
   private
 
   def validate_rights_changing
