@@ -13,13 +13,7 @@
 #after 'deploy:update', 'bundle:install'
 #after 'deploy:restart', 'unicorn:stop'
 
-require 'capistrano-deploy'
-use_recipes :git, :bundle, :rails, :rails_assets, :unicorn
-
-server '5.100.75.201', :web, :app, :db, primary: true
-set :user, 'itech'
-set :deploy_to, '/Users/itech/sites/itech_service'
-set :repository, 'git@bitbucket.org:itechdevs/itechservice.git'
-
-after 'deploy:update', 'bundle:install'
-after 'deploy:update', 'deploy:assets:precompile'
+load 'deploy'
+load 'capistrano/recipes/deploy/assets'
+Dir['vendor/gems/*/recipes/*.rb', 'vendor/plugins/*/recipes/*.rb'].each { |plugin| load(plugin) }
+load 'config/deploy'
