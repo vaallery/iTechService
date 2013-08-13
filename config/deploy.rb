@@ -1,4 +1,5 @@
 require 'capistrano-deploy'
+require 'capistrano-deploy/whenever'
 use_recipes :git, :bundle, :rails, :rails_assets, :unicorn
 
 server '192.168.0.1', :web, :app, :db, primary: true
