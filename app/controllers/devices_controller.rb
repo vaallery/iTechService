@@ -25,23 +25,31 @@ class DevicesController < ApplicationController
   end
 
   def show
-    @device = Device.find(params[:id])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @device }
-      format.pdf do
-        if can? :print_receipt, @device
-          if params[:print]
-            pdf = TicketPdf.new @device, view_context
-            system 'lp', pdf.render_file(Rails.root.to_s+"/tmp/tickets/ticket_#{@device.ticket_number}.pdf").path
+    if params[:find] == 'ticket'
+      @device = Device.find_by_ticket_number(params[:id])
+      respond_to do |format|
+        format.js do
+          flash.now[:error] = t('devices.not_found_by_ticket', ticket: params[:id]) if @device.nil?
+          render 'ticket_scan'
+        end
+      end
+    else
+      @device = Device.find(params[:id])
+      respond_to do |format|
+        format.html
+        format.json { render json: @device }
+        format.pdf do
+          if can? :print_receipt, @device
+            if params[:print]
+              pdf = TicketPdf.new @device, view_context
+              system 'lp', pdf.render_file(Rails.root.to_s+"/tmp/tickets/ticket_#{@device.ticket_number}.pdf").path
+            else
+              pdf = TicketPdf.new @device, view_context, params[:part]
+            end
+            send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf", type: 'application/pdf', disposition: 'inline'
           else
-            pdf = TicketPdf.new @device, view_context, params[:part]
+            render nothing: true
           end
-          send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf",
-                    type: 'application/pdf', disposition: 'inline'
-        else
-          render nothing: true
         end
       end
     end

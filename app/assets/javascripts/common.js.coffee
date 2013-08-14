@@ -50,6 +50,20 @@ jQuery ->
     $popover.prev().popover('hide')
     event.preventDefault()
 
+  $(document).on 'keydown', ':not(:input)', (event)->
+    console.log event.keyCode
+    if event.keyCode is 13 and window.scaned_code isnt ''
+      ticket_number = window.scaned_code.replace(/^0+/, '')
+      ticket_number = ticket_number[0..-2]
+      $.get '/devices/' + ticket_number + '.js?find=ticket'
+    else
+      if event.keyCode in [48..57]
+        window.scaned_code = window.scaned_code[1..-1] if window.scaned_code.length is 12
+        window.scaned_code += String.fromCharCode(event.keyCode)
+        false
+
+window.scaned_code = ''
+
 cursorX = $('#spinner').outerWidth() / 2
 cursorY = $('#spinner').outerHeight() / 2
 
@@ -58,15 +72,11 @@ $(document).on 'mousemove', '*', (event)->
   cursorY = event.pageY
 
 $(document).on 'keydown', 'input[type=text]', ->
-#  cursorX = this.offsetLeft + $('#spinner').outerWidth() / 2
-  cursorY = $(this).offset().left + $('#spinner').outerWidth() / 2
-#  cursorY = this.offsetTop + this.clientHeight / 2
+  cursorX = $(this).offset().left + $('#spinner').outerWidth() / 2
   cursorY = $(this).offset().top + this.clientHeight / 2
 
 $(document).on 'keydown', 'textarea', ->
-#  cursorX = this.offsetLeft + $('#spinner').outerWidth() / 2
   cursorX = $(this).offset().left + $('#spinner').outerWidth() / 2
-#  cursorY = this.offsetTop + $('#spinner').outerHeight() / 2
   cursorY = $(this).offset().top + $('#spinner').outerHeight() / 2
 
 $(document).ajaxSend ->

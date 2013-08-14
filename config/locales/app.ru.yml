@@ -403,6 +403,7 @@ ru:
     itunes_string: Строка для iTunes
     link: Девайсы
     not_found: Устройство не найдено
+    not_found_by_ticket: "Устройство с талоном № %{ticket} не найдено"
     moved_at: Перемёщен в
     moved_by: Переместил(а)
     phone_stolen: 'этот телефон в чёрном списке!!!'
