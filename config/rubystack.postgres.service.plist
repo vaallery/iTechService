@@ -8,7 +8,7 @@
 	<array>
 		<string>/Applications/rubystack/ctlscript.sh</string>
 		<string>start</string>
-		<string>postgres</string>
+		<string>postgresql</string>
 	</array>
 	<key>WorkingDirectory</key>
 	<string>/Applications/rubystack/</string>
