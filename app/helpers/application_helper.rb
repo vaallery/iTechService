@@ -251,4 +251,10 @@ module ApplicationHelper
     content_tag(:b, glyph('spinner'), id: 'spinner')
   end
 
+  def header_link_to_scan_barcode
+    content_tag(:li) do
+      link_to glyph(:barcode), '#', id: 'scan_barcode_button'
+    end.html_safe
+  end
+
 end

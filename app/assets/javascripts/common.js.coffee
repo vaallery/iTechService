@@ -50,19 +50,8 @@ jQuery ->
     $popover.prev().popover('hide')
     event.preventDefault()
 
-#  $(document).on 'keydown', ':not(:input)', (event)->
-#    console.log event.keyCode
-#    if event.keyCode is 13 and window.scaned_code isnt ''
-#      ticket_number = window.scaned_code.replace(/^0+/, '')
-#      ticket_number = ticket_number[0..-2]
-#      $.get '/devices/' + ticket_number + '.js?find=ticket'
-#    else
-#      if event.keyCode in [48..57]
-#        window.scaned_code = window.scaned_code[1..-1] if window.scaned_code.length is 12
-#        window.scaned_code += String.fromCharCode(event.keyCode)
-#        false
-
-window.scaned_code = ''
+  $('#scan_barcode_button').click ->
+    scanBarcode()
 
 cursorX = $('#spinner').outerWidth() / 2
 cursorY = $('#spinner').outerHeight() / 2
@@ -117,6 +106,25 @@ scanCard = ->
       $('#card_sign_in').removeClass('in').hide() if window.location.pathname is "/users/sign_in"
     card_number = ''
   ), 3000
+
+scanBarcode = ->
+  scaned_code = ''
+  $('#barcode_reader').fadeIn().addClass('in')
+  $(document).on 'keydown', (event)->
+    console.log event.keyCode
+    if event.keyCode is 13 and scaned_code isnt ''
+      ticket_number = scaned_code.replace(/^0+/, '')
+      ticket_number = ticket_number[0..-2]
+      $('#barcode_reader').removeClass('in').fadeOut()
+      $.get '/devices/' + ticket_number + '.js?find=ticket'
+    else
+      if event.keyCode in [48..57]
+        scaned_code = scaned_code[1..-1] if scaned_code.length is 12
+        scaned_code += String.fromCharCode(event.keyCode)
+
+  setTimeout (->
+    $('#barcode_reader').removeClass('in').fadeOut()
+  ), 5000
 
 auth_timeout = auth_count = 5 * 60
 
