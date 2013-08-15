@@ -17,7 +17,7 @@
 	<key>RunAtLoad</key>
 	<true/>
 	<key>KeepAlive</key>
-	<true/>
+	<false/>
 	<key>OnDemand</key>
 	<false/>
 </dict>
