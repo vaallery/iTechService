@@ -50,17 +50,17 @@ jQuery ->
     $popover.prev().popover('hide')
     event.preventDefault()
 
-  $(document).on 'keydown', ':not(:input)', (event)->
-    console.log event.keyCode
-    if event.keyCode is 13 and window.scaned_code isnt ''
-      ticket_number = window.scaned_code.replace(/^0+/, '')
-      ticket_number = ticket_number[0..-2]
-      $.get '/devices/' + ticket_number + '.js?find=ticket'
-    else
-      if event.keyCode in [48..57]
-        window.scaned_code = window.scaned_code[1..-1] if window.scaned_code.length is 12
-        window.scaned_code += String.fromCharCode(event.keyCode)
-        false
+#  $(document).on 'keydown', ':not(:input)', (event)->
+#    console.log event.keyCode
+#    if event.keyCode is 13 and window.scaned_code isnt ''
+#      ticket_number = window.scaned_code.replace(/^0+/, '')
+#      ticket_number = ticket_number[0..-2]
+#      $.get '/devices/' + ticket_number + '.js?find=ticket'
+#    else
+#      if event.keyCode in [48..57]
+#        window.scaned_code = window.scaned_code[1..-1] if window.scaned_code.length is 12
+#        window.scaned_code += String.fromCharCode(event.keyCode)
+#        false
 
 window.scaned_code = ''
 
