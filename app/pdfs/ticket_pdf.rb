@@ -2,7 +2,8 @@
 class TicketPdf < Prawn::Document
   require 'prawn/measurement_extensions'
   require 'barby/barcode/ean_13'
-  require 'barby/outputter/pdfwriter_outputter'
+  #require 'barby/outputter/pdfwriter_outputter'
+  require 'barby/outputter/prawn_outputter'
 
   def initialize(device, view, part=nil)
     super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: 10
