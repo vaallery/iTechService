@@ -4,16 +4,20 @@
 <dict>
 	<key>Label</key>
 	<string>local.nginx.service</string>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>KeepAlive</key>
-	<false/>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/nginx</string>
 		<string>-g</string>
 		<string>daemon off;</string>
 	</array>
+	<key>UserName</key>
+	<string>root</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<false/>
+	<key>OnDemand</key>
+	<false/>
 	<key>WorkingDirectory</key>
 	<string>/usr/local</string>
 </dict>

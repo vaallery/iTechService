@@ -4,14 +4,18 @@
 <dict>
 	<key>Label</key>
 	<string>local.delayed_job.services</string>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>KeepAlive</key>
-	<false/>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/delayed_job_start.sh</string>
 	</array>
+	<key>UserName</key>
+	<string>itech</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<false/>
+	<key>OnDemand</key>
+	<false/>
 	<key>WorkingDirectory</key>
 	<string>/usr/local/bin/</string>
 </dict>

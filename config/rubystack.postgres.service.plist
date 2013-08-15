@@ -4,16 +4,20 @@
 <dict>
 	<key>Label</key>
 	<string>rubystack.postgres.service</string>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>KeepAlive</key>
-	<false/>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/Applications/rubystack/ctlscript.sh</string>
 		<string>start</string>
 		<string>postgres</string>
 	</array>
+	<key>UserName</key>
+	<string>root</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<false/>
+	<key>OnDemand</key>
+	<false/>
 	<key>WorkingDirectory</key>
 	<string>/Applications/rubystack/</string>
 </dict>

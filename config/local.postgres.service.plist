@@ -4,10 +4,6 @@
 <dict>
 	<key>Label</key>
 	<string>local.postgres.service</string>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>KeepAlive</key>
-	<false/>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/opt/postgresql/bin/postgres</string>
@@ -15,7 +11,16 @@
 		<string>/usr/local/var/postgres</string>
 		<string>-l</string>
 		<string>/usr/local/var/postgres/server.log</string>
+		<string>start</string>
 	</array>
+	<key>UserName</key>
+	<string>itech</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<false/>
+	<key>OnDemand</key>
+	<false/>
 	<key>WorkingDirectory</key>
 	<string>/usr/local</string>
 	<key>StandardErrorPath</key>

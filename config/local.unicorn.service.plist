@@ -4,15 +4,19 @@
 <dict>
 	<key>Label</key>
 	<string>local.unicorn.service</string>
-	<key>RunAtLoad</key>
-	<true/>
-	<key>KeepAlive</key>
-	<false/>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/local/bin/unicorn_init.sh</string>
 		<string>start</string>
 	</array>
+	<key>UserName</key>
+	<string>itech</string>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>KeepAlive</key>
+	<false/>
+	<key>OnDemand</key>
+	<false/>
 	<key>WorkingDirectory</key>
 	<string>/usr/local/bin/</string>
 </dict>
