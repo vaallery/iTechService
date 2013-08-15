@@ -12,13 +12,11 @@
 	</array>
 	<key>UserName</key>
 	<string>root</string>
-	<key>RunAtLoad</key>
+	<key>LaunchOnlyOnce</key>
+	<true/>
+	<key>NetworkState</key>
 	<true/>
 	<key>KeepAlive</key>
-	<false/>
-	<key>OnDemand</key>
-	<false/>
-	<key>WorkingDirectory</key>
-	<string>/usr/local</string>
+	<true/>
 </dict>
 </plist>

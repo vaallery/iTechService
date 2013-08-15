@@ -11,6 +11,8 @@
 	</array>
 	<key>UserName</key>
 	<string>itech</string>
+	<key>GroupName</key>
+	<string>staff</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>KeepAlive</key>
