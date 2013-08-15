@@ -10,15 +10,15 @@
 		<string>start</string>
 		<string>postgres</string>
 	</array>
+	<key>WorkingDirectory</key>
+	<string>/Applications/rubystack/</string>
 	<key>UserName</key>
 	<string>root</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>KeepAlive</key>
-	<false/>
+	<true/>
 	<key>OnDemand</key>
 	<false/>
-	<key>WorkingDirectory</key>
-	<string>/Applications/rubystack/</string>
 </dict>
 </plist>

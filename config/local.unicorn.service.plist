@@ -9,6 +9,8 @@
 		<string>/usr/local/bin/unicorn_init.sh</string>
 		<string>start</string>
 	</array>
+	<key>WorkingDirectory</key>
+	<string>/usr/local</string>
 	<key>UserName</key>
 	<string>itech</string>
 	<key>GroupName</key>
@@ -16,10 +18,8 @@
 	<key>RunAtLoad</key>
 	<true/>
 	<key>KeepAlive</key>
-	<false/>
+	<true/>
 	<key>OnDemand</key>
 	<false/>
-	<key>WorkingDirectory</key>
-	<string>/usr/local/bin/</string>
 </dict>
 </plist>
