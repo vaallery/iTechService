@@ -253,7 +253,7 @@ module ApplicationHelper
 
   def header_link_to_scan_barcode
     content_tag(:li) do
-      link_to glyph(:barcode), '#', id: 'scan_barcode_button'
+      link_to glyph(:barcode), '#', remote: true, id: 'scan_barcode_button'
     end.html_safe
   end
 

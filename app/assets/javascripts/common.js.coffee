@@ -111,16 +111,17 @@ scanBarcode = ->
   scaned_code = ''
   $('#barcode_reader').fadeIn().addClass('in')
   $(document).on 'keydown', (event)->
-    console.log event.keyCode
-    if event.keyCode is 13 and scaned_code isnt ''
-      ticket_number = scaned_code.replace(/^0+/, '')
-      ticket_number = ticket_number[0..-2]
-      $('#barcode_reader').removeClass('in').fadeOut()
-      $.get '/devices/' + ticket_number + '.js?find=ticket'
-    else
-      if event.keyCode in [48..57]
-        scaned_code = scaned_code[1..-1] if scaned_code.length is 12
-        scaned_code += String.fromCharCode(event.keyCode)
+    if $('#barcode_reader:visible').length > 0
+      console.log event.keyCode
+      if event.keyCode is 13 and scaned_code isnt ''
+        ticket_number = scaned_code.replace(/^0+/, '')
+        ticket_number = ticket_number[0..-2]
+        $('#barcode_reader').removeClass('in').fadeOut()
+        $.get '/devices/' + ticket_number + '.js?find=ticket'
+      else
+        if event.keyCode in [48..57]
+          scaned_code = scaned_code[1..-1] if scaned_code.length is 12
+          scaned_code += String.fromCharCode(event.keyCode)
 
   setTimeout (->
     $('#barcode_reader').removeClass('in').fadeOut()
