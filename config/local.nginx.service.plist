@@ -12,9 +12,9 @@
 	</array>
 	<key>UserName</key>
 	<string>root</string>
-	<key>LaunchOnlyOnce</key>
+	<key>RunAtLoad</key>
 	<true/>
-	<key>NetworkState</key>
+	<key>LaunchOnlyOnce</key>
 	<true/>
 	<key>KeepAlive</key>
 	<true/>
