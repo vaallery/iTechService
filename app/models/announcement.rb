@@ -72,17 +72,17 @@ class Announcement < ActiveRecord::Base
       self.device.location.is_repair?
     else
       is_recipient = self.recipient_ids.include?(user.id)
-      case kind
-        when 'help' then is_recipient or (user_id != user.id and user.software?)
-        when 'coffee' then is_recipient or user.software?
-        when 'for_coffee' then is_recipient or user.media?
-        when 'protector' then is_recipient or user.software?
-        when 'birthday' then is_recipient or user.any_admin?
-        when 'order_status' then is_recipient or user_id == user.id
-        when 'order_done' then is_recipient or user_id == user.id or user.media?
-        when 'device_return' then is_recipient and !(self.device.at_done? or self.device.in_archive?)
-        else is_recipient
-      end
+      #case kind
+      #  when 'help' then is_recipient or (user_id != user.id and user.software?)
+      #  when 'coffee' then is_recipient or user.software?
+      #  when 'for_coffee' then is_recipient or user.media?
+      #  when 'protector' then is_recipient or user.software?
+      #  when 'birthday' then is_recipient or user.any_admin?
+      #  when 'order_status' then is_recipient or user_id == user.id
+      #  when 'order_done' then is_recipient or user_id == user.id or user.media?
+      #  when 'device_return' then is_recipient and !(self.device.at_done? or self.device.in_archive?)
+      #  else is_recipient
+      #end
     end
   end
 
