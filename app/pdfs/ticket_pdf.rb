@@ -76,7 +76,7 @@ class TicketPdf < Prawn::Document
     code = '0'*(12-num.length) + num
     code = Barby::EAN13.new code
     outputter = Barby::PrawnOutputter.new code
-    outputter.annotate_pdf self, height: 25, xdim: 1.5, x: 20, margin: 2
+    outputter.annotate_pdf self, height: 25, xdim: 1.7, x: 20, margin: 2
   end
 
 end
