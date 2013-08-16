@@ -6,11 +6,17 @@
 	<string>local.unicorn.service</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/unicorn_init.sh</string>
-		<string>start</string>
+		<string>bundle</string>
+		<string>exec</string>
+		<string>unicorn</string>
+		<string>-D</string>
+		<string>-c</string>
+		<string>/Users/itech/sites/itech_service/config/unicorn.rb</string>
+		<string>-E</string>
+		<string>production</string>
 	</array>
 	<key>WorkingDirectory</key>
-	<string>/usr/local</string>
+	<string>/Users/itech/sites/itech_service</string>
 	<key>UserName</key>
 	<string>itech</string>
 	<key>GroupName</key>
