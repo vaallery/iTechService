@@ -56,7 +56,6 @@ Ability
       can :make_announce, Announcement
       can :close_all, Announcement
       can :close, Announcement do |announcement|
-        #announcement.recipient_ids.include?(user.id)
         announcement.visible_for? user
       end
       can [:cancel_announce, :update], Announcement do |announcement|
