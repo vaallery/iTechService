@@ -1,0 +1,21 @@
+%h1 Listing feature_values
+
+%table
+  %tr
+    %th Feature type
+    %th Name
+    %th
+    %th
+    %th
+
+  - @feature_values.each do |feature_value|
+    %tr
+      %td= feature_value.feature_type
+      %td= feature_value.name
+      %td= link_to 'Show', feature_value
+      %td= link_to 'Edit', edit_feature_value_path(feature_value)
+      %td= link_to 'Destroy', feature_value, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Feature value', new_feature_value_path

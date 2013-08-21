@@ -1,5 +1,23 @@
 ItechService::Application.routes.draw do
 
+  resources :features
+
+
+  resources :contractors
+
+
+  resources :feature_values
+
+
+  resources :feature_types
+
+
+  resources :stores
+
+
+  resources :products
+
+
   resources :installments
 
 

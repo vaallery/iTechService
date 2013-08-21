@@ -1,0 +1,10 @@
+= simple_form_for(@feature) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :feature_type
+    = f.association :product
+    = f.association :value
+
+  .form-actions
+    = f.button :submit
