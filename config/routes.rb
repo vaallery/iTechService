@@ -1,29 +1,5 @@
 ItechService::Application.routes.draw do
 
-  resources :features
-
-
-  resources :contractors
-
-
-  resources :feature_values
-
-
-  resources :feature_types
-
-
-  resources :stores
-
-
-  resources :products
-
-
-  resources :installments
-
-
-  resources :installment_plans
-
-
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -126,6 +102,22 @@ ItechService::Application.routes.draw do
   resources :discounts
 
   resources :timesheet_days, path: 'timesheet', except: :show
+
+  resources :categories, except: :show
+
+  resources :features
+
+  resources :contractors
+
+  resources :feature_types
+
+  resources :stores
+
+  resources :products
+
+  resources :installments
+
+  resources :installment_plans
 
   wiki_root '/wiki'
 

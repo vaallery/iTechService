@@ -20,11 +20,25 @@
             = header_link_to_edit_prices
           - else
             = header_link_to_view_prices
+
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
               = t('dashboard.misc')
               = caret_tag
             %ul.dropdown-menu
+
+              %li.dropdown-submenu
+                = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+                  = t 'dashboard.references'
+                %ul.dropdown-menu
+                  %li= link_to t('products.index.title'), products_path
+                  %li= link_to t('categories.index.title'), categories_path
+                  %li= link_to t('contractors.index.title'), contractors_path
+                  %li= link_to t('feature_types.index.title'), feature_types_path
+                  %li= link_to t('stores.index.title'), stores_path
+
+              %li.divider
+
               %li= link_to t('users.rating'), rating_users_path
               - if can? :manage, User
                 %li= link_to t('users.schedule'), schedule_users_path
@@ -42,6 +56,7 @@
               %li= link_to t('locations.link'), locations_path if can? :manage, Location
               %li= link_to t('discounts.link'), discounts_path
               %li= link_to t('settings.link'), settings_path if can? :manage, Setting
+
         %ul.nav.pull-right
           = header_link_to_scan_barcode
           = header_link_for_device_returning

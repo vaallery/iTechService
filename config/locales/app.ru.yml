@@ -2,9 +2,7 @@ ru:
   activerecord:
     models:
       announcement: Оповещение
-      #ckeditor/asset: ckeditor/asset
-      #ckeditor/attachment_file: ckeditor/attachment_file
-      #ckeditor/picture: ckeditor/picture
+      category: Категория
       client: Клиент
       comment: Комментарий
       device: Девайс
@@ -12,6 +10,7 @@ ru:
       device_type: Тип девайса
       discount: Скидка
       duty_day: Дежурство
+      featrue_type: Тип характеристики
       gift_certificate: Подарочный сертификат
       history_record: history_record
       info: Новость
@@ -35,6 +34,9 @@ ru:
         active: Ативный
         kind: Тип
         user: Пользователь
+
+      category:
+        feature_types: "Типы характеристик"
 
       ckeditor/asset:
         assetable: :activerecord.models.assetable
@@ -139,6 +141,9 @@ ru:
         kind: Тип
         user: user
         user_id: user
+
+      feature_type:
+        code: Код
 
       gift_certificate:
         consumed: Израсходовано
@@ -323,11 +328,19 @@ ru:
     protector_made: Плёночка наклеена!
     updated: Оповещение изменено
 
+  categories:
+    edit:
+      title: "Редактирование Категории"
+    index:
+      title: "Категории"
+    new:
+      title: "Новая Категория"
+
   clients:
     edit:
-      title: Редактирование клиента
+      title: Редактирование Клиента
     new:
-      title: Новый клиент
+      title: Новый Клиент
     index:
       title: 'Клиенты'
       search_placeholder: Телефон или имя
@@ -359,6 +372,10 @@ ru:
     created: Комментарий создан
     updated: Комментарий изменён
 
+  contractors:
+    index:
+      title: "Контрагенты"
+
   dashboard:
     actual_orders: Текущие заказы
     actual_tasks: "Текущие задачи"
@@ -374,6 +391,7 @@ ru:
     params: Параметры
     reports: Отчёты
     sale: "Продажа"
+    references: "Справочники"
 
   devices:
     edit:
@@ -442,6 +460,14 @@ ru:
     kinds:
       kitchen: "на кухне"
       salesroom: "в зале"
+
+  feature_types:
+    edit:
+      title: "Редактирование Типа Характеристики"
+    index:
+      title: "Типы характеристик"
+    new:
+      title: "Новый Тип Характеристики"
 
   gift_certificates:
     edit:
@@ -560,6 +586,10 @@ ru:
       title: Прайсы
     link: Прайсы
 
+  products:
+    index:
+      title: "Продукты"
+
   reports:
     average_duration: Средняя длительность, мин.
     choose: Выберите отчет
@@ -636,6 +666,10 @@ ru:
     new:
       title: Новый телефон
     link: Чёрный список
+
+  stores:
+    index:
+      title: "Склады"
 
   tasks:
     created: Задача создана
@@ -768,7 +802,7 @@ ru:
     movement:
       subject: "Новый девайс %{device}"
 
-  in_time: через
+  add: "Добавить"
   ago: назад
   app_name: Айс
   back: Назад
@@ -783,6 +817,7 @@ ru:
   everywhere: "Везде"
   from_date: "от %{date}"
   hour_min: "%{hour} ч %{min} мин."
+  in_time: через
   me: Я
   min: "%{min} мин."
   moved: "%{user} %{time} назад"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130806040528) do
+ActiveRecord::Schema.define(:version => 20130823063655) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(:version => 20130806040528) do
   create_table "announcements_users", :force => true do |t|
     t.integer "announcement_id"
     t.integer "user_id"
+  end
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "categories_feature_types", :force => true do |t|
+    t.integer "category_id"
+    t.integer "feature_type_id"
   end
 
   create_table "ckeditor_assets", :force => true do |t|
@@ -81,6 +92,12 @@ ActiveRecord::Schema.define(:version => 20130806040528) do
   add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "contractors", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -182,6 +199,27 @@ ActiveRecord::Schema.define(:version => 20130806040528) do
   add_index "duty_days", ["day"], :name => "index_duty_days_on_day"
   add_index "duty_days", ["kind"], :name => "index_duty_days_on_kind"
   add_index "duty_days", ["user_id"], :name => "index_duty_days_on_user_id"
+
+  create_table "feature_types", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "feature_types", ["code"], :name => "index_feature_types_on_code"
+
+  create_table "features", :force => true do |t|
+    t.integer  "feature_type_id"
+    t.integer  "product_id"
+    t.integer  "value_id"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "features", ["feature_type_id"], :name => "index_features_on_feature_type_id"
+  add_index "features", ["product_id"], :name => "index_features_on_product_id"
+  add_index "features", ["value_id"], :name => "index_features_on_value_id"
 
   create_table "gift_certificates", :force => true do |t|
     t.string   "number"
@@ -309,6 +347,16 @@ ActiveRecord::Schema.define(:version => 20130806040528) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "products", :force => true do |t|
+    t.string   "name"
+    t.integer  "code"
+    t.integer  "group_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "products", ["group_id"], :name => "index_products_on_group_id"
+
   create_table "salaries", :force => true do |t|
     t.integer  "user_id"
     t.integer  "amount"
@@ -369,6 +417,12 @@ ActiveRecord::Schema.define(:version => 20130806040528) do
   end
 
   add_index "stolen_phones", ["imei"], :name => "index_stolen_phones_on_imei"
+
+  create_table "stores", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "tasks", :force => true do |t|
     t.string   "name"

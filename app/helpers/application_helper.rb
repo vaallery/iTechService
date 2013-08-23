@@ -189,13 +189,15 @@ module ApplicationHelper
     title_for controller_name.classify.constantize
   end
 
-  def auto_header_tag(button_name=nil)
+  def auto_header_tag(title=nil, button_name=nil)
     model_class = controller_name.classify.constantize
+    title ||= auto_title
+    button_name ||= t 'create'
     content_tag :div, class: 'page-header' do
       if action_name == 'index'
-        content_tag(:h1, auto_title) + ((can?(:create, model_class)) ? link_to_new(model_class, button_name) : '')
+        content_tag(:h1, title) + ((can?(:create, model_class)) ? link_to_new(model_class, button_name) : '')
       else
-        content_tag :h1, link_back_to_index + auto_title
+        content_tag :h1, link_back_to_index + title
       end
     end
   end
