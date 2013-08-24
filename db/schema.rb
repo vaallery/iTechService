@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130823063655) do
+ActiveRecord::Schema.define(:version => 20130824042151) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -341,6 +341,12 @@ ActiveRecord::Schema.define(:version => 20130823063655) do
   add_index "orders", ["status"], :name => "index_orders_on_status"
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
 
+  create_table "price_types", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "prices", :force => true do |t|
     t.string   "file"
     t.datetime "created_at", :null => false
@@ -349,12 +355,17 @@ ActiveRecord::Schema.define(:version => 20130823063655) do
 
   create_table "products", :force => true do |t|
     t.string   "name"
-    t.integer  "code"
+    t.string   "code"
     t.integer  "group_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "category_id"
+    t.boolean  "is_service"
+    t.boolean  "request_price"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
+  add_index "products", ["category_id"], :name => "index_products_on_category_id"
+  add_index "products", ["code"], :name => "index_products_on_code"
   add_index "products", ["group_id"], :name => "index_products_on_group_id"
 
   create_table "salaries", :force => true do |t|

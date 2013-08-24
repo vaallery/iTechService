@@ -1,8 +1,7 @@
 class CategoriesController < ApplicationController
+  load_and_authorize_resource
 
   def index
-    @categories = Category.all
-
     respond_to do |format|
       format.html
       format.json { render json: @categories }
@@ -10,8 +9,6 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @category = Category.new
-
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @category }
@@ -19,16 +16,12 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = Category.find(params[:id])
-    
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def create
-    @category = Category.new(params[:category])
-
     respond_to do |format|
       if @category.save
         format.html { redirect_to categories_path, notice: 'Category was successfully created.' }
@@ -41,8 +34,6 @@ class CategoriesController < ApplicationController
   end
 
   def update
-    @category = Category.find(params[:id])
-
     respond_to do |format|
       if @category.update_attributes(params[:category])
         format.html { redirect_to categories_path, notice: 'Category was successfully updated.' }
@@ -55,7 +46,6 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Category.find(params[:id])
     @category.destroy
 
     respond_to do |format|

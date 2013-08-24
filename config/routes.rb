@@ -99,21 +99,23 @@ ItechService::Application.routes.draw do
 
   resources :salaries
 
-  resources :discounts
+  resources :discounts, except: :show
 
   resources :timesheet_days, path: 'timesheet', except: :show
 
   resources :categories, except: :show
 
-  resources :features
+  resources :features, except: :show
 
   resources :contractors
 
-  resources :feature_types
+  resources :feature_types, except: :show
 
-  resources :stores
+  resources :stores, except: :show
 
   resources :products
+
+  resources :price_types, except: :show
 
   resources :installments
 

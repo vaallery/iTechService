@@ -1,23 +1,11 @@
-%h1 Listing products
+= auto_header_tag
 
-%table
-  %tr
-    %th Name
-    %th Code
-    %th Group
-    %th
-    %th
-    %th
+.table_filter.navbar.container
+  .navbar-inner
+    = form_tag products_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
+      .input-append
+        = text_field_tag :product_q, params[:product_q], id: 'search_product_input', class: 'search-query input-medium', placeholder: ''
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
 
-  - @products.each do |product|
-    %tr
-      %td= product.name
-      %td= product.code
-      %td= product.group_id
-      %td= link_to 'Show', product
-      %td= link_to 'Edit', edit_product_path(product)
-      %td= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Product', new_product_path
+#resource_table= render 'table'

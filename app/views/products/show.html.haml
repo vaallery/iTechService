@@ -1,15 +1,21 @@
-%p#notice= notice
+- model_class = Product
+.page-header
+  %h1=t '.title', :default => model_class.model_name.human.titleize
 
 %p
-  %b Name:
+  %strong= model_class.human_attribute_name(:name) + ':'
+  %br
   = @product.name
 %p
-  %b Code:
+  %strong= model_class.human_attribute_name(:code) + ':'
+  %br
   = @product.code
 %p
-  %b Group:
+  %strong= model_class.human_attribute_name(:group_id) + ':'
+  %br
   = @product.group_id
 
-= link_to 'Edit', edit_product_path(@product)
-\|
-= link_to 'Back', products_path
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), products_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_product_path(@product), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), product_path(@product), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

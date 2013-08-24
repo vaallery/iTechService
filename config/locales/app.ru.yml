@@ -10,7 +10,7 @@ ru:
       device_type: Тип девайса
       discount: Скидка
       duty_day: Дежурство
-      featrue_type: Тип характеристики
+      feature_type: Тип характеристики
       gift_certificate: Подарочный сертификат
       history_record: history_record
       info: Новость
@@ -21,11 +21,13 @@ ru:
       object: Обьект
       order: Заказ
       price: Прайс
+      price_type: "Тип цен"
       salary: Зарплата
       sale: Продажа
       schedule_day: Рабочий день
       setting: Параметр
       stolen_phone: Краденый телефон
+      store: "Склад"
       task: Задача
       user: Пользователь
 
@@ -204,6 +206,13 @@ ru:
       price:
         file: Файл
         remote_file_url: Ссылка на файл
+
+      product:
+        category: "Категория"
+        code: "Код"
+        group: "Группа"
+        is_service: "Услуга"
+        request_price: "Запрос цены"
 
       salary:
         amount: Сумма
@@ -575,6 +584,16 @@ ru:
     order_num: "Заказ №%{num}"
     not_found: "Заказ не найден"
 
+  price_types:
+    created: "Тип Цен создан"
+    updated: "Тип Цен изменён"
+    edit:
+      title: "Редактирование Типа Цен"
+    index:
+      title: "Типы Цен"
+    new:
+      title: "Новый Тип Цен"
+
   prices:
     created: Прайс создан
     updated: Прайс изменён
@@ -587,8 +606,14 @@ ru:
     link: Прайсы
 
   products:
+    created: "Продукт создан"
+    updated: "Продукт изменён"
+    edit:
+      title: "Редактирование Продукта"
     index:
       title: "Продукты"
+    new:
+      title: "Новый Продукт"
 
   reports:
     average_duration: Средняя длительность, мин.
@@ -668,8 +693,14 @@ ru:
     link: Чёрный список
 
   stores:
+    created: "Склад создан"
+    updated: 'Склад изменён'
     index:
       title: "Склады"
+    new:
+      title: 'Новый Склад'
+    edit:
+      title: 'Редактирование Склада'
 
   tasks:
     created: Задача создана

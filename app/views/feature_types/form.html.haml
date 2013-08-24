@@ -1,4 +1,4 @@
-= auto_header_tag @feature_type.new_record? ? t('feature_types.new.title') : t('feature_types.edit.title')
+= auto_header_tag @feature_type
 
 = simple_form_for @feature_type, html: { class: 'form-horizontal' } do |f|
   = f.input :name

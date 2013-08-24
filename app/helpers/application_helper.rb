@@ -189,9 +189,9 @@ module ApplicationHelper
     title_for controller_name.classify.constantize
   end
 
-  def auto_header_tag(title=nil, button_name=nil)
+  def auto_header_tag(object=nil, title=nil, button_name=nil)
     model_class = controller_name.classify.constantize
-    title ||= auto_title
+    title ||= object.nil? ? auto_title : t("#{object.class.name.tableize}.#{object.new_record? ? 'new' : 'edit'}.title")
     button_name ||= t 'create'
     content_tag :div, class: 'page-header' do
       if action_name == 'index'

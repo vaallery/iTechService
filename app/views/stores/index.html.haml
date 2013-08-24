@@ -1,19 +1,19 @@
-%h1 Listing stores
+- model_class = Store
+= auto_header_tag
 
-%table
-  %tr
-    %th Name
-    %th
-    %th
-    %th
-
-  - @stores.each do |store|
+%table.table.table-striped
+  %thead
     %tr
-      %td= store.name
-      %td= link_to 'Show', store
-      %td= link_to 'Edit', edit_store_path(store)
-      %td= link_to 'Destroy', store, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Store', new_store_path
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:created_at)
+      %th
+  %tbody
+    - @stores.each do |store|
+      %tr
+        %td= link_to store.id, edit_store_path(store)
+        %td= link_to store.name, edit_store_path(store)
+        %td= human_datetime store.created_at
+        %td.btn-group
+          = link_to_edit_small store
+          = link_to_destroy_small store

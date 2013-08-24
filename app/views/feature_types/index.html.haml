@@ -13,7 +13,7 @@
       %tr
         %td= link_to feature_type.id, edit_feature_type_path(feature_type)
         %td= link_to feature_type.name, edit_feature_type_path(feature_type)
-        %td= l feature_type.created_at, format: :long_d
+        %td= human_datetime feature_type.created_at
         %td.btn-group
           = link_to_edit_small feature_type
           = link_to_destroy_small feature_type

@@ -1,0 +1,19 @@
+- model_class = PriceType
+= auto_header_tag
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:created_at)
+      %th
+  %tbody
+    - @price_types.each do |price_type|
+      %tr
+        %td= link_to price_type.id, price_type_path(price_type)
+        %td= link_to price_type.name, edit_price_path(price_type)
+        %td= human_datetime price_type.created_at
+        %td.btn-group
+          = link_to_edit_small price_type
+          = link_to_destroy_small price_type

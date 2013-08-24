@@ -16,7 +16,7 @@
         %td= link_to category.id, edit_category_path(category)
         %td= link_to category.name, edit_category_path(category)
         %td= category.feature_types.collect { |ft| ft.name }.join ', '
-        %td= l category.created_at, format: :long_d
+        %td= human_datetime category.created_at
         %td.btn-group
           = link_to_edit_small category
           = link_to_destroy_small category
