@@ -94,6 +94,7 @@ class Announcement < ActiveRecord::Base
   private
 
   def define_recipients
+    recipients = []
     case self.kind
       when 'help'
         recipients = User.software.to_a
