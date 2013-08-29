@@ -18,8 +18,6 @@ module KarmasHelper
 
   def header_karma_button
     content_tag(:li, id: 'header_karma_button') do
-      #link_to "#{glyph('thumbs-up')}/#{glyph('thumbs-down')}".html_safe, '#', rel: 'popover', data: { html: true, placement: 'bottom', title: button_to_close_popover.gsub('/n', ''), content: header_karma_form.gsub('/n', '') }
-      #link_to "#{glyph('thumbs-up')}/#{glyph('thumbs-down')}".html_safe, '#', rel: 'popover', id: 'header_karma_link', data: { html: true, placement: 'bottom', title: button_to_close_popover.gsub('/n', ''), content: render('karmas/header_form').html_safe.gsub('/n', '') }
       link_to "#{glyph('thumbs-up')}/#{glyph('thumbs-down')}".html_safe, '#', rel: 'popover', id: 'header_karma_link', data: { html: true, placement: 'bottom', title: button_to_close_popover.gsub('/n', ''), content: header_karma_form.gsub('/n', '') }
     end
   end
@@ -27,7 +25,6 @@ module KarmasHelper
   def header_karma_form
     users_list = User.active.map { |user| [user.short_name, user.id] }
     form_tag(karmas_path, method: :post, remote: true, id: 'header_karma_form') do
-      #text_field_tag('karma[user]', nil, id: 'header_karma_user', data: { provide: 'typeahead', source: users_list })
       select(:karma, :user_id, users_list, { include_blank: true }) +
       hidden_field(:karma, :good, id: 'header_karma_good') +
       content_tag(:div, class: 'btn-group', 'data-toggle' => 'buttons-radio') do
