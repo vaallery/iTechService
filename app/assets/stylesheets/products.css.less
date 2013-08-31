@@ -1,3 +1,57 @@
-// Place all the styles related to the Products controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.product_selector {
+  .product_select_button {
+    width: 300px;
+  }
+  .products_list {
+    width: 300px;
+    margin-left: 34px;
+    &>li li {
+      display: none;
+    }
+    li {
+      &.opened {
+        a>ins.icon-chevron:before {
+          content: "\f078";
+        }
+      }
+      &.closed {
+        a > ins.icon-chevron:before {
+          content: "\f054";
+        }
+      }
+      a {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 20px;
+        color: #333333;
+        white-space: nowrap;
+        text-decoration: none;
+        &:hover {
+          text-decoration: none;
+          color: #ffffff;
+          background-color: #0081c2;
+          background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+          background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+          background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+          background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+          background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+          background-repeat: repeat-x;
+          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+          background-color: #0081c2;
+          background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+          background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+          background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+          background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+          background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+          background-repeat: repeat-x;
+          filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0077b3', GradientType=0);
+        }
+        ins {
+          float: right;
+        }
+      }
+    }
+  }
+}

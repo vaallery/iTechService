@@ -56,7 +56,7 @@ class ProductsController < ApplicationController
     end
   end
 
-     def destroy
+  def destroy
     @product.destroy
 
     respond_to do |format|
@@ -64,4 +64,10 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def category_select
+    category = Category.find params[:category_id]
+    @feature_types = category.feature_types
+  end
+
 end

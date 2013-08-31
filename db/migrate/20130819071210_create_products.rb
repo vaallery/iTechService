@@ -3,15 +3,13 @@ class CreateProducts < ActiveRecord::Migration
     create_table :products do |t|
       t.string :name
       t.string :code
-      t.belongs_to :group
       t.belongs_to :category
-      t.boolean :is_service
-      t.boolean :request_price
+      t.string :ancestry
 
       t.timestamps
     end
-    add_index :products, :group_id
     add_index :products, :category_id
     add_index :products, :code
+    add_index :products, :ancestry
   end
 end

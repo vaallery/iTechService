@@ -1,0 +1,8 @@
+%tr.batch_fields.fields
+  %td.num
+  %td.product= f.input_field :product_id, as: :product
+  %td.features=
+  %td.price= f.input_field :price, class: 'input-small'
+  %td.quantity= f.input_field :quantity, class: 'input-small'
+  %td.sum= text_field_tag :sum, nil, class: 'input-small'
+  %td.action= link_to_remove_fields f

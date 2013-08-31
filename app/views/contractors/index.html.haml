@@ -1,19 +1,19 @@
-%h1 Listing contractors
+- model_class = Contractor
+= auto_header_tag
 
-%table
-  %tr
-    %th Name
-    %th
-    %th
-    %th
-
-  - @contractors.each do |contractor|
+%table.table.table-striped
+  %thead
     %tr
-      %td= contractor.name
-      %td= link_to 'Show', contractor
-      %td= link_to 'Edit', edit_contractor_path(contractor)
-      %td= link_to 'Destroy', contractor, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Contractor', new_contractor_path
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:created_at)
+      %th
+  %tbody
+    - @contractors.each do |contractor|
+      %tr
+        %td= link_to contractor.id, contractor_path(contractor)
+        %td= link_to contractor.name, contractor_path(contractor)
+        %td= human_datetime contractor.created_at
+        %td.btn-group
+          = link_to_edit_small contractor
+          = link_to_destroy_small contractor

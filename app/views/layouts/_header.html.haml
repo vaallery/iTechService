@@ -27,13 +27,15 @@
               = caret_tag
             %ul.dropdown-menu
 
+              %li= link_to t('purchases.link'), purchases_path
+              %li= link_to t('sales.link'), sales_path
               %li.dropdown-submenu
                 = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
                   = t 'dashboard.references'
                 %ul.dropdown-menu
                   %li= link_to t('products.index.title'), products_path
                   %li= link_to t('categories.index.title'), categories_path
-                  %li= link_to t('contractors.index.title'), contractors_path
+                  %li= link_to t('contractors.link'), contractors_path
                   %li= link_to t('feature_types.index.title'), feature_types_path
                   %li= link_to t('price_types.index.title'), price_types_path
                   %li= link_to t('stores.index.title'), stores_path
@@ -49,7 +51,6 @@
               %li= link_to t('announcements.link'), announcements_path if current_user.any_admin?
               %li.divider
               %li= link_to t('gift_certificates.link'), gift_certificates_path
-              %li= link_to t('sales.link'), sales_path
               %li= link_to t('stolen_phones.link'), stolen_phones_path
               %li{class: nav_state_for('device_types')}= link_to t('device_types.link', default: 'Device types'), device_types_path if can? :manage, DeviceType
               %li.divider

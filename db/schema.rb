@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130824042151) do
+ActiveRecord::Schema.define(:version => 20130830035453) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -30,10 +30,25 @@ ActiveRecord::Schema.define(:version => 20130824042151) do
     t.integer "user_id"
   end
 
+  create_table "batches", :force => true do |t|
+    t.integer  "purchase_id"
+    t.integer  "product_id"
+    t.decimal  "price",       :precision => 8, :scale => 2
+    t.integer  "quantity"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+  end
+
+  add_index "batches", ["product_id"], :name => "index_batches_on_product_id"
+  add_index "batches", ["purchase_id"], :name => "index_batches_on_purchase_id"
+
   create_table "categories", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.boolean  "is_service",         :default => false
+    t.boolean  "request_price",      :default => false
+    t.boolean  "feature_accounting", :default => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   create_table "categories_feature_types", :force => true do |t|
@@ -212,14 +227,13 @@ ActiveRecord::Schema.define(:version => 20130824042151) do
   create_table "features", :force => true do |t|
     t.integer  "feature_type_id"
     t.integer  "product_id"
-    t.integer  "value_id"
+    t.string   "value"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
 
   add_index "features", ["feature_type_id"], :name => "index_features_on_feature_type_id"
   add_index "features", ["product_id"], :name => "index_features_on_product_id"
-  add_index "features", ["value_id"], :name => "index_features_on_value_id"
 
   create_table "gift_certificates", :force => true do |t|
     t.string   "number"
@@ -356,17 +370,27 @@ ActiveRecord::Schema.define(:version => 20130824042151) do
   create_table "products", :force => true do |t|
     t.string   "name"
     t.string   "code"
-    t.integer  "group_id"
     t.integer  "category_id"
-    t.boolean  "is_service"
-    t.boolean  "request_price"
+    t.string   "ancestry"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "products", ["ancestry"], :name => "index_products_on_ancestry"
+  add_index "products", ["category_id"], :name => "index_products_on_category_id"
+  add_index "products", ["code"], :name => "index_products_on_code"
+
+  create_table "purchases", :force => true do |t|
+    t.integer  "contractor_id"
+    t.integer  "store_id"
+    t.integer  "status"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
 
-  add_index "products", ["category_id"], :name => "index_products_on_category_id"
-  add_index "products", ["code"], :name => "index_products_on_code"
-  add_index "products", ["group_id"], :name => "index_products_on_group_id"
+  add_index "purchases", ["contractor_id"], :name => "index_purchases_on_contractor_id"
+  add_index "purchases", ["status"], :name => "index_purchases_on_status"
+  add_index "purchases", ["store_id"], :name => "index_purchases_on_store_id"
 
   create_table "salaries", :force => true do |t|
     t.integer  "user_id"
@@ -420,6 +444,18 @@ ActiveRecord::Schema.define(:version => 20130824042151) do
   end
 
   add_index "settings", ["name"], :name => "index_settings_on_name"
+
+  create_table "stock_items", :force => true do |t|
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.integer  "store_id"
+    t.integer  "quantity"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "stock_items", ["item_id", "item_type"], :name => "index_stock_items_on_item_id_and_item_type"
+  add_index "stock_items", ["store_id"], :name => "index_stock_items_on_store_id"
 
   create_table "stolen_phones", :force => true do |t|
     t.string   "imei",       :null => false

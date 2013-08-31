@@ -1,0 +1,19 @@
+- model_class = Purchase
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:contractor)
+      %th= model_class.human_attribute_name(:store)
+      %th= model_class.human_attribute_name(:created_at)
+      %th
+  %tbody
+    - @purchases.each do |purchase|
+      %tr
+        %td= link_to purchase.id, purchase_path(purchase)
+        %td= purchase.contractor_id
+        %td= purchase.store_id
+        %td= human_datetime purchase.created_at
+        %td.btn-group
+          = link_to_edit_small purchase
+          = link_to_destroy_small purchase

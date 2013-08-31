@@ -2,6 +2,6 @@
 
 FactoryGirl.define do
   factory :feature_type do
-    name "MyString"
+    name "Feature Type 1"
   end
 end

@@ -2,14 +2,17 @@ ru:
   activerecord:
     models:
       announcement: Оповещение
+      batch: 'Партия'
       category: Категория
       client: Клиент
       comment: Комментарий
+      contractor: 'Поставщик'
       device: Девайс
       device_task: Задача
       device_type: Тип девайса
       discount: Скидка
       duty_day: Дежурство
+      feature: Характеристика
       feature_type: Тип характеристики
       gift_certificate: Подарочный сертификат
       history_record: history_record
@@ -22,6 +25,8 @@ ru:
       order: Заказ
       price: Прайс
       price_type: "Тип цен"
+      product: 'Продукт'
+      purchase: "Закупка"
       salary: Зарплата
       sale: Продажа
       schedule_day: Рабочий день
@@ -36,6 +41,9 @@ ru:
         active: Ативный
         kind: Тип
         user: Пользователь
+
+      batch:
+        product: :activerecord.models.product
 
       category:
         feature_types: "Типы характеристик"
@@ -144,6 +152,9 @@ ru:
         user: user
         user_id: user
 
+      feature:
+        value: 'Значение'
+
       feature_type:
         code: Код
 
@@ -210,9 +221,15 @@ ru:
       product:
         category: "Категория"
         code: "Код"
+        feature_accounting: 'Учёт по характеристикам'
+        features: 'Характеристики'
         group: "Группа"
         is_service: "Услуга"
         request_price: "Запрос цены"
+
+      purchase:
+        contractor: :activerecord.models.contractor
+        store: :activerecord.models.store
 
       salary:
         amount: Сумма
@@ -311,8 +328,11 @@ ru:
     name: Название
     number: Номер
     object: Объект
+    price: 'Цена'
+    quantity: 'Количество'
     serial_number: Серийный номер
     status: Статус
+    sum: Сумма
     updated_at: Время обновления
     user: Пользователь
     user_comment: Комментарий сотрудника
@@ -382,8 +402,15 @@ ru:
     updated: Комментарий изменён
 
   contractors:
+    created: 'Поставщик создан'
+    updated: 'Поставщик изменён'
+    link: :contractors.index.title
     index:
-      title: "Контрагенты"
+      title: 'Поставщики'
+    new:
+      title: 'Новый Поставщик'
+    edit:
+      title: 'Редактирование Поставщика'
 
   dashboard:
     actual_orders: Текущие заказы
@@ -615,6 +642,20 @@ ru:
     new:
       title: "Новый Продукт"
 
+  purchases:
+    created: 'Закупка создана'
+    updated: 'Закупка изменена'
+    link: :purchases.index.title
+    add_product: 'Добавить Продукт'
+    edit:
+      title: 'Редактирование Закупки'
+    index:
+      title: 'Закупки'
+    new:
+      title: 'Новая Закупка'
+    errors:
+      deleting_posted: 'Невозможно удалить проведенную закупку.'
+
   reports:
     average_duration: Средняя длительность, мин.
     choose: Выберите отчет
@@ -658,15 +699,15 @@ ru:
 
   sales:
     edit:
-      title: "Редактирование продажы"
+      title: "Редактирование Продажы"
     index:
       import_link: Импорт
-      title: Проданные девайсы
+      title: 'Продажи'
       client_search_placeholder: "Клиент: телефон | имя | карта"
       device_search_placeholder: "Девайс: серийник | IMEI"
     new:
-      title: "Новая продажа"
-    link: Проданные девайсы
+      title: "Новая Продажа"
+    link: :sales.index.title
     created: "Продажа создана"
     updated: "Продажа изменена"
 
