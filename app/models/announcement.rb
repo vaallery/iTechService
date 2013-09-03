@@ -69,7 +69,12 @@ class Announcement < ActiveRecord::Base
 
   def visible_for?(user)
     if self.device_return? and user.technician?
-      self.device.location.is_repair?
+      if self.device.present?
+        self.device.location.is_repair?
+      else
+        self.destroy
+        return false
+      end
     else
       is_recipient = self.recipient_ids.include?(user.id)
       #case kind

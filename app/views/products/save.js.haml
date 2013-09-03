@@ -1,0 +1,22 @@
+- if @product.parent_id.present?
+  :plain
+    parent_id = "#product_#{@product.parent_id}";
+- else
+  :plain
+    parent_id = null;
+:plain
+  product_id = "#product_#{@product.id}";
+  product_tag = "#{j(product_li(@product))}";
+
+  $('#product_form').html('');
+  $('#product_form').slideUp();
+
+  if($(product_id).length > 0) {
+    $(product_id).replaceWith(product_tag);
+  }else{
+    if(parent_id == null) {
+      $("#products_tree").append("<ul>"+product_tag+"</ul>");
+    }else{
+      $(parent_id + '>ul').append(product_tag);
+    }
+  }

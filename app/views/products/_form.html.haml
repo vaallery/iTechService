@@ -1,0 +1,15 @@
+= simple_form_for @product, remote: true, html: { class: 'form-horizontal product_form' } do |f|
+  = f.hidden_field :parent_id
+  = f.association :category, as: :select
+  = f.input :name
+  = f.input :code
+
+  -##feature_types.well.well-small{class: (@product.is_feature_accounting? ? '' : ' hidden')}
+  -#  - if @product.is_feature_accounting?
+  -#    %strong= Product.human_attribute_name :features
+  -#    = f.simple_fields_for :features do |ff|
+  -#      = ff.input :value, label: ff.object.name
+
+  .form-actions
+    = submit_button f
+    = link_to t('close'), '#', class: 'btn close_product_form'

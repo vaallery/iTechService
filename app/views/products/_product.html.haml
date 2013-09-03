@@ -1,0 +1,8 @@
+.product_plate
+  = link_to_if product.has_children?, glyph('chevron'), '#'
+  = link_to product.name, edit_product_path(product), remote: true
+  %span.pull-right
+    %span.ui-menu-divider
+    = link_to glyph(:plus), new_product_path(product: { parent_id: product.id }), remote: true, class: 'link-new'
+    = link_to glyph(:edit), edit_product_path(product), remote: true, class: 'link-edit'
+    = link_to glyph(:trash), product, method: :delete, remote: true, class: 'link-delete', data: { confirm: t('confirmation', default: 'Are you sure?') }
