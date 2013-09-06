@@ -1,17 +1,15 @@
 class Product < ActiveRecord::Base
 
-  #belongs_to :group
-  belongs_to :category
-  has_many :features
-  has_many :batches, inverse_of: :product
-  has_many :stock_items, as: :item
-  has_ancestry
-  #has_many :feature_types, through: :category
-  accepts_nested_attributes_for :features
-  attr_accessible :code, :name, :parent_id, :category_id, :features_attributes
-  validates_presence_of :name, :category#, :group
+  belongs_to :product_group, inverse_of: :products
+  has_many :items, inverse_of: :product
+  attr_accessible :code, :name, :product_group_id
+  validates_presence_of :name, :product_group
 
-  #after_save :check_feature_accounting
+  after_initialize do |product|
+    if product.new_record? and product.parent.present?
+      product.category_id = product.parent.category_id
+    end
+  end
 
   def self.search(params)
     products = Product.scoped
@@ -21,10 +19,12 @@ class Product < ActiveRecord::Base
     products
   end
 
-  private
+  def is_feature_accounting?
+    product_group.product_category.feature_accounting
+  end
 
-  #def check_feature_accounting
-  #  self.feature_accounting = self.features.any?
-  #end
+  def feature_types
+    product_group.product_category.feature_types
+  end
 
 end

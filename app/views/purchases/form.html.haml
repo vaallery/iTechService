@@ -1,5 +1,5 @@
 = auto_header_tag @purchase
-= simple_form_for @purchase, html: { class: 'form-horizontal' } do |f|
+= simple_form_for @purchase, html: { class: 'form-horizontal', id: 'purchase_form' } do |f|
   = f.association :contractor, as: :select
   = f.association :store, as: :select
 
@@ -31,4 +31,4 @@
   = link_to_add_fields t('purchases.add_product'), '#purchase_products>tbody', f, :batches
 
   .form-actions
-    = submit_button f
+    = submit_button f, disabled: true

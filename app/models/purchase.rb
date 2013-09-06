@@ -4,11 +4,14 @@ class Purchase < ActiveRecord::Base
   belongs_to :store, inverse_of: :purchases
   has_many :batches, inverse_of: :purchase
   has_many :products, through: :batches
-  accepts_nested_attributes_for :batches, allow_destroy: true, reject_if: lambda { |a| a[:price].blank? or a[:quantity].blank? or a[:product].blank? }
-  attr_accessible :status, :contractor, :store, :batches_attributes, :contractor_id, :store_id
+  accepts_nested_attributes_for :batches, allow_destroy: true, reject_if: lambda { |a| a[:price].blank? or a[:quantity].blank? or a[:product_id].blank? }
+  attr_accessible :contractor, :store, :batches_attributes, :contractor_id, :store_id
   validates_presence_of :contractor, :store
+  validates_associated :batches
 
-  after_save :accord_stock_items
+  after_initialize lambda { |purchase| purchase.status ||= 'new' }
+
+  after_save :update_stock_items
 
   STATUSES = {
     0 => 'new',
@@ -48,21 +51,31 @@ class Purchase < ActiveRecord::Base
     end
   end
 
+  def contractor_name
+    contractor.try :name
+  end
+
+  def store_name
+    store.try :name
+  end
+
   private
 
-  def accord_stock_items
-    #if self.is_posted? and changed_attributes['status'] == 0
-    #  self.batches.each do |batch|
-    #    if batch.product.feature_accounting?
-    #      batch.product.features.each do |feature|
-    #        stock_item = StockItem.find_or_create_by_item_id_and_item_type_and_store_id(item_id: feature.id, item_type: feature.class.to_s, store_id: self.store_id)
-    #
-    #      end
-    #
-    #    end
-    #
-    #  end
-    #end
+  def update_stock_items
+    if self.is_posted? and changed_attributes['status'] == 0
+      self.batches.each do |batch|
+        if batch.product.is_feature_accounting?
+          batch.product.features.each do |feature|
+            if feature.stock_item.nil?
+              feature.create_stock_item item_id: feature.id, item_type: feature.class.to_s, store_id: self.store_id, quantity: 1
+            end
+          end
+        else
+          stock_item = StoreItem.find_or_initialize_by_item_id_and_item_type_and_store_id item_id: feature.id, item_type: product.class.to_s, store_id: self.store_id
+          stock_item.quantity = (stock_item.quantity || 0) + batch.quantity
+        end
+      end
+    end
   end
 
 end

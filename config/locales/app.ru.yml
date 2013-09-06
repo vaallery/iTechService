@@ -357,6 +357,10 @@ ru:
     protector_made: Плёночка наклеена!
     updated: Оповещение изменено
 
+  batches:
+    errors:
+      feature_exists: 'Характеристика уже существует'
+
   categories:
     edit:
       title: "Редактирование Категории"

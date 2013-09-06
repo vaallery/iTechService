@@ -8,12 +8,12 @@ class ProductInput < SimpleForm::Inputs::Base
           template.link_to(template.glyph('remove'), '#', class: 'btn clear_product') +
           template.content_tag(:button, class: 'product_select_button btn dropdown-toggle', 'data-toggle' => 'dropdown') do
             template.content_tag(:span, class: 'product_name pull-left') do
-              @builder.object.product.blank? ? '-' : @builder.object.product.try(:full_name)
+              @builder.object.item.blank? ? '-' : @builder.object.item.name
             end +
             template.content_tag(:span, nil, class: 'caret pull-right')
           end +
           template.content_tag(:ul, class: 'products_list dropdown-menu unstyled') do
-            template.nested_products_list
+            template.product_select_list
           end
         end
       end

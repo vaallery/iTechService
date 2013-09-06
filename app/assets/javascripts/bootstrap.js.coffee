@@ -1,7 +1,8 @@
+#  $("a[rel~=popover]").popover()
+#  $("a[rel~=tooltip], .tooltip").tooltip()
 jQuery ->
-  $("a[rel~=popover]").popover()
-  $(".tooltip").tooltip()
-  $("a[rel~=tooltip]").tooltip()
+  $("a[rel~=popover], .has-popover").popover()
+  $("a[rel~=tooltip], .has-tooltip").tooltip()
   $(".collapse").collapse()
   $(".dropdown-toggle").dropdown()
   $('.datetimepicker').datetimepicker

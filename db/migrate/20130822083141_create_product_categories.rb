@@ -1,6 +1,6 @@
-class CreateCategories < ActiveRecord::Migration
+class CreateProductCategories < ActiveRecord::Migration
   def change
-    create_table :categories do |t|
+    create_table :product_categories do |t|
       t.string :name
       t.boolean :is_service, default: false
       t.boolean :request_price, default: false
