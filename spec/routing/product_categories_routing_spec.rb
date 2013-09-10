@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe CategoriesController do
+describe ProductCategoriesController do
   describe "routing" do
 
     it "routes to #index" do

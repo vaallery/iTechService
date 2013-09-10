@@ -1,13 +1,5 @@
 module ProductsHelper
 
-  def root_products
-    Product.roots
-  end
-
-  def products_root
-    Product.roots.first
-  end
-
   #def nested_products(products)
   #  if products.present?
   #    products.map do |product, sub_products|
@@ -61,16 +53,9 @@ module ProductsHelper
     end
   end
 
-  def nested_product_groups_list(product_groups)
-    product_groups.map do |product_group, sub_product_groups|
-      ins_class = sub_product_groups.any? ? 'tree_icon' : 'tree_leaf'
-      content_tag(:li, content_tag(:ins, nil, class: ins_class) + link_to(product_group.name, '#') + content_tag(:ul, nested_product_groups_list(sub_product_groups)), class: 'product_group', id: "product_group_#{product_group.id}", title: product_group.name, data: {product_group_id: product_group.id, products: product_items(product_group.products)})
-    end.join.html_safe
-  end
-
   def product_select_list
     if ProductGroup.roots.goods.any?
-      product_groups = ProductGroup.roots.goods.first.subtree.arrange
+      product_groups = root_product_groups.goods.first.subtree.arrange
       nested_product_groups_list(product_groups)
     else
       nil

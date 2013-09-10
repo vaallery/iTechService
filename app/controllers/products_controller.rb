@@ -3,11 +3,20 @@ class ProductsController < ApplicationController
   skip_load_resource only: :index
 
   def index
-    @products = Product.search(params).page(params[:page])
+    @product_groups = ProductGroup.roots.order('id asc')
+    if params[:group].blank?
+      @opened_product_groups = []
+      @products = Product.search(params).page(params[:page])
+    else
+      @current_product_group = ProductGroup.find params[:group]
+      @current_product_group_id = @current_product_group.id
+      @opened_product_groups = @current_product_group.path_ids[1..-1].map { |g| "product_group_#{g}" }.join(', ')
+      @products = @current_product_group.products.search(params).page(params[:page])
+    end
 
     respond_to do |format|
       format.html
-      format.js { render 'shared/index' }
+      format.js
       format.json { render json: @products }
     end
   end
@@ -35,7 +44,7 @@ class ProductsController < ApplicationController
   def create
     respond_to do |format|
       if @product.save
-        format.html { redirect_to products_path, notice: 'Product was successfully created.' }
+        format.html { redirect_to products_path, notice: t('products.created') }
         format.json { render json: @product, status: :created, location: @product }
       else
         format.html { render action: "new" }
@@ -47,7 +56,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update_attributes(params[:product])
-        format.html { redirect_to products_path, notice: 'Product was successfully updated.' }
+        format.html { redirect_to products_path, notice: t('products.updated') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

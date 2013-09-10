@@ -105,7 +105,7 @@ ItechService::Application.routes.draw do
 
   resources :timesheet_days, path: 'timesheet', except: :show
 
-  resources :categories, except: :show
+  resources :product_categories, except: :show
 
   resources :features, except: :show
 
@@ -118,6 +118,8 @@ ItechService::Application.routes.draw do
   resources :products do
     get :category_select, on: :collection, defaults: {format: 'js'}
   end
+
+  resources :product_groups, except: [:index, :show]
 
   resources :price_types, except: :show
 

@@ -57,7 +57,7 @@ module ApplicationHelper
     options.merge! class: 'btn btn-success btn-large'
     name ||= t('new')
     link_to url_for(controller: object_class.name.tableize, action: 'new'), options do
-      icon_tag(:file) + name
+      glyph(:file) + name
     end
   end
 
@@ -65,7 +65,7 @@ module ApplicationHelper
     options.merge! class: 'btn'
     name = t 'show'
     link_to url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options do
-      icon_tag(:eye) + name
+      glyph(:eye) + name
     end
   end
 
@@ -73,7 +73,7 @@ module ApplicationHelper
     options.merge! class: 'btn'
     name = t 'edit'
     link_to url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options do
-      icon_tag(:edit) + name
+      glyph(:edit) + name
     end
   end
 
@@ -82,7 +82,7 @@ module ApplicationHelper
         data: {confirm: t('confirmation', default: 'Are you sure?')}
     name = t 'destroy'
     link_to url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options do
-      icon_tag(:trash) + name
+      glyph(:trash) + name
     end
   end
 

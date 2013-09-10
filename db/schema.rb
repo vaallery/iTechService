@@ -42,11 +42,6 @@ ActiveRecord::Schema.define(:version => 20130906043834) do
   add_index "batches", ["item_id"], :name => "index_batches_on_item_id"
   add_index "batches", ["purchase_id"], :name => "index_batches_on_purchase_id"
 
-  create_table "categories_feature_types", :force => true do |t|
-    t.integer "category_id"
-    t.integer "feature_type_id"
-  end
-
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
     t.string   "data_content_type"
@@ -214,6 +209,11 @@ ActiveRecord::Schema.define(:version => 20130906043834) do
   end
 
   add_index "feature_types", ["code"], :name => "index_feature_types_on_code"
+
+  create_table "feature_types_product_categories", :force => true do |t|
+    t.integer "product_category_id"
+    t.integer "feature_type_id"
+  end
 
   create_table "features", :force => true do |t|
     t.integer  "feature_type_id"

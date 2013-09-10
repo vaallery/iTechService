@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe CategoriesController do
+describe ProductCategoriesController do
 
   # This should return the minimal set of attributes required to create a valid
   # Category. As you add validations to Category, be sure to
@@ -34,7 +34,7 @@ describe CategoriesController do
     it "assigns all categories as @categories" do
       category = Category.create! valid_attributes
       get :index, {}, valid_session
-      assigns(:categories).should eq([category])
+      assigns(:product_categories).should eq([category])
     end
   end
 

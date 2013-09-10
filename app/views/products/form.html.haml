@@ -1,17 +1,14 @@
 = auto_header_tag @product
 = simple_form_for @product, html: { class: 'form-horizontal' } do |f|
-  = f.association :category, as: :select
-  -#= f.input :group, as: :select
+  = f.hidden_field :product_group_id
   = f.input :name
   = f.input :code
-  = f.input :is_service
-  = f.input :request_price
 
-  #feature_types.well.well-small{class: (@product.feature_accounting? ? '' : ' hidden')}
-    - if @product.feature_accounting?
-      %strong= Product.human_attribute_name :features
-      = f.simple_fields_for :features do |ff|
-        = ff.input :value, label: ff.object.name
+  -##feature_types.well.well-small{class: (@product.is_feature_accounting? ? '' : ' hidden')}
+  -#  - if @product.is_feature_accounting?
+  -#    %strong= Product.human_attribute_name :features
+  -#    = f.simple_fields_for :features do |ff|
+  -#      = ff.input :value, label: ff.object.name
 
   .form-actions
     = submit_button f

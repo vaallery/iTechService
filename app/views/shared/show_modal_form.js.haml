@@ -4,5 +4,5 @@
     $('html,body').css('overflow', 'hidden');
     $("#modal_form").modal('show');
   } else {
-    $("#modal_form").html("#{j(render('modal_form_content'))}")
+    $("#modal_form").html("#{j(render(params[:form].present? ? params[:form] : 'modal_form_content'))}")
   }

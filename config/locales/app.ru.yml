@@ -45,9 +45,6 @@ ru:
       batch:
         product: :activerecord.models.product
 
-      category:
-        feature_types: "Типы характеристик"
-
       ckeditor/asset:
         assetable: :activerecord.models.assetable
         assetable_type: assetable_type
@@ -224,6 +221,9 @@ ru:
         feature_accounting: 'Учёт по характеристикам'
         features: 'Характеристики'
         group: "Группа"
+
+      product_category:
+        feature_types: "Типы характеристик"
         is_service: "Услуга"
         request_price: "Запрос цены"
 
@@ -329,6 +329,7 @@ ru:
     number: Номер
     object: Объект
     price: 'Цена'
+    product_category: 'Категория продуктов'
     quantity: 'Количество'
     serial_number: Серийный номер
     status: Статус
@@ -360,14 +361,6 @@ ru:
   batches:
     errors:
       feature_exists: 'Характеристика уже существует'
-
-  categories:
-    edit:
-      title: "Редактирование Категории"
-    index:
-      title: "Категории"
-    new:
-      title: "Новая Категория"
 
   clients:
     edit:
@@ -635,6 +628,25 @@ ru:
     index:
       title: Прайсы
     link: Прайсы
+
+  product_categories:
+    created: 'Категория создана'
+    updated: 'Категория изменена'
+    edit:
+      title: "Редактирование Категории"
+    index:
+      title: "Категории Продуктов"
+    new:
+      title: "Новая Категория"
+
+  product_groups:
+    created: 'Продуктовая Группа создана'
+    updated: 'Продуктовая Группа изменена'
+    new_link: 'Новая Группа'
+    edit:
+      title: 'Редактирование Продуктовой Группы'
+    new:
+      title: 'Новая Продуктовая Группа'
 
   products:
     created: "Продукт создан"

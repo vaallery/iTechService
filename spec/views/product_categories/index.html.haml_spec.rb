@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "categories/index" do
   before(:each) do
-    assign(:categories, [
+    assign(:product_categories, [
       stub_model(Category,
         :name => "Name"
       ),
