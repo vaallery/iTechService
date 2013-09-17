@@ -29,7 +29,7 @@ class TicketPdf < Prawn::Document
       text Setting.get_value(:address), indent_paragraphs: 70
       text Setting.get_value(:schedule), indent_paragraphs: 70
     end
-    move_down 10
+    move_cursor_to 160
     font_size 24 do
       text "№ #{@device.ticket_number}", align: :center, inlign_format: true, style: :bold
     end
