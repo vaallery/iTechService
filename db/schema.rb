@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130906043834) do
+ActiveRecord::Schema.define(:version => 20130920050547) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -226,6 +226,11 @@ ActiveRecord::Schema.define(:version => 20130906043834) do
   add_index "features", ["feature_type_id"], :name => "index_features_on_feature_type_id"
   add_index "features", ["product_id"], :name => "index_features_on_product_id"
 
+  create_table "features_items", :force => true do |t|
+    t.integer "feature_id"
+    t.integer "item_id"
+  end
+
   create_table "gift_certificates", :force => true do |t|
     t.string   "number"
     t.integer  "nominal"
@@ -360,6 +365,14 @@ ActiveRecord::Schema.define(:version => 20130906043834) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "price_types_stores", :force => true do |t|
+    t.integer "price_type_id"
+    t.integer "store_id"
+  end
+
+  add_index "price_types_stores", ["price_type_id"], :name => "index_price_types_stores_on_price_type_id"
+  add_index "price_types_stores", ["store_id"], :name => "index_price_types_stores_on_store_id"
+
   create_table "prices", :force => true do |t|
     t.string   "file"
     t.datetime "created_at", :null => false
@@ -368,8 +381,6 @@ ActiveRecord::Schema.define(:version => 20130906043834) do
 
   create_table "product_categories", :force => true do |t|
     t.string   "name"
-    t.boolean  "is_service",         :default => false
-    t.boolean  "request_price",      :default => false
     t.boolean  "feature_accounting", :default => false
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
@@ -378,13 +389,27 @@ ActiveRecord::Schema.define(:version => 20130906043834) do
   create_table "product_groups", :force => true do |t|
     t.string   "name"
     t.string   "ancestry"
+    t.boolean  "is_service",          :default => false
+    t.boolean  "request_price",       :default => false
     t.integer  "product_category_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
   end
 
   add_index "product_groups", ["ancestry"], :name => "index_product_groups_on_ancestry"
   add_index "product_groups", ["product_category_id"], :name => "index_product_groups_on_product_category_id"
+
+  create_table "product_prices", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "price_type_id"
+    t.date     "date"
+    t.decimal  "value"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "product_prices", ["price_type_id"], :name => "index_product_prices_on_price_type_id"
+  add_index "product_prices", ["product_id"], :name => "index_product_prices_on_product_id"
 
   create_table "products", :force => true do |t|
     t.string   "name"
@@ -420,25 +445,6 @@ ActiveRecord::Schema.define(:version => 20130906043834) do
   add_index "salaries", ["is_prepayment"], :name => "index_salaries_on_is_prepayment"
   add_index "salaries", ["user_id"], :name => "index_salaries_on_user_id"
 
-  create_table "sales", :force => true do |t|
-    t.integer  "device_type_id"
-    t.string   "imei"
-    t.string   "serial_number"
-    t.datetime "sold_at"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "quantity"
-    t.integer  "client_id"
-    t.integer  "value"
-    t.integer  "user_id"
-  end
-
-  add_index "sales", ["client_id"], :name => "index_sales_on_client_id"
-  add_index "sales", ["device_type_id"], :name => "index_sales_on_device_type_id"
-  add_index "sales", ["imei"], :name => "index_sales_on_imei"
-  add_index "sales", ["serial_number"], :name => "index_sales_on_serial_number"
-  add_index "sales", ["user_id"], :name => "index_sales_on_user_id"
-
   create_table "schedule_days", :force => true do |t|
     t.integer  "user_id"
     t.integer  "day"
@@ -472,9 +478,9 @@ ActiveRecord::Schema.define(:version => 20130906043834) do
   create_table "store_items", :force => true do |t|
     t.integer  "item_id"
     t.integer  "store_id"
-    t.integer  "quantity"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "quantity",   :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "store_items", ["item_id"], :name => "index_store_items_on_item_id"

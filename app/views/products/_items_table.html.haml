@@ -1,0 +1,21 @@
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      - @feature_types.each do |feature_type|
+        %th= feature_type.name
+  %tbody
+    - @items.each do |item|
+      %tr.item_row{ data: { item: item.id } }
+        - item.features.each do |feature|
+          %td= feature.value
+
+    %tr#new_item_fields
+      = hidden_field_tag "item[product_id]", @product.id, disabled: true
+      - @feature_types.each_with_index do |feature_type, i|
+        %td
+          = hidden_field_tag "item[features_attributes][#{i}][feature_type_id]", feature_type.id, disabled: true
+          = text_field_tag "item[features_attributes][#{i}][value]", nil, disabled: true
+
+= paginate @items, remote: true, params: { controller: 'items', action: 'index', product_id: @product.id }
+
+= link_to t('add'), '#', id: 'add_product_item', class: 'btn btn-small'

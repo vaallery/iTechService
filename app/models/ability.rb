@@ -10,6 +10,10 @@ Ability
     if user.superadmin?
       can :manage, :all
       can :view_reports
+      cannot :post, Purchase, status: [1, 2]
+      cannot :unpost, Purchase, status: [0, 2]
+      cannot :edit, Purchase, status: [1, 2]
+      cannot :destroy, Purchase, status: 1
     elsif user.admin?
       can :manage, :all
       can :view_reports

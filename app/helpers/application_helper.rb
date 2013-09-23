@@ -57,7 +57,7 @@ module ApplicationHelper
     options.merge! class: 'btn btn-success btn-large'
     name ||= t('new')
     link_to url_for(controller: object_class.name.tableize, action: 'new'), options do
-      glyph(:file) + name
+      "#{glyph(:file)} #{name}".html_safe
     end
   end
 
@@ -65,7 +65,7 @@ module ApplicationHelper
     options.merge! class: 'btn'
     name = t 'show'
     link_to url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options do
-      glyph(:eye) + name
+      "#{glyph(:eye)} #{name}".html_safe
     end
   end
 
@@ -73,7 +73,7 @@ module ApplicationHelper
     options.merge! class: 'btn'
     name = t 'edit'
     link_to url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options do
-      glyph(:edit) + name
+      "#{glyph(:edit)} #{name}".html_safe
     end
   end
 
@@ -82,7 +82,7 @@ module ApplicationHelper
         data: {confirm: t('confirmation', default: 'Are you sure?')}
     name = t 'destroy'
     link_to url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options do
-      glyph(:trash) + name
+      "#{glyph(:trash)} #{name}".html_safe
     end
   end
 
@@ -97,7 +97,7 @@ module ApplicationHelper
       name = options[:name] || t("helpers.button.#{model_name}.#{action}", model: human_model_name, default: t(action, default: 'Save'))
     end
     button_tag options do
-      glyph(:save) + ' ' + name
+      "#{glyph(:save)} #{name}".html_safe
     end
   end
 
@@ -207,7 +207,7 @@ module ApplicationHelper
   end
 
   def history_link_to(url)
-    link_to icon_tag(:time), url, class: 'history_link', remote: true
+    link_to glyph(:time), url, class: 'history_link', remote: true
   end
 
   def store_location
@@ -257,6 +257,40 @@ module ApplicationHelper
     content_tag(:li) do
       link_to glyph(:barcode), '#', remote: true, id: 'scan_barcode_button'
     end.html_safe
+  end
+
+  def document_presentation(document)
+    t 'document', name: t("activerecord.models.#{document.class.to_s.downcase}"), num: document.id, time: human_datetime(document.created_at)
+  end
+
+  def button_to_post(document)
+    #content_tag(:div, class: 'post_button') do
+    #  form_for(document) do |f|
+    #    concat hidden_field_tag("#{document.class.to_s.downcase}[status]", 1)
+    #    concat button_tag("#{glyph('check')} #{t('post')}".html_safe, type: 'submit', class: 'btn btn-primary', data: {confirm: t('confirmation')})
+    #  end
+    #end
+
+    class_name = document.class.to_s.downcase
+    link_to "#{glyph('check')} #{t('post')}".html_safe, {controller: class_name.tableize, action: 'post', id: document.id}, method: 'put', data: {confirm: t('confirmation')}, class: 'btn btn-primary'
+  end
+
+  def button_to_unpost(document)
+    #content_tag(:div, class: 'unpost_button') do
+    #  form_for(document) do |f|
+    #    concat hidden_field_tag("#{document.class.to_s.downcase}[status]", 0)
+    #    concat button_tag("#{glyph('check-empty')} #{t('unpost')}".html_safe, type: 'submit', class: 'btn btn-primary', data: {confirm: t('confirmation')})
+    #  end
+    #end
+    class_name = document.class.to_s.downcase
+    link_to "#{glyph('check-empty')} #{t('unpost')}".html_safe, {controller: class_name.tableize, action: 'unpost', id: document.id}, method: 'put', data: {confirm: t('confirmation')}, class: 'btn btn-primary'
+  end
+
+  def button_to_update(name, document, attributes)
+    class_name = document.class.to_s.downcase
+    parameters = {controller: class_name.tableize, action: 'update', id: document.id, method: 'put', data: {confirm: t('confirmation')}}
+    parameters[class_name.to_sym] = attributes
+    button_to name, parameters, {class: 'btn btn-primary'}
   end
 
 end

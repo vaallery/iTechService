@@ -224,12 +224,15 @@ ru:
 
       product_category:
         feature_types: "Типы характеристик"
+
+      product_group:
         is_service: "Услуга"
         request_price: "Запрос цены"
 
       purchase:
         contractor: :activerecord.models.contractor
         store: :activerecord.models.store
+        total_sum: 'Сумма'
 
       salary:
         amount: Сумма
@@ -657,6 +660,10 @@ ru:
       title: "Продукты"
     new:
       title: "Новый Продукт"
+    shoose:
+      title: "Выбор товара"
+    choose:
+      submit: "Создать"
 
   purchases:
     created: 'Закупка создана'
@@ -671,6 +678,10 @@ ru:
       title: 'Новая Закупка'
     errors:
       deleting_posted: 'Невозможно удалить проведенную закупку.'
+    statuses:
+      new: 'Новая'
+      posted: 'Проведена'
+      deleted: 'Удалена'
 
   reports:
     average_duration: Средняя длительность, мин.
@@ -900,6 +911,7 @@ ru:
   confirmation: Вы уверены?
   create: Создать
   destroy: "Удалить"
+  document: "%{name} №%{num} от %{time}"
   done: "Готово"
   edit: Редактировать
   everywhere: "Везде"
@@ -912,6 +924,7 @@ ru:
   moved_title: Переместил
   new: "Новый"
   nothing_found: Ничего не найдено
+  post: 'Провести'
   phone_placeholder: "6, 7, 10 или 11 цифр"
   remove_photo: Удалить фото
   save: Сохранить
@@ -920,6 +933,7 @@ ru:
   today: Сегодня
   total: Итого
   undone: "Не готово"
+  unpost: 'Сделать непроведённым'
   update: Сохранить
   yep: "Да"
   not_accessible: "Не доступен"

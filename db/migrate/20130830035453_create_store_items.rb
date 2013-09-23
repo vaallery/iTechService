@@ -3,7 +3,7 @@ class CreateStoreItems < ActiveRecord::Migration
     create_table :store_items do |t|
       t.references :item
       t.references :store
-      t.integer :quantity
+      t.integer :quantity, default: 0
 
       t.timestamps
     end

@@ -3,6 +3,7 @@ class Batch < ActiveRecord::Base
   belongs_to :purchase, inverse_of: :batches
   belongs_to :item, inverse_of: :batches
   attr_accessible :price, :quantity, :item_id
+  validates_presence_of :item, :price, :quantity
 
   #def features=(attributes)
   #  #errors.add :features, I18n.t('batches.errors.feature_exists')
@@ -13,10 +14,16 @@ class Batch < ActiveRecord::Base
   #  end
   #end
 
-
-
   def sum
     (price || 0) * (quantity || 0)
+  end
+
+  def presentation
+    item.present? ? item.name : '-'
+  end
+
+  def product
+    item.try :product
   end
 
 end

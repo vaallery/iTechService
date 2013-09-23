@@ -1,17 +1,47 @@
-- model_class = Purchase
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.titleize
+  %h3
+    = link_back_to_index
+    = document_presentation @purchase
 
-%p
-  %strong= model_class.human_attribute_name(:contractor_id) + ':'
-  %br
-  = @purchase.contractor_id
-%p
-  %strong= model_class.human_attribute_name(:store_id) + ':'
-  %br
-  = @purchase.store_id
+%dl.dl-horizontal
+  %dt= Purchase.human_attribute_name :status
+  %dd= purchase_status @purchase
+  %dt= Purchase.human_attribute_name :contractor
+  %dd= link_to @purchase.contractor_name, contractor_path(@purchase.contractor)
+  %dt= Purchase.human_attribute_name :store
+  %dd= link_to @purchase.store_name, store_path(@purchase.store)
+
+%table#purchase_products.table.table-condensed.table-striped.table-bordered
+  %caption
+    %h4= t 'products.index.title'
+  %thead
+    %tr
+      %th.num
+      %th.product= Batch.human_attribute_name :product
+      %th.features= Product.human_attribute_name :features
+      %th.price= Batch.human_attribute_name :price
+      %th.quantity= Batch.human_attribute_name :quantity
+      %th.sum= Batch.human_attribute_name :sum
+
+  %tbody
+    - @purchase.batches.each do |batch|
+      %tr.batch_fields
+        %td.num
+        %td.product= link_to batch.presentation, product_path(batch.product)
+        %td.features= batch.item.features_presentation if batch.item.present?
+        %td.price.number= batch.price
+        %td.quantity.number= batch.quantity
+        %td.sum.number= batch.sum
+
+  %tfoot
+    %tr
+      %td{colspan: 3}= t 'total'
+      %td
+      %td
+      %td.total_sum.number= @purchase.total_sum
 
 .form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), purchases_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_purchase_path(@purchase), :class => 'btn'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), purchase_path(@purchase), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+  = link_to_edit @purchase if can? :edit, @purchase
+  = button_to_post @purchase if can? :post, @purchase
+  = button_to_unpost @purchase if can? :unpost, @purchase
+  = link_to_destroy @purchase if can? :destroy, @purchase

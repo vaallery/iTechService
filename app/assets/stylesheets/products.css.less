@@ -57,6 +57,7 @@
 .product_selector {
   .product_select_button {
     width: 300px;
+    text-align: left;
   }
   .products_list {
     width: 300px;
@@ -108,6 +109,33 @@
           float: right;
         }
       }
+    }
+  }
+}
+
+#product_choose_form {
+  .search-query {
+    -webkit-border-radius: 14px 0 0 14px;
+    -moz-border-radius: 14px 0 0 14px;
+    border-radius: 14px 0 0 14px;
+  }
+  .clear_search_field {
+    -webkit-border-radius: 0 14px 14px 0;
+    -moz-border-radius: 0 14px 14px 0;
+    border-radius: 0 14px 14px 0;
+  }
+  #resource_table {
+    .product_row {
+      cursor: pointer;
+    }
+  }
+  #product_items {
+    display: none;
+    #new_item_fields {
+      display: none;
+    }
+    .item_row {
+      cursor: pointer;
     }
   }
 }

@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   load_and_authorize_resource
-  skip_load_resource only: :index
+  skip_load_resource only: [:index, :choose, :select]
 
   def index
     @product_groups = ProductGroup.roots.order('id asc')
@@ -12,6 +12,10 @@ class ProductsController < ApplicationController
       @current_product_group_id = @current_product_group.id
       @opened_product_groups = @current_product_group.path_ids[1..-1].map { |g| "product_group_#{g}" }.join(', ')
       @products = @current_product_group.products.search(params).page(params[:page])
+    end
+
+    if params[:choose] == 'true'
+      @table_name = 'small_table'
     end
 
     respond_to do |format|
@@ -71,6 +75,45 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to products_url }
       format.json { head :no_content }
+    end
+  end
+
+  def choose
+    #if params[:item].present?
+    #  @item = Item.find params[:item]
+    #  @product = @item.product
+    #  current_product_group = @product.product_group
+    #  @current_product_group_id = current_product_group.id
+    #  @opened_product_groups = @current_product_group.path_ids[1..-1].map { |g| "product_group_#{g}" }.join(', ')
+    #  @products = @current_product_group.products.search(params).page(params[:page])
+    #end
+    @product_groups = ProductGroup.roots.goods
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def select
+    if params[:product_id].present?
+      @product = Product.find params[:product_id]
+      if @product.is_feature_accounting?
+        @items = @product.items.page(params[:page])
+        @feature_types = @product.feature_types
+      else
+        @item = @product.items.first_or_create
+      end
+    end
+
+    if params[:item_id].present?
+      @item = Item.find params[:item_id]
+    end
+
+    if params[:item].present?
+      @item = Item.create params[:item]
+    end
+
+    respond_to do |format|
+      format.js
     end
   end
 

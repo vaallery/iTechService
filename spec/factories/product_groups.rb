@@ -2,7 +2,10 @@
 
 FactoryGirl.define do
   factory :product_group do
-    name "MyString"
-    ancestry "MyString"
+    name "Product group"
+    ancestry nil
+    is_service false
+    request_price false
+    product_category
   end
 end

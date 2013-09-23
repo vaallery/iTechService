@@ -25,10 +25,11 @@
         %td{colspan: 3}= t 'total'
         %td
         %td
-        %td.total_sum
+        %td.total_sum.number= @purchase.total_sum
         %td
 
   = link_to_add_fields t('purchases.add_product'), '#purchase_products>tbody', f, :batches
 
   .form-actions
-    = submit_button f, disabled: true
+    = submit_button f#, disabled: true
+    = button_to_post @purchase if can? :post, @purchase

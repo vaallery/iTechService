@@ -20,9 +20,14 @@ jQuery ->
     add_fields target, association, content
     event.preventDefault()
 
+  $(document).on 'shown', '#modal_form', ->
+    $('html,body').css('overflow', 'hidden');
+
   $(document).on 'hidden', '#modal_form', ->
     $('html,body').css 'overflow', 'auto'
     $('#modal_form').remove()
+    $('.product_selector.active').removeClass('active')
+    $('.product_select_button.active').removeClass('active')
 
   $(document).on 'keyup', '#search_form .search-query', (event) ->
     if event.keyCode is 13
@@ -148,6 +153,9 @@ window.showSpinner = ()->
 
 window.hideSpinner = ->
   $('#spinner').fadeOut()
+
+window.hideModal = ->
+  $('#modal_form').modal('hide')
 
 window.datepicker_dates =
   days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],

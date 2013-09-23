@@ -20,6 +20,8 @@ class PurchasesController < ApplicationController
   end
 
   def new
+    @purchase = Purchase.new
+
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @purchase }
@@ -27,6 +29,8 @@ class PurchasesController < ApplicationController
   end
 
   def edit
+    @purchase = Purchase.find params[:id]
+
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @purchase }
@@ -34,9 +38,11 @@ class PurchasesController < ApplicationController
   end
 
   def create
+    @purchase = Purchase.new params[:purchase]
+
     respond_to do |format|
       if @purchase.save
-        format.html { redirect_to purchases_path, notice: 'Purchase was successfully created.' }
+        format.html { redirect_to @purchase, notice: t('purchases.created') }
         format.json { render json: @purchase, status: :created, location: @purchase }
       else
         format.html { render 'form' }
@@ -46,9 +52,11 @@ class PurchasesController < ApplicationController
   end
 
   def update
+    @purchase = Purchase.find params[:id]
+
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
-        format.html { redirect_to purchases_path, notice: 'Purchase was successfully updated.' }
+        format.html { redirect_to @purchase, notice: t('purchases.updated') }
         format.json { head :no_content }
       else
         format.html { render 'form' }
@@ -65,4 +73,29 @@ class PurchasesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def post
+    @porchase = Purchase.find params[:id]
+
+    respond_to do |format|
+      if @purchase.post
+        format.html { redirect_to @purchase, notice: t('purchases.posted') }
+      else
+        format.html { redirect_to @purchase, error: t('purchases.not_posted') }
+      end
+    end
+  end
+
+  def unpost
+    @porchase = Purchase.find params[:id]
+
+    respond_to do |format|
+      if @purchase.unpost
+        format.html { redirect_to @purchase, notice: t('purchases.unposted') }
+      else
+        format.html { redirect_to @purchase, error: t('purchases.not_unposted') }
+      end
+    end
+  end
+
 end

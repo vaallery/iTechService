@@ -1,7 +1,6 @@
 jQuery ->
 
   if $('#product_groups').length > 0
-#    $("#product_groups>.product_groups_tree").each (i, element)->
     product_groups_tree('#product_groups')
 
 window.product_groups_tree = (container)->

@@ -3,15 +3,15 @@ class Purchase < ActiveRecord::Base
   belongs_to :contractor, inverse_of: :purchases
   belongs_to :store, inverse_of: :purchases
   has_many :batches, inverse_of: :purchase
-  has_many :products, through: :batches
-  accepts_nested_attributes_for :batches, allow_destroy: true, reject_if: lambda { |a| a[:price].blank? or a[:quantity].blank? or a[:product_id].blank? }
-  attr_accessible :contractor, :store, :batches_attributes, :contractor_id, :store_id
+  has_many :items, through: :batches
+  accepts_nested_attributes_for :batches, allow_destroy: true, reject_if: lambda { |a| a[:price].blank? or a[:quantity].blank? or a[:item_id].blank? }
+  attr_accessible :batches_attributes, :contractor_id, :store_id
   validates_presence_of :contractor, :store
   validates_associated :batches
 
-  after_initialize lambda { |purchase| purchase.status ||= 'new' }
+  after_initialize lambda { |purchase| purchase.status = 'new' if purchase.status.blank? }
 
-  after_save :update_stock_items
+  #before_save :update_stock_items_and_prices
 
   STATUSES = {
     0 => 'new',
@@ -25,9 +25,27 @@ class Purchase < ActiveRecord::Base
 
   def self.search(params)
     purchases = Purchase.scoped
+
     unless (purchase_q = params[:purchase_q]).blank?
-# TODO purchases search
+      purchases = purchases.where('id LIKE ?', "%#{purchase_q}%")
     end
+
+    unless (start_date = params[:start_date]).blank?
+      purchases = purchases.where('created_at >= ?', start_date)
+    end
+
+    unless (end_date = params[:end_date]).blank?
+      purchases = purchases.where('created_at <= ?', end_date)
+    end
+
+    unless (contractor_id = params[:contractor_id]).blank?
+      purchases = purchases.where(contractor_id: contractor_id)
+    end
+
+    unless (store_id = params[:store_id]).blank?
+      purchases = purchases.where(store_id: store_id)
+    end
+
     purchases
   end
 
@@ -41,6 +59,10 @@ class Purchase < ActiveRecord::Base
 
   def is_deleted?
     status == 2
+  end
+
+  def status_s
+    STATUSES[status]
   end
 
   def set_deleted
@@ -59,22 +81,56 @@ class Purchase < ActiveRecord::Base
     store.try :name
   end
 
+  def total_sum
+    batches.sum { |batch| batch.sum }
+  end
+
+  def post
+    if is_new?
+      transaction do
+        cur_date = Date.current
+        batches.each do |batch|
+          item = batch.item
+          if item.is_feature_accounting?
+            if (store_item = item.store_items.first_or_create).quantity > 0
+              self.errors[:base] << t('purchases.errors.stock_item_already_present')
+            else
+              store_item.update_attributes store_id: store_id, quantity: 1
+            end
+          else
+            store_item = StoreItem.find_or_initialize_by_item_id_and_store_id item_id: item.id, store_id: self.store_id
+            store_item.quantity = (store_item.quantity || 0) + batch.quantity
+            store_item.save!
+          end
+          product = item.product
+          store.price_types.each do |price_type|
+            price = product.prices.find_or_initialize_by_price_type_id_and_date price_type_id: price_type.id, date: cur_date
+            price.value = batch.price
+            price.save!
+          end
+        end
+        update_attribute :status, 1
+      end
+    end
+  end
+
+  def unpost
+    if is_posted?
+      transaction do
+        cur_date = Date.current
+        batches.each do |batch|
+          item = batch.item
+        end
+        update status: 0
+      end
+    end
+  end
+
   private
 
-  def update_stock_items
+  def update_stock_items_and_prices
     if self.is_posted? and changed_attributes['status'] == 0
-      self.batches.each do |batch|
-        if batch.product.is_feature_accounting?
-          batch.product.features.each do |feature|
-            if feature.stock_item.nil?
-              feature.create_stock_item item_id: feature.id, item_type: feature.class.to_s, store_id: self.store_id, quantity: 1
-            end
-          end
-        else
-          stock_item = StoreItem.find_or_initialize_by_item_id_and_item_type_and_store_id item_id: feature.id, item_type: product.class.to_s, store_id: self.store_id
-          stock_item.quantity = (stock_item.quantity || 0) + batch.quantity
-        end
-      end
+
     end
   end
 

@@ -3,6 +3,8 @@ class CreateProductGroups < ActiveRecord::Migration
     create_table :product_groups do |t|
       t.string :name
       t.string :ancestry
+      t.boolean :is_service, default: false
+      t.boolean :request_price, default: false
       t.references :product_category
 
       t.timestamps

@@ -1,0 +1,14 @@
+- if @products.present? and @products.any?
+  - model_class = Product
+  %table.table.table-condensed.table-hover
+    %thead
+      %tr
+        %th= model_class.human_attribute_name(:code)
+        %th= model_class.human_attribute_name(:name)
+    %tbody
+      - @products.each do |product|
+        %tr.product_row{ data: { product: product.id } }
+          %td= product.code
+          %td= product.name
+
+  = paginate @products, remote: true

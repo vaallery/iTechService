@@ -2,17 +2,28 @@ require 'spec_helper'
 
 describe Purchase do
 
-  context 'callbacks' do
+  it 'is valid with valid attributes' do
+    purchase = create :purchase
+    purchase.should be_valid
+  end
 
-    it 'should create "stock_items" for products after posting' do
-      product = create(:product)
-      contractor = create(:contractor)
-      store = create(:store)
-      purchase = Purchase.create(contractor_id: contractor.id, store_id: store.id, batches_attributes: {'1' => {product_id: product.id, price: 1000, quantity: 3}})
-      #purchase.save
-      expect(product.stock_items.count).to be 1
-      expect(product.stock_items.where(store_id: purchase.store_id).count).to be 1
-      expect(product.stock_items.where(store_id: purchase.store_id).first.quantity).to be 3
+  context 'posting' do
+
+    it 'should create "store_items" with valid quantity for products after posting' do
+      item = create :item
+      purchase = Purchase.create batches_attributes: {'1' => {item_id: item.id, price: 1000, quantity: 3}}
+      purchase.post
+      expect(item.store_items.count).to eq 1
+      expect(item.store_items.find_by_store_id(purchase.store_id).count).to eq 1
+      expect(item.store_items.find_by_store_id(purchase.store_id).first.quantity).to eq 3
+    end
+
+    it 'should create "product_prices" for products after posting' do
+      item = create :item
+      purchase = Purchase.create batches_attributes: {'1' => {item_id: item.id, price: 1000, quantity: 3}}
+      purchase.post
+      expect(item.prices.count).to eq 1
+      expect(item.prices.first.value).to eq 1000
     end
 
   end

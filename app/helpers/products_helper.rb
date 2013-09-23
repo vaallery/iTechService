@@ -55,8 +55,8 @@ module ProductsHelper
 
   def product_select_list
     if ProductGroup.roots.goods.any?
-      product_groups = root_product_groups.goods.first.subtree.arrange
-      nested_product_groups_list(product_groups)
+      product_group = ProductGroup.roots.goods.first.subtree
+      product_groups_tree_tag(product_group)
     else
       nil
     end

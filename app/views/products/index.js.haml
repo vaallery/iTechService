@@ -1,5 +1,5 @@
 :plain
-  $("#resource_table").html("#{j(render('table'))}");
+  $("#resource_table").html("#{j(render(@table_name || 'table'))}");
 - if @current_product_group_id.present?
   :plain
     $('#new_product_link').removeAttr('disabled');
@@ -8,4 +8,3 @@
   :plain
     $('#new_product_link').attr('disabled', true);
     $('#new_product_link').attr('href', '#');
--#$('#new_product_group_link').attr('href', "#{new_product_group_path(product_group: {parent_id: @current_product_group_id})}");

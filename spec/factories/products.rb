@@ -4,10 +4,9 @@ FactoryGirl.define do
   factory :product do
     name 'Product 1'
     code '1'
-    is_service false
-    request_price false
+    product_group
     #feature_accounting false
-    association :category
+    #association :category
     #association :group, factory: :device_type
 
     trait :with_feature do

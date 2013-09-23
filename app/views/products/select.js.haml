@@ -1,0 +1,15 @@
+- if @item.present?
+  $selector = $('.product_selector.active');
+  $('input.item_id', $selector).val("#{@item.id}");
+  $('.product_select_button', $selector).text("#{@item.name}");
+  $selector.closest('.batch_fields').find('td.features').text("#{@item.features_presentation}");
+  hideModal();
+
+- else
+  - if @product.present?
+    $('#product_choose_form .product_row.info').removeClass('info');
+    $("#product_choose_form .product_row[data-product=#{@product.id}]").addClass('info');
+    $('#product_choose_form #selected_product').removeAttr('disabled').val("#{@product.id}");
+    - if @product.is_feature_accounting?
+      $('#product_choose_form  #product_items_table').html("#{j(render('items_table'))}");
+      $('#product_choose_form  #product_items').show();

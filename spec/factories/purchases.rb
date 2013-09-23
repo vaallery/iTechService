@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :purchase do
     status 0
-    association :contractor
-    association :store
+    contractor
+    store
   end
 end

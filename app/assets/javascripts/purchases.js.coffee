@@ -14,9 +14,10 @@ jQuery ->
     $('#purchase_products .total_sum').text(total_sum)
 
   $(document).on 'click', '.add_fields, .remove_fields', ->
-    num = 0
-    $('#purchase_products .batch_fields:visible').each ->
-      $(this).find('.num').text(++num)
+    enumerate_table('#purchase_products')
+
+  if $('#purchase_products').length > 0
+    enumerate_table('#purchase_products')
 
   $(document).on 'click', '.product_selector .product_link', ->
     slideSpeed = 100
@@ -77,9 +78,13 @@ jQuery ->
       else
         $('#feature_types').addClass('hidden')
 
-  $(document).on 'change', '#purchase_contractor_id', ->
+#  $(document).on 'change', '#purchase_contractor_id', ->
 
 #  $('#purchase_form').validate
 #    submitHandler: (form)->
 #      form.submit()
 
+window.enumerate_table = (table)->
+  num = 0
+  $('tbody>tr:visible', table).each ->
+    $(this).find('.num').text(++num)

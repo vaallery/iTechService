@@ -3,9 +3,21 @@
 .table_filter.navbar.container
   .navbar-inner
     = form_tag purchases_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
+
       .input-append
-        = text_field_tag :purchase_q, params[:purchase_q], id: 'search_purchase_input', class: 'search-query input-medium', placeholder: ''
+        = text_field_tag :purchase_q, params[:purchase_q], id: 'search_purchase_input', class: 'search-query input-small', placeholder: Purchase.human_attribute_name(:id)
         %span.add-on.btn.clear_search_input
           %i.icon-remove
+
+      = text_field_tag :start_date, params[:start_date].try(:strftime, '%d.%m.%Y'), class: 'datepicker input-small', data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
+      = '_'
+      = text_field_tag :end_date, params[:end_date].try(:strftime, '%d.%m.%Y'), class: 'datepicker input-small', data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
+
+      = select_tag 'contractor_id', options_from_collection_for_select(Contractor.all, 'id', 'name', params[:contractor_id]), prompt: Purchase.human_attribute_name(:contractor)
+
+      = select_tag 'store_id', options_from_collection_for_select(Store.all, 'id', 'name', params[:store_id]), prompt: Purchase.human_attribute_name(:store)
+
+      %button.filter_button.btn.btn-info.btn-small
+        %i.icon-filter
 
 #resource_table= render 'table'

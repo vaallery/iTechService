@@ -82,7 +82,10 @@ ItechService::Application.routes.draw do
 
   resources :messages, path: 'chat', except: [:new, :edit, :update]
 
-  resources :purchases
+  resources :purchases do
+    put 'post', on: :member
+    put 'unpost', on: :member
+  end
 
   resources :sales
 
@@ -116,7 +119,10 @@ ItechService::Application.routes.draw do
   resources :stores, except: :show
 
   resources :products do
-    get :category_select, on: :collection, defaults: {format: 'js'}
+    get :category_select, on: :collection, defaults: { format: 'js' }
+    get :choose, on: :collection, defaults: { format: 'js' }
+    post :select, on: :collection, defaults: { format: 'js' }
+    resources :items
   end
 
   resources :product_groups, except: [:index, :show]
