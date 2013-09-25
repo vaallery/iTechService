@@ -171,7 +171,7 @@ module ApplicationHelper
 
   def icon_tag(name, type = nil)
     white_class = type.to_s == 'white' ? 'icon-white' : ''
-    "<i class='icon-#{name.to_s} #{white_class}'></i> ".html_safe
+    "<i class='icon-#{name.to_s} #{white_class}'></i>".html_safe
   end
 
   def title_for(model_class)

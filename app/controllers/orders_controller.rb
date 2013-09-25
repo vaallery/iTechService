@@ -6,9 +6,9 @@ class OrdersController < ApplicationController
   skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
 
   def index
-    if current_user.technician?
+    if current_user.technician? or params[:kind] == 'spare_parts'
       @orders = Order.technician_orders.search params
-    elsif current_user.marketing?
+    elsif current_user.marketing? or params[:kind] == 'not_spare_parts'
       @orders = Order.marketing_orders.search params
     else
       @orders = Order.search params

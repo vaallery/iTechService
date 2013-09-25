@@ -549,6 +549,8 @@ ru:
     order_num: "Заказ №%{num}"
     not_found: "Заказ не найден"
 
+    spare_parts: "Запчасти"
+    not_spare_parts: "Не запчасти"
   prices:
     created: Прайс создан
     updated: Прайс изменён
