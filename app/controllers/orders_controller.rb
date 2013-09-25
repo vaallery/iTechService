@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
     elsif current_user.marketing? or params[:kind] == 'not_spare_parts'
       @orders = Order.marketing_orders.search params
     else
-      @orders = Order.marketing_orders.search params
+      @orders = Order.search params
     end
 
     if params.has_key? :sort and params.has_key? :direction

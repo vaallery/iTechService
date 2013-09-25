@@ -1,8 +1,8 @@
 .page-header
   %h1
     = auto_title
-    %small= link_to t('orders.spare_parts'), orders_path(kind: 'spare_parts'), remote: true
-    %small= link_to t('orders.not_spare_parts'), orders_path(kind: 'not_spare_parts'), remote: true
+    %small= link_to t('orders.spare_parts'), orders_path(kind: 'spare_parts')
+    %small= link_to t('orders.not_spare_parts'), orders_path(kind: 'not_spare_parts')
   = link_to_new Order
 
 .table_filter.navbar.container
@@ -35,12 +35,12 @@
     %ul.nav
       %li.dropdown
         = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-          = t "orders.object_kinds.#{params[:object_kind] || 'all_kinds'}"
+          = t "orders.object_kinds.#{(params[:object_kind].blank? ? 'all_kinds' : params[:object_kind])}"
           %b.caret
         %ul.dropdown-menu
           %li= link_to t("orders.object_kinds.all_kinds"), orders_path#, remote: true
-          - Order::OBJECT_KINDS.each do |object_type|
-            %li= link_to t("orders.object_kinds.#{object_type}"), orders_path(object_kind: object_type)#, remote: true
+          - Order::OBJECT_KINDS.each do |object_kind|
+            %li= link_to t("orders.object_kinds.#{object_kind}"), orders_path(object_kind: object_kind)#, remote: true
             -#%li= link_to t("orders.object_kinds.#{object_type}"), orders_path(params.update(object_kind: object_type))
 
     %ul.nav

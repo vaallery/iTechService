@@ -38,6 +38,7 @@ class Order < ActiveRecord::Base
   scope :misc, where(object_kind: 'misc')
   scope :spare_part, where(object_kind: 'spare_part')
   scope :done_at, lambda { |period| joins(:history_records).where(history_records: {column_name: 'status', new_value: 'done', created_at: period}) }
+  scope :by_status, order: order_by_status
 
   OBJECT_KINDS = %w[device accessory soft misc spare_part]
   STATUSES = %w[new pending done canceled notified archive]
@@ -49,7 +50,6 @@ class Order < ActiveRecord::Base
     end
     ret << " END"
   end
-  scope :by_status, order: order_by_status
 
   def customer_full_name
     customer.try :full_name
