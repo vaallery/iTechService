@@ -27,8 +27,16 @@ class Sale < ActiveRecord::Base
   def self.search(params)
     sales = Sale.scoped
 
+    unless (start_date = params[:start_date]).blank?
+      sales = sales.where('sold_at >= ?', start_date)
+    end
+
+    unless (end_date = params[:end_date]).blank?
+      sales = sales.where('sold_at <= ?', end_date)
+    end
+
     if (search = params[:search]).present?
-      sales = sales.where 'LOWER(sales.serial_number) = :s OR LOWER(sales.imei) = :s', s: "#{search.mb_chars.downcase.to_s}"
+      sales = sales.where 'id LIKE ?', "%#{search}%"
     end
 
     if (client_q = params[:client]).present?
