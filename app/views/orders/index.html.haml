@@ -46,7 +46,7 @@
     %ul.nav
       %li.dropdown
         = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-          = t "orders.statuses.#{params[:status] || 'all_statuses'}"
+          = t "orders.statuses.#{params[:status].blank? ? 'all_statuses' : params[:status]}"
           %b.caret
         %ul.dropdown-menu
           %li= link_to t("orders.statuses.all_statuses"), orders_path#, remote: true
