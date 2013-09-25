@@ -1,5 +1,10 @@
 require 'spec_helper'
 
 describe PriceType do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  it 'should be valid with valid attributes' do
+    price_type = build :price_type
+    expect(price_type).to be_valid
+  end
+  
 end

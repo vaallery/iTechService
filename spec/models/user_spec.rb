@@ -4,9 +4,9 @@ describe User do
 
   context 'with valid attributes' do
 
-    it "is valid with valid attributes" do
-      user = create :user
-      user.should be_valid
+    it 'is valid with valid attributes' do
+      user = build :user
+      expect(user).to be_valid
     end
 
     it 'should return work_days in given period' do

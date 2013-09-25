@@ -23,22 +23,22 @@ class SalesController < ApplicationController
     @sale = Sale.new params[:sale]
 
     respond_to do |format|
-      format.html
+      format.html { render 'form' }
     end
   end
 
   def edit
     respond_to do |format|
-      format.html
+      format.html { render 'form' }
     end
   end
 
   def create
     respond_to do |format|
       if @sale.save
-        format.html { redirect_to sales_path, notice: t('sales.created') }
+        format.html { redirect_to @sale, notice: t('sales.created') }
       else
-        format.html { render 'new' }
+        format.html { render 'form' }
       end
     end
   end
@@ -46,9 +46,9 @@ class SalesController < ApplicationController
   def update
     respond_to do |format|
       if @sale.update_attributes params[:sale]
-        format.html { redirect_to sales_path, notice: t('sales.updated') }
+        format.html { redirect_to @sale, notice: t('sales.updated') }
       else
-        format.html { render 'edit' }
+        format.html { render 'form' }
       end
     end
   end
@@ -57,7 +57,7 @@ class SalesController < ApplicationController
     @sale.destroy
 
     respond_to do |format|
-      format.html
+      format.html { redirect_to sales_url }
     end
   end
 

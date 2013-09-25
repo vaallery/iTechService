@@ -1,5 +1,8 @@
 ItechService::Application.routes.draw do
 
+  resources :payment_types
+
+
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users

@@ -2,7 +2,10 @@
 
 FactoryGirl.define do
   factory :sale do
+    sold_at Time.current
     user
     client
+    store
+    payment_type
   end
 end

@@ -3,6 +3,7 @@ class Item < ActiveRecord::Base
   belongs_to :product, inverse_of: :items
   has_many :batches, inverse_of: :item
   has_many :store_items, inverse_of: :item
+  has_many :sale_items, inverse_of: :item
   has_and_belongs_to_many :features, uniq: true
   accepts_nested_attributes_for :features, allow_destroy: true
   attr_accessible :product_id, :features_attributes
