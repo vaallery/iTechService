@@ -2,7 +2,9 @@
   $selector = $('.product_selector.active');
   $('input.item_id', $selector).val("#{@item.id}");
   $('.product_select_button', $selector).text("#{@item.name}");
-  $selector.closest('.batch_fields').find('td.features').text("#{@item.features_presentation}");
+  $selector.closest('.product').find('.features').text("#{@item.features_presentation}");
+  //$row = $selector.closest('tr');
+  //$('td.price', $row).text("#{@item.actual_prices}");
   hideModal();
 
 - else

@@ -3,6 +3,7 @@ class CreateSaleItems < ActiveRecord::Migration
     create_table :sale_items do |t|
       t.references :sale
       t.references :item
+      t.decimal :price, precision: 8, scale: 2
       t.integer :quantity
 
       t.timestamps

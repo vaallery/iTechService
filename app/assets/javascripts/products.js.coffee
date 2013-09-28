@@ -29,7 +29,9 @@ jQuery ->
 
   $(document).on 'click', '#product_choose_form .product_row', ->
     product_id = $(this).data('product')
-    $.post '/products/select.js', product_id: product_id
+    form = $('#product_choose_form').attr('form')
+    store_id = $('#product_choose_form').attr('store_id')
+    $.post '/products/select.js', product_id: product_id, form: form, store_id: store_id
 
   $(document).on 'click', '#product_choose_form .item_row', ->
     $('#product_choose_form #new_item_fields input').attr('disabled', true)

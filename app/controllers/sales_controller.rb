@@ -54,7 +54,7 @@ class SalesController < ApplicationController
   end
 
   def destroy
-    @sale.destroy
+    @sale.set_deleted
 
     respond_to do |format|
       format.html { redirect_to sales_url }

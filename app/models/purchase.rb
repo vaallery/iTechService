@@ -93,18 +93,18 @@ class Purchase < ActiveRecord::Base
           item = batch.item
           if item.is_feature_accounting?
             if (store_item = item.store_items.first_or_create).quantity > 0
-              self.errors[:base] << t('purchases.errors.stock_item_already_present')
+              self.errors[:base] << t('purchases.errors.store_item_already_present')
             else
               store_item.update_attributes store_id: store_id, quantity: 1
             end
           else
             store_item = StoreItem.find_or_initialize_by_item_id_and_store_id item_id: item.id, store_id: self.store_id
-            store_item.quantity = (store_item.quantity || 0) + batch.quantity
-            store_item.save!
+            store_item.add batch.quantity
+            #store_item.quantity = (store_item.quantity || 0) + batch.quantity
+            #store_item.save!
           end
-          product = item.product
           store.price_types.each do |price_type|
-            price = product.prices.find_or_initialize_by_price_type_id_and_date price_type_id: price_type.id, date: cur_date
+            price = item.prices.find_or_initialize_by_price_type_id_and_date price_type_id: price_type.id, date: cur_date
             price.value = batch.price
             price.save!
           end
@@ -117,9 +117,15 @@ class Purchase < ActiveRecord::Base
   def unpost
     if is_posted?
       transaction do
-        cur_date = Date.current
+        cur_date = Purchase.created_at
         batches.each do |batch|
           item = batch.item
+          item.store_items.in_store(self.store_id).each do |store_item|
+            store_item.dec batch.quantity
+          end
+          #store.price_types.each do |price_type|
+          #  price = item.prices.find_or_initialize_by_price_type_id_and_date price_type_id: price_type.id, date: cur_date
+          #end
         end
         update status: 0
       end

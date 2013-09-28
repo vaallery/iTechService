@@ -6,13 +6,19 @@ class ProductsController < ApplicationController
     @product_groups = ProductGroup.roots.order('id asc')
     if params[:group].blank?
       @opened_product_groups = []
-      @products = Product.search(params).page(params[:page])
+      @products = Product.search(params)
     else
       @current_product_group = ProductGroup.find params[:group]
       @current_product_group_id = @current_product_group.id
       @opened_product_groups = @current_product_group.path_ids[1..-1].map { |g| "product_group_#{g}" }.join(', ')
-      @products = @current_product_group.products.search(params).page(params[:page])
+      @products = @current_product_group.products.search(params)
     end
+
+    if (@form = params[:form]) == 'sale'
+      @products = @products.available
+    end
+
+    @products = @products.page(params[:page])
 
     if params[:choose] == 'true'
       @table_name = 'small_table'
@@ -88,6 +94,7 @@ class ProductsController < ApplicationController
     #  @products = @current_product_group.products.search(params).page(params[:page])
     #end
     @product_groups = ProductGroup.roots.goods
+    @form = params[:form]
     respond_to do |format|
       format.js
     end
@@ -96,8 +103,13 @@ class ProductsController < ApplicationController
   def select
     if params[:product_id].present?
       @product = Product.find params[:product_id]
+      @form = params[:form]
+      @store = Store.find params[:store_id] if params[:store_id].present?
       if @product.is_feature_accounting?
-        @items = @product.items.page(params[:page])
+        @items = @product.items
+        @items = @items.available if @form == 'sale'
+        @items = @items.in_store(@store) if @store.present?
+        @items = @items.page(params[:page])
         @feature_types = @product.feature_types
       else
         @item = @product.items.first_or_create

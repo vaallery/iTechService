@@ -243,12 +243,9 @@ ru:
       sale:
         client: "Покупатель"
         client_id: :activerecord.attributes.sale.client
-        device: :activerecord.models.device
-        device_type: Тип девайса
-        device_type_id: :activerecord.attributes.sale.device_type
-        quantity: Количество
-        sold_at: Время продажи
-        value: "Цена"
+        payment_type: 'Способ оплаты'
+        sold_at: 'Время продажи'
+        store: 'Склад'
 
       schedule_day:
         day: День
@@ -678,6 +675,7 @@ ru:
       title: 'Новая Закупка'
     errors:
       deleting_posted: 'Невозможно удалить проведенную закупку.'
+      store_item_already_present: 'Товар уже существует.'
     statuses:
       new: 'Новая'
       posted: 'Проведена'
@@ -727,16 +725,22 @@ ru:
   sales:
     edit:
       title: "Редактирование Продажы"
+    errors:
+      out_of_stock: 'Товара нет в наличии.'
     index:
       import_link: Импорт
       title: 'Продажи'
       client_search_placeholder: "Клиент: телефон | имя | карта"
       device_search_placeholder: "Девайс: серийник | IMEI"
+      user_search_placeholder: "Сотрудник"
+      sale_search_placeholder: "№"
     new:
       title: "Новая Продажа"
     link: :sales.index.title
     created: "Продажа создана"
     updated: "Продажа изменена"
+
+    add_product: "Добавить Продукт"
 
   settings:
     edit:

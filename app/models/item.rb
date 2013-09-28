@@ -1,27 +1,32 @@
 class Item < ActiveRecord::Base
 
   belongs_to :product, inverse_of: :items
-  has_many :batches, inverse_of: :item
   has_many :store_items, inverse_of: :item
+  has_many :batches, inverse_of: :item
   has_many :sale_items, inverse_of: :item
   has_and_belongs_to_many :features, uniq: true
   accepts_nested_attributes_for :features, allow_destroy: true
   attr_accessible :product_id, :features_attributes
   validates_presence_of :product
 
+  scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
+  scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
+
+  delegate :name, :is_feature_accounting?, :prices, :feature_types, :actual_prices, :actual_price, :available_quantity, to: :product
+
   paginates_per 5
 
-  def name
-    product.name
-  end
+  #def name
+  #  product.name
+  #end
 
   def features_presentation
     features.any? ? features.map { |feature| "#{feature.name}: #{feature.value}" }.join('; ') : '-'
   end
 
-  def is_feature_accounting?
-    product.is_feature_accounting?
-  end
+  #def is_feature_accounting?
+  #  product.is_feature_accounting?
+  #end
 
   def self.search(params)
     items = Item.scoped
@@ -31,8 +36,26 @@ class Item < ActiveRecord::Base
     items
   end
 
-  def prices
-    product.try :prices
+  #def prices
+  #  product.try :prices
+  #end
+
+  #def actual_price(type)
+  #  product.present? ? product.actual_price(type) : 0
+  #end
+
+  #def actual_prices
+  #  product.present? ? product.actual_prices : []
+  #end
+
+  def store_item(store=nil)
+    if is_feature_accounting?
+      store_items.first
+    elsif store.present?
+      store_items.in_store(store).first
+    else
+      nil
+    end
   end
 
 end

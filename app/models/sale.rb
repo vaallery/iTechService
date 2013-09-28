@@ -6,8 +6,8 @@ class Sale < ActiveRecord::Base
   belongs_to :payment_type
   has_many :sale_items, inverse_of: :sale
   has_many :items, through: :sale_items
-
-  attr_accessible :sold_at, :client_id, :user_id, :store_id, :payment_type_id
+  accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
+  attr_accessible :sold_at, :client_id, :user_id, :store_id, :payment_type_id, :sale_items_attributes
   validates_presence_of :user, :store, :payment_type, :sold_at, :status
   before_validation :set_user
   after_initialize do
@@ -50,8 +50,45 @@ class Sale < ActiveRecord::Base
     client.present? ? client.presentation : '-'
   end
 
+  def status_s
+    STATUSES[status]
+  end
+
+  def is_new?
+    status == 0
+  end
+
+  def is_posted?
+    status == 1
+  end
+
+  def is_deleted?
+    status == 2
+  end
+
+  def set_deleted
+    if self.status == 1
+      errors.add :status, I18n.t('purchases.errors.deleting_posted')
+    else
+      update_attribute :status, 2
+    end
+  end
+
   def post
-    #TODO posting sale
+    if is_new?
+      transaction do
+        cur_date = Date.current
+        sale_items.each do |sale_item|
+          item = sale_item.item
+          if (store_item = item.store_item(store_id)).present? and item.available_quantity(self.store_id) >= sale_item.quantity
+            store_item.dec sale_item.quantity
+          else
+            self.errors[:base] << t('sales.errors.out_of_stock')
+          end
+        end
+        update_attribute :status, 1
+      end
+    end
   end
 
   def unpost

@@ -18,4 +18,5 @@
 
 = paginate @items, remote: true, params: { controller: 'items', action: 'index', product_id: @product.id }
 
-= link_to t('add'), '#', id: 'add_product_item', class: 'btn btn-small'
+- if @form == 'purchase'
+  = link_to t('add'), '#', id: 'add_product_item', class: 'btn btn-small'

@@ -83,8 +83,3 @@ jQuery ->
 #  $('#purchase_form').validate
 #    submitHandler: (form)->
 #      form.submit()
-
-window.enumerate_table = (table)->
-  num = 0
-  $('tbody>tr:visible', table).each ->
-    $(this).find('.num').text(++num)

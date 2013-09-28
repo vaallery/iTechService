@@ -165,3 +165,9 @@ window.datepicker_dates =
            "Декабрь"],
   monthsShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
   today: "Сегодня"
+
+
+window.enumerate_table = (table)->
+  num = 0
+  $('tbody>tr:visible', table).each ->
+    $(this).find('.num').text(++num)

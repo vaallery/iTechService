@@ -1,10 +1,10 @@
 class ProductInput < SimpleForm::Inputs::Base
 
   def input
-    template.content_tag(:div, class: 'product_selector') do
-      @builder.hidden_field(attribute_name, class: 'item_id') +
+    template.content_tag(:div, class: "product_selector #{options[:form]}") do
+      @builder.hidden_field("#{attribute_name}_id", class: 'item_id') +
       template.content_tag(:div, class: 'btn-group') do
-        template.link_to(@builder.object.presentation, template.choose_products_path(item: @builder.object.item_id), remote: true, class: 'product_select_button btn') +
+        template.link_to(@builder.object.presentation, template.choose_products_path(item: @builder.object.item_id, form: options[:form]), remote: true, class: 'product_select_button btn') +
         template.link_to(template.glyph('remove'), '#', class: 'btn clear_product')
       end
     end.html_safe

@@ -26,4 +26,8 @@ class Batch < ActiveRecord::Base
     item.try :product
   end
 
+  def features_presentation
+    item.present? ? item.features_presentation : ''
+  end
+
 end
