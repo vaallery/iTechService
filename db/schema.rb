@@ -370,9 +370,12 @@ ActiveRecord::Schema.define(:version => 20130924041848) do
 
   create_table "price_types", :force => true do |t|
     t.string   "name"
+    t.integer  "kind"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  add_index "price_types", ["kind"], :name => "index_price_types_on_kind"
 
   create_table "price_types_stores", :force => true do |t|
     t.integer "price_type_id"

@@ -10,7 +10,6 @@ class Client < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :sales, inverse_of: :client
 
-  attr_accessor :comment
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
 
   validates :name, :phone_number, :full_phone_number, presence: true
@@ -20,10 +19,7 @@ class Client < ActiveRecord::Base
   def self.search params
     clients = Client.scoped
     unless (client_q = params[:client_q] || params[:client]).blank?
-      clients = Client.where 'LOWER(clients.surname) LIKE :q OR LOWER(clients.name) LIKE :q
-                               OR LOWER(clients.patronymic) LIKE :q OR clients.phone_number LIKE :q
-                               OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q',
-                               q: "%#{client_q.mb_chars.downcase.to_s}%"
+      clients = Client.where 'LOWER(clients.surname) LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.patronymic) LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q', q: "%#{client_q.mb_chars.downcase.to_s}%"
     end
     clients
   end
@@ -53,11 +49,11 @@ class Client < ActiveRecord::Base
   end
 
   def purchases_sum
-    purchases.sum :value
+    #purchases.sum :value
   end
 
   def discount_value
-    Discount.for_sum purchases_sum
+    #Discount.for_sum purchases_sum
   end
 
   def creator

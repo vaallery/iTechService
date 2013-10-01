@@ -28,12 +28,16 @@ class Product < ActiveRecord::Base
   end
 
   def actual_price(type)
-    if type.is_a? Integer
-      type = PriceType.find type
-    elsif type.is_a?(String)
-      type = PriceType.find_by_name type.to_s
+    if type.present?
+      if type.is_a? Integer
+        type = PriceType.find type
+      elsif type.is_a?(String)
+        type = PriceType.find_by_name type.to_s
+      end
+      type.try(:product_prices).try(:first)
+    else
+      nil
     end
-    type.try(:product_prices).try(:first)
   end
 
   def actual_prices

@@ -1,5 +1,6 @@
 = auto_header_tag @store
 = simple_form_for @store, html: { class: 'form-horizontal' } do |f|
   = f.input :name
+  = f.association :price_types, as: :check_boxes
   .form-actions
     = submit_button f

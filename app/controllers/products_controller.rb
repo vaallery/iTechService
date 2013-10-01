@@ -101,10 +101,10 @@ class ProductsController < ApplicationController
   end
 
   def select
+    @form = params[:form]
+    @store = Store.find params[:store_id] if params[:store_id].present?
     if params[:product_id].present?
       @product = Product.find params[:product_id]
-      @form = params[:form]
-      @store = Store.find params[:store_id] if params[:store_id].present?
       if @product.is_feature_accounting?
         @items = @product.items
         @items = @items.available if @form == 'sale'

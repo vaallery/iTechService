@@ -15,7 +15,7 @@
       %tr
         %th.num
         %th.product= t 'activerecord.models.product'
-        %th
+        %th= Product.human_attribute_name :available
         %th.quantity= SaleItem.human_attribute_name :quantity
         %th.price= SaleItem.human_attribute_name :price
         %th.sum= SaleItem.human_attribute_name :sum

@@ -216,6 +216,7 @@ ru:
         remote_file_url: Ссылка на файл
 
       product:
+        available: 'Доступно'
         category: "Категория"
         code: "Код"
         feature_accounting: 'Учёт по характеристикам'
@@ -255,6 +256,9 @@ ru:
         presentation: Представление
         value: Значение
         value_type: Тип значения
+
+      store:
+        price_types: 'Типы цен'
 
       stolen_phone:
         imei: IMEI
@@ -325,6 +329,7 @@ ru:
     fio: ФИО
     id: '№'
     imei: IMEI
+    kind: 'Вид'
     name: Название
     number: Номер
     object: Объект
@@ -608,6 +613,19 @@ ru:
     order_num: "Заказ №%{num}"
     not_found: "Заказ не найден"
 
+  payment_types:
+    created: 'Способ оплаты создан'
+    updated: 'Способ оплаты изменён'
+    index:
+      title: 'Способы оплаты'
+    new:
+      title: 'Новый Способ оплаты'
+    edit:
+      title: 'Редактирование Способа оплаты'
+    kinds:
+      cash: 'Наличный'
+      cashless: 'Безналичный'
+
   price_types:
     created: "Тип Цен создан"
     updated: "Тип Цен изменён"
@@ -617,6 +635,10 @@ ru:
       title: "Типы Цен"
     new:
       title: "Новый Тип Цен"
+    kinds:
+      retail: 'Розница'
+      purchase: 'Закуп'
+      other: 'Другой'
 
   prices:
     created: Прайс создан

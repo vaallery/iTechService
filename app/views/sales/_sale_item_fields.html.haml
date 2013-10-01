@@ -5,6 +5,6 @@
     %span.features= f.object.features_presentation
   %td.available_quantity.number
   %td.quantity.number= f.input_field :quantity, class: 'input-small'
-  %td.price.number= f.object.price if f.object.persisted?
-  %td.sum.number= f.object.sum if f.object.persisted?
+  %td.price.number= f.input_field :price, class: 'input-small', disabled: true
+  %td.sum.number= f.input_field :sum, class: 'input-small', disabled: true
   %td.actions= link_to_remove_fields f
