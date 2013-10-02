@@ -7,10 +7,27 @@ describe ProductCategory do
     expect(product_category).to be_valid
   end
 
-  #it 'should set "feature_accounting" to true if "features" present' do
-  #  product = create :product, feature_accounting: true, features_attributes: { '1' => attributes_for(:feature) }
-  #  expect(Feature.count).to be 1
-  #  expect(product.feature_accounting).to be_true
-  #end
+  context 'feature accounting' do
+
+    it 'should create product_category with feature_types' do
+      product_category = create :featured_product_category
+      #product_category = create :product_category, feature_type_ids: [create(:feature_type).id]
+      expect(product_category.feature_types.length).to be > 0
+      expect(product_category.feature_accounting).to be_true
+    end
+
+    it 'should set "feature_accounting" to true if "features_types" present' do
+      product_category = create :featured_product_category
+      product_category.update_attributes feature_type_ids: [create(:feature_type).id]
+      expect(product_category.feature_accounting).to be_true
+    end
+
+    it 'should set "feature_accounting" to false if no "features_types" present' do
+      product_category = create :product_category
+      product_category.update_attributes feature_type_ids: []
+      expect(product_category.feature_accounting).to be_false
+    end
+
+  end
 
 end

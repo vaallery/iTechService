@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :feature_type do
-    name "Feature Type 1"
+    name 'Feature Type 1'
+    code 'feature_type_1'
   end
 end

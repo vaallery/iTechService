@@ -9,7 +9,11 @@ describe Sale do
 
   context 'posting' do
 
-    it 'should decrease quantity of products after posting' do
+    it 'should decrease quantity of products without features after posting' do
+      sale = create :sale
+    end
+
+    it 'should decrease quantity of products with features after posting' do
       sale = create :sale
     end
 

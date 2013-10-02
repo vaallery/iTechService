@@ -5,18 +5,10 @@ FactoryGirl.define do
     name 'Product 1'
     code '1'
     product_group
-    #feature_accounting false
-    #association :category
-    #association :group, factory: :device_type
 
-    trait :with_feature do
-      ignore do
-        features_count 1
-      end
-
-      after(:create) do |product, evaluator|
-        create_list :feature, evaluator.features_count, product: product
-      end
+    factory :featured_product do
+      association :product_group, factory: :featured_product_group
     end
+
   end
 end

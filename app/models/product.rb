@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :items, allow_destroy: true
   attr_accessible :code, :name, :product_group_id, :items_attributes
   validates_presence_of :name, :product_group
+  delegate :feature_accounting, to: :product_group
 
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: { store_id: store.is_a?(Store) ? store.id : store }) }
@@ -17,10 +18,6 @@ class Product < ActiveRecord::Base
       products = products.where 'LOWER(name) LIKE :q OR code LIKE :q', q: "%#{product_q.mb_chars.downcase.to_s}%"
     end
     products
-  end
-
-  def is_feature_accounting?
-    product_group.is_feature_accounting?
   end
 
   def feature_types

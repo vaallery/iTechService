@@ -4,10 +4,9 @@ class ProductCategory < ActiveRecord::Base
   attr_accessible :name, :feature_accounting, :feature_type_ids
   validates_presence_of :name
 
-  after_validation do |product_category|
+  before_save do |product_category|
     product_category.feature_accounting = product_category.feature_type_ids.any?
     true
-    #product_category.update_attribute :feature_accounting, product_category.feature_type_ids.any?
   end
 
 end
