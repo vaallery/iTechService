@@ -13,7 +13,7 @@ FactoryGirl.define do
       end
 
       after :create do |product_category, evaluator|
-        FactoryGirl.build_list(:feature_type, evaluator.feature_types_count, product_category_ids: [product_category.id])
+        FactoryGirl.create_list :feature_type, evaluator.feature_types_count, product_category_ids: [product_category.id]
       end
 
     end
