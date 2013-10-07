@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   has_many :timesheet_days, inverse_of: :user, dependent: :destroy
   has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users'
   has_many :installment_plans, inverse_of: :user, dependent: :destroy
-  #has_many :installments, through: :installment_plans
+  has_many :sales, inverse_of: :user
 
   mount_uploader :photo, PhotoUploader
 

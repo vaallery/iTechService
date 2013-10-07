@@ -12,8 +12,8 @@ FactoryGirl.define do
         feature_types_count 1
       end
 
-      after :create do |product_category, evaluator|
-        FactoryGirl.create_list :feature_type, evaluator.feature_types_count, product_category_ids: [product_category.id]
+      after(:create) do |product_category, evaluator|
+        product_category.update_attribute :feature_type_ids, [create(:feature_type).id]
       end
 
     end

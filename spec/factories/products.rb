@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :product do
-    name 'Product 1'
-    code '1'
+    sequence(:name) { |n| "Product #{n}" }
+    sequence(:code)
     product_group
 
     factory :featured_product do

@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :feature_type do
-    name 'Feature Type 1'
-    code 'feature_type_1'
+    sequence(:name) { |n| "Feature Type #{n}" }
+    sequence(:code) { |n| "feature_type_#{n}" }
   end
 end

@@ -10,8 +10,9 @@ describe Item do
   context 'feature accounting' do
 
     it 'is valid with valid attributes' do
-      item = build :item, :feature_accounted
+      item = create :featured_item
       expect(item).to be_valid
+      expect(item.feature_accounting).to be_true
     end
 
   end

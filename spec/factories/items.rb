@@ -3,5 +3,10 @@
 FactoryGirl.define do
   factory :item do
     product
+
+    factory :featured_item do
+      association :product, factory: :featured_product
+    end
+
   end
 end

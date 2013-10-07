@@ -91,7 +91,7 @@ class Purchase < ActiveRecord::Base
         cur_date = Date.current
         batches.each do |batch|
           item = batch.item
-          if item.is_feature_accounting?
+          if item.feature_accounting
             if (store_item = item.store_items.first_or_create).quantity > 0
               self.errors[:base] << t('purchases.errors.store_item_already_present')
             else

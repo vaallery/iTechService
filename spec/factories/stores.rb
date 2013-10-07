@@ -2,6 +2,10 @@
 
 FactoryGirl.define do
   factory :store do
-    name "Store 1"
+    sequence(:name) {|n| "Store #{n}"}
+
+    after(:create) do |store|
+      store.update_attribute :price_type_ids, [create(:price_type).id]
+    end
   end
 end

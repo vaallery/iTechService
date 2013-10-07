@@ -11,7 +11,6 @@ describe ProductCategory do
 
     it 'should create product_category with feature_types' do
       product_category = create :featured_product_category
-      #product_category = create :product_category, feature_type_ids: [create(:feature_type).id]
       expect(product_category.feature_types.length).to be > 0
       expect(product_category.feature_accounting).to be_true
     end

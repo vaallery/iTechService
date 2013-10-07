@@ -5,24 +5,11 @@ class SaleItem < ActiveRecord::Base
   attr_accessible :sale_id, :item_id, :price, :quantity
   validates_presence_of :item, :price, :quantity
 
-  def presentation
-    item.present? ? item.name : '-'
-  end
+  delegate :product, :presentation, :features_presentation, to: :item
+  delegate :store, to: :sale
 
-  def product
-    item.try :product
-  end
-
-  def features_presentation
-    item.present? ? item.features_presentation : ''
-  end
-
-  def store
-    try(:sale).try(:store)
-  end
-
-  def price
-    (store.present? and product.present?) ? product.actual_price(store.price_type) : 0
+  def actual_price
+    (store.present? and item.present?) ? item.actual_price(store.price_types.first) : 0
   end
 
   def sum

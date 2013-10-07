@@ -2,6 +2,11 @@
 
 FactoryGirl.define do
   factory :price_type do
-    name "MyString"
+    sequence(:name) {|n| "Price Type #{n}"}
+    kind 0
+
+    factory :purchase_price_type do
+      kind 1
+    end
   end
 end
