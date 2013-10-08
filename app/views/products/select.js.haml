@@ -2,11 +2,12 @@
   $selector = $('.product_selector.active');
   $('input.item_id', $selector).val("#{@item.id}");
   $('.product_select_button', $selector).text("#{@item.name}");
+  $('.product_select_button', $selector).attr('title', "#{@item.name}");
   $selector.closest('.product').find('.features').text("#{@item.features_presentation}");
   $row = $selector.closest('tr');
   $('td.available_quantity', $row).text("#{@item.available_quantity(@store)} (#{@item.available_quantity})");
   - if @form == 'sale'
-    - if @item.is_feature_accounting?
+    - if @item.feature_accounting
       $('td.quantity input', $row).val(1);
       $('td.quantity input', $row).attr('readonly', true);
     - else
@@ -23,6 +24,13 @@
     $('#product_choose_form .product_row.info').removeClass('info');
     $("#product_choose_form .product_row[data-product=#{@product.id}]").addClass('info');
     $('#product_choose_form #selected_product').removeAttr('disabled').val("#{@product.id}");
-    - if @product.is_feature_accounting?
+    - if @form == 'revaluation_act'
+      $selector = $('.product_selector.active');
+      $('input.product_id', $selector).val("#{@product.id}");
+      $('.product_select_button', $selector).text("#{@product.name}");
+      $('.product_select_button', $selector).attr('title', "#{@product.name}");
+      $row = $selector.closest('tr');
+      hideModal();
+    - elsif @product.feature_accounting
       $('#product_choose_form  #product_items_table').html("#{j(render('items_table'))}");
       $('#product_choose_form  #product_items').show();

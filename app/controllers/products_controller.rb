@@ -105,7 +105,7 @@ class ProductsController < ApplicationController
     @store = Store.find params[:store_id] if params[:store_id].present?
     if params[:product_id].present?
       @product = Product.find params[:product_id]
-      if @product.is_feature_accounting?
+      if @product.feature_accounting
         @items = @product.items
         @items = @items.available if @form == 'sale'
         @items = @items.in_store(@store) if @store.present?

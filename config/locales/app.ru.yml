@@ -24,9 +24,11 @@ ru:
       object: Обьект
       order: Заказ
       price: Прайс
-      price_type: "Тип цен"
+      price_type: "Категория цен"
       product: 'Продукт'
       purchase: "Закупка"
+      revaluation: 'Переоценка'
+      revaluation_act: 'Акт переоценки'
       salary: Зарплата
       sale: Продажа
       schedule_day: Рабочий день
@@ -216,12 +218,14 @@ ru:
         remote_file_url: Ссылка на файл
 
       product:
+        actual_price: 'Текущая цена'
         available: 'Доступно'
         category: "Категория"
         code: "Код"
         feature_accounting: 'Учёт по характеристикам'
         features: 'Характеристики'
         group: "Группа"
+        purchase_price: 'Закупочная цена'
 
       product_category:
         feature_types: "Типы характеристик"
@@ -234,6 +238,9 @@ ru:
         contractor: :activerecord.models.contractor
         store: :activerecord.models.store
         total_sum: 'Сумма'
+
+      revaluation:
+        revaluation_act: 'Акт переоценки'
 
       salary:
         amount: Сумма
@@ -326,6 +333,7 @@ ru:
     created_at: Время создания
     comment: Комментарий
     content: Содержание
+    date: 'Дата'
     fio: ФИО
     id: '№'
     imei: IMEI
@@ -334,6 +342,7 @@ ru:
     number: Номер
     object: Объект
     price: 'Цена'
+    price_type: 'Категория цен'
     product_category: 'Категория продуктов'
     quantity: 'Количество'
     serial_number: Серийный номер
@@ -671,6 +680,7 @@ ru:
       title: 'Новая Продуктовая Группа'
 
   products:
+    add_product: 'Добавить Продукт'
     created: "Продукт создан"
     updated: "Продукт изменён"
     edit:
@@ -688,7 +698,6 @@ ru:
     created: 'Закупка создана'
     updated: 'Закупка изменена'
     link: :purchases.index.title
-    add_product: 'Добавить Продукт'
     edit:
       title: 'Редактирование Закупки'
     index:
@@ -731,6 +740,16 @@ ru:
     total: Всего
     users_report: Принятые девайсы по сотрудникам
     sales_report: "Отчет по продажам"
+
+  revaluation_acts:
+    created: 'Акт переоценки создан'
+    updated: 'Акт переоценки изменён'
+    index:
+      title: 'Акты переоценки'
+    new:
+      title: 'Новый Акт переоценки'
+    edit:
+      title: 'Редактирование Акта переоценки'
 
   salaries:
     edit:

@@ -1,0 +1,22 @@
+- if @revaluation_acts.any?
+  - model_class = RevaluationAct
+  %table.table.table-striped
+    %thead
+      %tr
+        %th= model_class.human_attribute_name(:id)
+        %th= model_class.human_attribute_name(:date)
+        %th= model_class.human_attribute_name(:price_type)
+        %th.actions
+
+    %tbody
+      - @revaluation_acts.each do |revaluation_act|
+        %tr{class: revaluation_act_row_class(revaluation_act)}
+          %td= link_to revaluation_act.id, revaluation_act_path(revaluation_act)
+          %td= human_datetime revaluation_act.date
+          %td= revaluation_act.price_type_name
+          %td.actions.btn-group
+            = link_to_show_small revaluation_act
+            = link_to_edit_small revaluation_act if can? :edit, revaluation_act
+            = link_to_destroy_small revaluation_act if can? :destroy, revaluation_act
+
+  = paginate @revaluation_acts

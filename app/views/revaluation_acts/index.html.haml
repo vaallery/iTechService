@@ -1,0 +1,20 @@
+= auto_header_tag
+
+.table_filter.navbar.container
+  .navbar-inner
+    = form_tag revaluation_acts_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
+      .input-append
+        = text_field_tag :q, params[:q], id: 'search_revaluation_act_input', class: 'search-query input-small', placeholder: RevaluationAct.human_attribute_name(:id)
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+
+      = text_field_tag :start_date, params[:start_date].try(:strftime, '%d.%m.%Y'), class: 'datepicker input-small', data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
+      = '_'
+      = text_field_tag :end_date, params[:end_date].try(:strftime, '%d.%m.%Y'), class: 'datepicker input-small', data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
+
+      = select_tag 'price_type_id', options_from_collection_for_select(PriceType.all, 'id', 'name', params[:contractor_id]), prompt: RevaluationAct.human_attribute_name(:price_type)
+
+      %button.filter_button.btn.btn-info.btn-small
+        %i.icon-filter
+
+#resource_table= render 'table'

@@ -4,10 +4,11 @@ class Product < ActiveRecord::Base
   has_many :items, inverse_of: :product
   has_many :prices, class_name: 'ProductPrice', inverse_of: :product
   has_many :store_items, through: :items
+  has_many :revaluations, inverse_of: :product
   accepts_nested_attributes_for :items, allow_destroy: true
   attr_accessible :code, :name, :product_group_id, :items_attributes
   validates_presence_of :name, :product_group
-  delegate :feature_accounting, :feature_types, to: :product_group
+  delegate :feature_accounting, :feature_types, to: :product_group, allow_nil: true
 
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: { store_id: store.is_a?(Store) ? store.id : store }) }

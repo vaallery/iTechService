@@ -20,8 +20,6 @@ class PurchasesController < ApplicationController
   end
 
   def new
-    @purchase = Purchase.new
-
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @purchase }
@@ -29,8 +27,6 @@ class PurchasesController < ApplicationController
   end
 
   def edit
-    @purchase = Purchase.find params[:id]
-
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @purchase }
@@ -38,8 +34,6 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    @purchase = Purchase.new params[:purchase]
-
     respond_to do |format|
       if @purchase.save
         format.html { redirect_to @purchase, notice: t('purchases.created') }
@@ -52,8 +46,6 @@ class PurchasesController < ApplicationController
   end
 
   def update
-    @purchase = Purchase.find params[:id]
-
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
         format.html { redirect_to @purchase, notice: t('purchases.updated') }

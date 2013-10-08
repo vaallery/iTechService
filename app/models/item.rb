@@ -12,13 +12,9 @@ class Item < ActiveRecord::Base
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
 
-  delegate :name, :feature_accounting, :prices, :feature_types, :actual_prices, :actual_price, :available_quantity, to: :product
+  delegate :name, :code, :feature_accounting, :prices, :feature_types, :actual_prices, :actual_price, :available_quantity, to: :product, allow_nil: true
 
   paginates_per 5
-
-  def features_presentation
-    features.any? ? features.map { |feature| "#{feature.name}: #{feature.value}" }.join('; ') : '-'
-  end
 
   def self.search(params)
     items = Item.scoped
@@ -26,6 +22,10 @@ class Item < ActiveRecord::Base
       items = includes(:features).where('features.value LIKE :q', q: "%#{item_q}%")
     end
     items
+  end
+
+  def features_presentation
+    features.any? ? features.map { |feature| "#{feature.name}: #{feature.value}" }.join('; ') : '-'
   end
 
   def store_item(store=nil)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130924041848) do
+ActiveRecord::Schema.define(:version => 20131007071229) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -436,6 +436,7 @@ ActiveRecord::Schema.define(:version => 20130924041848) do
   create_table "purchases", :force => true do |t|
     t.integer  "contractor_id"
     t.integer  "store_id"
+    t.datetime "date"
     t.integer  "status"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
@@ -444,6 +445,28 @@ ActiveRecord::Schema.define(:version => 20130924041848) do
   add_index "purchases", ["contractor_id"], :name => "index_purchases_on_contractor_id"
   add_index "purchases", ["status"], :name => "index_purchases_on_status"
   add_index "purchases", ["store_id"], :name => "index_purchases_on_store_id"
+
+  create_table "revaluation_acts", :force => true do |t|
+    t.integer  "price_type_id"
+    t.datetime "date"
+    t.integer  "status"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "revaluation_acts", ["price_type_id"], :name => "index_revaluation_acts_on_price_type_id"
+  add_index "revaluation_acts", ["status"], :name => "index_revaluation_acts_on_status"
+
+  create_table "revaluations", :force => true do |t|
+    t.integer  "revaluation_act_id"
+    t.integer  "product_id"
+    t.decimal  "price"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "revaluations", ["product_id"], :name => "index_revaluations_on_product_id"
+  add_index "revaluations", ["revaluation_act_id"], :name => "index_revaluations_on_revaluation_act_id"
 
   create_table "salaries", :force => true do |t|
     t.integer  "user_id"

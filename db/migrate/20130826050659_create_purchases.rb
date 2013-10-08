@@ -3,6 +3,7 @@ class CreatePurchases < ActiveRecord::Migration
     create_table :purchases do |t|
       t.references :contractor
       t.references :store
+      t.datetime :date
       t.integer :status
 
       t.timestamps

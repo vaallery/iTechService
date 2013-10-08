@@ -1,8 +1,5 @@
 ItechService::Application.routes.draw do
 
-  resources :payment_types
-
-
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -132,9 +129,13 @@ ItechService::Application.routes.draw do
 
   resources :price_types, except: :show
 
+  resources :payment_types
+
   resources :installments
 
   resources :installment_plans
+
+  resources :revaluation_acts
 
   wiki_root '/wiki'
 

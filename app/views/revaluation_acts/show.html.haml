@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Price type:
+  = @revaluation_act.price_type
+%p
+  %b Posted at:
+  = @revaluation_act.posted_at
+
+= link_to 'Edit', edit_revaluation_act_path(@revaluation_act)
+\|
+= link_to 'Back', revaluation_acts_path

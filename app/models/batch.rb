@@ -4,30 +4,10 @@ class Batch < ActiveRecord::Base
   belongs_to :item, inverse_of: :batches
   attr_accessible :price, :quantity, :item_id
   validates_presence_of :item, :price, :quantity
-
-  #def features=(attributes)
-  #  #errors.add :features, I18n.t('batches.errors.feature_exists')
-  #  unless attributes.any? { |attr| Feature.exists? product_id: self.product_id, feature_type_id: attr[1]['id'], value: attr[1]['value'] }
-  #    attributes.each do |attr|
-  #      Feature.create product_id: self.product_id, feature_type_id: attr[1]['id'], value: attr[1]['value']
-  #    end
-  #  end
-  #end
+  delegate :code, :name, :product, :features_presentation, to: :item, allow_nil: true
 
   def sum
     (price || 0) * (quantity || 0)
-  end
-
-  def presentation
-    item.present? ? item.name : '-'
-  end
-
-  def product
-    item.try :product
-  end
-
-  def features_presentation
-    item.present? ? item.features_presentation : ''
   end
 
 end

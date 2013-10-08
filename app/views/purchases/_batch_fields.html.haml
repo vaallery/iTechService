@@ -1,5 +1,6 @@
 %tr.batch_fields.fields
   %td.num
+  %td.code= f.object.try(:code)
   %td.product
     = f.input_field :item, as: :product, form: 'purchase'
     %span.features= f.object.features_presentation
