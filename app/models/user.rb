@@ -159,7 +159,7 @@ class User < ActiveRecord::Base
     short_name
   end
 
-  def is_duty_day? date
+  def is_duty_day?(date)
     duty_days.exists? day: date
   end
 
@@ -176,7 +176,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def is_shortened_day? date
+  def is_shortened_day?(date)
     if is_work_day? date
       hours = schedule_days.find_by_day(date.wday).hours.split(',').map{|h|h.to_i}.sort
       hours[-1] < 20
