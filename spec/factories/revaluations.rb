@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :revaluation do
-    revaluation_act nil
-    product nil
-    price "9.99"
+    revaluation_act
+    product
+    price '10000'
   end
 end

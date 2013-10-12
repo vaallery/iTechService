@@ -7,12 +7,12 @@ class Sale < ActiveRecord::Base
   has_many :sale_items, inverse_of: :sale
   has_many :items, through: :sale_items
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
-  attr_accessible :sold_at, :client_id, :user_id, :store_id, :payment_type_id, :sale_items_attributes
-  validates_presence_of :user, :store, :payment_type, :sold_at, :status
+  attr_accessible :date, :client_id, :user_id, :store_id, :payment_type_id, :sale_items_attributes
+  validates_presence_of :user, :store, :payment_type, :date, :status
   before_validation :set_user
   after_initialize do
     self.user_id ||= User.try(:current).try(:id)
-    self.sold_at ||= Time.current
+    self.date ||= Time.current
     self.status ||= 0
   end
 
@@ -22,7 +22,9 @@ class Sale < ActiveRecord::Base
       2 => 'deleted'
   }
 
-  scope :sold_at, lambda { |period| where(sold_at: period) }
+  scope :sold_at, lambda { |period| where(date: period) }
+  scope :posted, where(status: 1)
+  scope :deleted, where(status: 2)
 
   def self.search(params)
     sales = Sale.scoped
@@ -66,14 +68,6 @@ class Sale < ActiveRecord::Base
     status == 2
   end
 
-  def set_deleted
-    if self.status == 1
-      errors.add :status, I18n.t('purchases.errors.deleting_posted')
-    else
-      update_attribute :status, 2
-    end
-  end
-
   def post
     if is_new?
       transaction do
@@ -93,6 +87,14 @@ class Sale < ActiveRecord::Base
 
   def unpost
     #TODO unposting sale
+  end
+
+  def set_deleted
+    if self.status == 1
+      errors.add :status, I18n.t('purchases.errors.deleting_posted')
+    else
+      update_attribute :status, 2
+    end
   end
 
   def total_sum

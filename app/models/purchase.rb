@@ -9,7 +9,10 @@ class Purchase < ActiveRecord::Base
   validates_presence_of :contractor, :store
   validates_associated :batches
 
-  after_initialize lambda { |purchase| purchase.status = 'new' if purchase.status.blank? }
+  after_initialize do
+    self.date ||= Time.current
+    self.status ||= 0
+  end
 
   #before_save :update_stock_items_and_prices
 

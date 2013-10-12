@@ -5,7 +5,7 @@ class CreateSales < ActiveRecord::Migration
       t.references :user
       t.references :client
       t.references :payment_type
-      t.datetime :sold_at
+      t.datetime :date
       t.integer :status
 
       t.timestamps

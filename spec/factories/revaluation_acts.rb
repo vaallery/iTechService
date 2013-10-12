@@ -2,7 +2,11 @@
 
 FactoryGirl.define do
   factory :revaluation_act do
-    price_type nil
-    posted_at "2013-10-07 17:08:38"
+    price_type
+    date Time.current
+
+    after(:create) do |revaluation_act|
+      revaluation_act.revaluations.create product_id: create(:product).id, price: '1000'
+    end
   end
 end

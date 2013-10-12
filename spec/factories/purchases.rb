@@ -8,7 +8,7 @@ FactoryGirl.define do
 
     factory :purchase_with_batch do
       after(:create) do |purchase|
-        purchase.batches.create attributes_for :batch
+        purchase.batches.create attributes_for(:batch)
       end
     end
 

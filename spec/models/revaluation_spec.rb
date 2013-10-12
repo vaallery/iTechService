@@ -1,5 +1,10 @@
 require 'spec_helper'
 
 describe Revaluation do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  it 'is valid with valid attributes' do
+    revaluation = build :revaluation
+    expect(revaluation).to be_valid
+  end
+
 end

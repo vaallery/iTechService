@@ -25,7 +25,7 @@ class Item < ActiveRecord::Base
   end
 
   def features_presentation
-    features.any? ? features.map { |feature| "#{feature.name}: #{feature.value}" }.join('; ') : '-'
+    features.any? ? features.map { |feature| "#{feature.name}: #{feature.value}" }.join('; ') : nil
   end
 
   def store_item(store=nil)

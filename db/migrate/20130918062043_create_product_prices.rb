@@ -3,7 +3,7 @@ class CreateProductPrices < ActiveRecord::Migration
     create_table :product_prices do |t|
       t.references :product
       t.references :price_type
-      t.date :date
+      t.datetime :date
       t.decimal :value
 
       t.timestamps

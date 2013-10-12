@@ -414,7 +414,7 @@ ActiveRecord::Schema.define(:version => 20131007071229) do
   create_table "product_prices", :force => true do |t|
     t.integer  "product_id"
     t.integer  "price_type_id"
-    t.date     "date"
+    t.datetime "date"
     t.decimal  "value"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
@@ -497,7 +497,7 @@ ActiveRecord::Schema.define(:version => 20131007071229) do
     t.integer  "user_id"
     t.integer  "client_id"
     t.integer  "payment_type_id"
-    t.datetime "sold_at"
+    t.datetime "date"
     t.integer  "status"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false

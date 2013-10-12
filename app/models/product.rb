@@ -28,7 +28,7 @@ class Product < ActiveRecord::Base
       elsif type.is_a?(String)
         type = PriceType.find_by_name type.to_s
       end
-      type.try(:product_prices).try(:first)
+      prices.with_type(type).any? ? prices.with_type(type).first.value : nil
     else
       nil
     end

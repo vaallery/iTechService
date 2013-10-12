@@ -10,6 +10,9 @@ class PaymentType < ActiveRecord::Base
   KINDS = {
       0 => 'cash',
       1 => 'cashless',
+      2 => 'mixed',
+      3 => 'credit',
+      4 => 'gift_card'
   }
 
   def kind_s

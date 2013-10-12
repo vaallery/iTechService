@@ -2,8 +2,9 @@
 
 FactoryGirl.define do
   factory :product_price do
-    product nil
-    price nil
-    date "2013-09-18"
+    product
+    price_type
+    date Time.current
+    value '1000'
   end
 end

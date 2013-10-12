@@ -1,6 +1,6 @@
 class RevaluationAct < ActiveRecord::Base
 
-  belongs_to :price_type, inverse_of: :revaluation_act
+  belongs_to :price_type, inverse_of: :revaluation_acts
   has_many :revaluations, inverse_of: :revaluation_act
   accepts_nested_attributes_for :revaluations, allow_destroy: true, reject_if: lambda { |a| a[:product_id].blank? or a[:price].blank? }
   attr_accessible :date, :price_type_id
@@ -19,6 +19,18 @@ class RevaluationAct < ActiveRecord::Base
 
   def status_s
     STATUSES[status]
+  end
+
+  def is_new?
+    status == 0
+  end
+
+  def is_posted?
+    status == 1
+  end
+
+  def is_deleted?
+    status == 2
   end
 
   def self.search(params)
@@ -48,7 +60,23 @@ class RevaluationAct < ActiveRecord::Base
   end
 
   def post
+    if is_new?
+      transaction do
+        cur_time = Time.current
+        revaluations.each do |revaluation|
+          ProductPrice.create(product_id: revaluation.product_id, price_type_id: self.price_type_id, date: cur_time, value: revaluation.price)
+        end
+        update_attribute :status, 1
+      end
+    end
+  end
 
+  def set_deleted
+    if self.status == 1
+      errors.add :status, I18n.t('revaluation_acts.errors.deleting_posted')
+    else
+      update_attribute :status, 2
+    end
   end
 
 end

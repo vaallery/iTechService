@@ -1,12 +1,11 @@
 = auto_header_tag @sale
 = simple_form_for @sale, html: { class: 'form-horizontal' } do |f|
+  - if current_user.any_admin?
+    = f.input :date, as: :my_datetime
   = f.input :client_id, as: :client, wrapper_html: { id: 'client_fields' }
   = f.association :payment_type
   = f.association :store
   = hidden_field_tag :price_type_id
-  = f.input :sold_at, as: :my_datetime
-  -#= f.input :value, hint: "#{t('clients.available_discount')}: #{@sale.client.present? ? human_percent(@sale.client.discount_value) : '-'}"
-  -#= f.input :quantity, input_html: { class: 'input-small' }
 
   %table#sale_products.table.table-condensed.table-striped.table-bordered
     %caption

@@ -5,7 +5,7 @@ class SaleItem < ActiveRecord::Base
   attr_accessible :sale_id, :item_id, :price, :quantity
   validates_presence_of :item, :price, :quantity
 
-  delegate :product, :presentation, :features_presentation, to: :item
+  delegate :product, :presentation, :features_presentation, :name, to: :item, allow_nil: true
   delegate :store, to: :sale
 
   def actual_price
@@ -13,7 +13,7 @@ class SaleItem < ActiveRecord::Base
   end
 
   def sum
-    price * (quantity || 0)
+    (price || 0) * (quantity || 0)
   end
 
 end

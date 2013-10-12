@@ -1,5 +1,10 @@
 require 'spec_helper'
 
 describe ProductPrice do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  it 'is valid with valid attributes' do
+    product_price = build :product_price
+    expect(product_price).to be_valid
+  end
+
 end
