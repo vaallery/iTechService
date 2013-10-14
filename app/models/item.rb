@@ -18,9 +18,11 @@ class Item < ActiveRecord::Base
 
   def self.search(params)
     items = Item.scoped
-    unless (item_q = params[:item_q]).blank?
-      items = includes(:features).where('features.value LIKE :q', q: "%#{item_q}%")
+
+    unless (q = params[:q]).blank?
+      items = items.includes(:features, :product).where('features.value = :q OR products.code = :q OR LOWER(products.name) LIKE :ql', q: q, ql: "%#{q.mb_chars.downcase.to_s}%")
     end
+
     items
   end
 

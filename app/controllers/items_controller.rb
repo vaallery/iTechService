@@ -4,13 +4,32 @@ class ItemsController < ApplicationController
 
   def index
     @product = Product.find(params[:product_id])
-    @items = @product.items.search(params).page(params[:page])
+    @items = @product.items.search(params)
     @feature_types = @product.feature_types
 
+    if (@form = params[:form]) == 'sale'
+      @items = @items.available
+    end
+
+    @items = @items.page(params[:page])
+
+    if params[:choose] == 'true'
+      @table_name = 'small_table'
+    end
+
+    if @items.many?
+      @products = Product.find(@items.map{|i|i.product_id})
+    end
+
     respond_to do |format|
-      format.html
-      format.js
-      format.json { render json: @items }
+      if @items.one?
+        @item = @items.first
+        format.js { render 'products/select' }
+      else
+        format.html
+        format.js
+        format.json { render json: @items }
+      end
     end
   end
 

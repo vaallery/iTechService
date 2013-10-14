@@ -10,17 +10,18 @@ jQuery ->
 
   search_timeout = null
   $(document).on 'keyup', '#product_choose_form #product_search_field', ->
-    val = $(this).val()
+    q = $(this).val()
     clearTimeout(search_timeout) if search_timeout?
     search_timeout = setTimeout (->
-      $.get '/products.js', choose: true, product_q: val
+      $.get '/products.js', q: q, choose: true
     ), 250
 
   $(document).on 'keyup', '#product_choose_form #item_search_field', ->
-    val = $(this).val()
+    q = $(this).val()
+    product_id = $('#selected_product').val()
     clearTimeout(search_timeout) if search_timeout?
     search_timeout = setTimeout (->
-      $.get '/products/2/items.js', item_q: val
+      $.get '/products/' + product_id + '/items.js', item_q: val
     ), 250
 
   $(document).on 'click', '#product_choose_form #clear_product_search_field', ->
