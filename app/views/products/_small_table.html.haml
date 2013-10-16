@@ -11,4 +11,4 @@
           %td= product.code
           %td= product.name
 
-  = paginate @products, remote: true
+  = paginate @products, remote: true if @products.respond_to? :current_page

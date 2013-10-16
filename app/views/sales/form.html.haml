@@ -4,7 +4,7 @@
     = f.input :date, as: :my_datetime
   = f.input :client_id, as: :client, wrapper_html: { id: 'client_fields' }
   = f.association :payment_type
-  = f.association :store
+  = f.association :store, collection: Store.for_retail.all
   = hidden_field_tag :price_type_id
 
   %table#sale_products.table.table-condensed.table-striped.table-bordered
@@ -13,6 +13,7 @@
     %thead
       %tr
         %th.num
+        %th.code= Product.human_attribute_name :code
         %th.product= t 'activerecord.models.product'
         %th= Product.human_attribute_name :available
         %th.quantity= SaleItem.human_attribute_name :quantity
@@ -26,7 +27,7 @@
 
     %tfoot
       %tr
-        %td{colspan: 5}= t 'total'
+        %td{colspan: 6}= t 'total'
         %td.total_sum.number
         %td
 

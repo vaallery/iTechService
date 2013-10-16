@@ -164,6 +164,11 @@ GEM
       activesupport (>= 3.1, < 4.1)
       haml (~> 3.1)
       railties (>= 3.1, < 4.1)
+    has_barcode (0.2.3)
+      activesupport (>= 3)
+      barby
+      i18n
+      rake
     hashery (2.1.0)
     highline (1.6.19)
     hike (1.2.3)
@@ -406,6 +411,7 @@ DEPENDENCIES
   exception_notification (~> 2.6.1)
   factory_girl_rails
   haml-rails (~> 0.3.5)
+  has_barcode
   irwi!
   jquery-rails (~> 2.2.1)
   json (= 1.7.7)

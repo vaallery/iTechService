@@ -103,8 +103,6 @@ class Purchase < ActiveRecord::Base
           else
             store_item = StoreItem.find_or_initialize_by_item_id_and_store_id item_id: item.id, store_id: self.store_id
             store_item.add batch.quantity
-            #store_item.quantity = (store_item.quantity || 0) + batch.quantity
-            #store_item.save!
           end
           store.price_types.each do |price_type|
             price = item.prices.find_or_initialize_by_price_type_id_and_date price_type_id: price_type.id, date: cur_date

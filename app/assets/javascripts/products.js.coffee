@@ -13,15 +13,14 @@ jQuery ->
     q = $(this).val()
     clearTimeout(search_timeout) if search_timeout?
     search_timeout = setTimeout (->
-      $.get '/products.js', q: q, choose: true
+      $.get '/products.js', q: q, choose: true, form: $('#modal_form form').attr('form')
     ), 250
 
   $(document).on 'keyup', '#product_choose_form #item_search_field', ->
     q = $(this).val()
-    product_id = $('#selected_product').val()
     clearTimeout(search_timeout) if search_timeout?
     search_timeout = setTimeout (->
-      $.get '/products/' + product_id + '/items.js', item_q: val
+      $.get '/items.js', q: q, product_id: $('#selected_product').val(), choose: true, form: $('#modal_form form').attr('form')
     ), 250
 
   $(document).on 'click', '#product_choose_form #clear_product_search_field', ->

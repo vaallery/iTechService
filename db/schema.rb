@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131007071229) do
+ActiveRecord::Schema.define(:version => 20131015080222) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -297,8 +297,9 @@ ActiveRecord::Schema.define(:version => 20131007071229) do
 
   create_table "items", :force => true do |t|
     t.integer  "product_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "barcode_num"
   end
 
   add_index "items", ["product_id"], :name => "index_items_on_product_id"

@@ -3,23 +3,31 @@ class ItemsController < ApplicationController
   skip_load_resource only: [:index]
 
   def index
-    @product = Product.find(params[:product_id])
-    @items = @product.items.search(params)
-    @feature_types = @product.feature_types
+    if params[:product_id].blank?
+      @items = Item.search(params)
+      @feature_types = []
+      @items.each {|item| @feature_types + item.feature_types.to_a}
+      @feature_types.uniq!
+    else
+      @product = Product.find(params[:product_id]) unless params[:product_id].blank?
+      @items = @product.items.search(params)
+      @feature_types = @product.feature_types
+    end
 
     if (@form = params[:form]) == 'sale'
       @items = @items.available
     end
-
-    @items = @items.page(params[:page])
 
     if params[:choose] == 'true'
       @table_name = 'small_table'
     end
 
     if @items.many?
-      @products = Product.find(@items.map{|i|i.product_id})
+      @products = Product.where(id: @items.map{|i|i.product_id})
+      @products.page(params[:page])
     end
+
+    @items = @items.page(params[:page])
 
     respond_to do |format|
       if @items.one?

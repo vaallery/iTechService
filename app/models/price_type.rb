@@ -7,12 +7,12 @@ class PriceType < ActiveRecord::Base
   validates_presence_of :name, :kind
   validates_inclusion_of :kind, in: 0..2
 
-  scope :retail, where(kind: 0)
-  scope :purchase, where(kind: 1)
+  scope :purchase, where(kind: 0)
+  scope :retail, where(kind: 1)
 
   KINDS = {
-    0 => 'retail',
-    1 => 'purchase',
+    0 => 'purchase',
+    1 => 'retail',
     2 => 'other'
   }
 

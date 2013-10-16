@@ -2,7 +2,7 @@
 = simple_form_for @purchase, html: { class: 'form-horizontal', id: 'purchase_form' } do |f|
   = f.input :date, as: :my_datetime
   = f.association :contractor, as: :select
-  = f.association :store, as: :select
+  = f.association :store, collection: Store.for_purchase.all
 
   %table#purchase_products.table.table-condensed.table-striped.table-bordered
     %caption

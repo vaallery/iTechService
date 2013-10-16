@@ -125,6 +125,8 @@ ItechService::Application.routes.draw do
     resources :items
   end
 
+  resources :items, except: [:show]
+
   resources :product_groups, except: [:index, :show]
 
   resources :price_types, except: :show
