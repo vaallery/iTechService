@@ -31,8 +31,8 @@ class Product < ActiveRecord::Base
     if type.present?
       if type.is_a? Integer
         type = PriceType.find type
-      elsif type.is_a?(String)
-        type = PriceType.find_by_name type.to_s
+      elsif type.is_a?(String) or type.is_a?(Symbol)
+        type = PriceType.find_by_kind(PriceType::KINDS.values.index(type.to_s))
       end
       prices.with_type(type).any? ? prices.with_type(type).first.value : nil
     else
@@ -52,6 +52,10 @@ class Product < ActiveRecord::Base
     else
       store_items.count
     end
+  end
+
+  def item
+    (!feature_accounting and items.any?) ? items.first_or_create : nil
   end
 
 end

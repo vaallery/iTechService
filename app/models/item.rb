@@ -10,7 +10,8 @@ class Item < ActiveRecord::Base
   accepts_nested_attributes_for :features, allow_destroy: true
   attr_accessible :product_id, :features_attributes
   validates_presence_of :product
-  validates_length_of :barcode_num, is: 12, allow_nil: true
+  validates_length_of :barcode_num, is: 13, allow_nil: true
+  validates_uniqueness_of :barcode_num, allow_nil: true
   validates_uniqueness_of :product_id, unless: :feature_accounting
 
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
@@ -23,7 +24,9 @@ class Item < ActiveRecord::Base
   has_barcode :barcode,
               type: Barby::EAN13,
               outputter: :svg,
-              value: Proc.new { |i| i.barcode_num.to_s }
+              value: Proc.new { |i| i.barcode_num }
+
+  after_create :generate_barcode_num
 
   def self.search(params)
     items = Item.scoped
@@ -46,6 +49,14 @@ class Item < ActiveRecord::Base
       store_items.in_store(store).first
     else
       nil
+    end
+  end
+
+  def generate_barcode_num
+    if self.barcode_num.nil?
+      num = self.id.to_s
+      code = '242' + '0'*(9-num.length) + num
+      update_attribute :barcode_num, code
     end
   end
 

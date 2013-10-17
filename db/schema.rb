@@ -299,7 +299,7 @@ ActiveRecord::Schema.define(:version => 20131015080222) do
     t.integer  "product_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "barcode_num"
+    t.string   "barcode_num"
   end
 
   add_index "items", ["product_id"], :name => "index_items_on_product_id"

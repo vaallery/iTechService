@@ -1,17 +1,40 @@
+= auto_header_tag @product, @product.name
 - model_class = Product
-.page-header
-  %h1=t '.title', :default => model_class.model_name.human.titleize
 
-%p
-  %strong= model_class.human_attribute_name(:name) + ':'
-  %br
-  = @product.name
-%p
-  %strong= model_class.human_attribute_name(:code) + ':'
-  %br
-  = @product.code
+%dl.dl-horizontal
+  %dt= model_class.human_attribute_name(:code)
+  %dd= @product.code.blank? ? '-' : @product.code
+
+  %dt= model_class.human_attribute_name(:actual_price)
+  %dd= @product.actual_price(:sale).present? ? human_currency(@product.actual_price(:sale)) : '-'
+
+  -#%dt= model_class.human_attribute_name(:product_group)
+  -#%dd= @product.product_group.name
+
+  - unless @product.feature_accounting
+    %dt= Item.human_attribute_name(:barcode)
+    %dd= @product.item.barcode
+
+- if @product.feature_accounting
+  %hr
+  %table.table.table-condensed.table-hover
+    %thead
+      %tr
+        %th= Item.human_attribute_name(:barcode)
+        - @product.feature_types.each do |feature_type|
+          %th= feature_type.name
+    %tbody
+      - @product.items.each do |item|
+        %tr
+          %td= item.barcode
+          - item.features.each do |feature|
+            %td= feature.value
+
+-#%hr
+-#%h4= t 'attributes.prices'
+
+-##product_prices= render 'prices_table'
 
 .form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), products_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_product_path(@product), :class => 'btn'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), product_path(@product), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+  = link_to_edit @product
+  = link_to_destroy @product

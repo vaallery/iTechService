@@ -7,11 +7,18 @@ describe Item do
     expect(item).to be_valid
   end
 
-  it 'should be uniq' do
+  it 'should be uniq by product' do
     product = create :product
     create :item, product_id: product.id
     item = build :item, product_id: product.id
     expect(item).to_not be_valid
+  end
+
+  it 'should generate barcode on create' do
+    item = create :item
+    expect(item.barcode).to_not be_nil
+    expect(item.barcode_num).to start_with('242' + '0'*(9-item.id.to_s.length) + item.id.to_s)
+    expect(item.barcode_data).to_not be_nil
   end
 
   context 'feature accounting' do

@@ -1,0 +1,12 @@
+%table.table.table-condensed.hable-hover
+  %thead
+    %tr
+      %th= t 'attributes.date'
+      %th= t 'attributes.price'
+      %th= t 'attributes.price_type'
+  %tbody
+    - @product.prices.each do |price|
+      %tr
+        %td= human_datetime price.date
+        %td= human_currency price.value
+        %td= price.price_type.name

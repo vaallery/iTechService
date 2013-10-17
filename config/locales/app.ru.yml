@@ -189,6 +189,10 @@ ru:
         paid_at: Внесен
         value: Сумма
 
+      item:
+        barcode: Штрихкод
+        barcode_num: Номер штрихкода
+
       karma:
         good: good  #g
         user: :activerecord.models.user  #g
@@ -224,7 +228,7 @@ ru:
         code: "Код"
         feature_accounting: 'Учёт по характеристикам'
         features: 'Характеристики'
-        group: "Группа"
+        product_group: Группа
         purchase_price: 'Закупочная цена'
 
       product_category:
@@ -342,6 +346,7 @@ ru:
     number: Номер
     object: Объект
     price: 'Цена'
+    prices: 'Цены'
     price_type: 'Категория цен'
     product_category: 'Категория продуктов'
     quantity: 'Количество'
