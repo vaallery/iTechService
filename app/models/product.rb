@@ -10,6 +10,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :name, :product_group
   delegate :feature_accounting, :feature_types, to: :product_group, allow_nil: true
 
+  default_scope order('name asc')
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: { store_id: store.is_a?(Store) ? store.id : store }) }
 
@@ -34,7 +35,7 @@ class Product < ActiveRecord::Base
       elsif type.is_a?(String) or type.is_a?(Symbol)
         type = PriceType.find_by_kind(PriceType::KINDS.values.index(type.to_s))
       end
-      prices.with_type(type).any? ? prices.with_type(type).first.value : nil
+      prices.with_type(type).try(:first).try(:value)
     else
       nil
     end

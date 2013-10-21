@@ -122,10 +122,10 @@ ItechService::Application.routes.draw do
     get :category_select, on: :collection, defaults: { format: 'js' }
     get :choose, on: :collection, defaults: { format: 'js' }
     post :select, on: :collection, defaults: { format: 'js' }
-    resources :items
+    resources :items, except: [:show]
   end
 
-  resources :items, except: [:show]
+  resources :items
 
   resources :product_groups, except: [:index, :show]
 

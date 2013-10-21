@@ -6,6 +6,7 @@ class PriceType < ActiveRecord::Base
   attr_accessible :name, :kind
   validates_presence_of :name, :kind
   validates_inclusion_of :kind, in: 0..2
+  validates_uniqueness_of :kind
 
   scope :purchase, where(kind: 0)
   scope :retail, where(kind: 1)

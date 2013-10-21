@@ -8,6 +8,9 @@
   %dt= model_class.human_attribute_name(:actual_price)
   %dd= @product.actual_price(:sale).present? ? human_currency(@product.actual_price(:sale)) : '-'
 
+  %dt= model_class.human_attribute_name(:quantity)
+  %dd= @product.available_quantity
+
   -#%dt= model_class.human_attribute_name(:product_group)
   -#%dd= @product.product_group.name
 
@@ -23,12 +26,21 @@
         %th= Item.human_attribute_name(:barcode)
         - @product.feature_types.each do |feature_type|
           %th= feature_type.name
+        %th
     %tbody
       - @product.items.each do |item|
         %tr
           %td= item.barcode
           - item.features.each do |feature|
             %td= feature.value
+          %td
+            .btn-group
+              = link_to '#', class: 'btn btn-mini dropdown-toggle', 'data-toggle' => 'dropdown' do
+                = glyph(:barcode)
+                = caret_tag
+              %ul.dropdown-menu
+                %li= link_to t('without_price'), item_path(item, format: 'pdf'), target: '_blank'
+                %li= link_to t('with_price'), item_path(item, format: 'pdf', type: :with_price), target: '_blank'
 
 -#%hr
 -#%h4= t 'attributes.prices'

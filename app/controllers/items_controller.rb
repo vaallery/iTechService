@@ -41,6 +41,20 @@ class ItemsController < ApplicationController
     end
   end
 
+  def show
+    respond_to do |format|
+      format.pdf do
+        if params[:print]
+          pdf = ProductTagPdf.new @item, view_context
+          system 'lp', pdf.render_file(Rails.root.to_s+"/tmp/product_tag_#{@item.barcode.to_s}").path
+        else
+          pdf = ProductTagPdf.new @item, view_context, params[:type]
+        end
+        send_data pdf.render, filename: "product_tag_#{@item.barcode.to_s}", type: 'application/pdf', disposition: 'inline'
+      end
+    end
+  end
+
   def new
     @item = Item.new
 

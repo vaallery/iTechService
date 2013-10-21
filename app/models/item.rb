@@ -32,7 +32,7 @@ class Item < ActiveRecord::Base
     items = Item.scoped
 
     unless (q = params[:q]).blank?
-      items = items.includes(:features, :product).where('features.value = :q OR products.code = :q OR items.barcode_num = :qi OR LOWER(products.name) LIKE :ql', q: q, ql: "%#{q.mb_chars.downcase.to_s}%", qi: q.to_i)
+      items = items.includes(:features, :product).where('features.value = :q OR products.code = :q OR items.barcode_num = :q OR LOWER(products.name) LIKE :ql', q: q, ql: "%#{q.mb_chars.downcase.to_s}%")
     end
 
     items
@@ -55,7 +55,7 @@ class Item < ActiveRecord::Base
   def generate_barcode_num
     if self.barcode_num.nil?
       num = self.id.to_s
-      code = '242' + '0'*(9-num.length) + num
+      code = '243' + '0'*(9-num.length) + num
       update_attribute :barcode_num, code
     end
   end
