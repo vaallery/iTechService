@@ -1,6 +1,6 @@
 require 'barby/barcode/ean_13'
 class Item < ActiveRecord::Base
-  include HasBarcode
+  #include HasBarcode
 
   belongs_to :product, inverse_of: :items
   has_many :store_items, inverse_of: :item
@@ -21,12 +21,25 @@ class Item < ActiveRecord::Base
 
   paginates_per 5
 
-  has_barcode :barcode,
-              type: Barby::EAN13,
-              outputter: :svg,
-              value: Proc.new { |i| i.barcode_num }
+  #has_barcode :barcode,
+  #            type: Barby::EAN13,
+  #            outputter: :svg,
+  #            value: Proc.new { |i| i.barcode_num }
 
   after_create :generate_barcode_num
+
+  def as_json(options={})
+    {
+      id: id,
+      barcode_num: barcode_num,
+      product_id: product_id,
+      name: name,
+      code: code,
+      features: features,
+      prices: actual_prices,
+      quantity: available_quantity
+    }
+  end
 
   def self.search(params)
     items = Item.scoped
@@ -53,11 +66,9 @@ class Item < ActiveRecord::Base
   end
 
   def generate_barcode_num
-    if self.barcode_num.nil?
-      num = self.id.to_s
-      code = '243' + '0'*(9-num.length) + num
-      update_attribute :barcode_num, code
-    end
+    num = self.id.to_s
+    code = Product::BARCODE_PREFIX + '0'*(9-num.length) + num
+    update_attribute :barcode_num, Barby::EAN13.new(code).to_s
   end
 
 end

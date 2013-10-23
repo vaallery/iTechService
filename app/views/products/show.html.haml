@@ -30,7 +30,7 @@
     %tbody
       - @product.items.each do |item|
         %tr
-          %td= item.barcode
+          %td= item.barcode_num
           - item.features.each do |feature|
             %td= feature.value
           %td

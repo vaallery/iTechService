@@ -5,9 +5,14 @@ class Feature < ActiveRecord::Base
   attr_accessible :value, :feature_type_id
   validates_presence_of :value, :feature_type
   validates_uniqueness_of :value, scope: [:feature_type_id]
+  delegate :name, to: :feature_type
 
-  def name
-    feature_type.name
+  def as_json(options={})
+    {
+      id: id,
+      name: name,
+      value: value
+    }
   end
 
 end

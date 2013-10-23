@@ -5,7 +5,7 @@ class ProductTagPdf < Prawn::Document
   require 'barby/outputter/prawn_outputter'
 
   def initialize(item, view, type=nil)
-    super page_size: [3.cm, 2.cm], page_layout: :portrait, margin: 4
+    super page_size: [6.cm, 4.cm], page_layout: :portrait, margin: 4
     @item = item
     @view = view
     font_families.update 'DroidSans' => {
@@ -22,11 +22,11 @@ class ProductTagPdf < Prawn::Document
         text view.human_currency(item.actual_price(:sale)).to_s, align: :center
       end
     end
-    outputter = Barby::PrawnOutputter.new item.barcode
-    outputter.annotate_pdf self, height: 14, margin: 5, x: 0
+    outputter = Barby::PrawnOutputter.new Barby::EAN13.new(item.barcode_num.chop)
+    outputter.annotate_pdf self, height: 14, margin: 5, x: 0, xdim: 1
     move_cursor_to 4
     font_size 4 do
-      text item.barcode.to_s, character_spacing: 3.7
+      text item.barcode_num, character_spacing: 3.7
     end
   end
 

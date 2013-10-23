@@ -297,10 +297,10 @@ GEM
       columnize (>= 0.3.1)
       linecache19 (>= 0.5.11)
       ruby_core_source (>= 0.1.4)
-    ruby-debug-base19x (0.11.30.pre14)
+    ruby-debug-base19x (0.11.30.pre15)
       debugger-ruby_core_source (> 0)
       rake (>= 0.8.1)
-    ruby-debug-ide (0.4.19)
+    ruby-debug-ide (0.4.21.pre1)
       rake (>= 0.8.1)
     ruby-debug19 (0.11.6)
       columnize (>= 0.3.1)
@@ -418,7 +418,7 @@ DEPENDENCIES
   json_builder (~> 3.1.7)
   kaminari (~> 0.14.1)
   less-rails (~> 2.2.6)
-  linecache19
+  linecache19 (= 0.5.13)
   mailcatcher
   meta_request (= 0.2.1)
   mini_magick (~> 3.4)
@@ -430,8 +430,8 @@ DEPENDENCIES
   rails (= 3.2.14)
   roo
   rspec-rails
-  ruby-debug-base19x (= 0.11.30.pre14)
-  ruby-debug-ide (= 0.4.19)
+  ruby-debug-base19x (= 0.11.30.pre15)
+  ruby-debug-ide (= 0.4.21.pre1)
   ruby-debug19
   sass-rails (~> 3.2.3)
   seed_dumper (~> 0.1.3)

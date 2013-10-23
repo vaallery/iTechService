@@ -1,5 +1,7 @@
 class Product < ActiveRecord::Base
 
+  BARCODE_PREFIX = '243'
+
   belongs_to :product_group, inverse_of: :products
   has_many :items, inverse_of: :product
   has_many :prices, class_name: 'ProductPrice', inverse_of: :product

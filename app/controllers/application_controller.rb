@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   protect_from_forgery
-  before_filter :authenticate_user!, :set_current_user
+  before_filter :authenticate_user!
+  before_filter :set_current_user
   before_filter :store_location, except: [:create, :update, :destroy]
   before_filter :load_important_info, if: :user_signed_in?
   before_filter :load_personal_infos, if: :user_signed_in?
