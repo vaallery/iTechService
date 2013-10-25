@@ -5,6 +5,7 @@
   %thead
     %tr
       %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:code)
       %th= model_class.human_attribute_name(:name)
       %th= model_class.human_attribute_name(:created_at)
       %th
@@ -12,6 +13,7 @@
     - @stores.each do |store|
       %tr
         %td= link_to store.id, edit_store_path(store)
+        %td= link_to store.code, edit_store_path(store)
         %td= link_to store.name, edit_store_path(store)
         %td= human_datetime store.created_at
         %td.btn-group

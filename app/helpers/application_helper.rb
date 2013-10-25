@@ -238,15 +238,15 @@ module ApplicationHelper
   end
 
   def human_percent(value)
-    number_to_percentage value, precision: 0
+    value.nil? ? '-' : number_to_percentage(value, precision: 0)
   end
 
   def human_currency(value)
-    number_to_currency value, precision: 0, delimiter: ' ', separator: ','
+    value.nil? ? '-' : number_to_currency(value, precision: 0, delimiter: ' ', separator: ',')
   end
 
   def human_phone(value)
-    number_to_phone value, area_code: true
+    value.nil? ? '-' : number_to_phone(value, area_code: true)
   end
 
   def spinner_tag

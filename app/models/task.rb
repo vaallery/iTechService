@@ -1,13 +1,14 @@
 class Task < ActiveRecord::Base
 
+  IMPORTANCE_BOUND = 5
+
   has_many :device_tasks, dependent: :destroy
   has_many :devices, through: :device_tasks
+  belongs_to :product, inverse_of: :task
   belongs_to :location
   attr_accessible :cost, :duration, :name, :priority, :role, :location_id
-  validates :name, presence: true
-  
-  IMPORTANCE_BOUND = 5
-  
+  #delegate :name, to: :product
+
   scope :important, where('priority > ?', IMPORTANCE_BOUND)
   scope :tasks_for, lambda { |user| where(task: {role: user.role}) }
 
@@ -33,6 +34,10 @@ class Task < ActiveRecord::Base
 
   def location_name
     location.try(:full_name) || '-'
+  end
+
+  def role_name
+    role.blank? ? '-' : I18n.t("users.roles.#{role}")
   end
 
 end

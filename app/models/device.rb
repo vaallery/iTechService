@@ -4,19 +4,20 @@ class Device < ActiveRecord::Base
   belongs_to :user, inverse_of: :devices
   belongs_to :client, inverse_of: :devices
   belongs_to :device_type
+  belongs_to :item
   belongs_to :location
   belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
   has_many :history_records, as: :object, dependent: :destroy
+  accepts_nested_attributes_for :device_tasks
 
   attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration
-  accepts_nested_attributes_for :device_tasks
   attr_accessor :service_duration
 
   validates :ticket_number, :client, :device_type, :location, :device_tasks, :return_at, presence: true
   validates :ticket_number, uniqueness: true
-  validates :imei, length: {is: 15}, allow_blank: true
+  validates :imei, length: {is: 15}, allow_nil: true
   #validates :service_duration, format: { with: /[\D.]+\z/ }
   validates_associated :device_tasks
   
@@ -44,7 +45,26 @@ class Device < ActiveRecord::Base
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
   after_initialize :set_user_and_location
-  
+
+  def as_json(options={})
+    {
+      id: id,
+      device_type: type_name,
+      imei: imei,
+      serial_number: serial_number,
+      status: status,
+      comment: comment,
+      at_done: at_done?,
+      location: location_name,
+      client: {
+        id: client_id,
+        name: client.short_name,
+        phone: client.phone_number
+      },
+      tasks: device_tasks
+    }
+  end
+
   def type_name
     device_type.try(:full_name) || '-'
   end

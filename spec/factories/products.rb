@@ -6,6 +6,10 @@ FactoryGirl.define do
     sequence(:code)
     product_group
 
+    trait :service do
+      association :product_group, factory: :service_product_group
+    end
+
     factory :featured_product do
       association :product_group, factory: :featured_product_group
     end

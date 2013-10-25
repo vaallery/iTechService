@@ -334,9 +334,10 @@ ru:
         wish: Пожелание
 
   attributes:
-    created_at: Время создания
+    code: 'Код'
     comment: Комментарий
     content: Содержание
+    created_at: Время создания
     date: 'Дата'
     fio: ФИО
     id: '№'
@@ -449,10 +450,13 @@ ru:
     edit:
       title: Редактирование девайса
     errors:
+      already_archived: 'Девайс уже в архиве.'
       client_notification: Нужно уведомить клиента
-      pending_tasks: Не все задачи выполнены
-      not_done: Девайс не готов
+      invalid_action: 'Неверное действие.'
+      no_action: 'Действие не указано.'
+      not_done: 'Девайс не готов.'
       not_allowed: Вы не можете переместить девайс.
+      pending_tasks: Не все задачи выполнены
     index:
       client_search_placeholder: "Клиент: телефон | имя | карта"
       device_search_placeholder: "Девайс: серийник | IMEI"
@@ -698,6 +702,8 @@ ru:
       title: "Выбор товара"
     choose:
       submit: "Создать"
+    errors:
+      not_found: 'Продукт не найден.'
 
   purchases:
     created: 'Закупка создана'
@@ -951,6 +957,9 @@ ru:
     movement:
       subject: "Новый девайс %{device}"
 
+  errors:
+    nothing_found: Ничего не найдено
+
   add: "Добавить"
   ago: назад
   app_name: Айс
@@ -973,7 +982,6 @@ ru:
   moved: "%{user} %{time} назад"
   moved_title: Переместил
   new: "Новый"
-  nothing_found: Ничего не найдено
   post: 'Провести'
   phone_placeholder: "6, 7, 10 или 11 цифр"
   remove_photo: Удалить фото

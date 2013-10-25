@@ -17,7 +17,7 @@ class Item < ActiveRecord::Base
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
 
-  delegate :name, :code, :feature_accounting, :prices, :feature_types, :actual_prices, :actual_price, :available_quantity, to: :product, allow_nil: true
+  delegate :name, :code, :feature_accounting, :prices, :feature_types, :actual_retail_price, :available_quantity, to: :product, allow_nil: true
 
   paginates_per 5
 

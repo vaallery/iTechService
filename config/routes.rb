@@ -148,8 +148,11 @@ ItechService::Application.routes.draw do
       match 'signin' => 'tokens#create', via: :post
       match 'signout' => 'tokens#destroy', via: :delete
       match 'scan/:barcode_num' => 'barcodes#scan'
-      resources :products
-      resources :items
+      resources :products, only: [:index, :show] do
+        get :remnants, on: :member
+      end
+      resources :items, only: [:index, :show]
+      resources :devices, only: [:show, :update]
     end
   end
 

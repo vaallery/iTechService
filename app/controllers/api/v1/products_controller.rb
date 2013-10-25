@@ -2,9 +2,8 @@ module Api
   module V1
 
     class ProductsController < Api::BaseController
-      skip_before_filter :authenticate_user!, only: [:get_remnants]
-      load_and_authorize_resource
-      skip_authorize_resource
+      skip_before_filter :authenticate_user!, only: [:remnants]
+      load_and_authorize_resource except: :remnants
 
       def index
         respond_with @products
@@ -14,9 +13,12 @@ module Api
         respond_with @product
       end
 
-      def get_remnants
-        #@product = Product.find params[:id]
-        render json: {}
+      def remnants
+        if (@product = Product.find_by_code params[:id]).present?
+          render json: {remnants: @product.available_quantity_by_stores}
+        else
+          render json: {error: t('products.errors.not_found')}
+        end
       end
 
     end

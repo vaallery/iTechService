@@ -173,19 +173,4 @@ class DevicesController < ApplicationController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
   end
 
-  def generate_barcode_to(pdf, num)
-    #require 'barby'
-    require 'barby/barcode/ean_13'
-    require 'barby/outputter/prawn_outputter'
-    require 'barby/outputter/pdfwriter_outputter'
-
-    code = '0'*(12-num.length) + num
-    code = Barby::EAN13.new code
-    #out = Barby::PDFWriterOutputter.new code
-    #code.annotate_pdf(pdf)
-    #out.annotate_pdf pdf.render
-    out = Barby::PrawnOutputter.new code
-    out.to_pdf document: pdf
-  end
-  
 end

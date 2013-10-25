@@ -8,7 +8,7 @@ FactoryGirl.define do
     request_price false
     product_category
 
-    trait :service do
+    factory :service_product_group do
       is_service true
     end
 

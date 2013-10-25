@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131022073355) do
+ActiveRecord::Schema.define(:version => 20131024081303) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -169,12 +169,14 @@ ActiveRecord::Schema.define(:version => 20131022073355) do
     t.boolean  "notify_client",   :default => false
     t.boolean  "client_notified"
     t.datetime "return_at"
+    t.integer  "item_id"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
   add_index "devices", ["done_at"], :name => "index_devices_on_done_at"
   add_index "devices", ["imei"], :name => "index_devices_on_imei"
+  add_index "devices", ["item_id"], :name => "index_devices_on_item_id"
   add_index "devices", ["location_id"], :name => "index_devices_on_location_id"
   add_index "devices", ["status"], :name => "index_devices_on_status"
   add_index "devices", ["ticket_number"], :name => "index_devices_on_ticket_number"
@@ -432,6 +434,7 @@ ActiveRecord::Schema.define(:version => 20131022073355) do
     t.datetime "updated_at",       :null => false
   end
 
+  add_index "products", ["code"], :name => "index_products_on_code"
   add_index "products", ["product_group_id"], :name => "index_products_on_product_group_id"
 
   create_table "purchases", :force => true do |t|
@@ -569,10 +572,12 @@ ActiveRecord::Schema.define(:version => 20131022073355) do
     t.integer  "priority",    :default => 0
     t.string   "role"
     t.integer  "location_id"
+    t.integer  "product_id"
   end
 
   add_index "tasks", ["location_id"], :name => "index_tasks_on_location_id"
   add_index "tasks", ["name"], :name => "index_tasks_on_name"
+  add_index "tasks", ["product_id"], :name => "index_tasks_on_product_id"
   add_index "tasks", ["role"], :name => "index_tasks_on_role"
 
   create_table "timesheet_days", :force => true do |t|
