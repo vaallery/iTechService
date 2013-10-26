@@ -24,7 +24,10 @@
   = f.input :imei, as: :imei, wrapper_html: {class: @device.has_imei? ? 'imei_input' : 'imei_input hidden'}
 
   = f.input :serial_number, as: :serial_number, input_html: {autocomplete: 'off'}
-  
+
+  - if @device.new_record? or @device.user_id == current_useer.id
+    = f.input :app_store_pass
+
   = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)
 
   = f.input :notify_client if @device.new_record? or current_user.any_admin?

@@ -10,13 +10,13 @@ class Device < ActiveRecord::Base
   has_many :tasks, through: :device_tasks
   has_many :history_records, as: :object, dependent: :destroy
 
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration
+  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass
   accepts_nested_attributes_for :device_tasks
   attr_accessor :service_duration
 
-  validates :ticket_number, :client, :device_type, :location, :device_tasks, :return_at, presence: true
-  validates :ticket_number, uniqueness: true
-  validates :imei, length: {is: 15}, allow_blank: true
+  validates_presence_of :ticket_number, :client, :device_type, :location, :device_tasks, :return_at, :app_store_pass
+  validates_uniqueness_of :ticket_number
+  validates_length_of :imei, is: 15, allow_blank: true
   #validates :service_duration, format: { with: /[\D.]+\z/ }
   validates_associated :device_tasks
   
