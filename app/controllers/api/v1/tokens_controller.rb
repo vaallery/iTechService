@@ -2,7 +2,7 @@ module Api
   module V1
 
     class TokensController < Api::BaseController
-      skip_before_filter :authenticate_user!
+      skip_before_filter :authenticate, only: :create
       skip_before_filter :verify_authenticity_token
 
       def create

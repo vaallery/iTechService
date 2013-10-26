@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131024081303) do
+ActiveRecord::Schema.define(:version => 20131025075506) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -205,12 +205,12 @@ ActiveRecord::Schema.define(:version => 20131024081303) do
 
   create_table "feature_types", :force => true do |t|
     t.string   "name"
-    t.string   "code"
+    t.string   "kind"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "feature_types", ["code"], :name => "index_feature_types_on_code"
+  add_index "feature_types", ["kind"], :name => "index_feature_types_on_code"
 
   create_table "feature_types_product_categories", :force => true do |t|
     t.integer "product_category_id"

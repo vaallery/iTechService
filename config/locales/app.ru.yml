@@ -518,6 +518,12 @@ ru:
       salesroom: "в зале"
 
   feature_types:
+    created: 'Тип Характеристики создан'
+    updated: 'Тип Характеристики изменён'
+    kinds:
+      imei: 'IMEI'
+      serial_number: 'Серийный номер'
+      other: 'Прочее'
     edit:
       title: "Редактирование Типа Характеристики"
     index:
@@ -903,6 +909,8 @@ ru:
       superadmin: Супер админ
       supervisor: Супервайзер
       technician: Технарь
+    errors:
+      not_found: 'Пользователь не найден.'
     account: Учётка
     add_karma: Карма
     all: Все

@@ -24,7 +24,7 @@ class FeatureTypesController < ApplicationController
   def create
     respond_to do |format|
       if @feature_type.save
-        format.html { redirect_to feature_types_path, notice: 'Feature type was successfully created.' }
+        format.html { redirect_to feature_types_path, notice: t('feature_types.created') }
         format.json { render json: @feature_type, status: :created, location: @feature_type }
       else
         format.html { render 'form' }
@@ -36,7 +36,7 @@ class FeatureTypesController < ApplicationController
   def update
     respond_to do |format|
       if @feature_type.update_attributes(params[:feature_type])
-        format.html { redirect_to feature_types_path, notice: 'Feature type was successfully updated.' }
+        format.html { redirect_to feature_types_path, notice: t('feature_types.updated') }
         format.json { head :no_content }
       else
         format.html { render 'form' }

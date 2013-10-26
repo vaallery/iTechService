@@ -1,0 +1,13 @@
+%tr[item]
+  %td= item.barcode_num
+  - item.features.each do |feature|
+    %td= feature.value
+  %td
+    .btn-group
+      = link_to_edit_small item, remote: true
+      = link_to '#', class: 'btn btn-small dropdown-toggle', 'data-toggle' => 'dropdown' do
+        = glyph(:barcode)
+        = caret_tag
+      %ul.dropdown-menu
+        %li= link_to t('without_price'), item_path(item, format: 'pdf'), target: '_blank'
+        %li= link_to t('with_price'), item_path(item, format: 'pdf', type: :with_price), target: '_blank'

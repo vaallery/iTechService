@@ -1,7 +1,6 @@
 = simple_form_for @device, html: { class: 'form-horizontal', remote: true } do |f|
   .modal-header
-    %a.close{'data-dismiss' => 'modal', href: '#'}
-      %i.icon-remove-sign
+    = button_to_close_modal
     %h3
       = @device.type_name
 

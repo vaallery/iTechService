@@ -2,12 +2,14 @@ module Api
   module V1
 
     class UsersController < Api::BaseController
-      load_and_authorize_resource
+      #load_and_authorize_resource
 
       def profile
-        @user = current_user
-
-        respond_with @user
+        if @current_user.present?
+          respond_with @current_user
+        else
+          render json: {error: t('')}
+        end
       end
 
     end
