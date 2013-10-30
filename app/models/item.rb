@@ -1,12 +1,11 @@
 require 'barby/barcode/ean_13'
 class Item < ActiveRecord::Base
-  #include HasBarcode
 
   belongs_to :product, inverse_of: :items
   has_many :store_items, inverse_of: :item
   has_many :batches, inverse_of: :item
   has_many :sale_items, inverse_of: :item
-  has_and_belongs_to_many :features, uniq: true
+  has_many :features, inverse_of: :item
   accepts_nested_attributes_for :features, allow_destroy: true
   attr_accessible :product_id, :features_attributes
   validates_presence_of :product
@@ -14,17 +13,12 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :barcode_num, allow_nil: true
   validates_uniqueness_of :product_id, unless: :feature_accounting
 
+  delegate :name, :code, :feature_accounting, :prices, :feature_types, :actual_retail_price, :available_quantity, to: :product, allow_nil: true
+
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
 
-  delegate :name, :code, :feature_accounting, :prices, :feature_types, :actual_retail_price, :available_quantity, to: :product, allow_nil: true
-
   paginates_per 5
-
-  #has_barcode :barcode,
-  #            type: Barby::EAN13,
-  #            outputter: :svg,
-  #            value: Proc.new { |i| i.barcode_num }
 
   after_create :generate_barcode_num
 

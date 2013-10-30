@@ -3,6 +3,7 @@
   = f.hidden_field :product_group_id
   = f.input :name
   = f.input :code
+  = f.input :warranty_term
 
   - if @product.is_service
     = f.simple_fields_for :task do |ff|

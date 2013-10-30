@@ -357,6 +357,7 @@ ru:
     updated_at: Время обновления
     user: Пользователь
     user_comment: Комментарий сотрудника
+    warranty_term: 'Гарантийный срок (мес.)'
 
   announcements:
     edit:
@@ -712,7 +713,9 @@ ru:
       not_found: 'Продукт не найден.'
 
   purchases:
+    choose_products: 'Выберите продукты'
     created: 'Закупка создана'
+    new_revaluation_act: 'Создать Акт Переоценки'
     updated: 'Закупка изменена'
     link: :purchases.index.title
     edit:

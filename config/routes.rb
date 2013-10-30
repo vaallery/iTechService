@@ -137,7 +137,10 @@ ItechService::Application.routes.draw do
 
   resources :installment_plans
 
-  resources :revaluation_acts
+  resources :revaluation_acts do
+    put 'post', on: :member
+    put 'unpost', on: :member
+  end
 
   wiki_root '/wiki'
 

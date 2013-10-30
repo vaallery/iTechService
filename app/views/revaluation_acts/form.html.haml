@@ -1,7 +1,7 @@
 = auto_header_tag @revaluation_act
 = simple_form_for(@revaluation_act, html: { class: 'form-horizontal', id: 'revaluation_act_form' }) do |f|
   = f.input :date, as: :my_datetime
-  = f.association :price_type, as: :select
+  = f.association :price_type, as: :select, prompt: false
 
   %table#revaluations.table.table-condensed.table-striped.table-bordered
     %caption
@@ -19,10 +19,6 @@
     %tbody
       = f.simple_fields_for :revaluations do |ff|
         = render 'revaluation_fields', f: ff
-
-    -#%tfoot
-    -#  %tr
-    -#    %td{}
 
   = link_to_add_fields t('products.add_product'), '#revaluations>tbody', f, :revaluations
 

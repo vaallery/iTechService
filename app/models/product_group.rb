@@ -5,7 +5,7 @@ class ProductGroup < ActiveRecord::Base
   has_ancestry orphan_strategy: :restrict
   attr_accessible :name, :is_service, :request_price, :ancestry, :parent_id, :product_category_id
   validates_presence_of :name
-  delegate :feature_accounting, :feature_types, to: :product_category, allow_nil: true
+  delegate :feature_accounting, :feature_types, :warranty_term, to: :product_category, allow_nil: true
 
   after_initialize do |product_group|
     product_group.parent_id = nil if product_group.parent_id.blank?

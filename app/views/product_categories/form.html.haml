@@ -2,6 +2,7 @@
 
 = simple_form_for @product_category, html: { class: 'form-horizontal' } do |f|
   = f.input :name
+  = f.input :warranty_term
   = f.association :feature_types, as: :check_boxes
   .form-actions
     = submit_button f

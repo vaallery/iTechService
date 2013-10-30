@@ -67,8 +67,6 @@ class PurchasesController < ApplicationController
   end
 
   def post
-    @porchase = Purchase.find params[:id]
-
     respond_to do |format|
       if @purchase.post
         format.html { redirect_to @purchase, notice: t('purchases.posted') }
@@ -79,8 +77,6 @@ class PurchasesController < ApplicationController
   end
 
   def unpost
-    @porchase = Purchase.find params[:id]
-
     respond_to do |format|
       if @purchase.unpost
         format.html { redirect_to @purchase, notice: t('purchases.unposted') }

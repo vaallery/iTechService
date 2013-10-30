@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131025075506) do
+ActiveRecord::Schema.define(:version => 20131029044728) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -170,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20131025075506) do
     t.boolean  "client_notified"
     t.datetime "return_at"
     t.integer  "item_id"
+    t.string   "app_store_pass"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
@@ -219,14 +220,14 @@ ActiveRecord::Schema.define(:version => 20131025075506) do
 
   create_table "features", :force => true do |t|
     t.integer  "feature_type_id"
-    t.integer  "product_id"
+    t.integer  "item_id"
     t.string   "value"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
   end
 
   add_index "features", ["feature_type_id"], :name => "index_features_on_feature_type_id"
-  add_index "features", ["product_id"], :name => "index_features_on_product_id"
+  add_index "features", ["item_id"], :name => "index_features_on_item_id"
 
   create_table "features_items", :force => true do |t|
     t.integer "feature_id"
@@ -399,6 +400,7 @@ ActiveRecord::Schema.define(:version => 20131025075506) do
     t.boolean  "feature_accounting", :default => false
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.integer  "warranty_term"
   end
 
   create_table "product_groups", :force => true do |t|
@@ -432,6 +434,7 @@ ActiveRecord::Schema.define(:version => 20131025075506) do
     t.integer  "product_group_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "warranty_term"
   end
 
   add_index "products", ["code"], :name => "index_products_on_code"

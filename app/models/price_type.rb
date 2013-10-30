@@ -14,11 +14,16 @@ class PriceType < ActiveRecord::Base
   validates_inclusion_of :kind, in: 0..2
   validates_uniqueness_of :kind
 
-  scope :purchase, where(kind: 0)
-  scope :retail, where(kind: 1)
-
   def kind_s
     KINDS[kind]
+  end
+
+  def self.purchase
+    find_or_create_by_kind kind: 0, name: I18n.t('price_types.kinds.purchase')
+  end
+
+  def self.retail
+    find_or_create_by_kind kind: 1, name: I18n.t('price_types.kinds.retail')
   end
 
 end

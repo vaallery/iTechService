@@ -264,26 +264,11 @@ module ApplicationHelper
   end
 
   def button_to_post(document)
-    #content_tag(:div, class: 'post_button') do
-    #  form_for(document) do |f|
-    #    concat hidden_field_tag("#{document.class.to_s.downcase}[status]", 1)
-    #    concat button_tag("#{glyph('check')} #{t('post')}".html_safe, type: 'submit', class: 'btn btn-primary', data: {confirm: t('confirmation')})
-    #  end
-    #end
-
-    class_name = document.class.to_s.downcase
-    link_to "#{glyph('check')} #{t('post')}".html_safe, {controller: class_name.tableize, action: 'post', id: document.id}, method: 'put', data: {confirm: t('confirmation')}, class: 'btn btn-primary'
+    link_to "#{glyph('check')} #{t('post')}".html_safe, {controller: document.class.to_s.tableize, action: 'post', id: document.id}, method: 'put', data: {confirm: t('confirmation')}, class: 'btn btn-primary'
   end
 
   def button_to_unpost(document)
-    #content_tag(:div, class: 'unpost_button') do
-    #  form_for(document) do |f|
-    #    concat hidden_field_tag("#{document.class.to_s.downcase}[status]", 0)
-    #    concat button_tag("#{glyph('check-empty')} #{t('unpost')}".html_safe, type: 'submit', class: 'btn btn-primary', data: {confirm: t('confirmation')})
-    #  end
-    #end
-    class_name = document.class.to_s.downcase
-    link_to "#{glyph('check-empty')} #{t('unpost')}".html_safe, {controller: class_name.tableize, action: 'unpost', id: document.id}, method: 'put', data: {confirm: t('confirmation')}, class: 'btn btn-primary'
+    link_to "#{glyph('check-empty')} #{t('unpost')}".html_safe, {controller: document.class.to_s.tableize, action: 'unpost', id: document.id}, method: 'put', data: {confirm: t('confirmation')}, class: 'btn btn-primary'
   end
 
   def button_to_update(name, document, attributes)

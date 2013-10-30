@@ -1,6 +1,6 @@
 class RevaluationActsController < ApplicationController
   load_and_authorize_resource
-  skip_load_resource only: [:index]
+  skip_load_resource only: [:index, :new]
 
   def index
     @revaluation_acts = RevaluationAct.search(params).page(params[:page])
@@ -20,6 +20,8 @@ class RevaluationActsController < ApplicationController
   end
 
   def new
+    @revaluation_act = RevaluationAct.new params[:revaluation_act]
+
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @revaluation_act }
@@ -65,4 +67,25 @@ class RevaluationActsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def post
+    respond_to do |format|
+      if @revaluation_act.post
+        format.html { redirect_to @revaluation_act, notice: t('revaluation_acts.posted') }
+      else
+        format.html { redirect_to @revaluation_act, error: t('revaluation_acts.not_posted') }
+      end
+    end
+  end
+
+  def unpost
+    respond_to do |format|
+      if @revaluation_act.unpost
+        format.html { redirect_to @revaluation_act, notice: t('revaluation_acts.unposted') }
+      else
+        format.html { redirect_to @revaluation_act, error: t('revaluation_acts.not_unposted') }
+      end
+    end
+  end
+
 end

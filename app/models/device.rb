@@ -55,6 +55,7 @@ class Device < ActiveRecord::Base
       status: status,
       comment: comment,
       at_done: at_done?,
+      in_archive: in_archive?,
       location: location_name,
       client: {
         id: client_id,

@@ -78,6 +78,12 @@ jQuery ->
       else
         $('#feature_types').addClass('hidden')
 
+  $(document).on 'change', '#products_to_revaluate :checkbox', ->
+    ids = $('#products_to_revaluate :checkbox:checked').map(->
+      return $(this).attr('product_id')
+    ).get().join(',')
+    $('#new_revaluation_act_link').attr('href', "/revaluation_acts/new?revaluation_act%5Bproduct_ids%5D=#{ids}")
+
 #  $(document).on 'change', '#purchase_contractor_id', ->
 
 #  $('#purchase_form').validate

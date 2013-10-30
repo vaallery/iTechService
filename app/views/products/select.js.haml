@@ -14,7 +14,7 @@
       $('td.quantity input', $row).removeAttr('readonly');
     - if @store.present?
       qty = Number($('td.quantity input', $row).val());
-      price = Number("#{@item.actual_price(@store.price_types.retail.first)}");
+      price = Number("#{@item.actual_price(@store.price_types.retail)}");
       $('td.price input', $row).val(price);
       $('td.sum input', $row).val(qty*price);
   hideModal();

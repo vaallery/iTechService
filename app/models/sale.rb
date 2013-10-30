@@ -71,7 +71,6 @@ class Sale < ActiveRecord::Base
   def post
     if is_new?
       transaction do
-        cur_date = Date.current
         sale_items.each do |sale_item|
           item = sale_item.item
           if (store_item = item.store_item(store_id)).present? and item.available_quantity(self.store_id) >= sale_item.quantity

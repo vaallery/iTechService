@@ -27,7 +27,7 @@
     - @purchase.batches.each do |batch|
       %tr.batch_fields
         %td.num
-        %td.product= link_to batch.presentation, product_path(batch.product)
+        %td.product= link_to batch.name, product_path(batch.product)
         %td.features= batch.item.features_presentation if batch.item.present?
         %td.price.number= batch.price
         %td.quantity.number= batch.quantity
@@ -44,4 +44,5 @@
   = link_to_edit @purchase if can? :edit, @purchase
   = button_to_post @purchase if can? :post, @purchase
   = button_to_unpost @purchase if can? :unpost, @purchase
+  = link_to_new_revaluation_act(@purchase) if @purchase.is_posted?
   = link_to_destroy @purchase if can? :destroy, @purchase

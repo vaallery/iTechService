@@ -3,12 +3,14 @@ class RevaluationAct < ActiveRecord::Base
   belongs_to :price_type, inverse_of: :revaluation_acts
   has_many :revaluations, inverse_of: :revaluation_act
   accepts_nested_attributes_for :revaluations, allow_destroy: true, reject_if: lambda { |a| a[:product_id].blank? or a[:price].blank? }
-  attr_accessible :date, :price_type_id
+  #attr_accessor :product_ids
+  attr_accessible :date, :price_type_id, :product_ids, :revaluations_attributes
   validates_presence_of :price_type_id, :date
 
   after_initialize do
     self.status = 'new' if self.status.blank?
     self.date ||= Time.current
+    self.price_type_id ||= PriceType.retail.id
   end
 
   STATUSES = {
@@ -76,6 +78,12 @@ class RevaluationAct < ActiveRecord::Base
       errors.add :status, I18n.t('revaluation_acts.errors.deleting_posted')
     else
       update_attribute :status, 2
+    end
+  end
+
+  def product_ids=(product_ids)
+    product_ids.split(',').each do |product_id|
+      self.revaluations.build product_id: product_id
     end
   end
 

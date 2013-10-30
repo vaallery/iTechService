@@ -1,7 +1,7 @@
 class ProductCategory < ActiveRecord::Base
 
   has_and_belongs_to_many :feature_types
-  attr_accessible :name, :feature_accounting, :feature_type_ids
+  attr_accessible :name, :feature_accounting, :warranty_term, :feature_type_ids
   validates_presence_of :name
 
   before_save do |product_category|

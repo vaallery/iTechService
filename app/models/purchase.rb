@@ -91,6 +91,7 @@ class Purchase < ActiveRecord::Base
   def post
     if is_new?
       transaction do
+        price_type = PriceType.purchase
         cur_date = Date.current
         batches.each do |batch|
           item = batch.item
@@ -104,11 +105,7 @@ class Purchase < ActiveRecord::Base
             store_item = StoreItem.find_or_initialize_by_item_id_and_store_id item_id: item.id, store_id: self.store_id
             store_item.add batch.quantity
           end
-          store.price_types.each do |price_type|
-            price = item.prices.find_or_initialize_by_price_type_id_and_date price_type_id: price_type.id, date: cur_date
-            price.value = batch.price
-            price.save!
-          end
+          item.prices.create price_type_id: price_type.id, date: cur_date, value: batch.price
         end
         update_attribute :status, 1
       end
@@ -118,7 +115,6 @@ class Purchase < ActiveRecord::Base
   def unpost
     if is_posted?
       transaction do
-        cur_date = Purchase.created_at
         batches.each do |batch|
           item = batch.item
           item.store_items.in_store(self.store_id).each do |store_item|

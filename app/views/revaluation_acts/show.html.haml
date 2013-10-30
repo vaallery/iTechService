@@ -1,12 +1,33 @@
-%p#notice= notice
+.page-header
+  %h3
+    = link_back_to_index
+    = t('document', name: t('activerecord.models.revaluation_act'), num: @revaluation_act.id, time: human_datetime(@revaluation_act.date))
 
-%p
-  %b Price type:
-  = @revaluation_act.price_type
-%p
-  %b Posted at:
-  = @revaluation_act.posted_at
+%dl.dl-horizontal
+  %dt= RevaluationAct.human_attribute_name :price_type
+  %dd= @revaluation_act.price_type_name
 
-= link_to 'Edit', edit_revaluation_act_path(@revaluation_act)
-\|
-= link_to 'Back', revaluation_acts_path
+%table#revaluations.table.table-condensed.table-bordered
+  %thead
+    %tr
+      %th.num
+      %th.code= Product.human_attribute_name :code
+      %th.product= t 'activerecord.models.product'
+      %th.purchase_price= Product.human_attribute_name :purchase_price
+      %th.actual_price= Product.human_attribute_name :actual_price
+      %th.price= Revaluation.human_attribute_name :price
+  %tbody
+    - @revaluation_act.revaluations.each do |revaluation|
+      %tr.revaluation
+        %td.num
+        %td.code= revaluation.code
+        %td.product= revaluation.name
+        %td.purchase_price.number= human_currency revaluation.actual_purchase_price
+        %td.actual_price.number= human_currency revaluation.actual_retail_price
+        %td.price.number= human_currency revaluation.price
+
+.form-actions
+  = link_to_edit @revaluation_act if can? :edit, @revaluation_act
+  = button_to_post @revaluation_act if can? :post, @revaluation_act
+  = button_to_unpost @revaluation_act if can? :unpost, @revaluation_act
+  = link_to_destroy @revaluation_act if can? :destroy, @revaluation_act
