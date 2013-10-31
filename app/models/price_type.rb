@@ -26,4 +26,12 @@ class PriceType < ActiveRecord::Base
     find_or_create_by_kind kind: 1, name: I18n.t('price_types.kinds.retail')
   end
 
+  def is_purchase?
+    kind == 0
+  end
+
+  def is_retail?
+    kind == 1
+  end
+
 end

@@ -56,7 +56,7 @@ class Device < ActiveRecord::Base
       comment: comment,
       at_done: at_done?,
       in_archive: in_archive?,
-      location: location_name,
+      location: location.try(:name),
       client: {
         id: client_id,
         name: client.short_name,

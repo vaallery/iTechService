@@ -36,13 +36,14 @@
           %th= feature_type.name
         %th
     %tbody
-      - @product.items.each do |item|
+      - @items.each do |item|
         = render item
 
--#%hr
--#%h4= t 'attributes.prices'
+%hr
+%h4
+  = link_to t('attributes.prices'), show_prices_product_path(@product), remote: true
 
--##product_prices= render 'prices_table'
+#product_prices
 
 .form-actions
   = link_to_edit @product

@@ -32,6 +32,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @items = @product.items.available
     respond_to do |format|
       format.html
       format.json { render json: @product }
@@ -57,7 +58,7 @@ class ProductsController < ApplicationController
         format.html { redirect_to products_path, notice: t('products.created') }
         format.json { render json: @product, status: :created, location: @product }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
@@ -69,7 +70,7 @@ class ProductsController < ApplicationController
         format.html { redirect_to products_path, notice: t('products.updated') }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
@@ -85,14 +86,6 @@ class ProductsController < ApplicationController
   end
 
   def choose
-    #if params[:item].present?
-    #  @item = Item.find params[:item]
-    #  @product = @item.product
-    #  current_product_group = @product.product_group
-    #  @current_product_group_id = current_product_group.id
-    #  @opened_product_groups = @current_product_group.path_ids[1..-1].map { |g| "product_group_#{g}" }.join(', ')
-    #  @products = @current_product_group.products.search(params).page(params[:page])
-    #end
     @product_groups = ProductGroup.roots.goods
     @form = params[:form]
     respond_to do |format|
@@ -132,6 +125,13 @@ class ProductsController < ApplicationController
   def category_select
     category = Category.find params[:category_id]
     @feature_types = category.feature_types
+  end
+
+  def show_prices
+    @product_prices = @product.prices.page(params[:page])
+    respond_to do |format|
+      format.js
+    end
   end
 
 end

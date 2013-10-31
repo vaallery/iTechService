@@ -90,7 +90,7 @@ class Sale < ActiveRecord::Base
 
   def set_deleted
     if self.status == 1
-      errors.add :status, I18n.t('purchases.errors.deleting_posted')
+      errors.add :status, I18n.t('sales.errors.deleting_posted')
     else
       update_attribute :status, 2
     end
