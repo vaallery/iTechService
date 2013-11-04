@@ -19,7 +19,8 @@ class OrdersController < ApplicationController
     else
       @orders = @orders.by_status
     end
-    @orders = @orders.page params[:page]
+
+    @orders = @orders.page params[:page] if params[:status].present?
 
     respond_to do |format|
       format.html

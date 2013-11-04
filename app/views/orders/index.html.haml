@@ -3,6 +3,7 @@
     = auto_title
     %small= link_to t('orders.spare_parts'), orders_path(kind: 'spare_parts')
     %small= link_to t('orders.not_spare_parts'), orders_path(kind: 'not_spare_parts')
+    %small= link_to t('orders.statuses.archive'), orders_path(status: 'archive')
   = link_to_new Order
 
 .table_filter.navbar.container

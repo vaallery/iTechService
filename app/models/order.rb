@@ -79,7 +79,9 @@ class Order < ActiveRecord::Base
     orders = Order.scoped
 
     if (status_q = params[:status]).present?
-      orders = orders.send status_q+'_orders' if STATUSES.include? status_q
+      orders = orders.where status: status_q if STATUSES.include? status_q
+    else
+      orders = orders.actual_orders
     end
 
     if (object_kind_q = params[:object_kind]).present?

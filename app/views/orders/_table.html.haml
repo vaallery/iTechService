@@ -38,7 +38,7 @@
               = link_to_edit_small order if can? :edit, order
               = link_to_destroy_small order if can? :destroy, order
 
-  = paginate @orders
+  = paginate @orders if params[:status].present?
 
 - else
   = render 'shared/empty'
