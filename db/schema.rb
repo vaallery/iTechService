@@ -429,8 +429,8 @@ ActiveRecord::Schema.define(:version => 20130806040528) do
     t.string   "color"
     t.integer  "abilities_mask"
     t.boolean  "schedule"
-    t.boolean  "is_fired"
     t.integer  "position"
+    t.boolean  "is_fired"
     t.string   "job_title"
   end
 
