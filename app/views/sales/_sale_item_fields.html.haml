@@ -1,5 +1,5 @@
 %tr.sale_item_fields.fields
-  %td.num
+  %td.num.number
   %td.code= f.object.try(:code)
   %td.product
     = f.input_field :item, as: :product, form: 'sale'
@@ -7,6 +7,6 @@
   %td.available_quantity.number= remains_presentation f.object.product, f.object.store
   %td.quantity.number= f.number_field :quantity, as: 'integer', class: 'input-mini'
   %td.price.number= f.object.actual_retail_price
-  %td.discount.number= number_field_tag :discount, f.object.discount, class: 'input-small'
+  %td.discount.number= f.number_field :discount, class: 'input-small sale_item_discount', min: 0, max: f.object.available_discount
   %td.sum.number= f.object.sum
   %td.actions= link_to_remove_fields f

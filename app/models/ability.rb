@@ -18,6 +18,10 @@ Ability
       cannot :unpost, RevaluationAct, status: [0, 2]
       cannot :edit, RevaluationAct, status: [1, 2]
       cannot :destroy, RevaluationAct, status: 1
+      cannot :post, Sale, status: [1, 2]
+      cannot :unpost, Sale, status: [0, 2]
+      cannot :edit, Sale, status: [1, 2]
+      cannot :destroy, Sale, status: 1
     elsif user.admin?
       can :manage, :all
       can :view_reports

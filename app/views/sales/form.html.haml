@@ -2,12 +2,12 @@
 = simple_form_for @sale, html: { class: 'form-horizontal' } do |f|
   - if current_user.any_admin?
     = f.input :date, as: :my_datetime
-  = f.input :client_id, as: :client, wrapper_html: { id: 'client_fields' }
+  = f.input :client_id, as: :client, wrapper_html: { id: 'client_fields' }, no_devices: true
   = f.association :payment_type
   = f.association :store, collection: Store.for_retail.all
   = hidden_field_tag :price_type_id
 
-  %table#sale_products.table.table-condensed.table-striped.table-bordered
+  %table#sale_items.table.table-condensed.table-striped.table-bordered
     %caption
       %h4= t 'products.index.title'
     %thead
@@ -32,7 +32,7 @@
         %td.total_sum.number= @sale.total_sum
         %td
 
-  = link_to_add_fields t('sales.add_product'), '#sale_products>tbody', f, :sale_items
+  = link_to_add_fields t('sales.add_product'), '#sale_items>tbody', f, :sale_items
 
   .form-actions
     = submit_button f

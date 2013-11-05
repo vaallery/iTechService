@@ -11,14 +11,15 @@
     - if @item.feature_accounting
       $('td.quantity input', $row).attr('readonly', true);
     - else
-      $('td.quantity input', $row).removeAttr('readonly');
-    - if @store.present?
-      qty = Number($('td.quantity input', $row).val());
-      price = Number("#{@item.actual_retail_price}");
-      discount = Number("#{@item.discount_for(@client)}");
-      $('td.price', $row).text(price);
-      $('td.discount input', $row).val(discount);
-      $('td.sum', $row).text(qty*(price-discount));
+      $('#sale_items td.quantity input', $row).removeAttr('readonly');
+    -#- if @store.present?
+    qty = Number($('td.quantity input', $row).val());
+    price = Number("#{@item.actual_retail_price}");
+    discount = Number("#{@item.discount_for(@client)}");
+    $('td.price', $row).text(price);
+    $('.sale_item_discount', $row).val(discount);
+    $('td.sum', $row).text(qty*(price-discount));
+    calculate_sale_items_total_sum();
   hideModal();
 - else
   - if @product.present?

@@ -44,14 +44,14 @@ class Discount# < ActiveRecord::Base
       margin = VALUES[client_category][product_category][:margin]
       purchase_price = product.actual_purchase_price
       retail_price = product.actual_retail_price
-      if unit == '%'
-        discount = retail_price * value.fdiv(100)
-      else
-        discount = value
-      end
+      discount = unit == '%' ? retail_price * value.fdiv(100) : value
       discount = retail_price - purchase_price + margin if (retail_price-discount) < (purchase_price+margin)
       return discount
     end
+  end
+
+  def self.max_available_for(client, product)
+
   end
 
 end

@@ -717,9 +717,8 @@ ru:
       title: "Продукты"
     new:
       title: "Новый Продукт"
-    shoose:
-      title: "Выбор товара"
     choose:
+      title: "Выбор товара"
       submit: "Создать"
     errors:
       not_found: 'Продукт не найден.'
@@ -799,7 +798,8 @@ ru:
     edit:
       title: "Редактирование Продажы"
     errors:
-      out_of_stock: 'Товара нет в наличии.'
+      out_of_stock: 'Товара нет в наличии'
+      unavailable_discount: 'не допустима'
     index:
       import_link: Импорт
       title: 'Продажи'

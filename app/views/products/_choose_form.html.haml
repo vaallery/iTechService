@@ -1,7 +1,7 @@
 #modal_form.modal.fade.hide
   = form_tag select_products_path, remote: true, id: 'product_choose_form', form: @form do
     .modal-header
-      %h3= t 'products.shoose.title'
+      %h3= t 'products.choose.title'
 
     .modal-body
       = hidden_field_tag 'product_id', nil, id: 'selected_product', disabled: true

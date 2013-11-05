@@ -97,7 +97,7 @@ class Sale < ActiveRecord::Base
   end
 
   def total_sum
-
+    sale_items.sum :price
   end
 
   private
