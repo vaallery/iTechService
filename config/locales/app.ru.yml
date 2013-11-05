@@ -78,6 +78,7 @@ ru:
         admin_info: Информация админа
         birthday: День рождения
         card_number: Номер карты
+        category: 'Категория'
         comments: Комментарии
         contact_phone: Телефон для связи
         device: Девайс
@@ -223,9 +224,10 @@ ru:
 
       product:
         actual_price: 'Текущая цена'
-        available: 'Доступно'
+        available: 'На складе'
         category: "Категория"
         code: "Код"
+        discount: 'Скидка'
         feature_accounting: 'Учёт по характеристикам'
         features: 'Характеристики'
         product_group: Группа
@@ -384,6 +386,11 @@ ru:
       feature_exists: 'Характеристика уже существует'
 
   clients:
+    categories:
+      usual: 'Простой'
+      regular: 'Постоянный'
+      super: 'Супер'
+      friend: 'Друг'
     edit:
       title: Редактирование Клиента
     new:
@@ -685,6 +692,11 @@ ru:
       title: "Категории Продуктов"
     new:
       title: "Новая Категория"
+    kinds:
+      equipment: 'Техника'
+      accessory: 'Аксессуары'
+      service: 'Услуги'
+      protector: 'Плёнки'
 
   product_groups:
     created: 'Продуктовая Группа создана'

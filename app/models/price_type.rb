@@ -11,7 +11,7 @@ class PriceType < ActiveRecord::Base
   has_and_belongs_to_many :stores
   attr_accessible :name, :kind
   validates_presence_of :name, :kind
-  validates_inclusion_of :kind, in: 0..2
+  validates_inclusion_of :kind, in: KINDS.keys
   validates_uniqueness_of :kind
 
   def kind_s

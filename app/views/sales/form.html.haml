@@ -18,6 +18,7 @@
         %th= Product.human_attribute_name :available
         %th.quantity= SaleItem.human_attribute_name :quantity
         %th.price= SaleItem.human_attribute_name :price
+        %th.discount= Product.human_attribute_name :discount
         %th.sum= SaleItem.human_attribute_name :sum
         %th.actions
 
@@ -27,8 +28,8 @@
 
     %tfoot
       %tr
-        %td{colspan: 6}= t 'total'
-        %td.total_sum.number
+        %td{colspan: 7}= t 'total'
+        %td.total_sum.number= @sale.total_sum
         %td
 
   = link_to_add_fields t('sales.add_product'), '#sale_products>tbody', f, :sale_items

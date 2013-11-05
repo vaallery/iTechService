@@ -8,7 +8,7 @@ module Api
         if @current_user.present?
           respond_with @current_user
         else
-          render json: {error: t('')}
+          render status: 403, json: {error: t('')}
         end
       end
 

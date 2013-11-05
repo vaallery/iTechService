@@ -17,7 +17,7 @@ module Api
         if (@product = Product.find_by_code params[:id]).present?
           render json: {remnants: @product.available_quantity_by_stores}
         else
-          render json: {error: t('products.errors.not_found')}
+          render status: 403, json: {error: t('products.errors.not_found')}
         end
       end
 

@@ -4,8 +4,9 @@
   %td.product
     = f.input_field :item, as: :product, form: 'sale'
     .features= f.object.features_presentation
-  %td.available_quantity.number
-  %td.quantity.number= f.input_field :quantity, class: 'input-small'
-  %td.price.number= f.input_field :price, class: 'input-small', disabled: true
-  %td.sum.number= f.input_field :sum, class: 'input-small', disabled: true
+  %td.available_quantity.number= remains_presentation f.object.product, f.object.store
+  %td.quantity.number= f.number_field :quantity, as: 'integer', class: 'input-mini'
+  %td.price.number= f.object.actual_retail_price
+  %td.discount.number= number_field_tag :discount, f.object.discount, class: 'input-small'
+  %td.sum.number= f.object.sum
   %td.actions= link_to_remove_fields f

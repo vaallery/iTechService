@@ -86,7 +86,7 @@ class ProductsController < ApplicationController
   end
 
   def choose
-    @product_groups = ProductGroup.roots.goods
+    @product_groups = ProductGroup.goods.at_depth(1)
     @form = params[:form]
     respond_to do |format|
       format.js
@@ -96,6 +96,7 @@ class ProductsController < ApplicationController
   def select
     @form = params[:form]
     @store = Store.find params[:store_id] if params[:store_id].present?
+    @client = Client.find params[:client_id] if params[:client_id].present?
     if params[:product_id].present?
       @product = Product.find params[:product_id]
       if @product.feature_accounting

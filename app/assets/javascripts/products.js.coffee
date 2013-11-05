@@ -30,14 +30,18 @@ jQuery ->
   $(document).on 'click', '#product_choose_form .product_row', ->
     product_id = $(this).data('product')
     form = $('#product_choose_form').attr('form')
-    store_id = $('#product_choose_form').attr('store_id')
-    $.post '/products/select.js', product_id: product_id, form: form, store_id: store_id
+    store_id = $('#sale_store_id').val()
+    client_id = $('#sale_client_id').val()
+    $.post '/products/select.js', product_id: product_id, form: form, store_id: store_id, client_id: client_id
 
   $(document).on 'click', '#product_choose_form .item_row', ->
     $('#product_choose_form #new_item_fields input').attr('disabled', true)
     $('#new_item_fields').hide()
     item_id = $(this).data('item')
-    $.post '/products/select.js', item_id: item_id
+    form = $('#product_choose_form').attr('form')
+    store_id = $('#sale_store_id').val()
+    client_id = $('#sale_client_id').val()
+    $.post '/products/select.js', item_id: item_id, form: form, store_id: store_id, client_id: client_id
 
   $(document).on 'click', '#product_choose_form #add_product_item', ->
     $('#product_choose_form #selected_item').attr('disabled', true).val('')

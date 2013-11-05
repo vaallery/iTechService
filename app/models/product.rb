@@ -13,14 +13,14 @@ class Product < ActiveRecord::Base
   attr_accessible :code, :name, :product_group_id, :warranty_term, :items_attributes, :task_attributes
   validates_presence_of :name, :code, :product_group
   validates_uniqueness_of :code
-  delegate :feature_accounting, :feature_types, :is_service, to: :product_group, allow_nil: true
+  delegate :feature_accounting, :feature_types, :is_service?, :request_price, :product_category, to: :product_group, allow_nil: true
 
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: { store_id: store.is_a?(Store) ? store.id : store }) }
   scope :goods, joins(:product_group).where(product_groups: {is_service: false})
   scope :services, joins(:product_group).where(product_groups: {is_service: true})
 
-  after_save { self.is_service ? self.create_task : self.task.try(:destroy) }
+  after_save { self.is_service? ? self.create_task : self.task.try(:destroy) }
 
   after_initialize { self.warranty_term ||= default_warranty_term }
 
@@ -71,6 +71,10 @@ class Product < ActiveRecord::Base
 
   def default_warranty_term
     product_group.warranty_term
+  end
+
+  def discount_for(client)
+    Discount::available_for client, self
   end
 
 end

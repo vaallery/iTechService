@@ -29,4 +29,12 @@ module ClientsHelper
     end
   end
 
+  def client_categories_for_select
+    Client::CATEGORIES.to_a.map {|c| [t("clients.categories.#{c[1]}"), c[0]]}
+  end
+
+  def human_client_category(client)
+    t "clients.categories.#{client.category_s}"
+  end
+
 end

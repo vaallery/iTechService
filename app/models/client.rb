@@ -1,7 +1,14 @@
 class Client < ActiveRecord::Base
   include ApplicationHelper
-  
-  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone
+
+  CATEGORIES = {
+    0 => 'usual',
+    1 => 'regular',
+    2 => 'super',
+    3 => 'friend'
+  }
+
+  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :category
 
   has_many :devices, inverse_of: :client, dependent: :destroy
   has_many :orders, as: :customer, dependent: :destroy
@@ -12,10 +19,13 @@ class Client < ActiveRecord::Base
 
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
 
-  validates :name, :phone_number, :full_phone_number, presence: true
-  validates :full_phone_number, uniqueness: true
+  validates_presence_of :name, :phone_number, :full_phone_number, :category
+  validates_uniqueness_of :full_phone_number
+  validates_inclusion_of :category, in: CATEGORIES.keys
   validates_associated :comments
-  
+
+  after_initialize {self.category ||= 0}
+
   def self.search params
     clients = Client.scoped
     unless (client_q = params[:client_q] || params[:client]).blank?
@@ -58,6 +68,10 @@ class Client < ActiveRecord::Base
 
   def creator
     self.history_records.first.try :user
+  end
+
+  def category_s
+    CATEGORIES[category]
   end
 
 end

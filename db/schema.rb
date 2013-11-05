@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131029044728) do
+ActiveRecord::Schema.define(:version => 20131101100047) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -71,9 +71,11 @@ ActiveRecord::Schema.define(:version => 20131029044728) do
     t.string   "email"
     t.text     "admin_info"
     t.string   "contact_phone"
+    t.integer  "category"
   end
 
   add_index "clients", ["card_number"], :name => "index_clients_on_card_number"
+  add_index "clients", ["category"], :name => "index_clients_on_category"
   add_index "clients", ["email"], :name => "index_clients_on_email"
   add_index "clients", ["full_phone_number"], :name => "index_clients_on_full_phone_number"
   add_index "clients", ["name"], :name => "index_clients_on_name"
@@ -401,16 +403,19 @@ ActiveRecord::Schema.define(:version => 20131029044728) do
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.integer  "warranty_term"
+    t.string   "kind"
+    t.boolean  "request_price"
   end
+
+  add_index "product_categories", ["kind"], :name => "index_product_categories_on_kind"
 
   create_table "product_groups", :force => true do |t|
     t.string   "name"
     t.string   "ancestry"
-    t.boolean  "is_service",          :default => false
-    t.boolean  "request_price",       :default => false
     t.integer  "product_category_id"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.integer  "ancestry_depth",      :default => 0
   end
 
   add_index "product_groups", ["ancestry"], :name => "index_product_groups_on_ancestry"

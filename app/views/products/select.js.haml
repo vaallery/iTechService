@@ -5,18 +5,20 @@
   $('.product_select_button', $selector).attr('title', "#{@item.name}");
   $selector.closest('.product').find('.features').text("#{@item.features_presentation}");
   $row = $selector.closest('tr');
-  $('td.available_quantity', $row).text("#{@item.available_quantity(@store)} (#{@item.available_quantity})");
+  $('td.available_quantity', $row).text("#{remains_presentation(@item.product, @store)}");
   - if @form == 'sale'
+    $('td.quantity input', $row).val(1);
     - if @item.feature_accounting
-      $('td.quantity input', $row).val(1);
       $('td.quantity input', $row).attr('readonly', true);
     - else
       $('td.quantity input', $row).removeAttr('readonly');
     - if @store.present?
       qty = Number($('td.quantity input', $row).val());
-      price = Number("#{@item.actual_price(@store.price_types.retail)}");
-      $('td.price input', $row).val(price);
-      $('td.sum input', $row).val(qty*price);
+      price = Number("#{@item.actual_retail_price}");
+      discount = Number("#{@item.discount_for(@client)}");
+      $('td.price', $row).text(price);
+      $('td.discount input', $row).val(discount);
+      $('td.sum', $row).text(qty*(price-discount));
   hideModal();
 - else
   - if @product.present?

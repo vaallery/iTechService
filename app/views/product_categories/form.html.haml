@@ -2,6 +2,8 @@
 
 = simple_form_for @product_category, html: { class: 'form-horizontal' } do |f|
   = f.input :name
+  = f.input :kind, collection: product_category_kinds_for_select
+  = f.input :request_price
   = f.input :warranty_term
   = f.association :feature_types, as: :check_boxes
   .form-actions
