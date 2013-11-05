@@ -85,6 +85,7 @@ ru:
         user_id: :activerecord.models.user
 
       device:
+        app_store_pass: 'Пароль на учетную запись в App Store'
         client: :activerecord.models.client
         client_id: :activerecord.models.client
         client_notified: Клиент уведомлён

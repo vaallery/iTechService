@@ -36,6 +36,10 @@
     %dt= Client.human_attribute_name :contact_phone
     %dd= human_phone @device.client.contact_phone
 
+  - if @device.user_id == current_user.id
+    %dt= Device.human_attribute_name :app_store_pass
+    %dd= @device.app_store_pass
+
   %dt= Device.human_attribute_name :comment
   %dd.device_comment= @device.comment.present? ? @device.comment : '-'
 
