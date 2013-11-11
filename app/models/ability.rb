@@ -10,6 +10,7 @@ Ability
     if user.superadmin?
       can :manage, :all
       can :view_reports
+      can :view_purchase_price, Product
       cannot :post, Purchase, status: [1, 2]
       cannot :unpost, Purchase, status: [0, 2]
       cannot :edit, Purchase, status: [1, 2]

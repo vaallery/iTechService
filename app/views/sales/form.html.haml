@@ -1,6 +1,6 @@
 = auto_header_tag @sale
 = simple_form_for @sale, html: { class: 'form-horizontal' } do |f|
-  - if current_user.any_admin?
+  - if current_user.superadmin?
     = f.input :date, as: :my_datetime
   = f.input :client_id, as: :client, wrapper_html: { id: 'client_fields' }, no_devices: true
   = f.association :payment_type
@@ -17,6 +17,8 @@
         %th.product= t 'activerecord.models.product'
         %th= Product.human_attribute_name :available
         %th.quantity= SaleItem.human_attribute_name :quantity
+        - if can? :view_purchase_price, Product
+          %th.purchase_price= Product.human_attribute_name :purchase_price
         %th.price= SaleItem.human_attribute_name :price
         %th.discount= Product.human_attribute_name :discount
         %th.sum= SaleItem.human_attribute_name :sum
@@ -28,7 +30,7 @@
 
     %tfoot
       %tr
-        %td{colspan: 7}= t 'total'
+        %td{colspan: can?(:view_purchase_price, Product) ? 8 : 7}= t 'total'
         %td.total_sum.number= @sale.total_sum
         %td
 

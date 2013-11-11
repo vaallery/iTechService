@@ -28,7 +28,7 @@
       %tr.batch_fields
         %td.num
         %td.product= link_to batch.name, product_path(batch.product)
-        %td.features= batch.item.features_presentation if batch.item.present?
+        %td.features= features_presentation batch.item if batch.item.present?
         %td.price.number= batch.price
         %td.quantity.number= batch.quantity
         %td.sum.number= batch.sum

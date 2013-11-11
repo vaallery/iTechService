@@ -38,18 +38,18 @@ class Product < ActiveRecord::Base
     products
   end
 
-  def actual_purchase_price
+  def purchase_price
     prices.purchase.first.try(:value)
   end
 
-  def actual_retail_price
+  def retail_price
     prices.retail.first.try(:value)
   end
 
   def actual_prices
     {
-      purchase: actual_purchase_price,
-      retail: actual_retail_price
+      purchase: purchase_price,
+      retail: retail_price
     }
   end
 
@@ -74,7 +74,7 @@ class Product < ActiveRecord::Base
   end
 
   def discount_for(client)
-    Discount::available_for client, self
+    client.present? ? Discount::available_for(client, self) : 0
   end
 
 end

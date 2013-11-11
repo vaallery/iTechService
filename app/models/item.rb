@@ -13,7 +13,7 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :barcode_num, allow_nil: true
   validates_uniqueness_of :product_id, unless: :feature_accounting
 
-  delegate :name, :code, :feature_accounting, :prices, :feature_types, :actual_retail_price, :available_quantity, :product_category, :discount_for, to: :product, allow_nil: true
+  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :available_quantity, :product_category, :discount_for, to: :product, allow_nil: true
 
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
@@ -45,10 +45,6 @@ class Item < ActiveRecord::Base
     items
   end
 
-  def features_presentation
-    features.any? ? features.map { |feature| "#{feature.name}: #{feature.value}" }.join('; ') : nil
-  end
-
   def store_item(store=nil)
     if feature_accounting
       store_items.first
@@ -63,6 +59,10 @@ class Item < ActiveRecord::Base
     num = self.id.to_s
     code = Product::BARCODE_PREFIX + '0'*(9-num.length) + num
     update_attribute :barcode_num, Barby::EAN13.new(code).to_s
+  end
+
+  def purchase_price
+    feature_accounting ? batches.newest.first.try(:price) : product.purchase_price
   end
 
 end

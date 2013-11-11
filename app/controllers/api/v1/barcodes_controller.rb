@@ -2,7 +2,7 @@ module Api
   module V1
 
     class BarcodesController < Api::BaseController
-
+      skip_before_filter :authenticate
       def scan
         barcode_num = params[:barcode_num]
         if barcode_num.start_with? Product::BARCODE_PREFIX

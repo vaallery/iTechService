@@ -3,26 +3,26 @@
   %table.table.table-striped
     %thead
       %tr
-        %th= model_class.human_attribute_name :id
-        %th= model_class.human_attribute_name :payment_type
+        %th= sortable 'date', model_class.human_attribute_name(:date)
+        %th= sortable 'id', model_class.human_attribute_name(:id)
         %th= model_class.human_attribute_name :store
-        %th= model_class.human_attribute_name :client
-        %th= model_class.human_attribute_name :total_sum
-        %th= model_class.human_attribute_name :sold_at
         %th= model_class.human_attribute_name :user
+        %th= model_class.human_attribute_name :client
+        %th= model_class.human_attribute_name :payment_type
+        %th= model_class.human_attribute_name :total_sum
         %th
     %tbody
       - @sales.each do |sale|
         %tr
+          %td= human_datetime sale.date
           %td= link_to sale.id, sale
-          %td= sale.payment_type
           %td= sale.store.name
-          %td= link_to sale.client.short_name, client_path(sale.client)
-          %td= human_currency sale.total_sum
-          %td= human_datetime sale.sold_at
           %td= link_to sale.user.short_name, user_path(sale.user)
+          %td= link_to sale.client.short_name, client_path(sale.client)
+          %td= sale.payment_type.name
+          %td= human_currency sale.total_sum
           %td.actions.btn-group
-            = link_to_show_small sale
+            = link_to_show_small sale if can? :read, Sale
             = link_to_edit_small sale if can? :edit, Sale
             = link_to_destroy_small sale if can? :destroy, Sale
 

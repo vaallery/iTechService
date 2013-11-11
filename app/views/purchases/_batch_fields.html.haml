@@ -3,7 +3,7 @@
   %td.code= f.object.try(:code)
   %td.product
     = f.input_field :item, as: :product, form: 'purchase'
-    .features= f.object.features_presentation
+    .features= features_presentation f.object
   %td.quantity.number= f.input_field :quantity, class: 'input-small'
   %td.price.number= f.input_field :price, class: 'input-small'
   %td.sum.number= text_field_tag :sum, f.object.sum, class: 'input-small', disabled: true

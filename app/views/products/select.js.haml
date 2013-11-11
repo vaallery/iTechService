@@ -3,7 +3,7 @@
   $('input.item_id', $selector).val("#{@item.id}");
   $('.product_select_button', $selector).text("#{@item.name}");
   $('.product_select_button', $selector).attr('title', "#{@item.name}");
-  $selector.closest('.product').find('.features').text("#{@item.features_presentation}");
+  $selector.closest('.product').find('.features').text("#{features_presentation @item.features}");
   $row = $selector.closest('tr');
   $('td.available_quantity', $row).text("#{remains_presentation(@item.product, @store)}");
   - if @form == 'sale'
@@ -12,9 +12,8 @@
       $('td.quantity input', $row).attr('readonly', true);
     - else
       $('#sale_items td.quantity input', $row).removeAttr('readonly');
-    -#- if @store.present?
     qty = Number($('td.quantity input', $row).val());
-    price = Number("#{@item.actual_retail_price}");
+    price = Number("#{@item.retail_price}");
     discount = Number("#{@item.discount_for(@client)}");
     $('td.price', $row).text(price);
     $('.sale_item_discount', $row).val(discount);

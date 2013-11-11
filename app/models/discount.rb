@@ -37,13 +37,13 @@ class Discount# < ActiveRecord::Base
     end
   end
 
-  def self.available_for(client, product)
-    if (client_category = client.category_s.to_sym).present? and (product_category = product.product_category.kind.to_sym).present?
+  def self.available_for(client, item)
+    if (client_category = client.category_s.to_sym).present? and (product_category = item.product_category.kind.to_sym).present?
       value = VALUES[client_category][product_category][:value]
       unit = VALUES[client_category][product_category][:unit]
       margin = VALUES[client_category][product_category][:margin]
-      purchase_price = product.actual_purchase_price
-      retail_price = product.actual_retail_price
+      purchase_price = item.purchase_price
+      retail_price = item.retail_price
       discount = unit == '%' ? retail_price * value.fdiv(100) : value
       discount = retail_price - purchase_price + margin if (retail_price-discount) < (purchase_price+margin)
       return discount

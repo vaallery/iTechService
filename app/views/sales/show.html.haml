@@ -32,7 +32,7 @@
         %td.code.number= sale_item.code
         %td.product
           %strong= sale_item.name
-          .features= sale_item.features_presentation
+          .features= features_presentation sale_item
         %td.quantity.number= sale_item.quantity
         %td.price.number= human_currency sale_item.price
         %td.sum.number= human_currency sale_item.sum

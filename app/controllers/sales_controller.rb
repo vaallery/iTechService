@@ -1,9 +1,10 @@
 class SalesController < ApplicationController
   load_and_authorize_resource
   skip_load_resource only: [:index, :new]
+  helper_method :sort_column, :sort_direction
 
   def index
-    @sales = Sale.search(params).order('sold_at desc').page params[:page]
+    @sales = Sale.search(params).reorder(sort_column + ' ' + sort_direction).page params[:page]
 
     respond_to do |format|
       format.html
@@ -59,6 +60,16 @@ class SalesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to sales_url }
     end
+  end
+
+  private
+
+  def sort_column
+    Sale.column_names.include?(params[:sort]) ? params[:sort] : 'date'
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
   end
 
 end
