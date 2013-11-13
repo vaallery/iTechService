@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
+  attr_accessible :auth_token, :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
 
   belongs_to :location
   has_many :history_records, as: :object
@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
 
   mount_uploader :photo, PhotoUploader
 
+  attr_accessor :auth_token
   attr_accessor :login
   attr_accessor :installment
   cattr_accessor :current
@@ -45,6 +46,7 @@ class User < ActiveRecord::Base
   validates :password, presence: true, confirmation: true, if: :password_required?
   validates :role, inclusion: { in: ROLES }
   before_validation :validate_rights_changing
+  before_save :ensure_authentication_token
 
   scope :ordered, order('position asc')
   scope :any_admin, where(role: %w[admin superadmin])
@@ -66,6 +68,15 @@ class User < ActiveRecord::Base
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
   acts_as_list
+
+  def self.find_first_by_auth_conditions(warden_conditions)
+    conditions = warden_conditions.dup
+    if auth_token = conditions.delete(:auth_token)
+      active.where(conditions).where(["lower(username) = :value OR lower(card_number) = :value", {value: auth_token.mb_chars.downcase.to_s}]).first
+    else
+      active.where(conditions).first
+    end
+  end
 
   after_initialize do |user|
     if user.schedule_days.empty?
@@ -196,16 +207,6 @@ class User < ActiveRecord::Base
 
   def announced_birthday?
     announcements.active_birthdays.any?
-  end
-
-  def self.find_first_by_auth_conditions(warden_conditions)
-    conditions = warden_conditions.dup
-    if login = conditions.delete(:login)
-      where(conditions).where(["lower(username) = :value OR lower(card_number) = :value",
-                               { value: login.mb_chars.downcase.to_s }]).first
-    else
-      where(conditions).first
-    end
   end
 
   def helpable?

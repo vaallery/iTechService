@@ -27,7 +27,17 @@ class DeviceTask < ActiveRecord::Base
     done_time = dt.device.done? ? dt.device.device_tasks.maximum(:done_at).getlocal : nil
     dt.device.update_attribute :done_at, done_time
   end
-  
+
+  def as_json(options={})
+    {
+      id: id,
+      name: name,
+      done: done,
+      comment: comment,
+      user_comment: user_comment
+    }
+  end
+
   def task_name
     task.try :name
   end
