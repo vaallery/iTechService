@@ -2,7 +2,7 @@ class Purchase < ActiveRecord::Base
 
   belongs_to :contractor, inverse_of: :purchases
   belongs_to :store, inverse_of: :purchases
-  has_many :batches, inverse_of: :purchase
+  has_many :batches, inverse_of: :purchase, dependent: :destroy
   has_many :items, through: :batches
   accepts_nested_attributes_for :batches, allow_destroy: true, reject_if: lambda { |a| a[:price].blank? or a[:quantity].blank? or a[:item_id].blank? }
   attr_accessible :batches_attributes, :contractor_id, :store_id, :date

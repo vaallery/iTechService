@@ -1,7 +1,7 @@
 class SaleItem < ActiveRecord::Base
 
   belongs_to :sale, inverse_of: :sale_items
-  belongs_to :item, inverse_of: :sale_items
+  belongs_to :item, inverse_of: :sale_items, dependent: :destroy
   attr_accessible :sale_id, :item_id, :price, :quantity, :discount
   validates_presence_of :item, :price, :quantity
 

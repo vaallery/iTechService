@@ -3,11 +3,11 @@ class Product < ActiveRecord::Base
   BARCODE_PREFIX = '243'
 
   belongs_to :product_group, inverse_of: :products
-  has_many :items, inverse_of: :product
-  has_many :prices, class_name: 'ProductPrice', inverse_of: :product
-  has_many :store_items, through: :items
-  has_many :revaluations, inverse_of: :product
-  has_one :task, inverse_of: :product
+  has_many :items, inverse_of: :product, dependent: :destroy
+  has_many :prices, class_name: 'ProductPrice', inverse_of: :product, dependent: :destroy
+  has_many :store_items, through: :items, dependent: :destroy
+  has_many :revaluations, inverse_of: :product, dependent: :destroy
+  has_one :task, inverse_of: :product, dependent: :destroy
   accepts_nested_attributes_for :items, allow_destroy: true
   accepts_nested_attributes_for :task, allow_destroy: false
   attr_accessible :code, :name, :product_group_id, :warranty_term, :items_attributes, :task_attributes

@@ -18,7 +18,6 @@
     %tr
       %th.num
       %th.product= Batch.human_attribute_name :product
-      %th.features= Product.human_attribute_name :features
       %th.price= Batch.human_attribute_name :price
       %th.quantity= Batch.human_attribute_name :quantity
       %th.sum= Batch.human_attribute_name :sum
@@ -27,22 +26,21 @@
     - @purchase.batches.each do |batch|
       %tr.batch_fields
         %td.num
-        %td.product= link_to batch.name, product_path(batch.product)
-        %td.features= features_presentation batch.item if batch.item.present?
+        %td.product
+          = link_to batch.name, product_path(batch.product)
+          .features= features_presentation batch.item if batch.item.present?
         %td.price.number= batch.price
         %td.quantity.number= batch.quantity
         %td.sum.number= batch.sum
 
   %tfoot
     %tr
-      %td{colspan: 3}= t 'total'
-      %td
-      %td
+      %td{colspan: 4}= t 'total'
       %td.total_sum.number= @purchase.total_sum
 
 .form-actions
   = link_to_edit @purchase if can? :edit, @purchase
   = button_to_post @purchase if can? :post, @purchase
-  = button_to_unpost @purchase if can? :unpost, @purchase
+  -#= button_to_unpost @purchase if can? :unpost, @purchase
   = link_to_new_revaluation_act(@purchase) if @purchase.is_posted?
   = link_to_destroy @purchase if can? :destroy, @purchase

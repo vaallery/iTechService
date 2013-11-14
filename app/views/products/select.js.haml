@@ -3,15 +3,17 @@
   $('input.item_id', $selector).val("#{@item.id}");
   $('.product_select_button', $selector).text("#{@item.name}");
   $('.product_select_button', $selector).attr('title', "#{@item.name}");
-  $selector.closest('.product').find('.features').text("#{features_presentation @item.features}");
+  $selector.closest('.product').find('.features').text("#{features_presentation @item}");
   $row = $selector.closest('tr');
-  $('td.available_quantity', $row).text("#{remains_presentation(@item.product, @store)}");
-  - if @form == 'sale'
+  - if @form == 'sale' or @form == 'purchase'
+    $('td.available_quantity', $row).text("#{remains_presentation(@item.product, @store)}");
+    $('td.code', $row).text("#{@item.code}");
     $('td.quantity input', $row).val(1);
     - if @item.feature_accounting
       $('td.quantity input', $row).attr('readonly', true);
     - else
-      $('#sale_items td.quantity input', $row).removeAttr('readonly');
+      $('td.quantity input', $row).removeAttr('readonly');
+  - if @form == 'sale'
     qty = Number($('td.quantity input', $row).val());
     price = Number("#{@item.retail_price}");
     discount = Number("#{@item.discount_for(@client)}");

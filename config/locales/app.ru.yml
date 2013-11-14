@@ -727,9 +727,10 @@ ru:
   purchases:
     choose_products: 'Выберите продукты'
     created: 'Закупка создана'
-    new_revaluation_act: 'Создать Акт Переоценки'
-    updated: 'Закупка изменена'
     link: :purchases.index.title
+    new_revaluation_act: 'Создать Акт Переоценки'
+    posted: 'Закупка проведена'
+    updated: 'Закупка изменена'
     edit:
       title: 'Редактирование Закупки'
     index:

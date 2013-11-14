@@ -1,7 +1,7 @@
 class RevaluationAct < ActiveRecord::Base
 
   belongs_to :price_type, inverse_of: :revaluation_acts
-  has_many :revaluations, inverse_of: :revaluation_act
+  has_many :revaluations, inverse_of: :revaluation_act, dependent: :destroy
   accepts_nested_attributes_for :revaluations, allow_destroy: true, reject_if: lambda { |a| a[:product_id].blank? or a[:price].blank? }
   #attr_accessor :product_ids
   attr_accessible :date, :price_type_id, :product_ids, :revaluations_attributes

@@ -4,7 +4,7 @@ class Sale < ActiveRecord::Base
   belongs_to :client, inverse_of: :sales
   belongs_to :store
   belongs_to :payment_type
-  has_many :sale_items, inverse_of: :sale
+  has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
   attr_accessible :date, :client_id, :user_id, :store_id, :payment_type_id, :sale_items_attributes

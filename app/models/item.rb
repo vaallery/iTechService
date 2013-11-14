@@ -2,10 +2,10 @@ require 'barby/barcode/ean_13'
 class Item < ActiveRecord::Base
 
   belongs_to :product, inverse_of: :items
-  has_many :store_items, inverse_of: :item
-  has_many :batches, inverse_of: :item
-  has_many :sale_items, inverse_of: :item
-  has_many :features, inverse_of: :item
+  has_many :store_items, inverse_of: :item, dependent: :destroy
+  has_many :batches, inverse_of: :item, dependent: :destroy
+  has_many :sale_items, inverse_of: :item, dependent: :destroy
+  has_many :features, inverse_of: :item, dependent: :destroy
   accepts_nested_attributes_for :features, allow_destroy: true
   attr_accessible :product_id, :features_attributes
   validates_presence_of :product
