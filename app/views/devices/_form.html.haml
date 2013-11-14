@@ -26,7 +26,7 @@
   = f.input :serial_number, as: :serial_number, input_html: {autocomplete: 'off'}
 
   - if @device.new_record? or @device.user_id == current_user.id
-    = f.input :app_store_pass
+    = f.input :app_store_pass, required: @device.new_record?
 
   = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)
 

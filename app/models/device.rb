@@ -15,7 +15,7 @@ class Device < ActiveRecord::Base
   attr_accessor :service_duration
 
   validates_presence_of :ticket_number, :client, :device_type, :location, :device_tasks, :return_at
-  #validates_presence_of :app_store_pass, if: :new_record?
+  validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
   validates_length_of :imei, is: 15, allow_blank: true
   #validates :service_duration, format: { with: /[\D.]+\z/ }
