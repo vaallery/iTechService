@@ -45,7 +45,27 @@ class Device < ActiveRecord::Base
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
   after_initialize :set_user_and_location
-  
+
+  def as_json(options={})
+    {
+      id: id,
+      device_type: type_name,
+      imei: imei,
+      serial_number: serial_number,
+      status: status,
+      comment: comment,
+      at_done: at_done?,
+      in_archive: in_archive?,
+      location: location.try(:name),
+      client: {
+        id: client_id,
+        name: client.short_name,
+        phone: client.phone_number
+      },
+      tasks: device_tasks
+    }
+  end
+
   def type_name
     device_type.try(:full_name) || '-'
   end

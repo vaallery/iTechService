@@ -113,4 +113,19 @@ ItechService::Application.routes.draw do
 
   match '/delayed_job' => DelayedJobWeb, anchor: false
 
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      match 'signin' => 'tokens#create', via: :post
+      match 'signout' => 'tokens#destroy', via: :delete
+      match 'scan/:barcode_num' => 'barcodes#scan'
+      match 'profile' => 'users#profile'
+      resources :products, only: [:index, :show] do
+        get :remnants, on: :member
+      end
+      resources :items, only: [:index, :show]
+      resources :devices, only: [:show, :update]
+    end
+  end
+
+
 end
