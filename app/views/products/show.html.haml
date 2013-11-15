@@ -15,11 +15,11 @@
   %dt= model_class.human_attribute_name :quantity
   %dd= @product.available_quantity
 
-  - unless @product.feature_accounting or @product.is_service
+  - unless @product.feature_accounting or @product.is_service?
     %dt= Item.human_attribute_name :barcode
     %dd= @product.item.barcode
 
-  - if @product.is_service
+  - if @product.is_service?
     %dt= Task.human_attribute_name :role
     %dd= @product.task.role_name
 

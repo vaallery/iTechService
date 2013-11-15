@@ -603,6 +603,11 @@ ru:
       title: Новости
     link: Новости
 
+  items:
+    tag:
+      with_price: 'С ценой'
+      without_price: 'Без цены'
+
   locations:
     edit:
       title: Редактирование локации
