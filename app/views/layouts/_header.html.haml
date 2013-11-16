@@ -51,10 +51,5 @@
           = header_karma_button if can? :manage, Karma
           = header_link_to_close_announcements
           %li= link_to icon_tag(:lock), destroy_user_session_path, method: :delete, remote: true, id: 'lock_session'
-          - if Rails.env.development?
-            %li.dropdown
-              = link_to caret_tag, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown'
-              %ul.dropdown-menu
-                - User.all.map do |user|
-                  %li= link_to user.username, become_path(user)
+          = header_link_to_change_user if Rails.env.development?
           %li= link_to icon_tag(:signout), destroy_user_session_path, method: :delete

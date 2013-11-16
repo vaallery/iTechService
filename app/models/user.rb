@@ -65,6 +65,7 @@ class User < ActiveRecord::Base
   scope :staff, where('role <> ?', 'admin')
   scope :fired, where(is_fired: true)
   scope :active, where(is_fired: [false, nil])
+  scope :for_changing, where(username: %w[vova admin test test_soft test_media test_tech test_market test_manager])
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
   acts_as_list

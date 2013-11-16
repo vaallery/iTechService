@@ -20,8 +20,7 @@
   %body
     = yield :header
     = spinner_tag
-    = yield :info
-    = yield :announcements
+    = yield :notifications
     .container-fluid
       #flash_place= bootstrap_flash
       .row-fluid

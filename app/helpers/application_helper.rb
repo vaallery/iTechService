@@ -257,4 +257,15 @@ module ApplicationHelper
     end.html_safe
   end
 
+  def header_link_to_change_user
+    content_tag(:li, class: 'dropdown') do
+      link_to(caret_tag, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown') +
+      content_tag(:ul, class: 'dropdown-menu') do
+        User.for_changing.map do |user|
+          content_tag(:li, link_to(user.username, become_path(user)))
+        end.join.html_safe
+      end
+    end
+  end
+
 end

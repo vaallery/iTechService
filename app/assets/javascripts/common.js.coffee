@@ -1,4 +1,31 @@
 jQuery ->
+
+# Loading info and announcements
+
+  if $('#important_info').length
+    $('#important_info').load '/infos?important=t', ->
+      if $('#important_info>*').length
+        $('#important_info').slideDown(100)
+        showNotificationsIndicator()
+
+  if $('#personal_infos').length
+    $('#personal_infos').load '/infos?personal=t', ->
+      if $('#personal_infos>*').length
+        $('#personal_infos').slideDown(100)
+        showNotificationsIndicator()
+
+  if $('#announcements').length
+    $('#announcements').load '/announcements?actual=t', ->
+      if $('#announcements>*').length
+        $('#announcements').slideDown(100)
+        showNotificationsIndicator()
+
+  $(document).on 'click', '#hide_notifications_button', ->
+    $('#announcements:has(*)').slideToggle(100);
+    $('#personal_infos:has(*)').slideToggle(100);
+    $('#important_info:has(*)').slideToggle(100);
+    $('#hide_notifications_button>i').toggleClass('icon-chevron-up').toggleClass('icon-chevron-down')
+
   $(document).on 'click', '#history .close_history', (event) ->
     $history = $('#history')
     $history.remove()
@@ -148,6 +175,19 @@ window.showSpinner = ()->
 
 window.hideSpinner = ->
   $('#spinner').fadeOut()
+
+window.closeAnnouncement = ($announcement)->
+#  $announcement.css({position: 'fixed', left: $announcement.offset().left, top: $announcement.offset().top, width: $announcement.outerWidth()})
+#  $announcement.animate({left: $('body').outerWidth()}, 200).remove()
+  $announcement.slideUp 100, ->
+    $announcement.remove()
+    hideNotificationsIndicator() unless $('#announcements>*, #important_info>*, #personal_infos>*').length
+
+window.showNotificationsIndicator = ->
+  $('#hide_notifications_button>.indicator').addClass('active')
+
+window.hideNotificationsIndicator = ->
+  $('#hide_notifications_button>.indicator').removeClass('active')
 
 window.datepicker_dates =
   days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],

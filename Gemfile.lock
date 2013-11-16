@@ -62,6 +62,7 @@ GEM
     bootstrap-colorpicker-rails (0.3.1)
       railties (>= 3.0)
     builder (3.0.4)
+    callsite (0.0.11)
     cancan (1.6.10)
     capistrano (2.15.4)
       highline
@@ -202,9 +203,10 @@ GEM
       skinny (>= 0.1.2)
       sqlite3-ruby
       thin
-    meta_request (0.2.1)
+    meta_request (0.2.8)
+      callsite
       rack-contrib
-      rails
+      railties
     mime-types (1.23)
     mini_magick (3.5.0)
       subexec (~> 0.2.1)
@@ -295,7 +297,7 @@ GEM
     ruby-debug-base19x (0.11.30.pre12)
       debugger-ruby_core_source (>= 1.1.4)
       rake (>= 0.8.1)
-    ruby-debug-ide (0.4.17)
+    ruby-debug-ide (0.4.21)
       rake (>= 0.8.1)
     ruby-debug19 (0.11.6)
       columnize (>= 0.3.1)
@@ -414,7 +416,7 @@ DEPENDENCIES
   less-rails (~> 2.2.6)
   linecache19
   mailcatcher
-  meta_request (= 0.2.1)
+  meta_request (~> 0.2.8)
   mini_magick (~> 3.4)
   paperclip (= 3.4.0)
   pg (~> 0.14.1)
@@ -425,7 +427,7 @@ DEPENDENCIES
   roo
   rspec-rails
   ruby-debug-base19x (= 0.11.30.pre12)
-  ruby-debug-ide
+  ruby-debug-ide (= 0.4.21)
   ruby-debug19
   sass-rails (~> 3.2.3)
   seed_dumper (~> 0.1.3)

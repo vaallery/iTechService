@@ -14,6 +14,7 @@ class Announcement < ActiveRecord::Base
   scope :active_protector, where(active: true, kind: 'protector')
   scope :active_birthdays, where(active: true, kind: 'birthday')
   scope :device_return, where(kind: 'device_return')
+  scope :actual_for, lambda { |user| active.keep_if { |announcement| announcement.visible_for? user } }
 
   before_create :define_recipients
 

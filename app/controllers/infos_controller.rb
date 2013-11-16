@@ -1,24 +1,31 @@
 class InfosController < ApplicationController
   helper_method :sort_column, :sort_direction
-  load_and_authorize_resource
-  skip_load_resource only: :index
+  authorize_resource
 
   def index
-    @infos = params[:archive].present? ? Info.archived.newest : Info.unarchived.newest
-    if can? :manage, Info
-      @infos = @infos.newest
-      unless sort_column.blank? and sort_direction.blank?
-        @infos = @infos.reorder(sort_column + ' ' + sort_direction)
-      end
+    if params[:important].present?
+      @info = Info.actual.important.first
+      render @info, layout: false
+    elsif params[:personal].present?
+      @infos = Info.actual.addressed_to current_user
+      render @infos, layout: false
     else
-      @infos = @infos.newest.available_for(current_user)
-    end
-    @infos = @infos.page(params[:page])
+      @infos = params[:archive].present? ? Info.archived.newest : Info.actual.newest
+      if can? :manage, Info
+        @infos = @infos.newest
+        unless sort_column.blank? and sort_direction.blank?
+          @infos = @infos.reorder(sort_column + ' ' + sort_direction)
+        end
+      else
+        @infos = @infos.newest.available_for(current_user)
+      end
+      @infos = @infos.page(params[:page])
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @infos }
-      format.js { render 'shared/index' }
+      respond_to do |format|
+        format.html
+        format.json { render json: @infos }
+        format.js { render 'shared/index' }
+      end
     end
   end
 
