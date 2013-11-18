@@ -29,4 +29,13 @@ module ClientsHelper
     end
   end
 
+  def client_presentation(client)
+    if client.present? then
+      phone_number = number_to_phone client.full_phone_number || client.phone_number, area_code: true
+      "#{client.short_name} / #{phone_number}"
+    else
+      '-'
+    end
+  end
+
 end
