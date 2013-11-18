@@ -33,8 +33,8 @@ class DeviceTask < ActiveRecord::Base
       id: id,
       name: name,
       done: done,
-      comment: comment,
       cost: cost,
+      comment: comment,
       user_comment: user_comment
     }
   end
