@@ -34,6 +34,7 @@ class DeviceTask < ActiveRecord::Base
       name: name,
       done: done,
       comment: comment,
+      cost: cost,
       user_comment: user_comment
     }
   end
