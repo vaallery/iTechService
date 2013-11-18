@@ -103,7 +103,7 @@ class Announcement < ActiveRecord::Base
     recipients = []
     case self.kind
       when 'help'
-        recipients = User.software.to_a
+        recipients = User.software.exclude(User.current).to_a
       when 'coffee'
         recipients = User.software.to_a
       when 'for_coffee'

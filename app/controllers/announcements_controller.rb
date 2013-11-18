@@ -3,11 +3,6 @@ class AnnouncementsController < ApplicationController
 
   def index
     if params[:actual].present?
-      #announcement_ids = []
-      #Announcement::KINDS.map do |kind|
-      #  announcement_ids << Announcement.newest.find_by_kind(kind).id if Announcement.find_by_kind(kind).present?
-      #end
-      #@announcements = Announcement.find announcement_ids
       @announcements = Announcement.actual_for current_user
       render @announcements, layout: false
     else
