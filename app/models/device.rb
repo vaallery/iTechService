@@ -62,7 +62,8 @@ class Device < ActiveRecord::Base
         name: client.short_name,
         phone: client.phone_number
       },
-      tasks: device_tasks
+      tasks: device_tasks,
+      total_cost: tasks_cost
     }
   end
 
