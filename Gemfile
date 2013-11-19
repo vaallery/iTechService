@@ -41,8 +41,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', platforms: :ruby
-  gem 'less-rails'
-  #gem 'less-rails', '~> 2.2.6'
+  gem 'less-rails', '~> 2.4.2'
   gem 'uglifier', '>= 1.0.3'
   gem 'bootstrap-colorpicker-rails', '~> 0.3.1', require: 'bootstrap-colorpicker-rails'#, :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
 end
