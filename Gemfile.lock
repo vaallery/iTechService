@@ -184,11 +184,11 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
     kgio (2.8.1)
-    less (2.2.2)
-      commonjs (~> 0.2.6)
-    less-rails (2.2.6)
+    less (2.4.0)
+      commonjs (~> 0.2.7)
+    less-rails (2.4.2)
       actionpack (>= 3.1)
-      less (~> 2.2.0)
+      less (~> 2.4.0)
     libv8 (3.16.14.3)
     linecache19 (0.5.13)
       ruby_core_source (>= 0.1.4)
@@ -411,7 +411,7 @@ DEPENDENCIES
   json (~> 1.7.7)
   json_builder (~> 3.1.7)
   kaminari (~> 0.14.1)
-  less-rails (~> 2.2.6)
+  less-rails
   linecache19
   mailcatcher
   meta_request (~> 0.2.8)
