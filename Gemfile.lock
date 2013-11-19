@@ -411,7 +411,7 @@ DEPENDENCIES
   json (~> 1.7.7)
   json_builder (~> 3.1.7)
   kaminari (~> 0.14.1)
-  less-rails
+  less-rails (~> 2.4.2)
   linecache19
   mailcatcher
   meta_request (~> 0.2.8)
