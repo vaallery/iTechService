@@ -1,9 +1,9 @@
 jQuery ->
 
-  $('.user_karma_link').each (i, el)->
-    $(el).tooltip
-      html: true
-      title: $(this).data('comment')
+#  $('.user_karma_link').each (i, el)->
+#    $(el).tooltip
+#      html: true
+#      title: $(this).data('comment')
 
 $(document).on 'click', '#header_karma_good_true', ->
   $('#header_karma_good').val(true)
