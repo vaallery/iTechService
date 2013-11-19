@@ -18,7 +18,7 @@ class Info < ActiveRecord::Base
   scope :addressed_to, lambda { |user| where(recipient_id: user.id) }
   scope :public, where(recipient_id: nil)
   scope :archived, where(is_archived: true)
-  scope :unarchived, where(is_archived: false)
+  scope :actual, where(is_archived: false)
 
   def comment=(content)
     comments.build content: content unless content.blank?

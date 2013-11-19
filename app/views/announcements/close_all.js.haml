@@ -1,3 +1,7 @@
 - if @announcement_ids.present?
   - @announcement_ids.each do |id|
-    == $("#announcement_#{id}").remove();
+    :plain
+      $("#announcement_#{id}").remove();
+      if $('#announcements>*, #important_info>*, #personal_infos>*').length == 0 {
+        hideNotificationsIndicator();
+      }

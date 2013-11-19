@@ -8,13 +8,17 @@ class DevicesController < ApplicationController
   skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
 
   def index
-    @devices = Device.search(params)
-    
+    if params[:location].present?
+      @devices = Device.search(params)
+    else
+      @devices = Device.unarchived.search(params)
+    end
+
     if params.has_key? :sort and params.has_key? :direction
       @devices = @devices.reorder 'devices.'+sort_column + ' ' + sort_direction
     end
     @devices = @devices.newest.page params[:page]
-    @location_name = params[:location].present? ? Location.find(params[:location]).full_name : 'everywhere'
+    @location_name = params[:location].present? ? Location.find(params[:location]).full_name : I18n.t('everywhere')
     @locations = Location.scoped
 
     respond_to do |format|

@@ -7,4 +7,4 @@
       == $("#announcement_#{announcement.id}").remove();
 
 - if @announcement.present?
-  == $("#announcement_#{@announcement.id}").remove();
+  == closeAnnouncement($("#announcement_#{@announcement.id}"));

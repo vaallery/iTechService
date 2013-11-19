@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 #source 'http://gems.rubyforge.org'
 
 gem 'rails', '3.2.14'
-
+gem 'unicorn', '~> 4.6.2'
 gem 'pg', '~> 0.14.1'
 gem 'thin', '~> 1.5.0'
 gem 'haml-rails', '~> 0.3.5'
@@ -22,18 +22,17 @@ gem 'exception_notification', '~> 2.6.1'#, git: 'git://github.com/alanjds/except
 gem 'private_pub', '~> 1.0.3'
 gem 'twitter-bootstrap-rails', '~> 2.2.7'#, :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
 gem 'seed_dumper', '~> 0.1.3'
-gem 'json', '1.7.7'
-gem 'taps'
+gem 'json', '~> 1.7.7'
 gem 'irwi', git: 'git://github.com/alno/irwi.git'
-gem 'RedCloth'
-gem 'roo'
-gem 'paperclip', '3.4.0'
-gem 'backup'
-gem 'barby'
-gem 'acts_as_list'
-gem 'delayed_job_active_record'
-gem 'delayed_job_web'
-gem 'whenever', require: false
+gem 'RedCloth', '~> 4.2.9'
+gem 'roo', '~> 1.11.2'
+gem 'paperclip', '~> 3.4.0'
+gem 'barby', '~> 0.5.1'
+gem 'acts_as_list', '~> 0.2.0'
+gem 'delayed_job_active_record', '~> 0.4.4'
+gem 'delayed_job_web', '~> 1.2.0'
+gem 'whenever', '~> 0.8.4', require: false
+gem 'capistrano', '~> 2.15.4'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -44,7 +43,7 @@ group :assets do
   gem 'therubyracer', platforms: :ruby
   gem 'less-rails', '~> 2.2.6'
   gem 'uglifier', '>= 1.0.3'
-  gem 'bootstrap-colorpicker-rails', require: 'bootstrap-colorpicker-rails'#, :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
+  gem 'bootstrap-colorpicker-rails', '~> 0.3.1', require: 'bootstrap-colorpicker-rails'#, :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
 end
 
 group :development do
@@ -54,14 +53,14 @@ group :development do
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'meta_request', '0.2.1'
+  gem 'meta_request', '~> 0.2.8'
   gem 'capistrano-deploy', '~> 0.3.2'
   gem 'mailcatcher'
   gem 'linecache19'#, '>= 0.5.13', git: 'https://github.com/robmathews/linecache19-0.5.13.git'
   #gem 'linecache19', path: "/Users/v/projects/rails/_gems/linecache19-0.5.13"
   gem 'ruby-debug19'
   gem 'ruby-debug-base19x', '0.11.30.pre12', require: 'ruby-debug-base' #, path: '/Applications/RubyMine.app/rb/gems'
-  gem 'ruby-debug-ide', require: 'ruby-debug-ide' #, path: '/Applications/RubyMine.app/rb/gems'
+  gem 'ruby-debug-ide', '0.4.21', require: 'ruby-debug-ide' #, path: '/Applications/RubyMine.app/rb/gems'
 end
 
 group :test do
@@ -77,18 +76,3 @@ group :development, :test do
   #gem 'faker'
   #gem 'ffaker'
 end
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-gem 'unicorn'
-
-# Deploy with Capistrano
-gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'

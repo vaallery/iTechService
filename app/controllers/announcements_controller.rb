@@ -1,17 +1,18 @@
 class AnnouncementsController < ApplicationController
-
-  load_and_authorize_resource
+  authorize_resource
 
   def index
-    @announcements = Announcement.scoped.page params[:page]
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @announcements }
+    if params[:actual].present?
+      @announcements = Announcement.actual_for current_user
+      render @announcements, layout: false
+    else
+      @announcements = Announcement.newest.page params[:page]
     end
   end
 
   def show
+    @announcement = Announcement.find params[:id]
+
     respond_to do |format|
       format.js
     end
@@ -38,7 +39,7 @@ class AnnouncementsController < ApplicationController
         format.html { redirect_to announcements_path, notice: t('announcements.created') }
         format.json { render json: @announcement, status: :created, location: @announcement }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @announcement.errors, status: :unprocessable_entity }
       end
     end

@@ -388,6 +388,7 @@ ru:
       client_search_placeholder: "Клиент: телефон | имя | карта"
       device_search_placeholder: "Девайс: серийник | IMEI"
       title: Девайсы
+      archive: 'Архив'
     new:
       title: Новый девайс
     status:

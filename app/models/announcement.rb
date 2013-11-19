@@ -14,6 +14,7 @@ class Announcement < ActiveRecord::Base
   scope :active_protector, where(active: true, kind: 'protector')
   scope :active_birthdays, where(active: true, kind: 'birthday')
   scope :device_return, where(kind: 'device_return')
+  scope :actual_for, lambda { |user| active.keep_if { |announcement| announcement.visible_for? user } }
 
   before_create :define_recipients
 
@@ -102,7 +103,7 @@ class Announcement < ActiveRecord::Base
     recipients = []
     case self.kind
       when 'help'
-        recipients = User.software.to_a
+        recipients = User.software.exclude(User.current).to_a
       when 'coffee'
         recipients = User.software.to_a
       when 'for_coffee'

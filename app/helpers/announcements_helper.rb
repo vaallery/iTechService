@@ -1,18 +1,19 @@
 module AnnouncementsHelper
 
   def announcement_content announcement
+    user_name = announcement.user.try(:short_name)
     case announcement.kind
-      when 'help' then text = " #{t('announcements.needs_help')}"
-      when 'coffee' then text = ": #{t('announcements.coffee_made')}"
-      when 'for_coffee' then text = ": #{t('announcements.coffee_order', content: announcement.content)}"
-      when 'protector' then text = ": #{t('announcements.protector_made')}"
+      when 'help' then text = "#{user_name} #{t('announcements.needs_help')}"
+      when 'coffee' then text = "#{user_name}: #{t('announcements.coffee_made')}"
+      when 'for_coffee' then text = "#{user_name}: #{t('announcements.coffee_order', content: announcement.content)}"
+      when 'protector' then text = "#{user_name}: #{t('announcements.protector_made')}"
       when 'birthday'
         text = ''
         if (birthday = announcement.user.try(:birthday)).present?
-          text = t('announcements.birthday', user: announcement.user.short_name, time: l(birthday, format: :short))
+          text = t('announcements.birthday', user: user_name, time: l(birthday, format: :short))
         end
-      when 'order_status' then text = "[#{l(announcement.created_at, format: :long_d)}] #{announcement.content}"
-      when 'order_done' then text = "[#{l(announcement.created_at, format: :long_d)}] #{announcement.content}"
+      when 'order_status' then text = announcement.content
+      when 'order_done' then text = announcement.content
       when 'device_return'
         if (device = announcement.device).present?
           time = l(device.return_at, format: device.return_at.today? ? :time : :short_r)
@@ -22,13 +23,10 @@ module AnnouncementsHelper
         else
           text = ''
         end
-      else text = ": #{announcement.content}"
+      else text = "#{user_name}: #{announcement.content}"
     end
-    if announcement.birthday? or announcement.order_status? or announcement.order_done? or announcement.device_return?
-      text
-    else
-      "[#{l(announcement.created_at, format: :long_d)}] #{announcement.user.try(:short_name)}" + text
-    end
+    content_tag(:div, l(announcement.created_at, format: :long_d), class: 'timestamp') +
+    content_tag(:div, text)
   end
 
   def header_link_to_announce
