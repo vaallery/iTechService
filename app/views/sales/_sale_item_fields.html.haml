@@ -5,7 +5,7 @@
     = f.input_field :item, as: :product, form: 'sale'
     .features= features_presentation f.object
   %td.available_quantity.number= remains_presentation f.object.product, f.object.store
-  %td.quantity.number= f.number_field :quantity, as: 'integer', class: 'input-mini'
+  %td.quantity.number= f.number_field :quantity, class: 'input-mini', type: 'number', min: 1
   %td.price.number= f.object.retail_price
   - if can? :view_purchase_price, Product
     %td.purchase_price.number= f.object.purchase_price

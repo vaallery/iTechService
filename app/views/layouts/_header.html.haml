@@ -31,6 +31,7 @@
               = menu_item t('purchases.link'), purchases_path if can? :manage, Purchase
               = menu_item t('sales.link'), sales_path if can? :read, Sale
               = menu_item t('revaluation_acts.index.title'), revaluation_acts_path if can? :manage, RevaluationAct
+              = menu_item t('movement_acts.index.title'), movement_acts_path if can? :manage, MovementAct
               %li.dropdown-submenu
                 = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
                   = t 'dashboard.references'

@@ -21,6 +21,7 @@ ru:
       installment: Взнос
       karma: Карма
       location: Локация
+      movement_act: 'Акт Перемещения'
       object: Обьект
       order: Заказ
       price: Прайс
@@ -204,6 +205,12 @@ ru:
         position: Позиция
         schedule: Отображать в календаре
         users: Пользователи
+
+      movement_act:
+        dst_store: 'Склад получатель'
+        dst_store_id: :activerecord.models.movement_act.dst_store
+        store: 'Склад отправитель'
+        store_id: :activerecord.models.movement_act.src_store
 
       order:
         customer: Заказчик
@@ -521,6 +528,16 @@ ru:
     created: "Скидка создана"
     updated: "Скидка изменена"
 
+  documents:
+    posted: 'Документ проведён'
+    not_posted: 'Документ не проведён'
+    unposted: ''
+    not_unposted: ''
+    statuses:
+      new: 'Новый'
+      posted: 'Проведён'
+      deleted: 'Удалён'
+
   duty_days:
     kinds:
       kitchen: "на кухне"
@@ -618,6 +635,21 @@ ru:
     created: Локация создана
     link: Локации
     updated: Локация изменена
+
+  movement_acts:
+    created: 'Акт Перемещения создан'
+    updated: 'Акт Перемещения изменён'
+    link: :movement_acts.index.title
+    edit:
+      title: 'Редактирование Акта Перемещения'
+    new:
+      title: 'Новый Акт Перемещения'
+    index:
+      title: 'Акты Перемещения'
+    errors:
+      deleting_posted: 'Невозможно удалить проведённый Акт Перемещения.'
+      insufficient: 'Недостаточно товара (%{product})'
+      stores_same: 'Склады должны быть разными.'
 
   orders:
     edit:
@@ -743,7 +775,7 @@ ru:
     new:
       title: 'Новая Закупка'
     errors:
-      deleting_posted: 'Невозможно удалить проведенную закупку.'
+      deleting_posted: 'Невозможно удалить проведенную Закупку.'
       store_item_already_present: 'Товар уже существует.'
     statuses:
       new: 'Новая'
@@ -807,6 +839,7 @@ ru:
     errors:
       out_of_stock: 'Товара нет в наличии'
       unavailable_discount: 'не допустима'
+      deleting_posted: 'Невозможно удалить проведённую Продажу.'
     index:
       import_link: Импорт
       title: 'Продажи'

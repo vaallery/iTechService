@@ -259,18 +259,6 @@ module ApplicationHelper
     end.html_safe
   end
 
-  def document_presentation(document)
-    t 'document', name: t("activerecord.models.#{document.class.to_s.downcase}"), num: document.id, time: human_datetime(document.created_at)
-  end
-
-  def button_to_post(document)
-    link_to "#{glyph('check')} #{t('post')}".html_safe, {controller: document.class.to_s.tableize, action: 'post', id: document.id}, method: 'put', data: {confirm: t('confirmation')}, class: 'btn btn-primary'
-  end
-
-  def button_to_unpost(document)
-    link_to "#{glyph('check-empty')} #{t('unpost')}".html_safe, {controller: document.class.to_s.tableize, action: 'unpost', id: document.id}, method: 'put', data: {confirm: t('confirmation')}, class: 'btn btn-primary'
-  end
-
   def button_to_update(name, document, attributes)
     class_name = document.class.to_s.downcase
     parameters = {controller: class_name.tableize, action: 'update', id: document.id, method: 'put', data: {confirm: t('confirmation')}}

@@ -21,6 +21,19 @@ describe Item do
     expect(item.barcode_data).to_not be_nil
   end
 
+  it 'should return "store_item" for given "store"' do
+    item = create :item
+    store = create :store
+    store_item = create :store_item, item: item, store: store
+    item.store_item(store).should eq store_item
+  end
+
+  it 'should return new "store_item" with "quantity" eq 0 if it absent in given "store"' do
+    item = create :item
+    store = create :store
+    item.store_item(store).quantity.should eq 0
+  end
+
   context 'feature accounting' do
 
     it 'is valid with valid attributes' do
@@ -34,6 +47,12 @@ describe Item do
       create :item, product_id: product.id
       item = build :item, product_id: product.id
       expect(item).to be_valid
+    end
+
+    it 'should return "store_item"' do
+      item = create :featured_item
+      store_item = create :store_item, item: item, quantity: 1
+      item.store_item.should eq store_item
     end
 
   end

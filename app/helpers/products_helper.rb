@@ -21,9 +21,9 @@ module ProductsHelper
 
   def remains_presentation(product, store)
     if product.present? and store.present?
-      "#{product.available_quantity(store)} (#{product.available_quantity})"
+      "#{product.quantity_in_store(store)} (#{product.quantity_in_store})"
     elsif product.present?
-      "#{product.available_quantity}"
+      "#{product.quantity_in_store}"
     else
       '-'
     end

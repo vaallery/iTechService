@@ -143,6 +143,11 @@ ItechService::Application.routes.draw do
     put 'unpost', on: :member
   end
 
+  resources :movement_acts do
+    put 'post', on: :member
+    put 'unpost', on: :member
+  end
+
   wiki_root '/wiki'
 
   match '/delayed_job' => DelayedJobWeb, anchor: false

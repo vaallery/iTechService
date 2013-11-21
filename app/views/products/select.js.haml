@@ -1,11 +1,11 @@
+$selector = $('.product_selector.active');
+$row = $selector.closest('tr');
 - if @item.present?
-  $selector = $('.product_selector.active');
   $('input.item_id', $selector).val("#{@item.id}");
   $('.product_select_button', $selector).text("#{@item.name}");
   $('.product_select_button', $selector).attr('title', "#{@item.name}");
   $selector.closest('.product').find('.features').text("#{features_presentation @item}");
-  $row = $selector.closest('tr');
-  - if @form == 'sale' or @form == 'purchase'
+  - if %w[sale purchase movement_act].include? @form
     $('td.available_quantity', $row).text("#{remains_presentation(@item.product, @store)}");
     $('td.code', $row).text("#{@item.code}");
     $('td.quantity input', $row).val(1);
@@ -13,6 +13,7 @@
       $('td.quantity input', $row).attr('readonly', true);
     - else
       $('td.quantity input', $row).removeAttr('readonly');
+      $('td.quantity input', $row).attr('max', #{@item.quantity_in_store(@store)});
   - if @form == 'sale'
     qty = Number($('td.quantity input', $row).val());
     price = Number("#{@item.retail_price}");
@@ -28,11 +29,9 @@
     $("#product_choose_form .product_row[data-product=#{@product.id}]").addClass('info');
     $('#product_choose_form #selected_product').removeAttr('disabled').val("#{@product.id}");
     - if @form == 'revaluation_act'
-      $selector = $('.product_selector.active');
       $('input.product_id', $selector).val("#{@product.id}");
       $('.product_select_button', $selector).text("#{@product.name}");
       $('.product_select_button', $selector).attr('title', "#{@product.name}");
-      $row = $selector.closest('tr');
       hideModal();
     - elsif @product.feature_accounting
       $('#product_choose_form  #product_items_table').html("#{j(render('items_table'))}");

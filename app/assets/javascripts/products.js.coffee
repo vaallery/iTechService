@@ -61,3 +61,6 @@ jQuery ->
       else
         $('#product_choose_form #submit_product_button').attr('disabled', true)
     ), 250
+
+  $(document).on 'click', '.add_fields', ->
+    $('.product_select_button:last').click()

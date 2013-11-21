@@ -4,9 +4,11 @@ FactoryGirl.define do
   factory :item do
     product
 
-    factory :featured_item do
+    trait :featured do
       association :product, factory: :featured_product
     end
+
+    factory :featured_item, traits: [:featured]
 
   end
 end

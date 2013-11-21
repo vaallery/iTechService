@@ -3,8 +3,8 @@
   %table.table.table-striped
     %thead
       %tr
-        %th= sortable 'date', model_class.human_attribute_name(:date)
         %th= sortable 'id', model_class.human_attribute_name(:id)
+        %th= sortable 'date', model_class.human_attribute_name(:date)
         %th= model_class.human_attribute_name :store
         %th= model_class.human_attribute_name :user
         %th= model_class.human_attribute_name :client
@@ -14,8 +14,8 @@
     %tbody
       - @sales.each do |sale|
         %tr
-          %td= human_datetime sale.date
           %td= link_to sale.id, sale
+          %td= human_datetime sale.date
           %td= sale.store.name
           %td= link_to sale.user.short_name, user_path(sale.user)
           %td= link_to sale.client.short_name, client_path(sale.client)

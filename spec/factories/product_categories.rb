@@ -2,8 +2,15 @@
 
 FactoryGirl.define do
   factory :product_category do
-    name 'Category 1'
+    sequence(:name) {|n| "Category_#{n}"}
     feature_accounting false
+    kind ProductCategory::KINDS[0]
+    request_price false
+    warranty_term 12
+
+    trait :service do
+      kind 'service'
+    end
 
     factory :featured_product_category do
       feature_accounting true

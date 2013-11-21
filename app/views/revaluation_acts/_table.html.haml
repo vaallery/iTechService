@@ -19,4 +19,4 @@
             = link_to_edit_small revaluation_act if can? :edit, revaluation_act
             = link_to_destroy_small revaluation_act if can? :destroy, revaluation_act
 
-  = paginate @revaluation_acts
+  = paginate @revaluation_acts, remote: true

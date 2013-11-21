@@ -4,12 +4,10 @@ FactoryGirl.define do
   factory :product_group do
     name 'Product group 1'
     ancestry nil
-    is_service false
-    request_price false
     product_category
 
     factory :service_product_group do
-      is_service true
+      association :product_category, :service
     end
 
     factory :featured_product_group do

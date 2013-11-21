@@ -53,7 +53,7 @@ class Product < ActiveRecord::Base
     }
   end
 
-  def available_quantity(store=nil)
+  def quantity_in_store(store=nil)
     if store.present?
       store_items.in_store(store).sum(:quantity)
     else
@@ -61,8 +61,8 @@ class Product < ActiveRecord::Base
     end
   end
 
-  def available_quantity_by_stores
-    Store.all.map {|store| {code: store.code, name: store.name, quantity: available_quantity(store)}}
+  def quantity_by_stores
+    Store.all.map {|store| {code: store.code, name: store.name, quantity: quantity_in_store(store)}}
   end
 
   def item
@@ -70,7 +70,7 @@ class Product < ActiveRecord::Base
   end
 
   def default_warranty_term
-    product_group.warranty_term
+    product_group.try(:warranty_term) || 0
   end
 
   def discount_for(client)

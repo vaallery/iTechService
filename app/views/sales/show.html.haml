@@ -28,7 +28,7 @@
   %tbody
     - @sale.sale_items.each_with_index do |sale_item, index|
       %tr.sale_item
-        %td.num.number= index
+        %td.num.number= index.next
         %td.code.number= sale_item.code
         %td.product
           %strong= sale_item.name

@@ -4,7 +4,7 @@ class ProductGroup < ActiveRecord::Base
   has_many :products, inverse_of: :product_group
   has_ancestry orphan_strategy: :restrict, cache_depth: true
   attr_accessible :name, :ancestry, :parent_id, :product_category_id
-  validates_presence_of :name
+  validates_presence_of :name, :product_category
   delegate :feature_accounting, :feature_types, :warranty_term, :is_service?, to: :product_category, allow_nil: true
 
   after_initialize do |product_group|

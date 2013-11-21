@@ -4,8 +4,9 @@ class SaleItem < ActiveRecord::Base
   belongs_to :item, inverse_of: :sale_items, dependent: :destroy
   attr_accessible :sale_id, :item_id, :price, :quantity, :discount
   validates_presence_of :item, :price, :quantity
-
-  delegate :product, :product_category, :presentation, :features, :name, :code, :available_quantity, :retail_price, :purchase_price, to: :item, allow_nil: true
+  validates_numericality_of :quantity, only_integer: true, greater_than: 0, unless: :feature_accounting
+  validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
+  delegate :product, :product_category, :presentation, :features, :name, :code, :quantity_in_store, :retail_price, :purchase_price, :feature_accounting, to: :item, allow_nil: true
   delegate :store, :client, to: :sale, allow_nil: true
 
   def sum

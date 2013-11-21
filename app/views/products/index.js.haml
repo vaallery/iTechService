@@ -1,5 +1,6 @@
 :plain
   $("#resource_table").html("#{j(render(@table_name || 'table'))}");
+  $('#product_choose_form  #product_items').hide();
 - if @current_product_group_id.present?
   :plain
     $('#new_product_link').removeAttr('disabled');

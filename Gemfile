@@ -61,7 +61,7 @@ group :development do
   gem 'linecache19', '0.5.13'
   gem 'ruby-debug19'
   gem 'ruby-debug-base19x', '0.11.30.pre15', require: 'ruby-debug-base'
-  gem 'ruby-debug-ide', '0.4.21.pre1', require: 'ruby-debug-ide'
+  gem 'ruby-debug-ide', '0.4.21', require: 'ruby-debug-ide'
 end
 
 group :test do
@@ -74,6 +74,8 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'shoulda'
+  gem 'shoulda-matchers'
   #gem 'faker'
   #gem 'ffaker'
 end

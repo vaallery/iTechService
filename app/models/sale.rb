@@ -38,7 +38,7 @@ class Sale < ActiveRecord::Base
     end
 
     if (search = params[:search]).present?
-      sales = sales.where 'id LIKE ?', "%#{search}%"
+      sales = sales.where id: search
     end
 
     if (client_q = params[:client]).present?
@@ -73,7 +73,7 @@ class Sale < ActiveRecord::Base
       transaction do
         sale_items.each do |sale_item|
           item = sale_item.item
-          if (store_item = item.store_item(store_id)).present? and item.available_quantity(self.store_id) >= sale_item.quantity
+          if (store_item = item.store_item(store_id)).present? and item.quantity_in_store(self.store_id) >= sale_item.quantity
             store_item.dec sale_item.quantity
           else
             self.errors[:base] << t('sales.errors.out_of_stock')

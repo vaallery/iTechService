@@ -5,6 +5,7 @@ class Item < ActiveRecord::Base
   has_many :store_items, inverse_of: :item, dependent: :destroy
   has_many :batches, inverse_of: :item, dependent: :destroy
   has_many :sale_items, inverse_of: :item, dependent: :destroy
+  has_many :movement_items, inverse_of: :item, dependent: :destroy
   has_many :features, inverse_of: :item, dependent: :destroy
   accepts_nested_attributes_for :features, allow_destroy: true
   attr_accessible :product_id, :features_attributes
@@ -13,7 +14,7 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :barcode_num, allow_nil: true
   validates_uniqueness_of :product_id, unless: :feature_accounting
 
-  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :available_quantity, :product_category, :discount_for, to: :product, allow_nil: true
+  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :quantity_in_store, :product_category, :discount_for, to: :product, allow_nil: true
 
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
@@ -31,7 +32,7 @@ class Item < ActiveRecord::Base
       code: code,
       features: features,
       prices: actual_prices,
-      quantity: available_quantity
+      quantity: quantity_in_store
     }
   end
 
@@ -49,7 +50,7 @@ class Item < ActiveRecord::Base
     if feature_accounting
       store_items.first
     elsif store.present?
-      store_items.in_store(store).first
+      store_items.in_store(store).first_or_create quantity: 0
     else
       nil
     end

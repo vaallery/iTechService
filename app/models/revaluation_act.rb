@@ -5,7 +5,7 @@ class RevaluationAct < ActiveRecord::Base
   accepts_nested_attributes_for :revaluations, allow_destroy: true, reject_if: lambda { |a| a[:product_id].blank? or a[:price].blank? }
   #attr_accessor :product_ids
   attr_accessible :date, :price_type_id, :product_ids, :revaluations_attributes
-  validates_presence_of :price_type_id, :date
+  validates_presence_of :price_type, :date
 
   after_initialize do
     self.status = 'new' if self.status.blank?

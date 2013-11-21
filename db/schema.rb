@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131106073534) do
+ActiveRecord::Schema.define(:version => 20131118073700) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -343,6 +343,31 @@ ActiveRecord::Schema.define(:version => 20131106073534) do
 
   add_index "messages", ["recipient_id"], :name => "index_messages_on_recipient_id"
   add_index "messages", ["user_id"], :name => "index_messages_on_user_id"
+
+  create_table "movement_acts", :force => true do |t|
+    t.datetime "date"
+    t.integer  "store_id"
+    t.integer  "dst_store_id"
+    t.integer  "user_id"
+    t.integer  "status"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "movement_acts", ["dst_store_id"], :name => "index_movement_acts_on_dst_store_id"
+  add_index "movement_acts", ["store_id"], :name => "index_movement_acts_on_store_id"
+  add_index "movement_acts", ["user_id"], :name => "index_movement_acts_on_user_id"
+
+  create_table "movement_items", :force => true do |t|
+    t.integer  "movement_act_id"
+    t.integer  "item_id"
+    t.integer  "quantity"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "movement_items", ["item_id"], :name => "index_movement_items_on_item_id"
+  add_index "movement_items", ["movement_act_id"], :name => "index_movement_items_on_movement_act_id"
 
   create_table "orders", :force => true do |t|
     t.string   "number"

@@ -19,12 +19,12 @@ class User < ActiveRecord::Base
   cattr_accessor :current
 
   belongs_to :location
-  has_many :history_records, as: :object
+  has_many :history_records, as: :object, dependent: :nullify
   has_many :schedule_days, dependent: :destroy
   has_many :duty_days, dependent: :destroy
-  has_many :orders, as: :customer
-  has_many :announcements, inverse_of: :user
-  has_many :comments
+  has_many :orders, as: :customer, dependent: :nullify
+  has_many :announcements, inverse_of: :user, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :devices, inverse_of: :user
   has_many :karmas, dependent: :destroy
   has_many :messages, dependent: :destroy
@@ -33,7 +33,8 @@ class User < ActiveRecord::Base
   has_many :timesheet_days, inverse_of: :user, dependent: :destroy
   has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users'
   has_many :installment_plans, inverse_of: :user, dependent: :destroy
-  has_many :sales, inverse_of: :user
+  has_many :sales, inverse_of: :user, dependent: :nullify
+  has_many :movement_acts, dependent: :nullify
 
   mount_uploader :photo, PhotoUploader
 

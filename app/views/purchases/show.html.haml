@@ -23,9 +23,9 @@
       %th.sum= Batch.human_attribute_name :sum
 
   %tbody
-    - @purchase.batches.each do |batch|
+    - @purchase.batches.each_with_index do |batch, index|
       %tr.batch_fields
-        %td.num
+        %td.num= index.next
         %td.product
           = link_to batch.name, product_path(batch.product)
           .features= features_presentation batch.item if batch.item.present?
