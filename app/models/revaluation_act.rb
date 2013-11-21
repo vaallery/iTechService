@@ -1,4 +1,5 @@
 class RevaluationAct < ActiveRecord::Base
+  include Document
 
   belongs_to :price_type, inverse_of: :revaluation_acts
   has_many :revaluations, inverse_of: :revaluation_act, dependent: :destroy
@@ -7,32 +8,13 @@ class RevaluationAct < ActiveRecord::Base
   attr_accessible :date, :price_type_id, :product_ids, :revaluations_attributes
   validates_presence_of :price_type, :date
 
+  scope :posted, self.where(status: 1)
+  scope :deleted, self.where(status: 2)
+
   after_initialize do
     self.status = 'new' if self.status.blank?
     self.date ||= Time.current
     self.price_type_id ||= PriceType.retail.id
-  end
-
-  STATUSES = {
-      0 => 'new',
-      1 => 'posted',
-      2 => 'deleted'
-  }
-
-  def status_s
-    STATUSES[status]
-  end
-
-  def is_new?
-    status == 0
-  end
-
-  def is_posted?
-    status == 1
-  end
-
-  def is_deleted?
-    status == 2
   end
 
   def self.search(params)
@@ -70,14 +52,6 @@ class RevaluationAct < ActiveRecord::Base
         end
         update_attribute :status, 1
       end
-    end
-  end
-
-  def set_deleted
-    if self.status == 1
-      errors.add :status, I18n.t('revaluation_acts.errors.deleting_posted')
-    else
-      update_attribute :status, 2
     end
   end
 

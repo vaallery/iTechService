@@ -1,4 +1,5 @@
 class Purchase < ActiveRecord::Base
+  include Document
 
   belongs_to :contractor, inverse_of: :purchases
   belongs_to :store, inverse_of: :purchases
@@ -9,22 +10,15 @@ class Purchase < ActiveRecord::Base
   validates_presence_of :contractor, :store
   validates_associated :batches
 
+  scope :posted, self.where(status: 1)
+  scope :deleted, self.where(status: 2)
+
   after_initialize do
     self.date ||= Time.current
     self.status ||= 0
   end
 
   #before_save :update_stock_items_and_prices
-
-  STATUSES = {
-    0 => 'new',
-    1 => 'posted',
-    2 => 'deleted'
-  }
-
-  #scope :new, where(status: 0)
-  scope :posted, where(status: 1)
-  scope :deleted, where(status: 2)
 
   def self.search(params)
     purchases = Purchase.scoped
@@ -50,30 +44,6 @@ class Purchase < ActiveRecord::Base
     end
 
     purchases
-  end
-
-  def is_new?
-    status == 0
-  end
-
-  def is_posted?
-    status == 1
-  end
-
-  def is_deleted?
-    status == 2
-  end
-
-  def status_s
-    STATUSES[status]
-  end
-
-  def set_deleted
-    if self.status == 1
-      errors.add :status, I18n.t('purchases.errors.deleting_posted')
-    else
-      update_attribute :status, 2
-    end
   end
 
   def contractor_name

@@ -1,10 +1,5 @@
 class MovementAct < ActiveRecord::Base
-
-  STATUSES = {
-      0 => 'new',
-      1 => 'posted',
-      2 => 'deleted'
-  }
+  include Document
 
   belongs_to :user
   belongs_to :store
@@ -17,6 +12,9 @@ class MovementAct < ActiveRecord::Base
   before_validation :set_user
   delegate :name, to: :store, prefix: true, allow_nil: true
   delegate :name, to: :dst_store, prefix: true, allow_nil: true
+
+  scope :posted, self.where(status: 1)
+  scope :deleted, self.where(status: 2)
 
   after_initialize do
     self.user_id ||= User.try(:current).try(:id)
@@ -50,22 +48,6 @@ class MovementAct < ActiveRecord::Base
     movement_acts
   end
 
-  def status_s
-    STATUSES[status]
-  end
-
-  def is_new?
-    status == 0
-  end
-
-  def is_posted?
-    status == 1
-  end
-
-  def is_deleted?
-    status == 2
-  end
-
   def post
     if is_new?
       transaction do
@@ -83,14 +65,6 @@ class MovementAct < ActiveRecord::Base
 
   def unpost
 
-  end
-
-  def set_deleted
-    if self.status == 1
-      errors.add :status, I18n.t('movement_acts.errors.deleting_posted')
-    else
-      update_attribute :status, 2
-    end
   end
 
   private

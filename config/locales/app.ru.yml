@@ -537,6 +537,8 @@ ru:
       new: 'Новый'
       posted: 'Проведён'
       deleted: 'Удалён'
+    errors:
+      deleting_posted: 'Нельзя удалить проведённый документ'
 
   duty_days:
     kinds:

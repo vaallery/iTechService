@@ -1,4 +1,5 @@
 class Sale < ActiveRecord::Base
+  include Document
 
   belongs_to :user, inverse_of: :sales
   belongs_to :client, inverse_of: :sales
@@ -15,12 +16,6 @@ class Sale < ActiveRecord::Base
     self.date ||= Time.current
     self.status ||= 0
   end
-
-  STATUSES = {
-      0 => 'new',
-      1 => 'posted',
-      2 => 'deleted'
-  }
 
   scope :sold_at, lambda { |period| where(date: period) }
   scope :posted, where(status: 1)
@@ -52,22 +47,6 @@ class Sale < ActiveRecord::Base
     client.present? ? client.presentation : '-'
   end
 
-  def status_s
-    STATUSES[status]
-  end
-
-  def is_new?
-    status == 0
-  end
-
-  def is_posted?
-    status == 1
-  end
-
-  def is_deleted?
-    status == 2
-  end
-
   def post
     if is_new?
       transaction do
@@ -86,14 +65,6 @@ class Sale < ActiveRecord::Base
 
   def unpost
     #TODO unposting sale
-  end
-
-  def set_deleted
-    if self.status == 1
-      errors.add :status, I18n.t('sales.errors.deleting_posted')
-    else
-      update_attribute :status, 2
-    end
   end
 
   def total_sum
