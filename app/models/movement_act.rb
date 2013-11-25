@@ -57,8 +57,11 @@ class MovementAct < ActiveRecord::Base
     if is_new?
       transaction do
         movement_items.each do |movement_item|
-          if movement_item.quantity_in_store(store) < movement_item.quantity
+          if movement_item.is_insufficient?
             errors[:base] << I18n.t('movement_acts.errors.insufficient', product: movement_item.name)
+            no_errors = false
+          elsif !movement_item.has_prices_for_store?(dst_store)
+            errors[:base] << I18n.t('movement_acts.errors.prices_undefined', product: movement_item.name)
             no_errors = false
           else
             movement_item.store_item(store).move_to dst_store, movement_item.quantity

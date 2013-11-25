@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :price_type do
     sequence(:name) {|n| "Price Type #{n}"}
-    kind 3
+    kind 2
 
     trait :purchase do
       kind 0

@@ -654,6 +654,7 @@ ru:
     errors:
       deleting_posted: 'Невозможно удалить проведённый Акт Перемещения.'
       insufficient: 'Недостаточно товара (%{product})'
+      prices_undefined: 'Не определены цены для %{product}'
       stores_same: 'Склады должны быть разными.'
 
   orders:

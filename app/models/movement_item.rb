@@ -13,4 +13,8 @@ class MovementItem < ActiveRecord::Base
     store.present? ? quantity_in_store(store) < quantity : false
   end
 
+  def has_prices_for_store?(store)
+    store.price_types.all? { |price_type| product.prices.with_type(price_type).present? }
+  end
+
 end

@@ -37,9 +37,9 @@ describe MovementAct do
       @movement_act = create :movement_act, store: @src_store, dst_store: @dst_store
     end
 
-    it 'should change store_@items` quantity on post' do
+    it 'should change store_items` quantity on post' do
       item = create :item
-      StoreItem.create store_id: @src_store.id, item_id: item.id, quantity: 5
+      create :store_item, store: @src_store, item: item, quantity: 5
       @movement_act.movement_items.create item_id: item.id, quantity: 2
       @movement_act.post
       @movement_act.status.should eq 1
@@ -49,7 +49,7 @@ describe MovementAct do
 
     it 'should change store of featured store_item on post' do
       item = create :featured_item
-      StoreItem.create store_id: @src_store.id, item_id: item.id, quantity: 1
+      create :store_item, store: @src_store, item: item, quantity: 1
       @movement_act.movement_items.create item_id: item.id, quantity: 1
       @movement_act.post
       @movement_act.status.should eq 1
@@ -60,7 +60,7 @@ describe MovementAct do
 
     it 'should not post if not enough items in store' do
       item = create :item
-      StoreItem.create store_id: @src_store.id, item_id: item.id, quantity: 1
+      create :store_item, store: @src_store, item: item, quantity: 1
       @movement_act.movement_items.create item_id: item.id, quantity: 2
       @movement_act.post
       @movement_act.status.should eq 0
@@ -70,12 +70,35 @@ describe MovementAct do
 
     it 'should not post if there is no item in store' do
       item = create :featured_item
-      StoreItem.create store_id: @dst_store.id, item_id: item.id, quantity: 1
       @movement_act.movement_items.create item_id: item.id, quantity: 1
       @movement_act.post
       @movement_act.status.should eq 0
       item.quantity_in_store(@src_store).should eq 0
-      item.quantity_in_store(@dst_store).should eq 1
+      item.quantity_in_store(@dst_store).should eq 0
+    end
+
+    it 'should post if prices defined' do
+      item = create :item
+      price_type = create :price_type
+      @dst_store.price_types << price_type
+      create :product_price, product: item.product, price_type: price_type
+      create :store_item, store: @src_store, item: item, quantity: 5
+      @movement_act.movement_items.create item_id: item.id, quantity: 2
+      @movement_act.post
+      @movement_act.status.should eq 1
+      item.quantity_in_store(@src_store).should eq 3
+      item.quantity_in_store(@dst_store).should eq 2
+    end
+
+    it 'should not post if prices udefined' do
+      item = create :item
+      @dst_store.price_types.create name: 'Price Type 1', kind: 1
+      create :store_item, store: @src_store, item: item, quantity: 5
+      @movement_act.movement_items.create item_id: item.id, quantity: 2
+      @movement_act.post
+      @movement_act.status.should eq 0
+      item.quantity_in_store(@src_store).should eq 5
+      item.quantity_in_store(@dst_store).should eq 0
     end
 
   end
