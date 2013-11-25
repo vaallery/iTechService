@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
-  load_and_authorize_resource
-  skip_load_resource only: [:index, :choose, :select]
+  authorize_resource
 
   def index
     @product_groups = ProductGroup.roots.order('id asc')
@@ -32,6 +31,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    @product = Product.find params[:id]
     @items = @product.items.available
     respond_to do |format|
       format.html
@@ -40,6 +40,7 @@ class ProductsController < ApplicationController
   end
 
   def new
+    @product = Product.new
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @product }
@@ -47,12 +48,14 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    @product = Product.find params[:id]
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def create
+    @product = Product.new params[:product]
     respond_to do |format|
       if @product.save
         format.html { redirect_to products_path, notice: t('products.created') }
@@ -65,6 +68,7 @@ class ProductsController < ApplicationController
   end
 
   def update
+    @product = Product.find params[:id]
     respond_to do |format|
       if @product.update_attributes(params[:product])
         format.html { redirect_to products_path, notice: t('products.updated') }
@@ -77,8 +81,8 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+    @product = Product.find params[:id]
     @product.destroy
-
     respond_to do |format|
       format.html { redirect_to products_url }
       format.json { head :no_content }
@@ -130,6 +134,15 @@ class ProductsController < ApplicationController
 
   def show_prices
     @product_prices = @product.prices.page(params[:page])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def show_remains
+    @product = Product.find params[:id]
+    @stores = Store.all
+    #@store_items = @product.store_items.order('store_id asc')
     respond_to do |format|
       format.js
     end

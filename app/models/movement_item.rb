@@ -9,4 +9,8 @@ class MovementItem < ActiveRecord::Base
   delegate :code, :name, :product, :product_category, :presentation, :features, :feature_accounting, :store_items, :store_item, :quantity_in_store, to: :item, allow_nil: true
   delegate :store, to: :movement_act, allow_nil: true
 
+  def is_insufficient?
+    store.present? ? quantity_in_store(store) < quantity : false
+  end
+
 end

@@ -48,19 +48,22 @@ class Sale < ActiveRecord::Base
   end
 
   def post
+    no_errors = true
     if is_new?
       transaction do
         sale_items.each do |sale_item|
           item = sale_item.item
           if (store_item = item.store_item(store_id)).present? and item.quantity_in_store(self.store_id) >= sale_item.quantity
-            store_item.dec sale_item.quantity
+            store_item.feature_accounting ? store_item.destroy : store_item.dec(sale_item.quantity)
           else
             self.errors[:base] << t('sales.errors.out_of_stock')
+            no_errors = false
           end
         end
-        update_attribute :status, 1
+        update_attribute :status, 1 if no_errors
       end
     end
+    no_errors
   end
 
   def unpost

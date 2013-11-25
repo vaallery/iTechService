@@ -1,14 +1,24 @@
 class StoresController < ApplicationController
-  load_and_authorize_resource
+  authorize_resource
 
   def index
+    @stores = Store.all
     respond_to do |format|
       format.html
       format.json { render json: @stores }
     end
   end
 
+  def show
+    @store = Store.find params[:id]
+    @products = Product.in_store @store
+    respond_to do |format|
+      format.html
+    end
+  end
+
   def new
+    @store = Store.new
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @store }
@@ -16,6 +26,7 @@ class StoresController < ApplicationController
   end
 
   def edit
+    @store = Store.find params[:id]
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @store }
@@ -23,6 +34,7 @@ class StoresController < ApplicationController
   end
 
   def create
+    @store = Store.new params[:store]
     respond_to do |format|
       if @store.save
         format.html { redirect_to stores_path, notice: t('stores.created') }
@@ -35,6 +47,7 @@ class StoresController < ApplicationController
   end
 
   def update
+    @store = Store.find params[:id]
     respond_to do |format|
       if @store.update_attributes(params[:store])
         format.html { redirect_to stores_path, notice: t('stores.updated') }
@@ -47,11 +60,21 @@ class StoresController < ApplicationController
   end
 
   def destroy
+    @store = Store.find params[:id]
     @store.destroy
 
     respond_to do |format|
       format.html { redirect_to stores_url }
       format.json { head :no_content }
+    end
+  end
+
+  def product_details
+    store = Store.find params[:id]
+    @product = Product.find params[:product_id]
+    @store_items = @product.store_items.in_store store
+    respond_to do |format|
+      format.js
     end
   end
 end

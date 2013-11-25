@@ -21,29 +21,47 @@ describe Sale do
 
   context 'posting' do
 
+    before :each do
+      @store = create :store
+      @sale = create :sale, store_id: @store.id
+    end
+
     it 'should decrease quantity of products without features after posting' do
       item = create :item
-      store = create :store
-      purchase = create :purchase, store_id: store.id, batches_attributes: {'1' => {item_id: item.id, price: 1000, quantity: 3}}
-      purchase.post
-      sale = create :sale, store_id: store.id, sale_items_attributes: {'1' => {item_id: item.id, price: 1000, quantity: 1}}
-      sale.post
-      expect(item.store_item(sale.store_id).quantity).to eq 2
+      StoreItem.create item_id: item.id, store_id: @store.id, quantity: 5
+      @sale.sale_items.create item_id: item.id, price: 1000, quantity: 2
+      @sale.post
+      item.quantity_in_store(@store).should eq 3
     end
 
     it 'should decrease quantity of products with features after posting' do
-      item = create(:featured_item)
-      store = create :store
-      purchase = create :purchase, store_id: store.id, batches_attributes: {'1' => {item_id: item.id, price: 1000, quantity: 1}}
-      purchase.post
-      sale = create :sale, store_id: store.id, sale_items_attributes: {'1' => {item_id: item.id, price: 1000, quantity: 1}}
-      sale.post
-      expect(item.store_item(sale.store_id).quantity).to eq 0
+      item = create :featured_item
+      StoreItem.create item_id: item.id, store_id: @store.id, quantity: 1
+      @sale.sale_items.create item_id: item.id, price: 1000, quantity: 1
+      @sale.post
+      item.quantity_in_store(@store).should eq 0
     end
 
-    it 'should restore quantity of products after unposting' do
-      sale = create :sale
+    it 'should not post if not enough items in store' do
+      item = create :item
+      StoreItem.create store_id: @store.id, item_id: item.id, quantity: 1
+      @sale.sale_items.create item_id: item.id, price: 1000, quantity: 2
+      @sale.post
+      @sale.status.should eq 0
+      item.quantity_in_store(@store).should eq 1
     end
+
+    it 'should not post if there is no item in store' do
+      item = create :featured_item
+      @sale.sale_items.create item_id: item.id, price: 1000, quantity: 1
+      @sale.post
+      @sale.status.should eq 0
+      item.quantity_in_store(@store).should eq 0
+    end
+
+    #it 'should restore quantity of products after unposting' do
+    #  sale = create :sale
+    #end
 
   end
 

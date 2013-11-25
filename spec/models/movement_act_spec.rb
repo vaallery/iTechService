@@ -37,7 +37,7 @@ describe MovementAct do
       @movement_act = create :movement_act, store: @src_store, dst_store: @dst_store
     end
 
-    it 'should change store_items` quantity on post' do
+    it 'should change store_@items` quantity on post' do
       item = create :item
       StoreItem.create store_id: @src_store.id, item_id: item.id, quantity: 5
       @movement_act.movement_items.create item_id: item.id, quantity: 2
@@ -54,6 +54,28 @@ describe MovementAct do
       @movement_act.post
       @movement_act.status.should eq 1
       item.store_item.store.should eq @dst_store
+      item.quantity_in_store(@src_store).should eq 0
+      item.quantity_in_store(@dst_store).should eq 1
+    end
+
+    it 'should not post if not enough items in store' do
+      item = create :item
+      StoreItem.create store_id: @src_store.id, item_id: item.id, quantity: 1
+      @movement_act.movement_items.create item_id: item.id, quantity: 2
+      @movement_act.post
+      @movement_act.status.should eq 0
+      item.quantity_in_store(@src_store).should eq 1
+      item.quantity_in_store(@dst_store).should eq 0
+    end
+
+    it 'should not post if there is no item in store' do
+      item = create :featured_item
+      StoreItem.create store_id: @dst_store.id, item_id: item.id, quantity: 1
+      @movement_act.movement_items.create item_id: item.id, quantity: 1
+      @movement_act.post
+      @movement_act.status.should eq 0
+      item.quantity_in_store(@src_store).should eq 0
+      item.quantity_in_store(@dst_store).should eq 1
     end
 
   end

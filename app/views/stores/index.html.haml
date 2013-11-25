@@ -12,10 +12,11 @@
   %tbody
     - @stores.each do |store|
       %tr
-        %td= link_to store.id, edit_store_path(store)
-        %td= link_to store.code, edit_store_path(store)
-        %td= link_to store.name, edit_store_path(store)
+        %td= link_to store.id, store_path(store)
+        %td= link_to store.code, store_path(store)
+        %td= link_to store.name, store_path(store)
         %td= human_datetime store.created_at
         %td.btn-group
+          = link_to_show_small store
           = link_to_edit_small store
           = link_to_destroy_small store

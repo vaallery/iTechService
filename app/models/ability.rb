@@ -23,6 +23,10 @@ Ability
       cannot :unpost, Sale, status: [0, 2]
       cannot :edit, Sale, status: [1, 2]
       cannot :destroy, Sale, status: 1
+      cannot :post, MovementAct, status: [1, 2]
+      cannot :unpost, MovementAct, status: [0, 2]
+      cannot :edit, MovementAct, status: [1, 2]
+      cannot :destroy, MovementAct, status: 1
     elsif user.admin?
       can :manage, :all
       can :view_reports

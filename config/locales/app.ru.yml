@@ -239,6 +239,7 @@ ru:
         features: 'Характеристики'
         product_group: Группа
         purchase_price: 'Закупочная цена'
+        quantity_in_store: 'Остаток на складе'
 
       product_category:
         feature_types: "Типы характеристик"
@@ -363,6 +364,8 @@ ru:
     quantity: 'Количество'
     serial_number: Серийный номер
     status: Статус
+    store: 'Склад'
+    store_items: 'Остатки'
     sum: Сумма
     updated_at: Время обновления
     user: Пользователь

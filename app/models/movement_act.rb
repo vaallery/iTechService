@@ -48,19 +48,26 @@ class MovementAct < ActiveRecord::Base
     movement_acts
   end
 
+  def is_insufficient?
+    movement_items.any? { |movement_item| movement_item.is_insufficient? }
+  end
+
   def post
+    no_errors = true
     if is_new?
       transaction do
         movement_items.each do |movement_item|
           if movement_item.quantity_in_store(store) < movement_item.quantity
             errors[:base] << I18n.t('movement_acts.errors.insufficient', product: movement_item.name)
+            no_errors = false
           else
             movement_item.store_item(store).move_to dst_store, movement_item.quantity
           end
         end
-        update_attribute :status, 1
+        update_attribute :status, 1 if no_errors
       end
     end
+    no_errors
   end
 
   def unpost

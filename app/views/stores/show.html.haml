@@ -1,0 +1,26 @@
+= auto_header_tag @store, @store.name
+
+%dl.dl-horizontal
+  %dt= Store.human_attribute_name :code
+  %dd= @store.code
+  %dt= Store.human_attribute_name :price_types
+  %dd= price_types_presentation @store.price_types
+
+%table#store_products.table.table-bordered.table-condensed.table-hover
+  %caption
+    %h4= Store.human_attribute_name :store_items
+  %thead
+    %tr
+      %th.code= Product.human_attribute_name :code
+      %th.name= t 'activerecord.models.product'
+      %th.quantity= StoreItem.human_attribute_name :quantity
+  %tbody
+    - @products.each do |product|
+      %tr{class: product.feature_accounting ? 'detailable' : '', data: {path: product_details_store_path(@store, product_id: product.id, format: :js)}}[product]
+        %td.code= product.code
+        %td.name= link_to product.name, product_path(product)
+        %td.quantity.number= product.quantity_in_store(@store)
+
+.form-actions
+  = link_to_edit @store if can? :edit, @store
+  = link_to_destroy @store if can? :destroy, @store

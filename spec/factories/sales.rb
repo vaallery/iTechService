@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :sale do
     status 0
-    sold_at Time.current
+    date Time.current
     user
     client
     store

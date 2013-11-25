@@ -17,7 +17,7 @@
 
   - unless @product.feature_accounting or @product.is_service?
     %dt= Item.human_attribute_name :barcode
-    %dd= @product.item.barcode
+    %dd= @product.item.barcode_num
 
   - if @product.is_service?
     %dt= Task.human_attribute_name :role
@@ -40,10 +40,12 @@
         = render item
 
 %hr
-%h4
-  = link_to t('attributes.prices'), show_prices_product_path(@product), remote: true
-
+%h4= link_to t('attributes.prices'), show_prices_product_path(@product), remote: true
 #product_prices
+
+%hr
+%h4= link_to Product.human_attribute_name(:store_items), show_remains_product_path(@product), remote: true
+#product_store_items
 
 .form-actions
   = link_to_edit @product

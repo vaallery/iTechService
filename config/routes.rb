@@ -116,13 +116,16 @@ ItechService::Application.routes.draw do
 
   resources :feature_types, except: :show
 
-  resources :stores, except: :show
+  resources :stores do
+    get :product_details, on: :member, defaults: {format: :js}
+  end
 
   resources :products do
-    get :category_select, on: :collection, defaults: {format: 'js'}
-    get :choose, on: :collection, defaults: {format: 'js'}
-    get :show_prices, on: :member, defaults: {format: 'js'}
-    post :select, on: :collection, defaults: {format: 'js'}
+    get :category_select, on: :collection, defaults: {format: :js}
+    get :choose, on: :collection, defaults: {format: :js}
+    get :show_prices, on: :member, defaults: {format: :js}
+    get :show_remains, on: :member, defaults: {format: :js}
+    post :select, on: :collection, defaults: {format: :js}
     resources :items, except: [:show]
   end
 

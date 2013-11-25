@@ -7,10 +7,11 @@ class StoreItem < ActiveRecord::Base
   validates_uniqueness_of :item_id, scope: :store_id
   validates_numericality_of :quantity, only_integer: true
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
-  delegate :feature_accounting, to: :item, allow_nil: true
+  delegate :feature_accounting, :features, to: :item, allow_nil: true
 
   scope :in_store, lambda { |store| where(store_id: store.is_a?(Store) ? store.id : store) }
   scope :available, where('quantity > ?', 0)
+  scope :for_product, lambda { |product| includes(:item).where(items: {product_id: (product.is_a?(Product) ? product.id : product)}) }
 
   def add(amount)
     unless feature_accounting
