@@ -69,7 +69,7 @@ class Purchase < ActiveRecord::Base
             if (store_item = item.store_items.first_or_create).quantity > 0
               self.errors[:base] << t('purchases.errors.store_item_already_present')
             else
-              store_item.update_attributes store_id: store_id, quantity_in_store: 1
+              store_item.update_attributes store_id: store_id, quantity: 1
             end
           else
             store_item = StoreItem.find_or_initialize_by_item_id_and_store_id item_id: item.id, store_id: self.store_id
