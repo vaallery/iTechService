@@ -1,6 +1,6 @@
 $selector = $('.product_selector.active');
 $row = $selector.closest('tr');
-- if @item.present?
+- if @item.present? and @form != 'revaluation_act'
   $('input.item_id', $selector).val("#{@item.id}");
   $('.product_select_button', $selector).text("#{@item.name}");
   $('.product_select_button', $selector).attr('title', "#{@item.name}");
@@ -36,6 +36,10 @@ $row = $selector.closest('tr');
       $('input.product_id', $selector).val("#{@product.id}");
       $('.product_select_button', $selector).text("#{@product.name}");
       $('.product_select_button', $selector).attr('title', "#{@product.name}");
+      $('td.code', $row).text("#{@product.code}");
+      $('td.purchase_price', $row).text("#{@product.purchase_price}");
+      $('td.actual_price', $row).text("#{@product.retail_price}");
+      $('td.price>input', $row).val("#{@product.retail_price.to_i}");
       hideModal();
     - elsif @product.feature_accounting
       $('#product_choose_form  #product_items_table').html("#{j(render('items_table'))}");

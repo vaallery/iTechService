@@ -133,6 +133,7 @@ class ProductsController < ApplicationController
   end
 
   def show_prices
+    @product = Product.find params[:id]
     @product_prices = @product.prices.page(params[:page])
     respond_to do |format|
       format.js

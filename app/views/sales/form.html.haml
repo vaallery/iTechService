@@ -2,7 +2,7 @@
 = simple_form_for @sale, html: { class: 'form-horizontal' } do |f|
   - if current_user.superadmin?
     = f.input :date, as: :my_datetime
-  = f.input :client_id, as: :client, wrapper_html: { id: 'client_fields' }, no_devices: true
+  = f.input :client_id, as: :client, wrapper_html: { id: 'client_fields' }, no_devices: true, required: true
   = f.association :payment_type
   = f.association :store, collection: Store.for_retail.all
   = hidden_field_tag :price_type_id

@@ -2,11 +2,10 @@ jQuery ->
 
   if $('#sale_items').length > 0
     enumerate_table('#sale_items')
+    $(document).on 'click', '.add_fields, .remove_fields', ->
+      enumerate_table('#sale_items')
 
-  $(document).on 'click', '.add_fields, .remove_fields', ->
-    enumerate_table('#sale_items')
-
-  $(document).on 'change', '.sale_item_discount', ->
+  $(document).on 'change', '#sale_items .sale_item_discount, #sale_items .quantity>input', ->
     $row = $(this).closest('tr.sale_item_fields')
     calculate_sale_item_row $row
     calculate_sale_items_total_sum()

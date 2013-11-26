@@ -82,6 +82,7 @@ class MovementActsController < ApplicationController
       if @movement_act.post
         format.html { redirect_to @movement_act, notice: t('documents.posted') }
       else
+        flash.alert = @movement_act.errors.full_messages
         format.html { redirect_to @movement_act, error: t('documents.not_posted') }
       end
     end
@@ -93,6 +94,7 @@ class MovementActsController < ApplicationController
       if @movement_act.unpost
         format.html { redirect_to @movement_act, notice: t('documents.unposted') }
       else
+        flash.alert = @movement_act.errors.full_messages
         format.html { redirect_to @movement_act, error: t('documents.not_unposted') }
       end
     end

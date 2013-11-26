@@ -1,10 +1,8 @@
 class PurchasesController < ApplicationController
-  load_and_authorize_resource
-  skip_load_resource only: :index
+  authorize_resource
 
   def index
     @purchases = Purchase.search(params).page(params[:page])
-
     respond_to do |format|
       format.html
       format.js { render 'shared/index' }
@@ -13,6 +11,7 @@ class PurchasesController < ApplicationController
   end
 
   def show
+    @purchase = Purchase.find params[:id]
     respond_to do |format|
       format.html
       format.json { render json: @purchase }
@@ -20,6 +19,7 @@ class PurchasesController < ApplicationController
   end
 
   def new
+    @purchase = Purchase.new
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @purchase }
@@ -27,6 +27,7 @@ class PurchasesController < ApplicationController
   end
 
   def edit
+    @purchase = Purchase.find params[:id]
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @purchase }
@@ -34,6 +35,7 @@ class PurchasesController < ApplicationController
   end
 
   def create
+    @purchase = Purchase.new params[:purchase]
     respond_to do |format|
       if @purchase.save
         format.html { redirect_to @purchase, notice: t('purchases.created') }
@@ -46,6 +48,7 @@ class PurchasesController < ApplicationController
   end
 
   def update
+    @purchase = Purchase.find params[:id]
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
         format.html { redirect_to @purchase, notice: t('purchases.updated') }
@@ -58,8 +61,8 @@ class PurchasesController < ApplicationController
   end
 
   def destroy
+    @purchase = Purchase.find params[:id]
     @purchase.set_deleted
-
     respond_to do |format|
       format.html { redirect_to purchases_url }
       format.json { head :no_content }
@@ -67,20 +70,24 @@ class PurchasesController < ApplicationController
   end
 
   def post
+    @purchase = Purchase.find params[:id]
     respond_to do |format|
       if @purchase.post
         format.html { redirect_to @purchase, notice: t('purchases.posted') }
       else
+        flash.alert = @purchases.errors.full_messages
         format.html { redirect_to @purchase, error: t('purchases.not_posted') }
       end
     end
   end
 
   def unpost
+    @purchase = Purchase.find params[:id]
     respond_to do |format|
       if @purchase.unpost
         format.html { redirect_to @purchase, notice: t('purchases.unposted') }
       else
+        flash.alert = @purchase.errors.full_messages
         format.html { redirect_to @purchase, error: t('purchases.not_unposted') }
       end
     end
