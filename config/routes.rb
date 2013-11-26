@@ -125,11 +125,14 @@ ItechService::Application.routes.draw do
     get :choose, on: :collection, defaults: {format: :js}
     get :show_prices, on: :member, defaults: {format: :js}
     get :show_remains, on: :member, defaults: {format: :js}
+    get :remains_in_store, on: :member, defaults: {format: :json}
     post :select, on: :collection, defaults: {format: :js}
     resources :items, except: [:show]
   end
 
-  resources :items
+  resources :items do
+    get :remains_in_store, on: :member, defaults: {format: :json}
+  end
 
   resources :product_groups, except: [:index, :show]
 

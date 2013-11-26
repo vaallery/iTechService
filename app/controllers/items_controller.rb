@@ -1,6 +1,5 @@
 class ItemsController < ApplicationController
-  load_and_authorize_resource
-  skip_load_resource only: [:index]
+  authorize_resource
 
   def index
     if params[:product_id].blank?
@@ -42,6 +41,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @item = Item.find params[:id]
     respond_to do |format|
       format.pdf do
         if params[:print]
@@ -56,7 +56,7 @@ class ItemsController < ApplicationController
   end
 
   def new
-
+    @item = Item.new
     respond_to do |format|
       format.html
       format.json { render json: @item }
@@ -64,12 +64,14 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    @item = Item.find params[:id]
     respond_to do |format|
       format.js { render 'shared/show_modal_form' }
     end
   end
 
   def create
+    @item = Item.new params[:item]
     respond_to do |format|
       if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
@@ -82,6 +84,7 @@ class ItemsController < ApplicationController
   end
 
   def update
+    @item = Item.find params[:id]
     respond_to do |format|
       if @item.update_attributes(params[:item])
         format.js { render 'update' }
@@ -92,6 +95,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
+    @item = Item.find params[:id]
     @item.destroy
 
     respond_to do |format|
@@ -99,4 +103,14 @@ class ItemsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def remains_in_store
+    item = Item.find params[:id]
+    store = Store.find params[:store_id]
+    quantity = item.actual_quantity store
+    respond_to do |format|
+      format.json { render json: {quantity: quantity} }
+    end
+  end
+
 end

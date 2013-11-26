@@ -148,4 +148,13 @@ class ProductsController < ApplicationController
     end
   end
 
+  def remains_in_store
+    product = Product.find params[:id]
+    store = Store.find params[:store_id]
+    quantity = product.quantity_in_store store
+    respond_to do |format|
+      format.json { render json: {quantity: quantity} }
+    end
+  end
+
 end

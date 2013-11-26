@@ -29,5 +29,5 @@
 .form-actions
   = link_to_edit @revaluation_act if can? :edit, @revaluation_act
   = button_to_post @revaluation_act if can? :post, @revaluation_act
-  = button_to_unpost @revaluation_act if can? :unpost, @revaluation_act
+  -#= button_to_unpost @revaluation_act if can? :unpost, @revaluation_act
   = link_to_destroy @revaluation_act if can? :destroy, @revaluation_act

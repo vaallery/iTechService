@@ -8,11 +8,11 @@ describe MovementAct do
   it { should have_many :movement_items }
   it { should accept_nested_attributes_for :movement_items }
   it { should validate_presence_of :date }
+  it { should validate_presence_of :status }
   it { should validate_presence_of :store }
   it { should validate_presence_of :dst_store }
-  it { should validate_presence_of :status }
   it { should validate_presence_of :user }
-  it { should ensure_inclusion_of(:status).in_array(Document::STATUSES) }
+  it { should ensure_inclusion_of(:status).in_array(Document::STATUSES.keys) }
 
   it 'should be valid with valid attributes' do
     movement_act = build :movement_act
@@ -97,6 +97,16 @@ describe MovementAct do
       @movement_act.movement_items.create item_id: item.id, quantity: 2
       @movement_act.post
       @movement_act.status.should eq 0
+      item.quantity_in_store(@src_store).should eq 5
+      item.quantity_in_store(@dst_store).should eq 0
+    end
+
+    it 'should not post if status not 0' do
+      movement_act = create :movement_act, status: 1
+      item = create :item
+      create :store_item, store: @src_store, item: item, quantity: 5
+      movement_act.movement_items.create item_id: item.id, quantity: 2
+      movement_act.post
       item.quantity_in_store(@src_store).should eq 5
       item.quantity_in_store(@dst_store).should eq 0
     end

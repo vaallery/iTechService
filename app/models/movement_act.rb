@@ -8,6 +8,7 @@ class MovementAct < ActiveRecord::Base
   accepts_nested_attributes_for :movement_items, allow_destroy: true, reject_if: lambda { |a| a[:item_id].blank? or a[:quantity].blank? }
   attr_accessible :date, :dst_store_id, :store_id, :movement_items_attributes
   validates_presence_of :date, :dst_store, :store, :status, :user
+  validates_inclusion_of :status, in: Document::STATUSES.keys
   validate :stores_must_be_different
   before_validation :set_user
   delegate :name, to: :store, prefix: true, allow_nil: true
@@ -53,24 +54,16 @@ class MovementAct < ActiveRecord::Base
   end
 
   def post
-    no_errors = true
-    if is_new?
+    if is_valid_for_posting?
       transaction do
         movement_items.each do |movement_item|
-          if movement_item.is_insufficient?
-            errors[:base] << I18n.t('movement_acts.errors.insufficient', product: movement_item.name)
-            no_errors = false
-          elsif !movement_item.has_prices_for_store?(dst_store)
-            errors[:base] << I18n.t('movement_acts.errors.prices_undefined', product: movement_item.name)
-            no_errors = false
-          else
-            movement_item.store_item(store).move_to dst_store, movement_item.quantity
-          end
+          movement_item.store_item(store).move_to dst_store, movement_item.quantity
         end
-        update_attribute :status, 1 if no_errors
+        update_attribute :status, 1
       end
+    else
+      false
     end
-    no_errors
   end
 
   def unpost
@@ -89,6 +82,26 @@ class MovementAct < ActiveRecord::Base
 
   def set_user
     self.user_id ||= User.try(:current).try(:id)
+  end
+
+  def is_valid_for_posting?
+    is_valid = true
+    if is_new?
+      movement_items.each do |movement_item|
+        if movement_item.is_insufficient?
+          errors[:base] << I18n.t('movement_acts.errors.insufficient', product: movement_item.name)
+          is_valid = false
+        end
+        unless movement_item.has_prices_for_store?(dst_store)
+          errors[:base] << I18n.t('movement_acts.errors.prices_undefined', product: movement_item.name)
+          is_valid = false
+        end
+      end
+    else
+      errors[:base] << I18n.t('documents.errors.cannot_be_posted')
+      is_valid = false
+    end
+    is_valid
   end
 
 end

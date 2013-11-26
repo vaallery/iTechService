@@ -71,9 +71,9 @@ class RevaluationActsController < ApplicationController
   def post
     respond_to do |format|
       if @revaluation_act.post
-        format.html { redirect_to @revaluation_act, notice: t('revaluation_acts.posted') }
+        format.html { redirect_to @revaluation_act, notice: t('documents.posted') }
       else
-        format.html { redirect_to @revaluation_act, error: t('revaluation_acts.not_posted') }
+        format.html { redirect_to @revaluation_act, error: t('documents.not_posted') }
       end
     end
   end
@@ -81,9 +81,9 @@ class RevaluationActsController < ApplicationController
   def unpost
     respond_to do |format|
       if @revaluation_act.unpost
-        format.html { redirect_to @revaluation_act, notice: t('revaluation_acts.unposted') }
+        format.html { redirect_to @revaluation_act, notice: t('documents.unposted') }
       else
-        format.html { redirect_to @revaluation_act, error: t('revaluation_acts.not_unposted') }
+        format.html { redirect_to @revaluation_act, error: t('documents.not_unposted') }
       end
     end
   end

@@ -38,6 +38,10 @@ class Product < ActiveRecord::Base
     products
   end
 
+  def actual_price(price_type)
+    prices.with_type(price_type).first.try(:value)
+  end
+
   def purchase_price
     prices.purchase.first.try(:value)
   end
@@ -62,7 +66,7 @@ class Product < ActiveRecord::Base
   end
 
   def quantity_by_stores
-    Store.all.map {|store| {code: store.code, name: store.name, quantity: quantity_in_store(store)}}
+    Store.all.collect { |store| {id: id, code: store.code, name: store.name, quantity: quantity_in_store(store)} }
   end
 
   def item

@@ -30,7 +30,7 @@ jQuery ->
   $(document).on 'click', '#product_choose_form .product_row', ->
     product_id = $(this).data('product')
     form = $('#product_choose_form').attr('form')
-    store_id = $('#sale_store_id').val()
+    store_id = $('#product_choose_form').attr('store_id')
     client_id = $('#sale_client_id').val()
     $.post '/products/select.js', product_id: product_id, form: form, store_id: store_id, client_id: client_id
 
@@ -39,7 +39,7 @@ jQuery ->
     $('#new_item_fields').hide()
     item_id = $(this).data('item')
     form = $('#product_choose_form').attr('form')
-    store_id = $('#sale_store_id').val()
+    store_id = $('#product_choose_form').attr('store_id')
     client_id = $('#sale_client_id').val()
     $.post '/products/select.js', item_id: item_id, form: form, store_id: store_id, client_id: client_id
 

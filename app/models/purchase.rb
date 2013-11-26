@@ -7,7 +7,8 @@ class Purchase < ActiveRecord::Base
   has_many :items, through: :batches
   accepts_nested_attributes_for :batches, allow_destroy: true, reject_if: lambda { |a| a[:price].blank? or a[:quantity].blank? or a[:item_id].blank? }
   attr_accessible :batches_attributes, :contractor_id, :store_id, :date
-  validates_presence_of :contractor, :store
+  validates_presence_of :contractor, :store, :status, :date
+  validates_inclusion_of :status, in: Document::STATUSES.keys
   validates_associated :batches
 
   scope :posted, self.where(status: 1)
@@ -59,26 +60,22 @@ class Purchase < ActiveRecord::Base
   end
 
   def post
-    if is_new?
+    if is_valid_for_posting?
       transaction do
         price_type = PriceType.purchase
         cur_date = Date.current
         batches.each do |batch|
-          item = batch.item
-          if item.feature_accounting
-            if (store_item = item.store_items.first_or_create).quantity > 0
-              self.errors[:base] << t('purchases.errors.store_item_already_present')
-            else
-              store_item.update_attributes store_id: store_id, quantity: 1
-            end
+          if batch.feature_accounting
+            batch.store_item.present? ? batch.store_item.update_attributes(store_id: store_id) : StoreItem.create(store_id: store_id, item_id: batch.item_id, quantity: 1)
           else
-            store_item = StoreItem.find_or_initialize_by_item_id_and_store_id item_id: item.id, store_id: self.store_id
-            store_item.add batch.quantity
+            batch.store_item(store).add batch.quantity
           end
-          item.prices.create price_type_id: price_type.id, date: cur_date, value: batch.price
+          batch.prices.create price_type_id: price_type.id, date: cur_date, value: batch.price
         end
         update_attribute :status, 1
       end
+    else
+      false
     end
   end
 
@@ -105,6 +102,24 @@ class Purchase < ActiveRecord::Base
     if self.is_posted? and changed_attributes['status'] == 0
 
     end
+  end
+
+  def is_valid_for_posting?
+    is_valid = true
+    if is_new?
+      batches.each do |batch|
+        if batch.feature_accounting
+          if batch.store_item.present?
+            errors[:base] << I18n.t('purchases.errors.store_item_already_present', product: batch.name)
+            is_valid = false
+          end
+        end
+      end
+    else
+      errors[:base] << I18n.t('documents.errors.cannot_be_posted')
+      is_valid = false
+    end
+    is_valid
   end
 
 end

@@ -2,6 +2,20 @@ require 'spec_helper'
 
 describe Sale do
 
+  it { should belong_to :user }
+  it { should belong_to :client }
+  it { should belong_to :store }
+  it { should belong_to :payment_type }
+  it { should have_many :sale_items }
+  it { should accept_nested_attributes_for :sale_items }
+  it { should validate_presence_of :date }
+  it { should validate_presence_of :status }
+  it { should validate_presence_of :store }
+  it { should validate_presence_of :client }
+  it { should validate_presence_of :user }
+  it { should validate_presence_of :payment_type }
+  it { should ensure_inclusion_of(:status).in_array(Document::STATUSES.keys) }
+
   it 'is valid with valid attributes' do
     sale = build :sale
     expect(sale).to be_valid

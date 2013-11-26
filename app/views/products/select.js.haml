@@ -6,7 +6,11 @@ $row = $selector.closest('tr');
   $('.product_select_button', $selector).attr('title', "#{@item.name}");
   $selector.closest('.product').find('.features').text("#{features_presentation @item}");
   - if %w[sale purchase movement_act].include? @form
-    $('td.available_quantity', $row).text("#{remains_presentation(@item.product, @store)}");
+    - if @form == 'movement_act'
+      available_quantity = "#{@item.actual_quantity(@store)}";
+    - else
+      available_quantity = "#{remains_presentation(@item.product, @store)}";
+    $('td.available_quantity', $row).text(available_quantity);
     $('td.code', $row).text("#{@item.code}");
     $('td.quantity input', $row).val(1);
     - if @item.feature_accounting

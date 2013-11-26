@@ -5,8 +5,9 @@ class RevaluationAct < ActiveRecord::Base
   has_many :revaluations, inverse_of: :revaluation_act, dependent: :destroy
   accepts_nested_attributes_for :revaluations, allow_destroy: true, reject_if: lambda { |a| a[:product_id].blank? or a[:price].blank? }
   #attr_accessor :product_ids
-  attr_accessible :date, :price_type_id, :product_ids, :revaluations_attributes
-  validates_presence_of :price_type, :date
+  attr_accessible :date, :price_type_id, :revaluations_attributes, :product_ids
+  validates_presence_of :price_type, :date, :status
+  validates_inclusion_of :status, in: Document::STATUSES.keys
 
   scope :posted, self.where(status: 1)
   scope :deleted, self.where(status: 2)
@@ -44,7 +45,7 @@ class RevaluationAct < ActiveRecord::Base
   end
 
   def post
-    if is_new?
+    if is_valid_for_posting?
       transaction do
         cur_time = Time.current
         revaluations.each do |revaluation|
@@ -52,6 +53,8 @@ class RevaluationAct < ActiveRecord::Base
         end
         update_attribute :status, 1
       end
+    else
+      false
     end
   end
 
@@ -59,6 +62,15 @@ class RevaluationAct < ActiveRecord::Base
     product_ids.split(',').each do |product_id|
       self.revaluations.build product_id: product_id
     end
+  end
+
+  def is_valid_for_posting?
+    is_valid = true
+    unless is_new?
+      errors[:base] << I18n.t('documents.errors.cannot_be_posted')
+      is_valid = false
+    end
+    is_valid
   end
 
 end

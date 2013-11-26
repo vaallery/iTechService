@@ -56,6 +56,14 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def actual_quantity(store=nil)
+    if store.present?
+      store_items.in_store(store).try(:first).try(:quantity) || 0
+    else
+      store_items.sum(:quantity)
+    end
+  end
+
   def generate_barcode_num
     num = self.id.to_s
     code = Product::BARCODE_PREFIX + '0'*(9-num.length) + num

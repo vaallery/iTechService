@@ -541,6 +541,7 @@ ru:
       posted: 'Проведён'
       deleted: 'Удалён'
     errors:
+      cannot_be_posted: 'Документ не может быть проведён.'
       deleting_posted: 'Нельзя удалить проведённый документ'
 
   duty_days:
@@ -782,7 +783,7 @@ ru:
       title: 'Новая Закупка'
     errors:
       deleting_posted: 'Невозможно удалить проведенную Закупку.'
-      store_item_already_present: 'Товар уже существует.'
+      store_item_already_present: 'Товар уже существует (%{product}).'
     statuses:
       new: 'Новая'
       posted: 'Проведена'
@@ -818,14 +819,14 @@ ru:
     sales_report: "Отчет по продажам"
 
   revaluation_acts:
-    created: 'Акт переоценки создан'
-    updated: 'Акт переоценки изменён'
+    created: 'Акт Переоценки создан'
+    updated: 'Акт Переоценки изменён'
     index:
-      title: 'Акты переоценки'
+      title: 'Акты Переоценки'
     new:
-      title: 'Новый Акт переоценки'
+      title: 'Новый Акт Переоценки'
     edit:
-      title: 'Редактирование Акта переоценки'
+      title: 'Редактирование Акта Переоценки'
 
   salaries:
     edit:

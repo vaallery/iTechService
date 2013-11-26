@@ -5,5 +5,5 @@
     = f.input_field :item, as: :product, form: 'movement_act'
     .features= features_presentation f.object
   %td.available_quantity.number= f.object.try(:quantity_in_store, f.object.try(:store))
-  %td.quantity= f.input_field :quantity, type: 'number', class: 'input-mini', min: 1
+  %td.quantity= f.input_field :quantity, type: 'number', class: 'input-mini', min: 1, disabled: f.object.try(:feature_accounting)
   %td.action= link_to_remove_fields f

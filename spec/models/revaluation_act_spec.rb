@@ -2,6 +2,14 @@ require 'spec_helper'
 
 describe RevaluationAct do
 
+  it { should belong_to :price_type }
+  it { should have_many :revaluations }
+  it { should accept_nested_attributes_for :revaluations }
+  it { should validate_presence_of :date }
+  it { should validate_presence_of :status }
+  it { should validate_presence_of :price_type }
+  it { should ensure_inclusion_of(:status).in_array(Document::STATUSES.keys) }
+
   it 'is valid with valid attributes' do
     revaluation_act = build :revaluation_act
     expect(revaluation_act).to be_valid
