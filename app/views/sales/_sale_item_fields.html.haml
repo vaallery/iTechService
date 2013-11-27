@@ -6,9 +6,9 @@
     .features= features_presentation f.object
   %td.available_quantity.number= remains_presentation f.object.product, f.object.store
   %td.quantity.number= f.number_field :quantity, class: 'input-mini', type: 'number', min: 1
-  %td.price.number= f.object.retail_price
+  %td.price.number= human_currency f.object.retail_price
   - if can? :view_purchase_price, Product
     %td.purchase_price.number= f.object.purchase_price
   %td.discount.number= f.number_field :discount, class: 'input-small sale_item_discount', min: 0, max: f.object.available_discount
-  %td.sum.number= f.object.sum
+  %td.sum.number= human_currency f.object.sum
   %td.actions= link_to_remove_fields f

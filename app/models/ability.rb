@@ -1,5 +1,4 @@
-class
-Ability
+class Ability
   include CanCan::Ability
 
   def initialize(user)
@@ -11,22 +10,22 @@ Ability
       can :manage, :all
       can :view_reports
       can :view_purchase_price, Product
-      cannot :post, Purchase, status: [1, 2]
-      cannot :unpost, Purchase, status: [0, 2]
-      cannot :edit, Purchase, status: [1, 2]
-      cannot :destroy, Purchase, status: 1
-      cannot :post, RevaluationAct, status: [1, 2]
-      cannot :unpost, RevaluationAct, status: [0, 2]
-      cannot :edit, RevaluationAct, status: [1, 2]
-      cannot :destroy, RevaluationAct, status: 1
-      cannot :post, Sale, status: [1, 2]
-      cannot :unpost, Sale, status: [0, 2]
-      cannot :edit, Sale, status: [1, 2]
-      cannot :destroy, Sale, status: 1
-      cannot :post, MovementAct, status: [1, 2]
-      cannot :unpost, MovementAct, status: [0, 2]
-      cannot :edit, MovementAct, status: [1, 2]
-      cannot :destroy, MovementAct, status: 1
+      #cannot :edit, [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
+      #cannot :post, RevaluationAct, status: [1, 2]
+      #cannot :unpost, RevaluationAct, status: [0, 2]
+      #cannot :edit, RevaluationAct, status: [1, 2]
+      #cannot :destroy, RevaluationAct, status: 1
+      #cannot :post, Sale, status: [1, 2]
+      #cannot :unpost, Sale, status: [0, 2]
+      #cannot :edit, Sale, status: [1, 2]
+      #cannot :destroy, Sale, status: 1
+      #cannot :post, MovementAct, status: [1, 2]
+      #cannot :unpost, MovementAct, status: [0, 2]
+      #cannot :edit, MovementAct, status: [1, 2]
+      #cannot :destroy, MovementAct, status: 1
     elsif user.admin?
       can :manage, :all
       can :view_reports
@@ -45,6 +44,9 @@ Ability
         can :modify, [Device, Client]
         can [:issue, :activate, :scan], GiftCertificate
         can :modify, Sale
+        can [:choose, :select], Product
+        can [:post, :edit], Sale, status: [1, 2]
+        can [:create, :read], Sale
       end
       if user.media?
         can :modify, [Device, Client, Order]

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'cancan/matchers'
 
 describe User do
 
@@ -37,6 +38,43 @@ describe User do
     it "is not valid without 'password'" do
       user = build :user_without_password
       user.should_not be_valid
+    end
+
+  end
+
+  describe 'abilities' do
+
+    context 'superadmin' do
+      subject(:superadmin) { create :user, :superadmin }
+
+    end
+
+    context 'admin' do
+
+    end
+
+    context 'manager' do
+
+    end
+
+    context 'software' do
+
+    end
+
+    context 'media' do
+
+    end
+
+    context 'technician' do
+
+    end
+
+    context 'supervisor' do
+
+    end
+
+    context 'programmer' do
+
     end
 
   end
