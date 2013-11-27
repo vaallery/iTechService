@@ -49,19 +49,20 @@ group :assets do
 end
 
 group :development do
-  #gem 'debugger' unless ENV["RM_INFO"]
-  #gem 'debugger-linecache'
-  #gem 'debugger-pry', require: 'debugger/pry'
+  gem 'debugger' unless ENV['RM_INFO']
+  gem 'debugger-linecache'
+  gem 'debugger-xml'
+  gem 'debugger-pry', require: 'debugger/pry'
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request', '0.2.1'
   gem 'capistrano-deploy', '~> 0.3.2'
   gem 'mailcatcher'
-  gem 'linecache19', '0.5.13'
-  gem 'ruby-debug19'
-  gem 'ruby-debug-base19x', '0.11.30.pre15', require: 'ruby-debug-base'
-  gem 'ruby-debug-ide', '0.4.21', require: 'ruby-debug-ide'
+  #gem 'linecache19', '0.5.13'
+  #gem 'ruby-debug19'
+  #gem 'ruby-debug-base19x', '0.11.30.pre15', require: 'ruby-debug-base'
+  #gem 'ruby-debug-ide', '0.4.21', require: 'ruby-debug-ide'
 end
 
 group :test do
