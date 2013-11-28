@@ -28,20 +28,15 @@ jQuery ->
     $.get '/products.js', choose: true
 
   $(document).on 'click', '#product_choose_form .product_row', ->
-    product_id = $(this).data('product')
-    form = $('#product_choose_form').attr('form')
-    store_id = $('#product_choose_form').attr('store_id')
-    client_id = $('#sale_client_id').val()
-    $.post '/products/select.js', product_id: product_id, form: form, store_id: store_id, client_id: client_id
+    $form = $('#product_choose_form')
+    $('#product_id', $form).removeAttr('disabled').val($(this).data('product'))
+    $('#item_id', $form).attr('disabled', true)
+    $form.submit()
 
   $(document).on 'click', '#product_choose_form .item_row', ->
-    $('#product_choose_form #new_item_fields input').attr('disabled', true)
-    $('#new_item_fields').hide()
-    item_id = $(this).data('item')
-    form = $('#product_choose_form').attr('form')
-    store_id = $('#product_choose_form').attr('store_id')
-    client_id = $('#sale_client_id').val()
-    $.post '/products/select.js', item_id: item_id, form: form, store_id: store_id, client_id: client_id
+    $form = $('#product_choose_form')
+    $('#item_id', $form).removeAttr('disabled').val($(this).data('item'))
+    $form.submit()
 
   $(document).on 'click', '#product_choose_form #add_product_item', ->
     $('#product_choose_form #selected_item').attr('disabled', true).val('')

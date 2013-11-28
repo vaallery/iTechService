@@ -541,8 +541,9 @@ ru:
       posted: 'Проведён'
       deleted: 'Удалён'
     errors:
-      cannot_be_posted: 'Документ не может быть проведён.'
-      deleting_posted: 'Нельзя удалить проведённый документ'
+      cannot_be_posted: 'Документ не может быть проведён!'
+      deleting_posted: 'Нельзя удалить проведённый документ!'
+      product_already_present: 'Продукт уже выбран!'
 
   duty_days:
     kinds:
@@ -753,6 +754,7 @@ ru:
       title: 'Новая Продуктовая группа'
 
   products:
+    add_good: 'Добавить товар'
     add_product: 'Добавить Продукт'
     created: "Продукт создан"
     updated: "Продукт изменён"

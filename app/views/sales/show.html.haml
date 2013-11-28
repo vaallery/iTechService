@@ -2,8 +2,8 @@
 
 .dl.dl-horizontal
 
-  %dt= Sale.human_attribute_name :sold_at
-  %dd= human_datetime @sale.date
+  -#%dt= Sale.human_attribute_name :sold_at
+  -#%dd= human_datetime @sale.date
 
   %dt= Sale.human_attribute_name :client
   %dd= @sale.client.present? ? link_to(@sale.client_presentation, client_path(@sale.client)) : '-'
@@ -14,7 +14,7 @@
   %dt= Sale.human_attribute_name :store
   %dd= @sale.store.name
 
-%table#sale_items.table.table-condensed.table-striped.table-bordered
+%table#sale_items.table.table-condensed.table-hover.table-bordered
   %caption
     %h4= t 'products.index.title'
   %thead
@@ -22,6 +22,7 @@
       %th.num
       %th.code= Product.human_attribute_name :code
       %th.product= t 'activerecord.models.product'
+      %th= Product.human_attribute_name :available
       %th.quantity= SaleItem.human_attribute_name :quantity
       %th.price= SaleItem.human_attribute_name :price
       %th.sum= SaleItem.human_attribute_name :sum
@@ -33,12 +34,13 @@
         %td.product
           %strong= sale_item.name
           .features= features_presentation sale_item
+        %td.number= remains_presentation sale_item.product, @sale.store
         %td.quantity.number= sale_item.quantity
         %td.price.number= human_currency sale_item.price
         %td.sum.number= human_currency sale_item.sum
   %tfoot
     %tr
-      %td{colspan: 5}= t 'total'
+      %td{colspan: 6}= t 'total'
       %td.total_sum.number= human_currency @sale.total_sum
 
 .form-actions

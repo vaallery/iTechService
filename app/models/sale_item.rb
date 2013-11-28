@@ -9,6 +9,11 @@ class SaleItem < ActiveRecord::Base
   delegate :product, :product_category, :presentation, :features, :name, :code, :quantity_in_store, :retail_price, :purchase_price, :feature_accounting, :store_item, :store_items, to: :item, allow_nil: true
   delegate :store, :client, to: :sale, allow_nil: true
 
+  after_initialize do
+    self.quantity ||= 1
+    self.price ||= retail_price
+  end
+
   def sum
     (price || 0) * (quantity || 0)
   end

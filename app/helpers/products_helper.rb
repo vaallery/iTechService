@@ -29,4 +29,18 @@ module ProductsHelper
     end
   end
 
+  def link_to_add_product(form, association, is_product_only, options={})
+    link_to "#{glyph(:plus)} #{t('products.add_product')}".html_safe, choose_products_path(form: form, association: association, is_product_only: is_product_only, options: options), remote: true, class: 'add_product btn btn-success'
+  end
+
+  def product_fields(form, association, object, options={})
+    partial_name = "#{form.tableize}/#{association.singularize}_fields"
+    parent = form.classify.constantize.new
+    object_class = parent.class.reflect_on_association(association.to_sym).klass
+    attributes = {object.class.to_s.foreign_key => object.id}
+    #attributes[:quantity] = 1 if object_class.attribute_method? :quantity
+    new_object = object_class.new attributes
+    form_for(parent) { |f| f.fields_for(association, new_object, child_index: Time.new.to_i) { |ff| return render(partial_name, f: ff, options: options) } }
+  end
+
 end

@@ -25,6 +25,7 @@
   = require validation/jquery.validate.min
   = require validation/additional-methods.min
   = require validation/messages_ru
+  = require accounting
   = require_self
   = require_tree .
 */

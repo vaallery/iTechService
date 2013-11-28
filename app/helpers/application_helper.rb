@@ -7,7 +7,7 @@ module ApplicationHelper
     end
     link_to '#', class: 'add_fields btn-mini btn-success btn',
         data: { selector: append_to_selector, association: association, content: (fields.gsub('\n', '')) } do
-      icon_tag(:plus) + name
+      glyph(:plus) + ' ' + name
     end
   end
 

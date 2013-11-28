@@ -91,21 +91,19 @@ class ProductsController < ApplicationController
 
   def choose
     @product_groups = ProductGroup.goods.at_depth(1)
-    @form = params[:form]
     respond_to do |format|
       format.js
     end
   end
 
   def select
-    @form = params[:form]
     @store = Store.find params[:store_id] if params[:store_id].present?
     @client = Client.find params[:client_id] if params[:client_id].present?
     if params[:product_id].present?
       @product = Product.find params[:product_id]
       if @product.feature_accounting
         @items = @product.items
-        @items = @items.available if %w[sale movement_act].include? @form
+        @items = @items.available if %w[sale movement_act].include? params[:form]
         @items = @items.in_store(@store) if @store.present?
         @items = @items.page(params[:page])
         @feature_types = @product.feature_types

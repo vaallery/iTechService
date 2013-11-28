@@ -1,46 +1,25 @@
-$selector = $('.product_selector.active');
-$row = $selector.closest('tr');
-- if @item.present? and @form != 'revaluation_act'
-  $('input.item_id', $selector).val("#{@item.id}");
-  $('.product_select_button', $selector).text("#{@item.name}");
-  $('.product_select_button', $selector).attr('title', "#{@item.name}");
-  $selector.closest('.product').find('.features').text("#{features_presentation @item}");
-  - if %w[sale purchase movement_act].include? @form
-    - if @form == 'movement_act'
-      available_quantity = "#{@item.actual_quantity(@store)}";
-    - else
-      available_quantity = "#{remains_presentation(@item.product, @store)}";
-    $('td.available_quantity', $row).text(available_quantity);
-    $('td.code', $row).text("#{@item.code}");
-    $('td.quantity input', $row).val(1);
-    - if @item.feature_accounting
-      $('td.quantity input', $row).attr('readonly', true);
-    - else
-      $('td.quantity input', $row).removeAttr('readonly');
-      $('td.quantity input', $row).attr('max', #{@item.quantity_in_store(@store)});
-  - if @form == 'sale'
-    qty = Number($('td.quantity input', $row).val());
-    price = Number("#{@item.retail_price}");
-    discount = Number("#{@item.discount_for(@client)}");
-    $('td.price', $row).text(price);
-    $('.sale_item_discount', $row).val(discount);
-    $('td.sum', $row).text(qty*(price-discount));
-    calculate_sale_items_total_sum();
-  hideModal();
-- else
-  - if @product.present?
+- is_product_only = params[:is_product_only] == 'true'
+- if @product.present? and is_product_only or @item.present?
+  $selector = $("##{params[:association]}>tbody");
+  - if is_product_only
+    == if($("tr[data-product=#{@product.id}]:visible", $selector).length > 0){
+  - else
+    == if($("tr[data-item=#{@item.id}]:visible", $selector).length > 0){
+  :plain
+      alert("#{t('documents.errors.product_already_present')}");
+    }
+    else{
+      $selector.append("#{j(product_fields(params[:form], params[:association], is_product_only ? @product : @item, params[:options]))}");
+      enumerate_table('table.enumerable');
+      calculate_sale_items_total_sum();
+      hideModal();
+    }
+- elsif @product.present?
+  :plain
     $('#product_choose_form .product_row.info').removeClass('info');
     $("#product_choose_form .product_row[data-product=#{@product.id}]").addClass('info');
     $('#product_choose_form #selected_product').removeAttr('disabled').val("#{@product.id}");
-    - if @form == 'revaluation_act'
-      $('input.product_id', $selector).val("#{@product.id}");
-      $('.product_select_button', $selector).text("#{@product.name}");
-      $('.product_select_button', $selector).attr('title', "#{@product.name}");
-      $('td.code', $row).text("#{@product.code}");
-      $('td.purchase_price', $row).text("#{@product.purchase_price}");
-      $('td.actual_price', $row).text("#{@product.retail_price}");
-      $('td.price>input', $row).val("#{@product.retail_price.to_i}");
-      hideModal();
-    - elsif @product.feature_accounting
+  - if @product.feature_accounting
+    :plain
       $('#product_choose_form  #product_items_table').html("#{j(render('items_table'))}");
       $('#product_choose_form  #product_items').show();

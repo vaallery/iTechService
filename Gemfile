@@ -52,7 +52,6 @@ group :development do
   gem 'debugger' unless ENV['RM_INFO']
   gem 'debugger-linecache'
   gem 'debugger-xml'
-  gem 'debugger-pry', require: 'debugger/pry'
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'

@@ -7,7 +7,7 @@
   = f.association :store, collection: Store.for_retail.all
   = hidden_field_tag :price_type_id
 
-  %table#sale_items.table.table-condensed.table-striped.table-bordered
+  %table#sale_items.enumerable.table.table-condensed.table-bordered.table-hover
     %caption
       %h4= t 'products.index.title'
     %thead
@@ -24,17 +24,15 @@
         %th.sum= SaleItem.human_attribute_name :sum
         %th.actions
 
-    %tbody
-      = f.simple_fields_for :sale_items do |ff|
-        = render 'sale_item_fields', f: ff
+    %tbody= f.fields_for(:sale_items) { |ff| render 'sale_item_fields', f: ff }
 
     %tfoot
       %tr
         %td{colspan: can?(:view_purchase_price, Product) ? 8 : 7}= t 'total'
-        %td.total_sum.number= @sale.total_sum
+        %td.total_sum.number= human_currency @sale.total_sum
         %td
 
-  = link_to_add_fields t('sales.add_product'), '#sale_items>tbody', f, :sale_items
+  = link_to_add_product :sale, :sale_items, false
 
   .form-actions
     = submit_button f

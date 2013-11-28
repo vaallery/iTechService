@@ -3,7 +3,7 @@
   $("body").append("#{j(render('choose_form'))}");
   $('#modal_form form').attr('store_id', store_id);
   if(store_id != ''){
-    $('#modal_form form a').each(function(){
+    $('#modal_form #product_groups a').each(function(){
       $(this).attr('href', $(this).attr('href') + '&store_id=' + store_id);
     });
   }

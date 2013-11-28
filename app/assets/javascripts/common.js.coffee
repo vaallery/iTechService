@@ -58,6 +58,9 @@ jQuery ->
   $('#scan_barcode_button').click ->
     scanBarcode()
 
+  if $('table.enumerable').length > 0
+    enumerate_table('table.enumerable')
+
 cursorX = $('#spinner').outerWidth() / 2
 cursorY = $('#spinner').outerHeight() / 2
 
@@ -157,17 +160,27 @@ window.hideSpinner = ->
 window.hideModal = ->
   $('#modal_form').modal('hide')
 
-window.datepicker_dates =
-  days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
-  daysShort: ["Вск", "Пнд", "Втр", "Срд", "Чтв", "Птн", "Суб", "Вск"],
-  daysMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
-  months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь",
-           "Декабрь"],
-  monthsShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
-  today: "Сегодня"
-
-
 window.enumerate_table = (table)->
   num = 0
   $('tbody>tr:visible', table).each ->
     $(this).find('.num').text(++num)
+
+window.datepicker_dates =
+  days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],
+  daysShort: ["Вск", "Пнд", "Втр", "Срд", "Чтв", "Птн", "Суб", "Вск"],
+  daysMin: ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
+  months: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+  monthsShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
+  today: "Сегодня"
+
+accounting.settings =
+  currency:
+    symbol: 'руб.'
+    format: '%v %s'
+    decimal: ','
+    thousand: ' '
+    precision: 0
+  number:
+    precision: 0
+    decimal: ','
+    thousand: ' '

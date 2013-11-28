@@ -4,7 +4,7 @@
   = f.association :contractor, as: :select
   = f.association :store, collection: Store.for_purchase.all
 
-  %table#purchase_products.table.table-condensed.table-striped.table-bordered
+  %table#purchase_products.enumerable.table.table-condensed.table-striped.table-bordered
     %caption
       %h4= t 'products.index.title'
     %thead
