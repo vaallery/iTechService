@@ -42,7 +42,6 @@
                   %li= link_to t('feature_types.index.title'), feature_types_path if can? :manage, FeatureType
                   %li= link_to t('payment_types.index.title'), payment_types_path if can? :manage, PaymentType
                   %li= link_to t('stores.index.title'), stores_path if can? :read, Store
-                  %li= link_to t('tasks.link'), tasks_path if can? :manage, Task
                   %li= link_to t('locations.link'), locations_path if can? :manage, Location
               %li.divider
               %li= link_to t('users.rating'), rating_users_path

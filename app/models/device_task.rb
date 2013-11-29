@@ -5,9 +5,10 @@ class DeviceTask < ActiveRecord::Base
   attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task
   validates :task, :cost, presence: true
   validates :cost, numericality: true # except repair
-  delegate :name, to: :task, allow_nil: true
+  delegate :name, :role, :is_important?, :is_actual_for?, to: :task, allow_nil: true
+  delegate :client_presentation, to: :device, allow_nil: true
 
-  scope :ordered, joins(:task).order("done asc, tasks.priority desc")
+  scope :ordered, joins(:task).order('done asc, tasks.priority desc')
   scope :done, where(done: true)
   scope :pending, where(done: false)
   scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
@@ -43,10 +44,6 @@ class DeviceTask < ActiveRecord::Base
     task.try :name
   end
 
-  def name
-    task.try :name
-  end
-
   def task_cost
     task.try(:cost) || 0
   end
@@ -54,25 +51,9 @@ class DeviceTask < ActiveRecord::Base
   def task_duration
     task.try :duration
   end
-  
-  def is_important?
-    task.try :is_important?
-  end
 
   def device_presentation
     device.present? ? device.presentation : ''
-  end
-
-  def client_presentation
-    device.client_presentation
-  end
-
-  def role
-    task.try :role
-  end
-
-  def is_actual_for? user
-    task.is_actual_for? user
   end
 
   def performer
