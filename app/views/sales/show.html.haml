@@ -46,5 +46,5 @@
 .form-actions
   = link_to_edit @sale if can? :edit, @sale
   = button_to_post @sale if can? :post, @sale
-  = button_to_unpost @sale if can? :unpost, @sale
+  -#= button_to_unpost @sale if can? :unpost, @sale
   = link_to_destroy @sale if can? :destroy, @sale

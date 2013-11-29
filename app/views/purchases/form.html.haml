@@ -30,5 +30,4 @@
   = link_to_add_fields t('products.add_product'), '#purchase_products>tbody', f, :batches
 
   .form-actions
-    = submit_button f#, disabled: true
-    = button_to_post @purchase if @purchase.persisted? and can?(:post, @purchase)
+    = submit_button f
