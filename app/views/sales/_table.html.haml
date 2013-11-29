@@ -22,8 +22,8 @@
           %td= sale.payment_type.name
           %td= human_currency sale.total_sum
           %td.actions.btn-group
-            = link_to_show_small sale if can? :read, Sale
-            = link_to_edit_small sale if can? :edit, Sale
-            = link_to_destroy_small sale if can? :destroy, Sale
+            = link_to_show_small sale if can? :read, @sale
+            = link_to_edit_small sale if can? :edit, @sale
+            = link_to_destroy_small sale if can? :destroy, @sale
 
   = paginate @sales

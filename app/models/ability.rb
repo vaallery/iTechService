@@ -99,6 +99,9 @@ class Ability
       can :read, :all
       cannot [:create, :update, :destroy], StolenPhone
       cannot :read, Salary
+      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.
