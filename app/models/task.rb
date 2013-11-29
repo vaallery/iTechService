@@ -7,7 +7,7 @@ class Task < ActiveRecord::Base
   belongs_to :product, inverse_of: :task
   belongs_to :location
   attr_accessible :cost, :duration, :name, :priority, :role, :location_id
-  delegate :name, to: :product
+  delegate :name, to: :product, allow_nil: true
 
   scope :important, where('priority > ?', IMPORTANCE_BOUND)
   scope :tasks_for, lambda { |user| where(task: {role: user.role}) }
