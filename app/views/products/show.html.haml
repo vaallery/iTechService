@@ -5,6 +5,9 @@
   %dt= model_class.human_attribute_name :code
   %dd= @product.code.blank? ? '-' : @product.code
 
+  %dt= model_class.human_attribute_name :device_type
+  %dd= @product.device_type_full_name || '-'
+
   - if can? :view_purchase_price, @product
     %dt= model_class.human_attribute_name :purchase_price
     %dd= human_currency @product.purchase_price
@@ -15,11 +18,11 @@
   %dt= model_class.human_attribute_name :quantity
   %dd= @product.quantity_in_store
 
-  - unless @product.feature_accounting or @product.is_service?
+  - unless @product.feature_accounting or @product.is_service
     %dt= Item.human_attribute_name :barcode
     %dd= @product.item.barcode_num
 
-  - if @product.is_service?
+  - if @product.is_service
     %dt= Task.human_attribute_name :role
     %dd= @product.task.role_name
 

@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
+    @product = Product.new params[:product]
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @product }
@@ -58,10 +58,10 @@ class ProductsController < ApplicationController
     @product = Product.new params[:product]
     respond_to do |format|
       if @product.save
-        format.html { redirect_to products_path, notice: t('products.created') }
+        format.html { redirect_to @product, notice: t('products.created') }
         format.json { render json: @product, status: :created, location: @product }
       else
-        format.html { render action: 'new' }
+        format.html { render 'form' }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
@@ -71,10 +71,10 @@ class ProductsController < ApplicationController
     @product = Product.find params[:id]
     respond_to do |format|
       if @product.update_attributes(params[:product])
-        format.html { redirect_to products_path, notice: t('products.updated') }
+        format.html { redirect_to @product, notice: t('products.updated') }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html { render 'form' }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end

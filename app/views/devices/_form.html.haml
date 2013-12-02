@@ -15,7 +15,8 @@
         = text_field_tag 'contact_phone', human_phone(@device.client.contact_phone), class: 'input-medium', disabled: true
 
   - if can? :update, @device
-    = f.input :device_type_id, as: :device_type
+    = f.input :device_type, as: :device_type
+    = f.hidden_field :item_id
   - else
     = f.input :device_type, as: :string, disabled: true, input_html: {class: 'input-xlarge'}
 
@@ -23,7 +24,7 @@
 
   = f.input :imei, as: :imei, wrapper_html: {class: @device.has_imei? ? 'imei_input' : 'imei_input hidden'}
 
-  = f.input :serial_number, as: :serial_number, input_html: {autocomplete: 'off'}
+  = f.input :serial_number, as: :serial_number, input_html: {autocomplete: 'off'}, required: true
   
   = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)
 

@@ -48,42 +48,26 @@ jQuery ->
         $('#device_imei').parents('.control-group').removeClass 'warning'
         $('#device_imei').siblings('.help-inline').remove()
 
-  $('#device_imei, #device_serial_number').blur ()->
-    $this = $(this)
-    val = $this.val()
-    if val isnt ''
-      $.getJSON '/sales?search='+val, (res)->
-        info_tag = "<span class='help-inline sales_info'>"
-        if res.length > 0
-          for r in res
-            d = new Date(r.sold_at)
-            info_tag += '[' + d.toLocaleDateString() + ': '
-            info_tag += r.quantity + '] '
-        else
-          info_tag += 'Not found'
-        info_tag += "</span>"
-        $this.parent().siblings('.sales_info').remove()
-        $this.parent().after info_tag
-    else
-      $this.parent().siblings('.sales_info').remove()
-
-  $('#device_imei_search, #device_serial_number_search').click (event)->
+  $('#device_imei_search, #device_serial_number_search').click ()->
     $this = $(this)
     val = $this.prev('input').val()
     if val isnt ''
-      $.getJSON '/sales?search='+val, (res)->
-        info_tag = "<span class='help-inline sales_info'>"
-        if res.length > 0
-          for r in res
-            d = new Date(r.sold_at)
-            info_tag += '[' + d.toLocaleDateString() + ': '
-            info_tag += r.quantity + '] '
-        else
-          info_tag += 'Not found'
-        info_tag += "</span>"
+      $.getJSON '/items?q=' + val, (res)->
         $this.parent().siblings('.sales_info').remove()
-        $this.parent().after info_tag
-    false
+        if res.id
+          $('#device_item_id').val res.id
+          $('#device_type_name').text res.name
+          $('.device_form .imei_input').addClass 'hidden'
+          for feature in res.features
+            if feature.kind is 'imei'
+              $('#device_imei').closest('.imei_input').removeClass 'hidden'
+            $("#device_#{feature.kind}").val feature.value
+          info_s = res.name
+        else
+          $('#device_item_id').val null
+          $('#device_type_name').text '-'
+          info_s = res.message
+        $this.parent().after "<span class='help-inline sales_info'>#{info_s}</span>"
 
   $('#new_device_popup').mouseleave ->
     setTimeout (->

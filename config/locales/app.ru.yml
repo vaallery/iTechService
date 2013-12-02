@@ -103,8 +103,6 @@ ru:
         client_notified: Клиент уведомлён
         comment: Комментарий
         device_tasks: Список задач
-        device_type: :activerecord.models.device_type
-        device_type_id: :activerecord.models.device_type
         done_at: Время завершения
         history_records: История изменений
         imei: IMEI
@@ -243,9 +241,6 @@ ru:
 
       product_category:
         feature_types: "Типы характеристик"
-
-      product_group:
-        is_service: "Услуга"
         request_price: "Запрос цены"
 
       purchase:
@@ -350,6 +345,8 @@ ru:
     content: Содержание
     created_at: Время создания
     date: 'Дата'
+    device_type: :activerecord.models.device_type
+    device_type_id: :activerecord.models.device_type
     fio: ФИО
     id: '№'
     imei: IMEI

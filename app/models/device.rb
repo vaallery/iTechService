@@ -12,11 +12,12 @@ class Device < ActiveRecord::Base
   has_many :history_records, as: :object, dependent: :destroy
   accepts_nested_attributes_for :device_tasks
 
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration
+  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :item_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration
   attr_accessor :service_duration
 
-  validates :ticket_number, :client, :device_type, :location, :device_tasks, :return_at, presence: true
-  validates :ticket_number, uniqueness: true
+  validates_presence_of :ticket_number, :client, :location, :device_tasks, :return_at
+  validates_presence_of :device_type, if: 'item.nil?'
+  validates_uniqueness_of :ticket_number
   validates :imei, length: {is: 15}, allow_nil: true
   #validates :service_duration, format: { with: /[\D.]+\z/ }
   validates_associated :device_tasks

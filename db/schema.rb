@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118073700) do
+ActiveRecord::Schema.define(:version => 20131202040843) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -465,9 +465,11 @@ ActiveRecord::Schema.define(:version => 20131118073700) do
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
     t.integer  "warranty_term"
+    t.integer  "device_type_id"
   end
 
   add_index "products", ["code"], :name => "index_products_on_code"
+  add_index "products", ["device_type_id"], :name => "index_products_on_device_type_id"
   add_index "products", ["product_group_id"], :name => "index_products_on_product_group_id"
 
   create_table "purchases", :force => true do |t|

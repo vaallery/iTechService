@@ -32,10 +32,11 @@ class ItemsController < ApplicationController
       if @items.one?
         @item = @items.first
         format.js { render 'products/select' }
+        format.json { render json: @item }
       else
         format.html
         format.js
-        format.json { render json: @items }
+        format.json { render json: @items.any? ? @items : {message: t('devices.not_found')} }
       end
     end
   end
