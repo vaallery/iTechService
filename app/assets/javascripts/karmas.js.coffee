@@ -1,10 +1,3 @@
-jQuery ->
-
-#  $('.user_karma_link').each (i, el)->
-#    $(el).tooltip
-#      html: true
-#      title: $(this).data('comment')
-
 $(document).on 'click', '#header_karma_good_true', ->
   $('#header_karma_good').val(true)
 
@@ -16,10 +9,12 @@ $(document).on 'click', '.submit_karma_form', (event)->
   showSpinner()
   event.preventDefault()
 
-$(document).on 'click', '.close_karma_popover_button', (event)->
+$(document).on 'click', '.close_karma_popover_button', ->
   $owner = $($(this).data('owner'))
   $owner.popover('destroy')
-  event.preventDefault()
+
+$(document).on 'click', '.user_karma_group_link', ->
+  $("#user_karmas .has-tooltip").tooltip()
 
 window.close_karma_popovers = ->
   $('.new_karma_link,.user_karma_link,#header_karma_link').popover('destroy')

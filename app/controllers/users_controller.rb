@@ -23,15 +23,18 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-
     respond_to do |format|
-      format.html
+      format.html { render 'form' }
       format.json { render json: @user }
     end
   end
 
   def edit
     @user = User.find(params[:id])
+    respond_to do |format|
+      format.html { render 'form' }
+      format.json { render json: @user }
+    end
   end
 
   def create
@@ -42,7 +45,7 @@ class UsersController < ApplicationController
         format.html { redirect_to @user, notice: t('users.created') }
         format.json { render json: @user, status: :created, location: @user }
       else
-        format.html { render action: "new" }
+        format.html { render 'form' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +66,7 @@ class UsersController < ApplicationController
       else
         @salaries = @user.salaries
         @installments = @user.installments
-        format.html { render action: "edit" }
+        format.html { render 'form' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
         format.js { render 'shared/show_modal_form' }
       end

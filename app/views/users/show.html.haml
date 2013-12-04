@@ -67,7 +67,7 @@
       %dt= User.human_attribute_name :karmas
       %dd
         #user_karmas
-          .good= render @user.karmas.good
+          .good= render 'karmas/grouped', collection: @user.karmas.good
           .bad= render @user.karmas.bad
           #karma_popover_container
 
@@ -122,10 +122,6 @@
         %dd= "#{@user.current_sign_in_ip} at #{l(@user.current_sign_in_at, format: :long_d)}" unless @user.current_sign_in_at.blank?
         %dt= t 'last_sign_in'
         %dd= "#{@user.last_sign_in_ip} at #{l(@user.last_sign_in_at, format: :long_d)}" unless @user.last_sign_in_at.blank?
-
-  -##salary_tab.tab-pane
-  -#  - @salaries = @user.salaries
-  -#  = render 'salary_table'
 
 - if can? :manage, User
   .form-actions

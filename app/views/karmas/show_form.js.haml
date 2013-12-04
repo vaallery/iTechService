@@ -7,7 +7,7 @@
   $owner.popover({
     html: true,
     placement: 'top',
-    title: "<a href='#' class='close_karma_popover_button close_popover_button' data-owner="+$owner.selector+">&times;<\/a>",
+    title: "<a href='#' class='close_karma_popover_button close_popover_button' data-owner="+$owner.selector+">&times;<\/a>#{@karma.user_presentation}#{@karma.new_record? ? '' : " [#{l @karma.created_at, format: :date_short}]"}",
     content: "#{j(render('form'))}",
     container: '#karma_popover_container'
   });

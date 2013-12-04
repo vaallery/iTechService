@@ -1,8 +1,11 @@
 class Karma < ActiveRecord::Base
 
+  GROUP_SIZE = 10
+
   belongs_to :user
   attr_accessible :comment, :good, :user_id
   validates_presence_of :user, :comment, :good
+  scope :by_create_asc, order('created_at asc')
   scope :good, where(good: true)
   scope :bad, where(good: false)
 
