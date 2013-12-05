@@ -1,6 +1,6 @@
 class Karma < ActiveRecord::Base
 
-  GROUP_SIZE = 10
+  GROUP_SIZE = 50
 
   belongs_to :user
   attr_accessible :comment, :good, :user_id
