@@ -36,4 +36,13 @@ module KarmasHelper
     end
   end
 
+  def karma_group_content(karma_group)
+    render(karma_group.karmas)
+  end
+
+  def karma_group_title(karma_group)
+    button_to_close_popover(data: {owner: "#karma_group_#{karma_group.id}"}) +
+    (karma_group.is_used? ? '' : link_to(t('karmas.change_for_bonus'), edit_karma_group_path(karma_group), remote: true, class: 'new_bonus_link btn btn-primary btn-mini'))
+  end
+
 end

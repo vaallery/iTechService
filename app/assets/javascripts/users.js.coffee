@@ -221,12 +221,10 @@ jQuery ->
 
     $('.user_wish', $legend).tooltip()
 
-
 toggle_schedule_day = (el) ->
   el.toggleClass 'work_hour'
 
 fill_schedule_hours = (cells) ->
-  $log = $('#log')
   x = [cells[0], cells[2]]
   y = [cells[1]-1, cells[3]-1]
   $('#schedule_table>tbody>tr:eq('+y[0]+')').find('td:eq('+x[0]+')').toggleClass('work_hour')

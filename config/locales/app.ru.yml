@@ -2,6 +2,8 @@ ru:
   activerecord:
     models:
       announcement: Оповещение
+      bonus: 'Бонус'
+      bonus_type: 'Тип бонуса'
       #ckeditor/asset: ckeditor/asset
       #ckeditor/attachment_file: ckeditor/attachment_file
       #ckeditor/picture: ckeditor/picture
@@ -35,6 +37,10 @@ ru:
         active: Ативный
         kind: Тип
         user: Пользователь
+
+      bonus:
+        bonus_type: :activerecord.models.bonus_type
+        bonus_type_id: :activerecord.models.bonus_type
 
       ckeditor/asset:
         assetable: :activerecord.models.assetable
@@ -324,6 +330,26 @@ ru:
     protector_made: Плёночка наклеена!
     updated: Оповещение изменено
 
+  bonuses:
+    edit:
+      title: 'Редактирование Бонуса'
+    new:
+      title: 'Новый Бонус'
+    index:
+      title: 'Бонусы'
+    created: 'Бонус создан'
+    updated: 'Бонус изменён'
+
+  bonus_types:
+    edit:
+      title: 'Редактирование Типа бонуса'
+    new:
+      title: 'Новый Тип бонуса'
+    index:
+      title: 'Типы бонусов'
+    created: 'Тип бонуса создан'
+    updated: 'Тип бонуса изменён'
+
   clients:
     edit:
       title: Редактирование клиента
@@ -508,6 +534,11 @@ ru:
       title: Новости
     link: Новости
 
+  karmas:
+    change_for_bonus: 'Обменять на бонус'
+    group: 'Сгруппировать'
+
+    select: "Выделить"
   locations:
     edit:
       title: Редактирование локации
@@ -727,6 +758,7 @@ ru:
     date: Дата
     duty_info: Сегодня дежурный день!
     duty_schedule: График дежурств
+    group_karma: 'Сгруппировать'
     info: Информация
     job_schedule: График работы
     link: Пользователи

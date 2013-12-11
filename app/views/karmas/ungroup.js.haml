@@ -1,0 +1,12 @@
+:plain
+  bindKarmaEvents($("#karma_#{@karma.id}").appendTo('#user_karmas>div.good'));
+  old_karma_group_selector = "#karma_group_#{@old_karma_group_id}";
+  $old_karma_group = $(old_karma_group_selector);
+
+- if @old_karma_group.present?
+  :plain
+    $old_karma_group.popover('destroy');
+    $old_karma_group.replaceWith("#{j(render(@old_karma_group))}");
+    bindKarmaGroupEvents(old_karma_group_selector);
+- else
+  == $old_karma_group.popover('destroy').remove();

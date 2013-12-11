@@ -1,4 +1,4 @@
-#user_karma_form{
+#karma_form{
   #karma_comment{
     width: 184px;
     margin-top: 3px;
@@ -39,15 +39,60 @@
 
 #user_karmas{
   margin-bottom: 20px;
+
   .good{
-    margin-bottom: 10px;
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
+    &.ui-selected{
+      color: goldenrod;
+    }
   }
-  .user_karma_link{
+
+  .bad{
+    margin-top: 10px;
+  }
+
+  .karma_link{
     font-size: 30px;
   }
+
+  #karma_popover_container {
+    .popover {
+      z-index: 1011;
+    }
+  }
+
+  #karma_group_popover_container {
+    .popover {
+      .popover-title {
+        .new_bonus_link {
+          float: right;
+        }
+      }
+    }
+  }
+
+  #create_karma_group_form {
+    display: none;
+    #karma_group_karma_qty {
+      width: 40px;
+    }
+    input:first-child {
+      border-top-left-radius: 0;
+    }
+    input:last-child {
+      border-top-right-radius: 0;
+    }
+  }
+
+  #select_karmas_button{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
 }
 
-.user_karma_link {
+.karma_link {
   &:hover {
     text-decoration: none;
   }
@@ -56,6 +101,9 @@
   }
   &.bad{
     color: red;
+  }
+  &.drop-hover{
+    font-size: 38px;
   }
 }
 
@@ -72,6 +120,12 @@
   }
 }
 
-.user_karma_group_link:hover{
-  text-decoration: none;
+.karma_group_link{
+  cursor: pointer;
+  &:hover{
+    text-decoration: none;
+  }
+  &.drop-hover {
+    font-size: 38px;
+  }
 }

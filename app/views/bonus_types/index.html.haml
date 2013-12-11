@@ -1,0 +1,16 @@
+= auto_header_tag
+%table.table.table-hover.table-striped
+  %thead
+    %tr
+      %th= BonusType.human_attribute_name :id
+      %th= BonusType.human_attribute_name :name
+      %th
+  %tbody
+    - @bonus_types.each do |bonus_type|
+      %tr
+        %td= bonus_type.id
+        %td= bonus_type.name
+        %td
+          .btn-group
+            = link_to_edit_small bonus_type if can? :edit, bonus_type
+            = link_to_destroy_small bonus_type if can? :destroy, bonus_type

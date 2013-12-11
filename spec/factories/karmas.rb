@@ -2,8 +2,12 @@
 
 FactoryGirl.define do
   factory :karma do
-    good false
-    comment "MyText"
-    user nil
+    user
+    good true
+    comment 'Comment'
+
+    trait :bad do
+      good false
+    end
   end
 end

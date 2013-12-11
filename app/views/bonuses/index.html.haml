@@ -1,0 +1,21 @@
+%h1 Listing bonus
+
+%table
+  %tr
+    %th Bonus type
+    %th Comment
+    %th
+    %th
+    %th
+
+  - @bonus.each do |bonu|
+    %tr
+      %td= bonu.bonus_type
+      %td= bonu.comment
+      %td= link_to 'Show', bonu
+      %td= link_to 'Edit', edit_bonu_path(bonu)
+      %td= link_to 'Destroy', bonu, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Bonu', new_bonu_path

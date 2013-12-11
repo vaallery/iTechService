@@ -83,6 +83,10 @@ jQuery ->
 cursorX = $('#spinner').outerWidth() / 2
 cursorY = $('#spinner').outerHeight() / 2
 
+$(document).on 'click', '.close_popover_button', ->
+  $owner = $($(this).data('owner'))
+  $owner.popover('destroy')
+
 $(document).on 'mousemove', '*', (event)->
   cursorX = event.pageX
   cursorY = event.pageY
@@ -188,6 +192,9 @@ window.showNotificationsIndicator = ->
 
 window.hideNotificationsIndicator = ->
   $('#hide_notifications_button>.indicator').removeClass('active')
+
+window.closeModal = ->
+  $("#modal_form").modal('hide')
 
 window.datepicker_dates =
   days: ["Воскресенье", "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"],

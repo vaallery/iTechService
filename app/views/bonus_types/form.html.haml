@@ -1,0 +1,8 @@
+= auto_header_tag @bonus_type
+= simple_form_for @bonus_type, html: { class: 'form-horizontal' } do |f|
+  = f.error_notification
+
+  = f.input :name
+
+  .form-actions
+    = submit_button f

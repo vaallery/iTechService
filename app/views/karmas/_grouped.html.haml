@@ -1,6 +1,0 @@
-- collection.find_in_batches(batch_size: Karma::GROUP_SIZE) do |karma_group|
-  - if karma_group.count == Karma::GROUP_SIZE
-    = link_to '#', remote: false, class: 'has-popover user_karma_group_link good', data: {html: true, placement: 'top', content: render(karma_group).gsub('\n',''), karma_ids: karma_group.map(&:id)} do
-      = badge karma_group.count, karma_group.first.good ? :success : :important
-  - else
-    = render karma_group

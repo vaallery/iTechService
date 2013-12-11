@@ -1,9 +1,9 @@
 - if @karma.new_record?
   == $owner = $("#new_#{@karma.good ? 'good' : 'bad'}_karma_for_#{@karma.user_id}");
 - else
-  == $owner = $("#user_karma_#{@karma.id}");
+  == $owner = $("#karma_#{@karma.id}");
 :plain
-  close_karma_popovers();
+  closeKarmaPopovers();
   $owner.popover({
     html: true,
     placement: 'top',

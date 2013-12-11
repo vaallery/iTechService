@@ -1,2 +1,2 @@
-= link_to (can?(:manage, karma) ? edit_karma_path(karma) : '#'), remote: true, id: "user_karma_#{karma.id}", class: "has-tooltip user_karma_link #{karma.kind}", data: {html: true, title: karma_comment(karma)} do
+= link_to edit_karma_path(karma), remote: true, id: "karma_#{karma.id}", class: "karma_link #{karma.kind} #{karma.is_grouped? ? 'grouped' : 'ungrouped'}", data: {html: true, title: karma_comment(karma), id: karma.id} do
   = glyph "thumbs-#{karma.good ? 'up' : 'down'}"

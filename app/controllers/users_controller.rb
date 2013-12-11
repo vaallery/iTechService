@@ -170,6 +170,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def bonuses
+    @user = User.find params[:id]
+    @bonuses = @user.bonuses
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def load_infos

@@ -1,9 +1,9 @@
 :plain
   if($("#user_karmas").length > 0){
-    $("#user_karmas>.#{@karma.kind}").append("#{j(render(@karma))}");
+    $("#user_karmas>div.#{@karma.kind}").append("#{j(render(@karma))}");
   }
-  if($("#user_karma_#{@karma.id}").length > 0) {
-    $("#user_karma_#{@karma.id}").tooltip({title: "#{@karma.comment}"});
+  if($("#karma_#{@karma.id}").length > 0) {
+    $("#karma_#{@karma.id}").tooltip({title: "#{karma_comment(@karma)}"});
   }
   if($("#user_row_#{@karma.user_id}").length > 0) {
     $("#user_row_#{@karma.user_id}").replaceWith("#{j(user_row_tag(@karma.user))}");
@@ -13,4 +13,4 @@
   }else{
     $('#header_karma_link').popover('destroy');
   }
-  hideSpinner();
+  closeKarmaPopovers();
