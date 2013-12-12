@@ -76,7 +76,7 @@
           = form_for :karma_group, url: karma_groups_path, remote: true, html: {id: 'create_karma_group_form', class: 'form-inline'} do |f|
             = f.hidden_field :karma_ids
             .input-append
-              = number_field_tag :karma_qty, nil, id: 'karma_group_karma_qty', class: 'input-mini'
+              = number_field_tag :karma_qty, nil, id: 'karma_group_karma_qty', class: 'input-mini', min: 0
               = f.submit t('karmas.group'), class: 'btn btn-primary'
           .bad.well= render @user.karmas.bad
           - if can? :create, Karma
