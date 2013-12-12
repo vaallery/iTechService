@@ -1,0 +1,10 @@
+:plain
+  $bonus = $("#bonus_#{@bonus.id}");
+  $bonus.popover('destroy');
+  $bonus.popover({
+    html: true,
+    placement: 'top',
+    title: "#{j(bonus_popover_title(@bonus))}",
+    content: "#{j(bonus_popover_content(@bonus))}"
+  }).popover('show');
+  $('#user_bonuses .karma_link').tooltip();

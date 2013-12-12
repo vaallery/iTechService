@@ -1,2 +1,3 @@
 :plain
-  $('#user_bonuses').html("#{j(render(@bonuses))}");
+  $('#user_bonuses').html("#{j(render(@bonuses))}").show();
+  bindBonusEvents('#user_bonuses .bonus_link');

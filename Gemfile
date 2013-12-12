@@ -47,20 +47,21 @@ group :assets do
 end
 
 group :development do
-  #gem 'debugger' unless ENV["RM_INFO"]
-  #gem 'debugger-linecache'
-  #gem 'debugger-pry', require: 'debugger/pry'
+  gem 'debugger' unless ENV['RM_INFO']
+  gem 'debugger-xml'
+  gem 'debugger-linecache'
+  gem 'debugger-pry', require: 'debugger/pry'
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request', '~> 0.2.8'
   gem 'capistrano-deploy', '~> 0.3.2'
   gem 'mailcatcher'
-  gem 'linecache19'#, '>= 0.5.13', git: 'https://github.com/robmathews/linecache19-0.5.13.git'
+  #gem 'linecache19'#, '>= 0.5.13', git: 'https://github.com/robmathews/linecache19-0.5.13.git'
   #gem 'linecache19', path: "/Users/v/projects/rails/_gems/linecache19-0.5.13"
-  gem 'ruby-debug19'
-  gem 'ruby-debug-base19x', '0.11.30.pre12', require: 'ruby-debug-base' #, path: '/Applications/RubyMine.app/rb/gems'
-  gem 'ruby-debug-ide', '0.4.21', require: 'ruby-debug-ide' #, path: '/Applications/RubyMine.app/rb/gems'
+  #gem 'ruby-debug19'
+  #gem 'ruby-debug-base19x', '0.11.30.pre12', require: 'ruby-debug-base' #, path: '/Applications/RubyMine.app/rb/gems'
+  #gem 'ruby-debug-ide', '0.4.21', require: 'ruby-debug-ide' #, path: '/Applications/RubyMine.app/rb/gems'
 end
 
 group :test do
