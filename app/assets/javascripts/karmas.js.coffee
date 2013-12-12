@@ -18,15 +18,20 @@ jQuery ->
   $('#karma_group_karma_qty').on 'change keyup', ->
     qty = $(this).val()
     $('#user_karmas>.good>.karma_link.ui-selected').removeClass 'ui-selected'
-    selected_ids = []
-    $('#user_karmas>.good>.karma_link')[0..qty-1].each ->
-      $(this).addClass 'ui-selected'
-      selected_ids.push $(this).data('id')
-    $('#karma_group_karma_ids').val selected_ids
+    if qty > 0
+      selected_ids = []
+      $('#user_karmas>.good>.karma_link')[0..qty-1].each ->
+        $(this).addClass 'ui-selected'
+        selected_ids.push $(this).data('id')
+      $('#karma_group_karma_ids').val selected_ids
+    else
+      $('#karma_group_karma_ids').val null
 
   $('#select_karmas_button').click ->
-    $(this).fadeOut(100)
-    $('#create_karma_group_form').fadeIn(100)
+    showCreateKarmaGroupForm()
+
+  $('#close_karma_group_form_link').click ->
+    hideCreateKarmaGroupForm()
 
 $(document).on 'click', '#header_karma_good_true', ->
   $('#header_karma_good').val(true)
@@ -45,19 +50,19 @@ window.bindKarmaEvents = (karma)->
 
 window.closeKarmaPopovers = ->
   $('.new_karma_link, .karma_link').popover('destroy')
-  #$('.new_karma_link, .karma_link, #header_karma_link').popover('destroy')
 
 window.showCreateKarmaGroupForm = (selected_ids)->
-  $('#karma_group_karma_ids').val selected_ids
-  $('#karma_group_karma_qty').val selected_ids.length
-  $('#select_karmas_button').fadeOut(100)
-  $('#create_karma_group_form').fadeIn(100)
+  if selected_ids
+    $('#karma_group_karma_ids').val selected_ids
+    $('#karma_group_karma_qty').val selected_ids.length
+  $('#select_karmas_button').hide()
+  $('#create_karma_group_form').show()
 
 window.hideCreateKarmaGroupForm = ->
   $('#karma_group_karma_ids').val null
   $('#karma_group_karma_qty').val null
-  $('#create_karma_group_form').fadeOut(100)
-  $('#select_karmas_button').fadeIn(100)
+  $('#create_karma_group_form').hide()
+  $('#select_karmas_button').show()
 
 karma_draggable_params =
   distance: 20
