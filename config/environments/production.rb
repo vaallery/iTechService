@@ -82,7 +82,7 @@ ItechService::Application.configure do
       :port                 => 25,
       :domain               => 'itechstore.ru',
       :user_name            => 'noreply@itechstore.ru',
-      :password             => 'GpCp3k7N',
+      :password             => '6Ra4yEho',
       :authentication       => 'plain',
       :enable_starttls_auto => true
   }
