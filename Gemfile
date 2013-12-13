@@ -47,7 +47,7 @@ group :assets do
 end
 
 group :development do
-  gem 'debugger' unless ENV['RM_INFO']
+  gem 'debugger'# unless ENV['RM_INFO']
   gem 'debugger-xml'
   gem 'debugger-linecache'
   gem 'debugger-pry', require: 'debugger/pry'
