@@ -6,6 +6,7 @@ module BonusesHelper
   end
 
   def bonus_popover_content(bonus)
+    content_tag(:p, bonus.comment) +
     render(bonus.karmas)
   end
 
