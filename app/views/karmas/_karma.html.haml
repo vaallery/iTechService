@@ -1,2 +1,1 @@
-= link_to edit_karma_path(karma), remote: true, id: "karma_#{karma.id}", class: "karma_link #{karma.kind} #{karma.is_grouped? ? 'grouped' : 'ungrouped'}", data: {html: true, title: karma_comment(karma), id: karma.id} do
-  = glyph "thumbs-#{karma.good ? 'up' : 'down'}"
+= link_to image_tag("karma_#{karma.kind}.png"), edit_karma_path(karma), remote: true, id: "karma_#{karma.id}", class: "karma_link #{karma.kind} #{karma.is_grouped? ? 'grouped' : 'ungrouped'}", data: {html: true, title: karma_comment(karma), id: karma.id}

@@ -67,9 +67,12 @@
       %dt= User.human_attribute_name :karmas
       %dd
         #user_karmas
+          - if can? :create, Karma
+            = link_to_add_karma @user, true, class: 'large'
+            = link_to_add_karma @user, false, class: 'large'
           #karma_popover_container
           #karma_group_popover_container
-          .good.well
+          #good_karmas.good.well
             = render @user.karma_groups.unused if @user.karma_groups.any?
             = render @user.karmas.good.unused.ungrouped
           = link_to t('karmas.select'), '#', id: 'select_karmas_button', class: 'btn btn-info'
@@ -79,10 +82,7 @@
               = link_to glyph(:remove), '#', class: 'btn', id: 'close_karma_group_form_link'
               = number_field_tag :karma_qty, nil, id: 'karma_group_karma_qty', class: 'input-mini', min: 0
               = f.submit t('karmas.group'), class: 'btn btn-primary'
-          .bad.well= render @user.karmas.bad
-          - if can? :create, Karma
-            = link_to_add_karma @user, true, class: 'large'
-            = link_to_add_karma @user, false, class: 'large'
+          #bad_karmas.bad.well= render @user.karmas.bad
 
       %dt= link_to t('bonuses.index.title'), bonuses_user_path(@user), remote: true
       %dd

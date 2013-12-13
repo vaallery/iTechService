@@ -2,7 +2,7 @@ jQuery ->
   bindKarmaGroupEvents('#user_karmas .karma_group_link')
   bindKarmaEvents('#user_karmas .karma_link')
 
-  $('#user_karmas>div.good').selectable
+  $('#good_karmas').selectable
     cancel: '.karma_group_link,.karma_link'
     filter: '.karma_link'
     stop: ->
@@ -12,26 +12,31 @@ jQuery ->
       else
         hideCreateKarmaGroupForm()
 
+  $('#good_karmas').droppable
+    accept: '.karma_link.good.grouped'
+
   $('#karma_group_karma_qty').focusin ->
-    $('#karma_group_karma_qty').attr 'max', $('#user_karmas>.good>.karma_link').length
+    $('#karma_group_karma_qty').attr 'max', $('#good_karmas .karma_link').length
 
   $('#karma_group_karma_qty').on 'change keyup', ->
     qty = $(this).val()
-    $('#user_karmas>.good>.karma_link.ui-selected').removeClass 'ui-selected'
+    $('#good_karmas .karma_link.ui-selected').removeClass 'ui-selected'
     if qty > 0
       selected_ids = []
-      $('#user_karmas>.good>.karma_link')[0..qty-1].each ->
+      $('#good_karmas .karma_link')[0..qty-1].each ->
         $(this).addClass 'ui-selected'
         selected_ids.push $(this).data('id')
       $('#karma_group_karma_ids').val selected_ids
     else
       $('#karma_group_karma_ids').val null
 
-  $('#select_karmas_button').click ->
+  $('#select_karmas_button').click (event)->
     showCreateKarmaGroupForm()
+    event.preventDefault()
 
-  $('#close_karma_group_form_link').click ->
+  $('#close_karma_group_form_link').click (event)->
     hideCreateKarmaGroupForm()
+    event.preventDefault()
 
 $(document).on 'click', '#header_karma_good_true', ->
   $('#header_karma_good').val(true)
@@ -39,8 +44,9 @@ $(document).on 'click', '#header_karma_good_true', ->
 $(document).on 'click', '#header_karma_good_false', ->
   $('#header_karma_good').val(false)
 
-$(document).on 'click', '.submit_karma_form', ->
+$(document).on 'click', '.submit_karma_form', (event)->
   $('#karma_form').submit()
+  event.preventDefault()
 
 window.bindKarmaGroupEvents = (karma_group)->
   $(karma_group).droppable(karma_group_droppable_params)
@@ -60,6 +66,7 @@ window.showCreateKarmaGroupForm = (selected_ids)->
   $('#create_karma_group_form').show()
 
 window.hideCreateKarmaGroupForm = ->
+  $('#good_karmas .karma_link.ui-selected').removeClass 'ui-selected'
   $('#karma_group_karma_ids').val null
   $('#karma_group_karma_qty').val null
   $('#create_karma_group_form').hide()
@@ -69,7 +76,8 @@ karma_draggable_params =
   distance: 20
   revert: true
   revertDuration: 100
-  stop: (event, ui)->
+  zIndex: 1020
+  stop: (event, ui) ->
     $this = $(this)
     if $this.hasClass('grouped') and event.toElement != $(this).parent() and !$(event.toElement.parentElement).hasClass('karma_link')
       $.post '/karmas/ungroup',

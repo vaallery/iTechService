@@ -3,6 +3,6 @@
   $karma2 = $("#karma_#{@karma2.id}");
   $karma1.tooltip('destroy').remove();
   $karma2.tooltip('destroy').remove();
-  $('#user_karmas>div.good').prepend("#{j(render(@karma1.karma_group))}");
+  $('#good_karmas').prepend("#{j(render(@karma1.karma_group))}");
   karma_group_selector = "#karma_group_#{@karma1.karma_group_id}";
   bindKarmaGroupEvents(karma_group_selector);
