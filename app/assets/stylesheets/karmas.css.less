@@ -21,10 +21,6 @@
   margin: 5px;
 }
 
-.karma_link {
-  font-size: 30px;
-}
-
 .new_karma_link{
   font-size: 60px;
   &:hover{
@@ -44,15 +40,12 @@
 #user_karmas{
   margin-bottom: 20px;
 
-  .good{
+  #good_karmas{
     margin-bottom: 0;
     border-bottom-left-radius: 0;
-    &.ui-selected{
-      color: goldenrod;
-    }
   }
 
-  .bad{
+  #bad_karmas{
     margin-top: 10px;
   }
 
@@ -97,19 +90,77 @@
 }
 
 .karma_link {
-  height: 35px;
+  text-decoration: none;
+  color: #ffffff;
+  margin-right: 5px;
+  border-radius: 10px;
   width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  position: relative;
   &:hover {
     text-decoration: none;
   }
   &.good{
-    color: green;
+    &.ui-selected {
+      box-shadow: 0 3px 20px 1px #00F;
+    }
   }
-  &.bad{
-    color: red;
+  &.drop-hover img{
+    box-shadow: 0 3px 20px 1px #0F0;
   }
-  &.drop-hover{
-    box-shadow: 0 2px 20px 4px #00FF00;
+  img{
+    border-radius: 10px;
+  }
+}
+
+.karma_group_link {
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  margin-right: 5px;
+  border-radius: 10px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  position: relative;
+  span{
+    position: absolute;
+    margin: auto;
+    top: 20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 35px;
+  }
+  img{
+    border-radius: 10px;
+  }
+  &:hover {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  &.drop-hover img{
+    box-shadow: 0 3px 20px 1px #0F0;
+  }
+}
+
+.bonus_link {
+  text-decoration: none;
+  color: #ffffff;
+  margin-right: 5px;
+  border-radius: 10px;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  position: relative;
+  &:hover {
+    text-decoration: none;
+  }
+  img {
+    border-radius: 10px;
   }
 }
 
@@ -123,15 +174,5 @@
   }
   .btn {
     width: 123px;
-  }
-}
-
-.karma_group_link{
-  cursor: pointer;
-  &:hover{
-    text-decoration: none;
-  }
-  &.drop-hover {
-    box-shadow: 0 2px 20px 4px #00FF00;
   }
 }
