@@ -13,7 +13,7 @@ module KarmasHelper
     class_name = 'new_karma_link '
     class_name << (good ? 'good ' : 'bad ')
     class_name << options[:class]
-    link_to glyph(icon_name), new_karma_path(karma: {user_id: user.id, good: good}), class: class_name, remote: true, id: "new_#{(good ? 'good' : 'bad')}_karma_for_#{user.id}"
+    link_to image_tag("karma_#{good ? 'good' : 'bad'}.png"), new_karma_path(karma: {user_id: user.id, good: good}), class: class_name, remote: true, id: "new_#{(good ? 'good' : 'bad')}_karma_for_#{user.id}"
   end
 
   def header_karma_button
