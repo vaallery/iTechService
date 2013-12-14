@@ -20,7 +20,6 @@ class KarmaGroupsController < ApplicationController
     @karma_group = KarmaGroup.new params[:karma_group]
     respond_to do |format|
       if @karma_group.save
-        #@karma_ids = @karma_group.karma_ids
         format.js
       else
         format.js
