@@ -104,11 +104,11 @@
   }
   &.good{
     &.ui-selected img{
-      box-shadow: 0 1px 9px 1px #00F;
+      box-shadow: 0 0 9px 0 #00F;
     }
-  }
-  &.drop-hover img{
-    box-shadow: 0 1px 9px 1px #0F0;
+    &.drop-hover img {
+      box-shadow: 0 0 9px 0 #0F0;
+    }
   }
   img{
     border-radius: 25px;
@@ -146,7 +146,7 @@
     text-decoration: none;
   }
   &.drop-hover img{
-    box-shadow: 0 1px 9px 1px #0F0;
+    box-shadow: 0 0 9px 0 #0F0;
   }
 }
 
@@ -170,14 +170,23 @@
 }
 
 #header_karma_form {
+  form{
+    margin: 0;
+  }
   #karma_user_id,
   button[type=submit] {
     width: 246px;
   }
   #karma_comment {
-    width: 232px;
+    width: 231px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
   .btn {
     width: 123px;
+  }
+  .btn-group>.btn{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }
