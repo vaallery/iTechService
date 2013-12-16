@@ -33,12 +33,12 @@ gem 'delayed_job_active_record', '~> 0.4.4'
 gem 'delayed_job_web', '~> 1.2.0'
 gem 'whenever', '~> 0.8.4', require: false
 gem 'capistrano', '~> 2.15.4'
-gem 'coffee-rails', '~> 3.2.1'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
+  gem 'coffee-rails', '~> 3.2.1'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', platforms: :ruby
   gem 'less-rails', '~> 2.4.2'

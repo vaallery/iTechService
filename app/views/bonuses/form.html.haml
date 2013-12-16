@@ -1,0 +1,10 @@
+= auto_header_tag @bonus
+= simple_form_for @bonus, html: {class: 'form-horizontal'} do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :bonus_type
+    = f.input :comment
+
+  .form-actions
+    = f.button :submit

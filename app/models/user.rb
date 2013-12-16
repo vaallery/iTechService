@@ -21,7 +21,9 @@ class User < ActiveRecord::Base
   has_many :announcements, inverse_of: :user
   has_many :comments
   has_many :devices, inverse_of: :user
-  has_many :karmas, dependent: :destroy
+  has_many :karmas, dependent: :destroy, inverse_of: :user
+  has_many :karma_groups, through: :karmas, uniq: true
+  has_many :bonuses, through: :karma_groups, uniq: true
   has_many :messages, dependent: :destroy
   has_many :infos, inverse_of: :recipient, dependent: :destroy
   has_many :salaries, inverse_of: :user, dependent: :destroy
@@ -48,6 +50,7 @@ class User < ActiveRecord::Base
   before_validation :validate_rights_changing
   before_save :ensure_authentication_token
 
+  scope :id_asc, order('id asc')
   scope :ordered, order('position asc')
   scope :any_admin, where(role: %w[admin superadmin])
   scope :superadmins, where(role: 'superadmin')

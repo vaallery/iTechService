@@ -13,12 +13,12 @@ module KarmasHelper
     class_name = 'new_karma_link '
     class_name << (good ? 'good ' : 'bad ')
     class_name << options[:class]
-    link_to glyph(icon_name), new_karma_path(karma: {user_id: user.id, good: good}), class: class_name, remote: true, id: "new_#{(good ? 'good' : 'bad')}_karma_for_#{user.id}"
+    link_to image_tag("karma_#{good ? 'good' : 'bad'}.png"), new_karma_path(karma: {user_id: user.id, good: good}), class: class_name, remote: true, id: "new_#{(good ? 'good' : 'bad')}_karma_for_#{user.id}"
   end
 
   def header_karma_button
     content_tag(:li, id: 'header_karma_button') do
-      link_to "#{glyph('thumbs-up')}/#{glyph('thumbs-down')}".html_safe, '#', rel: 'popover', id: 'header_karma_link', data: { html: true, placement: 'bottom', title: button_to_close_popover.gsub('/n', ''), content: header_karma_form.gsub('/n', '') }
+      link_to "#{glyph('thumbs-up')}/#{glyph('thumbs-down')}".html_safe, '#', rel: 'popover', id: 'header_karma_link', data: { html: true, placement: 'bottom', title: "#{button_to_close_popover} #{t('users.add_karma')}".gsub('/n', ''), content: header_karma_form.gsub('/n', '') }
     end
   end
 
@@ -34,6 +34,15 @@ module KarmasHelper
       "<textarea id='karma_comment' name='karma[comment]' rows='3'></textarea>".html_safe +
       button_tag(glyph(:save)+' '+t(:save), class: 'btn btn-primary')
     end
+  end
+
+  def karma_group_content(karma_group)
+    render(karma_group.karmas)
+  end
+
+  def karma_group_title(karma_group)
+    button_to_close_popover(data: {owner: "#karma_group_#{karma_group.id}"}) +
+    (karma_group.is_used? ? '' : link_to(t('karmas.change_for_bonus'), edit_karma_group_path(karma_group), remote: true, class: 'new_bonus_link btn btn-primary btn-mini'))
   end
 
 end

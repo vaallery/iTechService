@@ -1,16 +1,16 @@
 .page-header
   %h1= t 'users.rating'
 
-%table.table.table-striped.table-hover
+%table#users_rating_table.table.table-striped.table-hover
   %tbody
     - @users.sort_by{|u|u.rating}.reverse.each do |user|
       %tr
-        %td= user.rating
-        %td
+        %td.rating= user.rating
+        %td.user
           = link_to user.short_name, user_path(user)
           = karma_tag(user)
-        %td
-          - user.karmas.good.each do |karma|
-            = render karma
-          - user.karmas.bad.each do |karma|
-            = render karma
+        %td.karmas
+          = render user.karma_groups.unused if user.karma_groups.any?
+          = render user.karmas.good.unused.ungrouped
+          %br
+          = render user.karmas.bad

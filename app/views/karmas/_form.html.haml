@@ -1,10 +1,10 @@
-= form_for @karma, remote: true, html: {id: 'user_karma_form'} do |f|
-  - unless @karma.new_record?
-    = "#{@karma.user_presentation} [#{l @karma.created_at, format: :date_short}]"
+= form_for @karma, remote: true, html: {id: 'karma_form'} do |f|
   = f.hidden_field :user_id
   = f.hidden_field :good
+  - if f.object.errors.any?
+    %span.label.label-important= f.object.errors.full_messages.join '. '
   = f.text_area :comment, rows: 3, class: 'input-medium'
   .actions
     .btn-group
-      = link_to glyph(:trash)+t(:destroy), @karma, method: :delete, remote: true, class: 'btn btn-small btn-danger', data: {confirm: t('confirmation', default: 'Are you sure?')} unless @karma.new_record?
-      = link_to glyph(:save)+t(:save), '#', remote: true, class: "submit_karma_form btn btn-small btn-primary #{'btn-block' if @karma.new_record?}"
+      = link_to glyph(:trash)+' '+t(:destroy), @karma, method: :delete, remote: true, class: 'btn btn-small btn-danger', data: {confirm: t('confirmation', default: 'Are you sure?')} unless @karma.new_record?
+      = link_to glyph(:save)+' '+t(:save), '#', class: "submit_karma_form btn btn-small btn-primary #{'btn-block' if @karma.new_record?}"

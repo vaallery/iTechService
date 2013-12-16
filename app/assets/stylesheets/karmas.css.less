@@ -1,4 +1,4 @@
-#user_karma_form{
+#karma_form{
   #karma_comment{
     width: 184px;
     margin-top: 3px;
@@ -22,7 +22,7 @@
 }
 
 .new_karma_link{
-  font-size: 60px;
+  font-size: 40px;
   &:hover{
     text-decoration: none;
   }
@@ -39,35 +39,154 @@
 
 #user_karmas{
   margin-bottom: 20px;
-  .good{
-    margin-bottom: 10px;
+
+  #good_karmas{
+    margin-bottom: 0;
+    border-bottom-left-radius: 0;
   }
-  .user_karma_link{
-    font-size: 30px;
+
+  #bad_karmas{
+    margin-top: 10px;
   }
+
+  #karma_popover_container {
+    .popover {
+      z-index: 1011;
+    }
+  }
+
+  #karma_group_popover_container {
+    .popover {
+      .popover-title {
+        .new_bonus_link {
+          float: right;
+        }
+      }
+    }
+  }
+
+  #create_karma_group_form {
+    display: none;
+    margin-left: 1px;
+    #karma_group_karma_qty {
+      width: 40px;
+    }
+    .btn{
+      border-top-left-radius: 0;
+    }
+    input:first-child {
+      border-top-left-radius: 0;
+    }
+    input:last-child {
+      border-top-right-radius: 0;
+    }
+  }
+
+  #select_karmas_button{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
 }
 
-.user_karma_link {
+.karma_link {
+  text-decoration: none;
+  color: #ffffff;
+  margin-right: 5px;
+  border-radius: 25px;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  position: relative;
   &:hover {
     text-decoration: none;
   }
   &.good{
-    color: green;
+    &.ui-selected img{
+      box-shadow: 0 0 9px 0 #00F;
+    }
+    &.drop-hover img {
+      box-shadow: 0 0 9px 0 #0F0;
+    }
   }
-  &.bad{
-    color: red;
+  img{
+    border-radius: 25px;
+    width: 35px;
+  }
+}
+
+.karma_group_link {
+  cursor: pointer;
+  color: #3b5d95;
+  font-weight: bold;
+  text-shadow: -1px 0 #CDE6FF, 0 1px #CDE6FF, 1px 0 #CDE6FF, 0 -1px #CDE6FF;
+  text-decoration: none;
+  margin-right: 5px;
+  border-radius: 25px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  position: relative;
+  span{
+    position: absolute;
+    margin: auto;
+    top: 20px;
+    left: -5px;
+    right: 0;
+    bottom: 0;
+    height: 35px;
+  }
+  img{
+    border-radius: 25px;
+    width: 35px;
+  }
+  &:hover {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  &.drop-hover img{
+    box-shadow: 0 0 9px 0 #0F0;
+  }
+}
+
+.bonus_link {
+  text-decoration: none;
+  color: #ffffff;
+  margin-right: 5px;
+  border-radius: 25px;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  position: relative;
+  &:hover {
+    text-decoration: none;
+  }
+  img {
+    border-radius: 25px;
+    width: 35px;
   }
 }
 
 #header_karma_form {
+  form{
+    margin: 0;
+  }
   #karma_user_id,
   button[type=submit] {
     width: 246px;
   }
   #karma_comment {
-    width: 232px;
+    width: 231px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
   .btn {
     width: 123px;
+  }
+  .btn-group>.btn{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 }

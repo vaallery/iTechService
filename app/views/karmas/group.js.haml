@@ -1,0 +1,8 @@
+:plain
+  $karma1 = $("#karma_#{@karma1.id}");
+  $karma2 = $("#karma_#{@karma2.id}");
+  $karma1.tooltip('destroy').remove();
+  $karma2.tooltip('destroy').remove();
+  $('#good_karmas').prepend("#{j(render(@karma1.karma_group))}");
+  karma_group_selector = "#karma_group_#{@karma1.karma_group_id}";
+  bindKarmaGroupEvents(karma_group_selector);

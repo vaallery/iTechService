@@ -13,10 +13,6 @@ module UsersHelper
       content_tag(:td, l(user.created_at, format: :long_d)) +
       content_tag(:td) do
         content_tag(:div, class: 'btn-group') do
-          link_to_add_karma(user, true, class: 'btn btn-small') +
-          link_to_add_karma(user, false, class: 'btn btn-small')
-        end +
-        content_tag(:div, class: 'btn-group') do
           content = link_to_show_small(user)
           content += link_to glyph(:money), finance_user_path(user), remote: true, class: 'btn btn-small'
           content += link_to_edit_small(user) if can? :edit, user

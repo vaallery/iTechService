@@ -16,8 +16,14 @@ Ability
       can :finance, User if user.able_to? :manage_salary
       cannot :manage, Salary unless user.able_to? :manage_salary
       cannot :manage_rights, User
+      cannot :manage, [BonusType, Bonus]
+      cannot [:edit, :destroy], Karma
     elsif user.programmer?
       can :manage, :all
+      cannot :manage, Salary unless user.able_to? :manage_salary
+      cannot :manage_rights, User
+      cannot :manage, [BonusType, Bonus]
+      cannot [:edit, :destroy], Karma
     else
       if user.manager?
         can :manage, :all

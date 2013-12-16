@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :load_infos, only: [:show, :profile]
 
   def index
-    @users = User.search(params).order(' id asc').page(params[:page]).per(50)
+    @users = User.search(params).id_asc.page(params[:page]).per(50)
 
     respond_to do |format|
       format.html
@@ -23,15 +23,18 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-
     respond_to do |format|
-      format.html
+      format.html { render 'form' }
       format.json { render json: @user }
     end
   end
 
   def edit
     @user = User.find(params[:id])
+    respond_to do |format|
+      format.html { render 'form' }
+      format.json { render json: @user }
+    end
   end
 
   def create
@@ -42,7 +45,7 @@ class UsersController < ApplicationController
         format.html { redirect_to @user, notice: t('users.created') }
         format.json { render json: @user, status: :created, location: @user }
       else
-        format.html { render action: "new" }
+        format.html { render 'form' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +66,7 @@ class UsersController < ApplicationController
       else
         @salaries = @user.salaries
         @installments = @user.installments
-        format.html { render action: "edit" }
+        format.html { render 'form' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
         format.js { render 'shared/show_modal_form' }
       end
@@ -117,7 +120,7 @@ class UsersController < ApplicationController
   end
 
   def schedule
-    @users = User.schedulable
+    @users = User.active.schedulable.id_asc
     @locations = Location.for_schedule
   end
 
@@ -130,7 +133,7 @@ class UsersController < ApplicationController
   end
 
   def rating
-    @users = User.active.staff.order('id asc')
+    @users = User.active.id_asc
   end
 
   def create_duty_day
@@ -164,6 +167,14 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.js { render 'shared/show_modal_form' }
+    end
+  end
+
+  def bonuses
+    @user = User.find params[:id]
+    @bonuses = @user.bonuses
+    respond_to do |format|
+      format.js
     end
   end
 

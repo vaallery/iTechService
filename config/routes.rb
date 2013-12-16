@@ -1,11 +1,5 @@
 ItechService::Application.routes.draw do
 
-  resources :installments
-
-
-  resources :installment_plans
-
-
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -29,10 +23,19 @@ ItechService::Application.routes.draw do
     get :rating, on: :collection
     get :actions, on: :member
     get :finance, on: :member
+    get :bonuses, on: :member
     post :create_duty_day, on: :collection
     post :destroy_duty_day, on: :collection
   end
-  resources :karmas, except: [:index, :show]
+
+  resources :karmas do
+    post :group, on: :collection, defaults: {format: 'js'}
+    post :addtogroup, on: :collection, defaults: {format: 'js'}
+    post :ungroup, on: :collection, defaults: {format: 'js'}
+  end
+
+  resources :karma_groups, except: [:new]
+
   match 'profile' => 'users#profile', via: :get
   match 'users/:id/update_wish' => 'users#update_wish', via: [:post, :put], as: 'update_wish_user'
 
@@ -48,7 +51,6 @@ ItechService::Application.routes.draw do
   end
 
   resources :tasks
-
   resources :locations, except: :show
   
   resources :devices do
@@ -58,10 +60,10 @@ ItechService::Application.routes.draw do
     get :check_imei, on: :collection
     get :movement_history, on: :member
   end
+
   match 'check_device_status' => 'devices#check_status', via: :get
   match 'check_order_status' => 'orders#check_status', via: :get
-  match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: :get,
-      as: :history_device_task, defaults: { format: 'js' }
+  match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: :get, as: :history_device_task, defaults: { format: 'js' }
 
   resources :device_tasks, only: [:edit, :update]
 
@@ -71,9 +73,7 @@ ItechService::Application.routes.draw do
   end
 
   resources :infos
-
   resources :stolen_phones, except: :show
-
   resources :prices
 
   resources :announcements do
@@ -85,11 +85,8 @@ ItechService::Application.routes.draw do
   #match 'close_all' => 'announcements#close_all', via: :post
 
   resources :comments
-
   resources :messages, path: 'chat', except: [:new, :edit, :update]
-
   resources :sales
-
   resources :sales_imports, only: [:new, :create]
 
   resources :gift_certificates do
@@ -102,12 +99,13 @@ ItechService::Application.routes.draw do
   end
 
   resources :settings, except: [:show]
-
   resources :salaries
-
   resources :discounts
-
   resources :timesheet_days, path: 'timesheet', except: :show
+  resources :bonuses
+  resources :bonus_types, except: :show
+  resources :installments
+  resources :installment_plans
 
   wiki_root '/wiki'
 

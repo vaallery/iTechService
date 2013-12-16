@@ -185,17 +185,18 @@ module ApplicationHelper
     end
   end
 
-  def auto_title
-    title_for controller_name.classify.constantize
+  def auto_title(object=nil)
+    object.present? ? (object.new_record? ? t("#{object.class.to_s.tableize}.new.title") : t("#{object.class.to_s.tableize}.edit.title")) : t('.title', default: controller_name.classify.constantize.model_name.human)
   end
 
-  def auto_header_tag(button_name=nil)
-    model_class = controller_name.classify.constantize
+  def auto_header_tag(object=nil, title=nil, button_name=nil)
+    model_class = object.present? ? object.class : controller_name.classify.constantize
     content_tag :div, class: 'page-header' do
       if action_name == 'index'
-        content_tag(:h1, auto_title) + ((can?(:create, model_class)) ? link_to_new(model_class, button_name) : '')
+        content_tag(:h1, t('.title')) + ((can?(:create, model_class)) ? link_to_new(model_class, button_name) : '')
       else
-        content_tag :h1, link_back_to_index + auto_title
+        title ||= auto_title object
+        content_tag :h1, link_back_to_index + title
       end
     end
   end
@@ -221,12 +222,20 @@ module ApplicationHelper
     clear_return_to
   end
 
-  def button_to_close_popover
-    link_to "&times;".html_safe, '#', class: 'close_popover_button'
+  def button_to_close_popover(options={})
+    link_to "&times;".html_safe, '#', options.merge(class: 'close_popover_button')
   end
 
   def button_to_close_modal
     content_tag(:a, glyph('remove-sign'), class: 'close_modal_button', 'data-dismiss' => 'modal', href: '#')
+  end
+
+  def modal_header_tag(title=nil)
+    content_tag(:div, class: 'modal-header') do
+      content_tag(:h3) do
+        button_to_close_modal + title
+      end
+    end
   end
 
   def humanize_duration(val)

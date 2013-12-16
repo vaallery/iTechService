@@ -1,3 +1,4 @@
+= auto_header_tag
 = simple_form_for @user, html: { class: 'form-horizontal user_form' } do |f|
   = f.error_notification
 
@@ -31,11 +32,9 @@
         %label.control-label= User.human_attribute_name :karmas
         .controls
           #user_karmas
-            .good= render @user.karmas.good
+            #karma_popover_container
+            .good= render @user.karmas.unused.good
             .bad= render @user.karmas.bad
-          #karma_popover_container
-          = link_to_add_karma @user, true, class: 'large'
-          = link_to_add_karma @user, false, class: 'large'
 
     #schedule_tab.tab-pane
       = f.input :schedule
