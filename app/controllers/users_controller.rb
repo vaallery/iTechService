@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :load_infos, only: [:show, :profile]
 
   def index
-    @users = User.search(params).order(' id asc').page(params[:page]).per(50)
+    @users = User.search(params).id_asc.page(params[:page]).per(50)
 
     respond_to do |format|
       format.html
@@ -120,7 +120,7 @@ class UsersController < ApplicationController
   end
 
   def schedule
-    @users = User.schedulable
+    @users = User.active.schedulable.id_asc
     @locations = Location.for_schedule
   end
 
@@ -133,7 +133,7 @@ class UsersController < ApplicationController
   end
 
   def rating
-    @users = User.active.staff.order('id asc')
+    @users = User.active.id_asc
   end
 
   def create_duty_day

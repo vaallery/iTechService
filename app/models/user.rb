@@ -50,6 +50,7 @@ class User < ActiveRecord::Base
   before_validation :validate_rights_changing
   before_save :ensure_authentication_token
 
+  scope :id_asc, order('id asc')
   scope :ordered, order('position asc')
   scope :any_admin, where(role: %w[admin superadmin])
   scope :superadmins, where(role: 'superadmin')

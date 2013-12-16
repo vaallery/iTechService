@@ -1,6 +1,7 @@
 jQuery ->
-  bindKarmaGroupEvents('#user_karmas .karma_group_link')
-  bindKarmaEvents('#user_karmas .karma_link')
+
+  bindKarmaGroupEvents('.karma_group_link')
+  bindKarmaEvents('.karma_link')
 
   $('#good_karmas').selectable
     cancel: '.karma_group_link,.karma_link'
@@ -52,7 +53,8 @@ window.bindKarmaGroupEvents = (karma_group)->
   $(karma_group).droppable(karma_group_droppable_params)
 
 window.bindKarmaEvents = (karma)->
-  $(karma).filter('.good').draggable(karma_draggable_params).droppable(karma_droppable_params)
+  if $(karma).closest('#user_karmas').length > 0
+    $(karma).filter('.good').draggable(karma_draggable_params).droppable(karma_droppable_params)
   $(karma).tooltip()
 
 window.closeKarmaPopovers = ->
