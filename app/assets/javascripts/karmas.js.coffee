@@ -3,6 +3,13 @@ jQuery ->
   bindKarmaGroupEvents('.karma_group_link')
   bindKarmaEvents('.karma_link')
 
+  $('#good_karmas').droppable
+    accept: '.karma_link.good.grouped'
+    hoverClass: 'drop-hover'
+    drop: (event, ui)->
+      $.post '/karmas/ungroup',
+        id: $(ui.draggable[0]).data 'id'
+
   $('#good_karmas').selectable
     cancel: '.karma_group_link,.karma_link'
     filter: '.karma_link'
@@ -79,13 +86,13 @@ karma_draggable_params =
   revert: true
   revertDuration: 100
   zIndex: 1020
-  stop: (event, ui) ->
-    $this = $(this)
-    if $this.hasClass('grouped') and event.toElement != $(this).parent() and !$(event.toElement.parentElement).hasClass('karma_link')
-      $.post '/karmas/ungroup',
-        id: $(this).data 'id'
-    else
-      $(this).css top: 0, left: 0
+#  stop: (event, ui) ->
+#    $this = $(this)
+#    if $this.hasClass('grouped') and event.toElement != $(this).parent() and !$(event.toElement.parentElement).hasClass('karma_link')
+#      $.post '/karmas/ungroup',
+#        id: $(this).data 'id'
+#    else
+#      $(this).css top: 0, left: 0
 
 karma_droppable_params =
   accept: '.karma_link.good'
