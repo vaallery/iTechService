@@ -183,13 +183,17 @@ class User < ActiveRecord::Base
     duty_days.exists? day: Date.current
   end
 
-  def is_work_day? day
+  def is_work_day?(day)
     day = day.respond_to?(:wday) ? day.wday : day.to_i
     if (schedule_day = schedule_days.find_by_day(day)).present?
       schedule_day.hours.present?
     else
       false
     end
+  end
+
+  def begin_of_work(day)
+    self.schedule_days.find_by_day(day.wday).try(:begin_of_work)
   end
 
   def is_shortened_day?(date)
@@ -320,6 +324,10 @@ class User < ActiveRecord::Base
         announcement.save
       end
     end
+  end
+
+  def timesheet_day(date)
+    self.timesheet_days.find_by_date(date)
   end
 
   private

@@ -4,7 +4,7 @@ class TimesheetDay < ActiveRecord::Base
 
   belongs_to :user, inverse_of: :timesheet_days
   attr_accessible :time, :date, :status, :work_mins, :work_hours, :user, :user_id
-  attr_accessor :work_hours
+  #attr_accessor :work_hours
 
   validates_presence_of :user_id, :date, :status
   validates_inclusion_of :status, in: STATUSES

@@ -1,21 +1,17 @@
 class TimesheetDaysController < ApplicationController
-  load_and_authorize_resource
-  skip_load_resource only: [:index, :new]
+  authorize_resource
 
   def index
-    @users = User.schedulable.ordered
+    @users = User.active.schedulable.id_asc
     @timesheet_date = (params[:date].present? ? params[:date].to_date : Date.current).beginning_of_month
-
     respond_to do |format|
       format.html
       format.js
-      format.json { render json: @timesheet_days }
     end
   end
 
   def new
     @timesheet_day = TimesheetDay.new params[:timesheet_day]
-
     respond_to do |format|
       format.js { render 'show_form' }
       format.json { render json: @timesheet_day }
@@ -24,13 +20,13 @@ class TimesheetDaysController < ApplicationController
 
   def edit
     @timesheet_day = TimesheetDay.find(params[:id])
-
     respond_to do |format|
       format.js { render 'show_form' }
     end
   end
 
   def create
+    @timesheet_day = TimesheetDay.new params[:timesheet_day]
     @data = {user: @timesheet_day.user, date: @timesheet_day.date}
     respond_to do |format|
       if @timesheet_day.save
@@ -44,6 +40,7 @@ class TimesheetDaysController < ApplicationController
   end
 
   def update
+    @timesheet_day = TimesheetDay.find(params[:id])
     @data = {user: @timesheet_day.user, date: @timesheet_day.date}
     respond_to do |format|
       if @timesheet_day.update_attributes(params[:timesheet_day])
@@ -57,9 +54,9 @@ class TimesheetDaysController < ApplicationController
   end
 
   def destroy
+    @timesheet_day = TimesheetDay.find(params[:id])
     @data = { user: @timesheet_day.user, date: @timesheet_day.date }
     @timesheet_day.destroy
-
     respond_to do |format|
       format.js { render 'update_cell' }
       format.json { head :no_content }

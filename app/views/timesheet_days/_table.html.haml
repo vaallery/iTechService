@@ -1,3 +1,4 @@
+- time = Time.current
 %table#timesheet_table.table.table-bordered.table-hover
   %thead
     %th= t 'attributes.id'
@@ -10,6 +11,5 @@
     %th= t 'timesheet_days.sickness_day'
     %th= t 'timesheet_days.lateness'
   %tbody
-    - row_num = 0
-    - @users.each do |user|
-      = timesheet_row user, @timesheet_date, (row_num = row_num.next)
+    - @users.each_with_index do |user, index|
+      = timesheet_row user, @timesheet_date, time, index+1
