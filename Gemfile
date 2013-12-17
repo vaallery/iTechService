@@ -32,7 +32,6 @@ gem 'acts_as_list', '~> 0.2.0'
 gem 'delayed_job_active_record', '~> 0.4.4'
 gem 'delayed_job_web', '~> 1.2.0'
 gem 'whenever', '~> 0.8.4', require: false
-gem 'capistrano', '~> 2.15.4'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -51,11 +50,14 @@ group :development do
   gem 'debugger-xml'
   gem 'debugger-linecache'
   gem 'debugger-pry', require: 'debugger/pry'
+  gem 'capistrano', '~> 3.0.0'
+  gem 'capistrano-rails', '~> 1.1.0' # https://github.com/capistrano/rails
+  gem 'capistrano-rvm', '~> 0.1.0'
+  gem 'capistrano-bundler'
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request', '~> 0.2.8'
-  gem 'capistrano-deploy', '~> 0.3.2'
   gem 'mailcatcher'
 end
 
