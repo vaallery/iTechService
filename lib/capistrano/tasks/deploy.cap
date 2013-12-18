@@ -1,0 +1,30 @@
+namespace :deploy do
+
+  task :setup_config do
+    on roles(:app) do |host|
+      #sudo "ln -nfs #{fetch(:current_path)}/config/nginx.conf /etc/nginx/sites-enabled/#{fetch(:application)}"
+      #sudo "ln -nfs #{fetch(:current_path)}/config/unicorn_init.sh /etc/init.d/unicorn_#{fetch(:application)}"
+      run "mkdir -p #{fetch(:shared_path)}/config"
+      put File.read('config/database.example.yml'), "#{fetch(:shared_path)}/config/database.yml"
+      puts "Now edit the config files in #{fetch(:shared_path)}."
+    end
+  end
+
+  task :symlink_config do
+    on roles(:app) do |host|
+      #run "ln -nfs #{fetch(:shared_path)}/config/database.yml #{fetch(:release_path)}/config/database.yml"
+    end
+  end
+
+  desc 'Make sure local git is in sync with remote.'
+  task :check_revision do
+    on roles(:web) do |host|
+      unless `git rev-parse HEAD` == `git rev-parse origin/master`
+        puts 'WARNING: HEAD is not the same as origin/master'
+        puts 'Run `git push` to sync changes.'
+        exit
+      end
+    end
+  end
+
+end

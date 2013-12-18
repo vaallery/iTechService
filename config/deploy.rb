@@ -6,15 +6,15 @@ set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
 #set :deploy_to, "/usr/local/var/www/#{application}"
 set :scm, :git
 
-# set :format, :pretty
-# set :log_level, :debug
-# set :pty, true
+set :format, :pretty
+set :log_level, :debug
+set :pty, true
 
-# set :linked_files, %w{config/database.yml}
-# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_files, %w{config/database.yml}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
-# set :keep_releases, 5
+set :keep_releases, 5
 
 set :rvm_ruby_version, '1.9.3'
 
@@ -24,19 +24,24 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
-      # execute :touch, release_path.join('tmp/restart.txt')
+      execute :touch, release_path.join('tmp/restart.txt')
     end
   end
 
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+      within release_path do
+        execute :rake, 'cache:clear'
+      end
     end
   end
 
   after :finishing, 'deploy:cleanup'
 
 end
+
+#before 'deploy:updated', 'deploy:setup_config'
+#after 'deploy:started', 'deploy:setup_config'
+#after 'deploy:updated', 'deploy:symlink_config'
+#before 'deploy', 'deploy:check_revision'
