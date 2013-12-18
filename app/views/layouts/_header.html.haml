@@ -38,6 +38,7 @@
               %li= link_to t('stolen_phones.link'), stolen_phones_path
               %li{class: nav_state_for('device_types')}= link_to t('device_types.link', default: 'Device types'), device_types_path if can? :manage, DeviceType
               %li.divider
+              %li= link_to t('bonus_types.index.title'), bonus_types_path if can? :manage, BonusType
               %li= link_to t('tasks.link'), tasks_path if can? :manage, Task
               %li= link_to t('locations.link'), locations_path if can? :manage, Location
               %li= link_to t('discounts.link'), discounts_path
