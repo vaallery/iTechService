@@ -184,6 +184,8 @@ ru:
     button:
       create: "Создать %{model}"
       update: "Сохранить %{model}"
+    links:
+      confirm: 'Вы уверены?'
   number:
     currency:
       format:

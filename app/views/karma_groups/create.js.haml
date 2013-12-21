@@ -1,5 +1,5 @@
 :plain
   $('#good_karmas .karma_link.ui-selected').tooltip('destroy').remove();
-  $("#{j(render(@karma_group))}").insertAfter('#good_karmas .karma_group_link:last').fadeIn();
+  $("#{j(render(@karma_group))}").prependTo('#good_karmas').fadeIn();
   bindKarmaGroupEvents("#karma_group_#{@karma_group.id}");
   hideCreateKarmaGroupForm();
