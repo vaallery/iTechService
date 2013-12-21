@@ -46,6 +46,16 @@ class KarmaGroupsController < ApplicationController
     end
   end
 
+  def destroy
+    @karma_group = KarmaGroup.find params[:id]
+    @karma_group_id = @karma_group.id
+    @karmas = Karma.find @karma_group.karma_ids
+    @karma_group.destroy
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def convert_karma_ids
