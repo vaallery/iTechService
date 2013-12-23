@@ -10,7 +10,7 @@ module TimesheetDaysHelper
       content_tag(:td, user.job_title, class: 'job_title_col') +
       (date..date.end_of_month).map { |cur_date| timesheet_cell(user, cur_date, time) }.join.html_safe +
       content_tag(:td, user.work_days_in(date), class: 'work_days_count') +
-      content_tag(:td, user.work_hours_in(date), class: 'work_hours_count') +
+      content_tag(:td, user.work_hours_in(date).truncate, class: 'work_hours_count') +
       content_tag(:td, user.sickness_days_in(date), class: 'sickness_days_count') +
       content_tag(:td, user.latenesses_in(date), class: 'lateness_count')
     end
