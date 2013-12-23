@@ -1,29 +1,30 @@
-= hidden_field_tag :direction, params[:direction]
-= hidden_field_tag :sort, params[:sort]
-%table.table.table-striped.table-hover
-  %thead
-    %tr
-      - if can? :manage, Info
-        %th= sortable 'id', Info.human_attribute_name(:id)
-      %th= sortable 'title', Info.human_attribute_name(:title)
-      - if can? :manage, Info
-        %th= sortable 'recipient', Info.human_attribute_name(:recipient)
-      %th= sortable 'created_at', Info.human_attribute_name(:created_at)
-      - if can? :modify, Info
-        %th
-  %tbody
-    - @infos.each do |info|
-      %tr{class: info_row_class(info)}
+- if @infos.present?
+  = hidden_field_tag :direction, params[:direction]
+  = hidden_field_tag :sort, params[:sort]
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
         - if can? :manage, Info
-          %td= link_to info.id, info_path(info)
-        %td= link_to info.title, info_path(info)
+          %th= sortable 'id', Info.human_attribute_name(:id)
+        %th= sortable 'title', Info.human_attribute_name(:title)
         - if can? :manage, Info
-          %td= info.recipient.present? ? link_to(info.recipient_presentation, user_path(info.recipient)) : '-'
-        %td= human_datetime info.created_at
+          %th= sortable 'recipient', Info.human_attribute_name(:recipient)
+        %th= sortable 'created_at', Info.human_attribute_name(:created_at)
         - if can? :modify, Info
-          %td.btn-group
-            = link_to_show_small info
-            = link_to_edit_small info
-            = link_to_destroy_small info
+          %th
+    %tbody
+      - @infos.each do |info|
+        %tr{class: info_row_class(info)}
+          - if can? :manage, Info
+            %td= link_to info.id, info_path(info)
+          %td= link_to info.title, info_path(info)
+          - if can? :manage, Info
+            %td= info.recipient.present? ? link_to(info.recipient_presentation, user_path(info.recipient)) : '-'
+          %td= human_datetime info.created_at
+          - if can? :modify, Info
+            %td.btn-group
+              = link_to_show_small info
+              = link_to_edit_small info
+              = link_to_destroy_small info
 
-= paginate @infos
+  = paginate @infos
