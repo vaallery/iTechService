@@ -12,6 +12,7 @@ class Karma < ActiveRecord::Base
   scope :used, includes(:karma_group).where('karma_groups.bonus_id != ?', nil)
   scope :unused, includes(:karma_group).where(karma_groups: {bonus_id: nil})
   scope :ungrouped, where(karma_group_id: nil)
+  scope :created_at, lambda {|date| where(created_at: date.beginning_of_day..date.end_of_day)}
 
   def kind
     good ? 'good' : 'bad'

@@ -5,7 +5,10 @@
     %th= t 'attributes.fio'
     %th= User.human_attribute_name :job_title
     - (@timesheet_date..@timesheet_date.end_of_month).each do |date|
-      %th= date.day
+      %th
+        = date.day
+        %br
+        = t('date.abbr_day_names')[date.wday-1]
     %th= t 'timesheet_days.days_count'
     %th= t 'timesheet_days.hours_count'
     %th= t 'timesheet_days.sickness_day'

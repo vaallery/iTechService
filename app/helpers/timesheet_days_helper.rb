@@ -36,10 +36,16 @@ module TimesheetDaysHelper
         cell_class << ' day_off'
       end
     end
+    good_karmas = user.karmas.good.created_at(date)
+    bad_karmas = user.karmas.bad.created_at(date)
     content_tag(:td, id: (id.present? ? "timesheet_day_#{id}" : ''), data: { date: date.to_s, id: id }, class: cell_class) do
-      content_tag(:span, status_abbr, class: 'status_abbr') +
-      tag(:br) +
-      content_tag(:span, value, class: 'value')
+      content = ''
+      content << content_tag(:span, status_abbr, class: 'status_abbr')
+      content << content_tag(:abbr, "+#{good_karmas.count}", class: 'good_karmas has-tooltip', title: good_karmas.map{|k|k.comment}.join('\n'), data: {html: true}) if good_karmas.count > 0
+      content << tag(:br)
+      content << content_tag(:span, value, class: 'value')
+      content << content_tag(:abbr, "-#{bad_karmas.count}", class: 'bad_karmas has-tooltip', title: bad_karmas.map { |k| k.comment }.join('\n'), data: {html: true}) if bad_karmas.count > 0
+      content.html_safe
     end
   end
 

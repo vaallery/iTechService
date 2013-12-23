@@ -10,11 +10,24 @@
     white-space: nowrap;
   }
   td.timesheet_day {
-    min-width: 36px;
+    min-width: 60px;
     height: 40px;
-    padding: 4px 2px;
+    padding: 0;
     cursor: pointer;
     text-align: center;
+    .good_karmas,
+    .bad_karmas{
+      float: right;
+    }
+    .good_karmas{
+      border-bottom: thin solid #dddddd;
+      border-left: thin solid #dddddd;
+    }
+    .bad_karmas {
+      border-top: thin solid #dddddd;
+      border-bottom: none;
+      border-left: thin solid #dddddd;
+    }
     &.work{
       border: #DFF0D8 3px solid;
     }
