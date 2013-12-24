@@ -67,11 +67,6 @@ jQuery ->
         alert status
     event.preventDefault()
 
-  $('.user_color_template').css 'background-color', $('#user_color').val()
-
-  $('#user_color').colorpicker().on 'changeColor', (event)->
-    $('.user_color_template').css 'background-color', event.color.toHex()
-
   if $('#staff_schedule').length > 0
     $legend = $('#staff_schedule_legend')
     $table = $('#job_schedule_table')

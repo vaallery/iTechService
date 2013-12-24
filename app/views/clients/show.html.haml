@@ -26,6 +26,12 @@
   %dt= Client.human_attribute_name :card_number
   %dd= @client.card_number.present? ? @client.card_number : '-'
 
+  %dt= Client.human_attribute_name :client_characteristic
+  %dd
+    = @client.category_name
+    %br
+    = @client.characteristic
+
   %dt= Client.human_attribute_name :admin_info
   %dd= @client.admin_info.present? ? @client.admin_info : '-'
 

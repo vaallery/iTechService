@@ -80,6 +80,11 @@ jQuery ->
   $('#scan_barcode_button').click ->
     scanBarcode()
 
+  $('.color_input>.color_template').css 'background-color', $('.color_value').val()
+
+  $('.color_input>.color_value').colorpicker().on 'changeColor', (event)->
+    $('.color_input>.color_template').css 'background-color', event.color.toHex()
+
 cursorX = $('#spinner').outerWidth() / 2
 cursorY = $('#spinner').outerHeight() / 2
 

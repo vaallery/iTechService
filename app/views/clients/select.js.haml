@@ -4,6 +4,8 @@
   $('#order_customer_id').val("#{@client.id}");
   $('#edit_client_link').attr('href', "#{edit_client_path(@client)}");
   $('#edit_client_link').attr('data-remote', true);
+  $('#client_search').css({color: "#{@client.category_color}"}).attr('title', "#{@client.characteristic}").attr('data-original-title', "#{@client.characteristic}");
+  $('#client_search').tooltip('destroy').tooltip();
   $('#clients_autocomplete_list').hide();
   $devices = $('#client_devices');
   if($devices.length > 0){

@@ -8,6 +8,7 @@ ru:
       #ckeditor/attachment_file: ckeditor/attachment_file
       #ckeditor/picture: ckeditor/picture
       client: Клиент
+      client_category: 'Категория клиента'
       comment: Комментарий
       device: Девайс
       device_task: Задача
@@ -73,6 +74,7 @@ ru:
         admin_info: Информация админа
         birthday: День рождения
         card_number: Номер карты
+        client_characteristic: 'Характеристика'
         comments: Комментарии
         contact_phone: Телефон для связи
         device: Девайс
@@ -258,7 +260,6 @@ ru:
         authentication_token: authentication_token  #g
         birthday: День рождения
         card_number: Номер карты
-        color: Цвет
         comments: Комментарии
         current_sign_in_at: Время авторизации
         current_sign_in_ip: IP авторизации
@@ -295,7 +296,9 @@ ru:
         wish: Пожелание
 
   attributes:
+    client_category: 'Категория клиента'
     created_at: Время создания
+    color: Цвет
     comment: Комментарий
     content: Содержание
     fio: ФИО
@@ -349,6 +352,16 @@ ru:
       title: 'Типы бонусов'
     created: 'Тип бонуса создан'
     updated: 'Тип бонуса изменён'
+
+  client_categories:
+    edit:
+      title: 'Редактирование Категории клиента'
+    new:
+      title: 'Новая Категория клиента'
+    index:
+      title: 'Категории клиентов'
+    created: 'Категория клиента создана'
+    updated: 'Категория клиента изменена'
 
   clients:
     edit:

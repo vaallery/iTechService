@@ -1,21 +1,30 @@
 class Client < ActiveRecord::Base
   include ApplicationHelper
   
-  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone
+  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :client_characteristic_attributes
 
   has_many :devices, inverse_of: :client, dependent: :destroy
   has_many :orders, as: :customer, dependent: :destroy
   has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
   has_many :history_records, as: :object
   has_many :comments, as: :commentable, dependent: :destroy
+  belongs_to :client_characteristic
 
   attr_accessor :comment
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
+  accepts_nested_attributes_for :client_characteristic, allow_destroy: true, reject_if: proc { |attr| attr['client_category_id'].blank? }
+
+  delegate :client_category, to: :client_characteristic, allow_nil: true
 
   validates :name, :phone_number, :full_phone_number, presence: true
   validates :full_phone_number, uniqueness: true
   validates_associated :comments
-  
+  validates_associated :client_characteristic
+
+  after_initialize do |client|
+    client.build_client_characteristic if client.client_characteristic.nil?
+  end
+
   def self.search params
     clients = Client.scoped
     unless (client_q = params[:client_q] || params[:client]).blank?
@@ -61,6 +70,18 @@ class Client < ActiveRecord::Base
 
   def creator
     self.history_records.first.try :user
+  end
+
+  def category_name
+    client_category.present? ? client_category.name : nil
+  end
+
+  def category_color
+    client_category.present? ? client_category.color : '#000000'
+  end
+
+  def characteristic
+    client_characteristic.present? ? client_characteristic.comment : nil
   end
 
 end

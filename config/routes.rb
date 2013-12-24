@@ -1,5 +1,8 @@
 ItechService::Application.routes.draw do
 
+  resources :client_categories
+
+
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users

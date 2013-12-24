@@ -1,12 +1,10 @@
 class ClientsController < ApplicationController
-  load_and_authorize_resource
-  skip_load_resource only: :index
+  authorize_resource
   skip_authorize_resource only: [:check_phone_number, :questionnaire, :autocomplete, :select]
 
   def index
     @clients = Client.search params
     @clients = @clients.page params[:page]
-
     respond_to do |format|
       format.html
       format.json { render json: @clients }
@@ -16,7 +14,6 @@ class ClientsController < ApplicationController
 
   def show
     @client = Client.find(params[:id])
-
     respond_to do |format|
       format.html
       format.json { render json: @client }
@@ -25,9 +22,8 @@ class ClientsController < ApplicationController
 
   def new
     @client = Client.new
-
     respond_to do |format|
-      format.html
+      format.html { render 'form' }
       format.json { render json: @client }
       format.js { render 'show_form' }
     end
@@ -35,23 +31,21 @@ class ClientsController < ApplicationController
 
   def edit
     @client = Client.find(params[:id])
-
     respond_to do |format|
-      format.html
+      format.html { render 'form' }
       format.js { render 'show_form' }
     end
   end
 
   def create
     @client = Client.new(params[:client])
-
     respond_to do |format|
       if @client.save
         format.html { redirect_to @client, notice: t('clients.created') }
         format.js { render 'saved' }
         format.json { render json: @client, status: :created, location: @client }
       else
-        format.html { render action: "new" }
+        format.html { render 'form' }
         format.js { render 'show_form' }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
@@ -60,14 +54,13 @@ class ClientsController < ApplicationController
 
   def update
     @client = Client.find(params[:id])
-
     respond_to do |format|
       if @client.update_attributes(params[:client])
         format.html { redirect_to @client, notice: t('clients.updated') }
         format.json { head :no_content }
         format.js { render 'saved' }
       else
-        format.html { render action: 'edit' }
+        format.html { render 'form' }
         format.js { render 'show_form' }
         format.json { render json: @client.errors, status: :unprocessable_entity }
       end
@@ -77,7 +70,6 @@ class ClientsController < ApplicationController
   def destroy
     @client = Client.find(params[:id])
     @client.destroy
-
     respond_to do |format|
       format.html { redirect_to clients_url }
       format.json { head :no_content }
@@ -87,7 +79,6 @@ class ClientsController < ApplicationController
   def check_phone_number
     number = params[:number]
     @number = PhoneTools.convert_phone number
-
     respond_to do |format|
       format.js
     end

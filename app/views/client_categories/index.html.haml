@@ -1,0 +1,19 @@
+= auto_header_tag
+- if @client_categories.present?
+  %table.table.table-hover.table-striped
+    %thead
+      %tr
+        %th= ClientCategory.human_attribute_name :id
+        %th= ClientCategory.human_attribute_name :name
+        %th= ClientCategory.human_attribute_name :color
+        %th
+    %tbody
+      - @client_categories.each do |client_category|
+        %tr[client_category]
+          %td= client_category.id
+          %td= client_category.name
+          %td.color{style: "background-color: #{client_category.color}"}
+          %td
+            .btn-group
+              = link_to_edit_small client_category if can? :edit, client_category
+              = link_to_destroy_small client_category if can? :destroy, client_category

@@ -16,7 +16,6 @@
             %li.next
               = link_to staff_duty_schedule_users_path(date: @calendar_month.next_month), remote: true do
                 &rarr;
-
       %tr
         %th
         - t('date.abbr_day_names').each do |day|

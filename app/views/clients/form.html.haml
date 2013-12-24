@@ -1,3 +1,4 @@
+= auto_header_tag @client
 = simple_form_for @client, html: { class: 'form-horizontal' } do |f|
 
   = f.input :name, autofocus: true
@@ -15,6 +16,16 @@
     .control-group
       %label.control-label= t 'clients.questionnaire'
       .controls= link_to icon_tag('print'), '#', class: 'btn', id: 'questionnaire_link', target: '_blank'
+
+  .control-group
+    %label.control-label= Client.human_attribute_name :client_characteristic
+    .controls
+      = f.simple_fields_for :client_characteristic do |ff|
+        = ff.input_field :client_category_id, collection: ClientCategory.all, prompt: ClientCharacteristic.human_attribute_name(:client_category)
+        = ff.error :client_category_id
+        %br
+        = ff.input_field :comment, placeholder: ClientCharacteristic.human_attribute_name(:comment), rows: 3
+        = ff.error :comment
 
   = f.input :admin_info, input_html: {rows: 5} if current_user.any_admin?
   = f.input :comment, as: 'text', input_html: {rows: 5}

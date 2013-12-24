@@ -1,0 +1,10 @@
+= auto_header_tag @client_category
+= simple_form_for @client_category, html: { class: 'form-horizontal' } do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :color, as: :color
+
+  .form-actions
+    = submit_button f
