@@ -12,7 +12,7 @@ class Client < ActiveRecord::Base
 
   attr_accessor :comment
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
-  accepts_nested_attributes_for :client_characteristic, allow_destroy: true, reject_if: proc { |attr| attr['client_category_id'].blank? }
+  accepts_nested_attributes_for :client_characteristic, allow_destroy: true
 
   delegate :client_category, to: :client_characteristic, allow_nil: true
 
