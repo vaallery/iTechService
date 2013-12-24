@@ -27,8 +27,10 @@ Ability
     else
       if user.manager?
         can :manage, :all
-        cannot [:modify, :destroy], User
-        cannot :manage, Salary
+        cannot :manage, Salary unless user.able_to? :manage_salary
+        cannot :manage_rights, User
+        cannot :manage, [BonusType, Bonus]
+        cannot [:edit, :destroy], Karma
       end
       if user.software?
         can :modify, [Device, Client]
