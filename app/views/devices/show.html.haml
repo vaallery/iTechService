@@ -30,7 +30,7 @@
   %dd= @device.serial_number.present? ? @device.serial_number : '-'
 
   %dt= Device.human_attribute_name :client_id
-  %dd= @device.client.presentation
+  %dd= link_to @device.client.presentation, @device.client
 
   - if @device.client.contact_phone.present?
     %dt= Client.human_attribute_name :contact_phone
