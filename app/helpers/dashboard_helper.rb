@@ -51,7 +51,8 @@ module DashboardHelper
         end
       end +
       content_tag(:td, class: 'client_comment_column') do
-        (device.client.present? ? link_to(device.client_presentation, client_path(device.client)) : '-').html_safe +
+        (device.client.present? ? link_to(device.client_short_name, client_path(device.client)) : '-').html_safe +
+        " #{contact_phones_for(device)}".html_safe +
         tag(:br, false) +
         device.comment
       end +

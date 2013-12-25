@@ -89,4 +89,13 @@ module DevicesHelper
     end
   end
 
+  def contact_phones_for(device)
+    if device.client.present?
+      phones = []
+      phones << human_phone(device.client.contact_phone) unless device.client.contact_phone.blank?
+      phones << human_phone(device.client.full_phone_number) unless device.client.full_phone_number.blank?
+      phones.join ', '
+    end
+  end
+
 end

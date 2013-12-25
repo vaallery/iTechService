@@ -14,6 +14,8 @@ class Device < ActiveRecord::Base
   accepts_nested_attributes_for :device_tasks
   attr_accessor :service_duration
 
+  delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
+
   validates_presence_of :ticket_number, :client, :device_type, :location, :device_tasks, :return_at
   validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
@@ -74,18 +76,6 @@ class Device < ActiveRecord::Base
     location.try(:full_name) || '-'
   end
   
-  def client_name
-    client.try(:name) || '-'
-  end
-
-  def client_short_name
-    client.try(:short_name) || '-'
-  end
-
-  def client_full_name
-    client.try(:full_name) || '-'
-  end
-
   def client_phone
     client.try(:phone_number) || '-'
   end
