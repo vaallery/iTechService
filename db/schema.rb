@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131223072524) do
+ActiveRecord::Schema.define(:version => 20131225025810) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -184,6 +184,7 @@ ActiveRecord::Schema.define(:version => 20131223072524) do
     t.boolean  "client_notified"
     t.datetime "return_at"
     t.string   "app_store_pass"
+    t.text     "tech_notice"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"

@@ -1,6 +1,5 @@
 class DevicesController < ApplicationController
   include DevicesHelper
-  #before_filter :store_location
   helper_method :sort_column, :sort_direction
   load_and_authorize_resource only: [:index, :new, :edit, :create, :update, :destroy]
   skip_load_resource except: [:index, :new, :edit, :create, :update, :destroy]
@@ -63,7 +62,7 @@ class DevicesController < ApplicationController
     @device = Device.new params[:device]
 
     respond_to do |format|
-      format.html
+      format.html { render 'form' }
       format.json { render json: @device }
     end
   end
@@ -72,7 +71,7 @@ class DevicesController < ApplicationController
     @device = Device.find(params[:id])
 
     respond_to do |format|
-      format.html
+      format.html { render 'form' }
       format.js { render 'shared/show_modal_form' }
     end
   end
@@ -85,7 +84,7 @@ class DevicesController < ApplicationController
         format.html { redirect_to @device, notice: t('devices.created') }
         format.json { render json: @device, status: :created, location: @device }
       else
-        format.html { render action: "new" }
+        format.html { render 'form' }
         format.json { render json: @device.errors, status: :unprocessable_entity }
       end
     end
@@ -100,7 +99,7 @@ class DevicesController < ApplicationController
         format.json { head :no_content }
         format.js { render 'update' }
       else
-        format.html { render action: "edit" }
+        format.html { render 'form' }
         format.json { render json: @device.errors, status: :unprocessable_entity }
         format.js { render 'shared/show_modal_form' }
       end
@@ -185,9 +184,6 @@ class DevicesController < ApplicationController
 
     code = '0'*(12-num.length) + num
     code = Barby::EAN13.new code
-    #out = Barby::PDFWriterOutputter.new code
-    #code.annotate_pdf(pdf)
-    #out.annotate_pdf pdf.render
     out = Barby::PrawnOutputter.new code
     out.to_pdf document: pdf
   end

@@ -115,6 +115,7 @@ ru:
         service_duration: "Длительность обслуживания"
         status: Статус
         tasks: Список задач
+        tech_notice: 'Для истинных технарей (не озвучивать клиенту)'
         ticket_number: Номер талона
         user: :activerecord.models.user
         user_id: :activerecord.models.user

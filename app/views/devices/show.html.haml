@@ -10,54 +10,54 @@
     = link_to icon_tag(:print) + t('tickets.link'), device_path(@device, format: 'pdf', print: true), class: 'btn btn-primary', target: '_blank', id: 'print_device_ticket'
     = link_to icon_tag('eye-open') + t('tickets.link'), device_path(@device, format: 'pdf', part: 1), class: 'btn btn-info pull-right', target: '_blank', id: 'print_device_ticket'
 
-%dl.dl-horizontal
-
-  %dt= t 'devices.itunes_string'
-  %dd= text_field_tag 'itunes_string', itunes_string_for(@device)
-
-  %br
-
-  %dt= Device.human_attribute_name :ticket_number
-  %dd= @device.ticket_number
-
-  %dt= Device.human_attribute_name :security_code
-  %dd= @device.security_code.present? ? @device.security_code : '-'
-
-  %dt= Device.human_attribute_name :imei
-  %dd= @device.imei.present? ? @device.imei : '-'
-
-  %dt= Device.human_attribute_name :serial_number
-  %dd= @device.serial_number.present? ? @device.serial_number : '-'
-
-  %dt= Device.human_attribute_name :client_id
-  %dd= link_to @device.client.presentation, @device.client
+%table.attributes_table
+  %tr
+    %td= t 'devices.itunes_string'
+    %td= text_field_tag 'itunes_string', itunes_string_for(@device)
+  %tr
+    %td= Device.human_attribute_name :ticket_number
+    %td= @device.ticket_number
+  %tr
+    %td= Device.human_attribute_name :security_code
+    %td= @device.security_code
+  %tr
+    %td= Device.human_attribute_name :imei
+    %td= @device.imei
+  %tr
+    %td= Device.human_attribute_name :serial_number
+    %td= @device.serial_number
+  %tr
+    %td= Device.human_attribute_name :client_id
+    %td= link_to @device.client.presentation, @device.client
 
   - if @device.client.contact_phone.present?
-    %dt= Client.human_attribute_name :contact_phone
-    %dd= human_phone @device.client.contact_phone
+    %tr
+      %td= Client.human_attribute_name :contact_phone
+      %td= human_phone @device.client.contact_phone
 
   - if @device.user_id == current_user.id
-    %dt= Device.human_attribute_name :app_store_pass
-    %dd= @device.app_store_pass.blank? ? '-' : @device.app_store_pass
+    %tr
+      %td= Device.human_attribute_name :app_store_pass
+      %td= @device.app_store_pass.blank? ? '-' : @device.app_store_pass
+  %tr
+    %td= Device.human_attribute_name :comment
+    %td.device_comment= @device.comment
 
-  %dt= Device.human_attribute_name :comment
-  %dd.device_comment= @device.comment.present? ? @device.comment : '-'
-
-  %dt= Device.human_attribute_name :location
-  %dd= @device.location_name
-
-  %dt= Device.human_attribute_name :return_at
-  %dd= human_datetime @device.return_at
+  - if can? :read_tech_notice, @device
+    %tr
+      %td= Device.human_attribute_name :tech_notice
+      %td= @device.tech_notice
+  %tr
+    %td= Device.human_attribute_name :location
+    %td= @device.location_name
+  %tr
+    %td= Device.human_attribute_name :return_at
+    %td= human_datetime @device.return_at
 
   - if @device.notify_client?
-    %br
-    %dt
-    %dd
-      %strong= Device.human_attribute_name :notify_client
-
-    - if @device.client_notified?
-      %dt
-      %dd= Device.human_attribute_name :client_notified
+    %tr
+      %td= Device.human_attribute_name :notify_client
+      %td= Device.human_attribute_name :client_notified if @device.client_notified?
 
 %table.table.table-bordered.table-condensed.table-hover
   %caption

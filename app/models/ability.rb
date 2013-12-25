@@ -10,6 +10,7 @@ Ability
     if user.superadmin?
       can :manage, :all
       can :view_reports
+      cannot :write_tech_notice, Device
     elsif user.admin?
       can :manage, :all
       can :view_reports
@@ -18,6 +19,7 @@ Ability
       cannot :manage_rights, User
       cannot :manage, [BonusType, Bonus]
       cannot [:edit, :destroy], Karma
+      cannot :write_tech_notice, Device
     elsif user.programmer?
       can :manage, :all
       cannot :manage, Salary unless user.able_to? :manage_salary
@@ -31,6 +33,8 @@ Ability
         cannot :manage_rights, User
         cannot :manage, [BonusType, Bonus]
         cannot [:edit, :destroy], Karma
+        cannot :read_tech_notice, Device
+        cannot :write_tech_notice, Device
       end
       if user.software?
         can :modify, [Device, Client]
@@ -59,6 +63,8 @@ Ability
       end
       if user.technician?
         can :modify, Order
+        can :read_tech_notice, Device
+        can :write_tech_notice, Device
       end
       can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement

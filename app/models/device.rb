@@ -10,7 +10,7 @@ class Device < ActiveRecord::Base
   has_many :tasks, through: :device_tasks
   has_many :history_records, as: :object, dependent: :destroy
 
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass
+  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice
   accepts_nested_attributes_for :device_tasks
   attr_accessor :service_duration
 

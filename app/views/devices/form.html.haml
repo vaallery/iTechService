@@ -1,3 +1,4 @@
+= auto_header_tag @device
 #client_form_place.well.well-small
 = simple_form_for @device, html: { class: 'form-horizontal device_form' } do |f|
 
@@ -29,6 +30,8 @@
     = f.input :app_store_pass, required: @device.new_record?
 
   = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)
+
+  = f.input :tech_notice, input_html: {rows: 5} if can? :write_tech_notice, @device
 
   = f.input :notify_client if @device.new_record? or current_user.any_admin?
   = f.input :client_notified, as: :radio_buttons, collection: [[true, t('yep')], [false, t('not_accessible')]], required: true, value_method: :first, label_method: :last if @device.notify_client?
