@@ -18,7 +18,6 @@ class Device < ActiveRecord::Base
   validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
   validates_length_of :imei, is: 15, allow_blank: true
-  #validates :service_duration, format: { with: /[\D.]+\z/ }
   validates_associated :device_tasks
   
   before_validation :generate_ticket_number
