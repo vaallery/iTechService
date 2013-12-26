@@ -16,10 +16,13 @@ class Client < ActiveRecord::Base
 
   delegate :client_category, to: :client_characteristic, allow_nil: true
 
+  scope :id_asc, order('id asc')
+
   validates :name, :phone_number, :full_phone_number, presence: true
   validates :full_phone_number, uniqueness: true
   validates_associated :comments
   validates_associated :client_characteristic
+
 
   after_initialize do |client|
     client.build_client_characteristic if client.client_characteristic.nil?

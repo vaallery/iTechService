@@ -3,7 +3,7 @@ class ClientsController < ApplicationController
   skip_authorize_resource only: [:check_phone_number, :questionnaire, :autocomplete, :select]
 
   def index
-    @clients = Client.search params
+    @clients = Client.search(params).id_asc
     @clients = @clients.page params[:page]
     respond_to do |format|
       format.html

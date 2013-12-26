@@ -22,7 +22,7 @@
             = link_to_edit_small client
             = link_to_destroy_small client
 
-  = paginate @clients
+  = paginate @clients, remote: true
 
 - else
   = render 'shared/empty'
