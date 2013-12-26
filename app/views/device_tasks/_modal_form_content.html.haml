@@ -14,5 +14,9 @@
     = f.input :cost
     = f.input :done
 
+    - if can? :write_tech_notice, @device_task.device || Device
+      = f.simple_fields_for :device do |ff|
+        = ff.input :tech_notice, input_html: {rows: 3}
+
   .modal-footer
     = submit_button f

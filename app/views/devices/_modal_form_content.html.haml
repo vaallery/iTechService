@@ -17,8 +17,6 @@
 
     = f.input :location_id, collection: Location.allowed_for(current_user, @device)
 
-    = f.input :tech_notice, input_html: {rows: 3} if can? :write_tech_notice, @device
-
     %table#device_tasks_small.table.table-bordered.table-condensed.table-hover
       %caption
         %h4= Device.human_attribute_name :tasks

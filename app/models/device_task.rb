@@ -2,7 +2,8 @@ class DeviceTask < ActiveRecord::Base
   belongs_to :device
   belongs_to :task
   has_many :history_records, as: :object
-  attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task
+  accepts_nested_attributes_for :device, reject_if: proc { |attr| attr['tech_notice'].blank? }
+  attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes
   validates :task, :cost, presence: true
   validates :cost, numericality: true # except repair
   
@@ -11,8 +12,6 @@ class DeviceTask < ActiveRecord::Base
   scope :pending, where(done: false)
   scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
   
-  #after_initialize {|dt| dt.cost ||= task_cost; dt.done ||= false}
-
   before_save do |dt|
     dt.done = false if dt.done.nil?
     old_done = changed_attributes['done']
