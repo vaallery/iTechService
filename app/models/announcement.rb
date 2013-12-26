@@ -77,7 +77,7 @@ class Announcement < ActiveRecord::Base
         return false
       end
     else
-      is_recipient = self.recipient_ids.include?(user.id)
+      self.recipient_ids.include?(user.id)
       #case kind
       #  when 'help' then is_recipient or (user_id != user.id and user.software?)
       #  when 'coffee' then is_recipient or user.software?
@@ -94,7 +94,7 @@ class Announcement < ActiveRecord::Base
 
   def exclude_recipient(recipient)
     self.recipients.destroy recipient
-    self.update_attribute :active, false if self.recipients.blank?
+    self.update_attribute(:active, false) if self.recipients.blank?
   end
 
   private
