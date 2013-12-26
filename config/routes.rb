@@ -72,7 +72,7 @@ ItechService::Application.routes.draw do
 
   resources :orders do
     get :history, on: :member, defaults: { format: 'js' }
-    get :device_type_select, on: :collection
+    get :device_type_select, on: :collection, defaults: {format: 'js'}
   end
 
   resources :infos

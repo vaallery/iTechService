@@ -2,7 +2,7 @@ class OrdersController < ApplicationController
   helper_method :sort_column, :sort_direction
   load_and_authorize_resource
   skip_load_resource only: [:index, :new, :history]
-  skip_authorize_resource only: :check_status
+  skip_authorize_resource only: [:check_status, :device_type_select]
   skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
 
   def index
