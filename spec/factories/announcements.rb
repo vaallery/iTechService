@@ -2,8 +2,9 @@
 
 FactoryGirl.define do
   factory :announcement do
-    content 'MyString'
+    active true
     kind 'help'
+    content 'Content'
     user nil
   end
 end

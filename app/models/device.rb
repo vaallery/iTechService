@@ -229,8 +229,12 @@ class Device < ActiveRecord::Base
   end
 
   def returning_alert
-    recipient_ids = User.active.map { |user| user.id }
-    announcement = Announcement.create kind: 'device_return', active: true, recipient_ids: recipient_ids, content: self.id
+    if self.location.is_repair?
+      recipient_ids = User.active.map &:id
+    else
+      recipient_ids = User.active.not_technician.map &:id
+    end
+    announcement = Announcement.find_or_create_by_kind_and_content 'device_return', self.id.to_s, active: true, recipient_ids: recipient_ids
     PrivatePub.publish_to '/devices/returning_alert', announcement_id: announcement.id
   end
 
@@ -294,7 +298,10 @@ class Device < ActiveRecord::Base
   end
 
   def device_update_announce
-    PrivatePub.publish_to '/devices/update', device: self if changed_attributes[:location_id].blank? and Rails.env.production?
+    if changed_attributes['location_id'].present?
+      Announcement.find_by_kind_and_content('device_return', self.id.to_s).try(:destroy) if self.at_done?
+    end
+    PrivatePub.publish_to '/devices/update', device: self if changed_attributes['location_id'].present? and Rails.env.production?
   end
 
   def create_alert

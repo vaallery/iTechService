@@ -6,8 +6,7 @@ FactoryGirl.define do
     cost 100
     done false
     comment 'comment'
-    task
-    device { build_stubbed(:device) }
+    association :task
 
     trait :done do
       done true

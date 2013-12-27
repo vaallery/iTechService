@@ -8,12 +8,20 @@ FactoryGirl.define do
     device_type
     client
     location
+    app_store_pass '0000'
 
-    #before(:create) { |device| device.device_tasks.build(attributes_for(:device_task)) }
-    before(:create) { |device| device.device_tasks << create_list(:device_task, 3, device: device) }
+    before(:create) { |device| device.device_tasks << create_list(:device_task, 1) }
 
     factory :device_2 do
       association :device_type, factory: :device_type, name: "iPhone 5 16GB"
+    end
+
+    trait :at_bar do
+      association :location, :bar
+    end
+
+    trait :at_repair do
+      association :location, :repair
     end
 
     trait :with_tasks do
