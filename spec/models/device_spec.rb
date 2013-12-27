@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Device do
   
-  it "is valid with valid attributes" do
+  it 'is valid with valid attributes' do
     device = create :device
-    device.should be_valid
+    expect(device).to be_valid
   end
   
   it "is not valid without 'device type'" do
@@ -70,7 +70,7 @@ describe Device do
     end
 
     it 'should have device_tasks' do
-      @device.device_tasks.create attributes_for(:device_tasks)
+      @device.device_tasks.create attributes_for(:device_task)
       expect(@device.device_tasks.count).to be > 0
     end
     
@@ -136,6 +136,28 @@ describe Device do
     expect(Delayed::Job.count).to be 2
     expect(Delayed::Job.first.run_at).to eq now.advance(days: 2, hours: 1, minutes: 30)
     expect(Delayed::Job.last.run_at).to eq now.advance(days: 1, hours: 2, minutes: 30)
+  end
+
+  context 'announcements' do
+    let!(:user_software) { create :user, :software }
+    let!(:user_technician) { create :user, :technician }
+
+    it 'creates returning announcement' do
+      device = create :device, :at_bar
+      device.returning_alert
+      announcement = Announcement.find_by_kind_and_content('device_return', device.id.to_s)
+      expect(announcement).to be
+      expect(announcement.recipient_ids).to include(user_software.id)
+      expect(announcement.recipient_ids).not_to include(user_technician.id)
+    end
+
+    it 'creates returning announcement with technicians in recipients if location is repair' do
+      device = create :device, :at_repair
+      device.returning_alert
+      announcement = Announcement.find_by_kind_and_content('device_return', device.id.to_s)
+      expect(announcement.recipient_ids).to include(user_technician.id)
+    end
+
   end
 
 end

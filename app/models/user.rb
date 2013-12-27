@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   has_many :infos, inverse_of: :recipient, dependent: :destroy
   has_many :salaries, inverse_of: :user, dependent: :destroy
   has_many :timesheet_days, inverse_of: :user, dependent: :destroy
-  has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users'
+  has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users', uniq: true
   has_many :installment_plans, inverse_of: :user, dependent: :destroy
   #has_many :installments, through: :installment_plans
 
@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
   scope :software, where(role: 'software')
   scope :media, where(role: 'media')
   scope :technician, where(role: 'technician')
+  scope :not_technician, where('role <> ?', 'technician')
   scope :marketing, where(role: 'marketing')
   scope :programmer, where(role: 'programmer')
   scope :supervisor, where(role: 'supervisor')

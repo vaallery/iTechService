@@ -2,7 +2,7 @@ class Announcement < ActiveRecord::Base
   KINDS = %w[help coffee for_coffee protector info birthday order_status order_done salary device_return]
 
   belongs_to :user, inverse_of: :announcements
-  has_and_belongs_to_many :recipients, class_name: 'User', join_table: 'announcements_users'
+  has_and_belongs_to_many :recipients, class_name: 'User', join_table: 'announcements_users', uniq: true
   attr_accessible :content, :kind, :user_id, :user, :active, :recipient_ids
   validates :kind, presence: true
   validates :kind, inclusion: { in: KINDS }
@@ -77,7 +77,7 @@ class Announcement < ActiveRecord::Base
         return false
       end
     else
-      is_recipient = self.recipient_ids.include?(user.id)
+      self.recipient_ids.include?(user.id)
       #case kind
       #  when 'help' then is_recipient or (user_id != user.id and user.software?)
       #  when 'coffee' then is_recipient or user.software?
@@ -94,7 +94,7 @@ class Announcement < ActiveRecord::Base
 
   def exclude_recipient(recipient)
     self.recipients.destroy recipient
-    self.update_attribute :active, false if self.recipients.blank?
+    self.update_attribute(:active, false) if self.recipients.blank?
   end
 
   private

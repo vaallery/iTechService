@@ -2,14 +2,9 @@ require 'spec_helper'
 
 describe DeviceTask do
 
-  it "is valid with valid attributes" do
-    device_task = build :device_task, device: build_stubbed(:device)
-    device_task.should be_valid
-  end
-  
-  it "is not valid without 'device'" do
-    device_task = build :device_task, device: nil
-    device_task.should_not be_valid
+  it 'is valid with valid attributes' do
+    device_task = build :device_task
+    expect(device_task).to be_valid
   end
   
   it "is not valid without 'task'" do
@@ -22,7 +17,7 @@ describe DeviceTask do
     device_task.should respond_to :comment
   end
   
-  describe "associations" do
+  describe 'associations' do
     
     before :each do
       @device_task = create :device_task
