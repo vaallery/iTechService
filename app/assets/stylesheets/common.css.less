@@ -11,13 +11,37 @@
   -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, .1);
   -moz-box-shadow: 0 1px 10px rgba(0, 0, 0, .1);
   box-shadow: 0 1px 10px rgba(0, 0, 0, .1);
+  #close_all_announcements_link {
+    color: #777777;
+    background-color: #f2f2f2;
+    border-left: solid thin #D8D8D8;
+    border-bottom: solid thin #D8D8D8;
+    padding: 0px 8px 2px 6px;
+    margin-left: -4px;
+    text-shadow: 0 1px 0 #ffffff;
+    font-weight: bold;
+    opacity: 0.8;
+    &:hover{
+      text-decoration: none;
+      color: #333333;
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
   #hide_notifications_button {
+    color: #777777;
     padding: 0 20px;
     background-color: #f2f2f2;
     cursor: pointer;
-    border-left: solid thin lavender;
-    border-bottom: solid thin lavender;
-    height: 18px;
+    border-left: solid thin #D8D8D8;
+    border-bottom: solid thin #D8D8D8;
+    height: 20px;
+    width: 320px;
+    display: inline-block;
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+    }
     .indicator {
       height: 4px;
       width: 80%;
@@ -115,10 +139,10 @@
 .change_announce_state_button {
   cursor: pointer;
 }
-
-#close_all_announcements_link {
-  font-weight: bold;
-}
+//
+//#close_all_announcements_link {
+//  font-weight: bold;
+//}
 
 .color_input{
   .color_value{

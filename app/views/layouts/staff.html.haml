@@ -2,10 +2,12 @@
   = render 'layouts/header'
   = content_for :notifications do
     #notifications
-      #hide_notifications_button
-        = glyph('chevron-up')
-        .indicator
-      = duty_info_tag if current_user.is_duty_today?
+      #notifications_handle
+        #hide_notifications_button
+          = glyph('chevron-up')
+          .indicator
+        = link_to '&times;'.html_safe, close_all_announcements_path, method: :post, remote: true, id: 'close_all_announcements_link', rel: 'tooltip', data: { title: t('announcements.close_all'), placement: 'left' }
+      #duty_announcement= duty_info_tag if current_user.is_duty_today?
       #important_info
       #personal_infos
       #announcements

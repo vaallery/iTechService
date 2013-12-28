@@ -24,6 +24,7 @@ jQuery ->
     $('#announcements:has(*)').slideToggle(100);
     $('#personal_infos:has(*)').slideToggle(100);
     $('#important_info:has(*)').slideToggle(100);
+    $('#duty_announcement:has(*)').slideToggle(100);
     $('#hide_notifications_button>i').toggleClass('icon-chevron-up').toggleClass('icon-chevron-down')
 
   $(document).on 'click', '#history .close_history', (event) ->
