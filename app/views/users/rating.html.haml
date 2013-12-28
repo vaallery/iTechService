@@ -11,6 +11,6 @@
           = karma_tag(user)
         %td.karmas
           = render user.karma_groups.unused if user.karma_groups.any?
-          = render user.karmas.good.unused.ungrouped
+          = render user.karmas.good.unused.ungrouped.created_asc
           %br
-          = render user.karmas.bad
+          = render user.karmas.bad.created_asc

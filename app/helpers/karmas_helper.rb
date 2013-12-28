@@ -37,7 +37,7 @@ module KarmasHelper
   end
 
   def karma_group_content(karma_group)
-    render(karma_group.karmas)
+    render(karma_group.karmas.created_asc)
   end
 
   def karma_group_title(karma_group)

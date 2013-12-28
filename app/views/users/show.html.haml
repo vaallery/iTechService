@@ -74,7 +74,7 @@
           #karma_group_popover_container
           #good_karmas.good.well
             = render @user.karma_groups.unused if @user.karma_groups.any?
-            = render @user.karmas.good.unused.ungrouped
+            = render @user.karmas.good.unused.ungrouped.created_asc
           = link_to t('karmas.select'), '#', id: 'select_karmas_button', class: 'btn btn-info'
           = form_for :karma_group, url: karma_groups_path, remote: true, html: {id: 'create_karma_group_form', class: 'form-inline'} do |f|
             = f.hidden_field :karma_ids
@@ -82,7 +82,7 @@
               = link_to glyph(:remove), '#', class: 'btn', id: 'close_karma_group_form_link'
               = number_field_tag :karma_qty, nil, id: 'karma_group_karma_qty', class: 'input-mini', min: 0
               = f.submit t('karmas.group'), class: 'btn btn-primary'
-          #bad_karmas.bad.well= render @user.karmas.bad
+          #bad_karmas.bad.well= render @user.karmas.bad.created_asc
 
       %dt= link_to t('bonuses.index.title'), bonuses_user_path(@user), remote: true
       %dd

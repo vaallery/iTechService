@@ -6,8 +6,8 @@ class Karma < ActiveRecord::Base
   belongs_to :karma_group, inverse_of: :karmas
   attr_accessible :comment, :user_id, :karma_group_id, :good
   validates_presence_of :user, :comment
-  default_scope order('created_at asc')
-  scope :created_asc, order('created_at asc')
+  #default_scope order('created_at asc')
+  scope :created_asc, order('karmas.created_at asc')
   scope :good, where(good: true)
   scope :bad, where(good: false)
   scope :used, includes(:karma_group).where('karma_groups.bonus_id != ?', nil)
