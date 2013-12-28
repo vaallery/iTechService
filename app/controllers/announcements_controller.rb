@@ -96,7 +96,7 @@ class AnnouncementsController < ApplicationController
   def close_all
     user = current_user
     user_announcements = user.addressed_announcements
-    @announcement_ids = user_announcements.map { |a| a.id }
+    @announcement_ids = user_announcements.map &:id
     user_announcements.find_each do |announcement|
       announcement.exclude_recipient(user)
     end
