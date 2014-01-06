@@ -6,9 +6,7 @@ class DeviceTask < ActiveRecord::Base
   attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes
   validates :task, :cost, presence: true
   validates :cost, numericality: true # except repair
-  delegate :role, to: :task
 
-  scope :ordered, joins(:task).order("done asc, tasks.priority desc")
   delegate :name, :role, :is_important?, :is_actual_for?, to: :task, allow_nil: true
   delegate :client_presentation, to: :device, allow_nil: true
 

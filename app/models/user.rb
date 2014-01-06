@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
-  attr_accessible :auth_token, :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
 
   attr_accessor :login
   attr_accessor :auth_token
@@ -53,14 +52,6 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
 
   scope :id_asc, order('id asc')
-  after_initialize do |user|
-    if user.schedule_days.empty?
-      (1..7).each do |d|
-        user.schedule_days.build day: d
-      end
-    end
-  end
-
   scope :ordered, order('position asc')
   scope :any_admin, where(role: %w[admin superadmin])
   scope :superadmins, where(role: 'superadmin')
@@ -227,8 +218,6 @@ class User < ActiveRecord::Base
 
   def announced_birthday?
     announcements.active_birthdays.any?
-  end
-
   end
 
   def helpable?

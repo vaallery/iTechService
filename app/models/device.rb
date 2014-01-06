@@ -19,17 +19,13 @@ class Device < ActiveRecord::Base
 
   validates_presence_of :ticket_number, :client, :location, :device_tasks, :return_at
   validates_presence_of :device_type, if: 'item.nil?'
+  validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
   validates :imei, length: {is: 15}, allow_nil: true
   #validates :service_duration, format: { with: /[\D.]+\z/ }
+  validates_associated :device_tasks
   delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
 
-  validates_presence_of :ticket_number, :client, :device_type, :location, :device_tasks, :return_at
-  validates_presence_of :app_store_pass, if: :new_record?
-  validates_uniqueness_of :ticket_number
-  validates_length_of :imei, is: 15, allow_blank: true
-  validates_associated :device_tasks
-  
   before_validation :generate_ticket_number
   before_validation :validate_security_code
   before_validation :set_user_and_location

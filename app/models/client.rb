@@ -1,7 +1,6 @@
 class Client < ActiveRecord::Base
   include ApplicationHelper
   
-  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :client_characteristic_attributes
 
   CATEGORIES = {
     0 => 'usual',
@@ -10,7 +9,7 @@ class Client < ActiveRecord::Base
     3 => 'friend'
   }
 
-  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :category
+  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :category, :client_characteristic_attributes
 
   has_many :devices, inverse_of: :client, dependent: :destroy
   has_many :orders, as: :customer, dependent: :destroy
@@ -38,10 +37,8 @@ class Client < ActiveRecord::Base
 
   after_initialize do |client|
     client.build_client_characteristic if client.client_characteristic.nil?
+    client.category ||= 0
   end
-
-
-  after_initialize {self.category ||= 0}
 
   def self.search params
     clients = Client.scoped
