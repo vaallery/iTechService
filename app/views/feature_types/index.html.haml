@@ -1,0 +1,21 @@
+- model_class = FeatureType
+= auto_header_tag
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name :id
+      %th= model_class.human_attribute_name :name
+      %th= model_class.human_attribute_name :kind
+      %th= model_class.human_attribute_name :created_at
+      %th
+  %tbody
+    - @feature_types.each do |feature_type|
+      %tr
+        %td= link_to feature_type.id, edit_feature_type_path(feature_type)
+        %td= link_to feature_type.name, edit_feature_type_path(feature_type)
+        %td= human_feature_type_kind(feature_type)
+        %td= human_datetime feature_type.created_at
+        %td.btn-group
+          = link_to_edit_small feature_type
+          = link_to_destroy_small feature_type

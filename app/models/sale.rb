@@ -1,23 +1,40 @@
 class Sale < ActiveRecord::Base
+  include Document
 
-  attr_accessible :imei, :serial_number, :sold_at, :device_type_id, :quantity, :value, :client_id, :user_id
-  belongs_to :device_type
-  belongs_to :client, inverse_of: :purchases
-
+  belongs_to :user, inverse_of: :sales
+  belongs_to :client, inverse_of: :sales
+  belongs_to :store
+  belongs_to :payment_type
+  has_many :sale_items, inverse_of: :sale, dependent: :destroy
+  has_many :items, through: :sale_items
+  accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
+  attr_accessible :date, :client_id, :user_id, :store_id, :payment_type_id, :sale_items_attributes
+  validates_presence_of :user, :client, :store, :payment_type, :date, :status
+  validates_inclusion_of :status, in: Document::STATUSES.keys
   before_validation :set_user
-  after_initialize :set_user
-
-  scope :sold_at, lambda { |period| where(sold_at: period) }
-
-  def device_type_name
-    device_type.present? ? device_type.full_name : '-'
+  after_initialize do
+    self.user_id ||= User.try(:current).try(:id)
+    self.date ||= Time.current
+    self.status ||= 0
   end
+
+  scope :sold_at, lambda { |period| where(date: period) }
+  scope :posted, where(status: 1)
+  scope :deleted, where(status: 2)
 
   def self.search(params)
     sales = Sale.scoped
 
+    unless (start_date = params[:start_date]).blank?
+      sales = sales.where('sold_at >= ?', start_date)
+    end
+
+    unless (end_date = params[:end_date]).blank?
+      sales = sales.where('sold_at <= ?', end_date)
+    end
+
     if (search = params[:search]).present?
-      sales = sales.where 'LOWER(sales.serial_number) = :s OR LOWER(sales.imei) = :s', s: "#{search.mb_chars.downcase.to_s}"
+      sales = sales.where id: search
     end
 
     if (client_q = params[:client]).present?
@@ -31,10 +48,49 @@ class Sale < ActiveRecord::Base
     client.present? ? client.presentation : '-'
   end
 
+  def post
+    if is_valid_for_posting?
+      transaction do
+        sale_items.each do |sale_item|
+          store_item = sale_item.store_item(store)
+          store_item.feature_accounting ? store_item.destroy : store_item.dec(sale_item.quantity)
+        end
+        update_attribute :status, 1
+      end
+    else
+      false
+    end
+  end
+
+  def unpost
+    #TODO unposting sale
+  end
+
+  def total_sum
+    sale_items.sum :price
+  end
+
   private
 
   def set_user
     self.user_id ||= User.try(:current).try(:id)
+  end
+
+  def is_valid_for_posting?
+    is_valid = true
+    if is_new?
+      sale_items.each do |sale_item|
+        store_item = sale_item.store_items.in_store(store).first
+        if !store_item.present? or store_item.quantity < sale_item.quantity
+          self.errors[:base] << t('sales.errors.out_of_stock')
+          is_valid = false
+        end
+      end
+    else
+      errors[:base] << I18n.t('documents.errors.cannot_be_posted')
+      is_valid = false
+    end
+    is_valid
   end
 
 end

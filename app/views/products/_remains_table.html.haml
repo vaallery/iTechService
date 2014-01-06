@@ -1,0 +1,14 @@
+%table.table.table-condensed.table-hover
+  %thead
+    %tr
+      %th= StoreItem.human_attribute_name :store
+      %th= StoreItem.human_attribute_name :quantity
+  %tbody
+    - @stores.each do |store|
+      %tr
+        %td.store= store.name
+        %td.quantity= @product.quantity_in_store store
+  %tfoot
+    %tr
+      %td= t 'total'
+      %td.quantity= @product.quantity_in_store

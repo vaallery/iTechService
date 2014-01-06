@@ -71,6 +71,8 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'shoulda'
+  gem 'shoulda-matchers'
   #gem 'faker'
   #gem 'ffaker'
 end

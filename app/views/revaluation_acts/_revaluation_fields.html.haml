@@ -1,0 +1,8 @@
+%tr.revaluation_fields.fields
+  %td.num
+  %td.code= f.object.try(:code)
+  %td.product= f.input_field :product, as: :product, form: 'revaluation_act'
+  %td.purchase_price.number= f.object.purchase_price
+  %td.actual_price.number= f.object.retail_price
+  %td.price.number= f.number_field :price, class: 'input-small', min: 0
+  %td.action= link_to_remove_fields f

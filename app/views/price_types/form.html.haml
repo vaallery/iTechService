@@ -1,0 +1,6 @@
+= auto_header_tag @price_type
+= simple_form_for @price_type, html: { class: 'form-horizontal' } do |f|
+  = f.input :name
+  = f.input :kind, collection: price_type_kinds_for_select
+  .form-actions
+    = submit_button f

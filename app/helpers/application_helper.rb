@@ -7,7 +7,7 @@ module ApplicationHelper
     end
     link_to '#', class: 'add_fields btn-mini btn-success btn',
         data: { selector: append_to_selector, association: association, content: (fields.gsub('\n', '')) } do
-      icon_tag(:plus) + name
+      glyph(:plus) + ' ' + name
     end
   end
 
@@ -57,7 +57,7 @@ module ApplicationHelper
     options.merge! class: 'btn btn-success btn-large'
     name ||= t('new')
     link_to url_for(controller: object_class.name.tableize, action: 'new'), options do
-      icon_tag(:file) + name
+      "#{glyph(:file)} #{name}".html_safe
     end
   end
 
@@ -65,7 +65,7 @@ module ApplicationHelper
     options.merge! class: 'btn'
     name = t 'show'
     link_to url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options do
-      icon_tag(:eye) + name
+      "#{glyph(:eye)} #{name}".html_safe
     end
   end
 
@@ -73,7 +73,7 @@ module ApplicationHelper
     options.merge! class: 'btn'
     name = t 'edit'
     link_to url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options do
-      icon_tag(:edit) + name
+      "#{glyph(:edit)} #{name}".html_safe
     end
   end
 
@@ -82,7 +82,7 @@ module ApplicationHelper
         data: {confirm: t('confirmation', default: 'Are you sure?')}
     name = t 'destroy'
     link_to url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options do
-      icon_tag(:trash) + name
+      "#{glyph(:trash)} #{name}".html_safe
     end
   end
 
@@ -97,7 +97,7 @@ module ApplicationHelper
       name = options[:name] || t("helpers.button.#{model_name}.#{action}", model: human_model_name, default: t(action, default: 'Save'))
     end
     button_tag options do
-      glyph(:save) + ' ' + name
+      "#{glyph(:save)} #{name}".html_safe
     end
   end
 
@@ -206,7 +206,7 @@ module ApplicationHelper
   end
 
   def history_link_to(url)
-    link_to icon_tag(:time), url, class: 'history_link', remote: true
+    link_to glyph(:time), url, class: 'history_link', remote: true
   end
 
   def store_location
@@ -227,7 +227,7 @@ module ApplicationHelper
   end
 
   def button_to_close_modal
-    content_tag(:a, glyph('remove-sign'), class: 'close_modal_button', 'data-dismiss' => 'modal', href: '#')
+    content_tag(:a, glyph('remove-sign'), class: 'close close_modal_button', 'data-dismiss' => 'modal', href: '#')
   end
 
   def modal_header_tag(title=nil)
@@ -245,15 +245,15 @@ module ApplicationHelper
   end
 
   def human_percent(value)
-    number_to_percentage value, precision: 0
+    value.nil? ? '-' : number_to_percentage(value, precision: 0)
   end
 
   def human_currency(value)
-    number_to_currency value, precision: 0, delimiter: ' ', separator: ','
+    value.nil? ? '-' : number_to_currency(value, precision: 0, delimiter: ' ', separator: ',')
   end
 
   def human_phone(value)
-    number_to_phone value, area_code: true
+    value.nil? ? '-' : number_to_phone(value, area_code: true)
   end
 
   def spinner_tag
@@ -264,6 +264,13 @@ module ApplicationHelper
     content_tag(:li) do
       link_to glyph(:barcode), '#', remote: true, id: 'scan_barcode_button'
     end.html_safe
+  end
+
+  def button_to_update(name, document, attributes)
+    class_name = document.class.to_s.downcase
+    parameters = {controller: class_name.tableize, action: 'update', id: document.id, method: 'put', data: {confirm: t('confirmation')}}
+    parameters[class_name.to_sym] = attributes
+    button_to name, parameters, {class: 'btn btn-primary'}
   end
 
   def header_link_to_change_user

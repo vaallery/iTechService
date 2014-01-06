@@ -1,5 +1,4 @@
-class
-Ability
+class Ability
   include CanCan::Ability
 
   def initialize(user)
@@ -11,6 +10,10 @@ Ability
       can :manage, :all
       can :view_reports
       cannot :write_tech_notice, Device
+      can :view_purchase_price, Product
+      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
     elsif user.admin?
       can :manage, :all
       can :view_reports
@@ -40,6 +43,9 @@ Ability
         can :modify, [Device, Client]
         can [:issue, :activate, :scan], GiftCertificate
         can :modify, Sale
+        can [:choose, :select], Product
+        can [:post, :edit], Sale, status: 0
+        can [:create, :read], Sale
       end
       if user.media?
         can :modify, [Device, Client, Order]
@@ -94,6 +100,9 @@ Ability
       can :read, :all
       cannot [:create, :update, :destroy], StolenPhone
       cannot :read, Salary
+      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.

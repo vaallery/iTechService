@@ -1,0 +1,24 @@
+- model_class = ProductCategory
+= auto_header_tag
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name :id
+      %th= model_class.human_attribute_name :name
+      %th= model_class.human_attribute_name :kind
+      %th= model_class.human_attribute_name :feature_types
+      %th= model_class.human_attribute_name :created_at
+      %th
+
+  %tbody
+    - @product_categories.each do |product_category|
+      %tr
+        %td= link_to product_category.id, edit_product_category_path(product_category)
+        %td= link_to product_category.name, edit_product_category_path(product_category)
+        %td= human_product_category_kind(product_category)
+        %td= product_category.feature_types.collect { |ft| ft.name }.join ', '
+        %td= human_datetime product_category.created_at
+        %td.btn-group
+          = link_to_edit_small product_category
+          = link_to_destroy_small product_category

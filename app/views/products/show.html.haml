@@ -1,0 +1,55 @@
+= auto_header_tag @product, @product.name
+- model_class = Product
+
+%dl.dl-horizontal
+  %dt= model_class.human_attribute_name :code
+  %dd= @product.code.blank? ? '-' : @product.code
+
+  %dt= model_class.human_attribute_name :device_type
+  %dd= @product.device_type_full_name || '-'
+
+  - if can? :view_purchase_price, @product
+    %dt= model_class.human_attribute_name :purchase_price
+    %dd= human_currency @product.purchase_price
+
+  %dt= model_class.human_attribute_name :actual_price
+  %dd= human_currency @product.retail_price
+
+  %dt= model_class.human_attribute_name :quantity
+  %dd= @product.quantity_in_store
+
+  - unless @product.feature_accounting or @product.is_service
+    %dt= Item.human_attribute_name :barcode
+    %dd= @product.item.barcode_num
+
+  - if @product.is_service
+    %dt= Task.human_attribute_name :role
+    %dd= @product.task.role_name
+
+    %dt= Task.human_attribute_name :location
+    %dd= @product.task.location_name
+
+- if @product.feature_accounting
+  %hr
+  %table.table.table-condensed.table-hover
+    %thead
+      %tr
+        %th= Item.human_attribute_name(:barcode)
+        - @product.feature_types.each do |feature_type|
+          %th= feature_type.name
+        %th
+    %tbody
+      - @items.each do |item|
+        = render item
+
+%hr
+%h4= link_to t('attributes.prices'), show_prices_product_path(@product), remote: true
+#product_prices
+
+%hr
+%h4= link_to Product.human_attribute_name(:store_items), show_remains_product_path(@product), remote: true
+#product_store_items
+
+.form-actions
+  = link_to_edit @product
+  = link_to_destroy @product

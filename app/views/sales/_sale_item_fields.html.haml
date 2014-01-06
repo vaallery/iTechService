@@ -1,0 +1,15 @@
+%tr.sale_item_fields.fields{data: {item: f.object.item_id}}
+  %td.num.number
+  %td.code= f.object.code
+  %td.product
+    %strong= f.object.name
+    .features= features_presentation f.object
+    = f.hidden_field :item_id
+  %td.available_quantity= remains_presentation f.object.product, f.object.store
+  %td.quantity= f.number_field :quantity, class: 'input-mini', type: 'number', min: 1, readonly: f.object.feature_accounting
+  %td.price.number= human_currency f.object.retail_price
+  - if can? :view_purchase_price, Product
+    %td.purchase_price.number= f.object.purchase_price
+  %td.discount= f.number_field :discount, class: 'input-small sale_item_discount', min: 0, max: f.object.available_discount
+  %td.sum.number= human_currency f.object.sum
+  %td.actions= link_to_remove_fields f

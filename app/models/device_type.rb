@@ -1,7 +1,7 @@
 class DeviceType < ActiveRecord::Base
   has_many :devices
-  attr_accessible :name, :ancestry, :parent_id, :qty_for_replacement, :qty_replaced, :qty_shop,
-                  :qty_store, :qty_reserve, :expected_during, :code_1c
+  has_one :product, inverse_of: :device_type, dependent: :nullify
+  attr_accessible :name, :ancestry, :parent_id, :qty_for_replacement, :qty_replaced, :qty_shop, :qty_store, :qty_reserve, :expected_during, :code_1c
   validates :name, presence: true
   #validates :name, uniqueness: true
   has_ancestry

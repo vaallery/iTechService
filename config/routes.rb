@@ -90,6 +90,17 @@ ItechService::Application.routes.draw do
   resources :comments
   resources :messages, path: 'chat', except: [:new, :edit, :update]
   resources :sales
+
+  resources :purchases do
+    put 'post', on: :member
+    put 'unpost', on: :member
+  end
+
+  resources :sales do
+    put 'post', on: :member
+    put 'unpost', on: :member
+  end
+
   resources :sales_imports, only: [:new, :create]
 
   resources :gift_certificates do
@@ -103,12 +114,59 @@ ItechService::Application.routes.draw do
 
   resources :settings, except: [:show]
   resources :salaries
-  resources :discounts
+  resources :discounts, except: :show
+
   resources :timesheet_days, path: 'timesheet', except: :show
   resources :bonuses
   resources :bonus_types, except: :show
   resources :installments
   resources :installment_plans
+
+  resources :product_categories, except: :show
+
+  resources :features, except: :show
+
+  resources :contractors
+
+  resources :feature_types, except: :show
+
+  resources :stores do
+    get :product_details, on: :member, defaults: {format: :js}
+  end
+
+  resources :products do
+    get :category_select, on: :collection, defaults: {format: :js}
+    get :choose, on: :collection, defaults: {format: :js}
+    get :show_prices, on: :member, defaults: {format: :js}
+    get :show_remains, on: :member, defaults: {format: :js}
+    get :remains_in_store, on: :member, defaults: {format: :json}
+    post :select, on: :collection, defaults: {format: :js}
+    resources :items, except: [:show]
+  end
+
+  resources :items do
+    get :remains_in_store, on: :member, defaults: {format: :json}
+  end
+
+  resources :product_groups, except: [:index, :show]
+
+  resources :price_types, except: :show
+
+  resources :payment_types
+
+  resources :installments
+
+  resources :installment_plans
+
+  resources :revaluation_acts do
+    put 'post', on: :member
+    put 'unpost', on: :member
+  end
+
+  resources :movement_acts do
+    put 'post', on: :member
+    put 'unpost', on: :member
+  end
 
   wiki_root '/wiki'
 
@@ -127,6 +185,5 @@ ItechService::Application.routes.draw do
       resources :devices, only: [:show, :update]
     end
   end
-
 
 end

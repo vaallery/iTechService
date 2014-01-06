@@ -16,7 +16,8 @@
         = text_field_tag 'contact_phone', human_phone(@device.client.contact_phone), class: 'input-medium', disabled: true
 
   - if can? :update, @device
-    = f.input :device_type_id, as: :device_type
+    = f.input :device_type, as: :device_type
+    = f.hidden_field :item_id
   - else
     = f.input :device_type, as: :string, disabled: true, input_html: {class: 'input-xlarge'}
 
@@ -29,6 +30,8 @@
   - if @device.new_record? or @device.user_id == current_user.id
     = f.input :app_store_pass, required: @device.new_record?
 
+  = f.input :serial_number, as: :serial_number, input_html: {autocomplete: 'off'}, required: true
+  
   = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)
 
   = f.input :tech_notice, input_html: {rows: 5} if can? :write_tech_notice, @device

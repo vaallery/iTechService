@@ -11,15 +11,21 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
+  attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
   attr_accessible :auth_token, :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
 
+  attr_accessor :login
+  attr_accessor :auth_token
+  attr_accessor :installment
+  cattr_accessor :current
+
   belongs_to :location
-  has_many :history_records, as: :object
+  has_many :history_records, as: :object, dependent: :nullify
   has_many :schedule_days, dependent: :destroy
   has_many :duty_days, dependent: :destroy
-  has_many :orders, as: :customer
-  has_many :announcements, inverse_of: :user
-  has_many :comments
+  has_many :orders, as: :customer, dependent: :nullify
+  has_many :announcements, inverse_of: :user, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :devices, inverse_of: :user
   has_many :karmas, dependent: :destroy, inverse_of: :user
   has_many :karma_groups, through: :karmas, uniq: true
@@ -30,14 +36,10 @@ class User < ActiveRecord::Base
   has_many :timesheet_days, inverse_of: :user, dependent: :destroy
   has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users', uniq: true
   has_many :installment_plans, inverse_of: :user, dependent: :destroy
-  #has_many :installments, through: :installment_plans
+  has_many :sales, inverse_of: :user, dependent: :nullify
+  has_many :movement_acts, dependent: :nullify
 
   mount_uploader :photo, PhotoUploader
-
-  attr_accessor :auth_token
-  attr_accessor :login
-  attr_accessor :installment
-  cattr_accessor :current
 
   accepts_nested_attributes_for :schedule_days, :duty_days, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :karmas, allow_destroy: true
@@ -51,6 +53,14 @@ class User < ActiveRecord::Base
   before_save :ensure_authentication_token
 
   scope :id_asc, order('id asc')
+  after_initialize do |user|
+    if user.schedule_days.empty?
+      (1..7).each do |d|
+        user.schedule_days.build day: d
+      end
+    end
+  end
+
   scope :ordered, order('position asc')
   scope :any_admin, where(role: %w[admin superadmin])
   scope :superadmins, where(role: 'superadmin')
@@ -217,6 +227,8 @@ class User < ActiveRecord::Base
 
   def announced_birthday?
     announcements.active_birthdays.any?
+  end
+
   end
 
   def helpable?

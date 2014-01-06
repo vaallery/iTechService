@@ -1,0 +1,22 @@
+- if @products.any?
+  - model_class = Product
+  %table.table.table-striped
+    %thead
+      %tr
+        %th= model_class.human_attribute_name(:id)
+        %th= model_class.human_attribute_name(:code)
+        %th= model_class.human_attribute_name(:name)
+        %th= model_class.human_attribute_name(:created_at)
+        %th
+    %tbody
+      - @products.each do |product|
+        %tr
+          %td= link_to product.id, product_path(product)
+          %td= link_to product.code, product_path(product)
+          %td= link_to product.name, product_path(product)
+          %td= human_datetime product.created_at
+          %td.btn-group
+            = link_to_edit_small product
+            = link_to_destroy_small product
+
+  = paginate @products

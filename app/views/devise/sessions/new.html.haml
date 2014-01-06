@@ -8,15 +8,12 @@
 
   .tab-content
     #card_tab.tab-pane.active
-      = link_to icon_tag('credit-card') + t('.signin', default: 'Sign in'), '#',
-          id: 'sign_in_by_card', class: 'btn btn-large', remote: false
+      = link_to icon_tag('credit-card') + t('.signin', default: 'Sign in'), '#', id: 'sign_in_by_card', class: 'btn btn-large', remote: false
 
     #password_tab.tab-pane
-      = f.input_field :username, required: false, label: false, autofocus: true,
-          placeholder: resource.class.human_attribute_name(:username), class: 'input-medium'
+      = f.input_field :username, required: false, label: false, autofocus: true, placeholder: resource.class.human_attribute_name(:username), class: 'input-medium'
 
-      = f.input_field :password, required: false, label: false,
-          placeholder: resource.class.human_attribute_name(:password), class: 'input-medium'
+      = f.input_field :password, required: false, label: false, placeholder: resource.class.human_attribute_name(:password), class: 'input-medium'
 
       = f.button :submit, t('.signin', default: 'Sign in')
 
@@ -24,5 +21,3 @@
     = f.label :remember_me do
       = f.input_field :remember_me, as: :boolean
       = resource.class.human_attribute_name(:remember_me)
-
--#= render "devise/shared/links"

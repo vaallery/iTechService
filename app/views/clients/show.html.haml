@@ -32,6 +32,9 @@
     %br
     = @client.characteristic
 
+  %dt= Client.human_attribute_name :category
+  %dd= human_client_category @client
+
   %dt= Client.human_attribute_name :admin_info
   %dd= @client.admin_info.present? ? @client.admin_info : '-'
 

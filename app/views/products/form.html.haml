@@ -1,0 +1,33 @@
+= auto_header_tag @product
+= simple_form_for @product, html: { class: 'form-horizontal' } do |f|
+  = f.hidden_field :product_group_id
+  = f.full_error :product_group
+  = f.input :device_type, as: :device_type unless @product.is_service
+  = f.input :name
+  = f.input :code
+  = f.input :warranty_term
+
+  - if @product.is_service
+    = f.simple_fields_for :task do |ff|
+      = ff.input :name
+      = ff.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
+      = ff.association :location, label_method: :full_name
+
+  - if @product.feature_accounting
+    %table.table.table-condensed
+      %thead
+        %tr
+          %th= Item.human_attribute_name :barcode
+          - @product.feature_types.each do |feature_type|
+            %th= feature_type.name
+      %tbody
+        - @product.items.each do |item|
+          %tr
+            %td= item.barcode_num
+            - item.features.each do |feature|
+              %td
+                = hidden_field_tag "item[features_attributes][#{feature.id}][feature_type_id]", feature.feature_type_id
+                = text_field_tag "item[features_attributes][#{feature.id}][value]", feature.value
+
+  .form-actions
+    = submit_button f

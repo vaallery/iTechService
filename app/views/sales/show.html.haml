@@ -1,28 +1,50 @@
 = auto_header_tag
 
 .dl.dl-horizontal
-  %p
-    %dt= Sale.human_attribute_name :sold_at
-    %dd= human_datetime @sale.sold_at
-  %p
-    %dt= Sale.human_attribute_name :device_type
-    %dd= @sale.device_type_name
-  %p
-    %dt= Sale.human_attribute_name :imei
-    %dd= @sale.imei.present? ? @sale.imei : '-'
-  %p
-    %dt= Sale.human_attribute_name :serial_number
-    %dd= @sale.serial_number.present? ? @sale.serial_number : '-'
-  %p
-    %dt= Sale.human_attribute_name :value
-    %dd= @sale.value.present? ? human_currency(@sale.value) : '-'
-  %p
-    %dt= Sale.human_attribute_name :client
-    %dd= @sale.client.present? ? link_to(@sale.client_presentation, client_path(@sale.client)) : '-'
-  %p
-    %dt= Sale.human_attribute_name :quantity
-    %dd= @sale.quantity
+
+  -#%dt= Sale.human_attribute_name :sold_at
+  -#%dd= human_datetime @sale.date
+
+  %dt= Sale.human_attribute_name :client
+  %dd= @sale.client.present? ? link_to(@sale.client_presentation, client_path(@sale.client)) : '-'
+
+  %dt= Sale.human_attribute_name :payment_type
+  %dd= @sale.payment_type.name
+
+  %dt= Sale.human_attribute_name :store
+  %dd= @sale.store.name
+
+%table#sale_items.table.table-condensed.table-hover.table-bordered
+  %caption
+    %h4= t 'products.index.title'
+  %thead
+    %tr
+      %th.num
+      %th.code= Product.human_attribute_name :code
+      %th.product= t 'activerecord.models.product'
+      %th= Product.human_attribute_name :available
+      %th.quantity= SaleItem.human_attribute_name :quantity
+      %th.price= SaleItem.human_attribute_name :price
+      %th.sum= SaleItem.human_attribute_name :sum
+  %tbody
+    - @sale.sale_items.each_with_index do |sale_item, index|
+      %tr.sale_item
+        %td.num.number= index.next
+        %td.code.number= sale_item.code
+        %td.product
+          %strong= sale_item.name
+          .features= features_presentation sale_item
+        %td.number= remains_presentation sale_item.product, @sale.store
+        %td.quantity.number= sale_item.quantity
+        %td.price.number= human_currency sale_item.price
+        %td.sum.number= human_currency sale_item.sum
+  %tfoot
+    %tr
+      %td{colspan: 6}= t 'total'
+      %td.total_sum.number= human_currency @sale.total_sum
 
 .form-actions
   = link_to_edit @sale if can? :edit, @sale
+  = button_to_post @sale if can? :post, @sale
+  -#= button_to_unpost @sale if can? :unpost, @sale
   = link_to_destroy @sale if can? :destroy, @sale

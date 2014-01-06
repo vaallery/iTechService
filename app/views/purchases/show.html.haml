@@ -1,0 +1,46 @@
+.page-header
+  %h3
+    = link_back_to_index
+    = document_presentation @purchase
+
+%dl.dl-horizontal
+  %dt= Purchase.human_attribute_name :status
+  %dd= purchase_status @purchase
+  %dt= Purchase.human_attribute_name :contractor
+  %dd= link_to @purchase.contractor_name, contractor_path(@purchase.contractor)
+  %dt= Purchase.human_attribute_name :store
+  %dd= link_to @purchase.store_name, store_path(@purchase.store)
+
+%table#purchase_products.table.table-condensed.table-striped.table-bordered
+  %caption
+    %h4= t 'products.index.title'
+  %thead
+    %tr
+      %th.num
+      %th.product= Batch.human_attribute_name :product
+      %th.price= Batch.human_attribute_name :price
+      %th.quantity= Batch.human_attribute_name :quantity
+      %th.sum= Batch.human_attribute_name :sum
+
+  %tbody
+    - @purchase.batches.each_with_index do |batch, index|
+      %tr.batch_fields
+        %td.num= index.next
+        %td.product
+          = link_to batch.name, product_path(batch.product)
+          .features= features_presentation batch.item if batch.item.present?
+        %td.price.number= batch.price
+        %td.quantity.number= batch.quantity
+        %td.sum.number= batch.sum
+
+  %tfoot
+    %tr
+      %td{colspan: 4}= t 'total'
+      %td.total_sum.number= @purchase.total_sum
+
+.form-actions
+  = link_to_edit @purchase if can? :edit, @purchase
+  = button_to_post @purchase if can? :post, @purchase
+  -#= button_to_unpost @purchase if can? :unpost, @purchase
+  = link_to_new_revaluation_act(@purchase) if @purchase.is_posted?
+  = link_to_destroy @purchase if can? :destroy, @purchase

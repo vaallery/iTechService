@@ -4,6 +4,7 @@ class Device < ActiveRecord::Base
   belongs_to :user, inverse_of: :devices
   belongs_to :client, inverse_of: :devices
   belongs_to :device_type
+  belongs_to :item
   belongs_to :location
   belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
   has_many :device_tasks, dependent: :destroy
@@ -12,8 +13,15 @@ class Device < ActiveRecord::Base
 
   attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice
   accepts_nested_attributes_for :device_tasks
+
+  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :item_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration
   attr_accessor :service_duration
 
+  validates_presence_of :ticket_number, :client, :location, :device_tasks, :return_at
+  validates_presence_of :device_type, if: 'item.nil?'
+  validates_uniqueness_of :ticket_number
+  validates :imei, length: {is: 15}, allow_nil: true
+  #validates :service_duration, format: { with: /[\D.]+\z/ }
   delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
 
   validates_presence_of :ticket_number, :client, :device_type, :location, :device_tasks, :return_at

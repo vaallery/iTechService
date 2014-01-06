@@ -10,7 +10,8 @@
         = link_to image_tag('logo.png'), root_path, class: 'brand'
         %ul.nav
           %li{class: nav_state_for('messages') + ' nav_chat'}= link_to t('chat.title'), messages_path
-          %li{class: nav_state_for('wiki_pages')}= link_to t("wiki.link"), wiki_all_path if can? :read, WikiPage
+          - if can? :read, WikiPage
+            %li{class: nav_state_for('wiki_pages')}= link_to t("wiki.link"), wiki_all_path
           %li{class: nav_state_for('devices')}= link_to t('devices.link', default: 'Devices'), devices_path
           %li{class: nav_state_for('clients')}= link_to t('clients.link', default: 'Clients'), clients_path
           %li{class: nav_state_for('users')}= link_to t('users.link', default: 'Users'), users_path if can? :manage, User
@@ -20,11 +21,29 @@
             = header_link_to_edit_prices
           - else
             = header_link_to_view_prices
+
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
               = t('dashboard.misc')
               = caret_tag
             %ul.dropdown-menu
+
+              = menu_item t('purchases.link'), purchases_path if can? :manage, Purchase
+              = menu_item t('sales.link'), sales_path if can? :read, Sale
+              = menu_item t('revaluation_acts.index.title'), revaluation_acts_path if can? :manage, RevaluationAct
+              = menu_item t('movement_acts.index.title'), movement_acts_path if can? :manage, MovementAct
+              %li.dropdown-submenu
+                = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+                  = t 'dashboard.references'
+                %ul.dropdown-menu
+                  %li= link_to t('products.index.title'), products_path if can? :read, Product
+                  %li= link_to t('product_categories.index.title'), product_categories_path if can? :manage, ProductCategory
+                  %li= link_to t('contractors.link'), contractors_path if can? :read, Contractor
+                  %li= link_to t('feature_types.index.title'), feature_types_path if can? :manage, FeatureType
+                  %li= link_to t('payment_types.index.title'), payment_types_path if can? :manage, PaymentType
+                  %li= link_to t('stores.index.title'), stores_path if can? :read, Store
+                  %li= link_to t('locations.link'), locations_path if can? :manage, Location
+              %li.divider
               %li= link_to t('users.rating'), rating_users_path
               - if can? :manage, User
                 %li= link_to t('users.schedule'), schedule_users_path
@@ -34,7 +53,6 @@
               %li= link_to t('announcements.link'), announcements_path if current_user.any_admin?
               %li.divider
               %li= link_to t('gift_certificates.link'), gift_certificates_path
-              %li= link_to t('sales.link'), sales_path
               %li= link_to t('stolen_phones.link'), stolen_phones_path
               %li{class: nav_state_for('device_types')}= link_to t('device_types.link', default: 'Device types'), device_types_path if can? :manage, DeviceType
               %li.divider
@@ -44,6 +62,7 @@
               %li= link_to t('locations.link'), locations_path if can? :manage, Location
               %li= link_to t('discounts.link'), discounts_path
               %li= link_to t('settings.link'), settings_path if can? :manage, Setting
+
         %ul.nav.pull-right
           = header_link_to_scan_barcode
           = header_link_for_device_returning
