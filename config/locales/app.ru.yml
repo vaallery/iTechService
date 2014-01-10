@@ -30,6 +30,7 @@ ru:
       schedule_day: Рабочий день
       setting: Параметр
       stolen_phone: Краденый телефон
+      supply_request: 'Заявка'
       task: Задача
       user: Пользователь
 
@@ -302,6 +303,7 @@ ru:
     color: Цвет
     comment: Комментарий
     content: Содержание
+    description: 'Описание'
     fio: ФИО
     id: '№'
     imei: IMEI
@@ -686,6 +688,24 @@ ru:
       title: Новый телефон
     link: Чёрный список
 
+  supply_requests:
+    created: 'Заявка создана'
+    updated: 'Заявка изменена'
+    index:
+      title: 'Заявки'
+    new:
+      title: 'Новая Заявка'
+    edit:
+      title: 'Редактирование Заявки'
+    statuses:
+      all: 'Все'
+      new: 'Новая'
+      done: 'Выполнена'
+    done_link: 'Выполненные'
+    search_number_placeholder: 'Номер заявки'
+    search_object_placeholder: 'Объект'
+    presentation: "Заявка №%{num} от %{date}"
+
   tasks:
     created: Задача создана
     updated: Задача изменена
@@ -755,6 +775,7 @@ ru:
       title: Новый пользователь
     roles:
       admin: Админ
+      driver: 'Водитель'
       manager: Менеджер
       marketing: Маркетолог
       media: Медийщик

@@ -1,0 +1,29 @@
+- model_class = SupplyRequest
+= hidden_field_tag :sort, params[:sort]
+= hidden_field_tag :direction, params[:direction]
+
+- if @supply_requests.any?
+
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th= sortable 'id', model_class.human_attribute_name(:id)
+        %th= model_class.human_attribute_name(:object)
+        %th= model_class.human_attribute_name(:user)
+        %th= sortable 'status', model_class.human_attribute_name(:status)
+        %th= sortable 'created_at', model_class.human_attribute_name(:created_at)
+        %th
+
+    - @supply_requests.each do |supply_request|
+      %tr{class: supply_request.is_done? ? 'success' : 'default'}
+        %td= link_to supply_request.id, supply_request_path(supply_request)
+        %td= link_to supply_request.object, supply_request_path(supply_request)
+        %td= link_to supply_request.user_presentation, user_path(supply_request.user)
+        %td= t("supply_requests.statuses.#{supply_request.status}")
+        %td= human_datetime supply_request.created_at
+        %td= link_to_show_small supply_request
+
+  = paginate @supply_requests
+
+- else
+  = render 'shared/empty'

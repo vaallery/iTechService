@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131225025810) do
+ActiveRecord::Schema.define(:version => 20140108041602) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -29,6 +29,18 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
     t.integer "announcement_id"
     t.integer "user_id"
   end
+
+  create_table "batches", :force => true do |t|
+    t.integer  "purchase_id"
+    t.integer  "item_id"
+    t.decimal  "price",       :precision => 8, :scale => 2
+    t.integer  "quantity"
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+  end
+
+  add_index "batches", ["item_id"], :name => "index_batches_on_item_id"
+  add_index "batches", ["purchase_id"], :name => "index_batches_on_purchase_id"
 
   create_table "bonus_types", :force => true do |t|
     t.string   "name"
@@ -90,10 +102,12 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
     t.string   "email"
     t.text     "admin_info"
     t.string   "contact_phone"
+    t.integer  "category"
     t.integer  "client_characteristic_id"
   end
 
   add_index "clients", ["card_number"], :name => "index_clients_on_card_number"
+  add_index "clients", ["category"], :name => "index_clients_on_category"
   add_index "clients", ["email"], :name => "index_clients_on_email"
   add_index "clients", ["full_phone_number"], :name => "index_clients_on_full_phone_number"
   add_index "clients", ["name"], :name => "index_clients_on_name"
@@ -113,6 +127,12 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
   add_index "comments", ["commentable_id", "commentable_type"], :name => "index_comments_on_commentable_id_and_commentable_type"
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "contractors", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -183,6 +203,7 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
     t.boolean  "notify_client",   :default => false
     t.boolean  "client_notified"
     t.datetime "return_at"
+    t.integer  "item_id"
     t.string   "app_store_pass"
     t.text     "tech_notice"
   end
@@ -191,6 +212,7 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
   add_index "devices", ["done_at"], :name => "index_devices_on_done_at"
   add_index "devices", ["imei"], :name => "index_devices_on_imei"
+  add_index "devices", ["item_id"], :name => "index_devices_on_item_id"
   add_index "devices", ["location_id"], :name => "index_devices_on_location_id"
   add_index "devices", ["status"], :name => "index_devices_on_status"
   add_index "devices", ["ticket_number"], :name => "index_devices_on_ticket_number"
@@ -216,6 +238,36 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
   add_index "duty_days", ["day"], :name => "index_duty_days_on_day"
   add_index "duty_days", ["kind"], :name => "index_duty_days_on_kind"
   add_index "duty_days", ["user_id"], :name => "index_duty_days_on_user_id"
+
+  create_table "feature_types", :force => true do |t|
+    t.string   "name"
+    t.string   "kind"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "feature_types", ["kind"], :name => "index_feature_types_on_code"
+
+  create_table "feature_types_product_categories", :force => true do |t|
+    t.integer "product_category_id"
+    t.integer "feature_type_id"
+  end
+
+  create_table "features", :force => true do |t|
+    t.integer  "feature_type_id"
+    t.integer  "item_id"
+    t.string   "value"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "features", ["feature_type_id"], :name => "index_features_on_feature_type_id"
+  add_index "features", ["item_id"], :name => "index_features_on_item_id"
+
+  create_table "features_items", :force => true do |t|
+    t.integer "feature_id"
+    t.integer "item_id"
+  end
 
   create_table "gift_certificates", :force => true do |t|
     t.string   "number"
@@ -281,6 +333,15 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
 
   add_index "installments", ["installment_plan_id"], :name => "index_installments_on_installment_plan_id"
 
+  create_table "items", :force => true do |t|
+    t.integer  "product_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "barcode_num"
+  end
+
+  add_index "items", ["product_id"], :name => "index_items_on_product_id"
+
   create_table "karma_groups", :force => true do |t|
     t.integer  "bonus_id"
     t.datetime "created_at", :null => false
@@ -326,6 +387,31 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
   add_index "messages", ["recipient_id"], :name => "index_messages_on_recipient_id"
   add_index "messages", ["user_id"], :name => "index_messages_on_user_id"
 
+  create_table "movement_acts", :force => true do |t|
+    t.datetime "date"
+    t.integer  "store_id"
+    t.integer  "dst_store_id"
+    t.integer  "user_id"
+    t.integer  "status"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "movement_acts", ["dst_store_id"], :name => "index_movement_acts_on_dst_store_id"
+  add_index "movement_acts", ["store_id"], :name => "index_movement_acts_on_store_id"
+  add_index "movement_acts", ["user_id"], :name => "index_movement_acts_on_user_id"
+
+  create_table "movement_items", :force => true do |t|
+    t.integer  "movement_act_id"
+    t.integer  "item_id"
+    t.integer  "quantity"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "movement_items", ["item_id"], :name => "index_movement_items_on_item_id"
+  add_index "movement_items", ["movement_act_id"], :name => "index_movement_items_on_movement_act_id"
+
   create_table "orders", :force => true do |t|
     t.string   "number"
     t.integer  "customer_id"
@@ -347,11 +433,122 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
   add_index "orders", ["status"], :name => "index_orders_on_status"
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
 
+  create_table "payment_types", :force => true do |t|
+    t.string   "name"
+    t.integer  "kind"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "payment_types", ["kind"], :name => "index_payment_types_on_kind"
+
+  create_table "price_types", :force => true do |t|
+    t.string   "name"
+    t.integer  "kind"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "price_types", ["kind"], :name => "index_price_types_on_kind"
+
+  create_table "price_types_stores", :force => true do |t|
+    t.integer "price_type_id"
+    t.integer "store_id"
+  end
+
+  add_index "price_types_stores", ["price_type_id"], :name => "index_price_types_stores_on_price_type_id"
+  add_index "price_types_stores", ["store_id"], :name => "index_price_types_stores_on_store_id"
+
   create_table "prices", :force => true do |t|
     t.string   "file"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "product_categories", :force => true do |t|
+    t.string   "name"
+    t.boolean  "feature_accounting", :default => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.integer  "warranty_term"
+    t.string   "kind"
+    t.boolean  "request_price"
+  end
+
+  add_index "product_categories", ["kind"], :name => "index_product_categories_on_kind"
+
+  create_table "product_groups", :force => true do |t|
+    t.string   "name"
+    t.string   "ancestry"
+    t.integer  "product_category_id"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
+    t.integer  "ancestry_depth",      :default => 0
+  end
+
+  add_index "product_groups", ["ancestry"], :name => "index_product_groups_on_ancestry"
+  add_index "product_groups", ["product_category_id"], :name => "index_product_groups_on_product_category_id"
+
+  create_table "product_prices", :force => true do |t|
+    t.integer  "product_id"
+    t.integer  "price_type_id"
+    t.datetime "date"
+    t.decimal  "value"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "product_prices", ["price_type_id"], :name => "index_product_prices_on_price_type_id"
+  add_index "product_prices", ["product_id"], :name => "index_product_prices_on_product_id"
+
+  create_table "products", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.integer  "product_group_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.integer  "warranty_term"
+    t.integer  "device_type_id"
+  end
+
+  add_index "products", ["code"], :name => "index_products_on_code"
+  add_index "products", ["device_type_id"], :name => "index_products_on_device_type_id"
+  add_index "products", ["product_group_id"], :name => "index_products_on_product_group_id"
+
+  create_table "purchases", :force => true do |t|
+    t.integer  "contractor_id"
+    t.integer  "store_id"
+    t.datetime "date"
+    t.integer  "status"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "purchases", ["contractor_id"], :name => "index_purchases_on_contractor_id"
+  add_index "purchases", ["status"], :name => "index_purchases_on_status"
+  add_index "purchases", ["store_id"], :name => "index_purchases_on_store_id"
+
+  create_table "revaluation_acts", :force => true do |t|
+    t.integer  "price_type_id"
+    t.datetime "date"
+    t.integer  "status"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "revaluation_acts", ["price_type_id"], :name => "index_revaluation_acts_on_price_type_id"
+  add_index "revaluation_acts", ["status"], :name => "index_revaluation_acts_on_status"
+
+  create_table "revaluations", :force => true do |t|
+    t.integer  "revaluation_act_id"
+    t.integer  "product_id"
+    t.decimal  "price"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "revaluations", ["product_id"], :name => "index_revaluations_on_product_id"
+  add_index "revaluations", ["revaluation_act_id"], :name => "index_revaluations_on_revaluation_act_id"
 
   create_table "salaries", :force => true do |t|
     t.integer  "user_id"
@@ -365,24 +562,18 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
   add_index "salaries", ["is_prepayment"], :name => "index_salaries_on_is_prepayment"
   add_index "salaries", ["user_id"], :name => "index_salaries_on_user_id"
 
-  create_table "sales", :force => true do |t|
-    t.integer  "device_type_id"
-    t.string   "imei"
-    t.string   "serial_number"
-    t.datetime "sold_at"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+  create_table "sale_items", :force => true do |t|
+    t.integer  "sale_id"
+    t.integer  "item_id"
+    t.decimal  "price",      :precision => 8, :scale => 2
     t.integer  "quantity"
-    t.integer  "client_id"
-    t.integer  "value"
-    t.integer  "user_id"
+    t.datetime "created_at",                                              :null => false
+    t.datetime "updated_at",                                              :null => false
+    t.integer  "discount",                                 :default => 0
   end
 
-  add_index "sales", ["client_id"], :name => "index_sales_on_client_id"
-  add_index "sales", ["device_type_id"], :name => "index_sales_on_device_type_id"
-  add_index "sales", ["imei"], :name => "index_sales_on_imei"
-  add_index "sales", ["serial_number"], :name => "index_sales_on_serial_number"
-  add_index "sales", ["user_id"], :name => "index_sales_on_user_id"
+  add_index "sale_items", ["item_id"], :name => "index_sale_items_on_item_id"
+  add_index "sale_items", ["sale_id"], :name => "index_sale_items_on_sale_id"
 
   create_table "schedule_days", :force => true do |t|
     t.integer  "user_id"
@@ -414,6 +605,38 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
 
   add_index "stolen_phones", ["imei"], :name => "index_stolen_phones_on_imei"
 
+  create_table "store_items", :force => true do |t|
+    t.integer  "item_id"
+    t.integer  "store_id"
+    t.integer  "quantity",   :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "store_items", ["item_id"], :name => "index_store_items_on_item_id"
+  add_index "store_items", ["store_id"], :name => "index_store_items_on_store_id"
+
+  create_table "stores", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "code"
+  end
+
+  add_index "stores", ["code"], :name => "index_stores_on_code"
+
+  create_table "supply_requests", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "status"
+    t.string   "object"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "supply_requests", ["status"], :name => "index_supply_requests_on_status"
+  add_index "supply_requests", ["user_id"], :name => "index_supply_requests_on_user_id"
+
   create_table "tasks", :force => true do |t|
     t.string   "name"
     t.integer  "duration"
@@ -423,10 +646,12 @@ ActiveRecord::Schema.define(:version => 20131225025810) do
     t.integer  "priority",    :default => 0
     t.string   "role"
     t.integer  "location_id"
+    t.integer  "product_id"
   end
 
   add_index "tasks", ["location_id"], :name => "index_tasks_on_location_id"
   add_index "tasks", ["name"], :name => "index_tasks_on_name"
+  add_index "tasks", ["product_id"], :name => "index_tasks_on_product_id"
   add_index "tasks", ["role"], :name => "index_tasks_on_role"
 
   create_table "timesheet_days", :force => true do |t|

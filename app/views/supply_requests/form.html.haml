@@ -1,0 +1,8 @@
+= auto_header_tag @supply_request
+= simple_form_for @supply_request, html: { id: 'supply_request_form', class: 'form-horizontal' } do |f|
+
+  = f.input :object, input_html: { class: 'input-xlarge' }
+  = f.input :description, input_html: { class: 'input-xlarge', rows: 5 }
+
+  .form-actions
+    = submit_button f

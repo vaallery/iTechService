@@ -1,0 +1,25 @@
+- model_class = SupplyRequest
+.page-header
+  %h1
+    = link_back_to_index
+    = t('supply_requests.presentation', num: @supply_request.id, date: human_datetime(@supply_request.created_at))
+
+%table.attributes_table
+  %tr
+    %td= model_class.human_attribute_name :status
+    %td= t("supply_requests.statuses.#{@supply_request.status}")
+  %tr
+    %td= model_class.human_attribute_name :object
+    %td= @supply_request.object
+  %tr
+    %td= model_class.human_attribute_name :description
+    %td= @supply_request.description
+  %tr
+    %td= model_class.human_attribute_name :user
+    %td= link_to @supply_request.user_presentation, user_path(@supply_request.user)
+
+.form-actions
+  = button_to t('supply_requests.statuses.done'), [:make_done, @supply_request], class: 'btn btn-primary' if can? :make_done, @supply_request and !@supply_request.is_done?
+  = button_to t('supply_requests.statuses.new'), [:make_new, @supply_request], class: 'btn btn-primary' if can? :make_new, @supply_request and !@supply_request.is_new?
+  = link_to_edit @supply_request if can? :edit, @supply_request
+  = link_to_destroy @supply_request if can? :destroy, @supply_request

@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-  ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin]
-  ROLES_FOR_ADMIN = %w[admin software media technician marketing programmer supervisor manager]
+  ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin driver]
+  ROLES_FOR_ADMIN = %w[admin software media technician marketing programmer supervisor manager driver]
   HELPABLE = %w[software media technician]
   ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet]
 
@@ -135,7 +135,11 @@ class User < ActiveRecord::Base
   def superadmin?
     has_role? 'superadmin'
   end
-  
+
+  def driver?
+    self.role == 'driver'
+  end
+
   def has_role? role
     if role.is_a? Array
       role.include? self.role

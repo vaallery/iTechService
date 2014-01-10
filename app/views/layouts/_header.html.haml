@@ -30,6 +30,8 @@
                 %li= link_to t('users.schedule'), schedule_users_path
               - if can? :manage, TimesheetDay
                 %li= link_to t('users.timesheet'), timesheet_days_path
+              - if can? :create, SupplyRequest
+                %li= link_to t('supply_requests.index.title'), supply_requests_path
               %li= link_to t('salaries.index.title'), salaries_path if can? :manage, Salary
               %li= link_to t('announcements.link'), announcements_path if current_user.any_admin?
               %li.divider

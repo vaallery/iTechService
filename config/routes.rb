@@ -1,8 +1,5 @@
 ItechService::Application.routes.draw do
 
-  resources :client_categories
-
-
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -109,6 +106,11 @@ ItechService::Application.routes.draw do
   resources :bonus_types, except: :show
   resources :installments
   resources :installment_plans
+  resources :client_categories
+  resources :supply_requests do
+    post :make_done, on: :member
+    post :make_new, on: :member
+  end
 
   wiki_root '/wiki'
 

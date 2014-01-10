@@ -66,6 +66,15 @@ Ability
         can :read_tech_notice, Device
         can :write_tech_notice, Device
       end
+      if user.has_role? %w[technician media]
+        can [:read, :create], SupplyRequest
+        can [:update, :destroy], SupplyRequest, user_id: user.id, status: 'new'
+      end
+      if user.driver?
+        can :read, SupplyRequest
+        can :make_done, SupplyRequest, status: 'new'
+        can :make_new, SupplyRequest, status: 'done'
+      end
       can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement
       can :close_all, Announcement
