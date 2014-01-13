@@ -1,0 +1,2 @@
+module SupplyReportsHelper
+end

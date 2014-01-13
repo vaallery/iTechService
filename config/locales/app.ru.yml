@@ -30,7 +30,9 @@ ru:
       schedule_day: Рабочий день
       setting: Параметр
       stolen_phone: Краденый телефон
+      supply_category: 'Категория снабжения'
       supply_request: 'Заявка'
+      supply_report: 'Отчёт водителя'
       task: Задача
       user: Пользователь
 
@@ -303,6 +305,7 @@ ru:
     color: Цвет
     comment: Комментарий
     content: Содержание
+    date: 'Дата'
     description: 'Описание'
     fio: ФИО
     id: '№'
@@ -688,6 +691,14 @@ ru:
       title: Новый телефон
     link: Чёрный список
 
+  supply_categories:
+    created: 'Категория снабжения создана'
+    updated: 'Категория снабжения изменена'
+    index:
+      title: 'Категории снабжения'
+    new:
+      title: 'Новая Категория снабжения'
+
   supply_requests:
     created: 'Заявка создана'
     updated: 'Заявка изменена'
@@ -705,6 +716,17 @@ ru:
     search_number_placeholder: 'Номер заявки'
     search_object_placeholder: 'Объект'
     presentation: "Заявка №%{num} от %{date}"
+
+  supply_reports:
+    created: 'Отчёт водителя создан'
+    updated: 'Отчёт водителя изменён'
+    index:
+      title: 'Отчёты водителя'
+    new:
+      title: 'Новый Отчёт водителя'
+    edit:
+      title: 'Редактирование Отчёта водителя'
+    presentation: 'Отчёт водителя №%{num} от %{date}'
 
   tasks:
     created: Задача создана

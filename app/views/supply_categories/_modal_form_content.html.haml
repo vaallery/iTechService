@@ -1,0 +1,11 @@
+= simple_form_for @supply_category, html: { class: 'form-horizontal', remote: false } do |f|
+  .modal-header
+    %h3
+      = button_to_close_modal
+      = t 'supply_categories.new.title'
+
+  .modal-body
+    = f.input :name, input_html: { autofocus: true }
+
+  .modal-footer
+    = submit_button f

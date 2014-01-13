@@ -1,0 +1,4 @@
+:plain
+  $('#supply_categories_tree').html("#{j(content_tag(:ul, nested_supply_categories(@supply_categories)))}");
+  buildSupplyCategoriesTree();
+  closeModal();

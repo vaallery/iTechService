@@ -107,6 +107,9 @@ ItechService::Application.routes.draw do
   resources :installments
   resources :installment_plans
   resources :client_categories
+  resources :supply_categories
+  resources :supply_reports
+
   resources :supply_requests do
     post :make_done, on: :member
     post :make_new, on: :member

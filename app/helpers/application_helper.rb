@@ -55,7 +55,7 @@ module ApplicationHelper
 
   def link_to_new object_class, name = nil, options = {}
     options.merge! class: 'btn btn-success btn-large'
-    name ||= t('new')
+    name ||= t("#{object_class.name.tableize}.new.title", default: t('new'))
     link_to url_for(controller: object_class.name.tableize, action: 'new'), options do
       icon_tag(:file) + name
     end

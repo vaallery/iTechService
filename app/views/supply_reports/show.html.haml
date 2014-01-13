@@ -1,0 +1,9 @@
+%p#notice= notice
+
+%p
+  %b Date:
+  = @supply_report.date
+
+= link_to 'Edit', edit_supply_report_path(@supply_report)
+\|
+= link_to 'Back', supply_reports_path

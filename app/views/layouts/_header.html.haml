@@ -32,6 +32,8 @@
                 %li= link_to t('users.timesheet'), timesheet_days_path
               - if can? :create, SupplyRequest
                 %li= link_to t('supply_requests.index.title'), supply_requests_path
+              - if can? :read, SupplyReport
+                %li= link_to t('supply_reports.index.title'), supply_reports_path
               %li= link_to t('salaries.index.title'), salaries_path if can? :manage, Salary
               %li= link_to t('announcements.link'), announcements_path if current_user.any_admin?
               %li.divider
@@ -40,6 +42,7 @@
               %li= link_to t('stolen_phones.link'), stolen_phones_path
               %li{class: nav_state_for('device_types')}= link_to t('device_types.link', default: 'Device types'), device_types_path if can? :manage, DeviceType
               %li.divider
+              %li= link_to t('supply_categories.index.title'), supply_categories_path if can? :manage, SupplyCategory
               %li= link_to t('bonus_types.index.title'), bonus_types_path if can? :manage, BonusType
               %li= link_to t('client_categories.index.title'), client_categories_path if can? :manage, ClientCategory
               %li= link_to t('tasks.link'), tasks_path if can? :manage, Task

@@ -210,3 +210,9 @@ window.datepicker_dates =
            "Декабрь"],
   monthsShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
   today: "Сегодня"
+
+window.jstree_i18n =
+  create: 'Создать'
+  rename: 'Переименовать'
+  delete: 'Удалить'
+  confirmation: 'Вы уверены?'
