@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Supply report:
+  = @supply.supply_report
+%p
+  %b Supply category:
+  = @supply.supply_category
+%p
+  %b Name:
+  = @supply.name
+%p
+  %b Quantity:
+  = @supply.quantity
+%p
+  %b Cost:
+  = @supply.cost
+
+= link_to 'Edit', edit_supply_path(@supply)
+\|
+= link_to 'Back', supplies_path

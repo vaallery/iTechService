@@ -1,0 +1,12 @@
+= simple_form_for(@supply) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :supply_report
+    = f.association :supply_category
+    = f.input :name
+    = f.input :quantity
+    = f.input :cost
+
+  .form-actions
+    = f.button :submit

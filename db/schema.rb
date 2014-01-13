@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140113044043) do
+ActiveRecord::Schema.define(:version => 20140113084500) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -624,6 +624,19 @@ ActiveRecord::Schema.define(:version => 20140113044043) do
   end
 
   add_index "stores", ["code"], :name => "index_stores_on_code"
+
+  create_table "supplies", :force => true do |t|
+    t.integer  "supply_report_id"
+    t.integer  "supply_category_id"
+    t.string   "name"
+    t.integer  "quantity"
+    t.decimal  "cost"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "supplies", ["supply_category_id"], :name => "index_supplies_on_supply_category_id"
+  add_index "supplies", ["supply_report_id"], :name => "index_supplies_on_supply_report_id"
 
   create_table "supply_categories", :force => true do |t|
     t.string   "name"
