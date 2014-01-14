@@ -1,9 +1,30 @@
-%p#notice= notice
+.page-header
+  %h3
+    = link_back_to_index
+    = t 'supply_reports.presentation', num: @supply_report.id, date: human_date(@supply_report.date)
 
-%p
-  %b Date:
-  = @supply_report.date
+%table.table.table.table-hover
+  %thead
+    %tr
+      %th.category= Supply.human_attribute_name :supply_category
+      %th.name= Supply.human_attribute_name :name
+      %th.quantity= Supply.human_attribute_name :quantity
+      %th.cost= Supply.human_attribute_name :cost
+      %th.sum= Supply.human_attribute_name :sum
+  %tbody
+    - @supply_report.supplies.each do |supply|
+      %tr
+        %td= supply.category_name
+        %td= supply.name
+        %td= supply.quantity
+        %td= human_currency supply.cost
+        %td= human_currency supply.sum
+  %tfoot
+    %tr
+      %td{colspan: 4}= t 'total'
+      %td= human_currency @supply_report.total_cost
 
-= link_to 'Edit', edit_supply_report_path(@supply_report)
-\|
-= link_to 'Back', supply_reports_path
+- if can? :manage, @supply_report
+  .form-actions
+    = link_to_edit @supply_report if can? :edit, @supply_report
+    = link_to_destroy @supply_report if can? :destroy, @supply_report

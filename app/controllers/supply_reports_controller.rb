@@ -1,8 +1,9 @@
 class SupplyReportsController < ApplicationController
+  helper_method :sort_column, :sort_direction
   authorize_resource
 
   def index
-    @supply_reports = SupplyReport.all
+    @supply_reports = SupplyReport.scoped.date_desc.page(params[:page])
     respond_to do |format|
       format.html
     end
@@ -58,4 +59,15 @@ class SupplyReportsController < ApplicationController
       format.html { redirect_to supply_reports_url }
     end
   end
+
+  private
+
+  def sort_column
+    Order.column_names.include?(params[:sort]) ? params[:sort] : ''
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
+  end
+
 end

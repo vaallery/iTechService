@@ -1,5 +1,7 @@
 class SupplyReport < ActiveRecord::Base
 
+  scope :date_desc, order('date desc')
+
   has_many :supplies, dependent: :destroy
   accepts_nested_attributes_for :supplies, allow_destroy: true
   attr_accessible :date, :supplies_attributes
@@ -9,7 +11,11 @@ class SupplyReport < ActiveRecord::Base
   after_initialize { self.date ||= Date.current }
 
   def total_cost
-    supplies.sum(:cost) || 0
+    if supplies.any?
+      supplies.map { |s|s.sum }.sum
+    else
+      0
+    end
   end
 
 end
