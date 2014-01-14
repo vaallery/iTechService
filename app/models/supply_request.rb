@@ -2,10 +2,11 @@ class SupplyRequest < ActiveRecord::Base
 
   STATUSES = %w[new done]
 
+  scope :created_desc, order('created_at desc')
+  scope :actual, where(status: 'new')
+
   belongs_to :user
   delegate :name, :short_name, :presentation, to: :user, prefix: true
-
-  scope :created_desc, order('created_at desc')
 
   attr_accessible :user_id, :status, :object, :description
   validates_presence_of :user, :status, :object

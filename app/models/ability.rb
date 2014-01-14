@@ -74,6 +74,7 @@ Ability
         can :read, SupplyRequest
         can :make_done, SupplyRequest, status: 'new'
         can :make_new, SupplyRequest, status: 'done'
+        can [:create, :read], SupplyReport
       end
       can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement

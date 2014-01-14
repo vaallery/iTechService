@@ -11,8 +11,8 @@
         %ul.nav
           %li{class: nav_state_for('messages') + ' nav_chat'}= link_to t('chat.title'), messages_path
           %li{class: nav_state_for('wiki_pages')}= link_to t("wiki.link"), wiki_all_path if can? :read, WikiPage
-          %li{class: nav_state_for('devices')}= link_to t('devices.link', default: 'Devices'), devices_path
-          %li{class: nav_state_for('clients')}= link_to t('clients.link', default: 'Clients'), clients_path
+          %li{class: nav_state_for('devices')}= link_to t('devices.link', default: 'Devices'), devices_path if can? :read, Device
+          %li{class: nav_state_for('clients')}= link_to t('clients.link', default: 'Clients'), clients_path if can? :read, Client
           %li{class: nav_state_for('users')}= link_to t('users.link', default: 'Users'), users_path if can? :manage, User
           %li{class: nav_state_for('infos')}= link_to t('infos.link', default: 'Infos'), infos_path if can? :read, Info
           %li{class: nav_state_for('orders')}= link_to t('orders.link', default: 'Orders'), orders_path if can? :read, Order
@@ -30,7 +30,7 @@
                 %li= link_to t('users.schedule'), schedule_users_path
               - if can? :manage, TimesheetDay
                 %li= link_to t('users.timesheet'), timesheet_days_path
-              - if can? :create, SupplyRequest
+              - if can? :read, SupplyRequest
                 %li= link_to t('supply_requests.index.title'), supply_requests_path
               - if can? :read, SupplyReport
                 %li= link_to t('supply_reports.index.title'), supply_reports_path

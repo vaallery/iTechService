@@ -58,6 +58,31 @@
   border-collapse: collapse;
 }
 
+#actual_requests_table{
+  &>thead>tr>th{
+    border-right: 1px solid #dddddd;
+  }
+  &>tbody>.supply_request_row{
+    &>td{
+      .border-top-thick();
+      &:first-child{
+        .border-left-thick();
+      }
+      &:last-child{
+        .border-right-thick();
+      }
+    }
+  }
+  &>tbody>.empty_row>td{
+    .border-top-thick();
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  border-right: 0;
+  border-collapse: collapse;
+}
+
 .device_movement_column{
   .history_link{
     float: right;

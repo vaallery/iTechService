@@ -6,6 +6,9 @@ class DashboardController < ApplicationController
     if current_user.marketing?
       load_actual_orders
       @table_name = 'orders_table'
+    elsif current_user.driver?
+      @supply_requests = SupplyRequest.actual.page params[:page]
+      @table_name = 'requests_table'
     else
       load_actual_devices
       @table_name = 'tasks_table'

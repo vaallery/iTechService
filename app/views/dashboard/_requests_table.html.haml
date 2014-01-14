@@ -1,0 +1,20 @@
+- if @supply_requests.present?
+  = paginate @supply_requests, remote: true
+  %table#actual_requests_table.table.table-hover.table-bordered
+    %thead
+      %tr
+        %th= SupplyRequest.human_attribute_name :object
+        %th= SupplyRequest.human_attribute_name :description
+        %th= SupplyRequest.human_attribute_name :user
+        %th
+    %tbody
+      - @supply_requests.each do |supply_request|
+        %tr{class: 'supply_request_row info'}
+          %td= link_to supply_request.object, supply_request_path(supply_request)
+          %td= supply_request.description
+          %td= link_to supply_request.user_presentation, user_path(supply_request.user)
+          %td= link_to_show_small supply_request
+        %tr.empty_row
+          %td{colspan: 4}
+
+  = paginate @supply_requests, remote: true
