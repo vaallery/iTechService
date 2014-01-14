@@ -241,6 +241,13 @@ ru:
       stolen_phone:
         imei: IMEI
 
+      supply:
+        supply_category: :activerecord.models.supply_category
+        supply_report: :activerecord.models.supply_report
+        quantity: 'Количество'
+        cost: 'Цена'
+        sum: 'Сумма'
+
       task:
         cost: Стоимость
         devices: Девайсы
@@ -727,6 +734,7 @@ ru:
     edit:
       title: 'Редактирование Отчёта водителя'
     presentation: 'Отчёт водителя №%{num} от %{date}'
+    add_supply: 'Добавить объект'
 
   tasks:
     created: Задача создана

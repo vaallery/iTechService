@@ -11,6 +11,7 @@ class SupplyCategoriesController < ApplicationController
 
   def show
     @supply_category = SupplyCategory.find(params[:id])
+    @supply_categories = @supply_category.has_children? ? @supply_category.children : SupplyCategory.roots
     respond_to do |format|
       format.js
     end

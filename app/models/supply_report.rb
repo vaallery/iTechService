@@ -6,4 +6,10 @@ class SupplyReport < ActiveRecord::Base
   validates_presence_of :date
   validates_associated :supplies
 
+  after_initialize { self.date ||= Date.current }
+
+  def total_cost
+    supplies.sum(:cost) || 0
+  end
+
 end

@@ -1,0 +1,7 @@
+%tr.supply.fields
+  %td.category= f.input_field :supply_category, as: :supply_category
+  %td.name= f.text_field :name, class: 'input-xxlarge'
+  %td.quantity= f.number_field :quantity, class: 'input-mini'
+  %td.cost= f.text_field :cost, class: 'input-small'
+  %td.sum.align_right= f.object.try(:sum)
+  %td.action= link_to_remove_fields f

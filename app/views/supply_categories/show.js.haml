@@ -1,0 +1,8 @@
+:plain
+  $selector = $('.supply_category_selector:has(.btn-group.open)');
+  if(#{@supply_category.is_childless?}){
+    $('[id$=_supply_category_id]', $selector).val("#{@supply_category.id}");
+    $('.supply_category_name', $selector).text("#{@supply_category.name}");
+    $('.btn-group.open', $selector).removeClass('open');
+  }
+  $('.supply_categories_list', $selector).html("#{j(make_supply_categories_list(@supply_categories))}");

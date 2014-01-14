@@ -645,6 +645,8 @@ ActiveRecord::Schema.define(:version => 20140113084500) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "supply_categories", ["ancestry"], :name => "index_supply_categories_on_ancestry"
+
   create_table "supply_reports", :force => true do |t|
     t.date     "date"
     t.datetime "created_at", :null => false

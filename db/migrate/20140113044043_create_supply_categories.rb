@@ -6,5 +6,6 @@ class CreateSupplyCategories < ActiveRecord::Migration
 
       t.timestamps
     end
+    add_index :supply_categories, :ancestry
   end
 end

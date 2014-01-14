@@ -3,5 +3,25 @@
 
   = f.input :date, as: :my_date
 
+  %table#supplies_table.table.table-bordered.table-condensed.table-hover
+    %thead
+      %tr
+        %th.category= Supply.human_attribute_name :supply_category
+        %th.name= Supply.human_attribute_name :name
+        %th.quantity= Supply.human_attribute_name :quantity
+        %th.cost= Supply.human_attribute_name :cost
+        %th.sum= Supply.human_attribute_name :sum
+        %th.action
+    %tbody
+      = f.simple_fields_for :supplies do |ff|
+        = render 'supply_fields', f: ff
+    %tfoot
+      %tr
+        %td{colspan: 4}= t 'total'
+        %td.align_right= @supply_report.total_cost
+        %td
+
+  = link_to_add_fields t('supply_reports.add_supply'), '#supplies_table', f, :supplies
+
   .form-actions
     = submit_button f
