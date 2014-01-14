@@ -1,0 +1,21 @@
+%table#supply_report.table.table-bordered.table-hover
+  %caption
+    %h4= t 'reports.supply_report'
+  %thead
+    %tr
+      %th.center= Supply.human_attribute_name :supply_category
+      %th.center= t 'reports.sum'
+  %tbody
+    %tr
+      - @report[:supply_categories].each do |supply_category|
+        %tr.detailable
+          %td= supply_category[:name]
+          %td= human_currency supply_category[:sum]
+        - supply_category[:supplies].each do |supply|
+          %tr.details
+            %td= supply.name
+            %td= "#{supply.quantity} x #{human_currency(supply.cost)}"
+  %tfoot
+    %tr
+      %td= t 'total'
+      %td= human_currency @report[:supplies_sum]

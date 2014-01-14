@@ -1,8 +1,5 @@
 ItechService::Application.routes.draw do
 
-  resources :supplies
-
-
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users

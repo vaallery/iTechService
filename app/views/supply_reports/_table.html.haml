@@ -9,14 +9,17 @@
       %tr
         %th= sortable 'id', model_class.human_attribute_name(:id)
         %th= sortable 'date', model_class.human_attribute_name(:date)
+        %th= model_class.human_attribute_name(:sum)
         %th= sortable 'created_at', model_class.human_attribute_name(:created_at)
         %th
-    - @supply_reports.each do |supply_report|
-      %tr
-        %td= link_to supply_report.id, supply_report_path(supply_report)
-        %td= link_to human_date(supply_report.date), supply_report_path(supply_report)
-        %td= link_to human_datetime(supply_report.created_at), supply_report_path(supply_report)
-        %td= link_to_show_small supply_report
+    %tbody
+      - @supply_reports.each do |supply_report|
+        %tr
+          %td= link_to supply_report.id, supply_report_path(supply_report)
+          %td= link_to human_date(supply_report.date), supply_report_path(supply_report)
+          %td= human_currency supply_report.total_cost
+          %td= link_to human_datetime(supply_report.created_at), supply_report_path(supply_report)
+          %td= link_to_show_small supply_report
 
   = paginate @supply_reports
 

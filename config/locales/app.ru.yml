@@ -322,6 +322,7 @@ ru:
     object: Объект
     serial_number: Серийный номер
     status: Статус
+    sum: Сумма
     updated_at: Время обновления
     user: Пользователь
     user_comment: Комментарий сотрудника
@@ -649,6 +650,7 @@ ru:
     total: Всего
     users_report: Принятые девайсы по сотрудникам
     sales_report: "Отчет по продажам"
+    supply_report: 'Отчёт водителя'
 
   salaries:
     edit:
