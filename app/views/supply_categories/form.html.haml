@@ -1,0 +1,6 @@
+= auto_header_tag @supply_category
+= simple_form_for @supply_category, html: { class: 'form-horizontal' } do |f|
+  = f.input :name, input_html: { autofocus: true }
+
+  .form-actions
+    = submit_button f

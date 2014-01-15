@@ -20,6 +20,7 @@ class SupplyCategoriesController < ApplicationController
   def new
     @supply_category = SupplyCategory.new
     respond_to do |format|
+      format.html { render 'form' }
       format.js { render 'shared/show_modal_form' }
     end
   end

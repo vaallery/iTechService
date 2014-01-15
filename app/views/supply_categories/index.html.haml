@@ -1,6 +1,6 @@
 .page-header
   %h1= t '.title'
-  = link_to_new SupplyCategory, t('supply_categories.new.title'), remote: true
+  = link_to_new SupplyCategory, t('supply_categories.new.title')
 
 #supply_categories_tree
   %ul= nested_supply_categories @supply_categories
