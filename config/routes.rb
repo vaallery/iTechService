@@ -10,6 +10,7 @@ ItechService::Application.routes.draw do
   match 'sign_in_by_card' => 'dashboard#sign_in_by_card', via: :get, as: 'sign_in_by_card'
   match 'actual_orders' => 'dashboard#actual_orders', via: :get
   match 'actual_tasks' => 'dashboard#actual_tasks', via: :get
+  match 'actual_supply_requests' => 'dashboard#actual_supply_requests', via: :get
   match 'ready_devices' => 'dashboard#ready_devices', via: :get
   match 'goods_for_sale' => 'dashboard#goods_for_sale', via: :get
   match 'reports' => 'dashboard#reports', via: :get

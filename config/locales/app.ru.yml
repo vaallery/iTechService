@@ -415,6 +415,7 @@ ru:
 
   dashboard:
     actual_orders: Текущие заказы
+    actual_requests: "Текущие запросы"
     actual_tasks: "Текущие задачи"
     goods_for_sale: "Техника для продажи"
     ready_devices: "Готовые девайсы"

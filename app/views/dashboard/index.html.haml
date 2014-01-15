@@ -8,29 +8,30 @@
     = link_to "#{glyph('file-alt')} #{t('supply_reports.new.title')}".html_safe, new_supply_report_path, class: 'btn btn-success btn-large' if can? :create, SupplyReport
     = link_to icon_tag('bar-chart') + t('dashboard.reports'), reports_path, class: 'btn btn-link btn-medium btn-large pull-right' if current_user.can_view_reports?
 
-- unless current_user.driver?
-  %h4
-    %ul#dashboard_navigation.nav.nav-pills
-      - if current_user.marketing?
-        %li.actual_orders_nav.active= link_to t('dashboard.actual_orders'), actual_orders_path, remote: true
+%h4
+  %ul#dashboard_navigation.nav.nav-pills
+    - if current_user.marketing?
+      %li.actual_orders_nav.active= link_to t('dashboard.actual_orders'), actual_orders_path, remote: true
+    - else
+      - if current_user.any_admin?
+        %li.dropdown.actual_tasks_nav.active
+          = link_to '#', 'data-toggle' => 'dropdown' do
+            = t('dashboard.actual_tasks')
+            %span.devices_location= ". #{@location_name}" if @location_name.present?
+            %b.caret
+          %ul.dropdown-menu
+            %li= link_to t('everywhere'), actual_tasks_path, remote: true
+            %li.divider
+            - Location.find_each do |location|
+              %li= link_to location.full_name, actual_tasks_path(location: location.id), remote: true
       - else
-        - if current_user.any_admin?
-          %li.dropdown.actual_tasks_nav.active
-            = link_to '#', 'data-toggle' => 'dropdown' do
-              = t('dashboard.actual_tasks')
-              %span.devices_location= ". #{@location_name}" if @location_name.present?
-              %b.caret
-            %ul.dropdown-menu
-              %li= link_to t('everywhere'), actual_tasks_path, remote: true
-              %li.divider
-              - Location.find_each do |location|
-                %li= link_to location.full_name, actual_tasks_path(location: location.id), remote: true
-        - else
-          %li.actual_tasks_nav.active= link_to t('dashboard.actual_tasks'), actual_tasks_path, remote: true
-          - if current_user.technician?
-            %li.actual_orders_nav= link_to t('dashboard.actual_orders'), actual_orders_path, remote: true
-        %li.ready_devices_nav= link_to t('dashboard.ready_devices'), ready_devices_path, remote: true
-      %li.goods_for_sale_nav= link_to t('dashboard.goods_for_sale'), goods_for_sale_path, remote: true
+        %li.actual_tasks_nav.active= link_to t('dashboard.actual_tasks'), actual_tasks_path, remote: true
+        - if current_user.technician?
+          %li.actual_orders_nav= link_to t('dashboard.actual_orders'), actual_orders_path, remote: true
+        - if current_user.driver?
+          %li.actual_requests_nav= link_to t('dashboard.actual_requests'), actual_supply_requests_path, remote: true
+      %li.ready_devices_nav= link_to t('dashboard.ready_devices'), ready_devices_path, remote: true
+    %li.goods_for_sale_nav= link_to t('dashboard.goods_for_sale'), goods_for_sale_path, remote: true
 
 #dashboard_table_filter= render @table_name+'_filter'
 #dashboard_content= render @table_name
