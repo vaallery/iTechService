@@ -2,6 +2,11 @@ class Product < ActiveRecord::Base
 
   BARCODE_PREFIX = '243'
 
+  scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
+  scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
+  scope :goods, joins(product_group: :product_category).where(product_categories: {kind: ['equipment', 'accessory']})
+  scope :services, joins(product_group: :product_category).where(product_categories: {kind: 'service'})
+
   belongs_to :product_group, inverse_of: :products
   belongs_to :device_type, inverse_of: :product
   has_many :items, inverse_of: :product, dependent: :destroy
@@ -11,17 +16,14 @@ class Product < ActiveRecord::Base
   has_one :task, inverse_of: :product, dependent: :destroy
   accepts_nested_attributes_for :items, allow_destroy: true
   accepts_nested_attributes_for :task, allow_destroy: false
+
+  delegate :feature_accounting, :feature_types, :is_service, :request_price, :product_category, to: :product_group, allow_nil: true
+  delegate :full_name, to: :device_type, prefix: true, allow_nil: true
+
   attr_accessible :code, :name, :product_group_id, :device_type_id, :warranty_term, :items_attributes, :task_attributes
   validates_presence_of :name, :code, :product_group
   validates_presence_of :device_type, unless: 'is_service'
   validates_uniqueness_of :code
-  delegate :feature_accounting, :feature_types, :is_service, :request_price, :product_category, to: :product_group, allow_nil: true
-  delegate :full_name, to: :device_type, prefix: true, allow_nil: true
-
-  scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
-  scope :in_store, lambda { |store| includes(:store_items).where(store_items: { store_id: store.is_a?(Store) ? store.id : store }) }
-  scope :goods, joins(:product_group).where(product_groups: {is_service: false})
-  scope :services, joins(:product_group).where(product_groups: {is_service: true})
 
   after_save { self.is_service ? self.create_task : self.task.try(:destroy) }
 
