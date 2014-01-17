@@ -3,7 +3,7 @@
   %td.code= f.object.try(:code)
   %td.product
     %strong= f.object.name
-    = f.hidden_field :item_id
+    = f.hidden_field :product_id
   %td.purchase_price.number= f.object.purchase_price
   %td.actual_price.number= f.object.retail_price
   %td.price.number= f.number_field :price, class: 'input-small', min: 0

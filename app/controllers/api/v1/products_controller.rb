@@ -3,8 +3,7 @@ module Api
 
     class ProductsController < Api::BaseController
       skip_before_filter :authenticate, only: [:remnants, :sync]
-      load_and_authorize_resource except: :remnants
-      skip_load_resource only: :index
+      authorize_resource except: [:remnants, :sync]
 
       def index
         @products = Product.search params
@@ -12,6 +11,7 @@ module Api
       end
 
       def show
+        @product = Product.find params[:id]
         respond_with @product.as_json include: {items: {include: :features}}
       end
 
@@ -25,7 +25,7 @@ module Api
 
       def sync
         @products = Product.goods
-        respond_with @products.as_json(only: [:code, :name], methods: [:retail_price, :quantity_by_stores])
+        respond_with @products.as_json(for_sync: true)
       end
 
     end
