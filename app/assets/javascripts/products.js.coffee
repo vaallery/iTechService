@@ -27,6 +27,10 @@ jQuery ->
     $('#product_choose_form #product_search_field').val('')
     $.get '/products.js', choose: true
 
+  $(document).on 'click', '#product_choose_form #clear_item_search_field', ->
+    $('#product_choose_form #item_search_field').val('')
+    $.get '/items.js', choose: true
+
   $(document).on 'click', '#product_choose_form .product_row', ->
     $form = $('#product_choose_form')
     $('#product_id', $form).removeAttr('disabled').val($(this).data('product'))
@@ -43,6 +47,10 @@ jQuery ->
     $('#product_choose_form #new_item_fields input').removeAttr('disabled')
     $('#product_choose_form #new_item_fields').show()
     $(this).hide()
+
+  $(document).on 'keydown', '#product_choose_form #new_item_fields input, #product_choose_form #product_search_field, #product_choose_form #item_search_field', ->
+    if event.keyCode is 13
+      event.preventDefault()
 
   validation_timeout = null
   $(document).on 'keyup', '#product_choose_form #new_item_fields input', ->

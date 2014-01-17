@@ -7,17 +7,17 @@ jQuery ->
     $('.sum>input', $row).val(price * quantity)
 
     total_sum = 0
-    $('#purchase_products .batch_fields').each ->
+    $('#batches .batch_fields').each ->
       sum = Number($(this).find('.sum>input').val())
       total_sum = total_sum + sum
 
-    $('#purchase_products .total_sum').text(total_sum)
+    $('#batches .total_sum').text(total_sum)
 
   $(document).on 'click', '#purchase_form .add_fields, #purchase_form .remove_fields', ->
-    enumerate_table('#purchase_products')
+    enumerate_table('#batches')
 
-  if $('#purchase_products').length > 0
-    enumerate_table('#purchase_products')
+  if $('#batches').length > 0
+    enumerate_table('#batches')
 
 #  $(document).on 'click', '.product_selector .product_link', ->
 #    slideSpeed = 100

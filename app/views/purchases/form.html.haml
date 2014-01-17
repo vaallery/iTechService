@@ -4,7 +4,7 @@
   = f.association :contractor, as: :select
   = f.association :store, collection: Store.for_purchase.all
 
-  %table#purchase_products.enumerable.table.table-condensed.table-striped.table-bordered
+  %table#batches.enumerable.table.table-condensed.table-hover
     %caption
       %h4= t 'products.index.title'
     %thead
@@ -27,7 +27,7 @@
         %td.total_sum.number= @purchase.total_sum
         %td
 
-  = link_to_add_fields t('products.add_product'), '#purchase_products>tbody', f, :batches
+  = link_to_add_product :purchase, :batches, false
 
   .form-actions
     = submit_button f

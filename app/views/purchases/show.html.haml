@@ -11,7 +11,7 @@
   %dt= Purchase.human_attribute_name :store
   %dd= link_to @purchase.store_name, store_path(@purchase.store)
 
-%table#purchase_products.table.table-condensed.table-striped.table-bordered
+%table#batches.table.table-condensed.table-hover
   %caption
     %h4= t 'products.index.title'
   %thead

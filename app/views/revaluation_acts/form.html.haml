@@ -15,12 +15,12 @@
         %th.actual_price= Product.human_attribute_name :actual_price
         %th.price= Revaluation.human_attribute_name :price
         %th.action
-
     %tbody
       = f.simple_fields_for :revaluations do |ff|
         = render 'revaluation_fields', f: ff
 
-  = link_to_add_fields t('products.add_product'), '#revaluations>tbody', f, :revaluations
+  -#= link_to_add_fields t('products.add_product'), '#revaluations>tbody', f, :revaluations
+  = link_to_add_product :revaluation_act, :revaluations, true
 
   .form-actions
     = submit_button f

@@ -12,6 +12,7 @@ class Batch < ActiveRecord::Base
 
   after_initialize do
     self.price ||= purchase_price
+    self.quantity ||= 1
   end
 
   def sum

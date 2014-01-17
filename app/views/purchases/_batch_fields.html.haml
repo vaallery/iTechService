@@ -2,9 +2,10 @@
   %td.num
   %td.code= f.object.try(:code)
   %td.product
-    = f.input_field :item, as: :product, form: 'purchase'
+    %strong= f.object.name
     .features= features_presentation f.object
-  %td.quantity.number= f.input_field :quantity, class: 'input-small', min: 1
-  %td.price.number= f.input_field :price, class: 'input-small'
+    = f.hidden_field :item_id
+  %td.quantity.number= f.number_field :quantity, class: 'input-mini', min: 1, readonly: f.object.feature_accounting
+  %td.price.number= f.number_field :price, class: 'input-small'
   %td.sum.number= text_field_tag :sum, f.object.sum, class: 'input-small', disabled: true
   %td.action= link_to_remove_fields f
