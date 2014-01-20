@@ -1,21 +1,24 @@
 class MovementAct < ActiveRecord::Base
   include Document
 
+  scope :posted, self.where(status: 1)
+  scope :deleted, self.where(status: 2)
+
   belongs_to :user
   belongs_to :store
   belongs_to :dst_store, class_name: 'Store'
   has_many :movement_items, dependent: :destroy, inverse_of: :movement_act
+
   accepts_nested_attributes_for :movement_items, allow_destroy: true, reject_if: lambda { |a| a[:item_id].blank? or a[:quantity].blank? }
+
+  delegate :name, to: :store, prefix: true, allow_nil: true
+  delegate :name, to: :dst_store, prefix: true, allow_nil: true
+
   attr_accessible :date, :dst_store_id, :store_id, :movement_items_attributes
   validates_presence_of :date, :dst_store, :store, :status, :user
   validates_inclusion_of :status, in: Document::STATUSES.keys
   validate :stores_must_be_different
   before_validation :set_user
-  delegate :name, to: :store, prefix: true, allow_nil: true
-  delegate :name, to: :dst_store, prefix: true, allow_nil: true
-
-  scope :posted, self.where(status: 1)
-  scope :deleted, self.where(status: 2)
 
   after_initialize do
     self.user_id ||= User.try(:current).try(:id)

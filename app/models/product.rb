@@ -86,23 +86,10 @@ class Product < ActiveRecord::Base
     client.present? ? Discount::available_for(client, self) : 0
   end
 
-  def remnants
+  def remnants_hash
     res = {}
     Store.for_retail.each { |store| res.store store.code, quantity_in_store(store) }
     res
-  end
-
-  def as_json(options={})
-    if options[:for_sync]
-      {
-        code.to_s => {
-          prices: retail_price,
-          remnants: remnants
-        }
-      }
-    else
-      super(options)
-    end
   end
 
 end

@@ -25,7 +25,17 @@ module Api
 
       def sync
         @products = Product.goods
-        respond_with @products.as_json(for_sync: true)
+        respond_with products_hash(@products)
+      end
+
+      private
+
+      def products_hash(products)
+        res = {}
+        products.each do |product|
+          res.store product.code.to_s, { price: product.retail_price, remnants: product.remnants_hash }
+        end
+        res
       end
 
     end
