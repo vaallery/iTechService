@@ -88,17 +88,17 @@ class Product < ActiveRecord::Base
 
   def remnants
     res = {}
-    Store.all.each { |store| res.store store.code, quantity_in_store(store) }
+    Store.for_retail.each { |store| res.store store.code, quantity_in_store(store) }
     res
   end
 
   def as_json(options={})
     if options[:for_sync]
       {
-        code: code,
-        name: name,
-        price: retail_price,
-        remnants: remnants
+        code.to_s => {
+          prices: retail_price,
+          remnants: remnants
+        }
       }
     else
       super(options)
