@@ -179,7 +179,7 @@ ItechService::Application.routes.draw do
       match 'scan/:barcode_num' => 'barcodes#scan'
       match 'profile' => 'users#profile'
       resources :products, only: [:index, :show] do
-        get :sync, on: :collection
+        post :sync, on: :collection
         get :remnants, on: :member
       end
       resources :items, only: [:index, :show]

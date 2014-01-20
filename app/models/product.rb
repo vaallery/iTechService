@@ -92,4 +92,10 @@ class Product < ActiveRecord::Base
     res
   end
 
+  private
+
+  def update_on_site
+
+  end
+
 end

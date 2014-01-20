@@ -2,17 +2,17 @@ module Api
   module V1
 
     class ProductsController < Api::BaseController
-      skip_before_filter :authenticate, only: [:remnants, :sync]
-      authorize_resource except: [:remnants, :sync]
+      skip_before_filter :authenticate, only: [:remnants]
+      authorize_resource except: [:remnants]
 
       def index
         @products = Product.search params
-        respond_with @products.as_json only: [:id, :name]
+        render json: @products.as_json(only: [:id, :name])
       end
 
       def show
         @product = Product.find params[:id]
-        respond_with @product.as_json include: {items: {include: :features}}
+        render json: @product.as_json(include: {items: {include: :features}})
       end
 
       def remnants
@@ -25,7 +25,7 @@ module Api
 
       def sync
         @products = Product.goods
-        respond_with products_hash(@products)
+        render json: products_hash(@products)
       end
 
       private
