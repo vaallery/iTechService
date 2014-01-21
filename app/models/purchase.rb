@@ -1,6 +1,9 @@
 class Purchase < ActiveRecord::Base
   include Document
 
+  scope :posted, self.where(status: 1)
+  scope :deleted, self.where(status: 2)
+
   belongs_to :contractor, inverse_of: :purchases
   belongs_to :store, inverse_of: :purchases
   has_many :batches, inverse_of: :purchase, dependent: :destroy
@@ -10,9 +13,6 @@ class Purchase < ActiveRecord::Base
   validates_presence_of :contractor, :store, :status, :date
   validates_inclusion_of :status, in: Document::STATUSES.keys
   validates_associated :batches
-
-  scope :posted, self.where(status: 1)
-  scope :deleted, self.where(status: 2)
 
   after_initialize do
     self.date ||= Time.current
