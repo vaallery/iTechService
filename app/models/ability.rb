@@ -29,6 +29,8 @@ class Ability
       cannot :manage_rights, User
       cannot :manage, [BonusType, Bonus]
       cannot [:edit, :destroy], Karma
+    elsif user.synchronizer?
+      can :sync, Product
     else
       if user.manager?
         can :manage, :all

@@ -1,17 +1,32 @@
 class User < ActiveRecord::Base
 
-  ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin]
+  ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin synchronizer]
   ROLES_FOR_ADMIN = %w[admin software media technician marketing programmer supervisor manager]
   HELPABLE = %w[software media technician]
   ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet]
 
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :registerable, :rememberable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
+  scope :id_asc, order('id asc')
+  scope :ordered, order('position asc')
+  scope :any_admin, where(role: %w[admin superadmin])
+  scope :superadmins, where(role: 'superadmin')
+  scope :software, where(role: 'software')
+  scope :media, where(role: 'media')
+  scope :technician, where(role: 'technician')
+  scope :not_technician, where('role <> ?', 'technician')
+  scope :marketing, where(role: 'marketing')
+  scope :programmer, where(role: 'programmer')
+  scope :supervisor, where(role: 'supervisor')
+  scope :manager, where(role: 'manager')
+  scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
+  scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
+  scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
+  scope :schedulable, where(schedule: true)
+  scope :staff, where('role <> ?', 'synchronizer')
+  scope :fired, where(is_fired: true)
+  scope :active, where(is_fired: [false, nil])
+  scope :for_changing, where(username: %w[vova admin test test_soft test_media test_tech test_market test_manager])
+  scope :exclude, lambda { |user| where('id <> ?', user.is_a?(User) ? user.id : user) }
+  #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
   attr_accessor :login
   attr_accessor :auth_token
@@ -45,34 +60,19 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :salaries, reject_if: lambda { |attrs| attrs['amount'].blank? or attrs['issued_at'].blank? }
   accepts_nested_attributes_for :installment_plans, reject_if: lambda { |attrs| (attrs['object'].blank? or attrs['cost'].blank? or attrs['issued_at'].blank?) and (attrs['installments_attributes'].blank?) }
 
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable, :registerable, :rememberable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
+
   validates :username, :role, presence: true
   validates :password, presence: true, confirmation: true, if: :password_required?
   validates :role, inclusion: { in: ROLES }
   before_validation :validate_rights_changing
   before_save :ensure_authentication_token
-
-  scope :id_asc, order('id asc')
-  scope :ordered, order('position asc')
-  scope :any_admin, where(role: %w[admin superadmin])
-  scope :superadmins, where(role: 'superadmin')
-  scope :software, where(role: 'software')
-  scope :media, where(role: 'media')
-  scope :technician, where(role: 'technician')
-  scope :not_technician, where('role <> ?', 'technician')
-  scope :marketing, where(role: 'marketing')
-  scope :programmer, where(role: 'programmer')
-  scope :supervisor, where(role: 'supervisor')
-  scope :manager, where(role: 'manager')
-  scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
-  scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
-  scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
-  scope :schedulable, where(schedule: true)
-  scope :staff, where('role <> ?', 'admin')
-  scope :fired, where(is_fired: true)
-  scope :active, where(is_fired: [false, nil])
-  scope :for_changing, where(username: %w[vova admin test test_soft test_media test_tech test_market test_manager])
-  scope :exclude, lambda { |user| where('id <> ?', user.is_a?(User) ? user.id : user) }
-  #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
   acts_as_list
 
@@ -135,6 +135,10 @@ class User < ActiveRecord::Base
 
   def superadmin?
     has_role? 'superadmin'
+  end
+
+  def synchronizer?
+    role == 'synchronizer'
   end
   
   def has_role? role
