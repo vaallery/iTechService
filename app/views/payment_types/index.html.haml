@@ -14,7 +14,7 @@
     %tr
       %td= link_to payment_type.id, edit_payment_type_path(payment_type)
       %td= link_to payment_type.name, edit_payment_type_path(payment_type)
-      %td= link_to t("payment_types.kinds.#{payment_type.kind_s}"), edit_payment_type_path(payment_type)
+      %td= link_to t("payment_types.kinds.#{payment_type.kind}"), edit_payment_type_path(payment_type)
       %td= human_datetime payment_type.created_at
       %td.btn-group
         = link_to_edit_small payment_type
