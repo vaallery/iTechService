@@ -14,13 +14,17 @@ class Product < ActiveRecord::Base
   has_many :store_items, through: :items, dependent: :destroy
   has_many :revaluations, inverse_of: :product, dependent: :destroy
   has_one :task, inverse_of: :product, dependent: :destroy
+  has_many :product_relations, as: :parent, dependent: :destroy
+  has_many :related_products, through: :product_relations, source: :relatable, source_type: 'Product'
+  has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'
+
   accepts_nested_attributes_for :items, allow_destroy: true
   accepts_nested_attributes_for :task, allow_destroy: false
 
   delegate :feature_accounting, :feature_types, :is_service, :request_price, :product_category, to: :product_group, allow_nil: true
   delegate :full_name, to: :device_type, prefix: true, allow_nil: true
 
-  attr_accessible :code, :name, :product_group_id, :device_type_id, :warranty_term, :items_attributes, :task_attributes
+  attr_accessible :code, :name, :product_group_id, :device_type_id, :warranty_term, :items_attributes, :task_attributes, :related_product_ids, :related_product_group_ids
   validates_presence_of :name, :code, :product_group
   validates_presence_of :device_type, unless: 'is_service'
   validates_uniqueness_of :code

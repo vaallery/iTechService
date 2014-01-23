@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140113084500) do
+ActiveRecord::Schema.define(:version => 20140123033424) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -500,6 +500,18 @@ ActiveRecord::Schema.define(:version => 20140113084500) do
 
   add_index "product_prices", ["price_type_id"], :name => "index_product_prices_on_price_type_id"
   add_index "product_prices", ["product_id"], :name => "index_product_prices_on_product_id"
+
+  create_table "product_relations", :force => true do |t|
+    t.integer  "parent_id"
+    t.string   "parent_type"
+    t.integer  "relatable_id"
+    t.string   "relatable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "product_relations", ["parent_type", "parent_id"], :name => "index_product_relations_on_parent_type_and_parent_id"
+  add_index "product_relations", ["relatable_type", "relatable_id"], :name => "index_product_relations_on_relatable_type_and_relatable_id"
 
   create_table "products", :force => true do |t|
     t.string   "name"

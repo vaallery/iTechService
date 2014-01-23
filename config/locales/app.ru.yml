@@ -249,9 +249,12 @@ ru:
         discount: 'Скидка'
         feature_accounting: 'Учёт по характеристикам'
         features: 'Характеристики'
+        items: 'Единицы'
         product_group: Группа
         purchase_price: 'Закупочная цена'
         quantity_in_store: 'Остаток на складе'
+        related_products: 'Сопутствующие продукты'
+        related_product_groups: 'Сопутствующие группы продуктов'
 
       product_category:
         feature_types: "Типы характеристик"
@@ -739,9 +742,9 @@ ru:
     updated: Заказ изменён
     order_num: "Заказ №%{num}"
     not_found: "Заказ не найден"
-
     spare_parts: "Запчасти"
     not_spare_parts: "Не запчасти"
+
   payment_types:
     created: 'Способ оплаты создан'
     updated: 'Способ оплаты изменён'
@@ -812,6 +815,8 @@ ru:
     add_product: 'Добавить Продукт'
     created: "Продукт создан"
     updated: "Продукт изменён"
+    form:
+      attributes: 'Атрибуты'
     edit:
       title: "Редактирование Продукта"
     index:
