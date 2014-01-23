@@ -1,0 +1,37 @@
+= form_for @sale, html: {id: 'sale_form'} do |f|
+  = render 'quick_select_panel'
+  .row-fluid.center_row
+    .span2
+    .span8
+      .row-fluid.heder_row
+        .span2= t 'sales.doc_kind'
+        .span4= select_tag 'sale_kind', options_for_sale_kind_select, include_blank: false
+        .span2= t 'sales.doc_num'
+        .span4= @sale.id
+      .row-fluid.result_row
+        .span3= t 'sales.total'
+        .span9
+          %span.pull-right= @sale.total_sum
+      .row-fluid
+        .span3= Sale.human_attribute_name :client
+        .span3= t 'sales.sum'
+        .span3= t 'sales.total_discount'
+        .span3= t 'sales.sum_with_discount'
+      .row-fluid
+        .span3
+        .span3
+        .span3
+        .span3
+      #sale_products.row-fluid
+        %table.table.table-condensed.table-bordered.table-hover
+          %thead
+            %tr
+              %th.num= t 'sales.num'
+              %th.code= Product.human_attribute_name :code
+              %th.name= Product.human_attribute_name :name
+              %th.quantity= SaleItem.human_attribute_name :quantity
+              %th.price= SaleItem.human_attribute_name :price
+              %th.sum= SaleItem.human_attribute_name :sum
+    .span2
+  .row.bottom_row
+    .span12

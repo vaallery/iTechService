@@ -920,6 +920,17 @@ ru:
     link: :sales.index.title
     created: "Продажа создана"
     updated: "Продажа изменена"
+    doc_kind: 'Вид док.'
+    doc_num: '№ док.'
+    total: 'Итог'
+    num: '№'
+    sum: 'Сумма'
+    total_discount: 'Итог. скидка'
+    sum_with_discount: 'Сум. со скид.'
+    kinds:
+      sale: 'Продажа'
+      return: 'Возврат'
+      return_check: 'Возврат чека'
 
     add_product: "Добавить Продукт"
 

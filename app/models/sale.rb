@@ -1,6 +1,10 @@
 class Sale < ActiveRecord::Base
   include Document
 
+  scope :sold_at, lambda { |period| where(date: period) }
+  scope :posted, where(status: 1)
+  scope :deleted, where(status: 2)
+
   belongs_to :user, inverse_of: :sales
   belongs_to :client, inverse_of: :sales
   belongs_to :store
@@ -8,7 +12,7 @@ class Sale < ActiveRecord::Base
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
-  attr_accessible :date, :client_id, :user_id, :store_id, :payment_type_id, :sale_items_attributes
+  attr_accessible :date, :client_id, :user_id, :store_id, :payment_type_id, :sale_items_attributes, :is_return
   validates_presence_of :user, :client, :store, :payment_type, :date, :status
   validates_inclusion_of :status, in: Document::STATUSES.keys
   before_validation :set_user
@@ -16,11 +20,8 @@ class Sale < ActiveRecord::Base
     self.user_id ||= User.try(:current).try(:id)
     self.date ||= Time.current
     self.status ||= 0
+    self.is_return ||= false
   end
-
-  scope :sold_at, lambda { |period| where(date: period) }
-  scope :posted, where(status: 1)
-  scope :deleted, where(status: 2)
 
   def self.search(params)
     sales = Sale.scoped
