@@ -185,6 +185,7 @@ ru:
       create: "Создать %{model}"
       update: "Сохранить %{model}"
     links:
+      cancel: 'Отмена'
       confirm: 'Вы уверены?'
   number:
     currency:

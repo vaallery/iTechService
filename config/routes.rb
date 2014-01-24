@@ -99,6 +99,8 @@ ItechService::Application.routes.draw do
   resources :sales do
     put 'post', on: :member
     put 'unpost', on: :member
+    post 'add_product', on: :collection
+    post 'cancel', on: :collection
   end
 
   resources :sales_imports, only: [:new, :create]

@@ -13,7 +13,7 @@ class Sale < ActiveRecord::Base
   has_many :items, through: :sale_items
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
   attr_accessible :date, :client_id, :user_id, :store_id, :payment_type_id, :sale_items_attributes, :is_return
-  validates_presence_of :user, :client, :store, :payment_type, :date, :status
+  validates_presence_of :user, :store, :date, :status
   validates_inclusion_of :status, in: Document::STATUSES.keys
   before_validation :set_user
   after_initialize do
@@ -21,6 +21,7 @@ class Sale < ActiveRecord::Base
     self.date ||= Time.current
     self.status ||= 0
     self.is_return ||= false
+    self.store_id ||= Store.default.try(:id)
   end
 
   def self.search(params)
@@ -43,6 +44,10 @@ class Sale < ActiveRecord::Base
     end
 
     sales
+  end
+
+  def kind
+    is_return ? 'return' : 'sale'
   end
 
   def client_presentation

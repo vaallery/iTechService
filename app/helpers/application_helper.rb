@@ -248,12 +248,16 @@ module ApplicationHelper
     value.nil? ? '-' : number_to_percentage(value, precision: 0)
   end
 
-  def human_currency(value)
-    value.nil? ? '-' : number_to_currency(value, precision: 0, delimiter: ' ', separator: ',')
+  def human_currency(value, with_unit=true)
+    value.nil? ? '-' : (with_unit ? number_to_currency(value, precision: 0, delimiter: ' ', separator: ',') : number_to_currency(value, precision: 2, delimiter: ' ', separator: ',', unit: ''))
   end
 
   def human_phone(value)
     value.nil? ? '-' : number_to_phone(value, area_code: true)
+  end
+
+  def human_number(value)
+    number_to_human value, precision: 2, delimiter: ' ', separator: ','
   end
 
   def spinner_tag
@@ -280,6 +284,15 @@ module ApplicationHelper
         User.for_changing.map do |user|
           content_tag(:li, link_to(user.username, become_path(user)))
         end.join.html_safe
+      end
+    end
+  end
+
+  def barcode_reader_tag
+    content_tag(:div, id: 'barcode_reader', class: 'modal-backdrop fade') do
+      content_tag(:div, id: 'barcode_reader_inner', class: 'input-prepend') do
+        link_to(t('helpers.links.cancel'), '#', id: 'cancel_barcode_scan', class: 'btn') +
+        text_field_tag('barcode_number', nil, id: 'barcode_field', autofocus: true)
       end
     end
   end

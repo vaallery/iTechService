@@ -30,7 +30,7 @@ module ProductsHelper
   end
 
   def link_to_add_product(form, association, is_product_only, options={})
-    link_to "#{glyph(:plus)} #{t('products.add_product')}".html_safe, choose_products_path(form: form, association: association, is_product_only: is_product_only, options: options), remote: true, class: 'add_product btn btn-success'
+    link_to "#{glyph(:plus)} #{t('products.add_product')}".html_safe, choose_products_path(form: form, association: association, is_product_only: is_product_only, options: options), remote: true, class: 'btn btn-success'
   end
 
   def product_fields(form, association, object, options={})

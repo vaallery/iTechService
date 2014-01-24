@@ -153,10 +153,10 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
   create_table "device_tasks", :force => true do |t|
     t.integer  "device_id"
     t.integer  "task_id"
-    t.boolean  "done"
+    t.boolean  "done",         :default => false
     t.text     "comment"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.decimal  "cost"
     t.datetime "done_at"
     t.text     "user_comment"
@@ -196,10 +196,10 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
     t.string   "serial_number"
     t.integer  "location_id"
     t.integer  "user_id"
-    t.string   "security_code"
-    t.string   "status"
     t.string   "imei"
     t.boolean  "replaced",        :default => false
+    t.string   "security_code"
+    t.string   "status"
     t.boolean  "notify_client",   :default => false
     t.boolean  "client_notified"
     t.datetime "return_at"
@@ -435,7 +435,7 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
 
   create_table "payment_types", :force => true do |t|
     t.string   "name"
-    t.string   "kind"
+    t.integer  "kind"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -655,46 +655,6 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
 
   add_index "stores", ["code"], :name => "index_stores_on_code"
 
-  create_table "supplies", :force => true do |t|
-    t.integer  "supply_report_id"
-    t.integer  "supply_category_id"
-    t.string   "name"
-    t.integer  "quantity"
-    t.decimal  "cost"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-  end
-
-  add_index "supplies", ["supply_category_id"], :name => "index_supplies_on_supply_category_id"
-  add_index "supplies", ["supply_report_id"], :name => "index_supplies_on_supply_report_id"
-
-  create_table "supply_categories", :force => true do |t|
-    t.string   "name"
-    t.string   "ancestry"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "supply_categories", ["ancestry"], :name => "index_supply_categories_on_ancestry"
-
-  create_table "supply_reports", :force => true do |t|
-    t.date     "date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "supply_requests", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "status"
-    t.string   "object"
-    t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "supply_requests", ["status"], :name => "index_supply_requests_on_status"
-  add_index "supply_requests", ["user_id"], :name => "index_supply_requests_on_user_id"
-
   create_table "tasks", :force => true do |t|
     t.string   "name"
     t.integer  "duration"
@@ -727,10 +687,11 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
   add_index "timesheet_days", ["user_id"], :name => "index_timesheet_days_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "username"
+    t.string   "username",               :default => "", :null => false
     t.string   "role"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.string   "email",                  :default => ""
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -741,7 +702,6 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "authentication_token"
-    t.string   "email",                  :default => ""
     t.integer  "location_id"
     t.string   "photo"
     t.string   "surname"
@@ -772,7 +732,7 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["schedule"], :name => "index_users_on_schedule"
   add_index "users", ["surname"], :name => "index_users_on_surname"
-  add_index "users", ["username"], :name => "index_users_on_username"
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
   create_table "wiki_page_attachments", :force => true do |t|
     t.integer  "page_id",                           :null => false

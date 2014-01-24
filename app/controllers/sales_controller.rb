@@ -88,6 +88,16 @@ class SalesController < ApplicationController
     end
   end
 
+  def add_product
+
+  end
+
+  def cancel
+    respond_to do |format|
+      format.html { redirect_to new_sale_path }
+    end
+  end
+
   private
 
   def sort_column
