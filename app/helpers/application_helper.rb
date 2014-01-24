@@ -288,13 +288,4 @@ module ApplicationHelper
     end
   end
 
-  def barcode_reader_tag
-    content_tag(:div, id: 'barcode_reader', class: 'modal-backdrop fade') do
-      content_tag(:div, id: 'barcode_reader_inner', class: 'input-prepend') do
-        link_to(t('helpers.links.cancel'), '#', id: 'cancel_barcode_scan', class: 'btn') +
-        text_field_tag('barcode_number', nil, id: 'barcode_field', autofocus: true)
-      end
-    end
-  end
-
 end

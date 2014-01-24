@@ -47,6 +47,7 @@ ItechService::Application.routes.draw do
     get :questionnaire, on: :collection
     get :autocomplete, on: :collection
     get :select, on: :member
+    get :find, on: :member
   end
 
   resources :device_types, except: [:new] do

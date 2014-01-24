@@ -1,5 +1,6 @@
 = form_for @sale, html: {id: 'sale_form'} do |f|
   = f.hidden_field :store_id
+  = f.hidden_field :date
   #sale_top_panel.row-fluid
     .span12
       - 2.times do
@@ -19,7 +20,9 @@
     .span8
       #sale_header_row.row-fluid
         .span2.field_label= t 'sales.doc_kind'
-        .span4= select_tag 'sale_kind', options_for_sale_kind_select(@sale.kind), include_blank: false
+        .span4
+          = f.hidden_field :is_return
+          = select_tag 'sale_kind', options_for_sale_kind_select(@sale.kind), include_blank: false
         .span2.field_label= t 'sales.doc_num'
         #sale_id.span4= @sale.id
       #sale_result_row.row-fluid{class: @sale.kind}
@@ -33,9 +36,12 @@
         .span3= t 'sales.discounted_sum'
       #sale_details.row-fluid
         #sale_client_cell.span3
+          = f.hidden_field :client_id
+          #sale_client_name= client_link @sale.client
+          #sale_client_category= human_client_category @sale.client
         #sale_sum_cell.span3
         #sale_discount_cell.span3
-        #sale_discounted_sum.span3
+        #sale_discounted_sum_cell.span3
       #sale_items_row.row-fluid
         .span12
           %table#sale_items.enumerable.table.table-condensed.table-bordered.table-hover
@@ -50,9 +56,9 @@
             %tbody= f.fields_for(:sale_items) { |ff| render 'sale_item_fields', f: ff }
     #sale_right_panel.span2
   #sale_bottom_row.row-fluid
-    .span2
-    .span2
-    .span2
-    .span2
-    .span2
-    .span2
+    .span2= link_to t('sales.enter_client_card'), '#', id: 'sale_enter_client_card', class: 'btn'
+    .span2= link_to t('sales.find_client'), clients_path(search: true), remote: true, id: 'sale_find_client', class: 'btn'
+    .span2= link_to t('sales.manual_discount'), '#', class: 'btn'
+    .span2= link_to t('sales.payment'), '#', class: 'btn'
+    .span2= link_to t('sales.print_warranty'), '#', class: 'btn'
+    .span2= link_to_post_sale @sale

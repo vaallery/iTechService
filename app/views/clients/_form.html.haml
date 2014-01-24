@@ -1,10 +1,10 @@
 = simple_form_for @client, remote: true, html: { id: 'client_form', class: 'form-horizontal' } do |f|
-  = hidden_field_tag :form, params[:form]
-  .modal-header
-    = button_to_close_modal
+  .form-header
+    %a.close#close_client_form_button{href: '#'}
+      %i.icon-remove-sign
     %h3= t("clients.#{@client.new_record? ? 'new' : 'edit'}.title")
 
-  .modal-body
+  .form-body
     = f.input :name, autofocus: true
     = f.input :surname
     = f.input :patronymic

@@ -60,7 +60,16 @@
     }
     #sale_details{
       font-weight: bold;
-      &>*{
+      &>div{
+        height: 42px;
+      }
+      #sale_client_cell{
+        text-align: center;
+        #sale_client_category{
+          font-weight: normal;
+        }
+      }
+      #sale_sum_cell, #sale_discount_cell, #sale_discounted_sum_cell{
         text-align: right;
       }
     }
@@ -80,6 +89,13 @@
     }
   }
   #sale_bottom_row{
-
+    .btn{
+      display: block;
+      font-size: 22px;
+      padding: 6px;
+      height: 44px;
+      vertical-align: middle;
+      width: 100%;
+    }
   }
 }

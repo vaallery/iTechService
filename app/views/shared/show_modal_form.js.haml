@@ -3,5 +3,5 @@
     $("body").append("#{j(render('shared/modal_form'))}");
     $("#modal_form").modal('show');
   } else {
-    $("#modal_form").html("#{j(render(@form_name || 'modal_form_content'))}");
+    $("#modal_form").html("#{j(render(params[:form_name] || 'modal_form_content'))}");
   }

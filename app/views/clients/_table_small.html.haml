@@ -1,0 +1,21 @@
+- if @clients.any?
+
+  %table.table.table-striped.table-hover
+    %thead
+      %tr
+        %th= Client.human_attribute_name(:id)
+        %th= Client.human_attribute_name(:name)
+        %th= Client.human_attribute_name(:phone_number)
+        %th
+    %tbody
+      - @clients.each do |client|
+        %tr
+          %td= client.id
+          %td= link_to client.short_name, select_client_path(client, form: 'sale'), remote: true
+          %td= client.human_phone_number
+          %td= link_to glyph(:edit), edit_client_path(client, form: 'modal'), remote: true, class: 'btn btn-small'
+
+  = paginate @clients, remote: true
+
+- else
+  = render 'shared/empty'

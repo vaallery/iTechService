@@ -9,21 +9,32 @@ jQuery ->
     $(document).on 'click', '.remove_fields', ->
       calculate_sale_items_total_sum()
 
-  $(document).on 'click', '#sale_scan_barcode', ->
+  $(document).on 'click', '#sale_scan_barcode', (event)->
+    event.preventDefault()
     scanProductBarcode()
 
-  $(document).on 'click', '#sale_enter_barcode', ->
+  $(document).on 'click', '#sale_enter_barcode', (event)->
+    event.preventDefault()
     enterProductBarcode()
 
-scanProductBarcode = ->
+  $(document).on 'click', '#sale_enter_client_card', (event)->
+    event.preventDefault()
+    scanClientCard()
+
+  $(document).on 'click', '#cancel_client_card_scan', (event)->
+    event.preventDefault()
+    closeClientCardReader()
+
+window.scanProductBarcode = ->
   scaned_code = ''
   $('#barcode_reader').fadeIn().addClass('in')
   $(document).on 'keydown', (event)->
     if $('#barcode_reader:visible').length > 0
       console.log event.keyCode
       if event.keyCode is 13 and scaned_code isnt ''
-        $('#barcode_reader').removeClass('in').fadeOut()
+        closeBarcodeReader()
         $.get '/items.js?form=sale&association=sale_items&q='+scaned_code
+        scaned_code = ''
       else
         if event.keyCode in [48..57]
           scaned_code = scaned_code[1..-1] if scaned_code.length is 12
@@ -38,8 +49,26 @@ window.enterProductBarcode = ->
   $('#barcode_reader').fadeIn().addClass('in')
   $('#barcode_reader #barcode_field').on 'keydown', (event)->
     if event.keyCode is 13 and $('#barcode_reader #barcode_field').val() isnt ''
-      $('#barcode_reader').removeClass('in').fadeOut()
+      closeBarcodeReader()
       $.get '/items.js?form=sale&association=sale_items&q='+$('#barcode_reader #barcode_field').val()
+
+window.scanClientCard = ->
+  $('#client_card_reader').fadeIn().addClass('in')
+  card_number = ''
+  $(document).on 'keydown', (event)->
+    if $('#client_card_reader:visible').length > 0
+      if event.keyCode is 13 and card_number isnt ''
+        closeClientCardReader()
+        $.get '/clients/'+card_number+'/find.js?form=sale'
+        card_number = ''
+      else
+        card_number += String.fromCharCode(event.keyCode).toLowerCase()
+  setTimeout (->
+    closeClientCardReader()
+  ), 5000
+
+window.closeClientCardReader = ->
+  $('#client_card_reader').removeClass('in').fadeOut()
 
 window.calculate_sale_items_total_sum = ->
   total_sum = 0
@@ -50,7 +79,7 @@ window.calculate_sale_items_total_sum = ->
   $('#sale_result_value').text accounting.formatMoney(total_sum)
   $('#sale_sum_cell').text accounting.formatMoney(total_sum)
   $('#sale_discount_cell').text accounting.formatMoney(discount_sum)
-  $('#sale_discounted_sum').text accounting.formatMoney(total_sum - discount_sum)
+  $('#sale_discounted_sum_cell').text accounting.formatMoney(total_sum - discount_sum)
 
 window.calculate_sale_item_row = (row)->
   $row = $(row)

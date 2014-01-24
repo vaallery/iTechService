@@ -1,0 +1,17 @@
+.modal-header
+  = button_to_close_modal
+  %h3= t('clients.search.title')
+
+.modal-body
+  = form_tag clients_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
+    = hidden_field_tag :form_name, params[:form_name]
+    = hidden_field_tag :table_name, params[:table_name]
+    .input-append
+      = text_field_tag :client_q, params[:client_q], id: 'search_client_input', class: 'search-query input-xlarge', placeholder: t('clients.index.search_placeholder')
+      %span.add-on.btn.clear_search_input
+        %i.icon-remove
+
+  #resource_table= render 'table_small'
+
+.modal-footer
+  = link_to t('clients.new.title'), new_client_path(form: 'modal'), remote: true, class: 'btn btn-success'

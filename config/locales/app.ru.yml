@@ -459,12 +459,15 @@ ru:
       date: "Дата"
       new_device: "Новый девайс"
       new_sale: "Новая продажа"
+    search:
+      title: 'Поиск клиента'
     created: Клиент создан
     link: Клиенты
     questionnaire: Анкета
     updated: Клиент изменён
-
     available_discount: "Доступная скидка"
+    not_found: 'Клиент не найден'
+
   chat:
     all: Все сообщения
     created: Сообщение создано
@@ -934,6 +937,12 @@ ru:
     copy_check: 'Копия чека'
     save_check: 'Сохранить чек'
     restore_check: 'Возобновить чек'
+    close_check: 'Закрыть чек'
+    enter_client_card: 'Ввод карты клиента'
+    find_client: 'Поиск клиента'
+    manual_discount: 'Ручная скидка'
+    payment: 'Оплата'
+    print_warranty: 'Печать гарантии'
     kinds:
       sale: 'Продажа'
       return: 'Возврат'
