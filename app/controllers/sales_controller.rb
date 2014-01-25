@@ -89,7 +89,9 @@ class SalesController < ApplicationController
   end
 
   def add_product
-
+    respond_to do |format|
+      format.js
+    end
   end
 
   def cancel

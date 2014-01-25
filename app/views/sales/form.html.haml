@@ -58,7 +58,7 @@
   #sale_bottom_row.row-fluid
     .span2= link_to t('sales.enter_client_card'), '#', id: 'sale_enter_client_card', class: 'btn'
     .span2= link_to t('sales.find_client'), clients_path(search: true), remote: true, id: 'sale_find_client', class: 'btn'
-    .span2= link_to t('sales.manual_discount'), '#', class: 'btn'
-    .span2= link_to t('sales.payment'), '#', class: 'btn'
+    .span2= link_to t('sales.manual_discount'), '#', id: 'set_sale_manual_discount', class: 'btn'
+    .span2= link_to t('sales.payment'), '#', id: '', class: 'btn'
     .span2= link_to t('sales.print_warranty'), '#', class: 'btn'
     .span2= link_to_post_sale @sale
