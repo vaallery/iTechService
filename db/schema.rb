@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140123072749) do
+ActiveRecord::Schema.define(:version => 20140123033424) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -591,16 +591,14 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
     t.integer  "store_id"
     t.integer  "user_id"
     t.integer  "client_id"
-    t.integer  "payment_type_id"
     t.datetime "date"
     t.integer  "status"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
     t.boolean  "is_return"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "sales", ["client_id"], :name => "index_sales_on_client_id"
-  add_index "sales", ["payment_type_id"], :name => "index_sales_on_payment_type_id"
   add_index "sales", ["status"], :name => "index_sales_on_status"
   add_index "sales", ["store_id"], :name => "index_sales_on_store_id"
   add_index "sales", ["user_id"], :name => "index_sales_on_user_id"

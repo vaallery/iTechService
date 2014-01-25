@@ -8,7 +8,6 @@ class Sale < ActiveRecord::Base
   belongs_to :user, inverse_of: :sales
   belongs_to :client, inverse_of: :sales
   belongs_to :store
-  belongs_to :payment_type
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
@@ -16,7 +15,7 @@ class Sale < ActiveRecord::Base
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
 
-  attr_accessible :date, :client_id, :user_id, :store_id, :payment_type_id, :sale_items_attributes, :is_return
+  attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return
   validates_presence_of :user, :store, :date, :status
   validates_inclusion_of :status, in: Document::STATUSES.keys
   before_validation :set_user

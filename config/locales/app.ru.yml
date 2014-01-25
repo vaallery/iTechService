@@ -2,6 +2,7 @@ ru:
   activerecord:
     models:
       announcement: Оповещение
+      bank: 'Банк'
       bonus: 'Бонус'
       bonus_type: 'Тип бонуса'
       #ckeditor/asset: ckeditor/asset
