@@ -214,9 +214,6 @@ window.showNotificationsIndicator = ->
 window.hideNotificationsIndicator = ->
   $('#hide_notifications_button>.indicator').removeClass('active')
 
-window.closeModal = ->
-  $("#modal_form").modal('hide')
-
 window.hideModal = ->
   $('#modal_form').modal('hide')
 
