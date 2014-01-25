@@ -12,4 +12,20 @@ module SalesHelper
     end
   end
 
+  def link_to_cancel_sale(sale)
+    if sale.new_record?
+      link_to t('sales.cancel_check'), '#', id: 'sale_cancel_check', class: 'btn', disabled: true
+    else
+      link_to t('sales.cancel_check'), cancel_sales_path(sale_id: @sale.id), method: 'post', id: 'sale_cancel_check', class: 'btn'
+    end
+  end
+
+  def link_to_payment(sale)
+    if sale.new_record?
+      link_to t('sales.payment'), '#', id: '', class: 'btn', disabled: true
+    else
+      link_to t('sales.payment'), '#', id: '', class: 'btn'
+    end
+  end
+
 end

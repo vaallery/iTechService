@@ -1,0 +1,64 @@
+= form_for @sale, remote: true, html: {id: 'sale_form'} do |f|
+  = f.hidden_field :store_id
+  = f.hidden_field :date
+  #sale_top_panel.row-fluid
+    .span12
+      - 2.times do
+        .row-fluid.quick_select_row
+          - 6.times do
+            .span2.quick_select_cell
+  #sale_center_row.row-fluid
+    #sale_left_panel.span2
+      = link_to t('sales.scan_barcode'), '#', id: 'sale_scan_barcode', class: 'btn'
+      = link_to t('sales.enter_barcode'), '#', id: 'sale_enter_barcode', class: 'btn'
+      = link_to t('sales.choose_product'), choose_products_path(form: 'sale', association: 'sale_items', is_product_only: false), remote: true, id: 'sale_choose_product', class: 'btn'
+      = link_to_cancel_sale(@sale)
+      = link_to t('sales.copy_check'), '#', id: 'sale_copy_check', class: 'btn'
+      -#= link_to t('sales.save_check'), '#', id: 'sale_save_check', class: 'btn'
+      = f.submit(t('sales.save_check'), id: 'sale_save_check', class: 'btn')
+      = link_to t('sales.restore_check'), '#', id: 'sale_restore_check', class: 'btn'
+    .span8
+      #sale_header_row.row-fluid
+        .span2.field_label= t 'sales.doc_kind'
+        .span4
+          = f.hidden_field :is_return
+          = select_tag 'sale_kind', options_for_sale_kind_select(@sale.kind), include_blank: false
+        .span2.field_label= t 'sales.doc_num'
+        #sale_id.span4= @sale.id
+      #sale_result_row.row-fluid{class: @sale.kind}
+        .span12
+          %span.span3= t 'sales.total'
+          %span#sale_result_value.span9= human_currency @sale.total_sum, false
+      #sale_details_header.row-fluid
+        .span3= Sale.human_attribute_name :client
+        .span3= t 'sales.sum'
+        .span3= t 'sales.total_discount'
+        .span3= t 'sales.discounted_sum'
+      #sale_details.row-fluid
+        #sale_client_cell.span3
+          = f.hidden_field :client_id
+          #sale_client_name= client_link @sale.client
+          #sale_client_category= human_client_category @sale.client
+        #sale_sum_cell.span3
+        #sale_discount_cell.span3
+        #sale_discounted_sum_cell.span3
+      #sale_items_row.row-fluid
+        .span12
+          %table#sale_items.enumerable.table.table-condensed.table-bordered.table-hover
+            %thead
+              %tr
+                %th.num= t 'sales.num'
+                %th.code= Product.human_attribute_name :code
+                %th.name= Product.human_attribute_name :name
+                %th.quantity= SaleItem.human_attribute_name :quantity
+                %th.price= SaleItem.human_attribute_name :price
+                %th.sum= SaleItem.human_attribute_name :sum
+            %tbody= f.fields_for(:sale_items) { |ff| render 'sale_item_fields', f: ff }
+    #sale_right_panel.span2
+  #sale_bottom_row.row-fluid
+    .span2= link_to t('sales.enter_client_card'), '#', id: 'sale_enter_client_card', class: 'btn'
+    .span2= link_to t('sales.find_client'), clients_path(search: true), remote: true, id: 'sale_find_client', class: 'btn'
+    .span2= link_to t('sales.manual_discount'), '#', id: 'set_sale_manual_discount', class: 'btn'
+    .span2= link_to_payment @sale
+    .span2= link_to t('sales.print_warranty'), '#', class: 'btn'
+    .span2= link_to_post_sale @sale

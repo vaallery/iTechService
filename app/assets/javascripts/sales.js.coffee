@@ -25,6 +25,9 @@ jQuery ->
     event.preventDefault()
     closeClientCardReader()
 
+window.saveSale = ->
+  $('#sale_form').submit()
+
 window.scanProductBarcode = ->
   scaned_code = ''
   $('#barcode_reader').fadeIn().addClass('in')

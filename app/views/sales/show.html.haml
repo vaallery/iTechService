@@ -9,7 +9,7 @@
   %dd= @sale.client.present? ? link_to(@sale.client_presentation, client_path(@sale.client)) : '-'
 
   %dt= Sale.human_attribute_name :payment_type
-  %dd= @sale.payment_type.name
+  %dd= @sale.payment_type_name
 
   %dt= Sale.human_attribute_name :store
   %dd= @sale.store.name

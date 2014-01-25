@@ -4,6 +4,7 @@
       $('#sale_client_id').val(#{@client.id});
       $('#sale_client_name').html("#{j(client_link(@client))}");
       $('#sale_client_category').text("#{human_client_category(@client)}");
+      saveSale();
       hideModal();
   - else
     :plain

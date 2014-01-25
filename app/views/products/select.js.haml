@@ -12,6 +12,7 @@
       $selector.append("#{j(product_fields(params[:form], params[:association], is_product_only ? @product : @item, params[:options]))}");
       enumerate_table('table.enumerable');
       calculate_sale_items_total_sum();
+      saveSale();
       hideModal();
     }
 - elsif @product.present?

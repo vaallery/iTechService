@@ -39,8 +39,10 @@ class SalesController < ApplicationController
     respond_to do |format|
       if @sale.save
         format.html { redirect_to @sale, notice: t('sales.created') }
+        format.js { render 'save' }
       else
         format.html { render 'form' }
+        format.js { render 'save' }
       end
     end
   end
@@ -50,8 +52,10 @@ class SalesController < ApplicationController
     respond_to do |format|
       if @sale.update_attributes params[:sale]
         format.html { redirect_to @sale, notice: t('sales.updated') }
+        format.js { render 'save' }
       else
         format.html { render 'form' }
+        format.js { render 'save' }
       end
     end
   end
@@ -95,6 +99,8 @@ class SalesController < ApplicationController
   end
 
   def cancel
+    @sale = Sale.find params[:id]
+    @sale.cancel
     respond_to do |format|
       format.html { redirect_to new_sale_path }
     end
