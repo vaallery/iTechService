@@ -11,7 +11,9 @@
       - @clients.each do |client|
         %tr
           %td= client.id
-          %td= link_to client.short_name, select_client_path(client, form: 'sale'), remote: true
+          %td
+            = link_to client.short_name, select_client_path(client, form: 'sale'), remote: true
+            = glyph('credit-card') unless client.card_number.blank?
           %td= client.human_phone_number
           %td= link_to glyph(:edit), edit_client_path(client, form: 'modal'), remote: true, class: 'btn btn-small'
 

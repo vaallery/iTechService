@@ -7,7 +7,7 @@
     = hidden_field_tag :form_name, params[:form_name]
     = hidden_field_tag :table_name, params[:table_name]
     .input-append
-      = text_field_tag :client_q, params[:client_q], id: 'search_client_input', class: 'search-query input-xlarge', placeholder: t('clients.index.search_placeholder')
+      = text_field_tag :client_q, params[:client_q], id: 'search_client_input', class: 'search-query input-xlarge', placeholder: t('clients.index.search_placeholder'), autofocus: true
       %span.add-on.btn.clear_search_input
         %i.icon-remove
 
