@@ -31,6 +31,7 @@ ru:
       movement_act: 'Акт Перемещения'
       object: Обьект
       order: Заказ
+      payment: 'Оплата'
       payment_type: 'Тип оплаты'
       price: Прайс
       price_type: "Категория цен"
@@ -748,6 +749,15 @@ ru:
     not_found: "Заказ не найден"
     spare_parts: "Запчасти"
     not_spare_parts: "Не запчасти"
+
+  payments:
+    kinds:
+      cash: 'Наличные'
+      card: 'Карта'
+      credit: 'Кредит'
+      certificate: 'Подарочный сертификат'
+      trade_in: 'Трейд-ин'
+      mixed: 'Смешанный'
 
   payment_types:
     created: 'Способ оплаты создан'

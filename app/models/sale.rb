@@ -10,15 +10,20 @@ class Sale < ActiveRecord::Base
   belongs_to :store
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
+  has_many :payments, dependent: :destroy
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
+  accepts_nested_attributes_for :payments, allow_destroy: true
 
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
 
-  attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return
+  attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return, :payment_ids
   validates_presence_of :user, :store, :date, :status
   validates_inclusion_of :status, in: Document::STATUSES.keys
+  validates_associated :payments
   before_validation :set_user
+
+
   after_initialize do
     self.user_id ||= User.try(:current).try(:id)
     self.date ||= Time.current
@@ -81,6 +86,23 @@ class Sale < ActiveRecord::Base
 
   def total_sum
     sale_items.sum :price
+  end
+
+  def discount_sum
+    0
+  end
+
+  def discounted_sum
+    total_sum - discount_sum
+  end
+
+  def payments_sum
+    payments.sum :value
+  end
+
+  def add_payment(params)
+    payment = Payment.new params
+
   end
 
   private

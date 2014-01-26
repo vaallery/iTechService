@@ -1,6 +1,10 @@
 = form_for @sale, remote: true, html: {id: 'sale_form'} do |f|
+  = f.hidden_field :client_id
   = f.hidden_field :store_id
   = f.hidden_field :date
+  = f.hidden_field :is_return
+  = f.hidden_field :payment_ids
+
   #sale_top_panel.row-fluid
     .span12
       - 2.times do
@@ -20,9 +24,7 @@
     .span8
       #sale_header_row.row-fluid
         .span2.field_label= t 'sales.doc_kind'
-        .span4
-          = f.hidden_field :is_return
-          = select_tag 'sale_kind', options_for_sale_kind_select(@sale.kind), include_blank: false
+        .span4= select_tag 'sale_kind', options_for_sale_kind_select(@sale.kind), include_blank: false
         .span2.field_label= t 'sales.doc_num'
         #sale_id.span4= @sale.id
       #sale_result_row.row-fluid{class: @sale.kind}
@@ -36,12 +38,11 @@
         .span3= t 'sales.discounted_sum'
       #sale_details.row-fluid
         #sale_client_cell.span3
-          = f.hidden_field :client_id
           #sale_client_name= client_link @sale.client
           #sale_client_category= human_client_category @sale.client
-        #sale_sum_cell.span3
-        #sale_discount_cell.span3
-        #sale_discounted_sum_cell.span3
+        #sale_sum_cell.span3= human_currency @sale.total_sum, false
+        #sale_discount_cell.span3= human_currency @sale.discount_sum, false
+        #sale_discounted_sum_cell.span3= human_currency @sale.discounted_sum, false
       #sale_items_row.row-fluid
         .span12
           %table#sale_items.enumerable.table.table-condensed.table-bordered.table-hover

@@ -2,10 +2,11 @@ class PaymentsController < ApplicationController
   authorize_resource
 
   def index
-    @payments = Payment.all
+    @sale = Sale.find params[:sale_id]
+    @payments = @sale.payments
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @payments }
+      format.html
+      format.js
     end
   end
 
@@ -17,9 +18,11 @@ class PaymentsController < ApplicationController
   end
 
   def new
-    @payment = Payment.new
+    @sale = Sale.find params[:sale_id]
+    @payment = @sale.add_payment params[:payment]
     respond_to do |format|
       format.html { render 'form' }
+      format.js { render 'shared/show_modal_form' }
     end
   end
 
@@ -31,7 +34,8 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    @payment = Payment.new(params[:payment])
+    @sale = Sale.find params[:sale_id]
+    @payment = @sale.add_payment params
     respond_to do |format|
       if @payment.save
         format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
