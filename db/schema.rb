@@ -587,24 +587,6 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
   add_index "sale_items", ["item_id"], :name => "index_sale_items_on_item_id"
   add_index "sale_items", ["sale_id"], :name => "index_sale_items_on_sale_id"
 
-  create_table "sales", :force => true do |t|
-    t.integer  "store_id"
-    t.integer  "user_id"
-    t.integer  "client_id"
-    t.integer  "payment_type_id"
-    t.datetime "date"
-    t.integer  "status"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-    t.boolean  "is_return"
-  end
-
-  add_index "sales", ["client_id"], :name => "index_sales_on_client_id"
-  add_index "sales", ["payment_type_id"], :name => "index_sales_on_payment_type_id"
-  add_index "sales", ["status"], :name => "index_sales_on_status"
-  add_index "sales", ["store_id"], :name => "index_sales_on_store_id"
-  add_index "sales", ["user_id"], :name => "index_sales_on_user_id"
-
   create_table "schedule_days", :force => true do |t|
     t.integer  "user_id"
     t.integer  "day"
