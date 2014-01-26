@@ -40,6 +40,10 @@
     #client_card_reader.modal-backdrop.fade
       = link_to t('helpers.links.cancel'), '#', id: 'cancel_client_card_scan', class: 'btn'
 
+    #card_scanner.modal-backdrop.fade
+      #card_scanner_inner
+        = link_to t('helpers.links.cancel'), '#', id: 'cancel_card_scan', class: 'btn'
+
     /
       Javascripts
       \==================================================

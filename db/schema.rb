@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140123072749) do
+ActiveRecord::Schema.define(:version => 20140125041052) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -28,6 +28,12 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
   create_table "announcements_users", :force => true do |t|
     t.integer "announcement_id"
     t.integer "user_id"
+  end
+
+  create_table "banks", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "batches", :force => true do |t|
@@ -442,6 +448,25 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
 
   add_index "payment_types", ["kind"], :name => "index_payment_types_on_kind"
 
+  create_table "payments", :force => true do |t|
+    t.string   "kind"
+    t.decimal  "value"
+    t.integer  "sale_id"
+    t.integer  "bank_id"
+    t.integer  "gift_certificate_id"
+    t.string   "device_name"
+    t.string   "device_number"
+    t.string   "client_info"
+    t.string   "appraiser"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "payments", ["bank_id"], :name => "index_payments_on_bank_id"
+  add_index "payments", ["gift_certificate_id"], :name => "index_payments_on_gift_certificate_id"
+  add_index "payments", ["kind"], :name => "index_payments_on_kind"
+  add_index "payments", ["sale_id"], :name => "index_payments_on_sale_id"
+
   create_table "price_types", :force => true do |t|
     t.string   "name"
     t.integer  "kind"
@@ -586,6 +611,22 @@ ActiveRecord::Schema.define(:version => 20140123072749) do
 
   add_index "sale_items", ["item_id"], :name => "index_sale_items_on_item_id"
   add_index "sale_items", ["sale_id"], :name => "index_sale_items_on_sale_id"
+
+  create_table "sales", :force => true do |t|
+    t.integer  "store_id"
+    t.integer  "user_id"
+    t.integer  "client_id"
+    t.datetime "date"
+    t.integer  "status"
+    t.boolean  "is_return"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sales", ["client_id"], :name => "index_sales_on_client_id"
+  add_index "sales", ["status"], :name => "index_sales_on_status"
+  add_index "sales", ["store_id"], :name => "index_sales_on_store_id"
+  add_index "sales", ["user_id"], :name => "index_sales_on_user_id"
 
   create_table "schedule_days", :force => true do |t|
     t.integer  "user_id"

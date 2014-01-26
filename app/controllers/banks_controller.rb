@@ -26,7 +26,7 @@ class BanksController < ApplicationController
     @bank = Bank.new(params[:bank])
     respond_to do |format|
       if @bank.save
-        format.html { redirect_to @bank, notice: 'Bank was successfully created.' }
+        format.html { redirect_to banks_path, notice: t('banks.created') }
       else
         format.html { render 'form' }
       end
@@ -37,7 +37,7 @@ class BanksController < ApplicationController
     @bank = Bank.find(params[:id])
     respond_to do |format|
       if @bank.update_attributes(params[:bank])
-        format.html { redirect_to @bank, notice: 'Bank was successfully updated.' }
+        format.html { redirect_to banks_path, notice: t('banks.updated') }
       else
         format.html { render 'form' }
       end

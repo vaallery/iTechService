@@ -112,6 +112,7 @@ ItechService::Application.routes.draw do
     post :refresh, on: :member
     get :check, on: :collection
     get :scan, on: :collection
+    get :find, on: :member
     get :history, on: :member, defaults: {format: 'js'}
   end
 

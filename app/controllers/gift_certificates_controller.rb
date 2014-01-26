@@ -95,11 +95,18 @@ class GiftCertificatesController < ApplicationController
     end
   end
 
+  def find
+    @gift_certificate = GiftCertificate.find_by_number(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def issue
     respond_to do |format|
       if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
         if @gift_certificate.issue
-          msg = flash.now[:notice] = t('gift_certificates.issued', nominal: @gift_certificate.nominal_h)
+          msg = flash.now[:notice] = t('gift_certificates.issued', nominal: human_gift_certificate_nominal(@gift_certificate))
           format.html { redirect_to gift_certificates_path, notice: msg }
           format.js { render 'status_changed' }
         else
@@ -120,7 +127,7 @@ class GiftCertificatesController < ApplicationController
       if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
         if @gift_certificate.update_attributes consume: params[:consume].to_i
           msg = flash.now[:notice] = @gift_certificate.used? ?
-                    t('gift_certificates.activated', nominal: @gift_certificate.nominal_h) :
+                    t('gift_certificates.activated', nominal: human_gift_certificate_nominal(@gift_certificate)) :
                     t('gift_certificates.consumed', value: params[:consume], balance: @gift_certificate.balance)
           pdf = GiftCertificatePdf.new @gift_certificate, view_context, params[:consume]
           if Rails.env.production?
@@ -149,7 +156,7 @@ class GiftCertificatesController < ApplicationController
 
     respond_to do |format|
       if @gift_certificate.refresh
-        msg = flash.now[:notice] = t('gift_certificates.refreshed', nominal:  @gift_certificate.nominal_h)
+        msg = flash.now[:notice] = t('gift_certificates.refreshed', nominal:  human_gift_certificate_nominal(@gift_certificate))
         format.html { redirect_to gift_certificates_path, notice: msg }
         format.js { render 'status_changed' }
       else

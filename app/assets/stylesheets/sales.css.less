@@ -17,12 +17,15 @@
   }
   #sale_center_row{
     #sale_left_panel{
-      &>.btn{
-        display: block;
-        font-size: 22px;
-        padding: 6px;
-        height: 44px;
-        vertical-align: middle;
+      &>div{
+        display: table-row;
+        &>.btn{
+          display: table-cell;
+          font-size: 22px;
+          padding: 6px;
+          height: 44px;
+          vertical-align: middle;
+        }
       }
       #sale_save_check{
         width: 100%;
@@ -60,7 +63,14 @@
     }
     #sale_details{
       font-weight: bold;
+      #sale_sum_cell, #sale_discount_cell, #sale_discounted_sum_cell{
+        display: table-cell;
+        height: inherit;
+        width: inherit;
+        vertical-align: middle;
+      }
       &>div{
+        text-align: right;
         height: 42px;
       }
       #sale_client_cell{
@@ -90,15 +100,19 @@
   }
   #sale_bottom_row{
     .btn-group{
-      width: 100%;
+      width: inherit;
+      display: table-cell;
+      .caret{
+        margin-left: 2px;
+      }
     }
     .btn{
-      display: block;
+      display: table-cell;
       font-size: 22px;
       padding: 6px;
       height: 44px;
       vertical-align: middle;
-      width: 100%;
+      width: inherit;
     }
   }
 }

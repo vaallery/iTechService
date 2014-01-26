@@ -19,7 +19,7 @@ class PaymentsController < ApplicationController
 
   def new
     @sale = Sale.find params[:sale_id]
-    @payment = @sale.add_payment params[:payment]
+    @payment = Payment.new params[:payment]
     respond_to do |format|
       format.html { render 'form' }
       format.js { render 'shared/show_modal_form' }
@@ -27,6 +27,7 @@ class PaymentsController < ApplicationController
   end
 
   def edit
+    @sale = Sale.find params[:sale_id]
     @payment = Payment.find(params[:id])
     respond_to do |format|
       format.html { render 'form' }
@@ -35,23 +36,28 @@ class PaymentsController < ApplicationController
 
   def create
     @sale = Sale.find params[:sale_id]
-    @payment = @sale.add_payment params
+    @payment = @sale.add_payment params[:payment]
     respond_to do |format|
       if @payment.save
         format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
+        format.js { render 'save' }
       else
         format.html { render 'form' }
+        format.js { render 'shared/show_modal_form' }
       end
     end
   end
 
   def update
+    @sale = Sale.find params[:sale_id]
     @payment = Payment.find(params[:id])
     respond_to do |format|
       if @payment.update_attributes(params[:payment])
         format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
+        format.js { render 'save' }
       else
         format.html { render 'form' }
+        format.js { render 'shared/show_modal_form' }
       end
     end
   end

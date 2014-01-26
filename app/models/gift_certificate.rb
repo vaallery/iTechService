@@ -3,6 +3,7 @@ class GiftCertificate < ActiveRecord::Base
   STATUSES = %w[available issued used]
   NOMINALS = %w[1500r 3000r 5000r 10000r 15000r]
 
+  has_many :payments, inverse_of: :gift_certificate
   has_many :history_records, as: :object, dependent: :destroy
 
   attr_accessible :number, :nominal, :status, :consumed, :consume
@@ -28,10 +29,6 @@ class GiftCertificate < ActiveRecord::Base
 
   def nominal_s
     NOMINALS[nominal]
-  end
-
-  def nominal_h
-    I18n.t("gift_certificates.nominals.#{nominal_s}")
   end
 
   def nominal_val

@@ -18,3 +18,9 @@ jQuery ->
         else
           card_number += String.fromCharCode(event.keyCode).toLowerCase()
     event.preventDefault()
+
+  $(document).on 'click', '.scan_gift_certificate_link', (event)->
+    event.preventDefault()
+    $('.gift_certificate_input.active').removeClass('active')
+    $(this).parent().addClass('active')
+    showScanner('gift_certificate')

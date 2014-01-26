@@ -134,7 +134,7 @@ module ApplicationHelper
           when 'task_id'
             val = Task.find(rec.new_value).try(:name)
           when 'nominal'
-            val = rec.object.is_a?(GiftCertificate) ? rec.object.nominal_h : rec.new_value
+            val = rec.object.is_a?(GiftCertificate) ? human_gift_certificate_nominal(rec.object) : rec.new_value
           when 'status'
             val = rec.object.is_a?(GiftCertificate) ? rec.object.status_h : rec.new_value
           else

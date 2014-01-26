@@ -10,7 +10,7 @@ class Sale < ActiveRecord::Base
   belongs_to :store
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
-  has_many :payments, dependent: :destroy
+  has_many :payments, inverse_of: :sale, dependent: :destroy
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
   accepts_nested_attributes_for :payments, allow_destroy: true
 
@@ -101,8 +101,7 @@ class Sale < ActiveRecord::Base
   end
 
   def add_payment(params)
-    payment = Payment.new params
-
+    payments.create params
   end
 
   private

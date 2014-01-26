@@ -3,7 +3,7 @@
   %dd= @gift_certificate.status_h
 
   %dt= GiftCertificate.human_attribute_name(:nominal)
-  %dd= @gift_certificate.nominal_h
+  %dd= human_gift_certificate_nominal @gift_certificate
 
   %dt= GiftCertificate.human_attribute_name(:consumed)
   %dd= number_to_currency(@gift_certificate.consumed || 0, precision: 0)

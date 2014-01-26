@@ -12,7 +12,7 @@
     - @banks.each do |bank|
       %tr
         %td= link_to bank.id, edit_bank_path(bank)
-        %td= link_to bank.name, edit_benk_path(bank)
+        %td= link_to bank.name, edit_bank_path(bank)
         %td= human_datetime bank.created_at
         %td.btn-group
           = link_to_edit_small bank

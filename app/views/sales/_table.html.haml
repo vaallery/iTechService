@@ -8,7 +8,6 @@
         %th= model_class.human_attribute_name :store
         %th= model_class.human_attribute_name :user
         %th= model_class.human_attribute_name :client
-        %th= model_class.human_attribute_name :payment_type
         %th= model_class.human_attribute_name :total_sum
         %th
     %tbody
@@ -19,7 +18,6 @@
           %td= sale.store.name
           %td= link_to sale.user.short_name, user_path(sale.user)
           %td= link_to sale.client.short_name, client_path(sale.client)
-          %td= sale.payment_type.name
           %td= human_currency sale.total_sum
           %td.actions.btn-group
             = link_to_show_small sale if can? :read, sale

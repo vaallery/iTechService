@@ -239,6 +239,11 @@ ru:
         user: :activerecord.models.user
         user_comment: Комментарий товароведа
 
+      payment:
+        bank: :activerecord.models.bank
+        gift_certificate: :activerecord.models.gift_certificate
+        value: 'Сумма'
+
       price:
         file: Файл
         remote_file_url: Ссылка на файл
@@ -409,6 +414,16 @@ ru:
     needs_help: нуждается в помощи!!!
     protector_made: Плёночка наклеена!
     updated: Оповещение изменено
+
+  banks:
+    index:
+      title: 'Банки'
+    edit:
+      title: 'Редактирование Банка'
+    new:
+      title: 'Новый Банк'
+    created: 'Банк создан'
+    updated: 'Банк изменён'
 
   bonuses:
     edit:
@@ -651,6 +666,7 @@ ru:
       used: Закрыт
     activated: "Подарочный сертификат номиналом %{nominal} закрыт."
     balance: Доступно
+    balance_value: 'Доступно %{value}'
     consume_placeholder: Списать
     consumed: "Списано: %{value}. Осталось: %{balance}."
     created: Подарочный сертификат создан.
@@ -753,7 +769,7 @@ ru:
   payments:
     kinds:
       cash: 'Наличные'
-      card: 'Карта'
+      card: 'Картой'
       credit: 'Кредит'
       certificate: 'Подарочный сертификат'
       trade_in: 'Трейд-ин'
@@ -954,6 +970,7 @@ ru:
     manual_discount: 'Ручная скидка'
     payment: 'Оплата'
     print_warranty: 'Печать гарантии'
+    payment_amount: 'Сумма к оплате: %{amount}'
     kinds:
       sale: 'Продажа'
       return: 'Возврат'

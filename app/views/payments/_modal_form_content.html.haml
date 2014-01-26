@@ -1,0 +1,11 @@
+= simple_form_for [@sale, @payment], html: { id: 'payment_form', class: 'form-horizontal' }, remote: true do |f|
+  .modal-header
+    %h3= "#{t('activerecord.models.payment')} - #{human_payment_kind(@payment)}"
+
+  .modal-body
+    = render 'payments/payment_fields', f: f
+
+    #payment_amount{data: {amount: @sale.discounted_sum}}= t 'sales.payment_amount', amount: human_currency(@sale.discounted_sum, false)
+  .modal-footer
+    = link_to t('helpers.links.cancel'), '#', 'data-dismiss' => 'modal', class: 'btn'
+    = f.submit t('done'), class: 'btn btn-primary'

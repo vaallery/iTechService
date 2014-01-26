@@ -5,7 +5,7 @@
       .modal-body
         #gift_certificate_status= "#{GiftCertificate.human_attribute_name(:status)}: #{@gift_certificate.status_h}"
         - if @gift_certificate.issued?
-          #gift_certificate_nominal= "#{GiftCertificate.human_attribute_name(:nominal)}: #{@gift_certificate.nominal_h}"
+          #gift_certificate_nominal= "#{GiftCertificate.human_attribute_name(:nominal)}: #{human_gift_certificate_nominal(@gift_certificate)}"
           #gift_certificate_consumed= "#{GiftCertificate.human_attribute_name(:consumed)}: #{number_to_currency(@gift_certificate.consumed || 0, precision: 0)}"
           #gift_certificate_balance= "#{t('gift_certificates.balance')}: #{number_to_currency (@gift_certificate.balance), precision: 0}"
           #gift_certificate_history.well.well-small= gift_certificate_history_tag @gift_certificate

@@ -177,15 +177,26 @@ scanTicket = ->
 
 auth_timeout = auth_count = 5 * 60
 
-#if $('#profile_link').data('role') is 'software'
-#  setInterval (->
-#    auth_count -= 1
-#    if auth_count < 1 and $('#card_sign_in.in:visible').length is 0
-#      $('#lock_session').click()
-#  ), 1000
-
 $(document).on 'click keydown mousemove', ->
   auth_count = auth_timeout
+
+window.showScanner = (object_type)->
+  scanned_number = ''
+  $('#card_scanner').fadeIn().addClass('in').addClass(object_type)
+  $(document).on 'keydown', (event)->
+    if $('#card_scanner.in:visible').length > 0
+      if event.keyCode is 13 and scanned_number isnt ''
+        closeScanner()
+        switch object_type
+          when 'gift_certificate' then $.get()
+        scanned_number = ''
+      else
+        scanned_number += String.fromCharCode(event.keyCode).toLowerCase()
+  setTimeout (-> closeScanner()), 5000
+
+window.closeScanner = ->
+  $('#card_scanner_inner input').val('')
+  $('#card_scanner').removeClass('in').fadeOut()
 
 window.closeBarcodeReader = ->
   $('#barcode_reader #barcode_field').val('')
