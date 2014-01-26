@@ -1,8 +1,5 @@
 ItechService::Application.routes.draw do
 
-  resources :client_categories
-
-
   mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
@@ -47,7 +44,10 @@ ItechService::Application.routes.draw do
     get :questionnaire, on: :collection
     get :autocomplete, on: :collection
     get :select, on: :member
+    get :find, on: :member
   end
+
+  resources :client_categories
 
   resources :device_types, except: [:new] do
     post :reserve, on: :member
@@ -97,8 +97,11 @@ ItechService::Application.routes.draw do
   end
 
   resources :sales do
-    put 'post', on: :member
-    put 'unpost', on: :member
+    put :post, on: :member
+    put :unpost, on: :member
+    post :add_product, on: :collection
+    post :cancel, on: :collection
+    resources :payments
   end
 
   resources :sales_imports, only: [:new, :create]
@@ -149,13 +152,10 @@ ItechService::Application.routes.draw do
   end
 
   resources :product_groups, except: [:index, :show]
-
   resources :price_types, except: :show
-
   resources :payment_types
-
+  resources :banks, except: :show
   resources :installments
-
   resources :installment_plans
 
   resources :revaluation_acts do

@@ -43,7 +43,11 @@ module ClientsHelper
   end
 
   def human_client_category(client)
-    t "clients.categories.#{client.category_s}"
+    client.present? ? t("clients.categories.#{client.category_s}") : ''
+  end
+
+  def client_link(client)
+    client.present? ? link_to(client.short_name, client_path(client)) : ''
   end
 
 end

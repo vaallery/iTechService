@@ -8,19 +8,28 @@ class Sale < ActiveRecord::Base
   belongs_to :user, inverse_of: :sales
   belongs_to :client, inverse_of: :sales
   belongs_to :store
-  belongs_to :payment_type
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
+  has_many :payments, dependent: :destroy
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
-  attr_accessible :date, :client_id, :user_id, :store_id, :payment_type_id, :sale_items_attributes, :is_return
-  validates_presence_of :user, :client, :store, :payment_type, :date, :status
+  accepts_nested_attributes_for :payments, allow_destroy: true
+
+  delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
+  delegate :name, to: :payment_type, prefix: true, allow_nil: true
+
+  attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return, :payment_ids
+  validates_presence_of :user, :store, :date, :status
   validates_inclusion_of :status, in: Document::STATUSES.keys
+  validates_associated :payments
   before_validation :set_user
+
+
   after_initialize do
     self.user_id ||= User.try(:current).try(:id)
     self.date ||= Time.current
     self.status ||= 0
     self.is_return ||= false
+    self.store_id ||= Store.default.try(:id)
   end
 
   def self.search(params)
@@ -45,6 +54,10 @@ class Sale < ActiveRecord::Base
     sales
   end
 
+  def kind
+    is_return ? 'return' : 'sale'
+  end
+
   def client_presentation
     client.present? ? client.presentation : '-'
   end
@@ -63,12 +76,33 @@ class Sale < ActiveRecord::Base
     end
   end
 
+  def cancel
+    update_attribute :status, 2
+  end
+
   def unpost
     #TODO unposting sale
   end
 
   def total_sum
     sale_items.sum :price
+  end
+
+  def discount_sum
+    0
+  end
+
+  def discounted_sum
+    total_sum - discount_sum
+  end
+
+  def payments_sum
+    payments.sum :value
+  end
+
+  def add_payment(params)
+    payment = Payment.new params
+
   end
 
   private

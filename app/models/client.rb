@@ -30,6 +30,7 @@ class Client < ActiveRecord::Base
   validates :full_phone_number, uniqueness: true
   validates_presence_of :name, :phone_number, :full_phone_number, :category
   validates_uniqueness_of :full_phone_number
+  validates_uniqueness_of :card_number, unless: 'card_number.blank?'
   validates_inclusion_of :category, in: CATEGORIES.keys
   validates_associated :comments
   validates_associated :client_characteristic

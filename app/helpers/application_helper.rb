@@ -248,12 +248,16 @@ module ApplicationHelper
     value.nil? ? '-' : number_to_percentage(value, precision: 0)
   end
 
-  def human_currency(value)
-    value.nil? ? '-' : number_to_currency(value, precision: 0, delimiter: ' ', separator: ',')
+  def human_currency(value, with_unit=true)
+    value.nil? ? '-' : (with_unit ? number_to_currency(value, precision: 0, delimiter: ' ', separator: ',') : number_to_currency(value, precision: 2, delimiter: ' ', separator: ',', unit: ''))
   end
 
   def human_phone(value)
     value.nil? ? '-' : number_to_phone(value, area_code: true)
+  end
+
+  def human_number(value)
+    number_to_human value, precision: 2, delimiter: ' ', separator: ','
   end
 
   def spinner_tag

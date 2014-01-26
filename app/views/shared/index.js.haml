@@ -1,2 +1,2 @@
 :plain
-  $("#resource_table").html("#{j(render(@table_name || 'table'))}");
+  $("#resource_table").html("#{j(render(params[:table_name] || @table_name || 'table'))}");

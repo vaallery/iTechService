@@ -84,7 +84,7 @@ jQuery ->
     event.preventDefault()
 
   $('#scan_barcode_button').click ->
-    scanBarcode()
+    scanTicket()
 
   $('.color_input>.color_template').css 'background-color', $('.color_value').val()
 
@@ -93,6 +93,9 @@ jQuery ->
 
   if $('table.enumerable').length > 0
     enumerate_table('table.enumerable')
+
+  $(document).on 'click', '#cancel_barcode_scan', ->
+    closeBarcodeReader()
 
 cursorX = $('#spinner').outerWidth() / 2
 cursorY = $('#spinner').outerHeight() / 2
@@ -152,7 +155,7 @@ scanCard = ->
     card_number = ''
   ), 3000
 
-scanBarcode = ->
+scanTicket = ->
   scaned_code = ''
   $('#barcode_reader').fadeIn().addClass('in')
   $(document).on 'keydown', (event)->
@@ -184,6 +187,10 @@ auth_timeout = auth_count = 5 * 60
 $(document).on 'click keydown mousemove', ->
   auth_count = auth_timeout
 
+window.closeBarcodeReader = ->
+  $('#barcode_reader #barcode_field').val('')
+  $('#barcode_reader').removeClass('in').fadeOut()
+
 window.showSpinner = ()->
   $spinner = $('#spinner')
   $spinner.css
@@ -207,9 +214,6 @@ window.showNotificationsIndicator = ->
 window.hideNotificationsIndicator = ->
   $('#hide_notifications_button>.indicator').removeClass('active')
 
-window.closeModal = ->
-  $("#modal_form").modal('hide')
-
 window.hideModal = ->
   $('#modal_form').modal('hide')
 
@@ -229,11 +233,12 @@ window.datepicker_dates =
 accounting.settings =
   currency:
     symbol: 'руб.'
-    format: '%v %s'
+    #format: '%v %s'
+    format: '%v'
     decimal: ','
     thousand: ' '
-    precision: 0
+    precision: 2
   number:
-    precision: 0
+    precision: 2
     decimal: ','
     thousand: ' '

@@ -1,21 +1,29 @@
-:plain
-  $('#client_search').val("#{@client.presentation}");
-  $('#device_client_id, #sale_client_id').val("#{@client.id}");
-  $('#order_customer_id').val("#{@client.id}");
-  $('#edit_client_link').attr('href', "#{edit_client_path(@client)}");
-  $('#edit_client_link').attr('data-remote', true);
-  $('#client_search').css({color: "#{@client.category_color}"}).attr('title', "#{@client.characteristic}").attr('data-original-title', "#{@client.characteristic}");
-  $('#client_search').tooltip('destroy').tooltip();
-  $('#clients_autocomplete_list').hide();
-  $devices = $('#client_devices');
-  if($devices.length > 0){
-    $('.popover-content', $devices).html("#{j(client_devices_list(@client))}");
-    if($('.client_devices_list', $devices).length > 0)
-      $devices.show()
-    else
-      $devices.hide();
-  }
--#
-  if ($('#sale_value').length > 0) {
-    $('#sale_value').next('.help-block').text("#{t('clients.available_discount')}: #{human_percent(@client.discount_value)}")
-  }
+- if @client.present?
+  - if params[:form] == 'sale' or params[:form] == 'modal'
+    :plain
+      $('#sale_client_id').val(#{@client.id});
+      $('#sale_client_name').html("#{j(client_link(@client))}");
+      $('#sale_client_category').text("#{human_client_category(@client)}");
+      saveSale();
+      hideModal();
+  - else
+    :plain
+      $('#client_search').val("#{@client.presentation}");
+      $('#device_client_id, #sale_client_id').val("#{@client.id}");
+      $('#order_customer_id').val("#{@client.id}");
+      $('#edit_client_link').attr('href', "#{edit_client_path(@client)}");
+      $('#edit_client_link').attr('data-remote', true);
+      $('#client_search').css({color: "#{@client.category_color}"}).attr('title', "#{@client.characteristic}").attr('data-original-title', "#{@client.characteristic}");
+      $('#client_search').tooltip('destroy').tooltip();
+      $('#clients_autocomplete_list').hide();
+      $devices = $('#client_devices');
+      if($devices.length > 0){
+        $('.popover-content', $devices).html("#{j(client_devices_list(@client))}");
+        if($('.client_devices_list', $devices).length > 0)
+          $devices.show()
+        else
+          $devices.hide();
+      }
+- else
+  :plain
+    alert("#{t('clients.not_found')}");
