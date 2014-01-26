@@ -188,7 +188,7 @@ window.showScanner = (object_type)->
       if event.keyCode is 13 and scanned_number isnt ''
         closeScanner()
         switch object_type
-          when 'gift_certificate' then $.get()
+          when 'gift_certificate' then $.get('/gift_certificates/'+scanned_number+'/find.js')
         scanned_number = ''
       else
         scanned_number += String.fromCharCode(event.keyCode).toLowerCase()

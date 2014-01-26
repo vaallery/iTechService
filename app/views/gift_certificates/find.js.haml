@@ -1,7 +1,7 @@
 == $input = $('.gift_certificate_input.active');
 - if @gift_certificate.present?
   :plain
-    $('.gift_certificate', $input).val("#{@gift_certificate.id}");
+    $('.gift_certificate_id', $input).val("#{@gift_certificate.id}");
     $('.scan_gift_certificate_link', $input).text("#{human_gift_certificate_nominal(@gift_certificate)}").attr('title', "#{human_gift_certificate_balance(@gift_certificate)}");
 - else
   == alert("#{t('gift_certificates.errors.not_found')});

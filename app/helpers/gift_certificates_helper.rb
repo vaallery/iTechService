@@ -30,11 +30,11 @@ module GiftCertificatesHelper
   end
 
   def human_gift_certificate_nominal(gift_certificate)
-    gift_certificate.present? ? t("gift_certificates.nominals.#{gift_certificate.nominal}") : '-'
+    gift_certificate.present? ? t("gift_certificates.nominals.#{gift_certificate.nominal_s}") : nil
   end
 
   def human_gift_certificate_balance(gift_certificate)
-    gift_certificate.present? ? t('gift_certificates.balance_value', value: gift_certificate.balance) : '-'
+    gift_certificate.present? ? t('gift_certificates.balance_value', value: gift_certificate.balance) : ''
   end
 
 end

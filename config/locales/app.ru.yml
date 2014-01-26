@@ -670,6 +670,7 @@ ru:
     consume_placeholder: Списать
     consumed: "Списано: %{value}. Осталось: %{balance}."
     created: Подарочный сертификат создан.
+    find: 'Найти'
     issued: "Подарочный сертификат номиналом %{nominal} открыт."
     link: Подарочные сертификаты
     refresh: Восстановить
