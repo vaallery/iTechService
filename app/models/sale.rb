@@ -12,7 +12,7 @@ class Sale < ActiveRecord::Base
   has_many :items, through: :sale_items
   has_many :payments, inverse_of: :sale, dependent: :destroy
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
-  accepts_nested_attributes_for :payments, allow_destroy: true#, reject_if: lambda { |a| a[:kind].blank? or a[:value].blank? }
+  accepts_nested_attributes_for :payments, allow_destroy: true
 
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
