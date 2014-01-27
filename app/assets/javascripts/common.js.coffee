@@ -182,21 +182,21 @@ $(document).on 'click keydown mousemove', ->
 
 window.showScanner = (object_type)->
   scanned_number = ''
-  $('#card_scanner').fadeIn().addClass('in').addClass(object_type)
+  $('#card_scanner').show().addClass('in').addClass(object_type)
   $(document).on 'keydown', (event)->
     if $('#card_scanner.in:visible').length > 0
       if event.keyCode is 13 and scanned_number isnt ''
-        closeScanner()
+        hideScanner()
         switch object_type
           when 'gift_certificate' then $.get('/gift_certificates/'+scanned_number+'/find.js')
         scanned_number = ''
       else
         scanned_number += String.fromCharCode(event.keyCode).toLowerCase()
-  setTimeout (-> closeScanner()), 5000
+  setTimeout (-> hideScanner()), 5000
 
-window.closeScanner = ->
+window.hideScanner = ->
   $('#card_scanner_inner input').val('')
-  $('#card_scanner').removeClass('in').fadeOut()
+  $('#card_scanner').removeClass('in').hide()
 
 window.closeBarcodeReader = ->
   $('#barcode_reader #barcode_field').val('')

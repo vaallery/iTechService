@@ -1,2 +1,5 @@
+- if params[:form_name] == 'payments/modal_index'
+  :plain
+    hideModal();
 :plain
   $('#sale_form').replaceWith("#{j(render('sales/form_content'))}");

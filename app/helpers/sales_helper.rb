@@ -40,4 +40,12 @@ module SalesHelper
     end
   end
 
+  def link_to_add_payment(append_to_selector, f)
+    new_payment = Payment.new client_info: f.object.client_presentation
+    fields = f.fields_for(:payments, new_payment, child_index: 'new_payments') do |builder|
+      render('payments/payment_fields', f: builder, index: 'new_payments')
+    end
+    link_to glyph('plus') + t('payments.add').html_safe, '#', class: 'add_fields add_payment btn btn-success btn-small', data: { selector: append_to_selector, association: 'payments', content: (fields.gsub('\n', '')) }
+  end
+
 end

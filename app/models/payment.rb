@@ -6,6 +6,8 @@ class Payment < ActiveRecord::Base
   belongs_to :bank
   belongs_to :gift_certificate, inverse_of: :payments
 
+  delegate :balance, to: :gift_certificate, prefix: true, allow_nil: true
+
   attr_accessible :value, :kind, :sale_id, :bank_id, :gift_certificate_id, :device_name, :device_number, :client_info, :appraiser, :device_logout
 
   validates_presence_of :value, :kind
@@ -13,9 +15,9 @@ class Payment < ActiveRecord::Base
   validates_presence_of :gift_certificate, if: :is_gift_certificate?
   validates_presence_of :device_name, :device_number, :client_info, :appraiser, if: :is_trade_in?
   validates_acceptance_of :device_logout, if: :is_trade_in?
-  # TODO gift_certificate balance validation
-
-
+  validates_numericality_of :value, greater_than: 0
+  validates_numericality_of :value, less_than_or_equal_to: :gift_certificate_balance, if: :is_gift_certificate?
+  before_validation :clear_unnecessary_attributes
 
   def is_cash?
     kind == 'cash'
@@ -35,6 +37,14 @@ class Payment < ActiveRecord::Base
 
   def is_by_bank?
     %W[card credit].include? kind
+  end
+
+  private
+
+  def clear_unnecessary_attributes
+    self.bank_id = nil unless is_by_bank?
+    self.gift_certificate_id = nil unless is_gift_certificate?
+    self.device_name = self.device_number = self.client_info = self.appraiser = nil unless is_trade_in?
   end
 
 end
