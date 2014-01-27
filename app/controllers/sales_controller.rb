@@ -55,7 +55,7 @@ class SalesController < ApplicationController
         format.js { render 'save' }
       else
         format.html { render 'form' }
-        format.js { render 'save' }
+        format.js { params[:sale][:payments_attributes].present? ? render('shared/show_modal_form') : render('save') }
       end
     end
   end

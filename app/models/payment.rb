@@ -6,7 +6,7 @@ class Payment < ActiveRecord::Base
   belongs_to :bank
   belongs_to :gift_certificate, inverse_of: :payments
 
-  attr_accessible :value, :kind, :sale_id, :bank_id, :gift_certificate_id, :device_name, :device_number, :client_info, :appraiser
+  attr_accessible :value, :kind, :sale_id, :bank_id, :gift_certificate_id, :device_name, :device_number, :client_info, :appraiser, :device_logout
 
   validates_presence_of :value, :kind
   validates_presence_of :bank, if: :is_by_bank?

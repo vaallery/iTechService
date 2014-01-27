@@ -1,0 +1,29 @@
+= simple_form_for @sale, html: { id: 'sale_payments_form' }, remote: true do |f|
+  = hidden_field_tag :form_name, params[:form_name]
+  .modal-header
+    %h3= t 'payments.index.title'
+
+  .modal-body
+    %table#payments_table.table.table-condensed
+      %thead
+        %tr
+          %th.kind= Payment.human_attribute_name :kind
+          %th.value= Payment.human_attribute_name :value
+          %th.addl_attr= t('payments.addl_attributes')
+      %tbody
+        = f.simple_fields_for :payments do |ff|
+          = render 'payments/payment_fields', f: ff
+      %tfoot
+        %tr
+          %td= t 'total'
+          %td#sale_payments_sum.number= human_currency @sale.payments_sum, false
+          %td
+        %tr
+          %td= t 'sales.calculation'
+          %td.number= human_currency @sale.discounted_sum, false
+          %td
+    = link_to_add_fields t('payments.add'), '#payments_table tbody', f, :payments
+
+  .modal-footer
+    = link_to t('helpers.links.cancel'), '#', 'data-dismiss' => 'modal', class: 'btn'
+    = f.submit t('done'), class: 'btn btn-primary'

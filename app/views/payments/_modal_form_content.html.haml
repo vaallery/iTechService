@@ -3,9 +3,13 @@
     %h3= "#{t('activerecord.models.payment')} - #{human_payment_kind(@payment)}"
 
   .modal-body
-    = render 'payments/payment_fields', f: f
+    = f.hidden_field :kind
+    = f.input :value
+    = f.association :bank if f.object.is_by_bank?
+    - if f.object.is_gift_certificate?
+      = f.input :gift_certificate, as: :gift_certificate
 
-    #payment_amount{data: {amount: @sale.discounted_sum}}= t 'sales.payment_amount', amount: human_currency(@sale.discounted_sum, false)
+    #payment_amount{data: {amount: @sale.discounted_sum}}= t 'sales.calculation_amount', amount: human_currency(@sale.discounted_sum, false)
   .modal-footer
     = link_to t('helpers.links.cancel'), '#', 'data-dismiss' => 'modal', class: 'btn'
     = f.submit t('done'), class: 'btn btn-primary'

@@ -4,9 +4,10 @@ class PaymentsController < ApplicationController
   def index
     @sale = Sale.find params[:sale_id]
     @payments = @sale.payments
+    params[:form_name] = 'payments/modal_index'
     respond_to do |format|
       format.html
-      format.js
+      format.js { render 'shared/show_modal_form' }
     end
   end
 

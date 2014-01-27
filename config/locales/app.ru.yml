@@ -240,9 +240,15 @@ ru:
         user_comment: Комментарий товароведа
 
       payment:
+        kind: 'Вид'
         bank: :activerecord.models.bank
         gift_certificate: :activerecord.models.gift_certificate
         value: 'Сумма'
+        device_name: 'Устройство'
+        device_number: 'Серийный номер или IMEI'
+        device_logout: 'Проверка выхода из учётной записи'
+        client_info: 'Телефон и имя клиента'
+        appraiser: 'Имя оценщика'
 
       price:
         file: Файл
@@ -671,6 +677,7 @@ ru:
     consumed: "Списано: %{value}. Осталось: %{balance}."
     created: Подарочный сертификат создан.
     find: 'Найти'
+    scan: 'Сканировать'
     issued: "Подарочный сертификат номиналом %{nominal} открыт."
     link: Подарочные сертификаты
     refresh: Восстановить
@@ -768,6 +775,10 @@ ru:
     not_spare_parts: "Не запчасти"
 
   payments:
+    add: 'Добавить'
+    addl_attributes: 'Доп. атрибуты'
+    index:
+      title: 'Платежи'
     kinds:
       cash: 'Наличные'
       card: 'Картой'
@@ -971,7 +982,8 @@ ru:
     manual_discount: 'Ручная скидка'
     payment: 'Оплата'
     print_warranty: 'Печать гарантии'
-    payment_amount: 'Сумма к оплате: %{amount}'
+    calculation: 'К рассчёту'
+    calculation_amount: 'Сумма к оплате: %{amount}'
     kinds:
       sale: 'Продажа'
       return: 'Возврат'
