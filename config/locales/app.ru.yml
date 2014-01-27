@@ -777,6 +777,7 @@ ru:
   payments:
     add: 'Добавить'
     addl_attributes: 'Доп. атрибуты'
+    calculate: 'Расчитать'
     index:
       title: 'Платежи'
     kinds:

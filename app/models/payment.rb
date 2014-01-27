@@ -15,6 +15,8 @@ class Payment < ActiveRecord::Base
   validates_acceptance_of :device_logout, if: :is_trade_in?
   # TODO gift_certificate balance validation
 
+
+
   def is_cash?
     kind == 'cash'
   end

@@ -4,12 +4,12 @@
 
   .modal-body
     = f.hidden_field :kind
-    = f.input :value
+    = f.input :value, readonly: true
     = f.association :bank if f.object.is_by_bank?
     - if f.object.is_gift_certificate?
       = f.input :gift_certificate, as: :gift_certificate
 
-    #payment_amount{data: {amount: @sale.discounted_sum}}= t 'sales.calculation_amount', amount: human_currency(@sale.discounted_sum, false)
+    #sale_calculation_amount{data: {amount: @sale.discounted_sum}}= t 'sales.calculation_amount', amount: human_currency(@sale.discounted_sum, false)
   .modal-footer
     = link_to t('helpers.links.cancel'), '#', 'data-dismiss' => 'modal', class: 'btn'
-    = f.submit t('done'), class: 'btn btn-primary'
+    = f.submit t('done'), id: 'payment_submit_button', class: 'btn btn-primary'
