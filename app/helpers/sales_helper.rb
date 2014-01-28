@@ -5,7 +5,7 @@ module SalesHelper
   end
 
   def link_to_post_sale(sale)
-    if sale.new_record? or !@sale.is_new?
+    if !@sale.is_postable?
       link_to t('sales.close_check'), '#', id: 'sale_close_check', class: 'btn', disabled: true
     else
       link_to t('sales.close_check'), post_sale_path(@sale), method: 'put', id: 'sale_close_check', class: 'btn', data: {confirm: t('confirmation')}

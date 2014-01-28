@@ -108,6 +108,10 @@ class Sale < ActiveRecord::Base
     payments.create params
   end
 
+  def is_postable?
+    persisted? and is_new? and (calculation_amount == payments_sum)
+  end
+
   private
 
   def set_user
