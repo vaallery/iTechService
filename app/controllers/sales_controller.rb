@@ -8,7 +8,7 @@ class SalesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @sales }
-      format.js { render 'shared/index' }
+      format.js { render (params[:form_name].present? ? 'shared/show_modal_form' : 'shared/index') }
     end
   end
 

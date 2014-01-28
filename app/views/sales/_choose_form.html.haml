@@ -1,0 +1,18 @@
+.modal-header
+  %h3
+    = button_to_close_modal
+    = t 'sales.choose_title'
+
+.modal-body
+  %table.table.table-condensed
+    %thead
+      %tr
+        %th= Sale.human_attribute_name :id
+        %th= Sale.human_attribute_name :date
+        %th= Sale.human_attribute_name :sum
+    %tbody
+      - @sales.each do |sale|
+        %tr
+          %td= link_to sale.id, edit_sale_path(sale)
+          %td= link_to human_datetime(sale.date), edit_sale_path(sale)
+          %td= link_to human_currency(sale.calculation_amount), edit_sale_path(sale)

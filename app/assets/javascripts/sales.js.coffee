@@ -25,6 +25,18 @@ jQuery ->
     event.preventDefault()
     closeClientCardReader()
 
+  $(document).on 'change', '#sale_form #sale_kind', ->
+    kind = $(this).val()
+    switch kind
+      when 'return'
+        $('#sale_form').removeClass('sale').addClass('return')
+        $('#sale_form #sale_is_return').val('true')
+      when 'sale'
+        $('#sale_form').removeClass('return').addClass('sale')
+        $('#sale_form #sale_is_return').val('false')
+      when 'return_check'
+        $.getScript '/sales?status=1&form_name=choose_form'
+
 window.saveSale = ->
   $('#sale_form').submit()
 

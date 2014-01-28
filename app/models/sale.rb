@@ -35,7 +35,11 @@ class Sale < ActiveRecord::Base
   def self.search(params)
     sales = Sale.scoped
 
-    unless (start_date = params[:start_date]).blank?
+    if (status_q = params[:status]).present?
+      sales = sales.where(status: status_q)
+    end
+
+      unless (start_date = params[:start_date]).blank?
       sales = sales.where('sold_at >= ?', start_date)
     end
 
@@ -92,7 +96,7 @@ class Sale < ActiveRecord::Base
     0
   end
 
-  def discounted_sum
+  def calculation_amount
     total_sum - discount_sum
   end
 

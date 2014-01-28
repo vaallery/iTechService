@@ -9,7 +9,7 @@
     - if f.object.is_gift_certificate?
       = f.input :gift_certificate, as: :gift_certificate
 
-    #sale_calculation_amount{data: {amount: @sale.discounted_sum}}= t 'sales.calculation_amount', amount: human_currency(@sale.discounted_sum, false)
+    #sale_calculation_amount{data: {amount: @sale.calculation_amount}}= t 'sales.calculation_amount', amount: human_currency(@sale.calculation_amount, false)
   .modal-footer
     = link_to t('helpers.links.cancel'), '#', 'data-dismiss' => 'modal', class: 'btn'
     = f.submit t('done'), id: 'payment_submit_button', class: 'btn btn-primary'

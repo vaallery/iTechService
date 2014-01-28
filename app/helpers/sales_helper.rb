@@ -5,7 +5,7 @@ module SalesHelper
   end
 
   def link_to_post_sale(sale)
-    if sale.new_record?
+    if sale.new_record? or !@sale.is_new?
       link_to t('sales.close_check'), '#', id: 'sale_close_check', class: 'btn', disabled: true
     else
       link_to t('sales.close_check'), post_sale_path(@sale), method: 'put', id: 'sale_close_check', class: 'btn', data: {confirm: t('confirmation')}
@@ -31,10 +31,10 @@ module SalesHelper
         content_tag(:ul, class: 'dropdown-menu') do
           content_tag(:li, link_to(t('payments.kinds.mixed'), sale_payments_path(sale_id: sale.id), remote: true)) +
           content_tag(:li, nil, class: 'divider') +
-          content_tag(:li, link_to(t('payments.kinds.certificate'), new_sale_payment_path(sale_id: sale.id, payment: {kind: 'certificate', value: sale.discounted_sum}), remote: true)) +
-          content_tag(:li, link_to(t('payments.kinds.credit'), new_sale_payment_path(sale_id: sale.id, payment: {kind: 'credit', value: sale.discounted_sum}), remote: true)) +
-          content_tag(:li, link_to(t('payments.kinds.card'), new_sale_payment_path(sale_id: sale.id, payment: {kind: 'card', value: sale.discounted_sum}), remote: true)) +
-          content_tag(:li, link_to(t('payments.kinds.cash'), sale_payments_path(sale_id: sale.id, payment: {kind: 'cash', value: sale.discounted_sum}), method: :post, remote: true, rel: 'nofollow'))
+          content_tag(:li, link_to(t('payments.kinds.certificate'), new_sale_payment_path(sale_id: sale.id, payment: {kind: 'certificate', value: sale.calculation_amount}), remote: true)) +
+          content_tag(:li, link_to(t('payments.kinds.credit'), new_sale_payment_path(sale_id: sale.id, payment: {kind: 'credit', value: sale.calculation_amount}), remote: true)) +
+          content_tag(:li, link_to(t('payments.kinds.card'), new_sale_payment_path(sale_id: sale.id, payment: {kind: 'card', value: sale.calculation_amount}), remote: true)) +
+          content_tag(:li, link_to(t('payments.kinds.cash'), sale_payments_path(sale_id: sale.id, payment: {kind: 'cash', value: sale.calculation_amount}), method: :post, remote: true, rel: 'nofollow'))
         end
       end
     end

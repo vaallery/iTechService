@@ -960,6 +960,7 @@ ru:
       sale_search_placeholder: "№"
     new:
       title: "Новая Продажа"
+    choose_title: 'Выберите чек'
     link: :sales.index.title
     created: "Продажа создана"
     updated: "Продажа изменена"
