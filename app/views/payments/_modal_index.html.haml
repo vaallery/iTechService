@@ -1,4 +1,4 @@
-- @sale.is_new?
+- if @sale.is_new?
   = simple_form_for @sale, html: { id: 'sale_payments_form' }, remote: true do |f|
     = hidden_field_tag :form_name, params[:form_name]
     .modal-header
