@@ -89,7 +89,6 @@ ItechService::Application.routes.draw do
 
   resources :comments
   resources :messages, path: 'chat', except: [:new, :edit, :update]
-  resources :sales
 
   resources :purchases do
     put 'post', on: :member
@@ -144,6 +143,7 @@ ItechService::Application.routes.draw do
     get :show_prices, on: :member, defaults: {format: :js}
     get :show_remains, on: :member, defaults: {format: :js}
     get :remains_in_store, on: :member, defaults: {format: :json}
+    get :related, on: :member, defaults: {format: :js}
     post :select, on: :collection, defaults: {format: :js}
     resources :items, except: [:show]
   end

@@ -25,9 +25,12 @@ jQuery ->
     event.preventDefault()
     closeClientCardReader()
 
+  $(document).on 'click', '#sale_save_check', (event)->
+    event.preventDefault()
+    saveSale()
+
   $(document).on 'change', '#sale_form #sale_kind', ->
-    kind = $(this).val()
-    switch kind
+    switch $(this).val()
       when 'return'
         $('#sale_form').removeClass('sale').addClass('return')
         $('#sale_form #sale_is_return').val('true')

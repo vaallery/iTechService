@@ -1,0 +1,7 @@
+#sale_top_panel.row-fluid
+  .span12
+    - 2.times do
+      .row-fluid.quick_select_row
+        - 6.times do
+          .span2.quick_select_cell
+            = link_to 'Product', '#', class: 'btn'

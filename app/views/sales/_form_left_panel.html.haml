@@ -1,0 +1,8 @@
+#sale_left_panel.span2
+    %div.product_select_button= link_to t('sales.scan_barcode'), '#', id: 'sale_scan_barcode', class: 'btn'
+    %div.product_select_button= link_to t('sales.enter_barcode'), '#', id: 'sale_enter_barcode', class: 'btn'
+    %div.product_select_button= link_to t('sales.choose_product'), choose_products_path(form: 'sale', association: 'sale_items', is_product_only: false), remote: true, id: 'sale_choose_product', class: 'btn'
+    %div= link_to_cancel_sale(@sale)
+    %div= link_to t('sales.copy_check'), '#', id: 'sale_copy_check', class: 'btn', disabled: (@sale.new_record? or !@sale.is_posted?)
+    %div= link_to t('sales.save_check'), '#', id: 'sale_save_check', class: 'btn', disabled: (@sale.new_record? or !@sale.is_new?)
+    %div= link_to t('sales.restore_check'), sales_path(form_name: 'choose_form', status: 0), remote: true, id: 'sale_restore_check', class: 'btn'

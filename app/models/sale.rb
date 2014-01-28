@@ -112,6 +112,12 @@ class Sale < ActiveRecord::Base
     persisted? and is_new? and (calculation_amount == payments_sum)
   end
 
+  def related_goods
+    if (last_item = line_items.order('created_at desc').first).present?
+      last_item
+    end
+  end
+
   private
 
   def set_user

@@ -75,7 +75,7 @@ class PurchasesController < ApplicationController
       if @purchase.post
         format.html { redirect_to @purchase, notice: t('purchases.posted') }
       else
-        flash.alert = @purchases.errors.full_messages
+        flash.alert = @purchase.errors.full_messages
         format.html { redirect_to @purchase, error: t('purchases.not_posted') }
       end
     end

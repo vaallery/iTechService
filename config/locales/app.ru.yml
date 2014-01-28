@@ -872,6 +872,7 @@ ru:
     errors:
       not_found: 'Продукт не найден.'
 
+    related_list_title: "Сопутствующие товары"
   purchases:
     choose_products: 'Выберите продукты'
     created: 'Закупка создана'

@@ -156,4 +156,13 @@ class ProductsController < ApplicationController
     end
   end
 
+  def related
+    @product = Product.find params[:id]
+    @related_products = @product.related_products.limit(5)
+    @related_product_groups = @product.related_product_groups.limit(5)
+    respond_to do |format|
+      format.js
+    end
+  end
+
 end

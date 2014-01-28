@@ -17,7 +17,7 @@
           %td= human_datetime sale.date
           %td= sale.store.name
           %td= link_to sale.user.short_name, user_path(sale.user)
-          %td= link_to sale.client.short_name, client_path(sale.client)
+          %td= link_to sale.client_short_name, client_path(sale.client) if sale.client.present?
           %td= human_currency sale.total_sum
           %td.actions.btn-group
             = link_to_show_small sale if can? :read, sale
