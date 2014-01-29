@@ -37,7 +37,7 @@
       box-shadow: 0 0 0 1px rgba(0,0,0,.05) inset!important;
     }
   }
-  #quick_select_back{
+  #quick_select_back_link{
     height: 98px;
 //    color: midnightblue;
     font-size: 33px;
@@ -159,12 +159,45 @@
       width: 100%;
       display: block;
       margin-bottom: 5px;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      height: 33px;
+      padding: 6px 4px 0 4px;
+
+      background-color: #FAFAFA;
+      color: gray;
+      text-decoration: none;
+      text-align: center;
+      vertical-align: middle;
+      background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0)),to(rgba(0,0,0,.05)));
+      background-image: -webkit-linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.05));
+      background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.05));
+      -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.08) inset;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.08) inset;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-transition: opacity .25s ease,background-color .25s ease,color .25s ease,background .25s ease,-webkit-box-shadow .25s ease;
+      transition: opacity .25s ease,background-color .25s ease,color .25s ease,background .25s ease,box-shadow .25s ease;
+      &:hover{
+        background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0)),to(rgba(0,0,0,.08)));
+        background-image: -webkit-linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.08));
+        background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.08));
+        color: rgba(0,0,0,.7);
+      }
+      &:active{
+        background-color: #F1F1F1;
+        color: rgba(0,0,0,.7);
+        -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.05) inset!important;
+        box-shadow: 0 0 0 1px rgba(0,0,0,.05) inset!important;
+      }
     }
   }
 }

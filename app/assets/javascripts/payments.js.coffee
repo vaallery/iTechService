@@ -20,7 +20,7 @@ calculateSalePayments = ->
   total_sum = 0
   if $('#payments_table').length > 0
     $('#payments_table .payment_value').each ->
-      total_sum += accounting.unformat $(this).val()
+      total_sum += Number $(this).val()
   $('#payments_table #sale_payments_sum').text(accounting.formatMoney(total_sum))
   calculation_amount = Number $('#sale_calculation_amount').data('amount')
   if total_sum == calculation_amount then $('#payment_submit_button').removeAttr('disabled') else $('#payment_submit_button').attr('disabled', true)
