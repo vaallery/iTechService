@@ -39,6 +39,7 @@ jQuery ->
         $('#sale_form #sale_is_return').val('false')
       when 'return_check'
         $.getScript '/sales?status=1&form_name=choose_form'
+        $(this).val('return').change()
 
 window.saveSale = ->
   $('#sale_form').submit()
