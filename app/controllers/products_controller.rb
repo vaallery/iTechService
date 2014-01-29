@@ -91,6 +91,8 @@ class ProductsController < ApplicationController
 
   def choose
     @product_groups = ProductGroup.goods.at_depth(1)
+    @product = Product.find params[:product_id] if params[:product_id].present?
+    params[:form_name] = 'products/choose_form'
     respond_to do |format|
       format.js
     end

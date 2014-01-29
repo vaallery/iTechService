@@ -43,4 +43,8 @@ module ProductsHelper
     form_for(parent) { |f| f.fields_for(association, new_object, child_index: Time.new.to_i) { |ff| return render(partial_name, f: ff, options: options) } }
   end
 
+  def link_to_related_product(product)
+    link_to product.name, choose_products_path(product_id: product.id, form: 'sale', association: 'sale_items'), remote: true, class: 'btn', title: product.name
+  end
+
 end
