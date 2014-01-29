@@ -6,7 +6,7 @@ class SaleItem < ActiveRecord::Base
   validates_presence_of :item, :price, :quantity
   validates_numericality_of :quantity, only_integer: true, greater_than: 0, unless: :feature_accounting
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
-  delegate :product, :product_category, :presentation, :features, :name, :code, :quantity_in_store, :retail_price, :purchase_price, :feature_accounting, :store_item, :store_items, to: :item, allow_nil: true
+  delegate :product, :product_category, :presentation, :features, :name, :code, :quantity_in_store, :retail_price, :purchase_price, :feature_accounting, :store_item, :store_items, :is_service, to: :item, allow_nil: true
   delegate :store, :client, to: :sale, allow_nil: true
 
   after_initialize do

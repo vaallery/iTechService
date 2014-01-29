@@ -26,7 +26,7 @@ class Product < ActiveRecord::Base
 
   attr_accessible :code, :name, :product_group_id, :device_type_id, :warranty_term, :items_attributes, :task_attributes, :related_product_ids, :related_product_group_ids
   validates_presence_of :name, :code, :product_group
-  validates_presence_of :device_type, unless: 'is_service'
+  validates_presence_of :device_type, unless: :is_service
   validates_uniqueness_of :code
 
   after_save { self.is_service ? self.create_task : self.task.try(:destroy) }
