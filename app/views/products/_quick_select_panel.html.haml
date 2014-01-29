@@ -1,0 +1,8 @@
+#products_quick_select_panel.row-fluid
+  .span-1.quick_select_back_button= link_to glyph('chevron-left'), '#', id: 'quick_select_back'
+  .span-11.product_buttons_group
+    - 2.times do
+      .row-fluid.quick_select_row
+        - 10.times do
+          .span-1.quick_select_cell
+            = link_to 'Product', '#'

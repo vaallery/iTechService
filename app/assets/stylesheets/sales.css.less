@@ -1,10 +1,61 @@
-#sale_top_panel{
+#products_quick_select_panel{
   margin-top: 20px;
+  a{
+    width: inherit;
+    display: table-cell;
+    background-color: #FAFAFA;
+    color: gray;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0)),to(rgba(0,0,0,.05)));
+    background-image: -webkit-linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.05));
+    background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.05));
+    -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.08) inset;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.08) inset;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-transition: opacity .25s ease,background-color .25s ease,color .25s ease,background .25s ease,-webkit-box-shadow .25s ease;
+    transition: opacity .25s ease,background-color .25s ease,color .25s ease,background .25s ease,box-shadow .25s ease;
+    &:hover{
+      background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(0,0,0,0)),to(rgba(0,0,0,.08)));
+      background-image: -webkit-linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.08));
+      background-image: linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.08));
+      color: rgba(0,0,0,.7);
+    }
+    &:active{
+      background-color: #F1F1F1;
+      color: rgba(0,0,0,.7);
+      -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.05) inset!important;
+      box-shadow: 0 0 0 1px rgba(0,0,0,.05) inset!important;
+    }
+  }
+  #quick_select_back{
+    height: 98px;
+//    color: midnightblue;
+    font-size: 33px;
+  }
+  .quick_select_back_button{
+    width: 5%;
+  }
+  .product_buttons_group{
+    margin-left: 0;
+    width: 95%;
+  }
   .quick_select_row{
-    .quick_select_cell>*{
-      height: 40px;
-      width: inherit;
-      display: table-cell;
+    .quick_select_cell{
+      margin-left: 0;
+      width: 10%;
+      &>a{
+        height: 49px;
+      }
     }
   }
 }
@@ -43,21 +94,18 @@
     #sale_header_row{
       font-weight: bold;
       font-size: 20px;
-      line-height: 20px;
+      line-height: 22px;
       &>.field_label, &>#sale_id{
         padding: 4px 4px;
+      }
+      #sale_kind{
+        width: 100%;
       }
     }
     #sale_result_row{
       font-weight: bold;
       line-height: 40px;
       font-size: 40px;
-      &.return{
-        background-color: #eeb6b4;
-      }
-      &.sale{
-  //        background-color: #468847;
-      }
       #sale_result_value{
         text-align: right;
       }
@@ -103,26 +151,29 @@
       }
     }
   }
-}
-
-#sale_right_panel{
-  a{
-    width: 100%;
-    display: block;
-    margin-bottom: 5px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  #sale_right_panel{
+    height: 406px;
+    border-right: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    a{
+      width: 100%;
+      display: block;
+      margin-bottom: 5px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }
 
 #sale_bottom_row{
+
   .btn-group{
-    width: inherit;
-    display: table-cell;
+    width: 100%;
+    display: table;
     .caret{
       margin-left: 2px;
     }
@@ -134,5 +185,49 @@
     height: 44px;
     vertical-align: middle;
     width: inherit;
+  }
+}
+
+@span-width: 100/12%;
+
+#sale_form_container{
+  [class*="span"]{
+    margin-left: 0;
+  }
+  .span1{
+    width: @span-width;
+  }
+  .span2{
+    width: @span-width*2;
+  }
+  .span3{
+    width: @span-width*3;
+  }
+  .span4{
+    width: @span-width*4;
+  }
+  .span5{
+    width: @span-width*5;
+  }
+  .span6{
+    width: @span-width*6;
+  }
+  .span7{
+    width: @span-width*7;
+  }
+  .span8{
+    width: @span-width*8;
+  }
+  .span9{
+    width: @span-width*9;
+  }
+  .span10{
+    width: @span-width*10;
+  }
+  .span11{
+    width: @span-width*11;
+  }
+  .span12{
+    width: @span-width*12;
   }
 }

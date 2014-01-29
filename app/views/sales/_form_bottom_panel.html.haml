@@ -1,7 +1,6 @@
-#sale_bottom_row.row-fluid
-  .span2= link_to t('sales.enter_client_card'), '#', id: 'sale_enter_client_card', class: 'btn', disabled: !@sale.is_new?
-  .span2= link_to t('sales.find_client'), clients_path(search: true), remote: true, id: 'sale_find_client', class: 'btn', disabled: !@sale.is_new?
-  .span2= link_to t('sales.manual_discount'), '#', id: 'set_sale_manual_discount', class: 'btn', disabled: (@sale.new_record? or !@sale.is_new?)
-  .span2= link_to_payment @sale
-  .span2= link_to t('sales.print_warranty'), '#', class: 'btn', disabled: (@sale.new_record?)
-  .span2= link_to_post_sale @sale
+.span2= link_to t('sales.enter_client_card'), '#', id: 'sale_enter_client_card', class: 'btn', disabled: !@sale.is_new?
+.span2= link_to t('sales.find_client'), clients_path(search: true), remote: true, id: 'sale_find_client', class: 'btn', disabled: !@sale.is_new?
+.span2= link_to t('sales.manual_discount'), '#', id: 'set_sale_manual_discount', class: 'btn', disabled: (@sale.new_record? or !@sale.is_new?)
+.span2= link_to_payment @sale
+.span2= link_to t('sales.print_warranty'), '#', class: 'btn', disabled: (@sale.new_record?)
+.span2= link_to_post_sale @sale
