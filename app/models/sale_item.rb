@@ -11,7 +11,7 @@ class SaleItem < ActiveRecord::Base
   validates_numericality_of :quantity, only_integer: true, greater_than: 0, unless: :feature_accounting
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
   validates_numericality_of :discount, greater_than_or_equal_to: 0, less_than: :max_discount
-  validates_numericality_of :price#, greater_than: :retail_price
+  validates_numericality_of :price, greater_than_or_equal_to: :min_price
 
   after_initialize do
     self.quantity ||= 1
@@ -38,6 +38,10 @@ class SaleItem < ActiveRecord::Base
 
   def max_discount
     (product.present? and client.present?) ? Discount::max_available_for(client, item) : 0
+  end
+
+  def min_price
+    retail_price - max_discount
   end
 
 end
