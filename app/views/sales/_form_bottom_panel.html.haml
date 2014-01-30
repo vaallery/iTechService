@@ -1,5 +1,5 @@
-.span2= link_to t('sales.enter_client_card'), '#', id: 'sale_enter_client_card', class: 'btn', disabled: !@sale.is_new?
-.span2= link_to t('sales.find_client'), clients_path(search: true), remote: true, id: 'sale_find_client', class: 'btn', disabled: !@sale.is_new?
+.span2= link_to t('sales.enter_client_card'), '#', id: 'sale_enter_client_card', class: 'btn btn-info', disabled: !@sale.is_new?
+.span2= link_to t('sales.find_client'), clients_path(search: true), remote: true, id: 'sale_find_client', class: 'btn btn-info', disabled: !@sale.is_new?
 .span2= link_to_manual_discount @sale
 .span2= link_to_payment @sale
 .span2= link_to t('sales.print_warranty'), '#', class: 'btn', disabled: (@sale.new_record?)

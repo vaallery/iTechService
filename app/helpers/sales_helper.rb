@@ -6,28 +6,28 @@ module SalesHelper
 
   def link_to_post_sale(sale)
     if !@sale.is_postable?
-      link_to t('sales.close_check'), '#', id: 'sale_close_check', class: 'btn', disabled: true
+      link_to t('sales.close_check'), '#', id: 'sale_close_check', class: 'btn btn-primary', disabled: true
     else
-      link_to t('sales.close_check'), post_sale_path(@sale), method: 'put', id: 'sale_close_check', class: 'btn', data: {confirm: t('confirmation')}
+      link_to t('sales.close_check'), post_sale_path(@sale), method: 'put', id: 'sale_close_check', class: 'btn btn-danger', data: {confirm: t('confirmation')}
     end
   end
 
   def link_to_cancel_sale(sale)
     if sale.new_record?
-      link_to t('sales.cancel_check'), '#', id: 'sale_cancel_check', class: 'btn', disabled: true
+      link_to t('sales.cancel_check'), '#', id: 'sale_cancel_check', class: 'btn btn-primary', disabled: true
     else
-      link_to t('sales.cancel_check'), cancel_sales_path(sale_id: @sale.id), method: 'post', id: 'sale_cancel_check', class: 'btn'
+      link_to t('sales.cancel_check'), cancel_sales_path(sale_id: @sale.id), method: 'post', id: 'sale_cancel_check', class: 'btn btn-primary'
     end
   end
 
   def link_to_payment(sale)
     if sale.new_record? or sale.sale_items.empty?
-      link_to t('sales.payment'), '#', id: '', class: 'btn', disabled: true
+      link_to t('sales.payment'), '#', id: '', class: 'btn btn-success', disabled: true
     elsif sale.payments.any?
-      link_to t('sales.payment'), sale_payments_path(sale_id: sale.id), remote: true, id: '', class: 'btn'
+      link_to t('sales.payment'), sale_payments_path(sale_id: sale.id), remote: true, id: '', class: 'btn btn-success'
     else
       content_tag(:div, class: 'btn-group dropup') do
-        link_to(t('sales.payment').html_safe + content_tag(:span, nil, class: 'caret'), '#', class: 'btn dropdown-toggle', 'data-toggle' => 'dropdown') +
+        link_to(t('sales.payment').html_safe + content_tag(:span, nil, class: 'caret'), '#', class: 'btn dropdown-toggle btn-success', 'data-toggle' => 'dropdown') +
         content_tag(:ul, class: 'dropdown-menu') do
           content_tag(:li, link_to(t('payments.kinds.mixed'), sale_payments_path(sale_id: sale.id), remote: true)) +
           content_tag(:li, nil, class: 'divider') +
@@ -49,7 +49,7 @@ module SalesHelper
   end
 
   def link_to_manual_discount(sale)
-    link_to t('sales.manual_discount'), edit_sale_path(sale, form_name: 'discount_form'), remote: true, id: 'sale_set_manual_discount', class: 'btn', disabled: (sale.new_record? or !sale.is_new? or sale.sale_items.empty?)
+    link_to t('sales.manual_discount'), edit_sale_path(sale, form_name: 'discount_form'), remote: true, id: 'sale_set_manual_discount', class: 'btn btn-info', disabled: (sale.new_record? or !sale.is_new? or sale.sale_items.empty?)
   end
 
 end
