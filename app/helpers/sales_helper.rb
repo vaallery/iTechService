@@ -48,4 +48,8 @@ module SalesHelper
     link_to glyph('plus') + t('payments.add').html_safe, '#', class: 'add_fields add_payment btn btn-success btn-small', data: { selector: append_to_selector, association: 'payments', content: (fields.gsub('\n', '')) }
   end
 
+  def link_to_manual_discount(sale)
+    link_to t('sales.manual_discount'), edit_sale_path(sale, form_name: 'discount_form'), remote: true, id: 'sale_set_manual_discount', class: 'btn', disabled: (sale.new_record? or !sale.is_new? or sale.sale_items.empty?)
+  end
+
 end

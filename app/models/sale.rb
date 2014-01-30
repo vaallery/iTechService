@@ -11,13 +11,13 @@ class Sale < ActiveRecord::Base
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
   has_many :payments, inverse_of: :sale, dependent: :destroy
-  accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:quantity].blank? or a[:item_id].blank? }
+  accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:id].blank? and a[:item_id].blank? }
   accepts_nested_attributes_for :payments, allow_destroy: true
 
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
 
-  attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return, :payment_ids, :payments_attributes
+  attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return, :payment_ids, :payments_attributes, :total_discount
   validates_presence_of :user, :store, :date, :status
   validates_inclusion_of :status, in: Document::STATUSES.keys
   validates_associated :payments
@@ -58,6 +58,17 @@ class Sale < ActiveRecord::Base
     sales
   end
 
+  def total_discount
+    sale_items.sum :discount
+  end
+
+  def total_discount=(new_value)
+    if (new_value = new_value.to_f) > 0
+      item_discount = new_value.fdiv(sale_items.count)
+      sale_items.each{|si| si.discount = item_discount}
+    end
+  end
+
   def kind
     is_return ? 'return' : 'sale'
   end
@@ -92,12 +103,8 @@ class Sale < ActiveRecord::Base
     sale_items.sum :price
   end
 
-  def discount_sum
-    0
-  end
-
   def calculation_amount
-    total_sum - discount_sum
+    total_sum - total_discount
   end
 
   def payments_sum

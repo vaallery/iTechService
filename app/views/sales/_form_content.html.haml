@@ -24,7 +24,7 @@
     .span3
       %span#sale_sum_cell= human_currency @sale.total_sum, false
     .span3
-      %span#sale_discount_cell= human_currency @sale.discount_sum, false
+      %span#sale_discount_cell= human_currency @sale.total_discount, false
     .span3
       %span#sale_discounted_sum_cell= human_currency @sale.calculation_amount, false
   #sale_items_row.row-fluid

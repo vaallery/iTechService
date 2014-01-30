@@ -31,6 +31,7 @@ class SalesController < ApplicationController
     @sale = Sale.find params[:id]
     respond_to do |format|
       format.html { render 'form' }
+      format.js { render 'shared/show_modal_form' }
     end
   end
 

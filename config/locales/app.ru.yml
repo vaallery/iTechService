@@ -293,7 +293,11 @@ ru:
         payment_type: 'Способ оплаты'
         sold_at: 'Время продажи'
         store: 'Склад'
+        total_discount: 'Общая скидка'
         total_sum: 'Общая сумма'
+
+      sale_item:
+        discount: 'Скидка'
 
       schedule_day:
         day: День

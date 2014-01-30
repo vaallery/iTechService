@@ -29,3 +29,42 @@
       = link_to t('helpers.links.cancel'), '#', 'data-dismiss' => 'modal', class: 'btn'
       = link_to t('payments.calculate'), '#', id: 'calculate_payments', class: 'btn btn-info'
       = f.submit t('done'), id: 'payment_submit_button', class: 'btn btn-primary', disabled: true
+- else
+  .modal-header
+    %h3= t 'payments.index.title'
+
+  .modal-body
+    %table#payments_table.table.table-condensed
+      %thead
+        %tr
+          %th.kind= Payment.human_attribute_name :kind
+          %th.value= Payment.human_attribute_name :value
+          %th.addl_attr= t('payments.addl_attributes')
+      %tbody
+        - @sale.payments.each do |payment|
+          %tr.payment_fields.fields{class: payment.kind}
+            %td.kind= human_payment_kind payment
+            %td.value= human_currency payment.value, false
+            %td.addl_attr
+              - case payment.kind
+                - when 'card', 'credit'
+                  = payment.bank_name
+                - when 'certificate'
+                  = link_to Payment.human_attribute_name(:gift_certificate), gift_certificate_path(payment.gift_certificate)
+                - when 'trade_in'
+                  = payment.device_name
+                  = payment.device_number
+                  = payment.client_info
+                  = payment.appraiser
+      %tfoot
+        %tr
+          %td= t 'total'
+          %td#sale_payments_sum.number= human_currency @sale.payments_sum, false
+          %td
+        %tr
+          %td= t 'sales.calculation'
+          %td#sale_calculation_amount.number{data: {amount: @sale.calculation_amount}}= human_currency @sale.calculation_amount, false
+          %td
+
+  .modal-footer
+    = link_to t('close'), '#', 'data-dismiss' => 'modal', class: 'btn'

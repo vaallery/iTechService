@@ -6,7 +6,8 @@ class Payment < ActiveRecord::Base
   belongs_to :bank
   belongs_to :gift_certificate, inverse_of: :payments
 
-  delegate :balance, to: :gift_certificate, prefix: true, allow_nil: true
+  delegate :balance, :nominal, to: :gift_certificate, prefix: true, allow_nil: true
+  delegate :name, to: :bank, prefix: true, allow_nil: true
 
   attr_accessible :value, :kind, :sale_id, :bank_id, :gift_certificate_id, :device_name, :device_number, :client_info, :appraiser, :device_logout
 

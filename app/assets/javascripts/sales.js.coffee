@@ -93,12 +93,12 @@ window.calculate_sale_items_total_sum = ->
   total_sum = 0
   $('#sale_items tr.sale_item_fields td.sum:visible').each ->
     total_sum += accounting.unformat $(this).text()
-  discount_sum = 0
+  total_discount = 0
 
   $('#sale_result_value').text accounting.formatMoney(total_sum)
   $('#sale_sum_cell').text accounting.formatMoney(total_sum)
-  $('#sale_discount_cell').text accounting.formatMoney(discount_sum)
-  $('#sale_discounted_sum_cell').text accounting.formatMoney(total_sum - discount_sum)
+  $('#sale_discount_cell').text accounting.formatMoney(total_discount)
+  $('#sale_discounted_sum_cell').text accounting.formatMoney(total_sum - total_discount)
 
 window.calculate_sale_item_row = (row)->
   $row = $(row)

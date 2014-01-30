@@ -1,6 +1,5 @@
-- if params[:form_name] == 'payments/modal_index'
-  :plain
-    hideModal();
+:plain
+  hideModal();
 - if @sale.errors.empty?
   :plain
     $('#sale_form_content').html("#{j(render('sales/form_content'))}");

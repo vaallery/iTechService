@@ -604,9 +604,9 @@ ActiveRecord::Schema.define(:version => 20140125041052) do
     t.integer  "item_id"
     t.decimal  "price",      :precision => 8, :scale => 2
     t.integer  "quantity"
-    t.datetime "created_at",                                              :null => false
-    t.datetime "updated_at",                                              :null => false
-    t.integer  "discount",                                 :default => 0
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
+    t.decimal  "discount",                                 :default => 0.0
   end
 
   add_index "sale_items", ["item_id"], :name => "index_sale_items_on_item_id"

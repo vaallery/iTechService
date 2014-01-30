@@ -1,0 +1,22 @@
+= simple_form_for @sale, remote: true, html: {class: 'form-horizontal'} do |f|
+  = hidden_field_tag :form_name, params[:form_name]
+  .modal-header
+    %h3= t 'sales.manual_discount'
+
+  .modal-body
+    %table#sale_items.table.table-condensed
+      %thead
+        %tr
+          %th= Product.human_attribute_name :name
+          %th= SaleItem.human_attribute_name :discount
+      %tbody
+        = f.simple_fields_for :sale_items do |ff|
+          %tr
+            %td= ff.object.name
+            %td= ff.number_field :discount, class: 'input-small', type: 'number'
+
+    = f.input :total_discount, as: :float
+
+  .modal-footer
+    = link_to t('helpers.links.cancel'), '#', 'data-dismiss' => 'modal', class: 'btn'
+    = f.submit t('done'), id: 'discount_submit_button', class: 'btn btn-primary'
