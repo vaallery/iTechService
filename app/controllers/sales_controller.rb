@@ -110,6 +110,10 @@ class SalesController < ApplicationController
     end
   end
 
+  def close_cashbox
+
+  end
+
   private
 
   def sort_column

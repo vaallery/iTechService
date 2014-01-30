@@ -967,6 +967,7 @@ ru:
     new:
       title: "Новая Продажа"
     choose_title: 'Выберите чек'
+    close_cashbox: 'Закрыть смену'
     link: :sales.index.title
     created: "Продажа создана"
     updated: "Продажа изменена"
