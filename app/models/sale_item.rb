@@ -10,7 +10,7 @@ class SaleItem < ActiveRecord::Base
   validates_presence_of :item, :price, :quantity
   validates_numericality_of :quantity, only_integer: true, greater_than: 0, unless: :feature_accounting
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
-  validates_numericality_of :discount, greater_than_or_equal_to: 0, less_than: :max_discount
+  validates_numericality_of :discount, greater_than_or_equal_to: 0, less_than_or_equal_to: :max_discount
   validates_numericality_of :price, greater_than_or_equal_to: :min_price
 
   after_initialize do

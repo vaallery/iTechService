@@ -39,7 +39,7 @@ class SalesController < ApplicationController
     @sale = Sale.new params[:sale]
     respond_to do |format|
       if @sale.save
-        format.html { redirect_to @sale, notice: t('sales.created') }
+        format.html { redirect_back_or root_path, notice: t('sales.created') }
         format.js { render 'save' }
       else
         format.html { render 'form' }

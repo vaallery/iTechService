@@ -8,17 +8,17 @@
         %th= model_class.human_attribute_name :store
         %th= model_class.human_attribute_name :user
         %th= model_class.human_attribute_name :client
-        %th= model_class.human_attribute_name :total_sum
+        %th= model_class.human_attribute_name :calculation_amount
         %th
     %tbody
       - @sales.each do |sale|
-        %tr
+        %tr{class: sale_row_class(sale)}
           %td= link_to sale.id, sale
           %td= human_datetime sale.date
           %td= sale.store.name
           %td= link_to sale.user.short_name, user_path(sale.user)
           %td= link_to sale.client_short_name, client_path(sale.client) if sale.client.present?
-          %td= human_currency sale.total_sum
+          %td= human_currency (sale.is_return? ? -1*sale.calculation_amount : sale.calculation_amount)
           %td.actions.btn-group
             = link_to_show_small sale if can? :read, sale
             = link_to_edit_small sale if can? :edit, sale

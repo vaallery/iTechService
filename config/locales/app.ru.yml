@@ -288,6 +288,7 @@ ru:
         user: Сотрудник
 
       sale:
+        calculation_amount: 'Сумма чека'
         client: "Покупатель"
         client_id: :activerecord.attributes.sale.client
         payment_type: 'Способ оплаты'

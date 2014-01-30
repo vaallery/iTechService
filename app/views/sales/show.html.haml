@@ -8,9 +8,6 @@
   %dt= Sale.human_attribute_name :client
   %dd= @sale.client.present? ? link_to(@sale.client_presentation, client_path(@sale.client)) : '-'
 
-  %dt= Sale.human_attribute_name :payment_type
-  %dd= @sale.payment_type_name
-
   %dt= Sale.human_attribute_name :store
   %dd= @sale.store.name
 
@@ -41,7 +38,7 @@
   %tfoot
     %tr
       %td{colspan: 6}= t 'total'
-      %td.total_sum.number= human_currency @sale.total_sum
+      %td.total_sum.number= human_currency @sale.calculation_amount
 
 .form-actions
   = link_to_edit @sale if can? :edit, @sale

@@ -95,16 +95,12 @@ class Sale < ActiveRecord::Base
     update_attribute :status, 2
   end
 
-  def unpost
-    #TODO unposting sale
-  end
-
   def total_sum
-    sale_items.sum :price
+    calculation_amount + total_discount
   end
 
   def calculation_amount
-    total_sum - total_discount
+    sale_items.sum :price
   end
 
   def payments_sum
