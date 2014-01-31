@@ -5,4 +5,4 @@
     %h3= t 'product_groups.index.title'
 
   .modal-body
-    #product_groups= product_groups_trees_tag @product_groups, @opened_product_groups, @current_product_group_id, form: params[:form]
+    #product_groups= product_groups_trees_tag @product_groups, @opened_product_groups, @current_product_group_id, form: params[:form], is_group_only: true
