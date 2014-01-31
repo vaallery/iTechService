@@ -36,6 +36,7 @@ ru:
       price: Прайс
       price_type: "Категория цен"
       product: 'Продукт'
+      product_group: 'Группа продуктов'
       purchase: "Закупка"
       revaluation: 'Переоценка'
       revaluation_act: 'Акт переоценки'
@@ -46,6 +47,7 @@ ru:
       stolen_phone: Краденый телефон
       store: "Склад"
       task: Задача
+      top_salable: 'Ходовой товар'
       user: Пользователь
 
     attributes:
@@ -332,6 +334,11 @@ ru:
         work_hours: "Рабочие часы"
         work_mins: "Рабочие минуты"
 
+      top_salable:
+        salable: 'Товар'
+        salable_id: :activerecord.attributes.top_salable.salable
+        salable_type: 'Тип'
+
       user:
         abilities: Возможности
         announcements: Оповещение
@@ -391,6 +398,7 @@ ru:
     name: Название
     number: Номер
     object: Объект
+    position: 'Позиция'
     price: 'Цена'
     prices: 'Цены'
     price_type: 'Категория цен'
@@ -857,6 +865,8 @@ ru:
       title: 'Редактирование Продуктовой группы'
     new:
       title: 'Новая Продуктовая группа'
+    index:
+      title: 'Группы продуктов'
 
   products:
     add_good: 'Добавить товар'
@@ -1090,6 +1100,16 @@ ru:
       fired: "УВ"
       business_trip: "К"
       training: "ОБ"
+
+  top_salables:
+    index:
+      title: 'Ходовые товары'
+    edit:
+      title: ''
+    new:
+      title: ''
+    created: ''
+    updated: ''
 
   users:
     abilities:

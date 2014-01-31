@@ -1,0 +1,20 @@
+= auto_header_tag @top_salable
+
+= simple_form_for @top_salable, html: {id: 'top_salable_form', class: 'form-horizontal'} do |f|
+
+  .form-inputs
+    = f.hidden_field :position
+    = f.input :color, as: :color
+    = f.input :salable_type, collection: [[t('activerecord.models.product'), 'Product'], [t('activerecord.models.product_group'), 'ProductGroup']]
+    = f.hidden_field :salable_id
+
+    #product_select_field.control-group
+      %label.control-label= t 'activerecord.models.product'
+      .controls= link_to @top_salable.name || '...', choose_products_path(form: 'top_salable', is_product_only: true), remote: true, id: 'top_salable_product_select', class: 'btn'
+
+    #product_group_select_field.control-group
+      %label.control-label= t 'activerecord.models.product_group'
+      .controls= link_to @top_salable.name || '...', product_groups_path(form: 'top_salable', is_group_only: true), remote: true, id: 'top_salable_product_group_select', class: 'btn'
+
+  .form-actions
+    = submit_button f

@@ -119,20 +119,16 @@ ItechService::Application.routes.draw do
   resources :settings, except: [:show]
   resources :salaries
   resources :discounts, except: :show
-
   resources :timesheet_days, path: 'timesheet', except: :show
   resources :bonuses
   resources :bonus_types, except: :show
   resources :installments
   resources :installment_plans
-
   resources :product_categories, except: :show
-
   resources :features, except: :show
-
   resources :contractors
-
   resources :feature_types, except: :show
+  resources :top_salables
 
   resources :stores do
     get :product_details, on: :member, defaults: {format: :js}
@@ -153,7 +149,7 @@ ItechService::Application.routes.draw do
     get :remains_in_store, on: :member, defaults: {format: :json}
   end
 
-  resources :product_groups, except: [:index, :show]
+  resources :product_groups
   resources :price_types, except: :show
   resources :payment_types
   resources :banks, except: :show

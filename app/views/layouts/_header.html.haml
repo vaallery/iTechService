@@ -38,6 +38,7 @@
                 %ul.dropdown-menu
                   %li= link_to t('products.index.title'), products_path if can? :read, Product
                   %li= link_to t('product_categories.index.title'), product_categories_path if can? :manage, ProductCategory
+                  %li= link_to t('top_salables.index.title'), top_salables_path if can? :manage, TopSalable
                   %li= link_to t('contractors.link'), contractors_path if can? :read, Contractor
                   %li= link_to t('feature_types.index.title'), feature_types_path if can? :manage, FeatureType
                   %li= link_to t('banks.index.title'), banks_path if can? :manage, Bank

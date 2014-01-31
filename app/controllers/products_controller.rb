@@ -8,19 +8,18 @@ class ProductsController < ApplicationController
       @products = Product.search(params)
     else
       @current_product_group = ProductGroup.find params[:group]
-      @current_product_group_id = @current_product_group.id
       @opened_product_groups = @current_product_group.path_ids[1..-1].map { |g| "product_group_#{g}" }.join(', ')
       @products = @current_product_group.products.search(params)
     end
 
-    if (@form = params[:form]) == 'sale'
+    if params[:form] == 'sale'
       @products = @products.available
     end
 
     @products = @products.page(params[:page])
 
     if params[:choose] == 'true'
-      @table_name = 'small_table'
+      params[:table_name] = 'small_table'
     end
 
     respond_to do |format|
@@ -101,6 +100,7 @@ class ProductsController < ApplicationController
   def select
     @store = Store.find params[:store_id] if params[:store_id].present?
     @client = Client.find params[:client_id] if params[:client_id].present?
+
     if params[:product_id].present?
       @product = Product.find params[:product_id]
       if @product.feature_accounting

@@ -1,0 +1,20 @@
+= auto_header_tag
+= render 'quick_select_panel_edit'
+
+-#
+  %table.table
+    %thead
+      %tr
+        %th= TopSalable.human_attribute_name :salable
+        %th= TopSalable.human_attribute_name :color
+        %th= TopSalable.human_attribute_name :position
+        %th
+    %tbody
+      - @top_salables.each do |top_salable|
+        %tr
+          %td= top_salable.name
+          %td= top_salable.color
+          %td= top_salable.position
+          %td
+            = link_to_edit_small top_salable
+            = link_to_destroy_small top_salable

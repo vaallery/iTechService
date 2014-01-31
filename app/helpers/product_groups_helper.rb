@@ -24,7 +24,8 @@ module ProductGroupsHelper
       is_current = product_group.id == current_id
       li_class = (opened.include?(product_group.id)) ? 'opened' : 'closed'
       li_class << ' current' if is_current
-      content_tag(:li, link_to(product_group.name, products_path(options.merge(group: product_group.id)), remote: true) + content_tag(:ul, nested_product_groups_list(sub_product_groups, opened, current_id, options)), class: "product_group #{li_class}", id: "product_group_#{product_group.id}", title: product_group.name, data: {product_group_id: product_group.id, products: product_items(product_group.products)})
+      content_tag(:li, link_to(product_group.name, product_group_path(product_group, options), remote: true) + content_tag(:ul, nested_product_groups_list(sub_product_groups, opened, current_id, options)), class: "product_group #{li_class}", id: "product_group_#{product_group.id}", title: product_group.name, data: {product_group_id: product_group.id, products: product_items(product_group.products)})
+      #content_tag(:li, link_to(product_group.name, products_path(options.merge(group: product_group.id)), remote: true) + content_tag(:ul, nested_product_groups_list(sub_product_groups, opened, current_id, options)), class: "product_group #{li_class}", id: "product_group_#{product_group.id}", title: product_group.name, data: {product_group_id: product_group.id, products: product_items(product_group.products)})
     end.join.html_safe
   end
 

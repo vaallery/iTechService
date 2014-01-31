@@ -1,23 +1,28 @@
 - is_product_only = params[:is_product_only] == 'true'
 - if @product.present? and is_product_only or @item.present?
-  $selector = $("##{params[:association]}>tbody");
-  - if is_product_only
-    == if($("tr[data-product=#{@product.id}]:visible", $selector).length > 0){
+  - if params[:form] == 'top_salable'
+    $('#top_salable_salable_id').val("#{@product.id}");
+    $('#top_salable_product_select').text("#{@product.name}");
+    hideModal();
   - else
-    == if($("tr[data-item=#{@item.id}]:visible", $selector).length > 0){
-  :plain
-      alert("#{t('documents.errors.product_already_present')}");
-    }
-    else{
-      $selector.append("#{j(product_fields(params[:form], params[:association], is_product_only ? @product : @item, params[:options]))}");
-      enumerate_table('table.enumerable');
-      //calculate_sale_items_total_sum();
-      if($('#sale_form').length > 0){
-        saveSale();
-        $.get("/products/#{@product.id}/related");
+    $selector = $("##{params[:association]}>tbody");
+    - if is_product_only
+      == if($("tr[data-product=#{@product.id}]:visible", $selector).length > 0){
+    - else
+      == if($("tr[data-item=#{@item.id}]:visible", $selector).length > 0){
+    :plain
+        alert("#{t('documents.errors.product_already_present')}");
       }
-      hideModal();
-    }
+      else{
+        $selector.append("#{j(product_fields(params[:form], params[:association], is_product_only ? @product : @item, params[:options]))}");
+        enumerate_table('table.enumerable');
+        //calculate_sale_items_total_sum();
+        if($('#sale_form').length > 0){
+          saveSale();
+          $.get("/products/#{@product.id}/related");
+        }
+        hideModal();
+      }
 - elsif @product.present?
   :plain
     $('#product_choose_form .product_row.info').removeClass('info');

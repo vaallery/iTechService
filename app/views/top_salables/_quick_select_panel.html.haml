@@ -1,0 +1,20 @@
+#products_quick_select_panel.row-fluid
+  .span.quick_select_back_button= link_to glyph('chevron-left'), top_salables_path, remote: true, id: 'quick_select_back_link'
+  .span.product_buttons_group
+    - 2.times do |r|
+      .row-fluid.quick_select_row
+        - 10.times do |c|
+          - pos = c+1+r*10
+          -#- if (top_salable = @top_salables.find_by_position pos).present?
+          - if @top_salables.present? and (top_salable = @top_salables[pos-1]).present?
+            - color = top_salable.is_a?(TopSalable) ? top_salable.color : (@top_salable.present? ? @top_salable.color : '')
+            .span.quick_select_cell{style: "background-color: #{color}"}
+              - if top_salable.is_a? Product
+                = link_to_product_quick_select top_salable
+              - elsif top_salable.salable.is_a? Product
+                = link_to_product_quick_select top_salable.salable
+              - else
+                = link_to top_salable.name, top_salable_path(top_salable), title: top_salable.name, remote: true
+          - else
+            .span.quick_select_cell
+              = link_to '', '#'

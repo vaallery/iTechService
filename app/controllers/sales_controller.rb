@@ -32,6 +32,7 @@ class SalesController < ApplicationController
 
   def new
     @sale = Sale.new params[:sale]
+    @top_salables = TopSalable.ordered
     respond_to do |format|
       format.html { render 'form' }
     end
@@ -39,7 +40,8 @@ class SalesController < ApplicationController
 
   def edit
     @sale = Sale.find params[:id]
-      if can? :edit, @sale
+    @top_salables = TopSalable.ordered
+    if can? :edit, @sale
       respond_to do |format|
         format.html { render 'form' }
         format.js { render 'shared/show_modal_form' }
