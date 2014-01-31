@@ -38,7 +38,7 @@ jQuery ->
         $('#sale_form').removeClass('return').addClass('sale')
         $('#sale_form #sale_is_return').val('false')
       when 'return_check'
-        $.getScript '/sales?status=1&form_name=choose_form'
+        $.getScript '/sales?status=1&form_name=choose_form&act=return_check'
         $(this).val('return').change()
 
 window.saveSale = ->

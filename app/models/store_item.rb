@@ -7,7 +7,7 @@ class StoreItem < ActiveRecord::Base
   belongs_to :item, inverse_of: :store_items
   belongs_to :store, inverse_of: :store_items
 
-  delegate :feature_accounting, :features, to: :item, allow_nil: true
+  delegate :feature_accounting, :features, :name, to: :item, allow_nil: true
   delegate :name, :code, to: :store, prefix: true, allow_nil: true
 
   attr_accessible :item_id, :store_id, :quantity

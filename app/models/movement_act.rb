@@ -22,7 +22,7 @@ class MovementAct < ActiveRecord::Base
 
   after_initialize do
     self.user_id ||= User.try(:current).try(:id)
-    self.date ||= Time.current
+    self.date ||= DateTime.current
     self.status ||= 0
   end
 
@@ -63,6 +63,7 @@ class MovementAct < ActiveRecord::Base
           movement_item.store_item(store).move_to dst_store, movement_item.quantity
         end
         update_attribute :status, 1
+        update_attribute :date, DateTime.current
       end
     else
       false

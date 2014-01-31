@@ -23,6 +23,9 @@ class Ability
       cannot :manage, [BonusType, Bonus]
       cannot [:edit, :destroy], Karma
       cannot :write_tech_notice, Device
+      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
     elsif user.programmer?
       can :manage, :all
       cannot :manage, Salary unless user.able_to? :manage_salary

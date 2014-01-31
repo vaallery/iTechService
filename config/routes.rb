@@ -97,10 +97,10 @@ ItechService::Application.routes.draw do
 
   resources :sales do
     put :post, on: :member
-    put :unpost, on: :member
     post :add_product, on: :collection
     post :cancel, on: :member
     post :close_cashbox, on: :collection
+    get :return_check, on: :member
     resources :payments
   end
 

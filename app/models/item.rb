@@ -56,6 +56,38 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def add_to_store(store, amount)
+    if store.present? and store.is_a? Store
+      if feature_accounting
+        if store_items.any?
+          return false
+        else
+          store_items.create store_id: store.id, quantity: 1
+        end
+      else
+        store_item(store).add amount
+      end
+    end
+  end
+
+  def remove_from_store(store, amount)
+    if store.present? and store.is_a? Store
+      if feature_accounting
+        if store_item.present?
+          store_item.destroy
+        else
+          return false
+        end
+      else
+        if store_item(store).quantity < amount
+          return false
+        else
+          store_item(store).dec amount
+        end
+      end
+    end
+  end
+
   def actual_quantity(store=nil)
     if store.present?
       store_items.in_store(store).try(:first).try(:quantity) || 0

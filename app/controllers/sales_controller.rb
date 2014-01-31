@@ -29,9 +29,13 @@ class SalesController < ApplicationController
 
   def edit
     @sale = Sale.find params[:id]
-    respond_to do |format|
-      format.html { render 'form' }
-      format.js { render 'shared/show_modal_form' }
+      if can? :edit, @sale
+      respond_to do |format|
+        format.html { render 'form' }
+        format.js { render 'shared/show_modal_form' }
+      end
+    else
+      redirect_to @sale
     end
   end
 
@@ -76,22 +80,10 @@ class SalesController < ApplicationController
     @sale = Sale.find params[:id]
     respond_to do |format|
       if @sale.post
-        format.html { redirect_to @sale, notice: t('documents.posted') }
+        format.html { redirect_back_or sales_path, notice: t('documents.posted') }
       else
         flash.alert = @sale.errors.full_messages
         format.html { redirect_to @sale, error: t('documents.not_posted') }
-      end
-    end
-  end
-
-  def unpost
-    @sale = Sale.find params[:id]
-    respond_to do |format|
-      if @sale.unpost
-        format.html { redirect_to @sale, notice: t('documents.unposted') }
-      else
-        flash.alert = @sale.errors.full_messages
-        format.html { redirect_to @sale, error: t('documents.not_unposted') }
       end
     end
   end
@@ -111,7 +103,20 @@ class SalesController < ApplicationController
   end
 
   def close_cashbox
-    # TODO closing cashbox
+    Sale.unposted.destroy_all
+    @sales = Sale.posted.sold_at(DateTime.current.beginning_of_day..DateTime.current)
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def return_check
+    source_sale = Sale.find params[:id]
+    @sale = source_sale.build_return
+    @sale.save
+    respond_to do |format|
+      format.html { redirect_to edit_sale_path(@sale) }
+    end
   end
 
   private

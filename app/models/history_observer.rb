@@ -17,6 +17,8 @@ class HistoryObserver < ActiveRecord::Observer
       tracked_attributes = %w[status nominal consumed]
     elsif model.is_a? Client
       tracked_attributes = %w[card_number contact_phone email full_phone_number name phone_number surname]
+    elsif model.is_a? StoreItem
+      tracked_attributes = %w[store_id item_id quantity]
     end
     
     unless (changed_attributes_keys = tracked_attributes & model.changed_attributes.keys).empty?

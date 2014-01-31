@@ -21,7 +21,7 @@ module SalesHelper
   end
 
   def link_to_cancel_sale(sale)
-    if sale.new_record?
+    if sale.new_record? or !sale.is_new?
       link_to t('sales.cancel_check'), '#', id: 'sale_cancel_check', class: 'btn btn-primary', disabled: true
     else
       link_to t('sales.cancel_check'), cancel_sale_path(sale), method: 'post', id: 'sale_cancel_check', class: 'btn btn-primary'

@@ -1,0 +1,16 @@
+.page-header
+  %h1
+    = link_back_to_index
+    = t 'sales.day_report'
+
+%table.table.table-bordered.table-hover
+  %tbody
+    - @sales.each do |sale|
+      %tr
+        %td= human_datetime sale.date
+        %td= sale.user_short_name
+        %td= human_currency sale.calculation_amount(true), false
+  %tfoot
+    %tr
+      %td{colspan: 2}= t 'total'
+      %td= human_currency @sales.sum{|sale| sale.calculation_amount(true)}, false

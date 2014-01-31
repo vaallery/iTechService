@@ -957,6 +957,7 @@ ru:
       out_of_stock: 'Товара нет в наличии'
       unavailable_discount: 'не допустима'
       deleting_posted: 'Невозможно удалить проведённую Продажу.'
+      item_already_present: '%{item} уже есть на складе %{store}'
     index:
       import_link: Импорт
       title: 'Продажи'
@@ -971,6 +972,7 @@ ru:
     link: :sales.index.title
     created: "Продажа создана"
     updated: "Продажа изменена"
+    day_report: 'Отчёт по продажам за день'
     doc_kind: 'Вид док.'
     doc_num: '№ док.'
     total: 'Итог'

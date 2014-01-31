@@ -16,9 +16,9 @@
           %td= link_to sale.id, sale
           %td= human_datetime sale.date
           %td= sale.store.name
-          %td= link_to sale.user.short_name, user_path(sale.user)
+          %td= link_to sale.user_short_name, user_path(sale.user)
           %td= link_to sale.client_short_name, client_path(sale.client) if sale.client.present?
-          %td= human_currency (sale.is_return? ? -1*sale.calculation_amount : sale.calculation_amount)
+          %td= human_currency sale.calculation_amount(true), false
           %td.actions.btn-group
             = link_to_show_small sale if can? :read, sale
             = link_to_edit_small sale if can? :edit, sale

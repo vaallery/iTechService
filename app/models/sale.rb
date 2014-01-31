@@ -4,6 +4,7 @@ class Sale < ActiveRecord::Base
   scope :sold_at, lambda { |period| where(date: period) }
   scope :posted, where(status: 1)
   scope :deleted, where(status: 2)
+  scope :unposted, where('status <> ?', 1)
 
   belongs_to :user, inverse_of: :sales
   belongs_to :client, inverse_of: :sales
@@ -14,6 +15,7 @@ class Sale < ActiveRecord::Base
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:id].blank? and a[:item_id].blank? }
   accepts_nested_attributes_for :payments, allow_destroy: true
 
+  delegate :name, :short_name, :full_name, to: :user, prefix: true, allow_nil: true
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
 
@@ -26,7 +28,7 @@ class Sale < ActiveRecord::Base
 
   after_initialize do
     self.user_id ||= User.try(:current).try(:id)
-    self.date ||= Time.current
+    self.date ||= DateTime.current
     self.status ||= 0
     self.is_return ||= false
     self.store_id ||= Store.default.try(:id)
@@ -81,14 +83,28 @@ class Sale < ActiveRecord::Base
     if is_valid_for_posting?
       transaction do
         sale_items.each do |sale_item|
-          store_item = sale_item.store_item(store)
-          store_item.feature_accounting ? store_item.destroy : store_item.dec(sale_item.quantity)
+          #store_item = sale_item.store_item(store)
+          if is_return?
+            sale_item.item.add_to_store store, sale_item.quantity
+          else
+            sale_item.item.remove_from_store store, sale_item.quantity
+            #store_item.feature_accounting ? store_item.destroy : store_item.dec(sale_item.quantity)
+          end
         end
         update_attribute :status, 1
+        update_attribute :date, DateTime.current
       end
     else
       false
     end
+  end
+
+  def build_return
+    new_sale = Sale.new is_return: true, client_id: self.client_id, store_id: self.store_id
+    self.sale_items.each do |sale_item|
+      new_sale.sale_items.build item_id: sale_item.item_id, quantity: sale_item.quantity, price: sale_item.price, discount: sale_item.discount
+    end
+    new_sale
   end
 
   def cancel
@@ -99,8 +115,9 @@ class Sale < ActiveRecord::Base
     calculation_amount + total_discount
   end
 
-  def calculation_amount
-    sale_items.sum :price
+  def calculation_amount(signed=false)
+    res = sale_items.sum :price
+    (signed and is_return) ? -1*res : res
   end
 
   def payments_sum
@@ -112,13 +129,7 @@ class Sale < ActiveRecord::Base
   end
 
   def is_postable?
-    persisted? and is_new? and (calculation_amount == payments_sum)
-  end
-
-  def related_goods
-    if (last_item = line_items.order('created_at desc').first).present?
-      last_item
-    end
+    persisted? and is_new? and (is_return and sale_items.any? or calculation_amount == payments_sum)
   end
 
   private
@@ -131,10 +142,17 @@ class Sale < ActiveRecord::Base
     is_valid = true
     if is_new?
       sale_items.each do |sale_item|
-        store_item = sale_item.store_items.in_store(store).first
-        if !store_item.present? or store_item.quantity < sale_item.quantity
-          self.errors[:base] << t('sales.errors.out_of_stock')
-          is_valid = false
+        store_item = sale_item.store_item(store)
+        if is_return?
+          if sale_item.feature_accounting and store_item.present?
+            self.errors[:base] << I18n.t('sales.errors.item_already_present', item: store_item.name, store: store_item.store_name)
+            is_valid = false
+          end
+        else
+          if !store_item.present? or store_item.quantity < sale_item.quantity
+            self.errors[:base] << I18n.t('sales.errors.out_of_stock')
+            is_valid = false
+          end
         end
       end
     else

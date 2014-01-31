@@ -2,7 +2,7 @@
   %h1
     = t '.title'
   = link_to_new Sale, t('sales.new.title')
-  = button_to t('sales.close_cashbox'), '#', id: 'close_cashbox_button', class: 'btn btn-primary', form_class: 'close_cashbox' if can? :close_cashbox, Sale
+  = button_to t('sales.close_cashbox'), close_cashbox_sales_path, id: 'close_cashbox_button', class: 'btn btn-primary', form_class: 'close_cashbox' if can? :close_cashbox, Sale
 
 .table_filter.navbar.container
   .navbar-inner

@@ -12,7 +12,8 @@
         %th= Sale.human_attribute_name :sum
     %tbody
       - @sales.each do |sale|
+        - url = (params[:act] == 'return_check') ? return_check_sale_path(sale) : edit_sale_path(sale)
         %tr
-          %td= link_to sale.id, edit_sale_path(sale)
-          %td= link_to human_datetime(sale.date), edit_sale_path(sale)
-          %td= link_to human_currency(sale.calculation_amount), edit_sale_path(sale)
+          %td= link_to sale.id, url
+          %td= link_to human_datetime(sale.date), url
+          %td= link_to human_currency(sale.calculation_amount), url

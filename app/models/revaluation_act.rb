@@ -14,7 +14,7 @@ class RevaluationAct < ActiveRecord::Base
 
   after_initialize do
     self.status = 'new' if self.status.blank?
-    self.date ||= Time.current
+    self.date ||= DateTime.current
     self.price_type_id ||= PriceType.retail.id
   end
 
@@ -52,6 +52,7 @@ class RevaluationAct < ActiveRecord::Base
           ProductPrice.create(product_id: revaluation.product_id, price_type_id: self.price_type_id, date: cur_time, value: revaluation.price)
         end
         update_attribute :status, 1
+        update_attribute :date, DateTime.current
       end
     else
       false

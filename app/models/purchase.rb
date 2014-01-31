@@ -15,7 +15,7 @@ class Purchase < ActiveRecord::Base
   validates_associated :batches
 
   after_initialize do
-    self.date ||= Time.current
+    self.date ||= DateTime.current
     self.status ||= 0
   end
 
@@ -73,6 +73,7 @@ class Purchase < ActiveRecord::Base
           batch.prices.create price_type_id: price_type.id, date: cur_date, value: batch.price
         end
         update_attribute :status, 1
+        update_attribute :date, DateTime.current
       end
     else
       false
