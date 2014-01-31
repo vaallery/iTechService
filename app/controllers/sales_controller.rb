@@ -111,7 +111,7 @@ class SalesController < ApplicationController
   end
 
   def close_cashbox
-
+    # TODO closing cashbox
   end
 
   private
