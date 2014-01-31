@@ -17,6 +17,16 @@ class SalesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @sale }
+      format.pdf do
+        pdf = SaleCheckPdf.new @sale, view_context, params[:copy].present?
+        filename = "sale_check_#{@sale.id}.pdf"
+        if params[:print].present?
+          system 'lp', pdf.render_file("#{Rails.root.to_s}/tmp/tickets/#{filename}").path
+        else
+          pdf = SaleCheckPdf.new @sale, view_context
+        end
+        send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
+      end
     end
   end
 
@@ -56,7 +66,7 @@ class SalesController < ApplicationController
     @sale = Sale.find params[:id]
     respond_to do |format|
       if @sale.update_attributes params[:sale]
-        format.html { redirect_to @sale, notice: t('sales.updated') }
+        format.html { redirect_back_or root_path, notice: t('sales.updated') }
         format.js { render 'save' }
       else
         format.html { render 'form' }

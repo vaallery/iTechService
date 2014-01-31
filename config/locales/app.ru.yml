@@ -967,6 +967,8 @@ ru:
       sale_search_placeholder: "№"
     new:
       title: "Новая Продажа"
+    check_num_datetime: 'Чек №%{num} от %{datetime}'
+    check_num_datetime_copy: 'Копия чека №%{num} от %{datetime}'
     choose_title: 'Выберите чек'
     close_cashbox: 'Закрыть смену'
     link: :sales.index.title

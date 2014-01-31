@@ -41,7 +41,11 @@ class Sale < ActiveRecord::Base
       sales = sales.where(status: status_q)
     end
 
-      unless (start_date = params[:start_date]).blank?
+    if (is_return_q = params[:is_return]).present?
+      sales = sales.where(is_return: is_return_q)
+    end
+
+    unless (start_date = params[:start_date]).blank?
       sales = sales.where('sold_at >= ?', start_date)
     end
 

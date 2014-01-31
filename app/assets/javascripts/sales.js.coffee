@@ -29,6 +29,10 @@ jQuery ->
     event.preventDefault()
     saveSale()
 
+  $(document).on 'click', '#sale_copy_check', (event)->
+    event.preventDefault()
+    $.getScript '/sales?status=1&form_name=choose_form&act=copy'
+
   $(document).on 'change', '#sale_form #sale_kind', ->
     switch $(this).val()
       when 'return'
@@ -38,7 +42,7 @@ jQuery ->
         $('#sale_form').removeClass('return').addClass('sale')
         $('#sale_form #sale_is_return').val('false')
       when 'return_check'
-        $.getScript '/sales?status=1&form_name=choose_form&act=return_check'
+        $.getScript '/sales?status=1&is_return=false&form_name=choose_form&act=return_check'
         $(this).val('return').change()
 
 window.saveSale = ->
