@@ -22,4 +22,12 @@ class Setting < ActiveRecord::Base
     (setting = Setting.find_by_name(name.to_s)).present? ? setting.value : ''
   end
 
+  def self.duck_plan
+    Setting.find_by_name('duck_plan').try :value
+  end
+
+  def self.duck_plan_url
+    Setting.find_by_name('duck_plan_url').try :value
+  end
+
 end

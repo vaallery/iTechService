@@ -3,6 +3,7 @@
     %span.user_name= profile_link
     - unless current_user.any_admin?
       %span= link_to karma_tag(current_user), rating_users_path
+    = duck_plan_tag
 
   #navbar.navbar.navbar-static-top
     .navbar-inner

@@ -1215,6 +1215,7 @@ ru:
   moved: "%{user} %{time} назад"
   moved_title: Переместил
   new: "Новый"
+  plan_for: 'План по '
   post: 'Провести'
   phone_placeholder: "6, 7, 10 или 11 цифр"
   remove_photo: Удалить фото
