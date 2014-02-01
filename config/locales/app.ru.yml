@@ -540,14 +540,14 @@ ru:
     ready_devices: "Готовые девайсы"
     misc: Прочее
     moved_title: Перемещен
-    new_device: Новый девайс
+    new_device: Новый Девайс
     new_device_message: Новый девайс!!!
     new_info: Создать новость
-    new_order: Новый заказ
+    new_order: Новый Заказ
     new_user: Новый пользователь
     params: Параметры
     reports: Отчёты
-    sale: "Продажа"
+    new_sale: "Новая Продажа"
     references: "Справочники"
 
   devices:
