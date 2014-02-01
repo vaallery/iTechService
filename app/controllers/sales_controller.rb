@@ -47,7 +47,7 @@ class SalesController < ApplicationController
         format.js { render 'shared/show_modal_form' }
       end
     else
-      redirect_to @sale
+      redirect_back_or @sale
     end
   end
 
