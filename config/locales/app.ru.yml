@@ -1103,7 +1103,7 @@ ru:
 
   top_salables:
     index:
-      title: 'Ходовые товары'
+      title: 'Панель быстрого доступа'
     edit:
       title: ''
     new:

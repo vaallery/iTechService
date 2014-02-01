@@ -1,8 +1,0 @@
-#products_quick_select_panel.row-fluid
-  .span1= link_to t('back'), '#', id: 'quick_select_back', class: 'btn'
-  .span11
-    - 2.times do
-      .row-fluid.quick_select_row
-        - 10.times do
-          .span1.quick_select_cell
-            = link_to 'Product', '#', class: 'btn'
