@@ -92,7 +92,7 @@ class SalesController < ApplicationController
     @sale = Sale.find params[:id]
     respond_to do |format|
       if @sale.post
-        format.html { redirect_back_or sales_path, notice: t('documents.posted') }
+        format.html { redirect_to root_path, notice: t('documents.posted') }
       else
         flash.alert = @sale.errors.full_messages
         format.html { redirect_to @sale, error: t('documents.not_posted') }
