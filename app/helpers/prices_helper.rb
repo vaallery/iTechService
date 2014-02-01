@@ -11,14 +11,11 @@ module PricesHelper
   end
 
   def header_link_to_view_prices
-    content_tag(:li, class: 'dropdown '+nav_state_for('prices')) do
-      link_to((t('prices.link', default: 'Prices')+caret_tag).html_safe, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown') +
-      content_tag(:ul, class: 'dropdown-menu') do
-        Price.all.map do |price|
-          content_tag :li, link_to_price(price)
-        end.join.html_safe
-      end
-    end.html_safe
+    drop_down t('prices.link', default: 'Prices') do
+      Price.all.map do |price|
+        menu_item price.file_name, price.file_url
+      end.join.html_safe
+    end
   end
 
 end
