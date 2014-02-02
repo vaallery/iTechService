@@ -102,6 +102,7 @@ class Ability
       can :read, Info, recipient_id: [nil, user.id]
       can :rating, User
       can :manage, TimesheetDay if user.able_to? :manage_timesheet
+      can :print_check, Sale
       can :read, :all
       cannot [:create, :update, :destroy], StolenPhone
       cannot :read, Salary

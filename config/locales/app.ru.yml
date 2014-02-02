@@ -961,13 +961,12 @@ ru:
     updated: Изменено
 
   sales:
+    kinds:
+      sale: 'Продажа'
+      return: 'Возврат'
+      return_check: 'Возврат чека'
     edit:
       title: "Редактирование Продажы"
-    errors:
-      out_of_stock: 'Товара нет в наличии'
-      unavailable_discount: 'не допустима'
-      deleting_posted: 'Невозможно удалить проведённую Продажу.'
-      item_already_present: '%{item} уже есть на складе %{store}'
     index:
       import_link: Импорт
       title: 'Продажи'
@@ -977,8 +976,18 @@ ru:
       sale_search_placeholder: "№"
     new:
       title: "Новая Продажа"
-    check_num_datetime: 'Чек №%{num} от %{datetime}'
-    check_num_datetime_copy: 'Копия чека №%{num} от %{datetime}'
+    errors:
+      out_of_stock: 'Товара нет в наличии'
+      unavailable_discount: 'не допустима'
+      deleting_posted: 'Невозможно удалить проведённую Продажу.'
+      item_already_present: '%{item} уже есть на складе %{store}'
+    check_pdf:
+      title: 'Чек №%{num} от %{datetime}'
+      title_copy: 'Копия чека №%{num} от %{datetime}'
+      qty: 'Кол'
+      name: 'Наименование'
+      price: 'Цена'
+      discount: 'Скидка'
     choose_title: 'Выберите чек'
     close_cashbox: 'Закрыть смену'
     link: :sales.index.title
@@ -1007,12 +1016,9 @@ ru:
     print_warranty: 'Печать гарантии'
     calculation: 'К рассчёту'
     calculation_amount: 'Сумма к оплате: %{amount}'
-    kinds:
-      sale: 'Продажа'
-      return: 'Возврат'
-      return_check: 'Возврат чека'
-
     add_product: "Добавить Продукт"
+    print_check: 'Распечатать чек'
+    view_check: 'Посмотреть чек'
 
   settings:
     edit:

@@ -41,6 +41,8 @@
       %td.total_sum.number= human_currency @sale.calculation_amount
 
 .form-actions
+  = link_to t('sales.print_check'), print_check_sale_path(@sale), remote: true, class: 'btn' if can? :print_check, @sale
+  = link_to t('sales.view_check'), sale_path(@sale, format: :pdf), class: 'btn' if can? :print_check, @sale
   = link_to_edit @sale if can? :edit, @sale
-  = button_to_post @sale if can? :post, @sale
-  = link_to_destroy @sale if can? :destroy, @sale
+  -#= button_to_post @sale if can? :post, @sale
+  -#= link_to_destroy @sale if can? :destroy, @sale

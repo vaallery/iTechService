@@ -18,14 +18,13 @@ class SalesController < ApplicationController
       format.html
       format.json { render json: @sale }
       format.pdf do
-        pdf = SaleCheckPdf.new @sale, view_context, params[:copy].present?
-        filename = "sale_check_#{@sale.id}.pdf"
-        if params[:print].present?
-          system 'lp', pdf.render_file("#{Rails.root.to_s}/tmp/tickets/#{filename}").path
+        if can? :print_check, @sale
+          pdf = SaleCheckPdf.new @sale, view_context, params[:copy].present?
+          filename = "sale_check_#{@sale.id}.pdf"
+          send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
         else
-          pdf = SaleCheckPdf.new @sale, view_context
+          render nothing: true
         end
-        send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
       end
     end
   end
@@ -92,17 +91,14 @@ class SalesController < ApplicationController
     @sale = Sale.find params[:id]
     respond_to do |format|
       if @sale.post
-        format.html { redirect_to root_path, notice: t('documents.posted') }
+        pdf = SaleCheckPdf.new @sale, view_context, params[:copy].present?
+        filename = "sale_check_#{@sale.id}.pdf"
+        system 'lp', pdf.render_file("#{Rails.root.to_s}/tmp/checks/#{filename}").path
+        format.html { redirect_to new_sale_path, notice: t('documents.posted') }
       else
         flash.alert = @sale.errors.full_messages
-        format.html { redirect_to @sale, error: t('documents.not_posted') }
+        format.html { render 'form', error: t('documents.not_posted') }
       end
-    end
-  end
-
-  def add_product
-    respond_to do |format|
-      format.js
     end
   end
 
@@ -111,6 +107,21 @@ class SalesController < ApplicationController
     @sale.cancel
     respond_to do |format|
       format.html { redirect_to new_sale_path }
+    end
+  end
+
+  def print_check
+    @sale = Sale.find params[:id]
+    if can?(:reprint_check, @sale)
+      pdf = SaleCheckPdf.new @sale, view_context, params[:copy].present?
+    else
+      pdf = SaleCheckPdf.new @sale, view_context, true
+    end
+    filename = "sale_check_#{@sale.id}.pdf"
+    system 'lp', pdf.render_file("#{Rails.root.to_s}/tmp/checks/#{filename}").path
+    respond_to do |format|
+      format.html { redirect_to new_sale_path }
+      format.js { render nothing: true }
     end
   end
 

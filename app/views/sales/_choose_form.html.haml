@@ -15,7 +15,7 @@
         - options = {}
         - case params[:act]
           - when 'return_check' then url = return_check_sale_path(sale)
-          - when 'copy' then url = sale_path(sale, format: 'pdf', copy: true, print: true); options.store :target, '_blank'
+          - when 'copy' then url = print_check_sale_path(sale, copy: true); options.store :remote, true
           - else url = edit_sale_path(sale)
         %tr
           %td= link_to sale.id, url, options

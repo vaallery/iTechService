@@ -28,10 +28,10 @@
         = drop_down_submenu t 'dashboard.references' do
           = menu_item t('product_categories.index.title'), product_categories_path if can? :manage, ProductCategory
           = menu_item t('top_salables.index.title'), top_salables_path if can? :manage, TopSalable
-          = menu_item t('contractors.link'), contractors_path if can? :read, Contractor
+          = menu_item t('contractors.link'), contractors_path if can? :manage, Contractor
           = menu_item t('feature_types.index.title'), feature_types_path if can? :manage, FeatureType
           = menu_item t('banks.index.title'), banks_path if can? :manage, Bank
-          = menu_item t('stores.index.title'), stores_path if can? :read, Store
+          = menu_item t('stores.index.title'), stores_path if can? :manage, Store
           = menu_item t('locations.link'), locations_path if can? :manage, Location
         = drop_down_divider
         = menu_item t('users.link', default: 'Users'), users_path if can? :manage, User
