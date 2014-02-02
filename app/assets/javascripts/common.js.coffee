@@ -20,55 +20,9 @@ jQuery ->
         $('#announcements').slideDown(100)
         showNotificationsIndicator()
 
-  $(document).on 'click', '#hide_notifications_button', ->
-    $('#announcements:has(*)').slideToggle(100);
-    $('#personal_infos:has(*)').slideToggle(100);
-    $('#important_info:has(*)').slideToggle(100);
-    $('#duty_announcement:has(*)').slideToggle(100);
-    $('#hide_notifications_button>i').toggleClass('icon-chevron-up').toggleClass('icon-chevron-down')
-
-  $(document).on 'click', '#history .close_history', (event) ->
-    $history = $('#history')
-    $history.remove()
-    event.preventDefault()
-
   $(document).ready () ->
     $('form[data-remote]').bind 'ajax:before', () ->
       CKEDITOR.instances[instance].updateElement() for instance in CKEDITOR.instances
-
-  $(document).on 'click', '.remove_fields', (event) ->
-    $(this).prev("input[type=hidden]").val("1")
-    $(this).closest(".fields").hide()
-    event.preventDefault()
-
-  $(document).on 'click', '.add_fields', (event) ->
-    target = $(this).data 'selector'
-    association = $(this).data 'association'
-    content = $(this).data 'content'
-    add_fields target, association, content
-    event.preventDefault()
-
-  $(document).on 'shown', '#modal_form', ->
-    $('html,body').css('overflow', 'hidden');
-
-  $(document).on 'hidden', '#modal_form', ->
-    $('html,body').css 'overflow', 'auto'
-    $('#modal_form').remove()
-    $('.product_selector.active').removeClass('active')
-    $('.product_select_button.active').removeClass('active')
-
-  $(document).on 'keyup', '#search_form .search-query', (event) ->
-    if event.keyCode is 13
-      $('#search_form').submit()
-      event.preventDefault()
-
-  $(document).on 'click', '#search_form .clear_search_input', (event) ->
-    $(this).siblings('.search-query').val ''
-    $('#search_form').submit()
-    event.preventDefault()
-
-  $(document).on 'focus', '.datepicker', ->
-    $(this).datepicker().dates = datepicker_dates
 
   $('#sign_in_by_card, #unlock_session').click (event)->
     event.preventDefault()
@@ -77,11 +31,6 @@ jQuery ->
   $('#lock_session').click (event)->
     event.preventDefault()
     $('#card_sign_in').show().addClass('in')
-
-  $(document).on 'click', '.close_popover_button', (event)->
-    $popover = $(this).parents('.popover')
-    $popover.prev().popover('hide')
-    event.preventDefault()
 
   $('#scan_barcode_button').click ->
     scanTicket()
@@ -94,8 +43,59 @@ jQuery ->
   if $('table.enumerable').length > 0
     enumerate_table('table.enumerable')
 
-  $(document).on 'click', '#cancel_barcode_scan', ->
-    closeBarcodeReader()
+$(document).on 'click', '.close_popover_button', (event)->
+  $popover = $(this).parents('.popover')
+  $popover.prev().popover('hide')
+  event.preventDefault()
+
+$(document).on 'click', '#hide_notifications_button', ->
+  $('#announcements:has(*)').slideToggle(100);
+  $('#personal_infos:has(*)').slideToggle(100);
+  $('#important_info:has(*)').slideToggle(100);
+  $('#duty_announcement:has(*)').slideToggle(100);
+  $('#hide_notifications_button>i').toggleClass('icon-chevron-up').toggleClass('icon-chevron-down')
+
+$(document).on 'click', '#history .close_history', (event) ->
+  $history = $('#history')
+  $history.remove()
+  event.preventDefault()
+
+$(document).on 'click', '.remove_fields', (event) ->
+  $(this).prev("input[type=hidden]").val("1")
+  $(this).closest(".fields").hide()
+  event.preventDefault()
+
+$(document).on 'shown', '#modal_form', ->
+  $('html,body').css('overflow', 'hidden');
+
+$(document).on 'hidden', '#modal_form', ->
+  $('html,body').css 'overflow', 'auto'
+  $('#modal_form').remove()
+  $('.product_selector.active').removeClass('active')
+  $('.product_select_button.active').removeClass('active')
+
+$(document).on 'keyup', '#search_form .search-query', (event) ->
+  if event.keyCode is 13
+    $('#search_form').submit()
+    event.preventDefault()
+
+$(document).on 'click', '#search_form .clear_search_input', (event) ->
+  $(this).siblings('.search-query').val ''
+  $('#search_form').submit()
+  event.preventDefault()
+
+$(document).on 'focus', '.datepicker', ->
+  $(this).datepicker().dates = datepicker_dates
+
+$(document).on 'click', '#cancel_barcode_scan', ->
+  closeBarcodeReader()
+
+$(document).on 'click', '.add_fields', (event) ->
+  event.preventDefault()
+  target = $(this).data 'selector'
+  association = $(this).data 'association'
+  content = $(this).data 'content'
+  add_fields target, association, content
 
 cursorX = $('#spinner').outerWidth() / 2
 cursorY = $('#spinner').outerHeight() / 2

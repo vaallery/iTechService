@@ -12,11 +12,12 @@
         %th= Sale.human_attribute_name :sum
     %tbody
       - @sales.each do |sale|
+        - options = {}
         - case params[:act]
           - when 'return_check' then url = return_check_sale_path(sale)
-          - when 'copy' then url = sale_path(sale, format: 'pdf', copy: true, print: true)
+          - when 'copy' then url = sale_path(sale, format: 'pdf', copy: true, print: true); options.store :target, '_blank'
           - else url = edit_sale_path(sale)
         %tr
-          %td= link_to sale.id, url
-          %td= link_to human_datetime(sale.date), url
-          %td= link_to human_currency(sale.calculation_amount), url
+          %td= link_to sale.id, url, options
+          %td= link_to human_datetime(sale.date), url, options
+          %td= link_to human_currency(sale.calculation_amount), url, options

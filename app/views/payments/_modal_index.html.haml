@@ -24,6 +24,7 @@
             %td#sale_calculation_amount.number{data: {amount: @sale.calculation_amount}}= human_currency @sale.calculation_amount, false
             %td
       = link_to_add_payment '#payments_table tbody', f
+      -#= link_to_add_fields t('payments.add'), '#payments_table tbody', f, :payments
 
     .modal-footer
       = link_to t('helpers.links.cancel'), '#', 'data-dismiss' => 'modal', class: 'btn'
