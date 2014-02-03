@@ -18,9 +18,9 @@ class ProductGroupsController < ApplicationController
   def show
     @product_group = ProductGroup.find params[:id]
     @products = @product_group.products.search(params)
-    #if params[:form] == 'sale'
-    #  @products = @products.available
-    #end
+    if params[:form] == 'sale'
+      @products = @products.available
+    end
     if params[:choose] == 'true'
       params[:table_name] = 'products/small_table'
     end

@@ -125,14 +125,6 @@ class SalesController < ApplicationController
     end
   end
 
-  def close_cashbox
-    Sale.unposted.destroy_all
-    @sales = Sale.posted.sold_at(DateTime.current.beginning_of_day..DateTime.current)
-    respond_to do |format|
-      format.html
-    end
-  end
-
   def return_check
     source_sale = Sale.find params[:id]
     @sale = source_sale.build_return

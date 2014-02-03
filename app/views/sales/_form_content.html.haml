@@ -4,10 +4,10 @@
   = f.hidden_field :date
   = f.hidden_field :is_return
   #sale_header_row.row-fluid
-    .span2.field_label= t 'sales.doc_kind'
-    .span4= select_tag 'sale_kind', options_for_sale_kind_select(@sale.kind), include_blank: false, disabled: !@sale.is_new?
-    .span2.field_label= t 'sales.doc_num'
-    #sale_id.span4= @sale.id
+    .span3.field_label= t 'sales.doc_kind'
+    .span3= select_tag 'sale_kind', options_for_sale_kind_select(@sale.kind), include_blank: false, disabled: !@sale.is_new?
+    .span3.field_label= t 'sales.doc_num'
+    #sale_id.span3= "#{@sale.id}/#{@sale.cash_shift_id}" unless @sale.new_record?
   #sale_result_row.row-fluid{class: @sale.kind}
     .span12
       %span.span3= t 'sales.total'

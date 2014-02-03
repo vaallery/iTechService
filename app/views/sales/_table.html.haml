@@ -6,8 +6,8 @@
         %th= sortable 'id', model_class.human_attribute_name(:id)
         %th= sortable 'date', model_class.human_attribute_name(:date)
         %th= model_class.human_attribute_name :store
-        %th= model_class.human_attribute_name :user
         %th= model_class.human_attribute_name :client
+        %th= model_class.human_attribute_name :user
         %th= model_class.human_attribute_name :calculation_amount
         %th
     %tbody
@@ -16,8 +16,8 @@
           %td= link_to sale.id, sale
           %td= human_datetime sale.date
           %td= sale.store.name
-          %td= link_to sale.user_short_name, user_path(sale.user)
           %td= link_to sale.client_short_name, client_path(sale.client) if sale.client.present?
+          %td= link_to sale.user_short_name, user_path(sale.user)
           %td= human_currency sale.calculation_amount(true), false
           %td.actions.btn-group
             = link_to_show_small sale if can? :read, sale

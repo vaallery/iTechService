@@ -9,6 +9,7 @@ class Sale < ActiveRecord::Base
   belongs_to :user, inverse_of: :sales
   belongs_to :client, inverse_of: :sales
   belongs_to :store
+  belongs_to :cash_shift, inverse_of: :sales
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
   has_many :payments, inverse_of: :sale, dependent: :destroy
@@ -20,11 +21,11 @@ class Sale < ActiveRecord::Base
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
 
   attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return, :payment_ids, :payments_attributes, :total_discount
-  validates_presence_of :user, :store, :date, :status
+  validates_presence_of :user, :store, :date, :status, :cash_shift
   validates_inclusion_of :status, in: Document::STATUSES.keys
   validates_associated :payments
   before_validation :set_user
-
+  before_validation :set_cash_shift
 
   after_initialize do
     self.user_id ||= User.try(:current).try(:id)
@@ -140,6 +141,10 @@ class Sale < ActiveRecord::Base
 
   def set_user
     self.user_id ||= User.try(:current).try(:id)
+  end
+
+  def set_cash_shift
+    self.cash_shift_id ||= CashShift.current.id
   end
 
   def is_valid_for_posting?

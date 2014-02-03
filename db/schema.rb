@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140131130957) do
+ActiveRecord::Schema.define(:version => 20140203062752) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -62,6 +62,15 @@ ActiveRecord::Schema.define(:version => 20140131130957) do
   end
 
   add_index "bonuses", ["bonus_type_id"], :name => "index_bonuses_on_bonus_type_id"
+
+  create_table "cash_shifts", :force => true do |t|
+    t.boolean  "is_closed",  :default => false
+    t.integer  "user_id"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "cash_shifts", ["user_id"], :name => "index_cash_shifts_on_user_id"
 
   create_table "ckeditor_assets", :force => true do |t|
     t.string   "data_file_name",                  :null => false
@@ -619,10 +628,12 @@ ActiveRecord::Schema.define(:version => 20140131130957) do
     t.datetime "date"
     t.integer  "status"
     t.boolean  "is_return"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "cash_shift_id"
   end
 
+  add_index "sales", ["cash_shift_id"], :name => "index_sales_on_cash_shift_id"
   add_index "sales", ["client_id"], :name => "index_sales_on_client_id"
   add_index "sales", ["status"], :name => "index_sales_on_status"
   add_index "sales", ["store_id"], :name => "index_sales_on_store_id"

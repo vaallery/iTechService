@@ -26,6 +26,8 @@ class Ability
       cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
       cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
       cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
+      cannot :read, CashShift
+      cannot :close, CashShift
     elsif user.programmer?
       can :manage, :all
       cannot :manage, Salary unless user.able_to? :manage_salary

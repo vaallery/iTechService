@@ -1,9 +1,5 @@
 ItechService::Application.routes.draw do
 
-  mount Ckeditor::Engine => '/ckeditor'
-
-  devise_for :users
-
   root to: 'dashboard#index'
   match 'dashboard' => 'dashboard#index', via: :get
   match 'become/:id' => 'dashboard#become', via: :get, as: 'become'
@@ -14,6 +10,12 @@ ItechService::Application.routes.draw do
   match 'goods_for_sale' => 'dashboard#goods_for_sale', via: :get
   match 'reports' => 'dashboard#reports', via: :get
   match 'check_session_status' => 'dashboard#check_session_status', via: :get
+  match 'cash_shifts/:id' => 'cash_shifts#show', via: :get, as: 'cash_shift'
+  match 'close_cash_shift' => 'cash_shifts#close', via: :post
+
+  mount Ckeditor::Engine => '/ckeditor'
+
+  devise_for :users
 
   resources :users do
     get :duty_calendar, on: :member
@@ -98,7 +100,6 @@ ItechService::Application.routes.draw do
   resources :sales do
     put :post, on: :member
     post :cancel, on: :member
-    post :close_cashbox, on: :collection
     get :return_check, on: :member
     get :print_check, on: :member, defaults: {format: 'js'}
     resources :payments

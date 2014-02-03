@@ -9,6 +9,7 @@ ru:
       #ckeditor/attachment_file: ckeditor/attachment_file
       #ckeditor/picture: ckeditor/picture
       batch: 'Партия'
+      cash_shift: 'Кассовая смена'
       category: Категория
       client: Клиент
       client_category: 'Категория клиента'
@@ -291,6 +292,7 @@ ru:
 
       sale:
         calculation_amount: 'Сумма чека'
+        cash_shift: 'Смена'
         client: "Покупатель"
         client_id: :activerecord.attributes.sale.client
         payment_type: 'Способ оплаты'
@@ -477,6 +479,9 @@ ru:
   batches:
     errors:
       feature_exists: 'Характеристика уже существует'
+
+  cash_shifts:
+    close: 'Закрыть смену'
 
   clients:
     categories:
@@ -990,13 +995,12 @@ ru:
       discount: 'Скидка'
     calculate: 'Расчитать'
     choose_title: 'Выберите чек'
-    close_cashbox: 'Закрыть смену'
     link: :sales.index.title
     created: "Продажа создана"
     updated: "Продажа изменена"
     day_report: 'Отчёт по продажам за день'
     doc_kind: 'Вид док.'
-    doc_num: '№ док.'
+    doc_num: '№ док./смены'
     total: 'Итог'
     num: '№'
     sum: 'Сумма'
