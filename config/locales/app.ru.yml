@@ -989,6 +989,7 @@ ru:
     check_pdf:
       title: 'Чек №%{num} от %{datetime}'
       title_copy: 'Копия чека №%{num} от %{datetime}'
+      title_return: 'Чек возврата №%{num} от %{datetime}'
       qty: 'Кол'
       name: 'Наименование'
       price: 'Цена'

@@ -10,11 +10,17 @@ class SaleCheckPdf < Prawn::Document
     }
     font 'DroidSans'
 
-    if is_copy
-      text view.t('sales.check_pdf.title_copy', num: sale.id, datetime: view.human_datetime(sale.date))
-    else
-      text view.t('sales.check_pdf.title', num: sale.id, datetime: view.human_datetime(sale.date))
-    end
+    text view.t("sales.check_pdf.#{sale.is_return ? 'title_return' : (is_copy ? 'title_copy' : 'title')}", num: sale.id, datetime: view.human_datetime(sale.date))
+
+    #if sale.is_return
+    #  text view.t('sales.check_pdf.title_return', num: sale.id, datetime: view.human_datetime(sale.date))
+    #else
+    #  if is_copy
+    #    text view.t('sales.check_pdf.title_copy', num: sale.id, datetime: view.human_datetime(sale.date))
+    #  else
+    #    text view.t('sales.check_pdf.title', num: sale.id, datetime: view.human_datetime(sale.date))
+    #  end
+    #end
     move_down 10
 
     data = [[view.t('sales.check_pdf.name'), view.t('sales.check_pdf.qty'), view.t('sales.check_pdf.price'), view.t('sales.check_pdf.discount')]]

@@ -70,19 +70,23 @@
       %tr
         %th= t '.date'
         %th= t 'activerecord.models.device'
-        %th= Sale.human_attribute_name :value
+        %th= SaleItem.human_attribute_name :price
+        %th= SaleItem.human_attribute_name :quantity
+        %th= SaleItem.human_attribute_name :sum
     %tbody
       - @client.sale_items.each do |sale_item|
         %tr
           %td= human_datetime sale_item.date
           %td
-            = sale_item.device_name
+            = sale_item.name
             %br
-            %small= [sale_item.serial_number, sale_item.imei].join ' | '
-          %td= human_currency sale_item.value
+            %small= features_presentation sale_item
+          %td= human_currency sale_item.price
+          %td= sale_item.quantity
+          %td= human_currency sale_item.sum
     %tfoot
       %tr
-        %td{colspan: 2}
+        %td{colspan: 4}
           %strong= t 'total'
         %td= human_currency @client.purchases_sum
       - if @client.discount_value.present?

@@ -29,14 +29,14 @@
         %td.product
           = link_to batch.name, product_path(batch.product)
           .features= features_presentation batch.item if batch.item.present?
-        %td.price.number= batch.price
-        %td.quantity.number= batch.quantity
-        %td.sum.number= batch.sum
+        %td.price= batch.price
+        %td.quantity= batch.quantity
+        %td.sum= batch.sum
 
   %tfoot
     %tr
       %td{colspan: 4}= t 'total'
-      %td.total_sum.number= @purchase.total_sum
+      %td.total_sum= @purchase.total_sum
 
 .form-actions
   = link_to_edit @purchase if can? :edit, @purchase

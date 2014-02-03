@@ -183,7 +183,7 @@ $(document).on 'click keydown mousemove', ->
 window.showScanner = (object_type)->
   scanned_number = ''
   $('#card_scanner').show().addClass('in').addClass(object_type)
-  $(document).on 'keydown', (event)->
+  $(document).on 'keydown', '#card_scanner.in:visible', (event)->
     if $('#card_scanner.in:visible').length > 0
       if event.keyCode is 13 and scanned_number isnt ''
         hideScanner()
@@ -192,7 +192,10 @@ window.showScanner = (object_type)->
         scanned_number = ''
       else
         scanned_number += String.fromCharCode(event.keyCode).toLowerCase()
-  setTimeout (-> hideScanner()), 5000
+  setTimeout (->
+    scanned_number = ''
+    hideScanner()
+  ), 5000
 
 window.hideScanner = ->
   $('#card_scanner_inner input').val('')

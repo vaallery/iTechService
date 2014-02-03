@@ -16,6 +16,7 @@ class Client < ActiveRecord::Base
   has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
   has_many :history_records, as: :object
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :sale_items, through: :purchases
   belongs_to :client_characteristic
   has_many :sales, inverse_of: :client
 
@@ -77,9 +78,7 @@ class Client < ActiveRecord::Base
   end
 
   def purchases_sum
-    #purchases.sum :value
-    0
-    #purchases.sum :value
+    sale_items.all.sum &:sum
   end
 
   def discount_value

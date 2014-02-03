@@ -14,7 +14,7 @@
       - @feature_types.each_with_index do |feature_type, i|
         %td
           = hidden_field_tag "item[features_attributes][#{i}][feature_type_id]", feature_type.id, disabled: true
-          = text_field_tag "item[features_attributes][#{i}][value]", nil, disabled: true
+          = text_field_tag "item[features_attributes][#{i}][value]", nil, disabled: true, maxlength: (feature_type.is_imei? ? 15 : nil)
 
 = paginate @items, remote: true, params: { controller: 'items', action: 'index', product_id: @product.try(:id) }
 

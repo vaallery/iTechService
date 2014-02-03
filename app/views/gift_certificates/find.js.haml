@@ -1,8 +1,8 @@
 == $input = $('.gift_certificate_input.active');
-- if @gift_certificate.present?
+- if @gift_certificate.present? and @gift_certificate.issued?
   :plain
     $('.gift_certificate_id', $input).val("#{@gift_certificate.id}");
     $('.scan_gift_certificate_link', $input).text("#{human_gift_certificate_nominal(@gift_certificate)}").attr('title', "#{human_gift_certificate_balance(@gift_certificate)}");
 - else
-  == alert("#{t('gift_certificates.errors.not_found')});
+  == alert("#{t('gift_certificates.errors.not_found')}");
 == $input.removeClass('active');

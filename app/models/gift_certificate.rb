@@ -7,15 +7,9 @@ class GiftCertificate < ActiveRecord::Base
   has_many :history_records, as: :object, dependent: :destroy
 
   attr_accessible :number, :nominal, :status, :consumed, :consume
-  attr_accessor :consume
   validates :number, presence: true, uniqueness: {case_sensitive: false}
-
-  before_validation do |cert|
-    cert.status ||= 0
-  end
-
+  before_validation { |cert| cert.status ||= 0 }
   before_validation :validate_consumption
-
   before_validation :validate_status, on: :update
 
   def self.search(params)

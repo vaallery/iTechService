@@ -13,7 +13,7 @@ class Sale < ActiveRecord::Base
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
   has_many :payments, inverse_of: :sale, dependent: :destroy
-  accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:id].blank? and a[:item_id].blank? }
+  accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda{|a| a[:id].blank? and a[:item_id].blank?}
   accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: lambda{|a| a[:value].blank?}
 
   delegate :name, :short_name, :full_name, to: :user, prefix: true, allow_nil: true
@@ -96,6 +96,13 @@ class Sale < ActiveRecord::Base
             #store_item.feature_accounting ? store_item.destroy : store_item.dec(sale_item.quantity)
           end
         end
+        payments.gift_certificates.each do |payment|
+          if is_return?
+            # TODO return money on new gift_certificate
+          else
+            payment.gift_certificate.consume = payment.value
+          end
+        end
         update_attribute :status, 1
         update_attribute :date, DateTime.current
       end
@@ -108,6 +115,9 @@ class Sale < ActiveRecord::Base
     new_sale = Sale.new is_return: true, client_id: self.client_id, store_id: self.store_id
     self.sale_items.each do |sale_item|
       new_sale.sale_items.build item_id: sale_item.item_id, quantity: sale_item.quantity, price: sale_item.price, discount: sale_item.discount
+    end
+    self.payments.each do |payment|
+      new_sale.payments.build value: payment.value, kind: payment.kind, bank_id: payment.bank_id, gift_certificate_id: payment.gift_certificate_id, device_number: payment.device_name, client_info: payment.client_info, appraiser: payment.appraiser, device_logout: true
     end
     new_sale
   end
@@ -160,6 +170,14 @@ class Sale < ActiveRecord::Base
         else
           if !store_item.present? or store_item.quantity < sale_item.quantity
             self.errors[:base] << I18n.t('sales.errors.out_of_stock')
+            is_valid = false
+          end
+        end
+      end
+      if is_return?
+        payments.gift_certificates.each do |payment|
+          if payment.gift_certificate.balance < payment.value
+            self.errors[:base] << I18n.t('gift_certificates.errors.consumption_exceeded')
             is_valid = false
           end
         end

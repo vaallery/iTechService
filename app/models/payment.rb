@@ -2,6 +2,8 @@ class Payment < ActiveRecord::Base
 
   KINDS = %w[cash card credit certificate trade_in]
 
+  scope :gift_certificates, where(kind: 'certificate')
+
   belongs_to :sale, inverse_of: :payments
   belongs_to :bank
   belongs_to :gift_certificate, inverse_of: :payments
