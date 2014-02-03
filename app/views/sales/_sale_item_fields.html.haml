@@ -1,13 +1,13 @@
 %tr.sale_item_fields{data: {item: f.object.item_id}}
-  %td.num.numbera
-  %td.code= f.object.code
+  %td.num.number
+  %td.code.number= f.object.code
   %td.product
     %strong= f.object.name
     -#.features= features_presentation f.object
     = f.hidden_field :item_id
-  %td.quantity= f.number_field :quantity, class: 'input-mini', type: 'number', min: 1, readonly: f.object.feature_accounting
-  - if f.object.is_service and current_user.any_admin?
-    %td.price= f.number_field :price, class: 'input-small', type: 'number'
+  %td.quantity.number= f.number_field :quantity, class: 'input-mini', type: 'number', min: 1, readonly: f.object.feature_accounting
+  - if f.object.is_service and current_user.any_admin? or f.object.request_price
+    %td.price.number= f.number_field :price, class: 'input-small', type: 'number'
   - else
     %td.price.number= human_currency f.object.retail_price, false
   = f.hidden_field :discount, class: 'input-small sale_item_discount', min: 0, max: f.object.available_discount

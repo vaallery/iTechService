@@ -89,7 +89,7 @@ class ProductsController < ApplicationController
   end
 
   def choose
-    @product_groups = ProductGroup.goods.at_depth(1)
+    @product_groups = ProductGroup.roots#.goods#.at_depth(1)
     @product = Product.find params[:product_id] if params[:product_id].present?
     params[:form_name] = 'products/choose_form'
     respond_to do |format|

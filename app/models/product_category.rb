@@ -17,4 +17,8 @@ class ProductCategory < ActiveRecord::Base
     kind == 'service'
   end
 
+  def is_equipment
+    kind == 'equipment'
+  end
+
 end

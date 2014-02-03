@@ -988,6 +988,7 @@ ru:
       name: 'Наименование'
       price: 'Цена'
       discount: 'Скидка'
+    calculate: 'Расчитать'
     choose_title: 'Выберите чек'
     close_cashbox: 'Закрыть смену'
     link: :sales.index.title

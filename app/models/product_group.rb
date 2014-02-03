@@ -10,7 +10,7 @@ class ProductGroup < ActiveRecord::Base
   has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'
   has_ancestry orphan_strategy: :restrict, cache_depth: true
 
-  delegate :feature_accounting, :feature_types, :warranty_term, :is_service, to: :product_category, allow_nil: true
+  delegate :feature_accounting, :feature_types, :warranty_term, :is_service, :is_equipment, :request_price, to: :product_category, allow_nil: true
 
   attr_accessible :name, :ancestry, :parent_id, :product_category_id, :related_product_ids, :related_product_group_ids
   validates_presence_of :name, :product_category

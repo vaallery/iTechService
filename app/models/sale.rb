@@ -120,7 +120,7 @@ class Sale < ActiveRecord::Base
   end
 
   def calculation_amount(signed=false)
-    res = sale_items.sum :price
+    res = sale_items.all.sum &:sum
     (signed and is_return) ? -1*res : res
   end
 

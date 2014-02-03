@@ -1,13 +1,17 @@
 jQuery ->
 
-  $(document).on 'change', '#sale_items .sale_item_discount, #sale_items .quantity>input', ->
-    $row = $(this).closest('tr.sale_item_fields')
-    calculate_sale_item_row $row
-    calculate_sale_items_total_sum()
-
   if $('#sale_items').length > 0
+
     $(document).on 'click', '.remove_fields', ->
-      calculate_sale_items_total_sum()
+      calculateSaleItemsTotal()
+
+    $(document).on 'click', '#sale_calculate', ->
+      calculateSaleItemsTotal()
+
+    $(document).on 'change', '#sale_items .sale_item_discount, #sale_items .quantity>input, #sale_items .price>input', ->
+      $row = $(this).closest('tr.sale_item_fields')
+      calculateSaleItemRow $row
+      calculateSaleItemsTotal()
 
   $(document).on 'click', '#sale_scan_barcode', (event)->
     event.preventDefault()
@@ -96,21 +100,26 @@ window.scanClientCard = ->
 window.closeClientCardReader = ->
   $('#client_card_reader').removeClass('in').fadeOut()
 
-window.calculate_sale_items_total_sum = ->
+window.calculateSaleItemsTotal = ->
   total_sum = 0
-  $('#sale_items tr.sale_item_fields td.sum:visible').each ->
-    total_sum += accounting.unformat $(this).text()
   total_discount = 0
+#  $('#sale_items tr.sale_item_fields td.sum:visible').each ->
+  $('#sale_items tr.sale_item_fields').each ->
+    total_sum += accounting.unformat $('td.sum:visible', this).text()
+    total_discount += Number $('.sale_item_discount', this).val()
 
-  $('#sale_result_value').text accounting.formatMoney(total_sum)
+  $('#sale_result_value').text accounting.formatMoney(total_sum - total_discount)
   $('#sale_sum_cell').text accounting.formatMoney(total_sum)
   $('#sale_discount_cell').text accounting.formatMoney(total_discount)
   $('#sale_discounted_sum_cell').text accounting.formatMoney(total_sum - total_discount)
 
-window.calculate_sale_item_row = (row)->
+window.calculateSaleItemRow = (row)->
   $row = $(row)
   qty = Number $('td.quantity input', $row).val()
-  price = accounting.unformat $('td.price', $row).text()
+  if $('td.price>input', $row).length > 0
+    price = Number $('td.price>input', $row).val()
+  else
+    price = accounting.unformat $('td.price', $row).text()
   cur_discount = Number $('.sale_item_discount', $row).val()
   max_discount = Number $('.sale_item_discount', $row).attr('max')
   discount = if cur_discount > max_discount then max_discount else Number(cur_discount)
