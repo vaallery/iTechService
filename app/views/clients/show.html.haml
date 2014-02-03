@@ -72,14 +72,14 @@
         %th= t 'activerecord.models.device'
         %th= Sale.human_attribute_name :value
     %tbody
-      - @client.purchases.each do |purchase|
+      - @client.sale_items.each do |sale_item|
         %tr
-          %td= human_datetime purchase.sold_at
+          %td= human_datetime sale_item.date
           %td
-            = purchase.device_type_name
+            = sale_item.device_name
             %br
-            %small= [purchase.serial_number, purchase.imei].join ' | '
-          %td= human_currency purchase.value
+            %small= [sale_item.serial_number, sale_item.imei].join ' | '
+          %td= human_currency sale_item.value
     %tfoot
       %tr
         %td{colspan: 2}
