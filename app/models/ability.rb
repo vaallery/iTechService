@@ -51,7 +51,7 @@ class Ability
         can [:issue, :activate, :scan, :find], GiftCertificate
         can :modify, Sale
         can [:choose, :select], Product
-        can [:post, :edit], Sale, status: 0
+        can [:post, :edit, :attach_gift_certificate, :return_check], Sale, status: 0
         can [:create, :read], Sale
       end
       if user.media?

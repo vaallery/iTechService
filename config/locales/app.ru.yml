@@ -805,6 +805,8 @@ ru:
       certificate: 'Подарочный сертификат'
       trade_in: 'Трейд-ин'
       mixed: 'Смешанный'
+    errors:
+      no_gift_certificate: "Подарочный сертификат не указан"
 
   payment_types:
     created: 'Способ оплаты создан'
@@ -986,6 +988,8 @@ ru:
       unavailable_discount: 'не допустима'
       deleting_posted: 'Невозможно удалить проведённую Продажу.'
       item_already_present: '%{item} уже есть на складе %{store}'
+      no_payment_with_certificate: "Отсутствует платёж подарочным сертификатом"
+      create_gift_certificate_fail: "Ошибка при создании подарочного сертификата"
     check_pdf:
       title: 'Чек №%{num} от %{datetime}'
       title_copy: 'Копия чека №%{num} от %{datetime}'
@@ -1025,6 +1029,7 @@ ru:
     add_product: "Добавить Продукт"
     print_check: 'Распечатать чек'
     view_check: 'Посмотреть чек'
+    attach_gift_certificate: "Прикрепить сертификат"
 
   settings:
     edit:

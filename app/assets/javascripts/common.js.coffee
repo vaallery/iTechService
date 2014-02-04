@@ -183,12 +183,13 @@ $(document).on 'click keydown mousemove', ->
 window.showScanner = (object_type)->
   scanned_number = ''
   $('#card_scanner').show().addClass('in').addClass(object_type)
-  $(document).on 'keydown', '#card_scanner.in:visible', (event)->
+  $(document).on 'keydown', (event)->
     if $('#card_scanner.in:visible').length > 0
       if event.keyCode is 13 and scanned_number isnt ''
         hideScanner()
         switch object_type
           when 'gift_certificate' then $.get('/gift_certificates/'+scanned_number+'/find.js')
+          when 'attach_gift_certificate' then $.post('/sales/'+$('#sale_form').data('id')+'/attach_gift_certificate.js', {number: scanned_number})
         scanned_number = ''
       else
         scanned_number += String.fromCharCode(event.keyCode).toLowerCase()

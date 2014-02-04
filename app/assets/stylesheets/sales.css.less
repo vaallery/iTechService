@@ -9,9 +9,11 @@
       &>.btn{
         display: table-cell;
         font-size: 22px;
+        font-weight: lighter;
         padding: 6px;
         height: 44px;
         vertical-align: middle;
+        border-radius: 0;
       }
     }
   }
@@ -146,6 +148,7 @@
 #sale_bottom_row{
 
   .btn-group{
+    border-radius: 0;
     width: 100%;
     display: table;
     .caret{
@@ -153,8 +156,14 @@
     }
   }
   .btn{
+    &>img{
+      margin-right: 8px;
+      height: 24px;
+    }
+    border-radius: 0;
     display: table-cell;
-    font-size: 22px;
+    font-size: 20px;
+    font-weight: lighter;
     padding: 6px;
     height: 44px;
     vertical-align: middle;

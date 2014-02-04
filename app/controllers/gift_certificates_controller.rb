@@ -1,6 +1,6 @@
 class GiftCertificatesController < ApplicationController
   helper_method :sort_column, :sort_direction
-  load_and_authorize_resource
+  authorize_resource
   skip_load_resource only: [:index, :issue, :activate]
 
   def index
@@ -106,7 +106,7 @@ class GiftCertificatesController < ApplicationController
     respond_to do |format|
       if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
         if @gift_certificate.issue
-          msg = flash.now[:notice] = t('gift_certificates.issued', nominal: human_gift_certificate_nominal(@gift_certificate))
+          msg = flash.now[:notice] = t('gift_certificates.issued', nominal: human_currency(@gift_certificate.nominal))
           format.html { redirect_to gift_certificates_path, notice: msg }
           format.js { render 'status_changed' }
         else

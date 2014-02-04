@@ -49,8 +49,9 @@ jQuery ->
         $.getScript '/sales?status=1&is_return=false&form_name=choose_form&act=return_check'
         $(this).val('return').change()
 
-#  if $('#sale_top_panel').length > 0
-#    $.getScript '/top_salables'
+$(document).on 'click', '#sale_close_check.attach_gift_certificate', (event)->
+  event.preventDefault()
+  showScanner('attach_gift_certificate')
 
 window.saveSale = ->
   $('#sale_form').submit()

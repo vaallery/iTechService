@@ -3,7 +3,7 @@ class GiftCertificate < ActiveRecord::Base
   STATUSES = %w[available issued used]
   NOMINALS = %w[1500r 3000r 5000r 10000r 15000r]
 
-  has_many :payments, inverse_of: :gift_certificate
+  has_many :payments, dependent: :nullify
   has_many :history_records, as: :object, dependent: :destroy
 
   attr_accessible :number, :nominal, :status, :consumed, :consume
@@ -11,6 +11,7 @@ class GiftCertificate < ActiveRecord::Base
   before_validation { |cert| cert.status ||= 0 }
   before_validation :validate_consumption
   before_validation :validate_status, on: :update
+  after_initialize :convert_nominal
 
   def self.search(params)
     certificates = GiftCertificate.scoped
@@ -59,11 +60,11 @@ class GiftCertificate < ActiveRecord::Base
 
   def consume=(amount)
     self.consumed = (self.consumed || 0) + amount
-    self.status = 2 if self.consumed == nominal_val
+    self.status = 2 if self.consumed == nominal
   end
 
   def balance
-    nominal_val - (consumed || 0)
+    nominal - (consumed || 0)
   end
 
   def issued_at
@@ -91,12 +92,18 @@ class GiftCertificate < ActiveRecord::Base
   def validate_consumption
     if changed_attributes['consumed'].present?
       if issued? or used?
-        unless (consumed || 0) <= nominal_val
+        unless (consumed || 0) <= nominal
           errors.add :base, I18n.t('gift_certificates.errors.consumption_exceeded')
         end
       elsif consumed != 0
         errors.add :base, I18n.t('gift_certificates.errors.not_issued')
       end
+    end
+  end
+
+  def convert_nominal
+    if nominal < 5
+      update_attribute :nominal, nominal_val
     end
   end
 

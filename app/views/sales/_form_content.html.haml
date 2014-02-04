@@ -1,4 +1,4 @@
-= form_for @sale, remote: true, html: {id: 'sale_form', class: @sale.kind} do |f|
+= form_for @sale, remote: true, html: {id: 'sale_form', class: @sale.kind, data: {id: @sale.id}} do |f|
   = f.hidden_field :client_id
   = f.hidden_field :store_id
   = f.hidden_field :date

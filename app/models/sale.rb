@@ -98,7 +98,7 @@ class Sale < ActiveRecord::Base
         end
         payments.gift_certificates.each do |payment|
           if is_return?
-            # TODO return money on new gift_certificate
+            payment.gift_certificate.issue
           else
             payment.gift_certificate.consume = payment.value
           end
@@ -117,9 +117,25 @@ class Sale < ActiveRecord::Base
       new_sale.sale_items.build item_id: sale_item.item_id, quantity: sale_item.quantity, price: sale_item.price, discount: sale_item.discount
     end
     self.payments.each do |payment|
-      new_sale.payments.build value: payment.value, kind: payment.kind, bank_id: payment.bank_id, gift_certificate_id: payment.gift_certificate_id, device_number: payment.device_name, client_info: payment.client_info, appraiser: payment.appraiser, device_logout: true
+      new_sale.payments.build value: payment.value, kind: payment.kind, bank_id: payment.bank_id, device_number: payment.device_name, client_info: payment.client_info, appraiser: payment.appraiser, device_logout: true
     end
     new_sale
+  end
+
+  def attach_gift_certificate(number)
+    if (payment = payments.gift_certificates.first).present?
+      if payment.create_gift_certificate number: number, nominal: payment.value
+        payment.save
+      else
+        errors[:base] << t('sales.errors.create_gift_certificate_fail')
+      end
+    else
+      errors[:base] << t('sales.errors.no_payment_with_certificate')
+    end
+  end
+
+  def needs_gift_certificate?
+    payments.gift_certificates.where(gift_certificate_id: nil).any?
   end
 
   def cancel
@@ -174,8 +190,12 @@ class Sale < ActiveRecord::Base
           end
         end
       end
-      if is_return?
-        payments.gift_certificates.each do |payment|
+      payments.gift_certificates.each do |payment|
+        if is_return?
+          if payment.gift_certificate.nil?
+            self.errors[:base] << I18n.t('payments.errors.no_gift_certificate')
+            is_valid = false
+          end
           if payment.gift_certificate.balance < payment.value
             self.errors[:base] << I18n.t('gift_certificates.errors.consumption_exceeded')
             is_valid = false

@@ -13,10 +13,13 @@ module SalesHelper
   end
 
   def link_to_post_sale(sale)
+    name = image_tag('close_check_w.png') + t('sales.close_check').html_safe
     if !sale.is_postable?
-      link_to t('sales.close_check'), '#', id: 'sale_close_check', class: 'btn btn-danger', disabled: true
+      link_to name, '#', id: 'sale_close_check', class: 'btn btn-danger', disabled: true
+    elsif sale.is_return? and sale.needs_gift_certificate?
+      link_to t('sales.attach_gift_certificate'), '#', id: 'sale_close_check', class: 'btn btn-danger attach_gift_certificate'
     else
-      link_to t('sales.close_check'), post_sale_path(sale), method: 'put', id: 'sale_close_check', class: 'btn btn-danger', data: {confirm: t('confirmation')}
+      link_to name, post_sale_path(sale), method: 'put', id: 'sale_close_check', class: 'btn btn-danger', data: {confirm: t('confirmation')}
     end
   end
 
@@ -29,13 +32,14 @@ module SalesHelper
   end
 
   def link_to_payment(sale)
+    name = image_tag('rub_w.png') + t('sales.payment').html_safe
     if sale.new_record? or sale.sale_items.empty?
-      link_to t('sales.payment'), '#', id: '', class: 'btn btn-success', disabled: true
+      link_to name, '#', id: '', class: 'btn btn-success', disabled: true
     elsif sale.payments.any?
-      link_to t('sales.payment'), sale_payments_path(sale_id: sale.id), remote: true, id: '', class: 'btn btn-success'
+      link_to name, sale_payments_path(sale_id: sale.id), remote: true, id: '', class: 'btn btn-success'
     else
       content_tag(:div, class: 'btn-group dropup') do
-        link_to(t('sales.payment').html_safe + content_tag(:span, nil, class: 'caret'), '#', class: 'btn dropdown-toggle btn-success', 'data-toggle' => 'dropdown') +
+        link_to(name + content_tag(:span, nil, class: 'caret'), '#', class: 'btn dropdown-toggle btn-success', 'data-toggle' => 'dropdown') +
         content_tag(:ul, class: 'dropdown-menu') do
           content_tag(:li, link_to(t('payments.kinds.mixed'), sale_payments_path(sale_id: sale.id), remote: true)) +
           content_tag(:li, nil, class: 'divider') +
@@ -57,10 +61,11 @@ module SalesHelper
   end
 
   def link_to_manual_discount(sale)
+    name = image_tag('discount_w.png') + t('sales.manual_discount').html_safe
     if sale.new_record? or !sale.is_new? or sale.sale_items.empty?
-      link_to t('sales.manual_discount'), '#', id: 'sale_set_manual_discount', class: 'btn btn-info', disabled: true
+      link_to name, '#', id: 'sale_set_manual_discount', class: 'btn btn-info', disabled: true
     else
-      link_to t('sales.manual_discount'), edit_sale_path(sale, form_name: 'discount_form'), remote: true, id: 'sale_set_manual_discount', class: 'btn btn-info'
+      link_to name, edit_sale_path(sale, form_name: 'discount_form'), remote: true, id: 'sale_set_manual_discount', class: 'btn btn-info'
     end
   end
 
@@ -71,6 +76,10 @@ module SalesHelper
       when 2 then 'warning'
       else ''
     end
+  end
+
+  def sale_title(sale)
+    t("sales.check_pdf.#{sale.is_return ? 'title_return' : 'title'}", num: sale.id, datetime: human_datetime(sale.date))
   end
 
 end

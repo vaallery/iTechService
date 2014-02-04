@@ -134,6 +134,12 @@ class SalesController < ApplicationController
     end
   end
 
+  def attach_gift_certificate
+    @sale = Sale.find params[:id]
+    @sale.attach_gift_certificate(params[:number])
+    render 'save'
+  end
+
   private
 
   def sort_column
