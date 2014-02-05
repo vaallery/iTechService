@@ -79,7 +79,7 @@ module SalesHelper
   end
 
   def sale_title(sale)
-    t("sales.check_pdf.#{sale.is_return ? 'title_return' : 'title'}", num: sale.id, datetime: human_datetime(sale.date))
+    t("sales.#{sale.is_return ? 'title_return' : 'title'}", num: sale.id, datetime: human_datetime(sale.date))
   end
 
 end

@@ -991,13 +991,23 @@ ru:
       no_payment_with_certificate: "Отсутствует платёж подарочным сертификатом"
       create_gift_certificate_fail: "Ошибка при создании подарочного сертификата"
     check_pdf:
-      title: 'Чек №%{num} от %{datetime}'
-      title_copy: 'Копия чека №%{num} от %{datetime}'
-      title_return: 'Чек возврата №%{num} от %{datetime}'
+      discount: 'Скидка'
+      greeting: 'ДОБРО ПОЖАЛОВАТЬ!'
       qty: 'Кол'
       name: 'Наименование'
       price: 'Цена'
-      discount: 'Скидка'
+      sale: 'Продажа'
+      return: 'Возврат'
+      copy: 'Копия'
+      open: "Откр."
+      po: 'по'
+      total: "ИТОГ"
+      doc: "ДОК."
+      thanks1: 'СПАСИБО'
+      thanks2: 'ЗА ПОКУПКУ!'
+    title: 'Чек №%{num} от %{datetime}'
+    title_copy: 'Копия чека №%{num} от %{datetime}'
+    title_return: 'Чек возврата №%{num} от %{datetime}'
     calculate: 'Расчитать'
     choose_title: 'Выберите чек'
     link: :sales.index.title

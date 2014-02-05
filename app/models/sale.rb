@@ -19,6 +19,7 @@ class Sale < ActiveRecord::Base
   delegate :name, :short_name, :full_name, to: :user, prefix: true, allow_nil: true
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
+  delegate :name, to: :store, prefix: true
 
   attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return, :payment_ids, :payments_attributes, :total_discount
   validates_presence_of :user, :store, :date, :status, :cash_shift

@@ -18,7 +18,7 @@ class ProductGroupsController < ApplicationController
   def show
     @product_group = ProductGroup.find params[:id]
     @products = @product_group.products.search(params)
-    if params[:form] == 'sale'
+    if params[:form] == 'sale' and !@product_group.is_service
       @products = @products.available
     end
     if params[:choose] == 'true'
