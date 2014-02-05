@@ -3,27 +3,82 @@ class CashShiftPdf < Prawn::Document
   require 'prawn/measurement_extensions'
 
   def initialize(cash_shift, view)
-    super page_size: [80.mm, 300.mm], page_layout: :portrait, margin: 10
+    @font_height = 10
+    @cash_shift = cash_shift
+    @view = view
+    super page_size: [227, 380], page_layout: :portrait, margin: 10
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
       bold: "#{Rails.root}/app/assets/fonts/droidsans-bold-webfont.ttf"
     }
     font 'DroidSans'
+    font_size @font_height
 
+    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 30, height: 30, at: [0, cursor]
+    move_down @font_height/2
+    text Setting.get_value(:address), align: :center
+    move_down @font_height
+    draw_divider
+    text @view.t('cash_shifts.pdf.title', num: @cash_shift.id), align: :center
+    text @cash_shift.user_short_name, align: :center
+    draw_divider
 
-    move_down 10
+    # Sales
+    text @view.t('cash_shifts.pdf.sales_section')
+    report_row @view.t('cash_shifts.pdf.sales'), @cash_shift.sales_total, indent_paragraphs: 10, style: :bold
+    @cash_shift.sales_total_by_kind.each do |kind_total|
+      report_row @view.t("payments.kinds.#{kind_total[0]}"), kind_total[1], indent_paragraphs: 20
+    end
+    draw_divider
 
-    #data = [[view.t('sales.check_pdf.name'), view.t('sales.check_pdf.qty'), view.t('sales.check_pdf.price'), view.t('sales.check_pdf.discount')]]
-    #data = data + sale.sale_items.map{|si| [si.name, si.quantity, si.price, si.discount]}
-    #data << [view.t('total'), '', sale.calculation_amount]
+    # Returns
+    report_row @view.t('cash_shifts.pdf.returns'), @cash_shift.sales_total(true), indent_paragraphs: 10, style: :bold
+    @cash_shift.sales_total_by_kind(true).each do |kind_total|
+      report_row @view.t("payments.kinds.#{kind_total[0]}"), kind_total[1], indent_paragraphs: 20
+    end
+    draw_divider
 
-    #font_size 10
-    #table data, width: bounds.width, column_widths: {1 => 8.mm, 2 => 22.mm, 3 => 15.mm} do
-    #  cells.style borders: [], padding: 3
-    #  columns(1..2).style align: :right
-    #end
+    # Pay In / Pay out
+    report_row @view.t('cash_shifts.pdf.pay_in'), @cash_shift.pays_total, style: :bold
+    report_row @view.t('cash_shifts.pdf.pay_out'), @cash_shift.pays_total(true), style: :bold
+    draw_divider
+
+    # Quantity
+    text @view.t('cash_shifts.pdf.sales_section')
+    report_row @view.t('cash_shifts.pdf.sales'), @cash_shift.sales_count, indent_paragraphs: 10
+    report_row @view.t('cash_shifts.pdf.returns'), @cash_shift.sales_count(true), indent_paragraphs: 10
+    draw_divider
+
+    # Encashment
+    text @view.t('cash_shifts.pdf.encashment')
+    @cash_shift.encashments_by_kind.each do |encashment_kind|
+      report_row @view.t("payments.kinds.#{encashment_kind[0]}"), encashment_kind[1], indent_paragraphs: 10
+    end
+    report_row @view.t('cash_shifts.pdf.shift_total'), @cash_shift.encashment_total, style: :bold
+    draw_divider
+
+    #text "#{view.t('sales.check_pdf.doc')} #{cash_shift.id}"
+    #move_up font.height
+    text cash_shift.closed_at.strftime('%d-%m-%y %H:%M'), align: :right
 
     encrypt_document permissions: { modify_contents: false }
+  end
+
+  private
+
+  def report_row(title, value, options={})
+    text title, options
+    move_up @font_height
+    text (value.is_a?(Integer) ? value.to_s : currency_str(value)), options.merge(align: :right)
+  end
+
+  def currency_str(number)
+    sprintf('%.2f', number || 0).gsub('.', ',')
+  end
+
+  def draw_divider
+    stroke { horizontal_line 0, 210 }
+    move_down 5
   end
 
 end

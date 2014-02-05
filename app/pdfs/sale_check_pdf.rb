@@ -16,7 +16,6 @@ class SaleCheckPdf < Prawn::Document
     font 'DroidSans'
     font_size @font_height
 
-    #text 'iTech', align: :center
     image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 30, height: 30, at: [0, cursor]
     move_down @font_height/2
     text sale.store_name, align: :center
@@ -51,19 +50,19 @@ class SaleCheckPdf < Prawn::Document
     sale.payments.each do |payment|
       text view.human_payment_kind(payment), indent_paragraphs: 10
       move_up font.height
-      text "=#{currency_str(payment.value)}", align: :right
+      text "#{currency_str(payment.value)}", align: :right
       move_down 2
     end
 
     text view.t('sales.check_pdf.discount')
     move_up font.height
-    text "=#{currency_str(sale.total_discount)}", align: :right
+    text "#{currency_str(sale.total_discount)}", align: :right
     move_down font.height
 
     font_size @font_height*1.6 do
       text view.t('sales.check_pdf.total')
       move_up font.height
-      text "=#{currency_str(sale.calculation_amount)}", align: :right
+      text "#{currency_str(sale.calculation_amount)}", align: :right
     end
     move_down font.height
 
