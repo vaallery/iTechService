@@ -102,6 +102,7 @@ ItechService::Application.routes.draw do
     post :cancel, on: :member
     get :return_check, on: :member
     get :print_check, on: :member, defaults: {format: 'js'}
+    get :print_warranty, on: :member
     post :attach_gift_certificate, on: :member, defaults: {format: 'js'}
     resources :payments
   end

@@ -125,6 +125,15 @@ class SalesController < ApplicationController
     end
   end
 
+  def print_warranty
+    @sale = Sale.find params[:id]
+    pdf = WarrantyPdf.new @sale, view_context
+    filename = "sale_warranty_#{@sale.id}.pdf"
+    respond_to do |format|
+      format.pdf { send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline' }
+    end
+  end
+
   def return_check
     source_sale = Sale.find params[:id]
     @sale = source_sale.build_return

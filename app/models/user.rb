@@ -171,6 +171,13 @@ class User < ActiveRecord::Base
     res
   end
 
+  def fio_short
+    res = surname
+    res += " #{name[0]}." unless name.blank?
+    res += " #{patronymic[0]}." unless patronymic.blank?
+    res
+  end
+
   def short_name
     res = [name, surname].join ' '
     res = username if res.blank?

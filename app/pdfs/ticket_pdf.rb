@@ -26,6 +26,7 @@ class TicketPdf < Prawn::Document
     font_size 10 do
       text @view.t('tickets.site'), indent_paragraphs: 70
       text @view.t('tickets.email'), indent_paragraphs: 70
+      text Setting.get_value(:city), indent_paragraphs: 70
       text Setting.get_value(:address), indent_paragraphs: 70
       text Setting.get_value(:schedule), indent_paragraphs: 70
     end

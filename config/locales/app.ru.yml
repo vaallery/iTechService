@@ -1052,6 +1052,9 @@ ru:
     view_check: 'Посмотреть чек'
     attach_gift_certificate: "Прикрепить сертификат"
 
+    warranty_pdf:
+      org_name: "ИП Колесник В. В."
+      title: "Гарантийный талон №%{num} от %{date}"
   settings:
     edit:
       title: Редактирование параметра

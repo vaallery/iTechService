@@ -18,7 +18,7 @@ class Sale < ActiveRecord::Base
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda{|a| a[:id].blank? and a[:item_id].blank?}
   accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: lambda{|a| a[:value].blank?}
 
-  delegate :name, :short_name, :full_name, to: :user, prefix: true, allow_nil: true
+  delegate :name, :short_name, :full_name, :fio_short, to: :user, prefix: true, allow_nil: true
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
   delegate :name, to: :store, prefix: true

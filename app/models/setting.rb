@@ -1,5 +1,7 @@
 class Setting < ActiveRecord::Base
 
+  default_scope order('id asc')
+
   attr_accessible :name, :presentation, :value, :value_type
   validates :name, :value_type, presence: true
   validates_uniqueness_of :name
