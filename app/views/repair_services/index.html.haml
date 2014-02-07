@@ -1,0 +1,11 @@
+.page-header
+  %h1= auto_title
+
+.row-fluid
+  .span3
+    = link_to glyph(:file) + t('repair_groups.new.link').html_safe, new_repair_group_path, remote: true, class: 'btn btn-success'
+    = link_to glyph(:file) + t('repair_services.new.title').html_safe, '#', class: 'btn btn-success', disabled: true
+
+    #repair_groups{model_name: 'repair_group'}= repair_groups_trees_tag @repair_groups, @repair_group.try(:id)
+
+  #resource_table.span9= render 'table'

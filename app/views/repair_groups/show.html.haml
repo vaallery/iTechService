@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @repair_group.name
+%p
+  %b Ancestry:
+  = @repair_group.ancestry
+
+= link_to 'Edit', edit_repair_group_path(@repair_group)
+\|
+= link_to 'Back', repair_groups_path

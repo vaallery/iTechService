@@ -1,0 +1,10 @@
+= auto_header_tag @repair_service
+= simple_form_for @repair_service, html: {class: 'form-horizontal'} do |f|
+
+  = f.hidden_field :repair_group_id
+  = f.full_error :product_group
+  = f.input :name
+  = f.input :price
+
+  .form-actions
+    = submit_button f

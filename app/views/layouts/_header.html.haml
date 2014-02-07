@@ -33,6 +33,7 @@
           = menu_item t('banks.index.title'), banks_path if can? :manage, Bank
           = menu_item t('stores.index.title'), stores_path if can? :manage, Store
           = menu_item t('locations.link'), locations_path if can? :manage, Location
+          = menu_item t('repair_services.index.title'), repair_services_path if can? :manage, RepairService
         = drop_down_divider
         = menu_item t('users.link', default: 'Users'), users_path if can? :manage, User
         = menu_item t('users.rating'), rating_users_path

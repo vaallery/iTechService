@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140205050144) do
+ActiveRecord::Schema.define(:version => 20140207035416) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -574,6 +574,26 @@ ActiveRecord::Schema.define(:version => 20140205050144) do
   add_index "purchases", ["contractor_id"], :name => "index_purchases_on_contractor_id"
   add_index "purchases", ["status"], :name => "index_purchases_on_status"
   add_index "purchases", ["store_id"], :name => "index_purchases_on_store_id"
+
+  create_table "repair_groups", :force => true do |t|
+    t.string   "name"
+    t.string   "ancestry"
+    t.integer  "ancestry_depth", :default => 0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "repair_groups", ["ancestry"], :name => "index_repair_groups_on_ancestry"
+
+  create_table "repair_services", :force => true do |t|
+    t.integer  "repair_group_id"
+    t.string   "name"
+    t.decimal  "price"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "repair_services", ["repair_group_id"], :name => "index_repair_services_on_repair_group_id"
 
   create_table "revaluation_acts", :force => true do |t|
     t.integer  "price_type_id"

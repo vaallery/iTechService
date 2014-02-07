@@ -169,6 +169,9 @@ ItechService::Application.routes.draw do
     put 'unpost', on: :member
   end
 
+  resources :repair_services
+  resources :repair_groups
+
   wiki_root '/wiki'
 
   match '/delayed_job' => DelayedJobWeb, anchor: false

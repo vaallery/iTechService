@@ -39,6 +39,8 @@ ru:
       product: 'Продукт'
       product_group: 'Группа продуктов'
       purchase: "Закупка"
+      repair_group: 'Группа ремонта'
+      repair_service: 'Вид ремонта'
       revaluation: 'Переоценка'
       revaluation_act: 'Акт переоценки'
       salary: Зарплата
@@ -926,6 +928,25 @@ ru:
       new: 'Новая'
       posted: 'Проведена'
       deleted: 'Удалена'
+
+  repair_groups:
+    created: 'Группа ремонта создана'
+    updated: 'Группа ремонта изменена'
+    new:
+      link: 'Новая Группа'
+      title: 'Новая Группа ремонта'
+    edit:
+      title: 'Редактирование Группы ремонта'
+
+  repair_services:
+    created: 'Вид ремонта создан'
+    udpated: 'Вид ремонта изменён'
+    index:
+      title: 'Виды ремонта'
+    new:
+      title: 'Новый Вид ремонта'
+    edit:
+      title: 'Редактирование Вида ремонта'
 
   reports:
     average_duration: Средняя длительность, мин.
