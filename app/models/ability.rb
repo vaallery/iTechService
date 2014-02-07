@@ -45,6 +45,7 @@ class Ability
         cannot [:edit, :destroy], Karma
         cannot :read_tech_notice, Device
         cannot :write_tech_notice, Device
+        cannot :destroy, [Client, Device]
       end
       if user.software?
         can :modify, [Device, Client]
