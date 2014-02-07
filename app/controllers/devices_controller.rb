@@ -108,6 +108,7 @@ class DevicesController < ApplicationController
 
   def destroy
     @device = Device.find(params[:id])
+    DeletionMailer.delay.notice({presentation: @device.presentation, tasks: @device.tasks.map(&:name).join(', ')}, current_user.presentation, DateTime.current)
     @device.destroy
 
     respond_to do |format|

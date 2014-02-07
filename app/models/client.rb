@@ -22,7 +22,7 @@ class Client < ActiveRecord::Base
   validates :full_phone_number, uniqueness: true
   validates_associated :comments
   validates_associated :client_characteristic
-
+  before_destroy :send_mail
 
   after_initialize do |client|
     client.build_client_characteristic if client.client_characteristic.nil?
@@ -85,6 +85,12 @@ class Client < ActiveRecord::Base
 
   def characteristic
     client_characteristic.present? ? client_characteristic.comment : nil
+  end
+
+  private
+
+  def send_mail
+    DeletionMailer.delay.notice({presentation: self.presentation}, User.current.presentation, DateTime.current)
   end
 
 end
