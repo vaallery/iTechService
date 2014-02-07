@@ -38,9 +38,9 @@ class CashShiftPdf < Prawn::Document
     end
     draw_divider
 
-    # Pay In / Pay out
-    report_row @view.t('cash_shifts.pdf.pay_in'), @cash_shift.pays_total, style: :bold
-    report_row @view.t('cash_shifts.pdf.pay_out'), @cash_shift.pays_total(true), style: :bold
+    # Cash operations
+    report_row @view.t('cash_shifts.pdf.pay_in'), @cash_shift.cash_operations_total, style: :bold
+    report_row @view.t('cash_shifts.pdf.pay_out'), @cash_shift.cash_operations_total(true), style: :bold
     draw_divider
 
     # Quantity

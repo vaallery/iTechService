@@ -4,6 +4,7 @@ class CashShift < ActiveRecord::Base
 
   belongs_to :user
   has_many :sales, inverse_of: :cash_shift
+  has_many :cash_operations, inverse_of: :cash_shift
   delegate :short_name, to: :user, prefix: true, allow_nil: true
   attr_accessible :is_closed
 
@@ -40,8 +41,12 @@ class CashShift < ActiveRecord::Base
     sales.posted.where(is_return: is_return).count
   end
 
-  def pays_total(is_out=false)
+  def cash_operations_total(is_out=false)
+    cash_operations.where(is_out: is_out).sum(:value)
+  end
 
+  def cash_operations_balance
+    cash_operations_total - cash_operations_total(true)
   end
 
   def encashments_by_kind
@@ -56,7 +61,7 @@ class CashShift < ActiveRecord::Base
   end
 
   def encashment_total
-    sales_total - sales_total(true)
+    sales_total - sales_total(true)# + cash_operations_balance
   end
 
 end

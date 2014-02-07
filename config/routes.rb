@@ -1,5 +1,8 @@
 ItechService::Application.routes.draw do
 
+  resources :cash_operations
+
+
   root to: 'dashboard#index'
   match 'dashboard' => 'dashboard#index', via: :get
   match 'become/:id' => 'dashboard#become', via: :get, as: 'become'
