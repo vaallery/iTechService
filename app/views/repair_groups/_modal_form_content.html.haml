@@ -6,7 +6,7 @@
 
   .modal-body
     = f.hidden_field :parent_id
-    = f.input :name
+    = f.input :name, autofocus: true
 
   .modal-footer
     = submit_button f
