@@ -24,10 +24,20 @@ module SalesHelper
   end
 
   def link_to_cancel_sale(sale)
+    name = image_tag('cancel_check_w.png') + t('sales.cancel_check').html_safe
     if sale.new_record? or !sale.is_new?
-      link_to t('sales.cancel_check'), '#', id: 'sale_cancel_check', class: 'btn btn-primary', disabled: true
+      link_to name, '#', id: 'sale_cancel_check', class: 'btn btn-primary', disabled: true
     else
-      link_to t('sales.cancel_check'), cancel_sale_path(sale), method: 'post', id: 'sale_cancel_check', class: 'btn btn-primary'
+      link_to name, cancel_sale_path(sale), method: 'post', id: 'sale_cancel_check', class: 'btn btn-primary'
+    end
+  end
+
+  def link_to_print_warranty(sale)
+    name = image_tag('warranty_print_w.png')+t('sales.print_warranty').html_safe
+    if sale.new_record?
+      link_to name, '#', class: 'btn btn-info', disabled: true
+    else
+      link_to name, print_warranty_sale_path(@sale, format: :pdf), class: 'btn btn-info'
     end
   end
 

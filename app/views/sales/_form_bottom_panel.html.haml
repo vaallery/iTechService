@@ -2,5 +2,5 @@
 .span2= link_to image_tag('client_find_w.png')+t('sales.find_client').html_safe, clients_path(search: true), remote: true, id: 'sale_find_client', class: 'btn btn-info', disabled: !@sale.is_new?
 .span2= link_to_manual_discount @sale
 .span2= link_to_payment @sale
-.span2= link_to image_tag('warranty_print_w.png')+t('sales.print_warranty').html_safe, print_warranty_sale_path(@sale, format: :pdf), class: 'btn btn-info', disabled: (@sale.new_record?)
+.span2= link_to_print_warranty @sale
 .span2= link_to_post_sale @sale
