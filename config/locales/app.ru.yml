@@ -47,6 +47,7 @@ ru:
       sale: Продажа
       schedule_day: Рабочий день
       setting: Параметр
+      spair_part: 'Запчасть'
       stolen_phone: Краденый телефон
       store: "Склад"
       task: Задача
@@ -285,6 +286,9 @@ ru:
 
       revaluation:
         revaluation_act: 'Акт переоценки'
+
+      repair_service:
+        spair_parts: 'Запчасти'
 
       salary:
         amount: Сумма
@@ -873,9 +877,10 @@ ru:
       title: "Новая Категория продуктов"
     kinds:
       equipment: 'Техника'
-      accessory: 'Аксессуары'
-      service: 'Услуги'
-      protector: 'Плёнки'
+      accessory: 'Аксессуар'
+      service: 'Услуга'
+      protector: 'Плёнка'
+      spair_part: 'Запчасть'
 
   product_groups:
     created: 'Продуктовая Группа создана'

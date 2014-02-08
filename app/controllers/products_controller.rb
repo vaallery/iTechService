@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   authorize_resource
 
   def index
-    @product_groups = ProductGroup.roots.order('id asc')
+    @product_groups = ProductGroup.roots.ordered
     if params[:group].blank?
       @opened_product_groups = []
       @products = Product.search(params)
@@ -89,7 +89,7 @@ class ProductsController < ApplicationController
   end
 
   def choose
-    @product_groups = ProductGroup.roots#.goods#.at_depth(1)
+    @product_groups = ProductGroup.roots.search(params).ordered
     @product = Product.find params[:product_id] if params[:product_id].present?
     params[:form_name] = 'products/choose_form'
     respond_to do |format|

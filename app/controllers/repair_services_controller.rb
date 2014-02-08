@@ -41,7 +41,7 @@ class RepairServicesController < ApplicationController
     @repair_service = RepairService.new(params[:repair_service])
     respond_to do |format|
       if @repair_service.save
-        format.html { redirect_to @repair_service, notice: 'Repair service was successfully created.' }
+        format.html { redirect_to repair_services_path, notice: t('repair_services.created') }
       else
         format.html { render 'form' }
       end
@@ -52,7 +52,7 @@ class RepairServicesController < ApplicationController
     @repair_service = RepairService.find(params[:id])
     respond_to do |format|
       if @repair_service.update_attributes(params[:repair_service])
-        format.html { redirect_to @repair_service, notice: 'Repair service was successfully updated.' }
+        format.html { redirect_to repair_service_path, notice: t('repair_services.udpated') }
       else
         format.html { render 'form' }
       end

@@ -4,14 +4,16 @@
       %tr
         %th= RepairService.human_attribute_name(:id)
         %th= RepairService.human_attribute_name(:name)
+        %th= RepairService.human_attribute_name(:price)
         %th= RepairService.human_attribute_name(:created_at)
         %th
     %tbody
       - @repair_services.each do |repair_service|
         %tr
-          %td= link_to repair_service.id, repair_service_path(repair_service)
-          %td= link_to repair_service.name, repair_service_path(repair_service)
+          %td= repair_service.id
+          %td= repair_service.name
+          %td= human_currency repair_service.price
           %td= human_datetime repair_service.created_at
           %td.btn-group
-            = link_to_edit_small repair_service
-            = link_to_destroy_small repair_service
+            = link_to_edit_small repair_service if can? :edit, RepairService
+            = link_to_destroy_small repair_service if can? :destroy, RepairService

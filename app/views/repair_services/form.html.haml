@@ -6,5 +6,16 @@
   = f.input :name
   = f.input :price
 
-  .form-actions
-    = submit_button f
+  %table#spair_parts.table.table-condensed.table-hover
+    %caption
+      %h4= RepairService.human_attribute_name(:spair_parts)
+    %thead
+      %tr
+        %th= t('activerecord.models.product')
+        %th= SpairPart.human_attribute_name :quantity
+        %th= SpairPart.human_attribute_name :warranty_term
+        %th.action
+    %tbody= f.simple_fields_for(:spair_parts) { |ff| render 'spair_part_fields', f: ff }
+  = link_to_add_product :repair_service, :spair_parts, false
+
+  .form-actions= submit_button f

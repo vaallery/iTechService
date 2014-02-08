@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140207122403) do
+ActiveRecord::Schema.define(:version => 20140208040722) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -693,6 +693,18 @@ ActiveRecord::Schema.define(:version => 20140207122403) do
   end
 
   add_index "settings", ["name"], :name => "index_settings_on_name"
+
+  create_table "spair_parts", :force => true do |t|
+    t.integer  "repair_service_id"
+    t.integer  "item_id"
+    t.integer  "quantity"
+    t.integer  "warranty_term"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "spair_parts", ["item_id"], :name => "index_spair_parts_on_item_id"
+  add_index "spair_parts", ["repair_service_id"], :name => "index_spair_parts_on_repair_service_id"
 
   create_table "stolen_phones", :force => true do |t|
     t.string   "imei",       :null => false

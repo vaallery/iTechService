@@ -1,7 +1,10 @@
 class ProductGroup < ActiveRecord::Base
 
+  scope :ordered, order('id asc')
   scope :services, joins(:product_category).where(product_categories: {kind: 'service'})
   scope :goods, joins(:product_category).where(product_categories: {kind: %w[equipment accessory]})
+  scope :except_spair_parts, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector service]})
+  scope :spair_parts, joins(:product_category).where(product_categories: {kind: 'spair_part'})
 
   belongs_to :product_category
   has_many :products, inverse_of: :product_group
@@ -20,7 +23,19 @@ class ProductGroup < ActiveRecord::Base
     unless product_group.is_root?
       product_group.product_category_id ||= product_group.parent.product_category_id
     end
+  end
 
+  def self.search(params)
+    product_groups = ProductGroup.scoped
+
+    if (form = params[:form]).present?
+      case form
+        when 'repair_service' then product_groups = product_groups.spair_parts
+        else product_groups = product_groups.except_spair_parts
+      end
+    end
+
+    product_groups
   end
 
 end
