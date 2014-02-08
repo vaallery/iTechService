@@ -20,6 +20,12 @@
       - else
         = header_link_to_view_prices
 
+      = drop_down t('navbar.cash_drawer') do
+        = menu_item t('sales.new.title'), new_sale_path if can? :create, Sale
+        = drop_down_divider
+        = menu_item t('cash_operations.cash_in'), new_cash_operation_path(cash_operation: {is_out: false}), remote: true if can? :create, CashOperation
+        = menu_item t('cash_operations.cash_out'), new_cash_operation_path(cash_operation: {is_out: true}), remote: true if can? :create, CashOperation
+
       = drop_down t('dashboard.misc') do
         = menu_item t('sales.link'), sales_path if can? :manage, Sale
         = menu_item t('purchases.link'), purchases_path if can? :manage, Purchase

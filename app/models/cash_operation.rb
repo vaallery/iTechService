@@ -1,7 +1,10 @@
 class CashOperation < ActiveRecord::Base
 
+  scope :created_desc, order('created_at desc')
+
   belongs_to :cash_shift, inverse_of: :cash_operations
   belongs_to :user
+  delegate :short_name, to: :user, prefix: true, allow_nil: true
 
   attr_accessible :is_out, :value
   validates_presence_of :value, :user, :cash_shift
@@ -11,6 +14,10 @@ class CashOperation < ActiveRecord::Base
 
   after_initialize do
     self.user_id ||= User.try(:current).try(:id)
+  end
+
+  def kind
+    is_out ? 'cash_out' : 'cash_in'
   end
 
   private

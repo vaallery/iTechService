@@ -1,0 +1,11 @@
+= simple_form_for @cash_operation, html: {class: 'form-horizontal'}, remote: true do |f|
+  .modal-header
+    %h3= t("cash_operations.#{@cash_operation.kind}")
+
+  .modal-body
+    = f.hidden_field :is_out
+    = f.input :value, autofocus: true
+
+  .modal-footer
+    = link_to t('helpers.links.cancel'), '#', 'data-dismiss' => 'modal', class: 'btn'
+    = f.submit t('done'), class: 'btn btn-primary'

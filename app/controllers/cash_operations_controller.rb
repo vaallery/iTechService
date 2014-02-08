@@ -2,7 +2,7 @@ class CashOperationsController < ApplicationController
   authorize_resource
 
   def index
-    @cash_operations = CashOperation.all
+    @cash_operations = CashOperation.created_desc.page(params[:page])
     respond_to do |format|
       format.html
     end
@@ -16,9 +16,10 @@ class CashOperationsController < ApplicationController
   end
 
   def new
-    @cash_operation = CashOperation.new
+    @cash_operation = CashOperation.new params[:cash_operation]
     respond_to do |format|
       format.html
+      format.js { render 'shared/show_modal_form' }
     end
   end
 
@@ -31,8 +32,10 @@ class CashOperationsController < ApplicationController
     respond_to do |format|
       if @cash_operation.save
         format.html { redirect_to @cash_operation, notice: 'Cash operation was successfully created.' }
+        format.js { flash.now[:notice] = t("cash_operations.created.#{@cash_operation.kind}") }
       else
         format.html { render action: "new" }
+        format.js { render 'shared/show_modal_form' }
       end
     end
   end
@@ -50,7 +53,7 @@ class CashOperationsController < ApplicationController
 
   def destroy
     @cash_operation = CashOperation.find(params[:id])
-    @cash_operation.destroy
+    #@cash_operation.destroy
     respond_to do |format|
       format.html { redirect_to cash_operations_url }
     end

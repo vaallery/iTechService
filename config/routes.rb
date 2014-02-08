@@ -1,8 +1,5 @@
 ItechService::Application.routes.draw do
 
-  resources :cash_operations
-
-
   root to: 'dashboard#index'
   match 'dashboard' => 'dashboard#index', via: :get
   match 'become/:id' => 'dashboard#become', via: :get, as: 'become'
@@ -161,6 +158,7 @@ ItechService::Application.routes.draw do
   resources :banks, except: :show
   resources :installments
   resources :installment_plans
+  resources :cash_operations, only: [:index, :new, :create]
 
   resources :revaluation_acts do
     put 'post', on: :member
