@@ -1,0 +1,25 @@
+%h1 Listing spair_parts
+
+%table
+  %tr
+    %th Repair service
+    %th Item
+    %th Quantity
+    %th Warranty term
+    %th
+    %th
+    %th
+
+  - @spair_parts.each do |spair_part|
+    %tr
+      %td= spair_part.repair_service
+      %td= spair_part.item
+      %td= spair_part.quantity
+      %td= spair_part.warranty_term
+      %td= link_to 'Show', spair_part
+      %td= link_to 'Edit', edit_spair_part_path(spair_part)
+      %td= link_to 'Destroy', spair_part, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Spair part', new_spair_part_path

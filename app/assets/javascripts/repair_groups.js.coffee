@@ -90,6 +90,7 @@ window.repair_groups_tree = (container)->
 
     plugins: ["themes", "html_data", "ui", "contextmenu", "crrm"]
   )
+  $('#repair_groups').show()
 
 window.repair_groups_tree_readonly = (container)->
   $.jstree._themes = "/assets/jstree/"

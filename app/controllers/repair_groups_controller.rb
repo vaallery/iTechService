@@ -32,9 +32,10 @@ class RepairGroupsController < ApplicationController
 
   def create
     @repair_group = RepairGroup.new(params[:repair_group])
+    @repair_groups = RepairGroup.roots.order('id asc')
     respond_to do |format|
       if @repair_group.save
-        format.js
+        format.js { render 'save' }
       else
         format.js { render 'shared/show_modal_form' }
       end
@@ -43,9 +44,10 @@ class RepairGroupsController < ApplicationController
 
   def update
     @repair_group = RepairGroup.find(params[:id])
+    @repair_groups = RepairGroup.roots.order('id asc')
     respond_to do |format|
       if @repair_group.update_attributes(params[:repair_group])
-        format.js
+        format.js { render 'save' }
       else
         format.js { render 'shared/show_modal_form' }
       end

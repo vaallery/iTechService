@@ -1,0 +1,11 @@
+= simple_form_for(@spair_part) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :repair_service
+    = f.association :item
+    = f.input :quantity
+    = f.input :warranty_term
+
+  .form-actions
+    = f.button :submit
