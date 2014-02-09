@@ -85,7 +85,7 @@ class WarrantyPdf < Prawn::Document
     table_data = [['№', 'Артикул', 'Наименование', 'Колич.', 'Характерист.', 'Срок Гарантии']]
     @sale.sale_items.each_with_index do |sale_item, index|
       features = sale_item.features.map(&:value).join(', ')
-      table_data += [[index.next.to_s, '', sale_item.name, sale_item.quantity, features, "#{sale_item.warranty_term} мес."]]
+      table_data += [[index.next.to_s, sale_item.code, sale_item.name, sale_item.quantity, features, "#{sale_item.warranty_term} мес."]]
       #table_data += [[index.next.to_s, '', sale_item.name, sale_item.quantity, features, "#{sale_item.warranty_term} #{'month'.pluralize(:ru)}"]]
     end
     move_down 10
