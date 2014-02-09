@@ -66,4 +66,19 @@ class RepairServicesController < ApplicationController
       format.html { redirect_to repair_services_url }
     end
   end
+
+  def choose
+    @repair_groups = RepairGroup.roots.order('id asc')
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def select
+    @repair_service = RepairService.find params[:id]
+    respond_to do |format|
+      format.js
+    end
+  end
+
 end

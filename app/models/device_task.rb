@@ -2,10 +2,13 @@ class DeviceTask < ActiveRecord::Base
   belongs_to :device
   belongs_to :task
   has_many :history_records, as: :object
+  has_many :repair_tasks
   accepts_nested_attributes_for :device, reject_if: proc { |attr| attr['tech_notice'].blank? }
+  accepts_nested_attributes_for :repair_tasks
   attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes
   validates :task, :cost, presence: true
   validates :cost, numericality: true # except repair
+  validates_associated :repair_tasks
 
   delegate :name, :role, :is_important?, :is_actual_for?, to: :task, allow_nil: true
   delegate :client_presentation, to: :device, allow_nil: true
@@ -67,6 +70,11 @@ class DeviceTask < ActiveRecord::Base
 
   def performer_name
     performer.present? ? performer.short_name : ''
+  end
+
+  def is_repair?
+    # TODO task.is_repair?
+    true
   end
 
   #def validate_device_tasks

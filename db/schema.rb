@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140208040722) do
+ActiveRecord::Schema.define(:version => 20140209050249) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -585,6 +585,19 @@ ActiveRecord::Schema.define(:version => 20140208040722) do
 
   add_index "repair_groups", ["ancestry"], :name => "index_repair_groups_on_ancestry"
 
+  create_table "repair_parts", :force => true do |t|
+    t.integer  "repair_task_id"
+    t.integer  "item_id"
+    t.integer  "quantity"
+    t.integer  "warranty_term"
+    t.integer  "defect_qty"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "repair_parts", ["item_id"], :name => "index_repair_parts_on_item_id"
+  add_index "repair_parts", ["repair_task_id"], :name => "index_repair_parts_on_repair_task_id"
+
   create_table "repair_services", :force => true do |t|
     t.integer  "repair_group_id"
     t.string   "name"
@@ -594,6 +607,17 @@ ActiveRecord::Schema.define(:version => 20140208040722) do
   end
 
   add_index "repair_services", ["repair_group_id"], :name => "index_repair_services_on_repair_group_id"
+
+  create_table "repair_tasks", :force => true do |t|
+    t.integer  "repair_service_id"
+    t.integer  "device_task_id"
+    t.decimal  "price"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "repair_tasks", ["device_task_id"], :name => "index_repair_tasks_on_device_task_id"
+  add_index "repair_tasks", ["repair_service_id"], :name => "index_repair_tasks_on_repair_service_id"
 
   create_table "revaluation_acts", :force => true do |t|
     t.integer  "price_type_id"

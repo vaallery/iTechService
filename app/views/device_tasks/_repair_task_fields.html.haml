@@ -1,0 +1,16 @@
+.fields.well.well-small
+  = f.hidden_field :repair_service_id
+  %strong= f.object.name
+  %span.pull-right= link_to_remove_fields f
+  = f.input :price, input_html: {class: 'input-small'}
+  %table.table.table-condensed.table-hover
+    %tbody
+      = f.simple_fields_for :repair_parts do |ff|
+        %tr
+          %td= ff.object.name + " (#{ff.object.quantity})"
+          %td
+            = ff.input_field :warranty_term, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:warranty_term)
+            = ff.error :warranty_term
+          %td
+            = ff.input_field :defect_qty, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:defect_qty)
+            = ff.error :defect_qty

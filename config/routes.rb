@@ -169,8 +169,13 @@ ItechService::Application.routes.draw do
     put 'unpost', on: :member
   end
 
-  resources :repair_services
   resources :repair_groups
+
+  resources :repair_services do
+    get :choose, on: :collection, defaults: {format: :js}
+    get :select, on: :member, defaults: {format: :js}
+  end
+
 
   wiki_root '/wiki'
 

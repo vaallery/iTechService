@@ -111,3 +111,4 @@ window.repair_groups_tree_readonly = (container)->
       select_limit: 1
     plugins: ["themes", "html_data", "ui"]
   )
+  $('#repair_groups').show()

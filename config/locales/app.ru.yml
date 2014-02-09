@@ -41,6 +41,8 @@ ru:
       purchase: "Закупка"
       repair_group: 'Группа ремонта'
       repair_service: 'Вид ремонта'
+      repair_task: 'Ремонтная работа'
+      repair_part: 'Запчасть'
       revaluation: 'Переоценка'
       revaluation_act: 'Акт переоценки'
       salary: Зарплата
@@ -150,6 +152,7 @@ ru:
         done: Выполнено
         done_at: Время выполнения
         history_records: История
+        repair_tasks: 'Ремонтные работы'
         task: :activerecord.models.task
         task_id: :activerecord.models.task
 
@@ -287,8 +290,14 @@ ru:
       revaluation:
         revaluation_act: 'Акт переоценки'
 
+      repair_part:
+        defect_qty: 'Кол-во брака'
+
       repair_service:
         spare_parts: 'Запчасти'
+
+      repair_task:
+        repair_parts: 'Запчасти'
 
       salary:
         amount: Сумма
@@ -614,6 +623,9 @@ ru:
     seach_sales_btn: Искать продажи
     service_duration_placeholder: "м | ч.м | д.ч.м"
     updated: Девайс изменён
+
+  device_tasks:
+    add_repair_task: "Добавить"
 
   device_types:
     created: Тип девайса создан

@@ -1,0 +1,5 @@
+.row-fluid
+  .span4
+    #repair_groups{model_name: 'repair_group'}= repair_groups_trees_tag @repair_groups, @repair_group.try(:id), choose: true
+  .span8
+    #resource_table= render 'small_table'

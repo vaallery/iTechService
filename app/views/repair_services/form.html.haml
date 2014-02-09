@@ -12,8 +12,8 @@
     %thead
       %tr
         %th= t('activerecord.models.product')
-        %th= SpairPart.human_attribute_name :quantity
-        %th= SpairPart.human_attribute_name :warranty_term
+        %th= SparePart.human_attribute_name :quantity
+        %th= SparePart.human_attribute_name :warranty_term
         %th.action
     %tbody= f.simple_fields_for(:spare_parts) { |ff| render 'spare_part_fields', f: ff }
   = link_to_add_product :repair_service, :spare_parts, true

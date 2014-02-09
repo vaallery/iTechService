@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe SparePart do
+describe RepairTask do
   pending "add some examples to (or delete) #{__FILE__}"
 end
