@@ -682,7 +682,7 @@ ActiveRecord::Schema.define(:version => 20140208040722) do
 
   add_index "settings", ["name"], :name => "index_settings_on_name"
 
-  create_table "spair_parts", :force => true do |t|
+  create_table "spare_parts", :force => true do |t|
     t.integer  "repair_service_id"
     t.integer  "product_id"
     t.integer  "quantity"
@@ -691,8 +691,8 @@ ActiveRecord::Schema.define(:version => 20140208040722) do
     t.datetime "updated_at",        :null => false
   end
 
-  add_index "spair_parts", ["product_id"], :name => "index_spair_parts_on_product_id"
-  add_index "spair_parts", ["repair_service_id"], :name => "index_spair_parts_on_repair_service_id"
+  add_index "spare_parts", ["product_id"], :name => "index_spare_parts_on_product_id"
+  add_index "spare_parts", ["repair_service_id"], :name => "index_spare_parts_on_repair_service_id"
 
   create_table "stolen_phones", :force => true do |t|
     t.string   "imei",       :null => false

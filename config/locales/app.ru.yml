@@ -47,7 +47,7 @@ ru:
       sale: Продажа
       schedule_day: Рабочий день
       setting: Параметр
-      spair_part: 'Запчасть'
+      spare_part: 'Запчасть'
       stolen_phone: Краденый телефон
       store: "Склад"
       task: Задача
@@ -288,7 +288,7 @@ ru:
         revaluation_act: 'Акт переоценки'
 
       repair_service:
-        spair_parts: 'Запчасти'
+        spare_parts: 'Запчасти'
 
       salary:
         amount: Сумма
@@ -880,7 +880,7 @@ ru:
       accessory: 'Аксессуар'
       service: 'Услуга'
       protector: 'Плёнка'
-      spair_part: 'Запчасть'
+      spare_part: 'Запчасть'
 
   product_groups:
     created: 'Продуктовая Группа создана'

@@ -1,4 +1,4 @@
-class SpairPart < ActiveRecord::Base
+class SparePart < ActiveRecord::Base
   belongs_to :repair_service
   belongs_to :product
   delegate :name, to: :product, allow_nil: true

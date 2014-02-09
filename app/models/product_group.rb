@@ -3,8 +3,8 @@ class ProductGroup < ActiveRecord::Base
   scope :ordered, order('id asc')
   scope :services, joins(:product_category).where(product_categories: {kind: 'service'})
   scope :goods, joins(:product_category).where(product_categories: {kind: %w[equipment accessory]})
-  scope :except_spair_parts, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector service]})
-  scope :spair_parts, joins(:product_category).where(product_categories: {kind: 'spair_part'})
+  scope :except_spare_parts, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector service]})
+  scope :spare_parts, joins(:product_category).where(product_categories: {kind: 'spare_part'})
 
   belongs_to :product_category
   has_many :products, inverse_of: :product_group
@@ -30,8 +30,8 @@ class ProductGroup < ActiveRecord::Base
 
     if (form = params[:form]).present?
       case form
-        when 'repair_service' then product_groups = product_groups.spair_parts
-        else product_groups = product_groups.except_spair_parts
+        when 'repair_service' then product_groups = product_groups.spare_parts
+        else product_groups = product_groups.except_spare_parts
       end
     end
 

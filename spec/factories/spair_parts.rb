@@ -1,7 +1,7 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :spair_part do
+  factory :spare_part do
     repair_service nil
     item nil
     quantity 1
