@@ -1,25 +1,19 @@
-%h1 Listing cash_operations
+.page-header
+  %h1
+    = link_back_to_index
+    Listing cash_operations
 
-%table
-  %tr
-    %th Cash shift
-    %th User
-    %th Is out
-    %th Value
-    %th
-    %th
-    %th
-
-  - @cash_operations.each do |cash_operation|
+%table.table.table-hover
+  %thead
     %tr
-      %td= cash_operation.cash_shift
-      %td= cash_operation.user
-      %td= cash_operation.is_out
-      %td= cash_operation.value
-      %td= link_to 'Show', cash_operation
-      %td= link_to 'Edit', edit_cash_operation_path(cash_operation)
-      %td= link_to 'Destroy', cash_operation, method: :delete, data: { confirm: 'Are you sure?' }
+      %th Cash shift
+      %th User
+      %th Value
+  %tbody
+    - @cash_operations.each do |cash_operation|
+      %tr
+        %td= cash_operation.cash_shift_id
+        %td= cash_operation.user_short_name
+        %td= "#{cash_operation.is_out ? '-' : ''} #{human_currency(cash_operation.value, false)}"
 
-%br
-
-= link_to 'New Cash operation', new_cash_operation_path
+= paginate @cash_operations

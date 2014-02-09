@@ -64,6 +64,9 @@ ru:
       batch:
         product: :activerecord.models.product
 
+      cash_operation:
+        value: 'Сумма'
+
       ckeditor/asset:
         assetable: :activerecord.models.assetable
         assetable_type: assetable_type
@@ -466,6 +469,13 @@ ru:
     created: 'Тип бонуса создан'
     updated: 'Тип бонуса изменён'
 
+  cash_operations:
+    cash_in: 'Внесение наличных'
+    cash_out: 'Выплата наличных'
+    created:
+      cash_in: 'Операция внесения в кассу проведена'
+      cash_out: 'Операция выплаты из кассы проведена'
+
   client_categories:
     edit:
       title: 'Редактирование Категории клиента'
@@ -768,6 +778,9 @@ ru:
       insufficient: 'Недостаточно товара (%{product})'
       prices_undefined: 'Не определены цены для %{product}'
       stores_same: 'Склады должны быть разными.'
+
+  navbar:
+    cash_drawer: "Касса"
 
   orders:
     edit:
