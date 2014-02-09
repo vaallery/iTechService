@@ -52,7 +52,7 @@ class RepairServicesController < ApplicationController
     @repair_service = RepairService.find(params[:id])
     respond_to do |format|
       if @repair_service.update_attributes(params[:repair_service])
-        format.html { redirect_to repair_service_path, notice: t('repair_services.udpated') }
+        format.html { redirect_to repair_services_path, notice: t('repair_services.udpated') }
       else
         format.html { render 'form' }
       end

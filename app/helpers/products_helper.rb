@@ -40,7 +40,7 @@ module ProductsHelper
     attributes = {object.class.to_s.foreign_key => object.id}
     #attributes[:quantity] = 1 if object_class.attribute_method? :quantity
     new_object = object_class.new attributes
-    form_for(parent) { |f| f.fields_for(association, new_object, child_index: Time.new.to_i) { |ff| return render(partial_name, f: ff, options: options) } }
+    form_for(parent) { |f| f.simple_fields_for(association, new_object, child_index: Time.new.to_i) { |ff| return render(partial_name, f: ff, options: options) } }
   end
 
   def link_to_product_quick_select(product)

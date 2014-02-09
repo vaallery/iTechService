@@ -1,7 +1,7 @@
-%tr.spair_part_fields.fields{data: {item: f.object.item_id}}
+%tr.spair_part_fields.fields{data: {product: f.object.product_id}}
   %td.item
     = f.object.name
-    = f.hidden_field :item_id
+    = f.hidden_field :product_id
   %td= f.input :quantity, label: false, input_html: {class: 'input-mini', min: 1}
   %td= f.input :warranty_term, label: false, input_html: {class: 'input-mini', min: 0}
   %td.action= link_to_remove_fields f

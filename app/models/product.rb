@@ -30,9 +30,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :name, :code, :product_group
   validates_presence_of :device_type, if: :is_equipment
   validates_uniqueness_of :code
-
   after_save { self.is_service ? self.create_task : self.task.try(:destroy) }
-
   after_initialize { self.warranty_term ||= default_warranty_term }
 
   def self.search(params)
