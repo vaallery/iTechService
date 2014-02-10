@@ -5,7 +5,7 @@ class DeviceTask < ActiveRecord::Base
   has_many :repair_tasks
   accepts_nested_attributes_for :device, reject_if: proc { |attr| attr['tech_notice'].blank? }
   accepts_nested_attributes_for :repair_tasks
-  attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes
+  attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes, :repair_tasks_attributes
   validates :task, :cost, presence: true
   validates :cost, numericality: true # except repair
   validates_associated :repair_tasks
