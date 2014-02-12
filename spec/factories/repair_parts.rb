@@ -2,9 +2,9 @@
 
 FactoryGirl.define do
   factory :repair_part do
-    repair_task nil
-    item nil
-    warranty_term 1
-    defect_qty 1
+    repair_task
+    item
+    warranty_term 0
+    defect_qty 0
   end
 end

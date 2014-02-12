@@ -5,11 +5,20 @@ class RepairPart < ActiveRecord::Base
   attr_accessible :quantity, :warranty_term, :defect_qty, :repair_task_id, :item_id
   validates_presence_of :item
   validates_numericality_of :warranty_term, only_integer: true, greater_than_or_equal_to: 0
-  after_initialize { self.warranty_term ||= item.try(:warranty_term) }
+  after_initialize do
+    self.warranty_term ||= item.try(:warranty_term)
+    self.defect_qty ||= 0
+  end
 
-  def deduct_defected
-    if (store_src = Store.default).present? and (store_dst = Store.for_defect).present?
-      store_item(store_src).move_to(store_dst, defect_qty)
+  def deduct_spare_parts
+    if (store_src = Store.spare_parts.first).present?
+      # Deducting used spare parts
+      self.store_item(store_src).dec(self.quantity)
+
+      # Moving defected spare parts
+      if (store_dst = Store.defect.first).present? and self.defect_qty > 0
+        self.store_item(store_src).move_to(store_dst, self.defect_qty)
+      end
     end
   end
 

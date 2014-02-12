@@ -2,6 +2,7 @@
 = simple_form_for @store, html: { class: 'form-horizontal' } do |f|
   = f.input :name
   = f.input :code
+  = f.input :kind, collection: store_kinds_for_select
   = f.association :price_types, as: :check_boxes
   .form-actions
     = submit_button f

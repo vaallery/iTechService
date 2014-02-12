@@ -10,6 +10,10 @@ FactoryGirl.define do
       association :product_category, :service
     end
 
+    factory :spare_part_product_group do
+      association :product_category, :spare_part
+    end
+
     factory :featured_product_group do
       association :product_category, factory: :featured_product_category
     end

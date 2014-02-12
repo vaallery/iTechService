@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :repair_task do
-    repair_service nil
-    device_task nil
-    price "9.99"
+    repair_service
+    device_task
+    price 1000.0
   end
 end

@@ -8,6 +8,10 @@ FactoryGirl.define do
       association :product, factory: :featured_product
     end
 
+    trait :spare_part do
+      association :product, :spare_part
+    end
+
     factory :featured_item, traits: [:featured]
 
   end

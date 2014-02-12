@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :repair_group do
-    name "MyString"
-    ancestry "MyString"
+    sequence(:name) { |n| "Repair group #{n}" }
+    ancestry nil
   end
 end

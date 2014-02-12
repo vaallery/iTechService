@@ -18,11 +18,13 @@
       = f.simple_fields_for :device do |ff|
         = ff.input :tech_notice, input_html: {rows: 3}
 
-    - if @device_task.is_repair? and can? :repair, @device_task.device || Device
+    - if can? :repair, @device_task.device || Device and @device_task.is_repair?
       %h4
         = DeviceTask.human_attribute_name :repair_tasks
         = link_to glyph(:plus) + t('device_tasks.add_repair_task').html_safe, choose_repair_services_path, remote: true, id: 'choose_repair_service_link', class: 'btn btn-success btn-small'
-        = link_to t('done'), '#', id: 'close_repair_service_choose_form', class: 'btn btn-primary btn-small'
+      - if f.object.errors.any?
+        - f.object.errors[:base].each do |error|
+          %p.text-error= error
       #repair_services_choose_form_container.well.well-small
       #repair_tasks= f.simple_fields_for(:repair_tasks) { |ff| render 'repair_task_fields', f: ff }
 

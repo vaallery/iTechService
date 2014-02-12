@@ -9,6 +9,7 @@ class RepairTask < ActiveRecord::Base
   validates_numericality_of :price, greater_than: 0
   validates_associated :repair_parts
   validates_uniqueness_of :repair_service_id, scope: :device_task_id
+  validates_associated :repair_parts
 
   after_initialize do
     self.price ||= repair_service.try(:price)

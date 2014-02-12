@@ -397,6 +397,18 @@ ru:
         username: Логин
         wish: Пожелание
 
+    errors:
+      models:
+        device_task:
+          no_defect_store: 'Склад брака не найден'
+          no_spare_parts_store: "Склад запчастей не найден"
+          attributes:
+            done:
+              already_done: 'Задача уже выполнена'
+        repair_part:
+          quantity:
+            insufficient: ''
+
   attributes:
     client_category: 'Категория клиента'
     created_at: Время создания
@@ -626,6 +638,9 @@ ru:
 
   device_tasks:
     add_repair_task: "Добавить"
+    errors:
+      already_done: "Задача уже выполнена"
+      insufficient_spare_parts: "На складе недостаточно запчастей (%{name})"
 
   device_types:
     created: Тип девайса создан
@@ -1118,6 +1133,11 @@ ru:
   stores:
     created: "Склад создан"
     updated: 'Склад изменён'
+    kinds:
+      defect: 'Брак'
+      purchase: 'Закуп'
+      spare_parts: 'Запчасти'
+      retail: 'Розница'
     index:
       title: "Склады"
     new:

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140209050249) do
+ActiveRecord::Schema.define(:version => 20140212004410) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -754,6 +754,7 @@ ActiveRecord::Schema.define(:version => 20140209050249) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "code"
+    t.string   "kind"
   end
 
   add_index "stores", ["code"], :name => "index_stores_on_code"

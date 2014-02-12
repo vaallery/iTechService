@@ -15,14 +15,15 @@ class DeviceTask < ActiveRecord::Base
 
   delegate :name, :role, :is_important?, :is_actual_for?, to: :task, allow_nil: true
   delegate :client_presentation, to: :device, allow_nil: true
-  delegate :is_repair, to: :task, allow_nil: true
+  delegate :is_repair?, to: :task, allow_nil: true
   attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes, :repair_tasks_attributes
   validates :task, :cost, presence: true
   validates :cost, numericality: true
   validates_associated :repair_tasks
-  after_initialize { self.done ||= false }
+  validate :valid_repair if :is_repair?
   after_commit :update_device_done_attribute
-  after_commit :deduct_defected if :is_repair
+  after_commit :deduct_spare_parts if :is_repair?
+  after_initialize { self.done ||= false }
 
   before_save do |dt|
     old_done = changed_attributes['done']
@@ -32,7 +33,6 @@ class DeviceTask < ActiveRecord::Base
       dt.done_at = nil
     end
   end
-
 
   def as_json(options={})
     {
@@ -73,11 +73,6 @@ class DeviceTask < ActiveRecord::Base
     performer.present? ? performer.short_name : ''
   end
 
-  def is_repair?
-    # TODO task.is_repair?
-    true
-  end
-
   #def validate_device_tasks
   #  roles = []
   #  device_tasks.each do |dt|
@@ -96,11 +91,37 @@ class DeviceTask < ActiveRecord::Base
     self.device.update_attribute :done_at, done_time
   end
 
-  def deduct_defected
-    old_done = changed_attributes['done']
-    if self.done and (!old_done or old_done.nil?)
-      self.repair_parts.each { |repair_part| repair_part.deduct_defected }
+  def deduct_spare_parts
+    if previous_changes['done'].present?
+      if previous_changes['done'][0] == false and previous_changes['done'][1] == true
+        repair_parts.each { |repair_part| repair_part.deduct_spare_parts }
+      end
     end
+  end
+
+  def valid_repair
+    is_valid = true
+    if previous_changes['done']
+      errors.add :done, :already_done
+      is_valid = false
+    else
+      if (store_src = Store.spare_parts.first).present?
+        repair_parts.each do |repair_part|
+          if repair_part.store_item(store_src).quantity < (repair_part.quantity + repair_part.defect_qty)
+            errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
+            is_valid = false
+          end
+        end
+        if repair_parts.sum(:defect_qty) > 0 and (Store.defect.empty?)
+          errors.add :base, :no_defect_store
+          is_valid = false
+        end
+      else
+        errors.add :base, :no_spare_parts_store
+        is_valid = false
+      end
+    end
+    is_valid
   end
 
 end

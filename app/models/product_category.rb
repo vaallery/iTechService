@@ -21,4 +21,8 @@ class ProductCategory < ActiveRecord::Base
     kind == 'equipment'
   end
 
+  def is_spare_part
+    kind == 'spare_part'
+  end
+
 end

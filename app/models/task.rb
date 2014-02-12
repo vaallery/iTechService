@@ -9,7 +9,6 @@ class Task < ActiveRecord::Base
   has_many :devices, through: :device_tasks
   belongs_to :product, inverse_of: :task
   belongs_to :location
-  delegate :is_repair, to: :product, allow_nil: true
   attr_accessible :cost, :duration, :name, :priority, :role, :location_id
   after_initialize { self.name ||= product.name if product.present? }
 
@@ -39,6 +38,11 @@ class Task < ActiveRecord::Base
 
   def role_name
     role.blank? ? '-' : I18n.t("users.roles.#{role}")
+  end
+
+  def is_repair?
+    # TODO define repair task
+    true
   end
 
 end

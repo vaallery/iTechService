@@ -22,7 +22,7 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :items, allow_destroy: true
   accepts_nested_attributes_for :task, allow_destroy: false
 
-  delegate :feature_accounting, :feature_types, :is_service, :is_equipment, :request_price, :product_category, to: :product_group, allow_nil: true
+  delegate :feature_accounting, :feature_types, :is_service, :is_equipment, :is_spare_part, :request_price, :product_category, to: :product_group, allow_nil: true
   delegate :full_name, to: :device_type, prefix: true, allow_nil: true
   delegate :color, to: :top_salable, allow_nil: true
 
