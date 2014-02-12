@@ -19,11 +19,10 @@
       = f.input :warranty_term
 
       - if @product.is_service
-        = f.simple_fields_for :task do |ff|
-          = ff.input :name
+        = f.simple_fields_for @product.task || @product.build_task do |ff|
+          -#= ff.input :name
           = ff.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
           = ff.association :location, label_method: :full_name
-
 
     - if @product.feature_accounting
       #items.tab-pane

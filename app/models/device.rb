@@ -1,41 +1,6 @@
 # encoding: utf-8
 class Device < ActiveRecord::Base
 
-  belongs_to :user, inverse_of: :devices
-  belongs_to :client, inverse_of: :devices
-  belongs_to :device_type
-  belongs_to :item
-  belongs_to :location
-  belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
-  has_many :device_tasks, dependent: :destroy
-  has_many :tasks, through: :device_tasks
-  has_many :history_records, as: :object, dependent: :destroy
-
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice
-  accepts_nested_attributes_for :device_tasks
-
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :item_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration
-  attr_accessor :service_duration
-
-  validates_presence_of :ticket_number, :client, :location, :device_tasks, :return_at
-  validates_presence_of :device_type, if: 'item.nil?'
-  validates_presence_of :app_store_pass, if: :new_record?
-  validates_uniqueness_of :ticket_number
-  validates :imei, length: {is: 15}, allow_nil: true
-  #validates :service_duration, format: { with: /[\D.]+\z/ }
-  validates_associated :device_tasks
-  delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
-
-  before_validation :generate_ticket_number
-  before_validation :validate_security_code
-  before_validation :set_user_and_location
-  before_validation :validate_location
-
-  after_save :update_qty_replaced
-  after_update :device_update_announce
-  after_create :new_device_announce
-  after_create :create_alert
-
   scope :newest, order('created_at desc')
   scope :oldest, order('created_at asc')
   scope :done, where('devices.done_at IS NOT NULL').order('devices.done_at desc')
@@ -49,6 +14,37 @@ class Device < ActiveRecord::Base
   scope :unarchived, where('devices.location_id <> ?', Location.archive_id)
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
+  belongs_to :user, inverse_of: :devices
+  belongs_to :client, inverse_of: :devices
+  belongs_to :device_type
+  belongs_to :item
+  belongs_to :location
+  belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
+  has_many :device_tasks, dependent: :destroy
+  has_many :tasks, through: :device_tasks
+  has_many :history_records, as: :object, dependent: :destroy
+  delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
+
+  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice
+  accepts_nested_attributes_for :device_tasks
+
+  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :item_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration
+  attr_accessor :service_duration
+
+  validates_presence_of :ticket_number, :client, :location, :device_tasks, :return_at
+  validates_presence_of :device_type, if: 'item.nil?'
+  validates_presence_of :app_store_pass, if: :new_record?
+  validates_uniqueness_of :ticket_number
+  validates :imei, length: {is: 15}, allow_nil: true
+  validates_associated :device_tasks
+  before_validation :generate_ticket_number
+  before_validation :validate_security_code
+  before_validation :set_user_and_location
+  before_validation :validate_location
+  after_save :update_qty_replaced
+  after_update :device_update_announce
+  after_create :new_device_announce
+  after_create :create_alert
   after_initialize :set_user_and_location
 
   def as_json(options={})
