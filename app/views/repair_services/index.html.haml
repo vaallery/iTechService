@@ -7,6 +7,7 @@
       = link_to glyph(:file) + t('repair_groups.new.link').html_safe, new_repair_group_path, remote: true, class: 'btn btn-success'
       = link_to glyph(:file) + t('repair_services.new.title').html_safe, '#', id: 'new_repair_service_link', class: 'btn btn-success', disabled: true
 
+    -#= buttons_for_tree
     #repair_groups{class: can?(:manage, RepairGroup) ? 'editable' : 'readonly'}= repair_groups_trees_tag @repair_groups, @repair_group.try(:id)
 
   #resource_table.span8= render 'table'

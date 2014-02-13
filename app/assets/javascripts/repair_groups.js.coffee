@@ -90,8 +90,7 @@ window.repair_groups_tree = (container)->
                 @remove obj
 
     plugins: ["themes", "html_data", "ui", "contextmenu", "crrm"]
-  )
-  $('#repair_groups').show()
+  ).show()
 
 window.repair_groups_tree_readonly = (container)->
   $.jstree._themes = "/assets/jstree/"
@@ -111,5 +110,4 @@ window.repair_groups_tree_readonly = (container)->
     ui:
       select_limit: 1
     plugins: ["themes", "html_data", "ui"]
-  )
-  $('#repair_groups').show()
+  ).show()

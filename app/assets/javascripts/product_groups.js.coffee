@@ -89,7 +89,7 @@ window.product_groups_tree = (container)->
                 @remove obj
 
     plugins: ["themes", "html_data", "ui", "contextmenu", "crrm"]
-  )
+  ).show()
 
 window.product_groups_tree_readonly = (container)->
   $.jstree._themes = "/assets/jstree/"
@@ -110,4 +110,4 @@ window.product_groups_tree_readonly = (container)->
     ui:
       select_limit: 1
     plugins: ["themes", "html_data", "ui"]
-  )
+  ).show()
