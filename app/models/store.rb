@@ -21,4 +21,8 @@ class Store < ActiveRecord::Base
     Store.find_by_code Setting.setting_value(:default_store_code)
   end
 
+  def self.spare_parts_default
+    Store.spare_parts.first
+  end
+
 end

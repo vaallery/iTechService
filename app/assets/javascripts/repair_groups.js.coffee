@@ -1,6 +1,7 @@
 jQuery ->
 
-  repair_groups_tree('#repair_groups') if $('#repair_groups').length > 0
+  repair_groups_tree('#repair_groups') if $('#repair_groups.editable').length > 0
+  repair_groups_tree_readonly('#repair_groups') if $('#repair_groups.readonly').length > 0
 
 window.repair_groups_tree = (container)->
   $.jstree._themes = "/assets/jstree/"

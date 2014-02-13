@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140212004410) do
+ActiveRecord::Schema.define(:version => 20140213005837) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -564,10 +564,12 @@ ActiveRecord::Schema.define(:version => 20140212004410) do
     t.string   "name"
     t.string   "code"
     t.integer  "product_group_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "warranty_term"
     t.integer  "device_type_id"
+    t.integer  "quantity_threshold"
+    t.text     "comment"
   end
 
   add_index "products", ["code"], :name => "index_products_on_code"
@@ -616,6 +618,7 @@ ActiveRecord::Schema.define(:version => 20140212004410) do
     t.decimal  "price"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.text     "client_info"
   end
 
   add_index "repair_services", ["repair_group_id"], :name => "index_repair_services_on_repair_group_id"

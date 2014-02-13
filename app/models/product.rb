@@ -26,11 +26,10 @@ class Product < ActiveRecord::Base
   delegate :full_name, to: :device_type, prefix: true, allow_nil: true
   delegate :color, to: :top_salable, allow_nil: true
 
-  attr_accessible :code, :name, :product_group_id, :device_type_id, :warranty_term, :items_attributes, :task_attributes, :related_product_ids, :related_product_group_ids
+  attr_accessible :code, :name, :product_group_id, :device_type_id, :warranty_term, :quantity_threshold, :comment, :items_attributes, :task_attributes, :related_product_ids, :related_product_group_ids
   validates_presence_of :name, :code, :product_group
   validates_presence_of :device_type, if: :is_equipment
   validates_uniqueness_of :code
-  #after_save { self.is_service ? self.create_task : self.task.try(:destroy) }
   after_initialize do
     self.warranty_term ||= default_warranty_term
     #self.build_task if self.is_service and self.task.nil?

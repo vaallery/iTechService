@@ -13,10 +13,12 @@
 
       = f.hidden_field :product_group_id
       = f.full_error :product_group
-      = f.input :device_type, as: :device_type unless @product.is_service
+      = f.input :device_type, as: :device_type if @product.is_equipment
       = f.input :name
       = f.input :code
       = f.input :warranty_term
+      = f.input :quantity_threshold
+      = f.input :comment, input_html: {rows: 3}
 
       - if @product.is_service
         = f.simple_fields_for @product.task || @product.build_task do |ff|

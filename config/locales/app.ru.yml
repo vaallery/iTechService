@@ -268,6 +268,7 @@ ru:
         available: 'На складе'
         category: "Категория"
         code: "Код"
+        comment: 'Комментарий'
         discount: 'Скидка'
         feature_accounting: 'Учёт по характеристикам'
         features: 'Характеристики'
@@ -277,6 +278,7 @@ ru:
         quantity_in_store: 'Остаток на складе'
         related_products: 'Сопутствующие продукты'
         related_product_groups: 'Сопутствующие группы продуктов'
+        quantity_threshold: 'Пороговое количество'
 
       product_category:
         feature_types: "Типы характеристик"
@@ -294,6 +296,7 @@ ru:
         defect_qty: 'Кол-во брака'
 
       repair_service:
+        client_info: 'Информация для клиента'
         spare_parts: 'Запчасти'
 
       repair_task:
@@ -1118,6 +1121,12 @@ ru:
     created: Параметр создан
     link: Параметры
     updated: Параметр изменён
+
+  spare_parts:
+    remnants:
+      none: 'Остутствуют'
+      low: 'Заканчиваются. Уточнить у технарей.'
+      many: 'Хватает'
 
   stolen_phones:
     created: Телефон создан

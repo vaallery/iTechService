@@ -5,6 +5,7 @@
   = f.full_error :product_group
   = f.input :name
   = f.input :price
+  = f.input :client_info, input_html: {rows: 3}
 
   %table#spare_parts.table.table-condensed.table-hover
     %caption
@@ -12,6 +13,7 @@
     %thead
       %tr
         %th= t('activerecord.models.product')
+        %th= SparePart.human_attribute_name :quantity
         %th= SparePart.human_attribute_name :quantity
         %th= SparePart.human_attribute_name :warranty_term
         %th.action
