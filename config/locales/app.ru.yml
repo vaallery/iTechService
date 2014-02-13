@@ -38,7 +38,7 @@ ru:
       price_type: "Категория цен"
       product: 'Продукт'
       product_group: 'Группа продуктов'
-      purchase: "Закупка"
+      purchase: "Приход"
       repair_group: 'Группа ремонта'
       repair_service: 'Вид ремонта'
       repair_task: 'Ремонтная работа'
@@ -958,19 +958,19 @@ ru:
     related_list_title: "Сопутствующие товары"
   purchases:
     choose_products: 'Выберите продукты'
-    created: 'Закупка создана'
+    created: 'Приход создан'
     link: :purchases.index.title
     new_revaluation_act: 'Создать Акт Переоценки'
-    posted: 'Закупка проведена'
-    updated: 'Закупка изменена'
+    posted: 'Приход проведён'
+    updated: 'Приход изменён'
     edit:
-      title: 'Редактирование Закупки'
+      title: 'Редактирование Прихода'
     index:
-      title: 'Закупки'
+      title: 'Приходы'
     new:
-      title: 'Новая Закупка'
+      title: 'Новый Приход'
     errors:
-      deleting_posted: 'Невозможно удалить проведенную Закупку.'
+      deleting_posted: 'Невозможно удалить проведенный Приход.'
       store_item_already_present: 'Товар уже существует (%{product}).'
     statuses:
       new: 'Новая'
@@ -1157,7 +1157,7 @@ ru:
     updated: 'Склад изменён'
     kinds:
       defect: 'Брак'
-      purchase: 'Закуп'
+      purchase: 'Приход'
       spare_parts: 'Запчасти'
       retail: 'Розница'
     index:

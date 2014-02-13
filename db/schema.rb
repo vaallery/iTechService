@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140207122403) do
+ActiveRecord::Schema.define(:version => 20140213005837) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -564,10 +564,12 @@ ActiveRecord::Schema.define(:version => 20140207122403) do
     t.string   "name"
     t.string   "code"
     t.integer  "product_group_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.integer  "warranty_term"
     t.integer  "device_type_id"
+    t.integer  "quantity_threshold"
+    t.text     "comment"
   end
 
   add_index "products", ["code"], :name => "index_products_on_code"
@@ -586,6 +588,51 @@ ActiveRecord::Schema.define(:version => 20140207122403) do
   add_index "purchases", ["contractor_id"], :name => "index_purchases_on_contractor_id"
   add_index "purchases", ["status"], :name => "index_purchases_on_status"
   add_index "purchases", ["store_id"], :name => "index_purchases_on_store_id"
+
+  create_table "repair_groups", :force => true do |t|
+    t.string   "name"
+    t.string   "ancestry"
+    t.integer  "ancestry_depth", :default => 0
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+  end
+
+  add_index "repair_groups", ["ancestry"], :name => "index_repair_groups_on_ancestry"
+
+  create_table "repair_parts", :force => true do |t|
+    t.integer  "repair_task_id"
+    t.integer  "item_id"
+    t.integer  "quantity"
+    t.integer  "warranty_term"
+    t.integer  "defect_qty"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "repair_parts", ["item_id"], :name => "index_repair_parts_on_item_id"
+  add_index "repair_parts", ["repair_task_id"], :name => "index_repair_parts_on_repair_task_id"
+
+  create_table "repair_services", :force => true do |t|
+    t.integer  "repair_group_id"
+    t.string   "name"
+    t.decimal  "price"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.text     "client_info"
+  end
+
+  add_index "repair_services", ["repair_group_id"], :name => "index_repair_services_on_repair_group_id"
+
+  create_table "repair_tasks", :force => true do |t|
+    t.integer  "repair_service_id"
+    t.integer  "device_task_id"
+    t.decimal  "price"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "repair_tasks", ["device_task_id"], :name => "index_repair_tasks_on_device_task_id"
+  add_index "repair_tasks", ["repair_service_id"], :name => "index_repair_tasks_on_repair_service_id"
 
   create_table "revaluation_acts", :force => true do |t|
     t.integer  "price_type_id"
@@ -674,6 +721,18 @@ ActiveRecord::Schema.define(:version => 20140207122403) do
 
   add_index "settings", ["name"], :name => "index_settings_on_name"
 
+  create_table "spare_parts", :force => true do |t|
+    t.integer  "repair_service_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.integer  "warranty_term"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "spare_parts", ["product_id"], :name => "index_spare_parts_on_product_id"
+  add_index "spare_parts", ["repair_service_id"], :name => "index_spare_parts_on_repair_service_id"
+
   create_table "stolen_phones", :force => true do |t|
     t.string   "imei",       :null => false
     t.datetime "created_at", :null => false
@@ -698,6 +757,7 @@ ActiveRecord::Schema.define(:version => 20140207122403) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "code"
+    t.string   "kind"
   end
 
   add_index "stores", ["code"], :name => "index_stores_on_code"
