@@ -27,8 +27,8 @@
         = menu_item t('cash_operations.cash_out'), new_cash_operation_path(cash_operation: {is_out: true}), remote: true if can? :create, CashOperation
 
       = drop_down t('dashboard.misc') do
-        = menu_item t('sales.link'), sales_path if can? :manage, Sale
         = menu_item t('purchases.link'), purchases_path if can? :manage, Purchase
+        = menu_item t('sales.link'), sales_path if can? :manage, Sale
         = menu_item t('revaluation_acts.index.title'), revaluation_acts_path if can? :manage, RevaluationAct
         = menu_item t('movement_acts.index.title'), movement_acts_path if can? :manage, MovementAct
         = drop_down_submenu t 'dashboard.references' do
