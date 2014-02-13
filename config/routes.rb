@@ -93,8 +93,9 @@ ItechService::Application.routes.draw do
   resources :messages, path: 'chat', except: [:new, :edit, :update]
 
   resources :purchases do
-    put 'post', on: :member
-    put 'unpost', on: :member
+    put :post, on: :member
+    put :unpost, on: :member
+    put :print_barcodes, on: :member, defaults: {format: :pdf}
   end
 
   resources :sales do

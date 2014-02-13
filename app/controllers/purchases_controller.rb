@@ -93,4 +93,14 @@ class PurchasesController < ApplicationController
     end
   end
 
+  def print_barcodes
+    @purchase = Purchase.find params[:id]
+    respond_to do |format|
+      format.pdf do
+        pdf = ProductTagsPdf.new @purchase, view_context, params
+        send_data pdf.render, filename: 'product_tags', type: 'application/pdf', disposition: 'inline'
+      end
+    end
+  end
+
 end

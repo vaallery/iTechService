@@ -41,6 +41,6 @@
 .form-actions
   = link_to_edit @purchase if can? :edit, @purchase
   = button_to_post @purchase if can? :post, @purchase
-  -#= button_to_unpost @purchase if can? :unpost, @purchase
+  = link_to_print_barcodes @purchase if can? :print_barcodes, Purchase
   = link_to_new_revaluation_act(@purchase) if @purchase.is_posted?
   = link_to_destroy @purchase if can? :destroy, @purchase

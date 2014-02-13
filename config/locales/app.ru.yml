@@ -969,6 +969,12 @@ ru:
       title: 'Приходы'
     new:
       title: 'Новый Приход'
+    show:
+      print_barcodes: "Печать штрихкодов"
+    print_barcodes:
+      with_price: "С ценами"
+      by_qty: 'С учётом количества'
+      submit: 'Печать'
     errors:
       deleting_posted: 'Невозможно удалить проведенный Приход.'
       store_item_already_present: 'Товар уже существует (%{product}).'
