@@ -1,0 +1,4 @@
+:plain
+  $("#resource_table").html("#{j(render(params[:table_name] || 'repair_services/table'))}");
+  $('#new_repair_service_link').removeAttr('disabled');
+  $('#new_repair_service_link').attr('href', "#{new_repair_service_path(repair_service: {repair_group_id: @repair_group.id})}");

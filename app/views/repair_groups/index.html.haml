@@ -1,0 +1,21 @@
+%h1 Listing repair_groups
+
+%table
+  %tr
+    %th Name
+    %th Ancestry
+    %th
+    %th
+    %th
+
+  - @repair_groups.each do |repair_group|
+    %tr
+      %td= repair_group.name
+      %td= repair_group.ancestry
+      %td= link_to 'Show', repair_group
+      %td= link_to 'Edit', edit_repair_group_path(repair_group)
+      %td= link_to 'Destroy', repair_group, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Repair group', new_repair_group_path

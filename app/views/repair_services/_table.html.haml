@@ -1,0 +1,29 @@
+- if @repair_services.any?
+  %table.table.table-hover
+    %thead
+      %tr
+        %th= RepairService.human_attribute_name(:id)
+        %th= RepairService.human_attribute_name(:name)
+        %th= RepairService.human_attribute_name(:price)
+        %th= RepairService.human_attribute_name(:client_info)
+        - if can? :manage, RepairService
+          %th
+    %tbody
+      - @repair_services.each do |repair_service|
+        - parts_qty = repair_service.spare_parts.count
+        %tr
+          %td{rowspan: parts_qty+1}= repair_service.id
+          %td= repair_service.name
+          %td= human_currency repair_service.price
+          %td.text-info{rowspan: parts_qty+1}= repair_service.client_info
+          - if can? :manage, RepairService
+            %td.btn-group{rowspan: parts_qty+1}
+              = link_to_edit_small repair_service
+              = link_to_destroy_small repair_service
+        - repair_service.spare_parts.each do |spare_part|
+          %tr{class: spare_part_row_class(spare_part)}
+            %td
+              = link_to_if can?(:manage, Product), spare_part.name, product_path(spare_part.product)
+              %br
+              %span= t ("spare_parts.remnants.#{spare_part.remnant_s}")
+            %td= spare_part.comment

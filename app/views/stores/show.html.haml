@@ -3,8 +3,10 @@
 %dl.dl-horizontal
   %dt= Store.human_attribute_name :code
   %dd= @store.code
+  %dt= Store.human_attribute_name :kind
+  %dd= human_store_kind(@store) || '-'
   %dt= Store.human_attribute_name :price_types
-  %dd= price_types_presentation @store.price_types
+  %dd= price_types_presentation(@store.price_types) || '-'
 
 %table#store_products.table.table-bordered.table-condensed.table-hover
   %caption

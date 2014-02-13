@@ -12,6 +12,10 @@ FactoryGirl.define do
       kind 'service'
     end
 
+    trait :spare_part do
+      kind 'spare_part'
+    end
+
     factory :featured_product_category do
       feature_accounting true
 

@@ -13,17 +13,18 @@
 
       = f.hidden_field :product_group_id
       = f.full_error :product_group
-      = f.input :device_type, as: :device_type unless @product.is_service
+      = f.input :device_type, as: :device_type if @product.is_equipment
       = f.input :name
       = f.input :code
       = f.input :warranty_term
+      = f.input :quantity_threshold
+      = f.input :comment, input_html: {rows: 3}
 
       - if @product.is_service
-        = f.simple_fields_for :task do |ff|
-          = ff.input :name
+        = f.simple_fields_for @product.task || @product.build_task do |ff|
+          -#= ff.input :name
           = ff.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
           = ff.association :location, label_method: :full_name
-
 
     - if @product.feature_accounting
       #items.tab-pane

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Repair group:
+  = @repair_service.repair_group
+%p
+  %b Name:
+  = @repair_service.name
+%p
+  %b Price:
+  = @repair_service.price
+
+= link_to 'Edit', edit_repair_service_path(@repair_service)
+\|
+= link_to 'Back', repair_services_path

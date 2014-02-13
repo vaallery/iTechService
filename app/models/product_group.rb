@@ -1,7 +1,11 @@
 class ProductGroup < ActiveRecord::Base
 
+  scope :ordered, order('id asc')
   scope :services, joins(:product_category).where(product_categories: {kind: 'service'})
   scope :goods, joins(:product_category).where(product_categories: {kind: %w[equipment accessory]})
+  scope :except_spare_parts, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector service]})
+  scope :spare_parts, joins(:product_category).where(product_categories: {kind: 'spare_part'})
+  scope :for_purchase, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector spare_part]})
 
   belongs_to :product_category
   has_many :products, inverse_of: :product_group
@@ -10,7 +14,7 @@ class ProductGroup < ActiveRecord::Base
   has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'
   has_ancestry orphan_strategy: :restrict, cache_depth: true
 
-  delegate :feature_accounting, :feature_types, :warranty_term, :is_service, :is_equipment, :request_price, to: :product_category, allow_nil: true
+  delegate :feature_accounting, :feature_types, :warranty_term, :is_service, :is_equipment, :is_spare_part, :request_price, to: :product_category, allow_nil: true
 
   attr_accessible :name, :ancestry, :parent_id, :product_category_id, :related_product_ids, :related_product_group_ids
   validates_presence_of :name, :product_category
@@ -20,7 +24,20 @@ class ProductGroup < ActiveRecord::Base
     unless product_group.is_root?
       product_group.product_category_id ||= product_group.parent.product_category_id
     end
+  end
 
+  def self.search(params)
+    product_groups = ProductGroup.scoped
+
+    if (form = params[:form]).present?
+      case form
+        when 'repair_service' then product_groups = product_groups.spare_parts
+        when 'purchase' then product_groups = product_groups.for_purchase
+        else product_groups = product_groups.except_spare_parts
+      end
+    end
+
+    product_groups
   end
 
 end

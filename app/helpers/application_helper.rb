@@ -298,4 +298,14 @@ module ApplicationHelper
     end
   end
 
+  def buttons_for_tree
+    content_tag(:div, id: 'tree_buttons', class: 'btn-toolbar') do
+      content_tag(:div, class: 'btn-group') do
+        content_tag(:button, '1', class: 'btn btn-mini') +
+        content_tag(:button, '2', class: 'btn btn-mini') +
+        content_tag(:button, '3', class: 'btn btn-mini')
+      end
+    end
+  end
+
 end

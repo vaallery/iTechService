@@ -79,6 +79,7 @@ class Ability
         can :modify, Order
         can :read_tech_notice, Device
         can :write_tech_notice, Device
+        can :repair, Device
       end
       can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement

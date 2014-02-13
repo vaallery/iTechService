@@ -1,6 +1,6 @@
 class ProductCategory < ActiveRecord::Base
 
-  KINDS = %w[equipment accessory service protector]
+  KINDS = %w[equipment accessory service protector spare_part]
 
   has_many :product_groups
   has_and_belongs_to_many :feature_types, uniq: true
@@ -19,6 +19,10 @@ class ProductCategory < ActiveRecord::Base
 
   def is_equipment
     kind == 'equipment'
+  end
+
+  def is_spare_part
+    kind == 'spare_part'
   end
 
 end

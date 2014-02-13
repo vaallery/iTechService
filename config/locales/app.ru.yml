@@ -39,12 +39,17 @@ ru:
       product: 'Продукт'
       product_group: 'Группа продуктов'
       purchase: "Закупка"
+      repair_group: 'Группа ремонта'
+      repair_service: 'Вид ремонта'
+      repair_task: 'Ремонтная работа'
+      repair_part: 'Запчасть'
       revaluation: 'Переоценка'
       revaluation_act: 'Акт переоценки'
       salary: Зарплата
       sale: Продажа
       schedule_day: Рабочий день
       setting: Параметр
+      spare_part: 'Запчасть'
       stolen_phone: Краденый телефон
       store: "Склад"
       task: Задача
@@ -150,6 +155,7 @@ ru:
         done: Выполнено
         done_at: Время выполнения
         history_records: История
+        repair_tasks: 'Ремонтные работы'
         task: :activerecord.models.task
         task_id: :activerecord.models.task
 
@@ -265,6 +271,7 @@ ru:
         available: 'На складе'
         category: "Категория"
         code: "Код"
+        comment: 'Комментарий'
         discount: 'Скидка'
         feature_accounting: 'Учёт по характеристикам'
         features: 'Характеристики'
@@ -274,6 +281,7 @@ ru:
         quantity_in_store: 'Остаток на складе'
         related_products: 'Сопутствующие продукты'
         related_product_groups: 'Сопутствующие группы продуктов'
+        quantity_threshold: 'Пороговое количество'
 
       product_category:
         feature_types: "Типы характеристик"
@@ -286,6 +294,16 @@ ru:
 
       revaluation:
         revaluation_act: 'Акт переоценки'
+
+      repair_part:
+        defect_qty: 'Кол-во брака'
+
+      repair_service:
+        client_info: 'Информация для клиента'
+        spare_parts: 'Запчасти'
+
+      repair_task:
+        repair_parts: 'Запчасти'
 
       salary:
         amount: Сумма
@@ -384,6 +402,18 @@ ru:
         surname: Фамилия
         username: Логин
         wish: Пожелание
+
+    errors:
+      models:
+        device_task:
+          no_defect_store: 'Склад брака не найден'
+          no_spare_parts_store: "Склад запчастей не найден"
+          attributes:
+            done:
+              already_done: 'Задача уже выполнена'
+        repair_part:
+          quantity:
+            insufficient: ''
 
   attributes:
     client_category: 'Категория клиента'
@@ -618,6 +648,12 @@ ru:
     seach_sales_btn: Искать продажи
     service_duration_placeholder: "м | ч.м | д.ч.м"
     updated: Девайс изменён
+
+  device_tasks:
+    add_repair_task: "Добавить"
+    errors:
+      already_done: "Задача уже выполнена"
+      insufficient_spare_parts: "На складе недостаточно запчастей (%{name})"
 
   device_types:
     created: Тип девайса создан
@@ -884,9 +920,10 @@ ru:
       title: "Новая Категория продуктов"
     kinds:
       equipment: 'Техника'
-      accessory: 'Аксессуары'
-      service: 'Услуги'
-      protector: 'Плёнки'
+      accessory: 'Аксессуар'
+      service: 'Услуга'
+      protector: 'Плёнка'
+      spare_part: 'Запчасть'
 
   product_groups:
     created: 'Продуктовая Группа создана'
@@ -939,6 +976,25 @@ ru:
       new: 'Новая'
       posted: 'Проведена'
       deleted: 'Удалена'
+
+  repair_groups:
+    created: 'Группа ремонта создана'
+    updated: 'Группа ремонта изменена'
+    new:
+      link: 'Новая Группа'
+      title: 'Новая Группа ремонта'
+    edit:
+      title: 'Редактирование Группы ремонта'
+
+  repair_services:
+    created: 'Вид ремонта создан'
+    udpated: 'Вид ремонта изменён'
+    index:
+      title: 'Виды ремонта'
+    new:
+      title: 'Новый Вид ремонта'
+    edit:
+      title: 'Редактирование Вида ремонта'
 
   reports:
     average_duration: Средняя длительность, мин.
@@ -1079,6 +1135,12 @@ ru:
     link: Параметры
     updated: Параметр изменён
 
+  spare_parts:
+    remnants:
+      none: 'Остутствуют'
+      low: 'Заканчиваются. Уточнить у технарей.'
+      many: 'Хватает'
+
   stolen_phones:
     created: Телефон создан
     updated: Телефон изменён
@@ -1093,6 +1155,11 @@ ru:
   stores:
     created: "Склад создан"
     updated: 'Склад изменён'
+    kinds:
+      defect: 'Брак'
+      purchase: 'Закуп'
+      spare_parts: 'Запчасти'
+      retail: 'Розница'
     index:
       title: "Склады"
     new:

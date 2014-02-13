@@ -14,7 +14,7 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :barcode_num, allow_nil: true
   validates_uniqueness_of :product_id, unless: :feature_accounting
 
-  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :actual_prices, :quantity_in_store, :product_category, :discount_for, :is_service, :is_equipment, :request_price, :warranty_term, to: :product, allow_nil: true
+  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :actual_prices, :quantity_in_store, :product_category, :discount_for, :is_service, :is_equipment, :is_spare_part, :request_price, :warranty_term, :quantity_threshold, :comment, to: :product, allow_nil: true
 
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }

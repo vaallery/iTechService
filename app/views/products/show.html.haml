@@ -2,11 +2,16 @@
 - model_class = Product
 
 %dl.dl-horizontal
+
+  %dt= model_class.human_attribute_name :comment
+  %dd= @product.comment
+
   %dt= model_class.human_attribute_name :code
   %dd= @product.code.blank? ? '-' : @product.code
 
-  %dt= model_class.human_attribute_name :device_type
-  %dd= @product.device_type_full_name || '-'
+  - if @product.is_equipment
+    %dt= model_class.human_attribute_name :device_type
+    %dd= @product.device_type_full_name || '-'
 
   - if can? :view_purchase_price, @product
     %dt= model_class.human_attribute_name :purchase_price
