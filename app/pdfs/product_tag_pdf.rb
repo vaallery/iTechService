@@ -5,7 +5,7 @@ class ProductTagPdf < Prawn::Document
   require 'barby/outputter/prawn_outputter'
 
   def initialize(item, view, type=nil)
-    super page_size: [6.cm, 4.cm], page_layout: :portrait, margin: 4
+    super page_size: [3.cm, 2.cm], page_layout: :portrait, margin: 4
     @item = item
     @view = view
     font_families.update 'DroidSans' => {
@@ -13,20 +13,49 @@ class ProductTagPdf < Prawn::Document
         bold: "#{Rails.root}/app/assets/fonts/droidsans-bold-webfont.ttf"
     }
     font 'DroidSans'
-    font_size 6 do
-      text item.name, align: :center
-    end
-    if type == :with_price
-      move_cursor_to 31
+    title = ''
+    title << "#{item.code}: " if params[:with_price].blank?
+    title << item.name
+    title << "(#{item.features.map(&:value).join(', ')})" if item.feature_accounting
+    price = type == :with_price ? item.retail_price : nil
+    item_tag title, item.barcode_num, price
+    item_tag title, item.barcode_num, price
+  end
+
+  private
+
+  def currency_str(number)
+    @view.number_to_currency number, precision: 0, delimiter: ' ', separator: ',', unit: ''
+  end
+
+  def draw_barcode(number, options={})
+    outputter = Barby::PrawnOutputter.new Barby::EAN13.new(number.chop)
+    outputter.annotate_pdf self, options.merge(height: 14, x: 0, xdim: 0.8)
+  end
+
+  def item_tag(title, barcode_num, price=nil)
+    if price.nil?
+      font_size 7
+      text title, align: :center
+      draw_barcode barcode_num, margin: 8
+      move_cursor_to 7
+      text barcode_num, character_spacing: 2
+    else
+      font_size 6
+      text title, align: :center
+      move_down 1
+      stroke { horizontal_line 0, 3.cm }
+      move_cursor_to 29
       font_size 10 do
-        text view.human_currency(item.actual_price(:sale)).to_s, align: :center
+        text currency_str(price).to_s, align: :center, style: :bold
+        move_up 8
+        text @view.t('number.currency.format.unit'), align: :right, size: 6
       end
-    end
-    outputter = Barby::PrawnOutputter.new Barby::EAN13.new(item.barcode_num.chop)
-    outputter.annotate_pdf self, height: 14, margin: 5, x: 0, xdim: 1
-    move_cursor_to 4
-    font_size 4 do
-      text item.barcode_num, character_spacing: 3.7
+      draw_barcode barcode_num, margin: 5
+      move_cursor_to 4
+      font_size 4 do
+        text barcode_num, character_spacing: 3.7
+      end
     end
   end
 
