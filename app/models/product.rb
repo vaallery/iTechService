@@ -17,7 +17,7 @@ class Product < ActiveRecord::Base
   has_many :product_relations, as: :parent, dependent: :destroy
   has_many :related_products, through: :product_relations, source: :relatable, source_type: 'Product'
   has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'
-  has_one :top_salable, as: :salable, dependent: :destroy
+  has_one :top_salable, dependent: :nullify
 
   accepts_nested_attributes_for :items, allow_destroy: true
   accepts_nested_attributes_for :task, allow_destroy: false

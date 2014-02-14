@@ -358,9 +358,9 @@ ru:
         work_mins: "Рабочие минуты"
 
       top_salable:
-        salable: 'Товар'
-        salable_id: :activerecord.attributes.top_salable.salable
-        salable_type: 'Тип'
+        product: 'Товар'
+        product_id: :activerecord.attributes.top_salable.product
+        type: 'Тип'
 
       user:
         abilities: Возможности
@@ -1238,6 +1238,10 @@ ru:
     created: ''
     updated: ''
 
+    form:
+      product: "Продукт"
+      group: "Группа"
+      type: "Тип"
   users:
     abilities:
       manage_salary: Редактировать зарплату

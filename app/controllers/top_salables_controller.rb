@@ -2,7 +2,7 @@ class TopSalablesController < ApplicationController
   authorize_resource
 
   def index
-    @top_salables = TopSalable.ordered
+    @top_salables = TopSalable.roots.ordered
     respond_to do |format|
       format.html
       format.js
@@ -11,8 +11,9 @@ class TopSalablesController < ApplicationController
 
   def show
     @top_salable = TopSalable.find params[:id]
-    @top_salables = @top_salable.salable.products if @top_salable.salable.is_a? ProductGroup
+    @top_salables = @top_salable.children
     respond_to do |format|
+      format.html { render 'index' }
       format.js { render 'index' }
     end
   end
@@ -35,7 +36,7 @@ class TopSalablesController < ApplicationController
     @top_salable = TopSalable.new(params[:top_salable])
     respond_to do |format|
       if @top_salable.save
-        format.html { redirect_to top_salables_path, notice: t('top_salables.created') }
+        format.html { redirect_to (@top_salable.parent || top_salables_path), notice: t('top_salables.created') }
       else
         format.html { render 'form' }
       end
@@ -46,7 +47,7 @@ class TopSalablesController < ApplicationController
     @top_salable = TopSalable.find(params[:id])
     respond_to do |format|
       if @top_salable.update_attributes(params[:top_salable])
-        format.html { redirect_to top_salables_path, notice: t('top_salables.updated') }
+        format.html { redirect_to (@top_salable.parent || top_salables_path), notice: t('top_salables.updated') }
       else
         format.html { render 'form' }
       end

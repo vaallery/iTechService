@@ -4,17 +4,17 @@
 
   .form-inputs
     = f.hidden_field :position
+    = f.hidden_field :parent_id
     = f.input :color, as: :color
-    = f.input :salable_type, collection: [[t('activerecord.models.product'), 'Product'], [t('activerecord.models.product_group'), 'ProductGroup']]
-    = f.hidden_field :salable_id
+    = f.input :type, collection: [[t('.group'), 'Group'], [t('.product'), 'Product']], prompt: false
 
-    #product_select_field.control-group
+    #product_select_field.control-group{class: @top_salable.product.present? ? '' : 'hidden'}
+      = f.hidden_field :product_id
       %label.control-label= t 'activerecord.models.product'
-      .controls= link_to @top_salable.name || '...', choose_products_path(form: 'top_salable', is_product_only: true), remote: true, id: 'top_salable_product_select', class: 'btn'
+      .controls= link_to @top_salable.product_name || '...', choose_products_path(form: 'top_salable', is_product_only: true), remote: true, id: 'top_salable_product_select', class: 'btn'
 
-    #product_group_select_field.control-group
-      %label.control-label= t 'activerecord.models.product_group'
-      .controls= link_to @top_salable.name || '...', product_groups_path(form: 'top_salable', is_group_only: true), remote: true, id: 'top_salable_product_group_select', class: 'btn'
+    #group_select_field.control-group{class: @top_salable.product.present? ? 'hidden' : ''}
+      = f.input :name
 
   .form-actions
     = submit_button f

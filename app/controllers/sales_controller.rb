@@ -31,7 +31,7 @@ class SalesController < ApplicationController
 
   def new
     @sale = Sale.new params[:sale]
-    @top_salables = TopSalable.ordered
+    @top_salables = TopSalable.roots.ordered
     respond_to do |format|
       format.html { render 'form' }
     end
@@ -39,7 +39,7 @@ class SalesController < ApplicationController
 
   def edit
     @sale = Sale.find params[:id]
-    @top_salables = TopSalable.ordered
+    @top_salables = TopSalable.roots.ordered
     if can? :edit, @sale
       respond_to do |format|
         format.html { render 'form' }

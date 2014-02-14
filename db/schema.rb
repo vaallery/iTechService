@@ -835,15 +835,17 @@ ActiveRecord::Schema.define(:version => 20140214032519) do
   add_index "timesheet_days", ["user_id"], :name => "index_timesheet_days_on_user_id"
 
   create_table "top_salables", :force => true do |t|
-    t.integer  "salable_id"
-    t.string   "salable_type"
+    t.integer  "product_id"
+    t.string   "name"
+    t.string   "ancestry"
     t.integer  "position"
     t.string   "color"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
-  add_index "top_salables", ["salable_type", "salable_id"], :name => "index_top_salables_on_salable_type_and_salable_id"
+  add_index "top_salables", ["ancestry"], :name => "index_top_salables_on_ancestry"
+  add_index "top_salables", ["product_id"], :name => "index_top_salables_on_product_id"
 
   create_table "users", :force => true do |t|
     t.string   "username"

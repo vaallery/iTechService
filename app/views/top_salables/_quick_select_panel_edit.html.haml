@@ -1,3 +1,9 @@
+- if @top_salable.present?
+  .row-fluid
+    %h4.span12
+      = link_back_to_index
+      = @top_salable.title
+      = link_to_edit_small @top_salable
 #products_quick_select_panel.row-fluid
   .span.product_buttons_group
     - 2.times do |r|
@@ -6,7 +12,7 @@
           - pos = c+1+r*10
           - if (top_salable = @top_salables.find_by_position pos).present?
             .span.quick_select_cell{style: "background-color: #{top_salable.color}"}
-              = link_to top_salable.name, edit_top_salable_path(top_salable), title: top_salable.name
+              = link_to top_salable.title, (top_salable.product.present? ? edit_top_salable_path(top_salable) : top_salable_path(top_salable)), title: top_salable.title
           - else
             .span.quick_select_cell
-              = link_to glyph(:plus), new_top_salable_path(top_salable: {position: pos})
+              = link_to glyph(:plus), new_top_salable_path(top_salable: {position: pos, parent_id: @top_salable.try(:id), color: @top_salable.try(:color)})

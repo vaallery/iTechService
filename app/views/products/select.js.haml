@@ -1,7 +1,7 @@
 - is_product_only = params[:is_product_only] == 'true'
 - if @product.present? and is_product_only or @item.present?
   - if params[:form] == 'top_salable'
-    $('#top_salable_salable_id').val("#{@product.id}");
+    $('#top_salable_product_id').val("#{@product.id}");
     $('#top_salable_product_select').text("#{@product.name}");
     hideModal();
   - else
