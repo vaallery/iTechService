@@ -3,7 +3,9 @@
     %h4.span12
       = link_back_to_index
       = @top_salable.title
-      = link_to_edit_small @top_salable
+      .btn-group
+        = link_to_edit_small @top_salable
+        = link_to_destroy_small @top_salable
 #products_quick_select_panel.row-fluid
   .span.product_buttons_group
     - 2.times do |r|
