@@ -11,4 +11,8 @@ class RepairService < ActiveRecord::Base
     store_items.in_store(Store.spare_parts_default).minimum('store_items.quantity')
   end
 
+  def total_cost
+    spare_parts.sum(&:purchase_price)
+  end
+
 end

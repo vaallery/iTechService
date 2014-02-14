@@ -16,6 +16,9 @@
       else{
         $selector.append("#{j(product_fields(params[:form], params[:association], is_product_only ? @product : @item, params[:options]))}");
         enumerate_table('table.enumerable');
+        if($('#repair_service_form').length > 0){
+          calculateTableTotal('#spare_parts', '.cost', '.quantity');
+        }
         //calculateSaleItemsTotal();
         if($('#sale_form').length > 0){
           saveSale();

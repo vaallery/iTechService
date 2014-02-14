@@ -334,6 +334,9 @@ ru:
         value: Значение
         value_type: Тип значения
 
+      spare_part:
+        price: 'Стоимость закупа'
+
       store:
         price_types: 'Типы цен'
 
