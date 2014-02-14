@@ -6,8 +6,9 @@ class CashOperation < ActiveRecord::Base
   belongs_to :user
   delegate :short_name, to: :user, prefix: true, allow_nil: true
 
-  attr_accessible :is_out, :value
+  attr_accessible :is_out, :value, :comment
   validates_presence_of :value, :user, :cash_shift
+  validates_presence_of :comment, if: :is_out
   validates_numericality_of :value, greater_than: 0
   before_validation :set_user
   before_validation :set_cash_shift

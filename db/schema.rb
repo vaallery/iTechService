@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140213005837) do
+ActiveRecord::Schema.define(:version => 20140214032519) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20140213005837) do
     t.decimal  "value"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
+    t.text     "comment"
   end
 
   add_index "cash_operations", ["cash_shift_id"], :name => "index_cash_operations_on_cash_shift_id"

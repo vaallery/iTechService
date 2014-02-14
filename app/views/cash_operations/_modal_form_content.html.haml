@@ -5,6 +5,7 @@
   .modal-body
     = f.hidden_field :is_out
     = f.input :value, autofocus: true
+    = f.input :comment, input_html: {rows: 3}
 
   .modal-footer
     = link_to t('helpers.links.cancel'), '#', 'data-dismiss' => 'modal', class: 'btn'
