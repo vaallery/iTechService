@@ -5,19 +5,16 @@ jQuery ->
   if $('#important_info').length
     $('#important_info').load '/infos?important=t', ->
       if $('#important_info>*').length
-        $('#important_info').slideDown(100)
         showNotificationsIndicator()
 
   if $('#personal_infos').length
     $('#personal_infos').load '/infos?personal=t', ->
       if $('#personal_infos>*').length
-        $('#personal_infos').slideDown(100)
         showNotificationsIndicator()
 
   if $('#announcements').length
     $('#announcements').load '/announcements?actual=t', ->
       if $('#announcements>*').length
-        $('#announcements').slideDown(100)
         showNotificationsIndicator()
 
   $(document).ready () ->
