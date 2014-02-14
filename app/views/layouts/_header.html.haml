@@ -32,6 +32,7 @@
         = menu_item t('revaluation_acts.index.title'), revaluation_acts_path if can? :manage, RevaluationAct
         = menu_item t('movement_acts.index.title'), movement_acts_path if can? :manage, MovementAct
         = drop_down_submenu t 'dashboard.references' do
+          = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService
           = menu_item t('product_categories.index.title'), product_categories_path if can? :manage, ProductCategory
           = menu_item t('top_salables.index.title'), top_salables_path if can? :manage, TopSalable
           = menu_item t('contractors.link'), contractors_path if can? :manage, Contractor
@@ -39,7 +40,6 @@
           = menu_item t('banks.index.title'), banks_path if can? :manage, Bank
           = menu_item t('stores.index.title'), stores_path if can? :manage, Store
           = menu_item t('locations.link'), locations_path if can? :manage, Location
-          = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService
         = drop_down_divider
         = menu_item t('users.link', default: 'Users'), users_path if can? :manage, User
         = menu_item t('users.rating'), rating_users_path

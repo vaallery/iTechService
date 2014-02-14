@@ -93,7 +93,8 @@ class Purchase < ActiveRecord::Base
           #  price = item.prices.find_or_initialize_by_price_type_id_and_date price_type_id: price_type.id, date: cur_date
           #end
         end
-        update status: 0
+        update_attribute :status, 0
+        update_attribute :date, nil
       end
     end
   end

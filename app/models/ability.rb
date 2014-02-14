@@ -54,6 +54,7 @@ class Ability
         can [:choose, :select], Product
         can [:post, :edit, :attach_gift_certificate, :return_check], Sale, status: 0
         can [:create, :read], Sale
+        can :create, CashOperation
       end
       if user.media?
         can :modify, [Device, Client, Order]
