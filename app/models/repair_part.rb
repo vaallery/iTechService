@@ -2,6 +2,7 @@ class RepairPart < ActiveRecord::Base
   belongs_to :repair_task, inverse_of: :repair_parts
   belongs_to :item
   delegate :name, :store_item, to: :item, allow_nil: true
+  delegate :store, to: :repair_task, allow_nil: true
   attr_accessible :quantity, :warranty_term, :defect_qty, :repair_task_id, :item_id
   validates_presence_of :item
   validates_numericality_of :warranty_term, only_integer: true, greater_than_or_equal_to: 0
@@ -11,7 +12,7 @@ class RepairPart < ActiveRecord::Base
   end
 
   def deduct_spare_parts
-    if (store_src = Store.spare_parts.first).present?
+    if (store_src = self.store).present?
       # Deducting used spare parts
       self.store_item(store_src).dec(self.quantity)
 

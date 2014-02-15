@@ -8,7 +8,7 @@ class RepairService < ActiveRecord::Base
   validates_associated :spare_parts
 
   def min_parts_remnants
-    store_items.in_store(Store.spare_parts_default).minimum('store_items.quantity')
+    store_items.in_store(Store.spare_part_ids).minimum('store_items.quantity')
   end
 
   def total_cost

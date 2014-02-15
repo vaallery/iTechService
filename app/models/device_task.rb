@@ -18,11 +18,12 @@ class DeviceTask < ActiveRecord::Base
   delegate :is_repair?, to: :task, allow_nil: true
   attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes, :repair_tasks_attributes
   validates :task, :cost, presence: true
-  validates :cost, numericality: true
+  #validates :cost, numericality: true
+  validates_numericality_of :cost#, greater_than_or_equal_to: :repair_cost
   validates_associated :repair_tasks
   validate :valid_repair if :is_repair?
   after_commit :update_device_done_attribute
-  after_commit :deduct_spare_parts if :is_repair?
+  after_save :deduct_spare_parts if :is_repair?
   after_initialize { self.done ||= false }
 
   before_save do |dt|
@@ -84,6 +85,10 @@ class DeviceTask < ActiveRecord::Base
   #  end
   #end
 
+  def repair_cost
+    repair_tasks.sum(:price)
+  end
+
   private
 
   def update_device_done_attribute
@@ -92,32 +97,23 @@ class DeviceTask < ActiveRecord::Base
   end
 
   def deduct_spare_parts
-    if previous_changes['done'].present?
-      if previous_changes['done'][0] == false and previous_changes['done'][1] == true
-        repair_parts.each { |repair_part| repair_part.deduct_spare_parts }
-      end
-    end
+    repair_parts.each { |repair_part| repair_part.deduct_spare_parts }
   end
 
   def valid_repair
     is_valid = true
-    if previous_changes['done']
+    if done_changed? and done_was
       errors.add :done, :already_done
       is_valid = false
     else
-      if (store_src = Store.spare_parts.first).present?
-        repair_parts.each do |repair_part|
-          if repair_part.store_item(store_src).quantity < (repair_part.quantity + repair_part.defect_qty)
-            errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
-            is_valid = false
-          end
-        end
-        if repair_parts.sum(:defect_qty) > 0 and (Store.defect.empty?)
-          errors.add :base, :no_defect_store
+      repair_parts.each do |repair_part|
+        if repair_part.store_item(repair_part.store).quantity < (repair_part.quantity + repair_part.defect_qty)
+          errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
           is_valid = false
         end
-      else
-        errors.add :base, :no_spare_parts_store
+      end
+      if repair_parts.sum(:defect_qty) > 0 and (Store.defect.empty?)
+        errors.add :base, :no_defect_store
         is_valid = false
       end
     end

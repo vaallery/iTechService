@@ -1,32 +1,75 @@
-= simple_form_for @device_task, html: { class: 'form-horizontal', remote: true } do |f|
+- if @device_task.done
   .modal-header
     %a.close{'data-dismiss' => 'modal', href: '#'}
       %i.icon-remove-sign
-    %h3
-      = @device_task.device.type_name
+    %h3= @device_task.device.type_name
 
   .modal-body
     .alert.alert-info
       %strong= @device_task.task_name
       %br
       = @device_task.comment
-    = f.input :user_comment, input_html: {rows: 3}
-    = f.input :cost
-    = f.input :done, disabled: @device_task.done
+    %dl.dl-horizontal
+      %dt= DeviceTask.human_attribute_name :user_comment
+      %dd= @device_task.user_comment || '-'
+      %dt= DeviceTask.human_attribute_name :cost
+      %dd= human_currency @device_task.cost
+      - if can? :write_tech_notice, @device_task.device || Device
+        %dt= Device.human_attribute_name :tech_notice
+        %dd= @device_task.device.tech_notice
 
-    - if can? :write_tech_notice, @device_task.device || Device
-      = f.simple_fields_for :device do |ff|
-        = ff.input :tech_notice, input_html: {rows: 3}
-
-    - if can? :repair, @device_task.device || Device and @device_task.is_repair?
+    - if @device_task.is_repair?
       %h4
         = DeviceTask.human_attribute_name :repair_tasks
-        = link_to glyph(:plus) + t('device_tasks.add_repair_task').html_safe, choose_repair_services_path, remote: true, id: 'choose_repair_service_link', class: 'btn btn-success btn-small'
-      - if f.object.errors.any?
-        - f.object.errors[:base].each do |error|
-          %p.text-error= error
-      #repair_services_choose_form_container.well.well-small
-      #repair_tasks= f.simple_fields_for(:repair_tasks) { |ff| render 'repair_task_fields', f: ff }
+      #repair_tasks
+        - @device_task.repair_tasks.each do |repair_task|
+          .well.well-small
+            %dl.dl-horizontal
+              %dt= RepairTask.human_attribute_name :price
+              %dd= human_currency repair_task.price
+            %table.table.table-condensed
+              %caption
+                %h4= RepairTask.human_attribute_name :repair_parts
+              %thead
+                %tr
+                  %th
+                  %th= RepairPart.human_attribute_name(:warranty_term)
+              %tbody
+                - repair_task.repair_parts.each do |repair_part|
+                  %tr
+                    %td= [repair_part.name, repair_part.quantity].join ' X '
+                    %td= repair_part.warranty_term
 
-  .modal-footer
-    = submit_button f
+- else
+  = simple_form_for @device_task, html: { class: 'form-horizontal', remote: true } do |f|
+    .modal-header
+      %a.close{'data-dismiss' => 'modal', href: '#'}
+        %i.icon-remove-sign
+      %h3
+        = @device_task.device.type_name
+
+    .modal-body
+      .alert.alert-info
+        %strong= @device_task.task_name
+        %br
+        = @device_task.comment
+      = f.input :user_comment, input_html: {rows: 3}
+      = f.input :cost
+      = f.input :done, disabled: @device_task.done
+
+      - if can? :write_tech_notice, @device_task.device || Device
+        = f.simple_fields_for :device do |ff|
+          = ff.input :tech_notice, input_html: {rows: 3}
+
+      - if can? :repair, @device_task.device || Device and @device_task.is_repair?
+        %h4
+          = DeviceTask.human_attribute_name :repair_tasks
+          = link_to glyph(:plus) + t('device_tasks.add_repair_task').html_safe, choose_repair_services_path, remote: true, id: 'choose_repair_service_link', class: 'btn btn-success btn-small'
+        - if f.object.errors.any?
+          - f.object.errors[:base].each do |error|
+            %p.text-error= error
+        #repair_services_choose_form_container.well.well-small
+        #repair_tasks= f.simple_fields_for(:repair_tasks) { |ff| render 'repair_task_fields', f: ff }
+
+    .modal-footer
+      = submit_button f

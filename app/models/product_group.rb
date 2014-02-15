@@ -33,7 +33,8 @@ class ProductGroup < ActiveRecord::Base
       case form
         when 'repair_service' then product_groups = product_groups.spare_parts
         when 'purchase' then product_groups = product_groups.for_purchase
-        else product_groups = product_groups.except_spare_parts
+        when 'sale' then product_groups = product_groups.except_spare_parts
+        else product_groups
       end
     end
 

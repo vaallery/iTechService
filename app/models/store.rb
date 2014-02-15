@@ -25,4 +25,8 @@ class Store < ActiveRecord::Base
     Store.spare_parts.first
   end
 
+  def self.spare_part_ids
+    Store.spare_parts.map(&:id)
+  end
+
 end

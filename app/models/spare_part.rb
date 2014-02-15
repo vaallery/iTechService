@@ -11,7 +11,7 @@ class SparePart < ActiveRecord::Base
   end
 
   def remnant
-    store_items.in_store(Store.spare_parts_default).sum(:quantity)
+    store_items.in_store(Store.spare_part_ids).sum(:quantity)
   end
 
   def remnant_s

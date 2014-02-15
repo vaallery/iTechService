@@ -7,6 +7,7 @@
       %th= model_class.human_attribute_name(:id)
       %th= model_class.human_attribute_name(:code)
       %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:kind)
       %th= model_class.human_attribute_name(:created_at)
       %th
   %tbody
@@ -15,6 +16,7 @@
         %td= link_to store.id, store_path(store)
         %td= link_to store.code, store_path(store)
         %td= link_to store.name, store_path(store)
+        %td= human_store_kind store
         %td= human_datetime store.created_at
         %td.btn-group
           = link_to_show_small store
