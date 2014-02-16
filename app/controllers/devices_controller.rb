@@ -166,6 +166,17 @@ class DevicesController < ApplicationController
     @device = Device.find params[:id]
   end
 
+  def create_sale
+    device = Device.find params[:id]
+    respond_to do |format|
+      if (sale = device.create_filled_sale).present?
+        format.html { redirect_to edit_sale_path(sale) }
+      else
+        format.html { render nothing: true }
+      end
+    end
+  end
+
   private
   
   def sort_column

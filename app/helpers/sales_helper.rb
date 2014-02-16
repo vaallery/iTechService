@@ -37,7 +37,7 @@ module SalesHelper
     if sale.new_record?
       link_to name, '#', class: 'btn btn-info', disabled: true
     else
-      link_to name, print_warranty_sale_path(@sale, format: :pdf), class: 'btn btn-info'
+      link_to name, print_warranty_sale_path(@sale, format: :pdf), class: 'btn btn-info', target: '_blank'
     end
   end
 

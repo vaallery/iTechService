@@ -49,6 +49,7 @@ class Ability
       end
       if user.software?
         can :modify, [Device, Client]
+        can :create_sale, Device
         can [:issue, :activate, :scan, :find], GiftCertificate
         can :modify, Sale
         can [:choose, :select], Product

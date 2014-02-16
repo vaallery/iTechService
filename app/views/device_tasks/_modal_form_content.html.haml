@@ -1,4 +1,4 @@
-- if @device_task.done
+- if @device_task.done and @device_task.errors.empty?
   .modal-header
     %a.close{'data-dismiss' => 'modal', href: '#'}
       %i.icon-remove-sign

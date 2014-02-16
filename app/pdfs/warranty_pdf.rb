@@ -6,7 +6,7 @@ class WarrantyPdf < Prawn::Document
     super page_size: 'A4', page_layout: :portrait
     @view = view
     @sale = sale
-    @font_height = 10
+    @font_height = 9
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
       bold: "#{Rails.root}/app/assets/fonts/droidsans-bold-webfont.ttf"
@@ -84,9 +84,15 @@ class WarrantyPdf < Prawn::Document
     # Products
     table_data = [['№', 'Артикул', 'Наименование', 'Колич.', 'Характерист.', 'Срок Гарантии']]
     @sale.sale_items.each_with_index do |sale_item, index|
-      features = sale_item.features.map(&:value).join(', ')
-      table_data += [[index.next.to_s, sale_item.code, sale_item.name, sale_item.quantity, features, "#{sale_item.warranty_term} мес."]]
-      #table_data += [[index.next.to_s, '', sale_item.name, sale_item.quantity, features, "#{sale_item.warranty_term} #{'month'.pluralize(:ru)}"]]
+      if (sale_item.warranty_term || 0) > 0
+        features = sale_item.features.map(&:value).join(', ')
+        table_data += [[index.next.to_s, sale_item.code, sale_item.name, sale_item.quantity, features, "#{sale_item.warranty_term} мес."]]
+      end
+    end
+    if @sale.device.present? and @sale.repair_parts.present?
+      @sale.repair_parts.each_with_index do |repair_part, index|
+        table_data += [[index.next.to_s, repair_part.code, repair_part.name, repair_part.quantity, '', "#{repair_part.warranty_term} мес."]] if (repair_part.warranty_term || 0) > 0
+      end
     end
     move_down 10
     table table_data, width: 520, header: true do

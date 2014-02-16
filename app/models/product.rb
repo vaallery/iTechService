@@ -13,7 +13,7 @@ class Product < ActiveRecord::Base
   has_many :prices, class_name: 'ProductPrice', inverse_of: :product, dependent: :destroy
   has_many :store_items, through: :items, dependent: :destroy
   has_many :revaluations, inverse_of: :product, dependent: :destroy
-  has_one :task, inverse_of: :product, dependent: :destroy
+  has_one :task, inverse_of: :product, dependent: :nullify
   has_many :product_relations, as: :parent, dependent: :destroy
   has_many :related_products, through: :product_relations, source: :relatable, source_type: 'Product'
   has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'
@@ -25,6 +25,7 @@ class Product < ActiveRecord::Base
   delegate :feature_accounting, :feature_types, :is_service, :is_equipment, :is_spare_part, :request_price, :product_category, to: :product_group, allow_nil: true
   delegate :full_name, to: :device_type, prefix: true, allow_nil: true
   delegate :color, to: :top_salable, allow_nil: true
+  delegate :cost, to: :task, prefix: true, allow_nil: true
 
   attr_accessible :code, :name, :product_group_id, :device_type_id, :warranty_term, :quantity_threshold, :comment, :items_attributes, :task_attributes, :related_product_ids, :related_product_group_ids
   validates_presence_of :name, :code, :product_group
@@ -54,11 +55,11 @@ class Product < ActiveRecord::Base
   end
 
   def purchase_price
-    prices.purchase.first.try(:value)
+    is_service ? task_cost : prices.purchase.first.try(:value)
   end
 
   def retail_price
-    prices.retail.first.try(:value)
+    is_service ? task_cost : prices.retail.first.try(:value)
   end
 
   def actual_prices
@@ -81,7 +82,6 @@ class Product < ActiveRecord::Base
   end
 
   def item
-    #(!feature_accounting and items.any?) ? items.first_or_create : nil
     feature_accounting ? nil : items.first_or_create
   end
 

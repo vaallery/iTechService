@@ -48,8 +48,12 @@ class Discount# < ActiveRecord::Base
       margin = VALUES[client_category][product_category][:margin]
       purchase_price = item.purchase_price
       retail_price = item.retail_price
-      discount = unit == '%' ? retail_price * value.fdiv(100) : value
-      discount = retail_price - purchase_price + margin if (retail_price-discount) < (purchase_price+margin)
+      if retail_price.present? and purchase_price.present?
+        discount = unit == '%' ? retail_price * value.fdiv(100) : value
+        discount = retail_price - purchase_price + margin if (retail_price-discount) < (purchase_price+margin)
+      else
+        discount = 0
+      end
       return discount
     else
       return 0
@@ -61,7 +65,7 @@ class Discount# < ActiveRecord::Base
       margin = VALUES[client_category][product_category][:margin]
       purchase_price = item.purchase_price
       retail_price = item.retail_price
-      discount = retail_price - purchase_price + margin
+      discount = (retail_price.present? and purchase_price.present?) ? retail_price - purchase_price + margin : 0
       return discount
     else
       return 0

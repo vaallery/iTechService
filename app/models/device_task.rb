@@ -4,6 +4,7 @@ class DeviceTask < ActiveRecord::Base
   scope :done, where(done: true)
   scope :pending, where(done: false)
   scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
+  scope :paid, where('device_tasks.cost > 0')
 
   belongs_to :device
   belongs_to :task
@@ -11,11 +12,11 @@ class DeviceTask < ActiveRecord::Base
   has_many :repair_tasks
   has_many :repair_parts, through: :repair_tasks
   accepts_nested_attributes_for :device, reject_if: proc { |attr| attr['tech_notice'].blank? }
-  accepts_nested_attributes_for :repair_tasks
+  accepts_nested_attributes_for :repair_tasks, allow_destroy: true
 
-  delegate :name, :role, :is_important?, :is_actual_for?, to: :task, allow_nil: true
+  delegate :name, :role, :is_important?, :is_actual_for?, :is_repair?, :item, to: :task, allow_nil: true
   delegate :client_presentation, to: :device, allow_nil: true
-  delegate :is_repair?, to: :task, allow_nil: true
+
   attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes, :repair_tasks_attributes
   validates :task, :cost, presence: true
   #validates :cost, numericality: true
@@ -102,19 +103,21 @@ class DeviceTask < ActiveRecord::Base
 
   def valid_repair
     is_valid = true
-    if done_changed? and done_was
-      errors.add :done, :already_done
-      is_valid = false
-    else
-      repair_parts.each do |repair_part|
-        if repair_part.store_item(repair_part.store).quantity < (repair_part.quantity + repair_part.defect_qty)
-          errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
+    if done_changed?
+      if done_was
+        errors.add :done, :already_done
+        is_valid = false
+      else
+        repair_parts.each do |repair_part|
+          if repair_part.store_item(repair_part.store).quantity < (repair_part.quantity + repair_part.defect_qty)
+            errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
+            is_valid = false
+          end
+        end
+        if repair_parts.sum(:defect_qty) > 0 and (Store.defect.empty?)
+          errors.add :base, :no_defect_store
           is_valid = false
         end
-      end
-      if repair_parts.sum(:defect_qty) > 0 and (Store.defect.empty?)
-        errors.add :base, :no_defect_store
-        is_valid = false
       end
     end
     is_valid

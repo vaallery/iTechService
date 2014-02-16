@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140215043018) do
+ActiveRecord::Schema.define(:version => 20140215101424) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -235,6 +235,7 @@ ActiveRecord::Schema.define(:version => 20140215043018) do
     t.integer  "item_id"
     t.string   "app_store_pass"
     t.text     "tech_notice"
+    t.integer  "sale_id"
   end
 
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
@@ -243,6 +244,7 @@ ActiveRecord::Schema.define(:version => 20140215043018) do
   add_index "devices", ["imei"], :name => "index_devices_on_imei"
   add_index "devices", ["item_id"], :name => "index_devices_on_item_id"
   add_index "devices", ["location_id"], :name => "index_devices_on_location_id"
+  add_index "devices", ["sale_id"], :name => "index_devices_on_sale_id"
   add_index "devices", ["status"], :name => "index_devices_on_status"
   add_index "devices", ["ticket_number"], :name => "index_devices_on_ticket_number"
   add_index "devices", ["user_id"], :name => "index_devices_on_user_id"
@@ -837,15 +839,17 @@ ActiveRecord::Schema.define(:version => 20140215043018) do
   add_index "timesheet_days", ["user_id"], :name => "index_timesheet_days_on_user_id"
 
   create_table "top_salables", :force => true do |t|
-    t.integer  "salable_id"
-    t.string   "salable_type"
+    t.integer  "product_id"
+    t.string   "name"
+    t.string   "ancestry"
     t.integer  "position"
     t.string   "color"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
-  add_index "top_salables", ["salable_type", "salable_id"], :name => "index_top_salables_on_salable_type_and_salable_id"
+  add_index "top_salables", ["ancestry"], :name => "index_top_salables_on_ancestry"
+  add_index "top_salables", ["product_id"], :name => "index_top_salables_on_product_id"
 
   create_table "users", :force => true do |t|
     t.string   "username",               :default => "", :null => false

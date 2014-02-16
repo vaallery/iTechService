@@ -41,7 +41,7 @@ class SaleItem < ActiveRecord::Base
   end
 
   def min_price
-    retail_price - max_discount
+    retail_price.present? ? retail_price - max_discount : 0
   end
 
 end

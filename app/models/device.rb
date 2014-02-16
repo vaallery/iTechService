@@ -20,23 +20,23 @@ class Device < ActiveRecord::Base
   belongs_to :item
   belongs_to :location
   belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :sale, inverse_of: :device
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
+  has_many :repair_tasks, through: :device_tasks
+  has_many :repair_parts, through: :repair_tasks
   has_many :history_records, as: :object, dependent: :destroy
+  accepts_nested_attributes_for :device_tasks
   delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
 
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice
-  accepts_nested_attributes_for :device_tasks
-
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :item_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration
-  attr_accessor :service_duration
-
+  attr_accessible :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id
   validates_presence_of :ticket_number, :client, :location, :device_tasks, :return_at
   validates_presence_of :device_type, if: 'item.nil?'
   validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
   validates :imei, length: {is: 15}, allow_nil: true
   validates_associated :device_tasks
+  validate :presence_of_payment
   before_validation :generate_ticket_number
   before_validation :validate_security_code
   before_validation :set_user_and_location
@@ -238,6 +238,18 @@ class Device < ActiveRecord::Base
     PrivatePub.publish_to '/devices/returning_alert', announcement_id: announcement.id
   end
 
+  def create_filled_sale
+    sale_attributes = { client_id: client_id, sale_items_attributes: {} }
+    device_tasks.paid.each_with_index do |device_task, index|
+      sale_item_attributes = {item_id: device_task.item.id, price: device_task.cost, quantity: 1}
+      sale_attributes[:sale_items_attributes].store index, sale_item_attributes
+      #new_sale.sale_items.build item_id: device_task.item.id, price: device_task.cost, quantity: 1
+    end
+    new_sale = create_sale sale_attributes
+    update_attribute :sale_id, new_sale.id
+    new_sale
+  end
+
   private
 
   def generate_ticket_number
@@ -314,6 +326,18 @@ class Device < ActiveRecord::Base
       alert_times.push self.return_at.advance days: -1 if duration > 1440
       alert_times.each { |alert_time| self.delay(run_at: alert_time).returning_alert }
     end
+  end
+
+  def presence_of_payment
+    is_valid = true
+    if location_id_changed? and location.is_archive?
+      if tasks_cost > 0
+        if sale.nil? or !sale.is_posted?
+          errors.add :base, :not_paid
+        end
+      end
+    end
+    is_valid
   end
 
 end

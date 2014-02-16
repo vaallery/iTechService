@@ -6,7 +6,7 @@
     -#.features= features_presentation f.object
     = f.hidden_field :item_id
   %td.quantity.number= f.number_field :quantity, class: 'input-mini', type: 'number', min: 1, readonly: f.object.feature_accounting
-  - if f.object.is_service and current_user.any_admin? or f.object.request_price
+  - if current_user.any_admin? or f.object.request_price# and f.object.is_service
     %td.price.number= f.number_field :price, class: 'input-small', type: 'number'
   - else
     %td.price.number= human_currency f.object.retail_price, false

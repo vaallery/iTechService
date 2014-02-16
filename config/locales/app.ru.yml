@@ -408,6 +408,8 @@ ru:
 
     errors:
       models:
+        device:
+          not_paid: 'Не оплачен!'
         device_task:
           no_defect_store: 'Склад брака не найден'
           no_spare_parts_store: "Склад запчастей не найден"
