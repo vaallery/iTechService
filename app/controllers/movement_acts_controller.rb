@@ -100,4 +100,11 @@ class MovementActsController < ApplicationController
     end
   end
 
+  def make_defect_sp
+    @movement_act = MovementAct.new store_id: current_user.spare_parts_store.id, dst_store_id: current_user.defect_sp_store.id
+    respond_to do |format|
+      format.html { render 'form' }
+    end
+  end
+
 end

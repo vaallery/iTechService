@@ -838,6 +838,7 @@ ru:
     created: 'Акт Перемещения создан'
     updated: 'Акт Перемещения изменён'
     link: :movement_acts.index.title
+    defect_link: 'Списать брак'
     edit:
       title: 'Редактирование Акта Перемещения'
     new:

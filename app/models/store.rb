@@ -30,4 +30,12 @@ class Store < ActiveRecord::Base
     Store.spare_parts.map(&:id)
   end
 
+  def is_spare_parts?
+    kind == 'spare_parts'
+  end
+
+  def is_defect?
+    %[defect defect_sp].include? kind
+  end
+
 end

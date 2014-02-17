@@ -82,7 +82,10 @@ class Ability
         can :read_tech_notice, Device
         can :write_tech_notice, Device
         can :repair, Device
+        can [:choose, :select], Product
         can [:choose, :select], RepairService
+        can :make_defect_sp, MovementAct
+        can [:create, :post], MovementAct, {status: 0, is_from_spare_parts?: true, is_to_defect?: true}
       end
       can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140217061856) do
+ActiveRecord::Schema.define(:version => 20140217090001) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -442,6 +442,7 @@ ActiveRecord::Schema.define(:version => 20140217061856) do
     t.integer  "status"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.text     "comment"
   end
 
   add_index "movement_acts", ["dst_store_id"], :name => "index_movement_acts_on_dst_store_id"

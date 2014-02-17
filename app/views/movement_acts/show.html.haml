@@ -5,12 +5,15 @@
     = document_presentation @movement_act
 
 .dl.dl-horizontal
-  %dt= MovementAct.human_attribute_name :status
-  %dd= status_presentation @movement_act
-  %dt= MovementAct.human_attribute_name :store
-  %dd= link_to @movement_act.store_name, store_path(@movement_act.store)
-  %dt= MovementAct.human_attribute_name :dst_store
-  %dd= link_to @movement_act.dst_store_name, store_path(@movement_act.dst_store)
+  - if can? :manage, MovementAct
+    %dt= MovementAct.human_attribute_name :status
+    %dd= status_presentation @movement_act
+    %dt= MovementAct.human_attribute_name :store
+    %dd= link_to @movement_act.store_name, store_path(@movement_act.store)
+    %dt= MovementAct.human_attribute_name :dst_store
+    %dd= link_to @movement_act.dst_store_name, store_path(@movement_act.dst_store)
+  %dt= MovementAct.human_attribute_name :comment
+  %dd= @movement_act.comment.blank? ? '-' : @movement_act.comment
 
 %table#movement_items.table.table-condensed.table-striped.table-bordered
   %caption
@@ -20,7 +23,8 @@
       %th.num
       %th.code= Product.human_attribute_name :code
       %th.product= t 'activerecord.models.product'
-      %th.available_quantity= Product.human_attribute_name :quantity_in_store
+      - if can? :manage, MovementAct
+        %th.available_quantity= Product.human_attribute_name :quantity_in_store
       %th.quantity= MovementItem.human_attribute_name :quantity
   %tbody
     - @movement_act.movement_items.each_with_index do |movement_item, index|
@@ -30,7 +34,8 @@
         %td.product
           = link_to movement_item.name, product_path(movement_item.product)
           .features= features_presentation movement_item if movement_item
-        %td.available_quantity= movement_item.quantity_in_store @movement_act.store
+        - if can? :manage, MovementAct
+          %td.available_quantity= movement_item.quantity_in_store @movement_act.store
         %td.quantity= movement_item.quantity
 
 .form-actions

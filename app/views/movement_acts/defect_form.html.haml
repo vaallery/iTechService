@@ -1,14 +1,7 @@
 = auto_header_tag @movement_act
 = simple_form_for @movement_act, html: {class: 'form-horizontal', id: 'movement_act_form'} do |f|
-  - if can? :manage, MovementAct
-    = f.input :date, as: :my_datetime
-    = f.association :store, as: :select, prompt: false
-    = f.association :dst_store, as: :select, prompt: false
-  - else
-    = f.hidden_field :store_id
-    = f.hidden_field :dst_store_id
-
-  = f.input :comment, input_html: {rows: 5}
+  = f.hidden_field :store_id
+  = f.hidden_field :dst_store_id
 
   %table#movement_items.enumerable.table.table-condensed.table.striped.table-bordered
     %caption

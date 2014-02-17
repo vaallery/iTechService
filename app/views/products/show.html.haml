@@ -4,7 +4,7 @@
 %dl.dl-horizontal
 
   %dt= model_class.human_attribute_name :comment
-  %dd= @product.comment
+  %dd= @product.comment.blank? ? '-' : @product.comment
 
   %dt= model_class.human_attribute_name :code
   %dd= @product.code.blank? ? '-' : @product.code
@@ -18,10 +18,11 @@
     %dd= human_currency @product.purchase_price
 
   %dt= model_class.human_attribute_name :actual_price
-  %dd= human_currency @product.retail_price
+  %dd= human_currency(@product.retail_price) || '-'
 
-  %dt= model_class.human_attribute_name :quantity
-  %dd= @product.quantity_in_store
+  - if can? :view_remnants, Product
+    %dt= model_class.human_attribute_name :quantity
+    %dd= @product.quantity_in_store
 
   - unless @product.feature_accounting or @product.is_service
     %dt= Item.human_attribute_name :barcode

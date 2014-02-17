@@ -172,6 +172,7 @@ ItechService::Application.routes.draw do
   resources :movement_acts do
     put 'post', on: :member
     put 'unpost', on: :member
+    get 'make_defect_sp', on: :collection
   end
 
   resources :repair_groups
