@@ -4,7 +4,6 @@
   %strong= f.object.name
   %span.pull-right= link_to_remove_fields f
   = f.input :price, input_html: {class: 'input-small'}
-  = f.association :store, collection: Store.spare_parts
   %table.repair_parts.table.table-condensed
     %tbody
       = f.simple_fields_for :repair_parts do |ff|
