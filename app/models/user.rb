@@ -255,8 +255,8 @@ class User < ActiveRecord::Base
   end
 
   def timeout_in
-    #1.day
-    30.minutes
+    1.day
+    #30.minutes
   end
 
   def abilities=(abilities)

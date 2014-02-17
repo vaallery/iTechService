@@ -660,6 +660,8 @@ ru:
       already_done: "Задача уже выполнена"
       insufficient_spare_parts: "На складе недостаточно запчастей (%{name})"
 
+    repair_task_fields:
+      spare_part: "Запчасть (кол-во)"
   device_types:
     created: Тип девайса создан
     updated: Тип девайса изменён
