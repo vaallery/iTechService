@@ -172,7 +172,7 @@ scanTicket = ->
     $('#barcode_reader').removeClass('in').fadeOut()
   ), 5000
 
-auth_timeout = auth_count = 5 * 60
+auth_timeout = auth_count = 10 * 60
 
 if $('#profile_link').data('role') is 'software'
   setInterval (->
