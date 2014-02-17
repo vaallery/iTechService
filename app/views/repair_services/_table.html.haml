@@ -15,8 +15,8 @@
           %td{rowspan: parts_qty+1}= repair_service.id
           %td.name
             %span.label.label-info= repair_service.name
-          %td= human_currency repair_service.price
-          %td.text-info{rowspan: parts_qty+1}= repair_service.client_info
+          %td.price= human_currency repair_service.price, false
+          %td.client_info.text-info{rowspan: parts_qty+1}= repair_service.client_info
           - if can? :manage, RepairService
             %td.btn-group{rowspan: parts_qty+1}
               = link_to_edit_small repair_service
@@ -24,7 +24,7 @@
         - repair_service.spare_parts.each do |spare_part|
           %tr{class: spare_part_row_class(spare_part)}
             %td
-              = link_to_if can?(:manage, Product), spare_part.name, product_path(spare_part.product)
+              = link_to_if (can?(:manage, Product) and spare_part.product.present?), spare_part.name, product_path(spare_part.product_id)
               %br
               %span= t ("spare_parts.remnants.#{spare_part.remnant_s}")
             %td= spare_part.comment
