@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140215101424) do
+ActiveRecord::Schema.define(:version => 20140217061856) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -178,6 +178,22 @@ ActiveRecord::Schema.define(:version => 20140215101424) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "departments", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.integer  "role"
+    t.string   "url"
+    t.string   "city"
+    t.string   "address"
+    t.string   "contact_phone"
+    t.text     "schedule"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "departments", ["code"], :name => "index_departments_on_code"
+  add_index "departments", ["role"], :name => "index_departments_on_role"
 
   create_table "device_tasks", :force => true do |t|
     t.integer  "device_id"
@@ -759,13 +775,15 @@ ActiveRecord::Schema.define(:version => 20140215101424) do
 
   create_table "stores", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "code"
     t.string   "kind"
+    t.integer  "department_id"
   end
 
   add_index "stores", ["code"], :name => "index_stores_on_code"
+  add_index "stores", ["department_id"], :name => "index_stores_on_department_id"
 
   create_table "supplies", :force => true do |t|
     t.integer  "supply_report_id"
@@ -884,10 +902,13 @@ ActiveRecord::Schema.define(:version => 20140215101424) do
     t.integer  "position"
     t.boolean  "is_fired"
     t.string   "job_title"
+    t.integer  "store_id"
+    t.integer  "department_id"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["card_number"], :name => "index_users_on_card_number"
+  add_index "users", ["department_id"], :name => "index_users_on_department_id"
   add_index "users", ["email"], :name => "index_users_on_email"
   add_index "users", ["is_fired"], :name => "index_users_on_is_fired"
   add_index "users", ["job_title"], :name => "index_users_on_job_title"
@@ -896,6 +917,7 @@ ActiveRecord::Schema.define(:version => 20140215101424) do
   add_index "users", ["patronymic"], :name => "index_users_on_patronymic"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["schedule"], :name => "index_users_on_schedule"
+  add_index "users", ["store_id"], :name => "index_users_on_store_id"
   add_index "users", ["surname"], :name => "index_users_on_surname"
   add_index "users", ["username"], :name => "index_users_on_username"
 

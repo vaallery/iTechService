@@ -1,0 +1,23 @@
+- model_class = Department
+= auto_header_tag
+%table.table.table-hover
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:code)
+      %th= model_class.human_attribute_name(:role)
+      - if can? :manage, model_class
+        %th
+  %tbody
+    - @departments.each do |department|
+      %tr
+        %td= link_to department.id, department_path(department)
+        %td= link_to department.name, department_path(department)
+        %td= department.code
+        %td= human_department_role department
+        - if can? :manage, model_class
+          %td.btn-group
+            = link_to_show_small department
+            = link_to_edit_small department
+            = link_to_destroy_small department

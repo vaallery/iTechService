@@ -15,6 +15,7 @@ ru:
       client_category: 'Категория клиента'
       comment: Комментарий
       contractor: 'Поставщик'
+      department: 'Подразделение'
       device: Девайс
       device_task: Задача
       device_type: Тип девайса
@@ -121,6 +122,14 @@ ru:
         content: Содержание
         user: :activerecord.models.user
         user_id: :activerecord.models.user
+
+      department:
+        role: 'Роль'
+        url: 'URL'
+        address: 'Адрес'
+        city: 'Город'
+        contact_phone: 'Контактный телефон'
+        schedule: 'График работы'
 
       device:
         app_store_pass: 'Пароль на учетную запись в App Store'
@@ -408,6 +417,9 @@ ru:
 
     errors:
       models:
+        department:
+          role:
+            main_exists: 'Не может быть больше одного главного'
         device:
           not_paid: 'Не оплачен!'
         device_task:
@@ -429,6 +441,7 @@ ru:
     content: Содержание
     created_at: Время создания
     date: 'Дата'
+    department: :activerecord.models.department
     device_type: :activerecord.models.device_type
     device_type_id: :activerecord.models.device_type
     fio: ФИО
@@ -536,9 +549,9 @@ ru:
       pay_in: 'ВНЕСЕНИЕ'
       pay_out: "ВЫПЛАТА"
       returns: ВОЗВРАТОВ ПРОДАЖ
-
       encashment: "ИНКАССАЦИЯ"
       shift_total: "СМЕННЫЙ ИТОГ ПРОДАЖ"
+
   clients:
     categories:
       usual: 'Простой'
@@ -610,6 +623,21 @@ ru:
     reports: Отчёты
     new_sale: "Новая Продажа"
     references: "Справочники"
+
+  departments:
+    created: 'Подразделение создано'
+    updated: 'Подразделение изменено'
+    link: :departments.index.title
+    index:
+      title: 'Подразделения'
+    new:
+      title: 'Новое Подразделение'
+    edit:
+      title: 'Редактирование Подразделения'
+    roles:
+      main: 'Главное'
+      branch: 'Филиал'
+      store: 'Склад'
 
   devices:
     edit:
@@ -1170,6 +1198,7 @@ ru:
     updated: 'Склад изменён'
     kinds:
       defect: 'Брак'
+      defect_sp: 'Брак запчастей'
       purchase: 'Приход'
       spare_parts: 'Запчасти'
       retail: 'Розница'

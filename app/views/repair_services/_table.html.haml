@@ -26,5 +26,5 @@
             %td
               = link_to_if (can?(:manage, Product) and spare_part.product.present?), spare_part.name, product_path(spare_part.product_id)
               %br
-              %span= t ("spare_parts.remnants.#{spare_part.remnant_s}")
+              %span= t ("spare_parts.remnants.#{spare_part.remnant_s(current_user.spare_parts_store)}")
             %td= spare_part.comment

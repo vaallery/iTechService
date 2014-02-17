@@ -1,0 +1,13 @@
+= auto_header_tag @department
+
+= simple_form_for @department, html: { class: 'form-horizontal' } do |f|
+  = f.input :name
+  = f.input :code
+  = f.input :role, collection: department_roles_for_select, prompt: false
+  = f.input :url
+  = f.input :city
+  = f.input :address
+  = f.input :contact_phone
+  = f.input :schedule, input_html: {rows: 5}
+  .form-actions
+    = submit_button f

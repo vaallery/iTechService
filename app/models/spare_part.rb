@@ -10,14 +10,17 @@ class SparePart < ActiveRecord::Base
     self.warranty_term ||= product.try(:warranty_term)
   end
 
-  def remnant
-    store_items.in_store(Store.spare_part_ids).sum(:quantity)
+  def remnant(store)
+    store.present? ? store_items.in_store(store).sum(:quantity) : nil
   end
 
-  def remnant_s
-    if remnant <= 0
+  def remnant_s(store)
+    value = remnant store
+    if value.nil?
+      '-'
+    elsif value <= 0
       'none'
-    elsif remnant > (quantity_threshold || 0)
+    elsif value > (quantity_threshold || 0)
       'many'
     else
       'low'

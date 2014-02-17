@@ -17,7 +17,7 @@ class RepairPart < ActiveRecord::Base
       self.store_item(store_src).dec(self.quantity)
 
       # Moving defected spare parts
-      if (store_dst = Store.defect.first).present? and self.defect_qty > 0
+      if (store_dst = User.current.defect_sp_store).present? and self.defect_qty > 0
         self.store_item(store_src).move_to(store_dst, self.defect_qty)
       end
     end

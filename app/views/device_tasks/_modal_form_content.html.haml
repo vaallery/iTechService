@@ -5,6 +5,7 @@
     %h3= @device_task.device.type_name
 
   .modal-body
+    = @device_task.errors.full_messages
     .alert.alert-info
       %strong= @device_task.task_name
       %br

@@ -17,6 +17,8 @@ ItechService::Application.routes.draw do
 
   devise_for :users
 
+  resources :departments
+
   resources :users do
     get :duty_calendar, on: :member
     get :schedule, on: :collection

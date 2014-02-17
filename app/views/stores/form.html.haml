@@ -1,5 +1,6 @@
 = auto_header_tag @store
 = simple_form_for @store, html: { class: 'form-horizontal' } do |f|
+  = f.association :department
   = f.input :name
   = f.input :code
   = f.input :kind, collection: store_kinds_for_select

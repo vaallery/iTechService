@@ -16,6 +16,7 @@ class DeviceTask < ActiveRecord::Base
 
   delegate :name, :role, :is_important?, :is_actual_for?, :is_repair?, :item, to: :task, allow_nil: true
   delegate :client_presentation, to: :device, allow_nil: true
+  delegate :department, to: :device
 
   attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes, :repair_tasks_attributes
   validates :task, :cost, presence: true
@@ -109,12 +110,17 @@ class DeviceTask < ActiveRecord::Base
         is_valid = false
       else
         repair_parts.each do |repair_part|
-          if repair_part.store_item(repair_part.store).quantity < (repair_part.quantity + repair_part.defect_qty)
-            errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
+          if repair_part.store.present?
+            if repair_part.store_item(repair_part.store).quantity < (repair_part.quantity + repair_part.defect_qty)
+              errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
+              is_valid = false
+            end
+          else
+            errors.add :base, :no_spare_parts_store
             is_valid = false
           end
         end
-        if repair_parts.sum(:defect_qty) > 0 and (Store.defect.empty?)
+        if repair_parts.sum(:defect_qty) > 0 and (User.current.try(:defect_sp_store).nil?)
           errors.add :base, :no_defect_store
           is_valid = false
         end

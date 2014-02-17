@@ -7,10 +7,6 @@ class RepairService < ActiveRecord::Base
   validates_presence_of :name, :price, :repair_group
   validates_associated :spare_parts
 
-  def min_parts_remnants
-    store_items.in_store(Store.spare_part_ids).minimum('store_items.quantity')
-  end
-
   def total_cost
     spare_parts.sum(&:purchase_price)
   end

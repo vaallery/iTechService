@@ -1,6 +1,8 @@
 .fields.well.well-small
   = f.hidden_field :repair_service_id
   = f.full_error :repair_service_id, class: 'text-error'
+  = f.hidden_field :store_id
+  = f.full_error :store_id, class: 'text-error'
   %strong= f.object.name
   %span.pull-right= link_to_remove_fields f
   = f.input :price, input_html: {class: 'input-small'}

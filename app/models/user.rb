@@ -30,10 +30,10 @@ class User < ActiveRecord::Base
 
   attr_accessor :login
   attr_accessor :auth_token
-  attr_accessor :installment
   cattr_accessor :current
 
   belongs_to :location
+  belongs_to :department
   has_many :history_records, as: :object, dependent: :nullify
   has_many :schedule_days, dependent: :destroy
   has_many :duty_days, dependent: :destroy
@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
   has_many :installment_plans, inverse_of: :user, dependent: :destroy
   has_many :sales, inverse_of: :user, dependent: :nullify
   has_many :movement_acts, dependent: :nullify
+  has_many :stores, through: :department
 
   mount_uploader :photo, PhotoUploader
 
@@ -60,15 +61,17 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :salaries, reject_if: lambda { |attrs| attrs['amount'].blank? or attrs['issued_at'].blank? }
   accepts_nested_attributes_for :installment_plans, reject_if: lambda { |attrs| (attrs['object'].blank? or attrs['cost'].blank? or attrs['issued_at'].blank?) and (attrs['installments_attributes'].blank?) }
 
+  delegate :name, to: :department, prefix: true, allow_nil: true
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :registerable, :rememberable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
+  attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment, :department_id
 
-  validates :username, :role, presence: true
+  validates_presence_of :username, :role, :department
   validates :password, presence: true, confirmation: true, if: :password_required?
   validates :role, inclusion: { in: ROLES }
   before_validation :validate_rights_changing
@@ -342,6 +345,22 @@ class User < ActiveRecord::Base
 
   def timesheet_day(date)
     self.timesheet_days.find_by_date(date)
+  end
+
+  def retail_store
+    stores.retail.first
+  end
+
+  def spare_parts_store
+    stores.spare_parts.first
+  end
+
+  def defect_store
+    stores.defect.first
+  end
+
+  def defect_sp_store
+    stores.defect_sp.first
   end
 
   private

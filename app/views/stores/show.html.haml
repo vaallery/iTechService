@@ -1,6 +1,8 @@
 = auto_header_tag @store, @store.name
 
 %dl.dl-horizontal
+  %dt= Store.human_attribute_name :department
+  %dd= @store.department_name || '-'
   %dt= Store.human_attribute_name :code
   %dd= @store.code
   %dt= Store.human_attribute_name :kind

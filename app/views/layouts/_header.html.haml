@@ -1,6 +1,8 @@
 = content_for :header do
   #current_user_row
     %span.user_name= profile_link
+    - if current_user.department.present?
+      %span.user_department= "[#{current_user.department.name}]"
     - unless current_user.any_admin?
       %span= link_to karma_tag(current_user), rating_users_path
     = duck_plan_tag
@@ -40,6 +42,7 @@
           = menu_item t('banks.index.title'), banks_path if can? :manage, Bank
           = menu_item t('stores.index.title'), stores_path if can? :manage, Store
           = menu_item t('locations.link'), locations_path if can? :manage, Location
+          = menu_item t('departments.link'), departments_path if can? :manage, Department
         = drop_down_divider
         = menu_item t('users.link', default: 'Users'), users_path if can? :manage, User
         = menu_item t('users.rating'), rating_users_path
