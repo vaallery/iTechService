@@ -51,7 +51,6 @@ class Device < ActiveRecord::Base
   def as_json(options={})
     {
       id: id,
-      ticket_number: ticket_number,
       device_type: type_name,
       imei: imei,
       serial_number: serial_number,
@@ -60,7 +59,6 @@ class Device < ActiveRecord::Base
       at_done: at_done?,
       in_archive: in_archive?,
       location: location.try(:name),
-      user_name: user_short_name,
       client: {
         id: client_id,
         name: client.short_name,
