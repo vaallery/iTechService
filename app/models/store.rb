@@ -24,10 +24,6 @@ class Store < ActiveRecord::Base
   attr_accessible :code, :name, :kind, :department_id, :price_type_ids
   validates_presence_of :name, :kind, :department
 
-  def self.default
-    Store.find_by_code Setting.setting_value(:default_store_code)
-  end
-
   def self.spare_part_ids
     Store.spare_parts.map(&:id)
   end

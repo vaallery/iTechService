@@ -7,11 +7,8 @@ class CashShift < ActiveRecord::Base
   has_many :sales, inverse_of: :cash_shift
   has_many :cash_operations, inverse_of: :cash_shift
   delegate :short_name, to: :user, prefix: true, allow_nil: true
+  delegate :department, to: :cash_drawer
   attr_accessible :is_closed, :cash_drawer_id, :user_id
-
-  def self.current
-    find_or_create_by_is_closed false
-  end
 
   def close
     if is_closed

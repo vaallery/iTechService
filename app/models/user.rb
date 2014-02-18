@@ -363,8 +363,12 @@ class User < ActiveRecord::Base
     stores.defect_sp.first
   end
 
-  def current_cash_shift
+  def cash_drawer
+    department.cash_drawers.first
+  end
 
+  def current_cash_shift
+    cash_drawer.current_shift
   end
 
   private

@@ -171,7 +171,7 @@ class Sale < ActiveRecord::Base
 
   def set_user_and_cash_shift
     self.user_id ||= User.current.try(:id)
-    self.cash_shift_id ||= User.current.current_cash_shift
+    self.cash_shift_id ||= User.current.try(:current_cash_shift).try(:id)
   end
 
   def is_valid_for_posting?

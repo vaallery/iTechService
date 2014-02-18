@@ -8,7 +8,7 @@
     %dd= @cash_drawer.department_name
 
   .form-actions
-    = button_to t('cash_shifts.close'), close_cash_shift_path(@cash_drawer.current_shift, format: :pdf), id: 'close_cash_shift_button', class: 'btn btn-primary', form_class: 'close_cash_shift' if can? :close, CashShift
     = link_to t('cash_drawers.x_report'), cash_shift_path(@cash_drawer.current_shift, format: :pdf), class: 'btn'
+    = button_to t('cash_shifts.close'), close_cash_shift_path(@cash_drawer.current_shift, format: :pdf), id: 'close_cash_shift_button', class: 'btn btn-primary', form_class: 'close_cash_shift' if can? :close, CashShift
     = link_to_edit @cash_drawer
     = link_to_destroy @cash_drawer

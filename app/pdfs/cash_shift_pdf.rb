@@ -16,7 +16,8 @@ class CashShiftPdf < Prawn::Document
 
     image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 30, height: 30, at: [0, cursor]
     move_down @font_height/2
-    text Setting.get_value(:address), align: :center
+    text @cash_shift.department.city, align: :center
+    text @cash_shift.department.address, align: :center
     text view.t('sales.check_pdf.greeting'), align: :center
     move_down @font_height
     draw_divider
