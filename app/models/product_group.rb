@@ -39,6 +39,13 @@ class ProductGroup < ActiveRecord::Base
       end
     end
 
+    if (store_kind = params[:store_kind]).present?
+      case store_kind
+        when 'spare_parts', 'defect_sp' then product_groups = product_groups.spare_parts
+        else product_groups = product_groups.except_spare_parts
+      end
+    end
+
     product_groups
   end
 

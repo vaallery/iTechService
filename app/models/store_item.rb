@@ -7,7 +7,7 @@ class StoreItem < ActiveRecord::Base
   belongs_to :item, inverse_of: :store_items
   belongs_to :store, inverse_of: :store_items
 
-  delegate :feature_accounting, :features, :name, :quantity_threshold, :comment, to: :item, allow_nil: true
+  delegate :feature_accounting, :features, :name, :code, :quantity_threshold, :comment, :product, to: :item, allow_nil: true
   delegate :name, :code, to: :store, prefix: true, allow_nil: true
 
   attr_accessible :item_id, :store_id, :quantity
@@ -15,6 +15,16 @@ class StoreItem < ActiveRecord::Base
   validates_uniqueness_of :item_id, scope: :store_id
   validates_numericality_of :quantity, only_integer: true
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
+
+  def self.search(params)
+    store_items = self.scoped
+
+    if (product_group = params[:product_group]).present?
+      store_items = store_items.includes(item: :product).where(products: {product_group_id: product_group})
+    end
+
+    store_items
+  end
 
   def add(amount)
     unless feature_accounting

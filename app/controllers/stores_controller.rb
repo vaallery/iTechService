@@ -11,9 +11,11 @@ class StoresController < ApplicationController
 
   def show
     @store = Store.find params[:id]
-    @products = Product.in_store @store
+    @product_groups = ProductGroup.roots.search(params.merge(store_kind: @store.kind)).ordered
+    @store_items = @store.store_items.search(params)
     respond_to do |format|
       format.html
+      format.js
     end
   end
 

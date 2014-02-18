@@ -1,0 +1,12 @@
+%table#store_items.table.table-bordered.table-condensed.table-hover
+  %thead
+    %tr
+      %th.code= StoreItem.human_attribute_name :code
+      %th.name= t 'activerecord.models.product'
+      %th.quantity= StoreItem.human_attribute_name :quantity
+  %tbody
+    - @store_items.each do |store_item|
+      %tr{class: store_item.feature_accounting ? 'detailable' : '', data: {path: product_details_store_path(@store, product_id: store_item.product.id, format: :js)}}[store_item]
+        %td.code= store_item.code
+        %td.name= link_to store_item.name, product_path(store_item.product)
+        %td.quantity.number= store_item.quantity
