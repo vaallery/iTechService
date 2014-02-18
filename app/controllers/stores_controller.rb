@@ -2,10 +2,10 @@ class StoresController < ApplicationController
   authorize_resource
 
   def index
-    @stores = Store.all
+    @stores = Store.search(params).ordered
     respond_to do |format|
       format.html
-      format.json { render json: @stores }
+      format.js { render 'shared/index' }
     end
   end
 

@@ -1,23 +1,8 @@
-= auto_header_tag
 - if can? :manage, Store
-  %table.table.table-striped
-    %thead
-      %tr
-        %th= Store.human_attribute_name(:id)
-        %th= Store.human_attribute_name(:code)
-        %th= Store.human_attribute_name(:name)
-        %th= Store.human_attribute_name(:kind)
-        %th= Store.human_attribute_name(:department)
-        %th
-    %tbody
-      - @stores.each do |store|
-        %tr
-          %td= link_to store.id, store_path(store)
-          %td= link_to store.code, store_path(store)
-          %td= link_to store.name, store_path(store)
-          %td= human_store_kind store
-          %td= store.department_name
-          %td.btn-group
-            = link_to_show_small store
-            = link_to_edit_small store
-            = link_to_destroy_small store
+  .page-header
+    %h1
+      = t '.title'
+      %small= link_to t('.usual_link'), stores_path(kind: %w[purchase retail defect]), remote: true
+      %small= link_to t('.spare_parts_link'), stores_path(kind: %w[spare_parts defect_sp]), remote: true
+    = link_to_new Store
+  #resource_table= render 'table'

@@ -1219,6 +1219,8 @@ ru:
       retail: 'Розница'
     index:
       title: "Склады"
+      spare_parts_link: "Запчасти"
+      usual_link: "Обычные"
     new:
       title: 'Новый Склад'
     edit:

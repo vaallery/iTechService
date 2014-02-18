@@ -2,6 +2,7 @@ class Store < ActiveRecord::Base
   # TODO change kind type to integer
   KINDS = %w[purchase retail spare_parts defect defect_sp]
 
+  scope :ordered, order('id asc')
   scope :for_purchase, joins(:price_types).where(price_types: {kind: 0})
   scope :for_retail, joins(:price_types).where(price_types: {kind: 1})
   scope :defect, where(kind: 'defect')
@@ -23,6 +24,16 @@ class Store < ActiveRecord::Base
 
   attr_accessible :code, :name, :kind, :department_id, :price_type_ids
   validates_presence_of :name, :kind, :department
+
+  def self.search(params)
+    stores = self.scoped
+
+    unless (kind = params[:kind]).blank?
+      stores = stores.where kind: kind
+    end
+
+    stores
+  end
 
   def self.spare_part_ids
     Store.spare_parts.map(&:id)
