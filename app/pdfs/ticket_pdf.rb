@@ -36,7 +36,7 @@ class TicketPdf < Prawn::Document
     end
     text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
     move_down 5
-    text @device.user_short_name
+    text @view.t('tickets.user', name: @device.user_short_name)
     move_down 5
     text Setting.get_value(:contact_phone)
     move_down 5
@@ -61,9 +61,9 @@ class TicketPdf < Prawn::Document
     text @device.client_short_name
     move_down 5
     text @view.t('tickets.operations_list')
-    text @device.tasks.map{|t|t.id}.join(', ')
+    text @device.tasks.map{|t|t.name}.join(', ')
     move_down 5
-    text @device.user_short_name
+    text @view.t('tickets.user', name: @device.user_short_name)
   end
 
   private

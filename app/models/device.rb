@@ -51,6 +51,7 @@ class Device < ActiveRecord::Base
   def as_json(options={})
     {
       id: id,
+      ticket_number: ticket_number,
       device_type: type_name,
       imei: imei,
       serial_number: serial_number,

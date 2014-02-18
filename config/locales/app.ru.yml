@@ -1252,6 +1252,7 @@ ru:
     schedule2: 'Сб: с 12 до 21'
     schedule3: 'Вс - выходной'
     site: 'www.itechstore.ru'
+    user: 'Сотрудник: %{name}'
 
   timesheet_days:
     index:
