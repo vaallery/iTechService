@@ -102,8 +102,11 @@ Ability
       can :rating, User
       can :manage, TimesheetDay if user.able_to? :manage_timesheet
       can :read, :all
+      unless user.driver?
+        cannot :read, SupplyReport
+      end
       cannot [:create, :update, :destroy], StolenPhone
-      cannot :read, [Salary, SupplyReport]
+      cannot :read, Salary
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.
