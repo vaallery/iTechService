@@ -4,6 +4,7 @@ class ProductGroup < ActiveRecord::Base
   scope :services, joins(:product_category).where(product_categories: {kind: 'service'})
   scope :goods, joins(:product_category).where(product_categories: {kind: %w[equipment accessory]})
   scope :except_spare_parts, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector service]})
+  scope :except_spare_parts_and_services, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector]})
   scope :spare_parts, joins(:product_category).where(product_categories: {kind: 'spare_part'})
   scope :for_purchase, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector spare_part]})
 
@@ -33,7 +34,7 @@ class ProductGroup < ActiveRecord::Base
       case form
         when 'repair_service' then product_groups = product_groups.spare_parts
         when 'purchase' then product_groups = product_groups.for_purchase
-        when 'sale' then product_groups = product_groups.except_spare_parts
+        when 'sale' then product_groups = product_groups.except_spare_parts_and_services
         when 'movement_act' then product_groups = User.current.technician? ? product_groups.spare_parts : product_groups.except_spare_parts
         else product_groups
       end
@@ -42,7 +43,7 @@ class ProductGroup < ActiveRecord::Base
     if (store_kind = params[:store_kind]).present?
       case store_kind
         when 'spare_parts', 'defect_sp' then product_groups = product_groups.spare_parts
-        else product_groups = product_groups.except_spare_parts
+        else product_groups = product_groups.except_spare_parts_and_services
       end
     end
 
