@@ -36,6 +36,7 @@
           = menu_item t('movement_acts.link'), movement_acts_path
         - elsif can? :make_defect_sp, MovementAct
           = menu_item t('movement_acts.defect_link'), make_defect_sp_movement_acts_path
+        = menu_item t('dashboard.reports'), reports_path if current_user.can_view_reports?
         = drop_down_submenu t 'dashboard.references' do
           = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService
           = menu_item t('product_categories.index.title'), product_categories_path if can? :manage, ProductCategory
