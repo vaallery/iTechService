@@ -37,7 +37,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.search(params)
-    products = Product.scoped
+    products = self.scoped
 
     unless (product_q = params[:product_q]).blank?
       products = products.where 'LOWER(name) LIKE :q OR code LIKE :q', q: "%#{product_q.mb_chars.downcase.to_s}%"
@@ -45,6 +45,10 @@ class Product < ActiveRecord::Base
 
     unless (q = params[:q]).blank?
       products = products.includes(items: :features).where('features.value = :q OR products.name LIKE :q1', q: q, q1: "%#{q}%")
+    end
+
+    unless (product_group_id = params[:product_group_id]).blank?
+      products = products.where(product_group_id: product_group_id)
     end
 
     products

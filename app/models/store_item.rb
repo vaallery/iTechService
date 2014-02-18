@@ -19,8 +19,8 @@ class StoreItem < ActiveRecord::Base
   def self.search(params)
     store_items = self.scoped
 
-    if (product_group = params[:product_group]).present?
-      store_items = store_items.includes(item: :product).where(products: {product_group_id: product_group})
+    if (product_group_id = params[:product_group_id]).present?
+      store_items = store_items.includes(item: :product).where(products: {product_group_id: product_group_id})
     end
 
     store_items

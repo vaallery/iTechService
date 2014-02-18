@@ -1,12 +1,26 @@
-%table#store_items.table.table-bordered.table-condensed.table-hover
+%table#store_products.table.table-bordered.table-condensed.table-hover
   %thead
     %tr
-      %th.code= StoreItem.human_attribute_name :code
+      %th.code= Product.human_attribute_name :code
       %th.name= t 'activerecord.models.product'
       %th.quantity= StoreItem.human_attribute_name :quantity
   %tbody
-    - @store_items.each do |store_item|
-      %tr{class: store_item.feature_accounting ? 'detailable' : '', data: {path: product_details_store_path(@store, product_id: store_item.product.id, format: :js)}}[store_item]
-        %td.code= store_item.code
-        %td.name= link_to store_item.name, product_path(store_item.product)
-        %td.quantity.number= store_item.quantity
+    - @products.each do |product|
+      %tr{class: product.feature_accounting ? 'detailable' : '', data: {path: product_details_store_path(@store, product_id: product.id, format: :js)}}[product]
+        %td.code= product.code
+        %td.name= link_to product.name, product_path(product)
+        %td.quantity.number= product.quantity_in_store(@store)
+
+-#
+  %table#store_items.table.table-bordered.table-condensed.table-hover
+    %thead
+      %tr
+        %th.code= StoreItem.human_attribute_name :code
+        %th.name= t 'activerecord.models.product'
+        %th.quantity= StoreItem.human_attribute_name :quantity
+    %tbody
+      - @store_items.each do |store_item|
+        %tr{class: store_item.feature_accounting ? 'detailable' : '', data: {path: product_details_store_path(@store, product_id: store_item.product.id, format: :js)}}[store_item.product]
+          %td.code= store_item.code
+          %td.name= link_to store_item.name, product_path(store_item.product)
+          %td.quantity.number= store_item.quantity
