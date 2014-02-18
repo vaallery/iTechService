@@ -30,9 +30,9 @@ class Sale < ActiveRecord::Base
   validates_inclusion_of :status, in: Document::STATUSES.keys
   validates_associated :payments
   before_validation :set_user_and_cash_shift
+  after_initialize :set_user_and_cash_shift
 
   after_initialize do
-    self.user_id ||= User.current.try(:id)
     self.date ||= DateTime.current
     self.status ||= 0
     self.is_return ||= false

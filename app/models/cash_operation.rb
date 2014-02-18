@@ -10,12 +10,8 @@ class CashOperation < ActiveRecord::Base
   validates_presence_of :value, :user, :cash_shift
   validates_presence_of :comment, if: :is_out
   validates_numericality_of :value, greater_than: 0
-  before_validation :set_user
-  before_validation :set_cash_shift
-
-  after_initialize do
-    self.user_id ||= User.try(:current).try(:id)
-  end
+  before_validation :set_user_and_cash_shift
+  after_initialize :set_user_and_cash_shift
 
   def kind
     is_out ? 'cash_out' : 'cash_in'
@@ -23,12 +19,9 @@ class CashOperation < ActiveRecord::Base
 
   private
 
-  def set_user
-    self.user_id ||= User.try(:current).try(:id)
-  end
-
-  def set_cash_shift
-    self.cash_shift_id ||= CashShift.current.id
+  def set_user_and_cash_shift
+    self.user_id ||= User.current.try(:id)
+    self.cash_shift_id ||= User.current.current_cash_shift
   end
 
 end
