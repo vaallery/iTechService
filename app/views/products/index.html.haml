@@ -1,10 +1,14 @@
 .page-header
-  %h1= auto_title
+  %h1
+    = auto_title
+    - if can? :manage, Product
+      %small= link_to t('.few'), few_products_path
 
 .row-fluid
   .span3
-    = link_to "#{glyph(:file)} #{t('product_groups.new_link')}".html_safe, new_product_group_path, remote: true, class: 'btn btn-success', id: 'new_product_group_link'
-    = link_to "#{glyph(:file)} #{t('products.new.title')}".html_safe, '#', class: 'btn btn-success', id: 'new_product_link', disabled: true
+    - if can? :manage, Product
+      = link_to "#{glyph(:file)} #{t('product_groups.new_link')}".html_safe, new_product_group_path, remote: true, class: 'btn btn-success', id: 'new_product_group_link'
+      = link_to "#{glyph(:file)} #{t('products.new.title')}".html_safe, '#', class: 'btn btn-success', id: 'new_product_link', disabled: true
 
   .span9
     .table_filter.navbar

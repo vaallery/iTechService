@@ -6,6 +6,7 @@ class Product < ActiveRecord::Base
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
   scope :goods, joins(product_group: :product_category).where(product_categories: {kind: ['equipment', 'accessory']})
   scope :services, joins(product_group: :product_category).where(product_categories: {kind: 'service'})
+  scope :few
 
   belongs_to :product_group, inverse_of: :products
   belongs_to :device_type, inverse_of: :product

@@ -146,6 +146,7 @@ ItechService::Application.routes.draw do
     get :show_remains, on: :member, defaults: {format: :js}
     get :remains_in_store, on: :member, defaults: {format: :json}
     get :related, on: :member, defaults: {format: :js}
+    get :few, on: :collection
     post :select, on: :collection, defaults: {format: :js}
     resources :items, except: [:show]
   end
