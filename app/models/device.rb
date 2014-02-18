@@ -60,6 +60,7 @@ class Device < ActiveRecord::Base
       at_done: at_done?,
       in_archive: in_archive?,
       location: location.try(:name),
+      user_name: user_short_name,
       client: {
         id: client_id,
         name: client.short_name,
