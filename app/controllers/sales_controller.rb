@@ -93,7 +93,9 @@ class SalesController < ApplicationController
       if @sale.post
         pdf = SaleCheckPdf.new @sale, view_context, params[:copy].present?
         filename = "sale_check_#{@sale.id}.pdf"
-        system 'lp', pdf.render_file("#{Rails.root.to_s}/tmp/checks/#{filename}").path
+        filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
+        pdf.render_file filepath
+        system 'lp', filepath
         format.html { redirect_to new_sale_path, notice: t('documents.posted') }
       else
         flash.alert = @sale.errors.full_messages
@@ -117,8 +119,9 @@ class SalesController < ApplicationController
     else
       pdf = SaleCheckPdf.new @sale, view_context, true
     end
-    filename = "sale_check_#{@sale.id}.pdf"
-    system 'lp', pdf.render_file("#{Rails.root.to_s}/tmp/checks/#{filename}").path
+    filepath = "#{Rails.root.to_s}/tmp/pdf/sale_check_#{@sale.id}.pdf"
+    pdf.render_file filepath
+    system 'lp', filepath
     respond_to do |format|
       format.html { redirect_to new_sale_path }
       format.js { render nothing: true }

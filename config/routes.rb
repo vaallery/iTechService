@@ -10,8 +10,6 @@ ItechService::Application.routes.draw do
   match 'goods_for_sale' => 'dashboard#goods_for_sale', via: :get
   match 'reports' => 'dashboard#reports', via: :get
   match 'check_session_status' => 'dashboard#check_session_status', via: :get
-  match 'cash_shifts/:id' => 'cash_shifts#show', via: :get, as: 'cash_shift'
-  match 'close_cash_shift' => 'cash_shifts#close', via: :post
 
   mount Ckeditor::Engine => '/ckeditor'
 
@@ -163,6 +161,11 @@ ItechService::Application.routes.draw do
   resources :installments
   resources :installment_plans
   resources :cash_operations, only: [:index, :new, :create]
+  resources :cash_drawers
+
+  resources :cash_shifts, only: :show do
+    post :close, on: :member
+  end
 
   resources :revaluation_acts do
     put 'post', on: :member

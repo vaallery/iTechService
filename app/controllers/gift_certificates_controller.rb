@@ -130,12 +130,14 @@ class GiftCertificatesController < ApplicationController
                     t('gift_certificates.activated', nominal: human_gift_certificate_nominal(@gift_certificate)) :
                     t('gift_certificates.consumed', value: params[:consume], balance: @gift_certificate.balance)
           pdf = GiftCertificatePdf.new @gift_certificate, view_context, params[:consume]
+          filename = "cert_#{@gift_certificate.number}.pdf"
           if Rails.env.production?
-            system 'lp', pdf.render_file(Rails.root.to_s+"/tmp/tickets/cert_#{@gift_certificate.number}.pdf").path
+            filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
+            pdf.render_file filepath
+            system 'lp', filepath
             format.html { redirect_to gift_certificates_path, notice: msg }
           else
-            format.html { send_data pdf.render, filename: "cert_#{@gift_certificate.number}.pdf",
-                                    type: 'application/pdf', disposition: 'inline' }
+            format.html { send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline' }
           end
           format.js { render 'status_changed' }
         else

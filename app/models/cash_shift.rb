@@ -2,11 +2,12 @@ class CashShift < ActiveRecord::Base
 
   scope :closed, where(is_closed: true)
 
+  belongs_to :cash_drawer
   belongs_to :user
   has_many :sales, inverse_of: :cash_shift
   has_many :cash_operations, inverse_of: :cash_shift
   delegate :short_name, to: :user, prefix: true, allow_nil: true
-  attr_accessible :is_closed
+  attr_accessible :is_closed, :cash_drawer_id, :user_id
 
   def self.current
     find_or_create_by_is_closed false
@@ -55,13 +56,14 @@ class CashShift < ActiveRecord::Base
     return_ids = sales.posted.returning.map(&:id)
     Payment::KINDS.each do |kind|
       value = Payment.where(kind: kind, sale_id: sale_ids).sum(:value) - Payment.where(kind: kind, sale_id: return_ids).sum(:value)
+      value = value + cash_operations_balance if kind == 'cash'
       res << [kind, value]
     end
     res
   end
 
   def encashment_total
-    sales_total - sales_total(true)# + cash_operations_balance
+    sales_total - sales_total(true) + cash_operations_balance
   end
 
 end

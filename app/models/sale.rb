@@ -29,15 +29,14 @@ class Sale < ActiveRecord::Base
   validates_presence_of :user, :store, :date, :status, :cash_shift
   validates_inclusion_of :status, in: Document::STATUSES.keys
   validates_associated :payments
-  before_validation :set_user
-  before_validation :set_cash_shift
+  before_validation :set_user_and_cash_shift
 
   after_initialize do
-    self.user_id ||= User.try(:current).try(:id)
+    self.user_id ||= User.current.try(:id)
     self.date ||= DateTime.current
     self.status ||= 0
     self.is_return ||= false
-    self.store_id ||= Store.default.try(:id)
+    self.store_id ||= User.current.try(:retail_store).try(:id)
   end
 
   def self.search(params)
@@ -170,12 +169,9 @@ class Sale < ActiveRecord::Base
 
   private
 
-  def set_user
-    self.user_id ||= User.try(:current).try(:id)
-  end
-
-  def set_cash_shift
-    self.cash_shift_id ||= CashShift.current.id
+  def set_user_and_cash_shift
+    self.user_id ||= User.current.try(:id)
+    self.cash_shift_id ||= User.current.current_cash_shift
   end
 
   def is_valid_for_posting?

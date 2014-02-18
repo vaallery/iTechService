@@ -322,7 +322,7 @@ class User < ActiveRecord::Base
 
   def installment=(params)
     if params[:installment_plan_id].present? and params[:value].present? and params[:paid_at].present?
-      if (installment_plan = self.installment_plans.find(params[:installment_plan_id]))
+      if (installment_plan = self.installment_plans.find(params[:installment_plan_id])).present?
         installment_plan.installments.create value: params[:value], paid_at: params[:paid_at]
       end
     end
@@ -361,6 +361,10 @@ class User < ActiveRecord::Base
 
   def defect_sp_store
     stores.defect_sp.first
+  end
+
+  def current_cash_shift
+
   end
 
   private

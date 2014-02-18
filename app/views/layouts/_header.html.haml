@@ -45,6 +45,7 @@
           = menu_item t('banks.index.title'), banks_path if can? :manage, Bank
           = menu_item t('stores.index.title'), stores_path if can? :manage, Store
           = menu_item t('locations.link'), locations_path if can? :manage, Location
+          = menu_item t('cash_drawers.link'), cash_drawers_path if can? :manage, CashDrawer
           = menu_item t('departments.link'), departments_path if can? :manage, Department
         = drop_down_divider
         = menu_item t('users.link', default: 'Users'), users_path if can? :manage, User

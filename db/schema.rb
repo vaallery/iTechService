@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140217090001) do
+ActiveRecord::Schema.define(:version => 20140218032228) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -63,6 +63,15 @@ ActiveRecord::Schema.define(:version => 20140217090001) do
 
   add_index "bonuses", ["bonus_type_id"], :name => "index_bonuses_on_bonus_type_id"
 
+  create_table "cash_drawers", :force => true do |t|
+    t.string   "name"
+    t.integer  "department_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "cash_drawers", ["department_id"], :name => "index_cash_drawers_on_department_id"
+
   create_table "cash_operations", :force => true do |t|
     t.integer  "cash_shift_id"
     t.integer  "user_id"
@@ -77,13 +86,15 @@ ActiveRecord::Schema.define(:version => 20140217090001) do
   add_index "cash_operations", ["user_id"], :name => "index_cash_operations_on_user_id"
 
   create_table "cash_shifts", :force => true do |t|
-    t.boolean  "is_closed",  :default => false
+    t.boolean  "is_closed",      :default => false
     t.integer  "user_id"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.datetime "closed_at"
+    t.integer  "cash_drawer_id"
   end
 
+  add_index "cash_shifts", ["cash_drawer_id"], :name => "index_cash_shifts_on_cash_drawer_id"
   add_index "cash_shifts", ["user_id"], :name => "index_cash_shifts_on_user_id"
 
   create_table "ckeditor_assets", :force => true do |t|

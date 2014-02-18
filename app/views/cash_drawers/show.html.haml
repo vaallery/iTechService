@@ -1,0 +1,14 @@
+- model_class = CashDrawer
+= auto_header_tag
+- if can? :manage, CashDrawer
+  %dl.dl-horizontal
+    %dt= model_class.human_attribute_name(:name)
+    %dd= @cash_drawer.name
+    %dt= model_class.human_attribute_name(:department)
+    %dd= @cash_drawer.department_name
+
+  .form-actions
+    = button_to t('cash_shifts.close'), close_cash_shift_path(@cash_drawer.current_shift, format: :pdf), id: 'close_cash_shift_button', class: 'btn btn-primary', form_class: 'close_cash_shift' if can? :close, CashShift
+    = link_to t('cash_drawers.x_report'), cash_shift_path(@cash_drawer.current_shift, format: :pdf), class: 'btn'
+    = link_to_edit @cash_drawer
+    = link_to_destroy @cash_drawer

@@ -9,6 +9,7 @@ ru:
       #ckeditor/attachment_file: ckeditor/attachment_file
       #ckeditor/picture: ckeditor/picture
       batch: 'Партия'
+      cash_drawer: 'Касса'
       cash_shift: 'Кассовая смена'
       category: Категория
       client: Клиент
@@ -442,6 +443,7 @@ ru:
     created_at: Время создания
     date: 'Дата'
     department: :activerecord.models.department
+    department_id: :activerecord.models.department
     device_type: :activerecord.models.device_type
     device_type_id: :activerecord.models.device_type
     fio: ФИО
@@ -538,6 +540,18 @@ ru:
     errors:
       feature_exists: 'Характеристика уже существует'
 
+  cash_drawers:
+    created: 'Касса создана'
+    updated: 'Касса изменена'
+    link: :cash_drawers.index.title
+    index:
+      title: 'Кассы'
+    new:
+      title: 'Новая Касса'
+    edit:
+      title: 'Редактирование Кассы'
+
+    x_report: "Х-Отчёт"
   cash_shifts:
     close: 'Закрыть смену'
     errors:
