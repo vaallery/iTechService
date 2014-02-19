@@ -4,9 +4,9 @@ class Product < ActiveRecord::Base
 
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
-  scope :goods, joins(product_group: :product_category).where(product_categories: {kind: ['equipment', 'accessory']})
+  scope :goods, joins(product_group: :product_category).where(product_categories: {kind: %w[equipment accessory protector]})
   scope :services, joins(product_group: :product_category).where(product_categories: {kind: 'service'})
-  scope :few
+  scope :spare_parts, joins(product_group: :product_category).where(product_categories: {kind: 'spare_part'})
 
   belongs_to :product_group, inverse_of: :products
   belongs_to :device_type, inverse_of: :product

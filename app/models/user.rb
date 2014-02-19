@@ -368,7 +368,7 @@ class User < ActiveRecord::Base
   end
 
   def current_cash_shift
-    cash_drawer.current_shift
+    cash_drawer.try(:current_shift)
   end
 
   private

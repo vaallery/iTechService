@@ -71,11 +71,7 @@ class DashboardController < ApplicationController
     @start_date = (params[:start_date] || 1.day.ago).to_datetime
     @end_date = (params[:end_date] || 1.day.ago).to_datetime
     @period = [@start_date.beginning_of_day..@end_date.end_of_day]
-    @received_devices = Device.where(created_at: @period)
     @report = {}
-    @report[:devices_received_count] = @received_devices.count
-    @report[:devices_received_done_count] = @received_devices.at_done.count
-    @report[:devices_received_archived_count] = @received_devices.at_archive.count
 
     case params[:report]
       when 'device_types_report' then make_device_types_report params[:device_type]
@@ -87,6 +83,8 @@ class DashboardController < ApplicationController
       when 'devices_movements_report' then make_devices_movements_report
       when 'sales_report' then make_sales_report
       when 'salary_report' then can?(:manage, Salary) ? make_salary_report : render(nothing: true)
+      when 'few_remnants_goods' then @report = Report.few_remnants :goods
+      when 'few_remnants_spare_parts' then @report = Report.few_remnants :spare_parts
     end
   end
 
@@ -125,6 +123,13 @@ class DashboardController < ApplicationController
     end
   end
 
+  def load_received_devices
+    @received_devices = Device.where(created_at: @period)
+    @report[:devices_received_count] = @received_devices.count
+    @report[:devices_received_done_count] = @received_devices.at_done.count
+    @report[:devices_received_archived_count] = @received_devices.at_archive.count
+  end
+
   def make_device_types_report(device_type_id)
     @report[:device_types] = []
     @current_device_type = DeviceType.find(device_type_id) if device_type_id.present?
@@ -149,6 +154,7 @@ class DashboardController < ApplicationController
   end
 
   def make_users_report
+    load_received_devices
     @report[:users] = []
     if @received_devices.any?
       @received_devices.group('user_id').count('id').each_pair do |key, val|

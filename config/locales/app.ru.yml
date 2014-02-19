@@ -1081,7 +1081,10 @@ ru:
     total: Всего
     users_report: Принятые девайсы по сотрудникам
     sales_report: "Отчет по продажам"
+    few_remnants_goods: "Заканчивающийся товар"
+    few_remnants_spare_parts: 'Заканчивающиеся запчасти'
 
+    remnants: "Остатки"
   revaluation_acts:
     created: 'Акт Переоценки создан'
     updated: 'Акт Переоценки изменён'
