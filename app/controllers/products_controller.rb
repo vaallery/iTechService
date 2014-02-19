@@ -167,9 +167,4 @@ class ProductsController < ApplicationController
     end
   end
 
-  def few
-    @products = Product.few(kind: 'spare_parts')
-
-  end
-
 end

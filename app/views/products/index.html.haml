@@ -1,8 +1,5 @@
 .page-header
-  %h1
-    = auto_title
-    - if can? :manage, Product
-      %small= link_to t('.few'), few_products_path
+  %h1= auto_title
 
 .row-fluid
   .span3
