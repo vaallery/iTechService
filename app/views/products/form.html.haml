@@ -44,11 +44,10 @@
                     = text_field_tag "item[features_attributes][#{feature.id}][value]", feature.value
 
     #related_products.tab-pane
-
-      = f.association :related_products, collection: Product.goods, as: :check_boxes, label: false
+      = f.input :related_product_ids, as: :filterable_association, collection: Product.goods.name_asc, label: false
 
     #related_product_groups.tab-pane
-      = f.association :related_product_groups, collection: ProductGroup.except_spare_parts_and_services, as: :check_boxes, label: false
+      = f.input :related_product_group_ids, as: :filterable_association, collection: ProductGroup.except_spare_parts_and_services.name_asc, label: false
 
   .form-actions
     = submit_button f

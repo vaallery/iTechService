@@ -2,6 +2,7 @@ class Product < ActiveRecord::Base
 
   BARCODE_PREFIX = '243'
 
+  scope :name_asc, order('name asc')
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
   scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
   scope :goods, joins(product_group: :product_category).where(product_categories: {kind: %w[equipment accessory protector]})

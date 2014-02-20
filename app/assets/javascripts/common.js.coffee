@@ -40,6 +40,8 @@ jQuery ->
   if $('table.enumerable').length > 0
     enumerate_table('table.enumerable')
 
+  $('.association_filter').filterAssociation()
+
 $(document).on 'click', '.close_popover_button', (event)->
   $popover = $(this).parents('.popover')
   $popover.prev().popover('hide')
