@@ -100,7 +100,7 @@ class Product < ActiveRecord::Base
 
   def remnants_hash
     res = {}
-    Store.for_retail.each { |store| res.store store.code, quantity_in_store(store) }
+    Store.retail.each { |store| res.store store.code, quantity_in_store(store) }
     res
   end
 
