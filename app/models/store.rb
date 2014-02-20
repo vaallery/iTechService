@@ -2,6 +2,7 @@ class Store < ActiveRecord::Base
   # TODO change kind type to integer
   KINDS = %w[purchase retail spare_parts defect defect_sp]
 
+  default_scope order('stores.name asc')
   scope :ordered, order('id asc')
   scope :for_purchase, joins(:price_types).where(price_types: {kind: 0})
   scope :for_retail, joins(:price_types).where(price_types: {kind: 1})
