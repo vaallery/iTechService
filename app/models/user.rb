@@ -69,11 +69,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment, :department_id
+  attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment, :department_id, :session_duration
 
   validates_presence_of :username, :role, :department
   validates :password, presence: true, confirmation: true, if: :password_required?
   validates :role, inclusion: { in: ROLES }
+  validates_numericality_of :session_duration, only_integer: true, greater_than: 0
   before_validation :validate_rights_changing
   before_save :ensure_authentication_token
 
@@ -258,8 +259,13 @@ class User < ActiveRecord::Base
   end
 
   def timeout_in
-    1.day
-    #30.minutes
+    if any_admin?
+      1.minute
+    elsif session_duration.present?
+      session_duration.minutes
+    else
+      30.minutes
+    end
   end
 
   def abilities=(abilities)

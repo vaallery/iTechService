@@ -136,6 +136,7 @@ sign_in_by_card = (number)->
         $('#card_sign_in').removeClass('in').hide()
       else
         window.location.assign '/'
+      window.auth_timeout = window.auth_count = Number($('#profile_link').data('timeout-in'))
 
 scanCard = ->
   card_number = ''
@@ -174,17 +175,18 @@ scanTicket = ->
     $('#barcode_reader').removeClass('in').fadeOut()
   ), 5000
 
-auth_timeout = auth_count = 10 * 60
+window.auth_timeout = window.auth_count = Number($('#profile_link').data('timeout-in'))
 
 #if $('#profile_link').data('role') is 'software'
-#  setInterval (->
-#    auth_count -= 1
-#    if auth_count < 1 and $('#card_sign_in.in:visible').length is 0
-#      $('#lock_session').click()
-#  ), 1000
+setInterval (->
+  auth_count -= 1 if auth_count > 0
+  console.log auth_count
+  if auth_count < 1 and $('#card_sign_in.in:visible').length is 0
+    $('#lock_session').click()
+), 1000
 
-$(document).on 'click keydown mousemove', ->
-  auth_count = auth_timeout
+#$(document).on 'click keydown mousemove', ->
+#  auth_count = auth_timeout
 
 window.showScanner = (object_type)->
   scanned_number = ''

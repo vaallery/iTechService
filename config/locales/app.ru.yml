@@ -412,6 +412,7 @@ ru:
         salary_date: Дата зарплаты
         schedule: Отображать график
         schedule_days: Рабочие дни
+        session_duration: 'Длительность сессии (мин.)'
         surname: Фамилия
         username: Логин
         wish: Пожелание
