@@ -42,6 +42,7 @@ ru:
       product: 'Продукт'
       product_group: 'Группа продуктов'
       purchase: "Приход"
+      quick_order: 'Быстрый заказ'
       repair_group: 'Группа ремонта'
       repair_service: 'Вид ремонта'
       repair_task: 'Ремонтная работа'
@@ -304,6 +305,11 @@ ru:
         contractor: :activerecord.models.contractor
         store: :activerecord.models.store
         total_sum: 'Сумма'
+
+      quick_order:
+        client_name: 'Имя клиента'
+        contact_phone: 'Телефон'
+        number: 'Номер'
 
       revaluation:
         revaluation_act: 'Акт переоценки'
@@ -1049,6 +1055,17 @@ ru:
       new: 'Новая'
       posted: 'Проведена'
       deleted: 'Удалена'
+
+  quick_orders:
+    created: 'Быстрый заказ создан'
+    updated: 'Быстрый заказ изменён'
+    link: :quick_orders.index.title
+    index:
+      title: 'Быстрые заказы'
+    new:
+      title: 'Новый Быстрый заказ'
+    edit:
+      title: 'Редактирование Быстрого заказа'
 
   repair_groups:
     created: 'Группа ремонта создана'

@@ -1,0 +1,7 @@
+= auto_header_tag @quick_order
+= simple_form_for @quick_order, html: { class: 'form-horizontal' } do |f|
+  = f.input :client_name
+  = f.input :contact_phone
+  = f.input :comment, input_html: {rows: 5}
+  .form-actions
+    = submit_button f

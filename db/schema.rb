@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140221023102) do
+ActiveRecord::Schema.define(:version => 20140221072742) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -628,6 +628,21 @@ ActiveRecord::Schema.define(:version => 20140221023102) do
   add_index "purchases", ["contractor_id"], :name => "index_purchases_on_contractor_id"
   add_index "purchases", ["status"], :name => "index_purchases_on_status"
   add_index "purchases", ["store_id"], :name => "index_purchases_on_store_id"
+
+  create_table "quick_orders", :force => true do |t|
+    t.integer  "number"
+    t.integer  "user_id"
+    t.string   "client_name"
+    t.string   "contact_phone"
+    t.text     "comment"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "quick_orders", ["client_name"], :name => "index_quick_orders_on_client_name"
+  add_index "quick_orders", ["contact_phone"], :name => "index_quick_orders_on_contact_phone"
+  add_index "quick_orders", ["number"], :name => "index_quick_orders_on_number"
+  add_index "quick_orders", ["user_id"], :name => "index_quick_orders_on_user_id"
 
   create_table "repair_groups", :force => true do |t|
     t.string   "name"

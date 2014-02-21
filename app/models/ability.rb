@@ -58,7 +58,7 @@ class Ability
         can :create, CashOperation
       end
       if user.media?
-        can :modify, [Device, Client, Order]
+        can :modify, [Device, Client, Order, QuickOrder]
       end
       if user.marketing?
         can :modify, Info
