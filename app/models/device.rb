@@ -44,6 +44,7 @@ class Device < ActiveRecord::Base
   before_validation :set_user_and_location
   before_validation :validate_location
   after_save :update_qty_replaced
+  after_save :update_tasks_cost
   after_update :device_update_announce
   after_create :new_device_announce
   after_create :create_alert
@@ -265,6 +266,16 @@ class Device < ActiveRecord::Base
     if changed_attributes[:replaced].present? and replaced != changed_attributes[:replaced]
       qty_replaced = Device.replaced.where(device_type_id: self.device_type_id)
       self.device_type.update_attribute :qty_replaced, qty_replaced
+    end
+  end
+
+  def update_tasks_cost
+    if location_id_changed? and location.is_done? and repair_tasks.present?
+      repair_tasks.each do |repair_task|
+        if repair_task.device_task.cost == 0
+          repair_task.device_task.update_attribute(:cost, repair_task.device_task.repair_cost)
+        end
+      end
     end
   end
 
