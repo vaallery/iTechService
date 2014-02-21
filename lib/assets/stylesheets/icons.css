@@ -1,0 +1,65 @@
+/*
+  Icon Font: icons
+*/
+
+@font-face {
+  font-family: "icons";
+  src: url("../../../app/assets/fonts/icons_3d7e2af98e55a6f9c60ba1780e4978d5.eot");
+  src: url("../../../app/assets/fonts/icons_3d7e2af98e55a6f9c60ba1780e4978d5.eot?#iefix") format("embedded-opentype"),
+       url("../../../app/assets/fonts/icons_3d7e2af98e55a6f9c60ba1780e4978d5.woff") format("woff"),
+       url("../../../app/assets/fonts/icons_3d7e2af98e55a6f9c60ba1780e4978d5.ttf") format("truetype"),
+       url("../../../app/assets/fonts/icons_3d7e2af98e55a6f9c60ba1780e4978d5.svg#icons") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "icons";
+    src: url("../../../app/assets/fonts/icons_3d7e2af98e55a6f9c60ba1780e4978d5.svg#icons") format("svg");
+  }
+}
+
+[data-icon]:before { content: attr(data-icon); }
+
+[data-icon]:before,
+.icon-cancel-check:before,
+.icon-catalog:before,
+.icon-client-card:before,
+.icon-close-check:before,
+.icon-copy-check:before,
+.icon-discount:before,
+.icon-enter-barcode:before,
+.icon-find-client:before,
+.icon-payment:before,
+.icon-restore-check:before,
+.icon-save-check:before,
+.icon-scan-barcode:before,
+.icon-warranty-print:before {
+  display: inline-block;
+  font-family: "icons";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.icon-cancel-check:before { content: "\f100"; }
+.icon-catalog:before { content: "\f101"; }
+.icon-client-card:before { content: "\f102"; }
+.icon-close-check:before { content: "\f103"; }
+.icon-copy-check:before { content: "\f104"; }
+.icon-discount:before { content: "\f105"; }
+.icon-enter-barcode:before { content: "\f106"; }
+.icon-find-client:before { content: "\f107"; }
+.icon-payment:before { content: "\f108"; }
+.icon-restore-check:before { content: "\f109"; }
+.icon-save-check:before { content: "\f10a"; }
+.icon-scan-barcode:before { content: "\f10b"; }
+.icon-warranty-print:before { content: "\f10c"; }
