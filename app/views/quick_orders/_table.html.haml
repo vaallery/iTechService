@@ -1,7 +1,6 @@
 %table.table.table-hover
   %thead
     %tr
-      %th= QuickOrder.human_attribute_name(:id)
       %th= QuickOrder.human_attribute_name(:number)
       %th= QuickOrder.human_attribute_name(:client_name)
       %th= QuickOrder.human_attribute_name(:contact_phone)
@@ -11,7 +10,6 @@
   %tbody
     - @quick_orders.each do |quick_order|
       %tr
-        %td= link_to quick_order.id, quick_order_path(quick_order)
         %td= link_to quick_order.number, quick_order_path(quick_order)
         %td= quick_order.client_name
         %td= quick_order.contact_phone
