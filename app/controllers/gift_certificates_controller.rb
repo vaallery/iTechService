@@ -1,7 +1,6 @@
 class GiftCertificatesController < ApplicationController
   helper_method :sort_column, :sort_direction
   authorize_resource
-  skip_load_resource only: [:index, :issue, :activate]
 
   def index
     @gift_certificates = GiftCertificate.search(params).order(sort_column + ' ' + sort_direction).page params[:page]
