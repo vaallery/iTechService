@@ -2,6 +2,7 @@ class CreateQuickOrders < ActiveRecord::Migration
   def change
     create_table :quick_orders do |t|
       t.integer :number
+      t.boolean :is_done
       t.references :user
       t.string :client_name
       t.string :contact_phone

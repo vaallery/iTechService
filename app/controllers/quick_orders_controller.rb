@@ -42,7 +42,7 @@ class QuickOrdersController < ApplicationController
 
     respond_to do |format|
       if @quick_order.save
-        format.html { redirect_to @quick_order, notice: t('quick_orders.created') }
+        format.html { redirect_to quick_orders_path, notice: t('quick_orders.created') }
         format.json { render json: @quick_order, status: :created, location: @quick_order }
       else
         format.html { render 'form' }
@@ -56,7 +56,7 @@ class QuickOrdersController < ApplicationController
 
     respond_to do |format|
       if @quick_order.update_attributes(params[:quick_order])
-        format.html { redirect_to @quick_order, notice: t('quick_orders.updated') }
+        format.html { redirect_to quick_orders_path, notice: t('quick_orders.updated') }
         format.json { head :no_content }
       else
         format.html { render 'form' }

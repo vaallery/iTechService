@@ -43,6 +43,7 @@ ru:
       product_group: 'Группа продуктов'
       purchase: "Приход"
       quick_order: 'Быстрый заказ'
+      quick_task: 'Быстрая задача'
       repair_group: 'Группа ремонта'
       repair_service: 'Вид ремонта'
       repair_task: 'Ремонтная работа'
@@ -310,6 +311,7 @@ ru:
         client_name: 'Имя клиента'
         contact_phone: 'Телефон'
         number: 'Номер'
+        quick_tasks: 'Задачи'
 
       revaluation:
         revaluation_act: 'Акт переоценки'
@@ -1066,6 +1068,17 @@ ru:
       title: 'Новый Быстрый заказ'
     edit:
       title: 'Редактирование Быстрого заказа'
+
+  quick_tasks:
+    created: 'Быстрая задача создана'
+    updated: 'Быстрая задача изменена'
+    link: :quick_tasks.index.title
+    index:
+      title: 'Быстрые задачи'
+    new:
+      title: 'Новая Быстрая задача'
+    edit:
+      title: 'Редактирование Быстрой задачи'
 
   repair_groups:
     created: 'Группа ремонта создана'

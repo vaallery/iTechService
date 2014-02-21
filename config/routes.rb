@@ -165,6 +165,7 @@ ItechService::Application.routes.draw do
   resources :repair_groups
   resources :case_colors, except: :show
   resources :quick_orders
+  resources :quick_tasks, except: :show
 
   resources :cash_shifts, only: :show do
     post :close, on: :member

@@ -1,0 +1,15 @@
+= auto_header_tag
+%table.table.table-hover
+  %thead
+    %tr
+      %th= QuickTask.human_attribute_name(:id)
+      %th= QuickTask.human_attribute_name(:name)
+      %th
+  %tbody
+    - @quick_tasks.each do |quick_task|
+      %tr
+        %td= quick_task.id
+        %td= quick_task.name
+        %td.btn-group
+          = link_to_edit_small quick_task
+          = link_to_destroy_small quick_task

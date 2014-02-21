@@ -50,6 +50,7 @@
           = menu_item t('locations.link'), locations_path if can? :manage, Location
           = menu_item t('cash_drawers.link'), cash_drawers_path if can? :manage, CashDrawer
           = menu_item t('departments.link'), departments_path if can? :manage, Department
+          = menu_item t('quick_tasks.link'), quick_tasks_path if can? :manage, QuickTask
         = drop_down_divider
         = menu_item t('users.link', default: 'Users'), users_path if can? :manage, User
         = menu_item t('users.rating'), rating_users_path
