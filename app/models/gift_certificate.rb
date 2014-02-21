@@ -11,7 +11,7 @@ class GiftCertificate < ActiveRecord::Base
   before_validation { |cert| cert.status ||= 0 }
   before_validation :validate_consumption
   before_validation :validate_status, on: :update
-  after_initialize :convert_nominal
+  after_initialize :convert_nominal_and_status
 
   def self.search(params)
     certificates = GiftCertificate.scoped
@@ -101,10 +101,11 @@ class GiftCertificate < ActiveRecord::Base
     end
   end
 
-  def convert_nominal
+  def convert_nominal_and_status
     if nominal < 5
       update_attribute :nominal, nominal_val
     end
+    #if nominal
   end
 
 end
