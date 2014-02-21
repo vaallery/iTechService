@@ -9,6 +9,7 @@ ru:
       #ckeditor/attachment_file: ckeditor/attachment_file
       #ckeditor/picture: ckeditor/picture
       batch: 'Партия'
+      case_color: 'Цвет чехла'
       cash_drawer: 'Касса'
       cash_shift: 'Кассовая смена'
       category: Категория
@@ -134,6 +135,8 @@ ru:
 
       device:
         app_store_pass: 'Пароль на учетную запись в App Store'
+        case_color: :activerecord.models.case_color
+        case_color_id: :activerecord.models.case_color
         client: :activerecord.models.client
         client_id: :activerecord.models.client
         client_notified: Клиент уведомлён
@@ -439,6 +442,7 @@ ru:
     created_at: Время создания
     color: Цвет
     code: 'Код'
+    color: 'Цвет'
     comment: Комментарий
     content: Содержание
     created_at: Время создания
@@ -540,6 +544,17 @@ ru:
   batches:
     errors:
       feature_exists: 'Характеристика уже существует'
+
+  case_colors:
+    created: 'Цвет чехла создан'
+    updated: 'Цвет чехла изменён'
+    link: :case_colors.index.title
+    index:
+      title: 'Цвета чехлов'
+    edit:
+      title: 'Редактирование Цвета чехла'
+    new:
+      title: 'Новый Цвет чехла'
 
   cash_drawers:
     created: 'Касса создана'

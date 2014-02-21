@@ -30,6 +30,8 @@
   - if @device.new_record? or @device.user_id == current_user.id
     = f.input :app_store_pass, required: @device.new_record?
 
+  = f.association :case_color, as: :radio_buttons, collection: CaseColor.ordered_by_name, label_method: lambda{|c|case_color_presentation(c)}
+
   = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)
 
   = f.input :tech_notice, input_html: {rows: 5} if can? :write_tech_notice, @device

@@ -166,6 +166,24 @@
   }
 }
 
+#card_sign_in {
+  display: none;
+  text-align: center;
+  padding-top: 20px;
+  font-size: 50px;
+  font-weight: bold;
+  color: red;
+  z-index: 1055;
+  a {
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+    &:hover {
+      color: #f5f5f5;
+    }
+  }
+}
+
 #card_scanner {
   display: none;
   z-index: 1055;
@@ -182,7 +200,7 @@
 
 #barcode_reader {
   display: none;
-  z-index: 1045;
+  z-index: 1055;
   #barcode_reader_inner{
     display: none;
     position: fixed;
@@ -196,7 +214,7 @@
 
 #client_card_reader{
   display: none;
-  z-index: 1045;
+  z-index: 1055;
   #cancel_client_card_scan{
     position: fixed;
     left: 40%;

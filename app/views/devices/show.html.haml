@@ -27,6 +27,9 @@
     %td= Device.human_attribute_name :serial_number
     %td= @device.serial_number
   %tr
+    %td= Device.human_attribute_name :case_color
+    %td= case_color_presentation @device.case_color
+  %tr
     %td= Device.human_attribute_name :client_id
     %td= link_to @device.client.presentation, @device.client
 

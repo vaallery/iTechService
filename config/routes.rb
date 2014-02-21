@@ -162,6 +162,8 @@ ItechService::Application.routes.draw do
   resources :installment_plans
   resources :cash_operations, only: [:index, :new, :create]
   resources :cash_drawers
+  resources :repair_groups
+  resources :case_colors, except: :show
 
   resources :cash_shifts, only: :show do
     post :close, on: :member
@@ -178,13 +180,10 @@ ItechService::Application.routes.draw do
     get 'make_defect_sp', on: :collection
   end
 
-  resources :repair_groups
-
   resources :repair_services do
     get :choose, on: :collection, defaults: {format: :js}
     get :select, on: :member, defaults: {format: :js}
   end
-
 
   wiki_root '/wiki'
 

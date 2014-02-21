@@ -1,0 +1,15 @@
+= auto_header_tag
+%table.table.table-hover
+  %thead
+    %tr
+      %th= CaseColor.human_attribute_name(:id)
+      %th= CaseColor.human_attribute_name(:color)
+      %th
+  %tbody
+    - @case_colors.each do |case_color|
+      %tr
+        %td= case_color.id
+        %td= case_color_presentation(case_color)
+        %td.btn-group
+          = link_to_edit_small case_color
+          = link_to_destroy_small case_color

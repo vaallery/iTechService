@@ -61,6 +61,7 @@
         = menu_item t('gift_certificates.link'), gift_certificates_path
         = menu_item t('stolen_phones.link'), stolen_phones_path
         = menu_item t('device_types.link', default: 'Device types'), device_types_path if can? :manage, DeviceType
+        = menu_item t('case_colors.link'), case_colors_path if can? :manage, CaseColor
         = drop_down_divider
         = menu_item t('bonus_types.index.title'), bonus_types_path if can? :manage, BonusType
         = menu_item t('client_categories.index.title'), client_categories_path if can? :manage, ClientCategory

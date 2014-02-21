@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140220050359) do
+ActiveRecord::Schema.define(:version => 20140221023102) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -62,6 +62,13 @@ ActiveRecord::Schema.define(:version => 20140220050359) do
   end
 
   add_index "bonuses", ["bonus_type_id"], :name => "index_bonuses_on_bonus_type_id"
+
+  create_table "case_colors", :force => true do |t|
+    t.string   "name"
+    t.string   "color"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "cash_drawers", :force => true do |t|
     t.string   "name"
@@ -263,8 +270,10 @@ ActiveRecord::Schema.define(:version => 20140220050359) do
     t.string   "app_store_pass"
     t.text     "tech_notice"
     t.integer  "sale_id"
+    t.integer  "case_color_id"
   end
 
+  add_index "devices", ["case_color_id"], :name => "index_devices_on_case_color_id"
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
   add_index "devices", ["done_at"], :name => "index_devices_on_done_at"
