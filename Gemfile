@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 #source 'http://gems.rubyforge.org'
 #ruby '2.0.0'
-gem 'rails', '3.2.16'
+gem 'rails', '3.2.17'
 gem 'unicorn', '~> 4.6.2'
 gem 'pg', '~> 0.14.1'
 gem 'thin', '~> 1.5.0'
