@@ -1062,6 +1062,7 @@ ru:
     created: 'Быстрый заказ создан'
     updated: 'Быстрый заказ изменён'
     link: :quick_orders.index.title
+    title: 'Быстрый заказ №%{num}'
     index:
       title: 'Быстрые заказы'
     new:
@@ -1069,6 +1070,7 @@ ru:
     edit:
       title: 'Редактирование Быстрого заказа'
 
+    set_done: "Выполнен"
   quick_tasks:
     created: 'Быстрая задача создана'
     updated: 'Быстрая задача изменена'

@@ -1,25 +1,27 @@
 - model_class = QuickOrder
 .page-header
-  %h1=t '.title', :default => model_class.model_name.human.titleize
+  %h1
+    = link_back_to_index
+    = t 'quick_orders.title', num: @quick_order.number_s
 
-%p
-  %strong= model_class.human_attribute_name(:number) + ':'
-  %br
-  = @quick_order.number
-%p
-  %strong= model_class.human_attribute_name(:client_name) + ':'
-  %br
-  = @quick_order.client_name
-%p
-  %strong= model_class.human_attribute_name(:contact_phone) + ':'
-  %br
-  = @quick_order.contact_phone
-%p
-  %strong= model_class.human_attribute_name(:comment) + ':'
-  %br
-  = @quick_order.comment
+%table.attributes_table
+  %tr
+    %td= model_class.human_attribute_name(:number)
+    %td= @quick_order.number
+  %tr
+    %td= model_class.human_attribute_name(:client_name)
+    %td= @quick_order.client_name
+  %tr
+    %td= model_class.human_attribute_name(:contact_phone)
+    %td= @quick_order.contact_phone
+  %tr
+    %td= model_class.human_attribute_name(:quick_tasks)
+    %td= @quick_order.quick_tasks.map(&:name).join(tag(:br)).html_safe
+  %tr
+    %td= model_class.human_attribute_name(:comment)
+    %td= @quick_order.comment
 
 .form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), quick_orders_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_quick_order_path(@quick_order), :class => 'btn'
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), quick_order_path(@quick_order), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'
+  = link_to_edit @quick_order
+  = link_to t('quick_orders.set_done'), set_done_quick_order_path(@quick_order), method: :put, class: 'btn btn-primary' unless @quick_order.is_done
+  = link_to_destroy @quick_order

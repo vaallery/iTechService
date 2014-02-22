@@ -10,7 +10,7 @@
   %tbody
     - @quick_orders.each do |quick_order|
       %tr{class: quick_order.is_done ? 'success' : ''}[quick_order]
-        %td= link_to quick_order.number, quick_order_path(quick_order)
+        %td= link_to quick_order.number_s, quick_order_path(quick_order)
         %td= quick_order.client_name
         %td= quick_order.contact_phone
         %td= quick_order.comment

@@ -19,6 +19,10 @@ class QuickOrder < ActiveRecord::Base
     update_attributes is_done: true
   end
 
+  def number_s
+    sprintf('%04d', number)
+  end
+
   private
 
   def set_number
