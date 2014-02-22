@@ -160,7 +160,6 @@ scanTicket = ->
   $('#barcode_reader').fadeIn().addClass('in')
   $(document).on 'keydown', (event)->
     if $('#barcode_reader:visible').length > 0
-      console.log event.keyCode
       if event.keyCode is 13 and scaned_code isnt ''
         ticket_number = scaned_code.replace(/^0+/, '')
         ticket_number = ticket_number[0..-2]
@@ -180,7 +179,6 @@ window.auth_timeout = window.auth_count = Number($('#profile_link').data('timeou
 #if $('#profile_link').data('role') is 'software'
 setInterval (->
   auth_count -= 1 if auth_count > 0
-  console.log auth_count
   if auth_count < 1 and $('#card_sign_in.in:visible').length is 0
     $('#lock_session').click()
 ), 1000

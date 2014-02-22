@@ -1,3 +1,4 @@
+-#.span2= link_to glyph(:client_card) + t('sales.enter_client_card').html_safe, '#', id: 'sale_enter_client_card', class: 'btn btn-info', disabled: !@sale.is_new?
 .span2= link_to image_tag('client_card_w.png')+t('sales.enter_client_card').html_safe, '#', id: 'sale_enter_client_card', class: 'btn btn-info', disabled: !@sale.is_new?
 .span2= link_to image_tag('client_find_w.png')+t('sales.find_client').html_safe, clients_path(search: true), remote: true, id: 'sale_find_client', class: 'btn btn-info', disabled: !@sale.is_new?
 .span2= link_to_manual_discount @sale
