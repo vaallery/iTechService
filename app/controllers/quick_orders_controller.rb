@@ -2,12 +2,11 @@ class QuickOrdersController < ApplicationController
   authorize_resource
 
   def index
-    @quick_orders = QuickOrder.month_ago.created_desc.page params[:page]
+    @quick_orders = QuickOrder.in_month.undone.created_desc.page params[:page]
 
     respond_to do |format|
       format.html # index.html.erb
       format.js { render 'shared/index' }
-      format.json { render json: @quick_orders }
     end
   end
 
@@ -16,7 +15,6 @@ class QuickOrdersController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @quick_order }
     end
   end
 
@@ -25,7 +23,6 @@ class QuickOrdersController < ApplicationController
 
     respond_to do |format|
       format.html { render 'form' }
-      format.json { render json: @quick_order }
     end
   end
 
@@ -33,7 +30,6 @@ class QuickOrdersController < ApplicationController
     @quick_order = QuickOrder.find(params[:id])
     respond_to do |format|
       format.html { render 'form' }
-      format.json { render json: @quick_order }
     end
   end
 
@@ -43,10 +39,8 @@ class QuickOrdersController < ApplicationController
     respond_to do |format|
       if @quick_order.save
         format.html { redirect_to quick_orders_path, notice: t('quick_orders.created') }
-        format.json { render json: @quick_order, status: :created, location: @quick_order }
       else
         format.html { render 'form' }
-        format.json { render json: @quick_order.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -57,10 +51,22 @@ class QuickOrdersController < ApplicationController
     respond_to do |format|
       if @quick_order.update_attributes(params[:quick_order])
         format.html { redirect_to quick_orders_path, notice: t('quick_orders.updated') }
-        format.json { head :no_content }
       else
         format.html { render 'form' }
-        format.json { render json: @quick_order.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def set_done
+    @quick_order = QuickOrder.find(params[:id])
+
+    respond_to do |format|
+      if @quick_order.set_done
+        format.html { redirect_to quick_orders_path, notice: t('quick_orders.updated') }
+        format.js
+      else
+        format.html { render 'form' }
+        format.js { render nothing: true }
       end
     end
   end
@@ -71,7 +77,6 @@ class QuickOrdersController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to quick_orders_url }
-      format.json { head :no_content }
     end
   end
 end

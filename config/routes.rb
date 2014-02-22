@@ -164,8 +164,11 @@ ItechService::Application.routes.draw do
   resources :cash_drawers
   resources :repair_groups
   resources :case_colors, except: :show
-  resources :quick_orders
   resources :quick_tasks, except: :show
+
+  resources :quick_orders do
+    put :set_done, on: :member
+  end
 
   resources :cash_shifts, only: :show do
     post :close, on: :member
@@ -203,6 +206,7 @@ ItechService::Application.routes.draw do
       end
       resources :items, only: [:index, :show]
       resources :devices, only: [:show, :update]
+      resources :quick_orders, only: [:create]
     end
   end
 

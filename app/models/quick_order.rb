@@ -2,7 +2,8 @@ class QuickOrder < ActiveRecord::Base
 
   scope :id_asc, order('id asc')
   scope :created_desc, order('created_at desc')
-  scope :month_ago, where(created_at: 1.month.ago..DateTime.current)
+  scope :in_month, where(created_at: 1.month.ago..DateTime.current)
+  scope :undone, where(is_done: false)
 
   belongs_to :user
   has_and_belongs_to_many :quick_tasks
@@ -12,6 +13,10 @@ class QuickOrder < ActiveRecord::Base
   after_initialize do
     self.user_id ||= User.current.try(:id)
     self.is_done ||= false
+  end
+
+  def set_done
+    update_attributes is_done: true
   end
 
   private
