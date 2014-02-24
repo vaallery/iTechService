@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140221092413) do
+ActiveRecord::Schema.define(:version => 20140224022045) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -822,6 +822,18 @@ ActiveRecord::Schema.define(:version => 20140221092413) do
 
   add_index "store_items", ["item_id"], :name => "index_store_items_on_item_id"
   add_index "store_items", ["store_id"], :name => "index_store_items_on_store_id"
+
+  create_table "store_products", :force => true do |t|
+    t.integer  "store_id"
+    t.integer  "product_id"
+    t.integer  "warning_quantity"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "store_products", ["product_id", "store_id"], :name => "index_store_products_on_product_id_and_store_id"
+  add_index "store_products", ["product_id"], :name => "index_store_products_on_product_id"
+  add_index "store_products", ["store_id"], :name => "index_store_products_on_store_id"
 
   create_table "stores", :force => true do |t|
     t.string   "name"

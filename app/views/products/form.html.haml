@@ -26,6 +26,14 @@
           = ff.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
           = ff.association :location, label_method: :full_name
 
+      .control-group
+        %label.control-label= Product.human_attribute_name :warning_quantities
+        .controls
+          %table#store_products.form-inline
+            = f.simple_fields_for :store_products do |ff|
+              = render 'store_product_fields', f: ff
+          = link_to_add_fields t('.add_store'), '#store_products', f, :store_products
+
     - if @product.feature_accounting
       #items.tab-pane
         %table.table.table-condensed

@@ -1,0 +1,4 @@
+%tr.store_product.fields
+  %td= f.association :store, label: false
+  %td= f.input :warning_quantity, label: false, input_html: {class: 'input-mini'}
+  %td.action= link_to_remove_fields f

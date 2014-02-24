@@ -1,0 +1,7 @@
+!!!
+%html{style: "font-family:'Helvetica-Neue', 'Helvetica', sans-serif;"}
+  %head
+    %meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
+
+  %body
+    = t 'mail.remnants.warning_text', product: @product.name, store: @store.name, quantity: @product.quantity_in_store(@store)

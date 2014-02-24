@@ -297,6 +297,7 @@ ru:
         related_products: 'Сопутствующие продукты'
         related_product_groups: 'Сопутствующие группы продуктов'
         quantity_threshold: 'Пороговое количество'
+        warning_quantities: 'Количество для уведомления'
 
       product_category:
         feature_types: "Типы характеристик"
@@ -1017,6 +1018,7 @@ ru:
     updated: "Продукт изменён"
     form:
       attributes: 'Атрибуты'
+      add_store: "Добавить склад"
     edit:
       title: "Редактирование Продукта"
     index:
@@ -1426,6 +1428,9 @@ ru:
   mail:
     movement:
       subject: "Новый девайс %{device}"
+    remnants:
+      warn_subject: 'Заканчивается %{product}'
+      warning_text: 'На складе %{store} осталось %{quantity} %{product}'
 
   errors:
     nothing_found: Ничего не найдено

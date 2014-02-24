@@ -20,6 +20,7 @@ class Store < ActiveRecord::Base
   has_many :items, through: :store_items
   has_many :products, through: :items
   has_and_belongs_to_many :price_types
+  has_many :store_products, dependent: :destroy
 
   delegate :name, to: :department, prefix: true, allow_nil: true
 

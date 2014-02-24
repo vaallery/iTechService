@@ -15,6 +15,8 @@ class StoreItem < ActiveRecord::Base
   validates_uniqueness_of :item_id, scope: :store_id
   validates_numericality_of :quantity, only_integer: true
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
+  after_save :warn_of_low_remnants
+  before_destroy :warn_of_low_remnants
 
   def self.search(params)
     store_items = self.scoped
@@ -49,6 +51,16 @@ class StoreItem < ActiveRecord::Base
         store_item.add amount
       else
         StoreItem.create store_id: dst_store.id, item_id: item_id, quantity: amount
+      end
+    end
+  end
+
+  private
+
+  def warn_of_low_remnants
+    if (warning_quantity = product.warning_quantity_for_store(store)).present?
+      if product.quantity_in_store(store).pred <= warning_quantity
+        RemnantsMailer.delay.warning(product, store)
       end
     end
   end
