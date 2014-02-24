@@ -1135,6 +1135,7 @@ ru:
     few_remnants_spare_parts: 'Заканчивающиеся запчасти'
 
     remnants: "Остатки"
+    payments_report: "Отчёт по платежам"
   revaluation_acts:
     created: 'Акт Переоценки создан'
     updated: 'Акт Переоценки изменён'

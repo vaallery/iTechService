@@ -1,0 +1,39 @@
+%table#payments_report.table.table-bordered.table-hover
+  %caption
+    %h4= t 'reports.payments_report'
+  %thead
+    %tr
+      %th.center= Payment.human_attribute_name :kind
+      %th.center= Payment.human_attribute_name :value
+      %th.center= t('attributes.quantity')
+  %tbody
+    - @report[:payment_kinds].each_pair do |kind, value|
+      %tr{class: kind == 'cash' ? '' : 'detailable'}
+        %td= t "payments.kinds.#{kind}"
+        %td.number= human_currency value[:sum], false
+        %td= value[:qty]
+      - unless kind == 'cash'
+        - value[:payments].each do |payment|
+          %tr.details
+            %td
+              - if kind == 'trade_in'
+                %strong= "#{Payment.human_attribute_name(:device_name)}: "
+                = payment[:device_name]
+                %br
+                %strong= "#{Payment.human_attribute_name(:device_number)}: "
+                = payment[:device_number]
+                %br
+                %strong= "#{Payment.human_attribute_name(:client_info)}: "
+                = payment[:client_info]
+                %br
+                %strong= "#{Payment.human_attribute_name(:appraiser)}: "
+                = payment[:appraiser]
+              - else
+                = payment[:bank]
+            %td.number= human_currency payment[:value], false
+            %td
+  %tfoot
+    %tr
+      %td= t 'total'
+      %td.number= human_currency @report[:payments_sum], false
+      %td= @report[:payments_qty]

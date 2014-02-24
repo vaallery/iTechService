@@ -13,7 +13,7 @@ class Payment < ActiveRecord::Base
   belongs_to :bank
   belongs_to :gift_certificate
 
-  delegate :balance, :nominal, to: :gift_certificate, prefix: true, allow_nil: true
+  delegate :balance, :nominal, :number, to: :gift_certificate, prefix: true, allow_nil: true
   delegate :name, to: :bank, prefix: true, allow_nil: true
   delegate :is_return, to: :sale
 
@@ -46,6 +46,20 @@ class Payment < ActiveRecord::Base
 
   def is_by_bank?
     %W[card credit].include? kind
+  end
+
+  def attributes_hash
+    result = {}
+    result[:value] = value
+    result[:bank] = bank_name if is_by_bank?
+    result[:gift_certificate] = gift_certificate_number if is_gift_certificate?
+    if is_trade_in?
+      result[:device_name] = device_name
+      result[:device_number] = device_number
+      result[:client_info] = client_info
+      result[:appraiser] = appraiser
+    end
+    result
   end
 
   private

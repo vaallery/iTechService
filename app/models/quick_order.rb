@@ -2,7 +2,7 @@ class QuickOrder < ActiveRecord::Base
 
   scope :id_asc, order('id asc')
   scope :created_desc, order('created_at desc')
-  scope :in_month, where(created_at: 1.month.ago..DateTime.current)
+  scope :in_month, where('created_at > ?', 1.month.ago)
   scope :undone, where(is_done: false)
 
   belongs_to :user

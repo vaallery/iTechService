@@ -21,7 +21,8 @@
           %li= link_to t('reports.tasks_report'), '#', remote: true, data: { report: 'tasks_report' }
           %li= link_to t('reports.clients_report'), '#', remote: true, data: { report: 'clients_report' }
           %li= link_to t('reports.tasks_durations_report'), '#', remote: true, data: { report: 'tasks_durations_report' }
-          %li= link_to t('reports.sales_report'), '#', remote: true, data: { report: 'sales_report' }
+          %li= link_to t('reports.payments_report'), '#', remote: true, data: { report: 'payments_report' }
+          -#%li= link_to t('reports.sales_report'), '#', remote: true, data: { report: 'sales_report' }
           %li= link_to t('reports.devices_movements_report'), '#', remote: true, data: { report: 'devices_movements_report' }
           - if can? :manage, Salary
             %li= link_to t('reports.salary_report'), '#', remote: true, data: { report: 'salary_report' }

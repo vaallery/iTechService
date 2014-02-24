@@ -2,7 +2,7 @@ class QuickOrdersController < ApplicationController
   authorize_resource
 
   def index
-    @quick_orders = QuickOrder.in_month.undone.created_desc.page params[:page]
+    @quick_orders = QuickOrder.in_month.undone.created_desc.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

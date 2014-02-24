@@ -1,15 +1,15 @@
 %ul.breadcrumb
-  - if @current_device_type.present?
+  - if @report[:current_device_type].present?
     %li
       = link_to icon_tag(:home), reports_path(report: 'device_types_report',
                     start_date: @start_date.strftime('%d.%m.%Y'), end_date: @end_date.strftime('%d.%m.%Y'))
       %span.divider /
-    - @current_device_type.ancestors.each do |device_type|
+    - @report[:current_device_type].ancestors.each do |device_type|
       %li
         = link_to device_type.full_name, reports_path(report: 'device_types_report', device_type: device_type.id,
                               start_date: @start_date.strftime('%d.%m.%Y'), end_date: @end_date.strftime('%d.%m.%Y'))
         %span.divider /
-    %li.active= @current_device_type.full_name
+    %li.active= @report[:current_device_type].full_name
 
   - else
     %li.active= icon_tag(:home)
