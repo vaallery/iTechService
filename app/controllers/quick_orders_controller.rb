@@ -15,6 +15,12 @@ class QuickOrdersController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.pdf do
+        filename = "quick_order_#{@quick_order.number}.pdf"
+        pdf = QuickOrderPdf.new @quick_order, view_context
+        print_ticket(pdf, filename) if params[:print]
+        send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
+      end
     end
   end
 
@@ -79,4 +85,13 @@ class QuickOrdersController < ApplicationController
       format.html { redirect_to quick_orders_url }
     end
   end
+
+  private
+
+  def print_ticket(pdf, filename)
+    filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
+    pdf.render_file filepath
+    system 'lp', filepath
+  end
+
 end

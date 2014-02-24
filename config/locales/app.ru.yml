@@ -1297,7 +1297,8 @@ ru:
     address2: 'Океанский проспект, 90'
     check_status: 'Вы можете проверить статус устройства по адресу: www.itechstore.ru/check.'
     check_status_order: 'Вы можете проверить статус заказа по адресу: www.itechstore.ru/check.'
-    contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
+    #contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
+    contact_phone: 'Телефон для связи: %{number}'
     email: 'e-mail: info@itechstore.ru'
     link: Талон
     notice: 'Сохраняйте этот талон до получения Вашего устройства.'
