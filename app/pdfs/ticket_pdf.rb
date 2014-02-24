@@ -57,8 +57,9 @@ class TicketPdf < Prawn::Document
       text "№ #{@device.ticket_number}", align: :center, inlign_format: true, style: :bold
     end
     text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
-    move_down 20
+    move_down 5
     text @device.client_short_name
+    text @device.client.human_phone_number
     move_down 5
     text @view.t('tickets.operations_list')
     text @device.tasks.map{|t|t.name}.join(', ')
