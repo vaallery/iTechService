@@ -1,0 +1,31 @@
+.modal-header
+  %h3
+    = button_to_close_modal
+    = t 'sales.choose_title'
+
+.modal-body
+  = form_tag sales_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
+    = hidden_field_tag :form_name, params[:form_name]
+    = hidden_field_tag :table_name, params[:table_name]
+    .input-append
+      = text_field_tag :search, params[:search], id: 'search_sale_input', class: 'search-query input-small', placeholder: t('sales.index.sale_search_placeholder'), autofocus: true
+      %span.add-on.btn.clear_search_input
+        %i.icon-remove
+
+  %table.table.table-condensed
+    %thead
+      %tr
+        %th= Sale.human_attribute_name :id
+        %th= Sale.human_attribute_name :date
+        %th= Sale.human_attribute_name :sum
+    %tbody
+      - @sales.each do |sale|
+        - options = {}
+        - case params[:act]
+          - when 'return_check' then url = return_check_sale_path(sale)
+          - when 'copy' then url = print_check_sale_path(sale, copy: true); options.store :remote, true
+          - else url = edit_sale_path(sale)
+        %tr
+          %td= link_to sale.id, url, options
+          %td= link_to human_datetime(sale.date), url, options
+          %td= link_to human_currency(sale.calculation_amount), url, options

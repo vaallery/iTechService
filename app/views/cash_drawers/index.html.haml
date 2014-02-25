@@ -1,0 +1,20 @@
+- model_class = CashDrawer
+= auto_header_tag
+- if can? :manage, CashDrawer
+  %table.table.table-hover
+    %thead
+      %tr
+        %th= model_class.human_attribute_name(:id)
+        %th= model_class.human_attribute_name(:name)
+        %th= model_class.human_attribute_name(:department)
+        %th
+    %tbody
+      - @cash_drawers.each do |cash_drawer|
+        %tr
+          %td= link_to cash_drawer.id, cash_drawer_path(cash_drawer)
+          %td= link_to cash_drawer.name, cash_drawer_path(cash_drawer)
+          %td= cash_drawer.department_name
+          %td.btn-group
+            = link_to_show_small cash_drawer
+            = link_to_edit_small cash_drawer
+            = link_to_destroy_small cash_drawer

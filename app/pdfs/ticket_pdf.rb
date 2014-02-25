@@ -26,6 +26,7 @@ class TicketPdf < Prawn::Document
     font_size 10 do
       text @view.t('tickets.site'), indent_paragraphs: 70
       text @view.t('tickets.email'), indent_paragraphs: 70
+      text Setting.get_value(:city), indent_paragraphs: 70
       text Setting.get_value(:address), indent_paragraphs: 70
       text Setting.get_value(:schedule), indent_paragraphs: 70
     end
@@ -35,7 +36,7 @@ class TicketPdf < Prawn::Document
     end
     text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
     move_down 5
-    text @device.user_short_name
+    text @view.t('tickets.user', name: @device.user_short_name)
     move_down 5
     text Setting.get_value(:contact_phone)
     move_down 5
@@ -56,13 +57,15 @@ class TicketPdf < Prawn::Document
       text "№ #{@device.ticket_number}", align: :center, inlign_format: true, style: :bold
     end
     text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
-    move_down 20
+    move_down 5
     text @device.client_short_name
+    text @device.client.human_phone_number
     move_down 5
     text @view.t('tickets.operations_list')
-    text @device.tasks.map{|t|t.id}.join(', ')
+    text @device.tasks.map{|t|t.name}.join(', ')
     move_down 5
-    text @device.user_short_name
+    text @view.t('tickets.user', name: @device.user_short_name)
+    barcode
   end
 
   private

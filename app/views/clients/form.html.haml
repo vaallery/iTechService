@@ -9,6 +9,7 @@
   = f.input :phone_number
   = f.input :contact_phone
   = f.input :email
+  = f.input :category, collection: client_categories_for_select if can? :change_category, @client
   = f.input :card_number
   #client_questionnaire_input{class: @client.card_number.blank? ? 'hidden' : ''}
     = f.input :email
@@ -31,10 +32,12 @@
           = t('destroy')
 
   = f.input :admin_info, input_html: {rows: 5} if current_user.any_admin?
-  = f.input :comment, as: 'text', input_html: {rows: 5}
+  .control-group
+    %label.control-label= Client.human_attribute_name :comment
+    .controls= text_area_tag 'client[comment]', nil, rows: 5, class: 'input-xlarge'
 
   .control-group
-    %label.control-label= t Client.human_attribute_name(:comments)
+    %label.control-label= Client.human_attribute_name(:comments)
     .controls= render @client.comments
 
   .form-actions

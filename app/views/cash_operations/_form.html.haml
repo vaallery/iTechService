@@ -1,0 +1,11 @@
+= simple_form_for(@cash_operation) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :cash_shift
+    = f.association :user
+    = f.input :is_out
+    = f.input :value
+
+  .form-actions
+    = f.button :submit

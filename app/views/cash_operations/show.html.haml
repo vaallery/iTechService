@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Cash shift:
+  = @cash_operation.cash_shift
+%p
+  %b User:
+  = @cash_operation.user
+%p
+  %b Is out:
+  = @cash_operation.is_out
+%p
+  %b Value:
+  = @cash_operation.value
+
+= link_to 'Edit', edit_cash_operation_path(@cash_operation)
+\|
+= link_to 'Back', cash_operations_path

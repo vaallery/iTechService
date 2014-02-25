@@ -1,8 +1,4 @@
-
 jQuery ->
-
-  $('.device_tasks_toggle').click ->
-    $(this).parents('.device_row').nextAll('.device_task_row.success').toggle()
 
   $('#dashboard_navigation a').click ->
     $(document).ajaxSend (event, xhr, options)->
@@ -29,3 +25,6 @@ jQuery ->
     $this = $(this)
     $('#selected_report span').text $this.text()
     $('#reports_filter #report').val $this.data('report')
+
+$(document).on 'click', '.device_tasks_toggle', ->
+  $(this).parents('.device_row').nextAll('.device_task_row.success').toggle()

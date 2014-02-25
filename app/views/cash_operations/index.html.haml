@@ -1,0 +1,19 @@
+.page-header
+  %h1
+    = link_back_to_index
+    Listing cash_operations
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th Cash shift
+      %th User
+      %th Value
+  %tbody
+    - @cash_operations.each do |cash_operation|
+      %tr
+        %td= cash_operation.cash_shift_id
+        %td= cash_operation.user_short_name
+        %td= "#{cash_operation.is_out ? '-' : ''} #{human_currency(cash_operation.value, false)}"
+
+= paginate @cash_operations

@@ -1,0 +1,11 @@
+:plain
+  hideModal();
+- if @sale.errors.empty?
+  :plain
+    $('#sale_form_content').html("#{j(render('sales/form_content'))}");
+    $('#sale_left_panel').html("#{j(render('sales/form_left_panel'))}");
+    $('#sale_bottom_row').html("#{j(render('sales/form_bottom_panel'))}");
+    history.pushState(null, "#{content_for?(:title) ? yield(:title) : 'iTech Service'}", "#{edit_sale_path(@sale)}");
+- else
+  :plain
+    $('#flash_place').html("#{j(bootstrap_flash)}");

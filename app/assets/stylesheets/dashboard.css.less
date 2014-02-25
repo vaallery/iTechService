@@ -135,8 +135,12 @@
 }
 
 #reports_filter{
+  margin-top: 20px;
   span{
     margin-bottom: 0;
+  }
+  button{
+    margin: 0;
   }
 }
 
@@ -173,5 +177,19 @@
     .duration{
       width: 30%;
     }
+  }
+  tbody>tr:hover{
+    td.warning{
+      background-color: #faf2cc;
+    }
+    td.error{
+      background-color: #ebcccc;
+    }
+  }
+  td.warning{
+    background-color: #fcf8e3;
+  }
+  td.error{
+    background-color: #f2dede;
   }
 }

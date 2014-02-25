@@ -133,7 +133,7 @@ class UsersController < ApplicationController
   end
 
   def rating
-    @users = User.active.id_asc
+    @users = User.active.staff.id_asc
   end
 
   def create_duty_day

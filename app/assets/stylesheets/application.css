@@ -14,5 +14,6 @@
  *= require bootstrap-colorpicker
  *= require datepicker
  *= require bootstrap-datetimepicker.min
+ *= require customicons
  *= require_tree .
  */

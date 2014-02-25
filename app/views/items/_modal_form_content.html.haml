@@ -1,0 +1,13 @@
+= simple_form_for @item, html: {class: 'form-horizontal', remote: true} do |f|
+  .modal-header
+    = button_to_close_modal
+    %h3
+      = @item.name
+      %small= @item.barcode_num
+
+  .modal-body
+    = f.simple_fields_for :features do |ff|
+      = ff.input :value, label: ff.object.name
+
+  .modal-footer
+    = submit_button f

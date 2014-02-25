@@ -1,0 +1,4 @@
+:plain
+  $("#modal_form").modal("hide");
+  $("#product_group_#{@product_group.id}").attr("title", "#{j(@product_group.name)}");
+  $("#product_group_#{@product_group.id}>a").text("#{j(@product_group.name)}");

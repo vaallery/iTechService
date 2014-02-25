@@ -1,37 +1,6 @@
 # encoding: utf-8
 class Device < ActiveRecord::Base
 
-  belongs_to :user, inverse_of: :devices
-  belongs_to :client, inverse_of: :devices
-  belongs_to :device_type
-  belongs_to :location
-  belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
-  has_many :device_tasks, dependent: :destroy
-  has_many :tasks, through: :device_tasks
-  has_many :history_records, as: :object, dependent: :destroy
-
-  attr_accessible :comment, :serial_number, :imei, :client, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice
-  accepts_nested_attributes_for :device_tasks
-  attr_accessor :service_duration
-
-  delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
-
-  validates_presence_of :ticket_number, :client, :device_type, :location, :device_tasks, :return_at
-  validates_presence_of :app_store_pass, if: :new_record?
-  validates_uniqueness_of :ticket_number
-  validates_length_of :imei, is: 15, allow_blank: true
-  validates_associated :device_tasks
-  
-  before_validation :generate_ticket_number
-  before_validation :validate_security_code
-  before_validation :set_user_and_location
-  before_validation :validate_location
-
-  after_save :update_qty_replaced
-  after_update :device_update_announce
-  after_create :new_device_announce
-  after_create :create_alert
-
   scope :newest, order('created_at desc')
   scope :oldest, order('created_at asc')
   scope :done, where('devices.done_at IS NOT NULL').order('devices.done_at desc')
@@ -45,6 +14,40 @@ class Device < ActiveRecord::Base
   scope :unarchived, where('devices.location_id <> ?', Location.archive_id)
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
+  belongs_to :user, inverse_of: :devices
+  belongs_to :client, inverse_of: :devices
+  belongs_to :device_type
+  belongs_to :item
+  belongs_to :location
+  belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
+  belongs_to :sale, inverse_of: :device
+  belongs_to :case_color
+  has_many :device_tasks, dependent: :destroy
+  has_many :tasks, through: :device_tasks
+  has_many :repair_tasks, through: :device_tasks
+  has_many :repair_parts, through: :repair_tasks
+  has_many :history_records, as: :object, dependent: :destroy
+  accepts_nested_attributes_for :device_tasks
+  delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
+  delegate :department, to: :user
+
+  attr_accessible :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id
+  validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at
+  validates_presence_of :device_type, if: 'item.nil?'
+  validates_presence_of :app_store_pass, if: :new_record?
+  validates_uniqueness_of :ticket_number
+  validates :imei, length: {is: 15}, allow_nil: true
+  validates_associated :device_tasks
+  validate :presence_of_payment
+  before_validation :generate_ticket_number
+  before_validation :validate_security_code
+  before_validation :set_user_and_location
+  before_validation :validate_location
+  after_save :update_qty_replaced
+  after_save :update_tasks_cost
+  after_update :device_update_announce
+  after_create :new_device_announce
+  after_create :create_alert
   after_initialize :set_user_and_location
 
   def as_json(options={})
@@ -240,6 +243,18 @@ class Device < ActiveRecord::Base
     PrivatePub.publish_to '/devices/returning_alert', announcement_id: announcement.id
   end
 
+  def create_filled_sale
+    sale_attributes = { client_id: client_id, sale_items_attributes: {} }
+    device_tasks.paid.each_with_index do |device_task, index|
+      sale_item_attributes = {item_id: device_task.item.id, price: device_task.cost, quantity: 1}
+      sale_attributes[:sale_items_attributes].store index, sale_item_attributes
+      #new_sale.sale_items.build item_id: device_task.item.id, price: device_task.cost, quantity: 1
+    end
+    new_sale = create_sale sale_attributes
+    update_attribute :sale_id, new_sale.id
+    new_sale
+  end
+
   private
 
   def generate_ticket_number
@@ -253,6 +268,16 @@ class Device < ActiveRecord::Base
     if changed_attributes[:replaced].present? and replaced != changed_attributes[:replaced]
       qty_replaced = Device.replaced.where(device_type_id: self.device_type_id)
       self.device_type.update_attribute :qty_replaced, qty_replaced
+    end
+  end
+
+  def update_tasks_cost
+    if location_id_changed? and location.is_done? and repair_tasks.present?
+      repair_tasks.each do |repair_task|
+        if repair_task.device_task.cost == 0
+          repair_task.device_task.update_attribute(:cost, repair_task.device_task.repair_cost)
+        end
+      end
     end
   end
 
@@ -316,6 +341,18 @@ class Device < ActiveRecord::Base
       alert_times.push self.return_at.advance days: -1 if duration > 1440
       alert_times.each { |alert_time| self.delay(run_at: alert_time).returning_alert }
     end
+  end
+
+  def presence_of_payment
+    is_valid = true
+    if location_id_changed? and location.is_archive?
+      if tasks_cost > 0
+        if sale.nil? or !sale.is_posted?
+          errors.add :base, :not_paid
+        end
+      end
+    end
+    is_valid
   end
 
 end

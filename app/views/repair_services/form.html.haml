@@ -1,0 +1,27 @@
+= auto_header_tag @repair_service
+= simple_form_for @repair_service, html: {id: 'repair_service_form', class: 'form-horizontal'} do |f|
+
+  = f.hidden_field :repair_group_id
+  = f.full_error :product_group
+  = f.input :name
+  = f.input :price
+  = f.input :client_info, input_html: {rows: 3}
+
+  %table#spare_parts.table.table-condensed.table-hover
+    %caption
+      %h4= RepairService.human_attribute_name(:spare_parts)
+    %thead
+      %tr
+        %th= t('activerecord.models.product')
+        %th.quantity= SparePart.human_attribute_name :quantity
+        %th.warranty= SparePart.human_attribute_name :warranty_term
+        %th.cost= SparePart.human_attribute_name :price
+        %th.action
+    %tbody= f.simple_fields_for(:spare_parts) { |ff| render 'spare_part_fields', f: ff }
+    %tfoot
+      %tr
+        %td{colspan: 3}= t 'total'
+        %td.total= human_currency @repair_service.total_cost, false
+  = link_to_add_product :repair_service, :spare_parts, true
+
+  .form-actions= submit_button f

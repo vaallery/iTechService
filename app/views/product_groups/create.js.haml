@@ -1,0 +1,8 @@
+:plain
+  $("#modal_form").modal("hide");
+- if @product_group.is_root?
+  :plain
+    element = $("#product_groups").append("#{j(product_groups_tree_tag(@product_group))}");
+    product_groups_tree(element);
+- else
+  :plain

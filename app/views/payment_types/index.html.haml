@@ -1,0 +1,21 @@
+- model_class = PaymentType
+= auto_header_tag
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:kind)
+      %th= model_class.human_attribute_name(:created_at)
+      %th
+
+  - @payment_types.each do |payment_type|
+    %tr
+      %td= link_to payment_type.id, edit_payment_type_path(payment_type)
+      %td= link_to payment_type.name, edit_payment_type_path(payment_type)
+      %td= link_to t("payment_types.kinds.#{payment_type.kind}"), edit_payment_type_path(payment_type)
+      %td= human_datetime payment_type.created_at
+      %td.btn-group
+        = link_to_edit_small payment_type
+        = link_to_destroy_small payment_type

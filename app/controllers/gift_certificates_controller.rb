@@ -1,7 +1,6 @@
 class GiftCertificatesController < ApplicationController
   helper_method :sort_column, :sort_direction
-  load_and_authorize_resource
-  skip_load_resource only: [:index, :issue, :activate]
+  authorize_resource
 
   def index
     @gift_certificates = GiftCertificate.search(params).order(sort_column + ' ' + sort_direction).page params[:page]
@@ -95,11 +94,18 @@ class GiftCertificatesController < ApplicationController
     end
   end
 
+  def find
+    @gift_certificate = GiftCertificate.find_by_number(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def issue
     respond_to do |format|
       if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
         if @gift_certificate.issue
-          msg = flash.now[:notice] = t('gift_certificates.issued', nominal: @gift_certificate.nominal_h)
+          msg = flash.now[:notice] = t('gift_certificates.issued', nominal: human_currency(@gift_certificate.nominal))
           format.html { redirect_to gift_certificates_path, notice: msg }
           format.js { render 'status_changed' }
         else
@@ -120,15 +126,17 @@ class GiftCertificatesController < ApplicationController
       if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
         if @gift_certificate.update_attributes consume: params[:consume].to_i
           msg = flash.now[:notice] = @gift_certificate.used? ?
-                    t('gift_certificates.activated', nominal: @gift_certificate.nominal_h) :
+                    t('gift_certificates.activated', nominal: human_gift_certificate_nominal(@gift_certificate)) :
                     t('gift_certificates.consumed', value: params[:consume], balance: @gift_certificate.balance)
           pdf = GiftCertificatePdf.new @gift_certificate, view_context, params[:consume]
+          filename = "cert_#{@gift_certificate.number}.pdf"
           if Rails.env.production?
-            system 'lp', pdf.render_file(Rails.root.to_s+"/tmp/tickets/cert_#{@gift_certificate.number}.pdf").path
+            filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
+            pdf.render_file filepath
+            system 'lp', filepath
             format.html { redirect_to gift_certificates_path, notice: msg }
           else
-            format.html { send_data pdf.render, filename: "cert_#{@gift_certificate.number}.pdf",
-                                    type: 'application/pdf', disposition: 'inline' }
+            format.html { send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline' }
           end
           format.js { render 'status_changed' }
         else
@@ -149,7 +157,7 @@ class GiftCertificatesController < ApplicationController
 
     respond_to do |format|
       if @gift_certificate.refresh
-        msg = flash.now[:notice] = t('gift_certificates.refreshed', nominal:  @gift_certificate.nominal_h)
+        msg = flash.now[:notice] = t('gift_certificates.refreshed', nominal:  human_gift_certificate_nominal(@gift_certificate))
         format.html { redirect_to gift_certificates_path, notice: msg }
         format.js { render 'status_changed' }
       else

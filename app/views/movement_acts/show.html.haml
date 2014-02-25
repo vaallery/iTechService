@@ -1,0 +1,45 @@
+
+.page-header
+  %h3
+    = link_back_to_index
+    = document_presentation @movement_act
+
+.dl.dl-horizontal
+  - if can? :manage, MovementAct
+    %dt= MovementAct.human_attribute_name :status
+    %dd= status_presentation @movement_act
+    %dt= MovementAct.human_attribute_name :store
+    %dd= link_to @movement_act.store_name, store_path(@movement_act.store)
+    %dt= MovementAct.human_attribute_name :dst_store
+    %dd= link_to @movement_act.dst_store_name, store_path(@movement_act.dst_store)
+  %dt= MovementAct.human_attribute_name :comment
+  %dd= @movement_act.comment.blank? ? '-' : @movement_act.comment
+
+%table#movement_items.table.table-condensed.table-striped.table-bordered
+  %caption
+    %h4= t 'products.index.title'
+  %thead
+    %tr
+      %th.num
+      %th.code= Product.human_attribute_name :code
+      %th.product= t 'activerecord.models.product'
+      - if can? :manage, MovementAct
+        %th.available_quantity= Product.human_attribute_name :quantity_in_store
+      %th.quantity= MovementItem.human_attribute_name :quantity
+  %tbody
+    - @movement_act.movement_items.each_with_index do |movement_item, index|
+      %tr{class: (movement_item.quantity_in_store(@movement_act.store) < movement_item.quantity) ? 'error' : ''}
+        %td.num= index.next
+        %td.code= movement_item.code
+        %td.product
+          = link_to movement_item.name, product_path(movement_item.product)
+          .features= features_presentation movement_item if movement_item
+        - if can? :manage, MovementAct
+          %td.available_quantity= movement_item.quantity_in_store @movement_act.store
+        %td.quantity= movement_item.quantity
+
+.form-actions
+  = link_to_edit @movement_act if can? :edit, @movement_act
+  = button_to_post @movement_act if can? :post, @movement_act# and !@movement_act.is_insufficient?
+  -#= button_to_unpost @@movement_act if can? :unpost, @movement_act
+  = link_to_destroy @movement_act if can? :destroy, @movement_act

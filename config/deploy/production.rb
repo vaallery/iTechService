@@ -1,5 +1,5 @@
 set :stage, :production
-set :deploy_to, '/usr/local/var/www/itech_service'
+set :deploy_to, "/usr/local/var/www/#{application}"
 set :branch, 'master'
 
 # Simple Role Syntax

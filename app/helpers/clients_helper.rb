@@ -38,4 +38,16 @@ module ClientsHelper
     end
   end
 
+  def client_categories_for_select
+    Client::CATEGORIES.to_a.map {|c| [t("clients.categories.#{c[1]}"), c[0]]}
+  end
+
+  def human_client_category(client)
+    client.present? ? t("clients.categories.#{client.category_s}") : ''
+  end
+
+  def client_link(client)
+    client.present? ? link_to(client.short_name, client_path(client)) : ''
+  end
+
 end

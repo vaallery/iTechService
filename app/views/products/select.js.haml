@@ -1,0 +1,37 @@
+- is_product_only = params[:is_product_only] == 'true'
+- if @product.present? and is_product_only or @item.present?
+  - if params[:form] == 'top_salable'
+    $('#top_salable_product_id').val("#{@product.id}");
+    $('#top_salable_product_select').text("#{@product.name}");
+    hideModal();
+  - else
+    $selector = $("##{params[:association]}>tbody");
+    - if is_product_only
+      == if($("tr[data-product=#{@product.id}]:visible", $selector).length > 0){
+    - else
+      == if($("tr[data-item=#{@item.id}]:visible", $selector).length > 0){
+    :plain
+        alert("#{t('documents.errors.product_already_present')}");
+      }
+      else{
+        $selector.append("#{j(product_fields(params[:form], params[:association], is_product_only ? @product : @item, params[:options]))}");
+        enumerate_table('table.enumerable');
+        if($('#repair_service_form').length > 0){
+          calculateTableTotal('#spare_parts', '.cost', '.quantity');
+        }
+        //calculateSaleItemsTotal();
+        if($('#sale_form').length > 0){
+          saveSale();
+          $.get("/products/#{@product.id}/related");
+        }
+        hideModal();
+      }
+- elsif @product.present?
+  :plain
+    $('#product_choose_form .product_row.info').removeClass('info');
+    $("#product_choose_form .product_row[data-product=#{@product.id}]").addClass('info');
+    $('#product_choose_form #selected_product').removeAttr('disabled').val("#{@product.id}");
+  - if @product.feature_accounting
+    :plain
+      $('#product_choose_form  #product_items_table').html("#{j(render('items_table'))}");
+      $('#product_choose_form  #product_items').show();

@@ -3,17 +3,17 @@
     %h4= t 'reports.clients_report'
   %thead
     %tr
-      %th= t Client.human_attribute_name :created_at
+      %th= Client.human_attribute_name :created_at
       %th= t 'activerecord.models.client'
       %th= t 'activerecord.models.device'
   %tbody
     - @report[:new_clients].each do |client|
       %tr
-        %td= human_datetime client.created_at
-        %td= link_to client.presentation, client_path(client)
+        %td= human_datetime client[:created_at]
+        %td= link_to client[:presentation], client_path(client[:id])
         %td
-          - client.devices.where(created_at: @period).each do |device|
-            = link_to device.presentation, device_path(device)
+          - client[:devices].each do |device|
+            = link_to device[:presentation], device_path(device[:id])
             %br
   %tfoot
     %tr

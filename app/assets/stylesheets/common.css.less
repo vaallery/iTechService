@@ -180,3 +180,76 @@ form.button_to{
     display: none;
   }
 }
+
+#card_sign_in {
+  display: none;
+  text-align: center;
+  padding-top: 20px;
+  font-size: 50px;
+  font-weight: bold;
+  color: red;
+  z-index: 1055;
+  a {
+    text-decoration: none;
+    color: #ffffff;
+    cursor: pointer;
+    &:hover {
+      color: #f5f5f5;
+    }
+  }
+}
+
+#card_scanner {
+  display: none;
+  z-index: 1055;
+  #card_scanner_inner{
+    opacity: 1;
+    position: fixed;
+    left: 40%;
+    top: 40%;
+    input{
+      margin-bottom: 0;
+    }
+  }
+}
+
+#barcode_reader {
+  display: none;
+  z-index: 1055;
+  #barcode_reader_inner{
+    display: none;
+    position: fixed;
+    left: 40%;
+    top: 40%;
+    #barcode_field{
+      margin-bottom: none;
+    }
+  }
+}
+
+#client_card_reader{
+  display: none;
+  z-index: 1055;
+  #cancel_client_card_scan{
+    position: fixed;
+    left: 40%;
+    top: 40%;
+  }
+}
+
+#duck_plan_link{
+  margin-left: 10px;
+  font-size: 16px;
+  img{
+    height: 20px;
+    margin-right: 4px;
+    margin-top: -6px;
+  }
+  &:hover>img{
+    height: 24px;
+  }
+}
+
+a>i{
+  margin-right: 4px;
+}

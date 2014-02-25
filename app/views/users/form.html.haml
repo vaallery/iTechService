@@ -81,9 +81,11 @@
                 = t("users.abilities.#{ability}")
             = hidden_field_tag 'user[abilities][]', ''
 
+      = f.association :department, prompt: false
       = f.association :location, label_method: :full_name
       = f.input :password
       = f.input :password_confirmation
       = f.input :card_number
+      = f.input :session_duration
   .form-actions
     = submit_button f

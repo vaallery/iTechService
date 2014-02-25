@@ -59,7 +59,7 @@ body {
   }
 }
 
-#navbar {
+.navbar-static-top {
   margin-top: 27px;
   a.brand {
     text-decoration: none;
@@ -123,29 +123,6 @@ td.align_right {
   &:hover {
     text-decoration: none;
   }
-}
-
-#card_sign_in {
-  display: none;
-  text-align: center;
-  padding-top: 20px;
-  font-size: 50px;
-  font-weight: bold;
-  color: red;
-  z-index: 1045;
-  a {
-    text-decoration: none;
-    color: #ffffff;
-    cursor: pointer;
-    &:hover {
-      color: #f5f5f5;
-    }
-  }
-}
-
-#barcode_reader {
-  display: none;
-  z-index: 1045;
 }
 
 .close_popover_button,
@@ -217,5 +194,20 @@ td.align_right {
   }
   to {
     -webkit-transform: rotate(360deg);
+  }
+}
+
+table>tbody>tr>td.num, table tr>td.number {
+  text-align: right;
+  vertical-align: middle;
+}
+
+.navbar .filter_button {
+  margin: 0;
+}
+
+#resource_table>table {
+  .actions {
+    width: 100px;
   }
 }

@@ -37,9 +37,11 @@ class OrdersController < ApplicationController
       format.json { render json: @order }
       format.pdf do
         pdf = OrderPdf.new @order, view_context
-        system 'lp', pdf.render_file(Rails.root.to_s+"/tmp/tickets/order_#{@order.number}.pdf").path
-        send_data pdf.render, filename: "order_#{@order.number}.pdf",
-                  type: 'application/pdf', disposition: 'inline'
+        filename = "order_#{@order.number}.pdf"
+        filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
+        pdf.render_file filepath
+        system 'lp', filepath
+        send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
       end
     end
   end

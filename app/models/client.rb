@@ -1,16 +1,25 @@
 class Client < ActiveRecord::Base
   include ApplicationHelper
   
-  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :client_characteristic_attributes
+
+  CATEGORIES = {
+    0 => 'usual',
+    1 => 'regular',
+    2 => 'super',
+    3 => 'friend'
+  }
+
+  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :category, :client_characteristic_attributes
 
   has_many :devices, inverse_of: :client, dependent: :destroy
   has_many :orders, as: :customer, dependent: :destroy
   has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
   has_many :history_records, as: :object
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :sale_items, through: :purchases
   belongs_to :client_characteristic
+  has_many :sales, inverse_of: :client
 
-  attr_accessor :comment
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
   accepts_nested_attributes_for :client_characteristic, allow_destroy: true
 
@@ -18,14 +27,17 @@ class Client < ActiveRecord::Base
 
   scope :id_asc, order('id asc')
 
-  validates :name, :phone_number, :full_phone_number, presence: true
-  validates :full_phone_number, uniqueness: true
+  validates_presence_of :name, :phone_number, :full_phone_number, :category
+  validates_uniqueness_of :full_phone_number
+  validates_uniqueness_of :card_number, unless: 'card_number.blank?'
+  validates_inclusion_of :category, in: CATEGORIES.keys
   validates_associated :comments
   validates_associated :client_characteristic
   before_destroy :send_mail
 
   after_initialize do |client|
     client.build_client_characteristic if client.client_characteristic.nil?
+    client.category ||= 0
   end
 
   def self.search params
@@ -34,6 +46,7 @@ class Client < ActiveRecord::Base
       client_q.chomp.split(/\s+/).each do |q|
         clients = clients.where ['LOWER(clients.surname) LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.patronymic) LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q', q: "%#{q.mb_chars.downcase.to_s}%"]
       end
+      #clients = Client.where 'LOWER(clients.surname) LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.patronymic) LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q', q: "%#{client_q.mb_chars.downcase.to_s}%"
     end
     clients
   end
@@ -63,12 +76,11 @@ class Client < ActiveRecord::Base
   end
 
   def purchases_sum
-    #purchases.sum :value
-    0
+    sale_items.all.sum &:sum
   end
 
   def discount_value
-    Discount.for_sum purchases_sum
+    #Discount.for_sum purchases_sum
   end
 
   def creator
@@ -85,6 +97,10 @@ class Client < ActiveRecord::Base
 
   def characteristic
     client_characteristic.present? ? client_characteristic.comment : nil
+  end
+
+  def category_s
+    CATEGORIES[category]
   end
 
   private

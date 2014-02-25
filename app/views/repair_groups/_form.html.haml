@@ -1,0 +1,9 @@
+= simple_form_for(@repair_group) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :ancestry
+
+  .form-actions
+    = f.button :submit

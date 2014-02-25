@@ -1,54 +1,9 @@
 class User < ActiveRecord::Base
 
-  ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin driver]
-  ROLES_FOR_ADMIN = %w[admin software media technician marketing programmer supervisor manager driver]
+  ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin driver synchronizer]
+  ROLES_FOR_ADMIN = %w[admin software media technician marketing supervisor manager driver]
   HELPABLE = %w[software media technician]
   ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet]
-
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :registerable, :rememberable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
-
-  # Setup accessible (or protected) attributes for your model
-  attr_accessible :auth_token, :role, :login, :username, :email, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment
-
-  belongs_to :location
-  has_many :history_records, as: :object
-  has_many :schedule_days, dependent: :destroy
-  has_many :duty_days, dependent: :destroy
-  has_many :orders, as: :customer
-  has_many :announcements, inverse_of: :user
-  has_many :comments
-  has_many :devices, inverse_of: :user
-  has_many :karmas, dependent: :destroy, inverse_of: :user
-  has_many :karma_groups, through: :karmas, uniq: true
-  has_many :bonuses, through: :karma_groups, uniq: true
-  has_many :messages, dependent: :destroy
-  has_many :infos, inverse_of: :recipient, dependent: :destroy
-  has_many :salaries, inverse_of: :user, dependent: :destroy
-  has_many :timesheet_days, inverse_of: :user, dependent: :destroy
-  has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users', uniq: true
-  has_many :installment_plans, inverse_of: :user, dependent: :destroy
-  #has_many :installments, through: :installment_plans
-
-  mount_uploader :photo, PhotoUploader
-
-  attr_accessor :auth_token
-  attr_accessor :login
-  attr_accessor :installment
-  cattr_accessor :current
-
-  accepts_nested_attributes_for :schedule_days, :duty_days, allow_destroy: true, reject_if: :all_blank
-  accepts_nested_attributes_for :karmas, allow_destroy: true
-  accepts_nested_attributes_for :salaries, reject_if: lambda { |attrs| attrs['amount'].blank? or attrs['issued_at'].blank? }
-  accepts_nested_attributes_for :installment_plans, reject_if: lambda { |attrs| (attrs['object'].blank? or attrs['cost'].blank? or attrs['issued_at'].blank?) and (attrs['installments_attributes'].blank?) }
-
-  validates :username, :role, presence: true
-  validates :password, presence: true, confirmation: true, if: :password_required?
-  validates :role, inclusion: { in: ROLES }
-  before_validation :validate_rights_changing
-  before_save :ensure_authentication_token
 
   scope :id_asc, order('id asc')
   scope :ordered, order('position asc')
@@ -66,12 +21,62 @@ class User < ActiveRecord::Base
   scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
   scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
   scope :schedulable, where(schedule: true)
-  scope :staff, where('role <> ?', 'admin')
+  scope :staff, where('role <> ?', 'synchronizer')
   scope :fired, where(is_fired: true)
   scope :active, where(is_fired: [false, nil])
-  scope :for_changing, where(username: %w[vova admin test test_soft test_media test_tech test_market test_manager test_driver])
+  scope :for_changing, where(username: %w[vova admin test test_soft test_media test_tech test_market test_manager])
   scope :exclude, lambda { |user| where('id <> ?', user.is_a?(User) ? user.id : user) }
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
+
+  attr_accessor :login
+  attr_accessor :auth_token
+  cattr_accessor :current
+
+  belongs_to :location
+  belongs_to :department
+  has_many :history_records, as: :object, dependent: :nullify
+  has_many :schedule_days, dependent: :destroy
+  has_many :duty_days, dependent: :destroy
+  has_many :orders, as: :customer, dependent: :nullify
+  has_many :announcements, inverse_of: :user, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :devices, inverse_of: :user
+  has_many :karmas, dependent: :destroy, inverse_of: :user
+  has_many :karma_groups, through: :karmas, uniq: true
+  has_many :bonuses, through: :karma_groups, uniq: true
+  has_many :messages, dependent: :destroy
+  has_many :infos, inverse_of: :recipient, dependent: :destroy
+  has_many :salaries, inverse_of: :user, dependent: :destroy
+  has_many :timesheet_days, inverse_of: :user, dependent: :destroy
+  has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users', uniq: true
+  has_many :installment_plans, inverse_of: :user, dependent: :destroy
+  has_many :sales, inverse_of: :user, dependent: :nullify
+  has_many :movement_acts, dependent: :nullify
+  has_many :stores, through: :department
+
+  mount_uploader :photo, PhotoUploader
+
+  accepts_nested_attributes_for :schedule_days, :duty_days, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :karmas, allow_destroy: true
+  accepts_nested_attributes_for :salaries, reject_if: lambda { |attrs| attrs['amount'].blank? or attrs['issued_at'].blank? }
+  accepts_nested_attributes_for :installment_plans, reject_if: lambda { |attrs| (attrs['object'].blank? or attrs['cost'].blank? or attrs['issued_at'].blank?) and (attrs['installments_attributes'].blank?) }
+
+  delegate :name, to: :department, prefix: true, allow_nil: true
+
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable, :registerable, :rememberable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment, :department_id, :session_duration
+
+  validates_presence_of :username, :role, :department
+  validates :password, presence: true, confirmation: true, if: :password_required?
+  validates :role, inclusion: { in: ROLES }
+  validates_numericality_of :session_duration, only_integer: true, greater_than: 0
+  before_validation :validate_rights_changing
+  before_save :ensure_authentication_token
 
   acts_as_list
 
@@ -140,6 +145,10 @@ class User < ActiveRecord::Base
     self.role == 'driver'
   end
 
+  def synchronizer?
+    role == 'synchronizer'
+  end
+  
   def has_role? role
     if role.is_a? Array
       role.include? self.role
@@ -167,6 +176,13 @@ class User < ActiveRecord::Base
   def full_name
     res = [surname, name, patronymic].join ' '
     res = username if res.blank?
+    res
+  end
+
+  def fio_short
+    res = surname
+    res += " #{name[0]}." unless name.blank?
+    res += " #{patronymic[0]}." unless patronymic.blank?
     res
   end
 
@@ -247,7 +263,13 @@ class User < ActiveRecord::Base
   end
 
   def timeout_in
-    software? ? 30.minutes : 1.day
+    if any_admin?
+      1.minute
+    elsif session_duration.present?
+      session_duration.minutes
+    else
+      30.minutes
+    end
   end
 
   def abilities=(abilities)
@@ -310,7 +332,7 @@ class User < ActiveRecord::Base
 
   def installment=(params)
     if params[:installment_plan_id].present? and params[:value].present? and params[:paid_at].present?
-      if (installment_plan = self.installment_plans.find(params[:installment_plan_id]))
+      if (installment_plan = self.installment_plans.find(params[:installment_plan_id])).present?
         installment_plan.installments.create value: params[:value], paid_at: params[:paid_at]
       end
     end
@@ -333,6 +355,30 @@ class User < ActiveRecord::Base
 
   def timesheet_day(date)
     self.timesheet_days.find_by_date(date)
+  end
+
+  def retail_store
+    stores.retail.first
+  end
+
+  def spare_parts_store
+    stores.spare_parts.first
+  end
+
+  def defect_store
+    stores.defect.first
+  end
+
+  def defect_sp_store
+    stores.defect_sp.first
+  end
+
+  def cash_drawer
+    department.cash_drawers.first
+  end
+
+  def current_cash_shift
+    cash_drawer.try(:current_shift)
   end
 
   private

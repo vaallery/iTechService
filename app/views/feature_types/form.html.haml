@@ -1,0 +1,7 @@
+= auto_header_tag @feature_type
+
+= simple_form_for @feature_type, html: { class: 'form-horizontal' } do |f|
+  = f.input :name
+  = f.input :kind, collection: feature_type_kinds_for_select
+  .form-actions
+    = submit_button f

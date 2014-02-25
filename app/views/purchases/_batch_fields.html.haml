@@ -1,0 +1,11 @@
+%tr.batch_fields.fields
+  %td.num
+  %td.code= f.object.try(:code)
+  %td.product
+    %strong= f.object.name
+    .features= features_presentation f.object
+    = f.hidden_field :item_id
+  %td.quantity= f.number_field :quantity, class: 'input-mini', min: 1, readonly: f.object.feature_accounting
+  %td.price= f.number_field :price, class: 'input-small'
+  %td.sum= text_field_tag :sum, f.object.sum, class: 'input-small', disabled: true
+  %td.action= link_to_remove_fields f

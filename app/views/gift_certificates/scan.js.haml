@@ -3,5 +3,5 @@
 = render 'shared/show_modal_form'
 -#$('#gift_certificate_nominal').text("#{GiftCertificate.human_attribute_name(:nominal)}: #{@gift_certificate.nominal_h}");
 -#$('#gift_certificate_consumed').text("#{GiftCertificate.human_attribute_name(:consumed)}: #{number_to_currency(@gift_certificate.consumed || 0, precision: 0)}");
--#$('#gift_certificate_balance').text("#{t('gift_certificates.balance')}: #{number_to_currency (@gift_certificate.nominal_val - (@gift_certificate.consumed || 0)), precision: 0}");
+-#$('#gift_certificate_balance').text("#{t('gift_certificates.balance')}: #{number_to_currency (@gift_certificate.nominal - (@gift_certificate.consumed || 0)), precision: 0}");
 -#$('#gift_certificate_form').show();

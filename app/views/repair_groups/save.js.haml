@@ -1,0 +1,4 @@
+:plain
+  $('#repair_groups').html("#{j(repair_groups_trees_tag(@repair_groups, @repair_group.try(:id)))}");
+  repair_groups_tree('#repair_groups');
+  hideModal();

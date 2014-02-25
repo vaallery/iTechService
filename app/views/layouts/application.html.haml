@@ -30,9 +30,19 @@
     = yield :footer
     #card_sign_in.modal-backdrop.fade
       - if user_signed_in?
-        %a#unlock_session= icon_tag(:unlock)
+        %a#unlock_session= glyph(:unlock)
         = current_user.short_name
     #barcode_reader.modal-backdrop.fade
+      #barcode_reader_inner.input-prepend
+        = link_to t('helpers.links.cancel'), '#', id: 'cancel_barcode_scan', class: 'btn'
+        = text_field_tag 'barcode_number', nil, id: 'barcode_field', autofocus: true
+
+    #client_card_reader.modal-backdrop.fade
+      = link_to t('helpers.links.cancel'), '#', id: 'cancel_client_card_scan', class: 'btn'
+
+    #card_scanner.modal-backdrop.fade
+      #card_scanner_inner
+        = link_to t('helpers.links.cancel'), '#', id: 'cancel_card_scan', class: 'btn'
 
     /
       Javascripts

@@ -1,0 +1,29 @@
+.fields.well.well-small
+  = f.hidden_field :repair_service_id
+  = f.full_error :repair_service_id, class: 'text-error'
+  = f.hidden_field :store_id
+  = f.full_error :store_id, class: 'text-error'
+  %strong= f.object.name
+  %span.pull-right= link_to_remove_fields f
+  = f.input :price, input_html: {class: 'input-small'}
+  %table.repair_parts.table.table-condensed
+    %thead
+      %tr
+        %th= t '.spare_part'
+        %th= RepairPart.human_attribute_name(:warranty_term)
+        %th= RepairPart.human_attribute_name(:defect_qty)
+    %tbody
+      = f.simple_fields_for :repair_parts do |ff|
+        %tr
+          %td
+            = ff.object.name + " (#{ff.object.quantity})" if ff.object.name.present?
+            = ff.hidden_field :item_id
+            = ff.full_error :item_id, class: 'text-error'
+            = ff.hidden_field :quantity
+            = ff.full_error :quantity, class: 'text-error'
+          %td
+            = ff.input_field :warranty_term, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:warranty_term)
+            = ff.error :warranty_term, class: 'text-error'
+          %td
+            = ff.input_field :defect_qty, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:defect_qty), placeholder: RepairPart.human_attribute_name(:defect_qty)
+            = ff.error :defect_qty, class: 'text-error'

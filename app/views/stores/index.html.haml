@@ -1,0 +1,8 @@
+- if can? :manage, Store
+  .page-header
+    %h1
+      = t '.title'
+      %small= link_to t('.usual_link'), stores_path(kind: %w[purchase retail defect]), remote: true
+      %small= link_to t('.spare_parts_link'), stores_path(kind: %w[spare_parts defect_sp]), remote: true
+    = link_to_new Store
+  #resource_table= render 'table'

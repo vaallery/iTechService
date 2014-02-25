@@ -1,0 +1,11 @@
+.page-header
+  %h1
+    = link_back_to_index
+    = @quick_order.new_record? ? t('quick_orders.new.title') : t('quick_orders.title', num: @quick_order.number_s)
+= simple_form_for @quick_order, html: { class: 'form-horizontal' } do |f|
+  = f.input :client_name
+  = f.input :contact_phone
+  = f.association :quick_tasks, as: :check_boxes
+  = f.input :comment, input_html: {rows: 5}
+  .form-actions
+    = submit_button f

@@ -1,28 +1,86 @@
-= auto_header_tag
+.page-header
+  %h1
+    = link_back_to_index
+    = sale_title @sale
 
 .dl.dl-horizontal
-  %p
-    %dt= Sale.human_attribute_name :sold_at
-    %dd= human_datetime @sale.sold_at
-  %p
-    %dt= Sale.human_attribute_name :device_type
-    %dd= @sale.device_type_name
-  %p
-    %dt= Sale.human_attribute_name :imei
-    %dd= @sale.imei.present? ? @sale.imei : '-'
-  %p
-    %dt= Sale.human_attribute_name :serial_number
-    %dd= @sale.serial_number.present? ? @sale.serial_number : '-'
-  %p
-    %dt= Sale.human_attribute_name :value
-    %dd= @sale.value.present? ? human_currency(@sale.value) : '-'
-  %p
-    %dt= Sale.human_attribute_name :client
-    %dd= @sale.client.present? ? link_to(@sale.client_presentation, client_path(@sale.client)) : '-'
-  %p
-    %dt= Sale.human_attribute_name :quantity
-    %dd= @sale.quantity
+
+  -#%dt= Sale.human_attribute_name :sold_at
+  -#%dd= human_datetime @sale.date
+
+  %dt= Sale.human_attribute_name :client
+  %dd= @sale.client.present? ? link_to(@sale.client_presentation, client_path(@sale.client)) : '-'
+
+  %dt= Sale.human_attribute_name :store
+  %dd= @sale.store.name
+
+%table#sale_items.table.table-condensed.table-hover.table-bordered
+  %caption
+    %h4= t 'products.index.title'
+  %thead
+    %tr
+      %th.num
+      %th.code= Product.human_attribute_name :code
+      %th.product= t 'activerecord.models.product'
+      %th= Product.human_attribute_name :available
+      %th.quantity= SaleItem.human_attribute_name :quantity
+      %th.price= SaleItem.human_attribute_name :price
+      %th.sum= SaleItem.human_attribute_name :sum
+  %tbody
+    - @sale.sale_items.each_with_index do |sale_item, index|
+      %tr.sale_item
+        %td.num.number= index.next
+        %td.code.number= sale_item.code
+        %td.product
+          %strong= sale_item.name
+          .features= features_presentation sale_item
+        %td.number= remains_presentation sale_item.product, @sale.store
+        %td.quantity.number= sale_item.quantity
+        %td.price.number= human_currency sale_item.price
+        %td.sum.number= human_currency sale_item.sum
+  %tfoot
+    %tr
+      %td{colspan: 6}= t 'total'
+      %td.total_sum.number= human_currency @sale.calculation_amount
+
+%table#payments_table.table.table-condensed.table-bordered
+  %caption
+    %h4= t 'sales.payment'
+  %thead
+    %tr
+      %th.kind= Payment.human_attribute_name :kind
+      %th.value= Payment.human_attribute_name :value
+      %th.addl_attr= t('payments.addl_attributes')
+  %tbody
+    - @sale.payments.each do |payment|
+      %tr.payment_fields.fields{class: payment.kind}
+        %td.kind= human_payment_kind payment
+        %td.value= human_currency payment.value, false
+        %td.addl_attr
+          - case payment.kind
+            - when 'card', 'credit'
+              = payment.bank_name
+            - when 'certificate'
+              = link_to Payment.human_attribute_name(:gift_certificate), gift_certificate_path(payment.gift_certificate)
+            - when 'trade_in'
+              = payment.device_name
+              = payment.device_number
+              = payment.client_info
+              = payment.appraiser
+  %tfoot
+    %tr
+      %td= t 'total'
+      %td#sale_payments_sum.number= human_currency @sale.payments_sum, false
+      %td
+    %tr
+      %td= t 'sales.calculation'
+      %td#sale_calculation_amount.number{data: {amount: @sale.calculation_amount}}= human_currency @sale.calculation_amount, false
+      %td
 
 .form-actions
+  = link_to t('sales.print_check'), print_check_sale_path(@sale), remote: true, class: 'btn' if can? :print_check, @sale
+  = link_to t('sales.view_check'), sale_path(@sale, format: :pdf), class: 'btn', target: '_blank' if can? :print_check, @sale
+  = link_to t('sales.print_warranty'), print_warranty_sale_path(@sale, format: :pdf), class: 'btn', target: '_blank'
   = link_to_edit @sale if can? :edit, @sale
-  = link_to_destroy @sale if can? :destroy, @sale
+  -#= button_to_post @sale if can? :post, @sale
+  -#= link_to_destroy @sale if can? :destroy, @sale

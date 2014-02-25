@@ -43,13 +43,16 @@ class DevicesController < ApplicationController
         format.json { render json: @device }
         format.pdf do
           if can? :print_receipt, @device
+            filename = "ticket_#{@device.ticket_number}.pdf"
             if params[:print]
               pdf = TicketPdf.new @device, view_context
-              system 'lp', pdf.render_file(Rails.root.to_s+"/tmp/tickets/ticket_#{@device.ticket_number}.pdf").path
+              filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
+              pdf.render_file filepath
+              system 'lp', filepath
             else
               pdf = TicketPdf.new @device, view_context, params[:part]
             end
-            send_data pdf.render, filename: "ticket_#{@device.ticket_number}.pdf", type: 'application/pdf', disposition: 'inline'
+            send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
           else
             render nothing: true
           end
@@ -165,6 +168,17 @@ class DevicesController < ApplicationController
 
   def movement_history
     @device = Device.find params[:id]
+  end
+
+  def create_sale
+    device = Device.find params[:id]
+    respond_to do |format|
+      if (sale = device.create_filled_sale).present?
+        format.html { redirect_to edit_sale_path(sale) }
+      else
+        format.html { render nothing: true }
+      end
+    end
   end
 
   private

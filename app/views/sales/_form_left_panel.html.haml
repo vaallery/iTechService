@@ -1,0 +1,7 @@
+%div.product_select_button= link_to image_tag('scan_barcode_w.png') + t('sales.scan_barcode').html_safe, '#', id: 'sale_scan_barcode', class: 'btn btn-inverse'
+%div.product_select_button= link_to image_tag('enter_barcode_w.png') + t('sales.enter_barcode').html_safe, '#', id: 'sale_enter_barcode', class: 'btn btn-inverse'
+%div.product_select_button= link_to image_tag('catalog_w.png') + t('sales.choose_product').html_safe, choose_products_path(form: 'sale', association: 'sale_items', is_product_only: false), remote: true, id: 'sale_choose_product', class: 'btn btn-inverse'
+%div= link_to_cancel_sale @sale
+%div= link_to image_tag('copy_check_w.png') + t('sales.copy_check').html_safe, sales_path(status: 1, form_name: 'choose_form', act: 'copy'), id: 'sale_copy_check', class: 'btn btn-primary'
+%div= link_to image_tag('save_check_w.png') + t('sales.save_check').html_safe, '#', id: 'sale_save_check', class: 'btn btn-primary', disabled: (@sale.new_record? or !@sale.is_new?)
+%div= link_to image_tag('restore_check_w.png') + t('sales.restore_check').html_safe, sales_path(form_name: 'choose_form', status: 0), remote: true, id: 'sale_restore_check', class: 'btn btn-primary'

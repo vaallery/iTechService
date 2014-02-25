@@ -8,7 +8,7 @@ module GiftCertificatesHelper
         history.map do |rec|
           case rec.column_name
             when 'nominal'
-              value = t("gift_certificates.nominals.#{GiftCertificate::NOMINALS[rec.new_value.to_i]}")
+              value = human_currency rec.new_value
             when 'status'
               value = t("gift_certificates.statuses.#{GiftCertificate::STATUSES[rec.new_value.to_i]}")
               prev_consumed = 0 if rec.new_value.to_i == 1
@@ -27,6 +27,14 @@ module GiftCertificatesHelper
     else
       nil
     end
+  end
+
+  def human_gift_certificate_nominal(gift_certificate)
+    gift_certificate.present? ? human_currency(gift_certificate.nominal) : nil
+  end
+
+  def human_gift_certificate_balance(gift_certificate)
+    gift_certificate.present? ? t('gift_certificates.balance_value', value: gift_certificate.balance) : ''
   end
 
 end

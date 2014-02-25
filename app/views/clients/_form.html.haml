@@ -1,0 +1,25 @@
+= simple_form_for @client, remote: true, html: { id: 'client_form', class: 'form-horizontal' } do |f|
+  .form-header
+    %a.close#close_client_form_button{href: '#'}
+      %i.icon-remove-sign
+    %h3= t("clients.#{@client.new_record? ? 'new' : 'edit'}.title")
+
+  .form-body
+    = f.input :name, autofocus: true
+    = f.input :surname
+    = f.input :patronymic
+    = f.input :full_phone_number, as: :phone_number
+    = f.input :phone_number
+    = f.input :contact_phone
+    = f.input :category, collection: client_categories_for_select if can? :change_category, @client
+    = f.input :card_number
+
+    #client_questionnaire_input.hidden
+      = f.input :email
+      = f.input :birthday, as: :my_date, viewmode: 'years'
+      .control-group
+        %label.control-label= t 'clients.questionnaire'
+        .controls= link_to icon_tag('print'), '#', class: 'btn', id: 'questionnaire_link', target: '_blank'
+
+  .modal-footer
+    = submit_button f

@@ -1,9 +1,5 @@
 ItechService::Application.routes.draw do
 
-  mount Ckeditor::Engine => '/ckeditor'
-
-  devise_for :users
-
   root to: 'dashboard#index'
   match 'dashboard' => 'dashboard#index', via: :get
   match 'become/:id' => 'dashboard#become', via: :get, as: 'become'
@@ -15,6 +11,12 @@ ItechService::Application.routes.draw do
   match 'goods_for_sale' => 'dashboard#goods_for_sale', via: :get
   match 'reports' => 'dashboard#reports', via: :get
   match 'check_session_status' => 'dashboard#check_session_status', via: :get
+
+  mount Ckeditor::Engine => '/ckeditor'
+
+  devise_for :users
+
+  resources :departments
 
   resources :users do
     get :duty_calendar, on: :member
@@ -45,7 +47,10 @@ ItechService::Application.routes.draw do
     get :questionnaire, on: :collection
     get :autocomplete, on: :collection
     get :select, on: :member
+    get :find, on: :member
   end
+
+  resources :client_categories
 
   resources :device_types, except: [:new] do
     post :reserve, on: :member
@@ -60,6 +65,7 @@ ItechService::Application.routes.draw do
     get :device_select, on: :collection
     get :check_imei, on: :collection
     get :movement_history, on: :member
+    post :create_sale, on: :member
   end
 
   match 'check_device_status' => 'devices#check_status', via: :get
@@ -87,7 +93,23 @@ ItechService::Application.routes.draw do
 
   resources :comments
   resources :messages, path: 'chat', except: [:new, :edit, :update]
-  resources :sales
+
+  resources :purchases do
+    put :post, on: :member
+    put :unpost, on: :member
+    put :print_barcodes, on: :member, defaults: {format: :pdf}
+  end
+
+  resources :sales do
+    put :post, on: :member
+    post :cancel, on: :member
+    get :return_check, on: :member
+    get :print_check, on: :member, defaults: {format: 'js'}
+    get :print_warranty, on: :member
+    post :attach_gift_certificate, on: :member, defaults: {format: 'js'}
+    resources :payments
+  end
+
   resources :sales_imports, only: [:new, :create]
 
   resources :gift_certificates do
@@ -96,12 +118,13 @@ ItechService::Application.routes.draw do
     post :refresh, on: :member
     get :check, on: :collection
     get :scan, on: :collection
+    get :find, on: :member
     get :history, on: :member, defaults: {format: 'js'}
   end
 
   resources :settings, except: [:show]
   resources :salaries
-  resources :discounts
+  resources :discounts, except: :show
   resources :timesheet_days, path: 'timesheet', except: :show
   resources :bonuses
   resources :bonus_types, except: :show
@@ -115,6 +138,66 @@ ItechService::Application.routes.draw do
     post :make_done, on: :member
     post :make_new, on: :member
   end
+  resources :product_categories, except: :show
+  resources :features, except: :show
+  resources :contractors
+  resources :feature_types, except: :show
+  resources :top_salables
+
+  resources :stores do
+    get :product_details, on: :member, defaults: {format: :js}
+  end
+
+  resources :products do
+    get :category_select, on: :collection, defaults: {format: :js}
+    get :choose, on: :collection, defaults: {format: :js}
+    get :show_prices, on: :member, defaults: {format: :js}
+    get :show_remains, on: :member, defaults: {format: :js}
+    get :remains_in_store, on: :member, defaults: {format: :json}
+    get :related, on: :member, defaults: {format: :js}
+    post :select, on: :collection, defaults: {format: :js}
+    resources :items, except: [:show]
+  end
+
+  resources :items do
+    get :remains_in_store, on: :member, defaults: {format: :json}
+  end
+
+  resources :product_groups
+  resources :price_types, except: :show
+  resources :payment_types
+  resources :banks, except: :show
+  resources :installments
+  resources :installment_plans
+  resources :cash_operations, only: [:index, :new, :create]
+  resources :cash_drawers
+  resources :repair_groups
+  resources :case_colors, except: :show
+  resources :quick_tasks, except: :show
+
+  resources :quick_orders do
+    put :set_done, on: :member
+  end
+
+  resources :cash_shifts, only: :show do
+    post :close, on: :member
+  end
+
+  resources :revaluation_acts do
+    put 'post', on: :member
+    put 'unpost', on: :member
+  end
+
+  resources :movement_acts do
+    put 'post', on: :member
+    put 'unpost', on: :member
+    get 'make_defect_sp', on: :collection
+  end
+
+  resources :repair_services do
+    get :choose, on: :collection, defaults: {format: :js}
+    get :select, on: :member, defaults: {format: :js}
+  end
 
   wiki_root '/wiki'
 
@@ -127,12 +210,13 @@ ItechService::Application.routes.draw do
       match 'scan/:barcode_num' => 'barcodes#scan'
       match 'profile' => 'users#profile'
       resources :products, only: [:index, :show] do
+        post :sync, on: :collection
         get :remnants, on: :member
       end
       resources :items, only: [:index, :show]
       resources :devices, only: [:show, :update]
+      resources :quick_orders, only: [:create]
     end
   end
-
 
 end

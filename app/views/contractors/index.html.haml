@@ -1,0 +1,19 @@
+- model_class = Contractor
+= auto_header_tag
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:created_at)
+      %th
+  %tbody
+    - @contractors.each do |contractor|
+      %tr
+        %td= link_to contractor.id, contractor_path(contractor)
+        %td= link_to contractor.name, contractor_path(contractor)
+        %td= human_datetime contractor.created_at
+        %td.btn-group
+          = link_to_edit_small contractor
+          = link_to_destroy_small contractor

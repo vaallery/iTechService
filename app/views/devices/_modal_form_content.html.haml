@@ -1,21 +1,22 @@
 = simple_form_for @device, html: { class: 'form-horizontal', remote: true } do |f|
   .modal-header
-    %a.close{'data-dismiss' => 'modal', href: '#'}
-      %i.icon-remove-sign
+    = button_to_close_modal
     %h3
       = @device.type_name
 
   .modal-body
-
     = f.input :client_notified, as: :radio_buttons, collection: [[true, t('yep')], [false, t('not_accessible')]], required: true, value_method: :first, label_method: :last if @device.notify_client?
 
     - if @device.persisted? and @device.client.contact_phone.present?
       .control-group
         = label_tag 'contact_phone', Client.human_attribute_name(:contact_phone), class: 'control-label'
-        .controls
-          = text_field_tag 'contact_phone', human_phone(@device.client.contact_phone), class: 'input-medium', disabled: true
+        .controls= text_field_tag 'contact_phone', human_phone(@device.client.contact_phone), class: 'input-medium', disabled: true
 
-    = f.input :location_id, collection: Location.allowed_for(current_user, @device)
+    = f.input :location_id, collection: Location.allowed_for(current_user, @device), prompt: false
+
+    .control-group
+      %label.control-label= Device.human_attribute_name :case_color
+      .controls= case_color_presentation @device.case_color
 
     %table#device_tasks_small.table.table-bordered.table-condensed.table-hover
       %caption
@@ -34,9 +35,14 @@
               %span.client_comment= task.comment
               %br
               %strong.user_comment= task.user_comment
+      %tfoot
+        %tr
+          %td= t 'total'
+          %td.number= human_currency @device.tasks_cost
+          %td
 
-
-    = link_to_add_fields t('devices.add_task'), '#device_tasks_small tbody', f, :device_tasks
-
+    = link_to_add_fields t('devices.add_task'), '#device_tasks_small tbody', f, :device_tasks unless @device.at_done? or @device.in_archive?
+    = f.error :base, class: 'text-error'
   .modal-footer
+    = link_to glyph(:money) + t('sales.payment').html_safe, create_sale_device_path(@device), method: :post, class: 'btn btn-success', target: '_blank' if @device.at_done?
     = submit_button f

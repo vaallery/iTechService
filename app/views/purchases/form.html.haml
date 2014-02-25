@@ -1,0 +1,33 @@
+= auto_header_tag @purchase
+= simple_form_for @purchase, html: { class: 'form-horizontal', id: 'purchase_form' } do |f|
+  = f.input :date, as: :my_datetime
+  = f.association :contractor, as: :select
+  = f.association :store, collection: Store.for_purchase.all
+
+  %table#batches.enumerable.table.table-condensed.table-hover
+    %caption
+      %h4= t 'products.index.title'
+    %thead
+      %tr
+        %th.num
+        %th.code= Product.human_attribute_name :code
+        %th.product= Batch.human_attribute_name :product
+        %th.quantity= Batch.human_attribute_name :quantity
+        %th.price= Batch.human_attribute_name :price
+        %th.sum= Batch.human_attribute_name :sum
+        %th.action
+
+    %tbody
+      = f.simple_fields_for :batches do |ff|
+        = render 'batch_fields', f: ff
+
+    %tfoot
+      %tr
+        %td{colspan: 5}= t 'total'
+        %td.total_sum.number= @purchase.total_sum
+        %td
+
+  = link_to_add_product :purchase, :batches, false
+
+  .form-actions
+    = submit_button f

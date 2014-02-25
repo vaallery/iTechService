@@ -1,0 +1,10 @@
+:plain
+  $row = $("table#store_products tr#product_#{@product.id}");
+  if ($row.hasClass('open')){
+    $row.nextUntil('tr.product', 'tr.store_item').slideUp(300).remove();
+  }
+  else{
+    $row.after("#{j(render(@store_items))}");
+    $row.nextUntil('tr.product', 'tr.store_item').hide().slideDown(300);
+  }
+  $row.toggleClass('open');

@@ -1,0 +1,11 @@
+:plain
+  $("#resource_table").html("#{j(render(params[:table_name] || 'table'))}");
+  $('#product_choose_form  #product_items').hide();
+- if @current_product_group.present?
+  :plain
+    $('#new_product_link').removeAttr('disabled');
+    $('#new_product_link').attr('href', "#{new_product_path(product: {product_group_id: @current_product_group.id})}");
+- else
+  :plain
+    $('#new_product_link').attr('disabled', true);
+    $('#new_product_link').attr('href', '#');

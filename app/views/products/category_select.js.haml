@@ -1,0 +1,9 @@
+- if @feature_types.any?
+  %strong= Product.human_attribute_name :features
+  - @feature_types.each do |feature_type|
+    .control-group.string.required
+      = label "product_feature_type_#{feature_type.id}", 'value', class: 'control-label string required' do
+        %abbr{title: t('simple_form.required.text')}= '*'
+        = feature_type.name
+      .controls
+        = text_field "product_feature_type_#{feature_type.id}", 'value', class: 'string required'

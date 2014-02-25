@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 #source 'http://gems.rubyforge.org'
-#ruby '2.0.0'
+#ruby '2.1.1'
 gem 'rails', '3.2.17'
 gem 'unicorn', '~> 4.6.2'
 gem 'pg', '~> 0.14.1'
@@ -13,7 +13,7 @@ gem 'devise', '~> 2.2.1'
 gem 'cancan', '~> 1.6.8'
 gem 'kaminari', '~> 0.14.1'
 gem 'ancestry', '~> 1.3.0'
-gem 'prawn', '~> 0.12.0'
+gem 'prawn', '~> 0.14.0'
 gem 'carrierwave', '~> 0.8.0'
 gem 'mini_magick', '~> 3.4'
 gem 'ckeditor', '~> 3.7.3'
@@ -36,7 +36,6 @@ gem 'whenever', '~> 0.8.4', require: false
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   gem 'therubyracer', platforms: :ruby
@@ -71,6 +70,8 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'shoulda'
+  gem 'shoulda-matchers'
   #gem 'faker'
   #gem 'ffaker'
 end

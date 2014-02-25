@@ -1,5 +1,6 @@
-set :application, 'itech_service'
+set :application, 'itechservice'
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
+set :branch, 'master'
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
@@ -16,7 +17,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
 
-set :rvm_ruby_version, '1.9.3'
+set :rvm_ruby_version, '2.1.1'
 
 namespace :deploy do
 

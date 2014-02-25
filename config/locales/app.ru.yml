@@ -2,19 +2,29 @@ ru:
   activerecord:
     models:
       announcement: Оповещение
+      bank: 'Банк'
       bonus: 'Бонус'
       bonus_type: 'Тип бонуса'
       #ckeditor/asset: ckeditor/asset
       #ckeditor/attachment_file: ckeditor/attachment_file
       #ckeditor/picture: ckeditor/picture
+      batch: 'Партия'
+      case_color: 'Цвет чехла'
+      cash_drawer: 'Касса'
+      cash_shift: 'Кассовая смена'
+      category: Категория
       client: Клиент
       client_category: 'Категория клиента'
       comment: Комментарий
+      contractor: 'Поставщик'
+      department: 'Подразделение'
       device: Девайс
       device_task: Задача
       device_type: Тип девайса
       discount: Скидка
       duty_day: Дежурство
+      feature: Характеристика
+      feature_type: Тип характеристики
       gift_certificate: Подарочный сертификат
       history_record: history_record
       info: Новость
@@ -22,18 +32,36 @@ ru:
       installment: Взнос
       karma: Карма
       location: Локация
+      movement_act: 'Акт Перемещения'
       object: Обьект
       order: Заказ
+      payment: 'Оплата'
+      payment_type: 'Тип оплаты'
       price: Прайс
+      price_type: "Категория цен"
+      product: 'Продукт'
+      product_group: 'Группа продуктов'
+      purchase: "Приход"
+      quick_order: 'Быстрый заказ'
+      quick_task: 'Быстрая задача'
+      repair_group: 'Группа ремонта'
+      repair_service: 'Вид ремонта'
+      repair_task: 'Ремонтная работа'
+      repair_part: 'Запчасть'
+      revaluation: 'Переоценка'
+      revaluation_act: 'Акт переоценки'
       salary: Зарплата
       sale: Продажа
       schedule_day: Рабочий день
       setting: Параметр
+      spare_part: 'Запчасть'
       stolen_phone: Краденый телефон
+      store: "Склад"
       supply_category: 'Категория снабжения'
       supply_request: 'Заявка'
       supply_report: 'Отчёт водителя'
       task: Задача
+      top_salable: 'Ходовой товар'
       user: Пользователь
 
     attributes:
@@ -45,6 +73,12 @@ ru:
       bonus:
         bonus_type: :activerecord.models.bonus_type
         bonus_type_id: :activerecord.models.bonus_type
+
+      batch:
+        product: :activerecord.models.product
+
+      cash_operation:
+        value: 'Сумма'
 
       ckeditor/asset:
         assetable: :activerecord.models.assetable
@@ -78,6 +112,7 @@ ru:
         birthday: День рождения
         card_number: Номер карты
         client_characteristic: 'Характеристика'
+        category: 'Категория'
         comments: Комментарии
         contact_phone: Телефон для связи
         device: Девайс
@@ -95,15 +130,23 @@ ru:
         user: :activerecord.models.user
         user_id: :activerecord.models.user
 
+      department:
+        role: 'Роль'
+        url: 'URL'
+        address: 'Адрес'
+        city: 'Город'
+        contact_phone: 'Контактный телефон'
+        schedule: 'График работы'
+
       device:
         app_store_pass: 'Пароль на учетную запись в App Store'
+        case_color: 'Чехол'
+        case_color_id: 'Чехол'
         client: :activerecord.models.client
         client_id: :activerecord.models.client
         client_notified: Клиент уведомлён
         comment: Комментарий
         device_tasks: Список задач
-        device_type: :activerecord.models.device_type
-        device_type_id: :activerecord.models.device_type
         done_at: Время завершения
         history_records: История изменений
         imei: IMEI
@@ -130,6 +173,7 @@ ru:
         done: Выполнено
         done_at: Время выполнения
         history_records: История
+        repair_tasks: 'Ремонтные работы'
         task: :activerecord.models.task
         task_id: :activerecord.models.task
 
@@ -152,6 +196,12 @@ ru:
         kind: Тип
         user: user
         user_id: user
+
+      feature:
+        value: 'Значение'
+
+      feature_type:
+        code: Код
 
       gift_certificate:
         consumed: Израсходовано
@@ -185,6 +235,10 @@ ru:
         paid_at: Внесен
         value: Сумма
 
+      item:
+        barcode: Штрихкод
+        barcode_num: Номер штрихкода
+
       karma:
         good: good  #g
         user: :activerecord.models.user  #g
@@ -195,6 +249,12 @@ ru:
         position: Позиция
         schedule: Отображать в календаре
         users: Пользователи
+
+      movement_act:
+        dst_store: 'Склад получатель'
+        dst_store_id: :activerecord.models.movement_act.dst_store
+        store: 'Склад отправитель'
+        store_id: :activerecord.models.movement_act.src_store
 
       order:
         customer: Заказчик
@@ -209,9 +269,66 @@ ru:
         user: :activerecord.models.user
         user_comment: Комментарий товароведа
 
+      payment:
+        kind: 'Вид'
+        bank: :activerecord.models.bank
+        gift_certificate: :activerecord.models.gift_certificate
+        value: 'Сумма'
+        device_name: 'Устройство'
+        device_number: 'Серийный номер или IMEI'
+        device_logout: 'Проверка выхода из учётной записи'
+        client_info: 'Телефон и имя клиента'
+        appraiser: 'Имя оценщика'
+
       price:
         file: Файл
         remote_file_url: Ссылка на файл
+
+      product:
+        actual_price: 'Текущая цена'
+        available: 'На складе'
+        category: "Категория"
+        code: "Код"
+        comment: 'Комментарий'
+        discount: 'Скидка'
+        feature_accounting: 'Учёт по характеристикам'
+        features: 'Характеристики'
+        items: 'Единицы'
+        product_group: Группа
+        purchase_price: 'Закупочная цена'
+        quantity_in_store: 'Остаток на складе'
+        related_products: 'Сопутствующие продукты'
+        related_product_groups: 'Сопутствующие группы продуктов'
+        quantity_threshold: 'Пороговое количество'
+        warning_quantities: 'Количество для уведомления'
+
+      product_category:
+        feature_types: "Типы характеристик"
+        request_price: "Запрос цены"
+
+      purchase:
+        contractor: :activerecord.models.contractor
+        store: :activerecord.models.store
+        total_sum: 'Сумма'
+
+      quick_order:
+        client_name: 'Имя клиента'
+        contact_phone: 'Телефон'
+        number: 'Номер'
+        quick_tasks: 'Задачи'
+
+      revaluation:
+        revaluation_act: 'Акт переоценки'
+
+      repair_part:
+        defect_qty: 'Кол-во брака'
+
+      repair_service:
+        client_info: 'Информация для клиента'
+        spare_parts: 'Запчасти'
+
+      repair_task:
+        repair_parts: 'Запчасти'
 
       salary:
         amount: Сумма
@@ -220,14 +337,18 @@ ru:
         user: Сотрудник
 
       sale:
+        calculation_amount: 'Сумма чека'
+        cash_shift: 'Смена'
         client: "Покупатель"
         client_id: :activerecord.attributes.sale.client
-        device: :activerecord.models.device
-        device_type: Тип девайса
-        device_type_id: :activerecord.attributes.sale.device_type
-        quantity: Количество
-        sold_at: Время продажи
-        value: "Цена"
+        payment_type: 'Способ оплаты'
+        sold_at: 'Время продажи'
+        store: 'Склад'
+        total_discount: 'Общая скидка'
+        total_sum: 'Общая сумма'
+
+      sale_item:
+        discount: 'Скидка'
 
       schedule_day:
         day: День
@@ -237,6 +358,12 @@ ru:
         presentation: Представление
         value: Значение
         value_type: Тип значения
+
+      spare_part:
+        price: 'Стоимость закупа'
+
+      store:
+        price_types: 'Типы цен'
 
       stolen_phone:
         imei: IMEI
@@ -264,6 +391,11 @@ ru:
         time: "Время"
         work_hours: "Рабочие часы"
         work_mins: "Рабочие минуты"
+
+      top_salable:
+        product: 'Товар'
+        product_id: :activerecord.attributes.top_salable.product
+        type: 'Тип'
 
       user:
         abilities: Возможности
@@ -302,30 +434,67 @@ ru:
         salary_date: Дата зарплаты
         schedule: Отображать график
         schedule_days: Рабочие дни
+        session_duration: 'Длительность сессии (мин.)'
         surname: Фамилия
         username: Логин
         wish: Пожелание
+
+    errors:
+      models:
+        department:
+          role:
+            main_exists: 'Не может быть больше одного главного'
+        device:
+          not_paid: 'Не оплачен!'
+        device_task:
+          no_defect_store: 'Склад брака не найден'
+          no_spare_parts_store: "Склад запчастей не найден"
+          attributes:
+            done:
+              already_done: 'Задача уже выполнена'
+        repair_part:
+          quantity:
+            insufficient: ''
 
   attributes:
     client_category: 'Категория клиента'
     created_at: Время создания
     color: Цвет
+    code: 'Код'
+    color: 'Цвет'
     comment: Комментарий
     content: Содержание
     date: 'Дата'
     description: 'Описание'
+    created_at: Время создания
+    date: 'Дата'
+    department: :activerecord.models.department
+    department_id: :activerecord.models.department
+    device_type: :activerecord.models.device_type
+    device_type_id: :activerecord.models.device_type
     fio: ФИО
     id: '№'
     imei: IMEI
+    kind: 'Вид'
     name: Название
     number: Номер
     object: Объект
+    position: 'Позиция'
+    price: 'Цена'
+    prices: 'Цены'
+    price_type: 'Категория цен'
+    product_category: 'Категория продуктов'
+    quantity: 'Количество'
     serial_number: Серийный номер
     status: Статус
+    sum: Сумма
+    store: 'Склад'
+    store_items: 'Остатки'
     sum: Сумма
     updated_at: Время обновления
     user: Пользователь
     user_comment: Комментарий сотрудника
+    warranty_term: 'Гарантийный срок (мес.)'
 
   announcements:
     edit:
@@ -347,6 +516,16 @@ ru:
     protector_made: Плёночка наклеена!
     updated: Оповещение изменено
 
+  banks:
+    index:
+      title: 'Банки'
+    edit:
+      title: 'Редактирование Банка'
+    new:
+      title: 'Новый Банк'
+    created: 'Банк создан'
+    updated: 'Банк изменён'
+
   bonuses:
     edit:
       title: 'Редактирование Бонуса'
@@ -367,6 +546,13 @@ ru:
     created: 'Тип бонуса создан'
     updated: 'Тип бонуса изменён'
 
+  cash_operations:
+    cash_in: 'Внесение наличных'
+    cash_out: 'Выплата наличных'
+    created:
+      cash_in: 'Операция внесения в кассу проведена'
+      cash_out: 'Операция выплаты из кассы проведена'
+
   client_categories:
     edit:
       title: 'Редактирование Категории клиента'
@@ -377,11 +563,57 @@ ru:
     created: 'Категория клиента создана'
     updated: 'Категория клиента изменена'
 
-  clients:
+  batches:
+    errors:
+      feature_exists: 'Характеристика уже существует'
+
+  case_colors:
+    created: 'Цвет чехла создан'
+    updated: 'Цвет чехла изменён'
+    link: :case_colors.index.title
+    index:
+      title: 'Цвета чехлов'
     edit:
-      title: Редактирование клиента
+      title: 'Редактирование Цвета чехла'
     new:
-      title: Новый клиент
+      title: 'Новый Цвет чехла'
+
+  cash_drawers:
+    created: 'Касса создана'
+    updated: 'Касса изменена'
+    link: :cash_drawers.index.title
+    index:
+      title: 'Кассы'
+    new:
+      title: 'Новая Касса'
+    edit:
+      title: 'Редактирование Кассы'
+
+    x_report: "Х-Отчёт"
+  cash_shifts:
+    close: 'Закрыть смену'
+    errors:
+      already_closed: "Смена уже закрыта"
+    pdf:
+      title: "Отчёт кассовой смены №%{num}"
+      sales_section: "ПРОДАЖИ:"
+      sales: "ПРОДАЖ"
+      pay_in: 'ВНЕСЕНИЕ'
+      pay_out: "ВЫПЛАТА"
+      returns: ВОЗВРАТОВ ПРОДАЖ
+      encashment: "ИНКАССАЦИЯ"
+      shift_total: "СМЕННЫЙ ИТОГ ПРОДАЖ"
+
+  clients:
+    categories:
+      usual: 'Простой'
+      regular: 'Постоянный'
+      super: 'Супер'
+      friend: 'Друг'
+    edit:
+      title: Редактирование Клиента
+    new:
+      title: Новый Клиент
     index:
       title: 'Клиенты'
       search_placeholder: Телефон или имя
@@ -389,12 +621,15 @@ ru:
       date: "Дата"
       new_device: "Новый девайс"
       new_sale: "Новая продажа"
+    search:
+      title: 'Поиск клиента'
     created: Клиент создан
     link: Клиенты
     questionnaire: Анкета
     updated: Клиент изменён
-
     available_discount: "Доступная скидка"
+    not_found: 'Клиент не найден'
+
   chat:
     all: Все сообщения
     created: Сообщение создано
@@ -413,6 +648,17 @@ ru:
     created: Комментарий создан
     updated: Комментарий изменён
 
+  contractors:
+    created: 'Поставщик создан'
+    updated: 'Поставщик изменён'
+    link: :contractors.index.title
+    index:
+      title: 'Поставщики'
+    new:
+      title: 'Новый Поставщик'
+    edit:
+      title: 'Редактирование Поставщика'
+
   dashboard:
     actual_orders: Текущие заказы
     actual_requests: "Текущие запросы"
@@ -421,23 +667,42 @@ ru:
     ready_devices: "Готовые девайсы"
     misc: Прочее
     moved_title: Перемещен
-    new_device: Новый девайс
+    new_device: Новый Девайс
     new_device_message: Новый девайс!!!
     new_info: Создать новость
-    new_order: Новый заказ
+    new_order: Новый Заказ
     new_user: Новый пользователь
     params: Параметры
     reports: Отчёты
-    sale: "Продажа"
+    new_sale: "Новая Продажа"
+    references: "Справочники"
+
+  departments:
+    created: 'Подразделение создано'
+    updated: 'Подразделение изменено'
+    link: :departments.index.title
+    index:
+      title: 'Подразделения'
+    new:
+      title: 'Новое Подразделение'
+    edit:
+      title: 'Редактирование Подразделения'
+    roles:
+      main: 'Главное'
+      branch: 'Филиал'
+      store: 'Склад'
 
   devices:
     edit:
       title: Редактирование девайса
     errors:
+      already_archived: 'Девайс уже в архиве.'
       client_notification: Нужно уведомить клиента
-      pending_tasks: Не все задачи выполнены
-      not_done: Девайс не готов
+      invalid_action: 'Неверное действие.'
+      no_action: 'Действие не указано.'
+      not_done: 'Девайс не готов.'
       not_allowed: Вы не можете переместить девайс.
+      pending_tasks: Не все задачи выполнены
     index:
       client_search_placeholder: "Клиент: телефон | имя | карта"
       device_search_placeholder: "Девайс: серийник | IMEI"
@@ -470,6 +735,14 @@ ru:
     service_duration_placeholder: "м | ч.м | д.ч.м"
     updated: Девайс изменён
 
+  device_tasks:
+    add_repair_task: "Добавить"
+    errors:
+      already_done: "Задача уже выполнена"
+      insufficient_spare_parts: "На складе недостаточно запчастей (%{name})"
+
+    repair_task_fields:
+      spare_part: "Запчасть (кол-во)"
   device_types:
     created: Тип девайса создан
     updated: Тип девайса изменён
@@ -494,10 +767,38 @@ ru:
     created: "Скидка создана"
     updated: "Скидка изменена"
 
+  documents:
+    posted: 'Документ проведён'
+    not_posted: 'Документ не проведён'
+    unposted: ''
+    not_unposted: ''
+    statuses:
+      new: 'Новый'
+      posted: 'Проведён'
+      deleted: 'Удалён'
+    errors:
+      cannot_be_posted: 'Документ не может быть проведён!'
+      deleting_posted: 'Нельзя удалить проведённый документ!'
+      product_already_present: 'Продукт уже выбран!'
+
   duty_days:
     kinds:
       kitchen: "на кухне"
       salesroom: "в зале"
+
+  feature_types:
+    created: 'Тип Характеристики создан'
+    updated: 'Тип Характеристики изменён'
+    kinds:
+      imei: 'IMEI'
+      serial_number: 'Серийный номер'
+      other: 'Прочее'
+    edit:
+      title: "Редактирование Типа Характеристики"
+    index:
+      title: "Типы характеристик"
+    new:
+      title: "Новый Тип Характеристики"
 
   gift_certificates:
     edit:
@@ -534,9 +835,12 @@ ru:
       used: Закрыт
     activated: "Подарочный сертификат номиналом %{nominal} закрыт."
     balance: Доступно
+    balance_value: 'Доступно %{value}'
     consume_placeholder: Списать
     consumed: "Списано: %{value}. Осталось: %{balance}."
     created: Подарочный сертификат создан.
+    find: 'Найти'
+    scan: 'Сканировать'
     issued: "Подарочный сертификат номиналом %{nominal} открыт."
     link: Подарочные сертификаты
     refresh: Восстановить
@@ -567,6 +871,11 @@ ru:
     group: 'Сгруппировать'
 
     select: "Выделить"
+  items:
+    tag:
+      with_price: 'С ценой'
+      without_price: 'Без цены'
+
   locations:
     edit:
       title: Редактирование локации
@@ -577,6 +886,26 @@ ru:
     created: Локация создана
     link: Локации
     updated: Локация изменена
+
+  movement_acts:
+    created: 'Акт Перемещения создан'
+    updated: 'Акт Перемещения изменён'
+    link: :movement_acts.index.title
+    defect_link: 'Списать брак'
+    edit:
+      title: 'Редактирование Акта Перемещения'
+    new:
+      title: 'Новый Акт Перемещения'
+    index:
+      title: 'Акты Перемещения'
+    errors:
+      deleting_posted: 'Невозможно удалить проведённый Акт Перемещения.'
+      insufficient: 'Недостаточно товара (%{product})'
+      prices_undefined: 'Не определены цены для %{product}'
+      stores_same: 'Склады должны быть разными.'
+
+  navbar:
+    cash_drawer: "Касса"
 
   orders:
     edit:
@@ -609,9 +938,55 @@ ru:
     updated: Заказ изменён
     order_num: "Заказ №%{num}"
     not_found: "Заказ не найден"
-
     spare_parts: "Запчасти"
     not_spare_parts: "Не запчасти"
+
+  payments:
+    add: 'Добавить'
+    addl_attributes: 'Доп. атрибуты'
+    calculate: 'Расчитать'
+    index:
+      title: 'Платежи'
+    kinds:
+      cash: 'Наличные'
+      card: 'Картой'
+      credit: 'Кредит'
+      certificate: 'Подарочный сертификат'
+      trade_in: 'Трейд-ин'
+      mixed: 'Смешанный'
+    errors:
+      no_gift_certificate: "Подарочный сертификат не указан"
+
+  payment_types:
+    created: 'Способ оплаты создан'
+    updated: 'Способ оплаты изменён'
+    index:
+      title: 'Способы оплаты'
+    new:
+      title: 'Новый Способ оплаты'
+    edit:
+      title: 'Редактирование Способа оплаты'
+    kinds:
+      cash: 'Наличный'
+      cashless: 'Безналичный'
+      mixed: 'Смешанный'
+      credit: 'Кредит'
+      gift_card: 'Подарочная карта'
+
+  price_types:
+    created: "Тип Цен создан"
+    updated: "Тип Цен изменён"
+    edit:
+      title: "Редактирование Типа Цен"
+    index:
+      title: "Типы Цен"
+    new:
+      title: "Новый Тип Цен"
+    kinds:
+      retail: 'Розница'
+      purchase: 'Закуп'
+      other: 'Другой'
+
   prices:
     created: Прайс создан
     updated: Прайс изменён
@@ -622,6 +997,125 @@ ru:
     index:
       title: Прайсы
     link: Прайсы
+
+  product_categories:
+    created: 'Категория создана'
+    updated: 'Категория изменена'
+    edit:
+      title: "Редактирование Категории продуктов"
+    index:
+      title: "Категории продуктов"
+    new:
+      title: "Новая Категория продуктов"
+    kinds:
+      equipment: 'Техника'
+      accessory: 'Аксессуар'
+      service: 'Услуга'
+      protector: 'Плёнка'
+      spare_part: 'Запчасть'
+
+  product_groups:
+    created: 'Продуктовая Группа создана'
+    updated: 'Продуктовая Группа изменена'
+    new_link: 'Новая Группа'
+    edit:
+      title: 'Редактирование Продуктовой группы'
+    new:
+      title: 'Новая Продуктовая группа'
+    index:
+      title: 'Группы продуктов'
+
+  products:
+    add_good: 'Добавить товар'
+    add_product: 'Добавить Продукт'
+    created: "Продукт создан"
+    updated: "Продукт изменён"
+    form:
+      attributes: 'Атрибуты'
+      add_store: "Добавить склад"
+    edit:
+      title: "Редактирование Продукта"
+    index:
+      title: "Продукты"
+      few: "Заканчиваются"
+    new:
+      title: "Новый Продукт"
+    choose:
+      title: "Выбор товара"
+      submit: "Создать"
+    errors:
+      not_found: 'Продукт не найден.'
+
+    related_list_title: "Сопутствующие товары"
+  purchases:
+    choose_products: 'Выберите продукты'
+    created: 'Приход создан'
+    link: :purchases.index.title
+    new_revaluation_act: 'Создать Акт Переоценки'
+    posted: 'Приход проведён'
+    updated: 'Приход изменён'
+    edit:
+      title: 'Редактирование Прихода'
+    index:
+      title: 'Приходы'
+    new:
+      title: 'Новый Приход'
+    show:
+      print_barcodes: "Печать штрихкодов"
+    print_barcodes:
+      with_price: "С ценами"
+      by_qty: 'С учётом количества'
+      submit: 'Печать'
+    errors:
+      deleting_posted: 'Невозможно удалить проведенный Приход.'
+      store_item_already_present: 'Товар уже существует (%{product}).'
+    statuses:
+      new: 'Новая'
+      posted: 'Проведена'
+      deleted: 'Удалена'
+
+  quick_orders:
+    created: 'Быстрый заказ создан'
+    updated: 'Быстрый заказ изменён'
+    link: :quick_orders.index.title
+    title: 'Быстрый заказ №%{num}'
+    index:
+      title: 'Быстрые заказы'
+    new:
+      title: 'Новый Быстрый заказ'
+    edit:
+      title: 'Редактирование Быстрого заказа'
+
+    set_done: "Выполнен"
+  quick_tasks:
+    created: 'Быстрая задача создана'
+    updated: 'Быстрая задача изменена'
+    link: :quick_tasks.index.title
+    index:
+      title: 'Быстрые задачи'
+    new:
+      title: 'Новая Быстрая задача'
+    edit:
+      title: 'Редактирование Быстрой задачи'
+
+  repair_groups:
+    created: 'Группа ремонта создана'
+    updated: 'Группа ремонта изменена'
+    new:
+      link: 'Новая Группа'
+      title: 'Новая Группа ремонта'
+    edit:
+      title: 'Редактирование Группы ремонта'
+
+  repair_services:
+    created: 'Вид ремонта создан'
+    udpated: 'Вид ремонта изменён'
+    index:
+      title: 'Виды ремонта'
+    new:
+      title: 'Новый Вид ремонта'
+    edit:
+      title: 'Редактирование Вида ремонта'
 
   reports:
     average_duration: Средняя длительность, мин.
@@ -652,6 +1146,20 @@ ru:
     users_report: Принятые девайсы по сотрудникам
     sales_report: "Отчет по продажам"
     supply_report: 'Отчёт водителя'
+    few_remnants_goods: "Заканчивающийся товар"
+    few_remnants_spare_parts: 'Заканчивающиеся запчасти'
+
+    remnants: "Остатки"
+    payments_report: "Отчёт по платежам"
+  revaluation_acts:
+    created: 'Акт Переоценки создан'
+    updated: 'Акт Переоценки изменён'
+    index:
+      title: 'Акты Переоценки'
+    new:
+      title: 'Новый Акт Переоценки'
+    edit:
+      title: 'Редактирование Акта Переоценки'
 
   salaries:
     edit:
@@ -666,19 +1174,82 @@ ru:
     updated: Изменено
 
   sales:
+    kinds:
+      sale: 'Продажа'
+      return: 'Возврат'
+      return_check: 'Возврат чека'
     edit:
-      title: "Редактирование продажы"
+      title: "Редактирование Продажы"
     index:
       import_link: Импорт
-      title: Проданные девайсы
+      title: 'Продажи'
       client_search_placeholder: "Клиент: телефон | имя | карта"
       device_search_placeholder: "Девайс: серийник | IMEI"
+      user_search_placeholder: "Сотрудник"
+      sale_search_placeholder: "№"
     new:
-      title: "Новая продажа"
-    link: Проданные девайсы
+      title: "Новая Продажа"
+    errors:
+      out_of_stock: 'Товара нет в наличии'
+      unavailable_discount: 'не допустима'
+      deleting_posted: 'Невозможно удалить проведённую Продажу.'
+      item_already_present: '%{item} уже есть на складе %{store}'
+      no_payment_with_certificate: "Отсутствует платёж подарочным сертификатом"
+      create_gift_certificate_fail: "Ошибка при создании подарочного сертификата"
+    check_pdf:
+      discount: 'Скидка'
+      greeting: 'ДОБРО ПОЖАЛОВАТЬ!'
+      qty: 'Кол'
+      name: 'Наименование'
+      price: 'Цена'
+      sale: 'Продажа'
+      return: 'Возврат'
+      copy: 'Копия'
+      open: "Откр."
+      po: 'по'
+      total: "ИТОГ"
+      doc: "ДОК."
+      thanks1: 'СПАСИБО'
+      thanks2: 'ЗА ПОКУПКУ!'
+    title: 'Чек №%{num} от %{datetime}'
+    title_copy: 'Копия чека №%{num} от %{datetime}'
+    title_return: 'Чек возврата №%{num} от %{datetime}'
+    calculate: 'Расчитать'
+    choose_title: 'Выберите чек'
+    link: :sales.index.title
     created: "Продажа создана"
     updated: "Продажа изменена"
+    day_report: 'Отчёт по продажам за день'
+    doc_kind: 'Вид док.'
+    doc_num: '№ док./смены'
+    total: 'Итог'
+    num: '№'
+    sum: 'Сумма'
+    total_discount: 'Итог. скидка'
+    discounted_sum: 'Сум. со скид.'
+    scan_barcode: 'Запрос ШК'
+    enter_barcode: 'Ввод ШК вручную'
+    choose_product: 'Подбор товара в каталоге'
+    cancel_check: 'Отмена чека'
+    copy_check: 'Копия чека'
+    save_check: 'Сохранить чек'
+    restore_check: 'Возобновить чек'
+    close_check: 'Закрыть чек'
+    enter_client_card: 'Ввод карты клиента'
+    find_client: 'Поиск клиента'
+    manual_discount: 'Ручная скидка'
+    payment: 'Оплата'
+    print_warranty: 'Печать гарантии'
+    calculation: 'К рассчёту'
+    calculation_amount: 'Сумма к оплате: %{amount}'
+    add_product: "Добавить Продукт"
+    print_check: 'Распечатать чек'
+    view_check: 'Посмотреть чек'
+    attach_gift_certificate: "Прикрепить сертификат"
 
+    warranty_pdf:
+      org_name: "ИП Колесник В. В."
+      title: "Гарантийный талон №%{num} от %{date}"
   settings:
     edit:
       title: Редактирование параметра
@@ -690,6 +1261,12 @@ ru:
     link: Параметры
     updated: Параметр изменён
 
+  spare_parts:
+    remnants:
+      none: 'Остутствуют'
+      low: 'Заканчиваются. Уточнить у технарей.'
+      many: 'Хватает'
+
   stolen_phones:
     created: Телефон создан
     updated: Телефон изменён
@@ -700,6 +1277,24 @@ ru:
     new:
       title: Новый телефон
     link: Чёрный список
+
+  stores:
+    created: "Склад создан"
+    updated: 'Склад изменён'
+    kinds:
+      defect: 'Брак'
+      defect_sp: 'Брак запчастей'
+      purchase: 'Приход'
+      spare_parts: 'Запчасти'
+      retail: 'Розница'
+    index:
+      title: "Склады"
+      spare_parts_link: "Запчасти"
+      usual_link: "Обычные"
+    new:
+      title: 'Новый Склад'
+    edit:
+      title: 'Редактирование Склада'
 
   supply_categories:
     created: 'Категория снабжения создана'
@@ -755,7 +1350,8 @@ ru:
     address2: 'Океанский проспект, 90'
     check_status: 'Вы можете проверить статус устройства по адресу: www.itechstore.ru/check.'
     check_status_order: 'Вы можете проверить статус заказа по адресу: www.itechstore.ru/check.'
-    contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
+    #contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
+    contact_phone: 'Телефон для связи: %{number}'
     email: 'e-mail: info@itechstore.ru'
     link: Талон
     notice: 'Сохраняйте этот талон до получения Вашего устройства.'
@@ -765,6 +1361,7 @@ ru:
     schedule2: 'Сб: с 12 до 21'
     schedule3: 'Вс - выходной'
     site: 'www.itechstore.ru'
+    user: 'Сотрудник: %{name}'
 
   timesheet_days:
     index:
@@ -794,6 +1391,20 @@ ru:
       business_trip: "К"
       training: "ОБ"
 
+  top_salables:
+    index:
+      title: 'Панель быстрого доступа'
+    edit:
+      title: ''
+    new:
+      title: ''
+    created: ''
+    updated: ''
+
+    form:
+      product: "Продукт"
+      group: "Группа"
+      type: "Тип"
   users:
     abilities:
       manage_salary: Редактировать зарплату
@@ -817,6 +1428,8 @@ ru:
       superadmin: Супер админ
       supervisor: Супервайзер
       technician: Технарь
+    errors:
+      not_found: 'Пользователь не найден.'
     account: Учётка
     add_karma: Карма
     all: Все
@@ -871,9 +1484,16 @@ ru:
   mail:
     movement:
       subject: "Новый девайс %{device}"
+    remnants:
+      warn_subject: 'Заканчивается %{product}'
+      warning_text: 'На складе %{store} осталось %{quantity} %{product}'
     deletion:
       subject: "Айс. Удаление объекта."
 
+  errors:
+    nothing_found: Ничего не найдено
+
+  add: "Добавить"
       object: "Объект"
       time: "Время"
       user: "Пользователь"
@@ -888,17 +1508,20 @@ ru:
   confirmation: Вы уверены?
   create: Создать
   destroy: "Удалить"
+  document: "%{name} №%{num} от %{time}"
   done: "Готово"
   edit: Редактировать
   everywhere: "Везде"
   from_date: "от %{date}"
   hour_min: "%{hour} ч %{min} мин."
+  in_time: через
   me: Я
   min: "%{min} мин."
   moved: "%{user} %{time} назад"
   moved_title: Переместил
   new: "Новый"
-  nothing_found: Ничего не найдено
+  plan_for: 'План по '
+  post: 'Провести'
   phone_placeholder: "6, 7, 10 или 11 цифр"
   remove_photo: Удалить фото
   save: Сохранить
@@ -907,6 +1530,7 @@ ru:
   today: Сегодня
   total: Итого
   undone: "Не готово"
+  unpost: 'Сделать непроведённым'
   update: Сохранить
   yep: "Да"
   not_accessible: "Не доступен"

@@ -1,0 +1,6 @@
+%h4= t 'products.related_list_title'
+- @related_products.each do |product|
+  = link_to_product_quick_select product
+
+- @related_product_groups.each do |product_group|
+  = link_to glyph('chevron-left')+product_group.name.html_safe, '#', class: 'product_quick_select_link has-popover', title: product_group.name, data: { html: true, placement: 'left', content: product_group.products.map{|p| link_to_product_quick_select p} }

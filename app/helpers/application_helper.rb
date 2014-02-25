@@ -7,7 +7,7 @@ module ApplicationHelper
     end
     link_to '#', class: 'add_fields btn-mini btn-success btn',
         data: { selector: append_to_selector, association: association, content: (fields.gsub('\n', '')) } do
-      icon_tag(:plus) + name
+      glyph(:plus) + ' ' + name
     end
   end
 
@@ -19,7 +19,7 @@ module ApplicationHelper
   end
 
   def link_back_to_index
-    link_to glyph('chevron-left'), url_for(action: 'index', controller: controller_name), class: "link_back"
+    link_to glyph('chevron-left'), url_for(action: 'index', controller: controller_name), class: 'link_back'
   end
 
   def sortable(column, title = nil)
@@ -57,7 +57,7 @@ module ApplicationHelper
     options.merge! class: 'btn btn-success btn-large'
     name ||= t("#{object_class.name.tableize}.new.title", default: t('new'))
     link_to url_for(controller: object_class.name.tableize, action: 'new'), options do
-      icon_tag(:file) + name
+      "#{glyph(:file)} #{name}".html_safe
     end
   end
 
@@ -65,7 +65,7 @@ module ApplicationHelper
     options.merge! class: 'btn'
     name = t 'show'
     link_to url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options do
-      icon_tag(:eye) + name
+      "#{glyph(:eye)} #{name}".html_safe
     end
   end
 
@@ -73,7 +73,7 @@ module ApplicationHelper
     options.merge! class: 'btn'
     name = t 'edit'
     link_to url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options do
-      icon_tag(:edit) + name
+      "#{glyph(:edit)} #{name}".html_safe
     end
   end
 
@@ -82,7 +82,7 @@ module ApplicationHelper
         data: {confirm: t('confirmation', default: 'Are you sure?')}
     name = t 'destroy'
     link_to url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options do
-      icon_tag(:trash) + name
+      "#{glyph(:trash)} #{name}".html_safe
     end
   end
 
@@ -97,7 +97,7 @@ module ApplicationHelper
       name = options[:name] || t("helpers.button.#{model_name}.#{action}", model: human_model_name, default: t(action, default: 'Save'))
     end
     button_tag options do
-      glyph(:save) + ' ' + name
+      "#{glyph(:save)} #{name}".html_safe
     end
   end
 
@@ -134,7 +134,7 @@ module ApplicationHelper
           when 'task_id'
             val = Task.find(rec.new_value).try(:name)
           when 'nominal'
-            val = rec.object.is_a?(GiftCertificate) ? rec.object.nominal_h : rec.new_value
+            val = rec.object.is_a?(GiftCertificate) ? human_gift_certificate_nominal(rec.object) : rec.new_value
           when 'status'
             val = rec.object.is_a?(GiftCertificate) ? rec.object.status_h : rec.new_value
           else
@@ -206,7 +206,7 @@ module ApplicationHelper
   end
 
   def history_link_to(url)
-    link_to icon_tag(:time), url, class: 'history_link', remote: true
+    link_to glyph(:time), url, class: 'history_link', remote: true
   end
 
   def store_location
@@ -227,7 +227,7 @@ module ApplicationHelper
   end
 
   def button_to_close_modal
-    content_tag(:a, glyph('remove-sign'), class: 'close_modal_button', 'data-dismiss' => 'modal', href: '#')
+    content_tag(:a, glyph('remove-sign'), class: 'close close_modal_button', 'data-dismiss' => 'modal', href: '#')
   end
 
   def modal_header_tag(title=nil)
@@ -245,15 +245,19 @@ module ApplicationHelper
   end
 
   def human_percent(value)
-    number_to_percentage value, precision: 0
+    value.nil? ? '-' : number_to_percentage(value, precision: 0)
   end
 
-  def human_currency(value)
-    number_to_currency value, precision: 0, delimiter: ' ', separator: ','
+  def human_currency(value, with_unit=true)
+    value.nil? ? '-' : (with_unit ? number_to_currency(value, precision: 0, delimiter: ' ', separator: ',') : number_to_currency(value, precision: 2, delimiter: ' ', separator: ',', unit: ''))
   end
 
   def human_phone(value)
-    number_to_phone value, area_code: true
+    value.nil? ? '-' : number_to_phone(value, area_code: true)
+  end
+
+  def human_number(value)
+    number_to_human value, precision: 2, delimiter: ' ', separator: ','
   end
 
   def spinner_tag
@@ -266,6 +270,13 @@ module ApplicationHelper
     end.html_safe
   end
 
+  def button_to_update(name, document, attributes)
+    class_name = document.class.to_s.downcase
+    parameters = {controller: class_name.tableize, action: 'update', id: document.id, method: 'put', data: {confirm: t('confirmation')}}
+    parameters[class_name.to_sym] = attributes
+    button_to name, parameters, {class: 'btn btn-primary'}
+  end
+
   def header_link_to_change_user
     content_tag(:li, class: 'dropdown') do
       link_to(caret_tag, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown') +
@@ -273,6 +284,26 @@ module ApplicationHelper
         User.for_changing.map do |user|
           content_tag(:li, link_to(user.username, become_path(user)))
         end.join.html_safe
+      end
+    end
+  end
+
+  def duck_plan_tag
+    if (value = Setting.duck_plan).present? and (url = Setting.duck_plan_url).present?
+      link_to url, id: 'duck_plan_link' do
+        concat t('plan_for')
+        concat image_tag('duck_40.png')
+        concat value
+      end
+    end
+  end
+
+  def buttons_for_tree
+    content_tag(:div, id: 'tree_buttons', class: 'btn-toolbar') do
+      content_tag(:div, class: 'btn-group') do
+        content_tag(:button, '1', class: 'btn btn-mini') +
+        content_tag(:button, '2', class: 'btn btn-mini') +
+        content_tag(:button, '3', class: 'btn btn-mini')
       end
     end
   end

@@ -1,0 +1,14 @@
+:plain
+  store_id = $('form [id$=store_id]').val();
+  $("body").append("#{j(render('products/choose_form'))}");
+  $('#modal_form form').attr('store_id', store_id);
+  if(store_id != ''){
+    $('#modal_form #product_groups a').each(function(){
+      $(this).attr('href', $(this).attr('href') + '&store_id=' + store_id);
+    });
+  }
+  product_groups_tree_readonly('#product_groups');
+  $("#modal_form").modal('show');
+
+- if @product.present?
+  $('#product_choose_form').submit();

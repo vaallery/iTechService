@@ -1,5 +1,4 @@
-class
-Ability
+class Ability
   include CanCan::Ability
 
   def initialize(user)
@@ -11,6 +10,10 @@ Ability
       can :manage, :all
       can :view_reports
       cannot :write_tech_notice, Device
+      can :view_purchase_price, Product
+      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
     elsif user.admin?
       can :manage, :all
       can :view_reports
@@ -20,12 +23,19 @@ Ability
       cannot :manage, [BonusType, Bonus]
       cannot [:edit, :destroy], Karma
       cannot :write_tech_notice, Device
+      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
+      cannot :read, CashShift
+      cannot :close, CashShift
     elsif user.programmer?
       can :manage, :all
       cannot :manage, Salary unless user.able_to? :manage_salary
       cannot :manage_rights, User
       cannot :manage, [BonusType, Bonus]
       cannot [:edit, :destroy], Karma
+    elsif user.synchronizer?
+      can :sync, Product
     else
       if user.manager?
         can :manage, :all
@@ -35,14 +45,21 @@ Ability
         cannot [:edit, :destroy], Karma
         cannot :read_tech_notice, Device
         cannot :write_tech_notice, Device
+        cannot :destroy, [Client, Device]
       end
       if user.software?
         can :modify, [Device, Client]
-        can [:issue, :activate, :scan], GiftCertificate
+        can :create_sale, Device
+        can [:issue, :activate, :scan, :find], GiftCertificate
         can :modify, Sale
+        can [:choose, :select], Product
+        can [:post, :edit, :attach_gift_certificate, :return_check], Sale, status: 0
+        can [:create, :read], Sale
+        can :create, CashOperation
       end
       if user.media?
-        can :modify, [Device, Client, Order]
+        can :modify, [Device, Client, Order, QuickOrder]
+        can :set_done, QuickOrder
       end
       if user.marketing?
         can :modify, Info
@@ -65,6 +82,11 @@ Ability
         can :modify, Order
         can :read_tech_notice, Device
         can :write_tech_notice, Device
+        can :repair, Device
+        can [:choose, :select], Product
+        can [:choose, :select], RepairService
+        can :make_defect_sp, MovementAct
+        can [:create, :post], MovementAct, {status: 0, is_from_spare_parts?: true, is_to_defect?: true}
       end
       if user.has_role? %w[technician media]
         can [:read, :create], SupplyRequest
@@ -101,12 +123,16 @@ Ability
       can :read, Info, recipient_id: [nil, user.id]
       can :rating, User
       can :manage, TimesheetDay if user.able_to? :manage_timesheet
+      can :print_check, Sale
       can :read, :all
       unless user.driver?
         cannot :read, SupplyReport
       end
       cannot [:create, :update, :destroy], StolenPhone
       cannot :read, Salary
+      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
     end
     #
     # The first argument to `can` is the action you are giving the user permission to do.
