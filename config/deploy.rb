@@ -1,6 +1,5 @@
 set :application, 'itechservice'
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
-set :branch, 'master'
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
