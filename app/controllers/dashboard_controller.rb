@@ -93,7 +93,7 @@ class DashboardController < ApplicationController
       when 'salary_report' then can?(:manage, Salary) ? @report = Report.salary_report : render(nothing: true)
       when 'few_remnants_goods' then @report = Report.few_remnants_report :goods
       when 'few_remnants_spare_parts' then @report = Report.few_remnants_report :spare_parts
-      when 'supply_report' then make_supply_report
+      when 'supply_report' then @report = Report.supply_report period
     end
   end
 
@@ -326,25 +326,6 @@ class DashboardController < ApplicationController
     end
     @report[:sales_sum] = sales_sum
     @report[:sales_count] = sales_count
-  end
-
-  def make_supply_report
-    @report[:supply_categories] = []
-    supply_reports = SupplyReport.where date: @period
-    supplies_sum = 0
-    if supply_reports.any?
-      if (supplies = Supply.where supply_report_id: supply_reports.map(&:id)).any?
-        supplies.group(:supply_category_id).sum('id').each_pair do |key, val|
-          if key.present? and (supply_category = SupplyCategory.find(key)).present?
-            category_supplies = supplies.where(supply_category_id: key)
-            category_sum = category_supplies.map{|s|s.sum}.sum
-            @report[:supply_categories] << {name: supply_category.name, sum: category_sum, supplies: category_supplies}
-            supplies_sum = supplies_sum + category_sum
-          end
-        end
-      end
-    end
-    @report[:supplies_sum] = supplies_sum
   end
 
 end
