@@ -49,7 +49,7 @@ jQuery ->
             label: 'delete'
             action: (obj) ->
               if confirm('Are you sure?')
-                if this.is_selected(obj) this.remove() else this.remove(obj)
+                if this.is_selected(obj) then this.remove() else this.remove(obj)
       plugins: ['themes', 'html_data', 'ui', 'contextmenu', 'crrm']
     .bind  'loaded.jstree', (e, data) ->
       $('#device_types_tree').jstree('open_all', $('li.device_type'), false)

@@ -1497,7 +1497,7 @@ ru:
   object: "Объект"
   time: "Время"
   user: "Пользователь"
-  tasks: "Задачи"
+#  tasks: "Задачи"
   in_time: через
   ago: назад
   app_name: Айс
