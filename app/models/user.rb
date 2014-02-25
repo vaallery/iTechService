@@ -263,9 +263,7 @@ class User < ActiveRecord::Base
   end
 
   def timeout_in
-    if any_admin?
-      1.minute
-    elsif session_duration.present?
+    if session_duration.present?
       session_duration.minutes
     else
       30.minutes
