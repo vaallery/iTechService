@@ -1494,10 +1494,10 @@ ru:
     nothing_found: Ничего не найдено
 
   add: "Добавить"
-      object: "Объект"
-      time: "Время"
-      user: "Пользователь"
-      tasks: "Задачи"
+  object: "Объект"
+  time: "Время"
+  user: "Пользователь"
+  tasks: "Задачи"
   in_time: через
   ago: назад
   app_name: Айс
