@@ -14,7 +14,10 @@
         = menu_item t("wiki.link"), wiki_all_path
       = drop_down t('devices.link') do
         = menu_item t('devices.link', default: 'Devices'), devices_path
-        = menu_item t('quick_orders.link'), quick_orders_path if can? :manage, QuickOrder
+        - if can? :manage, QuickOrder
+          = menu_item t('quick_orders.link'), quick_orders_path
+        - elsif can? :create, QuickOrder
+          = menu_item t('quick_orders.new.title'), new_quick_order_path
       = menu_item t('clients.link', default: 'Clients'), clients_path
       = menu_item t('products.index.title'), products_path if can? :read, Product
       = menu_item t('orders.link', default: 'Orders'), orders_path if can? :read, Order
