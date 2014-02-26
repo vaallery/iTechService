@@ -1,4 +1,4 @@
-chdir: /Users/v/projects/rails/itech_service
+chdir: /usr/local/var/www/itechservice/current
 environment: production
 rackup: private_pub.ru
 port: 9292

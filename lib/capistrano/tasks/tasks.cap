@@ -8,3 +8,56 @@ task :check_write_permissions do
     end
   end
 end
+
+#------------------------------------------------------------------------------
+# Delayed Job
+#------------------------------------------------------------------------------
+
+def delayed_job(cmd)
+  "cd #{current_path} && RAILS_ENV=production bundle exec script/delayed_job #{cmd.to_s}"
+end
+
+namespace :delayed_job do
+
+  desc "Delayed Job start"
+  task :start do
+    on roles(:app) do
+      execute delayed_job(:start)
+    end
+  end
+
+  desc "Delayed Job stop"
+  task :stop do
+    on roles(:app) do
+      execute delayed_job(:stop)
+    end
+  end
+
+end
+
+#------------------------------------------------------------------------------
+# Private Pub
+#------------------------------------------------------------------------------
+
+def private_pub(cmd)
+  "cd #{current_path} && bundle exec thin -C config/private_pub_thin.yml #{cmd.to_s}"
+  #"cd #{current_path} && bundle exec rackup private_pub.ru -s thin -E production"
+end
+
+namespace :delayed_job do
+
+  desc "Private Pub start"
+  task :start do
+    on roles(:app) do
+      execute private_pub(:start)
+    end
+  end
+
+  desc "Private Pub stop"
+  task :stop do
+    on roles(:app) do
+      execute private_pub(:stop)
+    end
+  end
+
+end
