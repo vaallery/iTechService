@@ -33,7 +33,7 @@ set :unicorn_pid, "#{fetch(:pids_path)}/unicorn.pid" unless any?(:unicorn_pid)
 #set :unicorn_remote_config, "#{current_path}/config/unicorn.rb"
 
 def unicorn_start_cmd
-  "cd #{current_path} && bundle exec unicorn_rails -D -c #{current_path}/config/unicorn.rb -E production"
+  "cd #{current_path} && bundle exec unicorn_rails -c #{current_path}/config/unicorn.rb -E production -D"
 end
 
 def unicorn_stop_cmd
