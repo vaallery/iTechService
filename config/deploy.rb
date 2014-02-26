@@ -10,13 +10,16 @@ set :format, :pretty
 set :log_level, :debug
 set :pty, true
 
-set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml bin/unicorn_init.sh}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
 
 set :rvm_ruby_version, '2.1.1'
+
+set :sockets_path, shared_path.join('tmp/sockets')
+set :pids_path, shared_path.join('tmp/pids')
 
 namespace :deploy do
 
