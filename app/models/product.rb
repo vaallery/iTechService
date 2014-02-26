@@ -124,4 +124,8 @@ class Product < ActiveRecord::Base
     store_products.find_by_store_id(store.id).try(:warning_quantity)
   end
 
+  def remnants_cost
+    quantity_in_store * (purchase_price || 0)
+  end
+
 end

@@ -71,7 +71,8 @@ class Purchase < ActiveRecord::Base
           else
             batch.store_item(store).add batch.quantity
           end
-          batch.prices.create price_type_id: price_type.id, date: cur_date, value: batch.price
+          new_price = (batch.product.remnants_cost + batch.sum) / (batch.product.quantity_in_store + batch.quantity)
+          batch.prices.create price_type_id: price_type.id, date: cur_date, value: new_price
         end
         update_attribute :status, 1
         update_attribute :date, DateTime.current
@@ -82,21 +83,21 @@ class Purchase < ActiveRecord::Base
   end
 
   def unpost
-    if is_posted?
-      transaction do
-        batches.each do |batch|
-          item = batch.item
-          item.store_items.in_store(self.store_id).each do |store_item|
-            store_item.dec batch.quantity
-          end
-          #store.price_types.each do |price_type|
-          #  price = item.prices.find_or_initialize_by_price_type_id_and_date price_type_id: price_type.id, date: cur_date
-          #end
-        end
-        update_attribute :status, 0
-        update_attribute :date, nil
-      end
-    end
+  #  if is_posted?
+  #    transaction do
+  #      batches.each do |batch|
+  #        item = batch.item
+  #        item.store_items.in_store(self.store_id).each do |store_item|
+  #          store_item.dec batch.quantity
+  #        end
+  #        #store.price_types.each do |price_type|
+  #        #  price = item.prices.find_or_initialize_by_price_type_id_and_date price_type_id: price_type.id, date: cur_date
+  #        #end
+  #      end
+  #      update_attribute :status, 0
+  #      update_attribute :date, nil
+  #    end
+  #  end
   end
 
   private
