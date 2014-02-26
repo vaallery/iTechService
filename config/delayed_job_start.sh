@@ -1,1 +1,1 @@
-#!/bin/shcd /Users/itech/sites/itech_service && RAILS_ENV=production /Users/itech/sites/itech_service/script/delayed_job start
+#!/bin/shcd /usr/local/var/www/itechservice/current && RAILS_ENV=production bundle exec script/delayed_job start#cd /Users/itech/sites/itech_service && RAILS_ENV=production /Users/itech/sites/itech_service/script/delayed_job start

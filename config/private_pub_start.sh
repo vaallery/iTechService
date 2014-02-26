@@ -1,1 +1,1 @@
-#!/bin/shcd /Users/itech/sites/itech_service && rackup private_pub.ru -s thin -E production
+#!/bin/shcd /usr/local/var/www/itechservice/current && bundle exec rackup private_pub.ru -s thin -E production#cd /Users/itech/sites/itech_service && rackup private_pub.ru -s thin -E production
