@@ -6,6 +6,6 @@ stderr_path "#{root}/log/unicorn.log"
 stdout_path "#{root}/log/unicorn.log"
 
 #listen '/tmp/unicorn.itech_service.sock'
-listen "#{root}/tmp/unicorn.sock"
+listen "#{root}/tmp/sockets/unicorn.sock"
 worker_processes 4
 timeout 30
