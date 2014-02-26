@@ -6,7 +6,7 @@
     - unless current_user.any_admin?
       %span= link_to karma_tag(current_user), rating_users_path
     = duck_plan_tag
-
+    -#= audio_tag 'ya_zhdu_tebya.mp3', autoplay: true, loop: false
   = nav_bar static: :top, brand: image_tag('logo.png'), responsive: true, fluid: true do
     = menu_group do
       = menu_item t('chat.title'), messages_path, class: 'nav_chat'
