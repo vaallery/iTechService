@@ -3,22 +3,20 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>local.delayed_job.service</string>
+	<string>itech.itechservice.delayed_job</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/bin/delayed_job_start.sh</string>
+		<string>/usr/local/var/www/itechservice/current/delayed_job_start.sh</string>
 	</array>
 	<key>WorkingDirectory</key>
-	<string>/usr/local</string>
+	<string>/usr/local/var/www/itechservice/current</string>
 	<key>UserName</key>
 	<string>itech</string>
-	<key>GroupName</key>
-	<string>staff</string>
 	<key>RunAtLoad</key>
 	<true/>
 	<key>KeepAlive</key>
 	<true/>
-	<key>OnDemand</key>
-	<false/>
+	<key>StandardErrorPath</key>
+	<string>/usr/local/var/www/itechservice/current/log/delayed_job.log</string>
 </dict>
 </plist>
