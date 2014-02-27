@@ -16,7 +16,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
 
-set :rvm_ruby_version, '2.1.0'
+set :rvm_ruby_version, '2.0.0-p451'
 
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
