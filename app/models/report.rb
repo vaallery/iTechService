@@ -144,25 +144,11 @@ module Report
 
   def self.sales_report(period)
     result = {sales: []}
-    sales_sum = 0
-    sales_count = 0
-    sales = Sale.sold_at(period)
-    users_sales = sales.where('sales.user_id IS NOT NULL').group('sales.user_id').sum('sales.value')
-    users_sales.each_pair do |user_id, sum|
-      if (user = User.find user_id).present?
-        user_sales = sales.where user_id: user_id
-        user_sales_hash = []
-        user_sales.each do |sale|
-          client_hash = sale.client.present? ? { id: sale.client_id, name: sale.client_presentation } : {}
-          user_sales_hash << { sold_at: sale.sold_at, device_type: sale.device_type_name, serial_number: sale.serial_number, imei: sale.imei, value: sale.value, id: sale.id, client: client_hash }
-          sales_sum = sales_sum + sale.value
-          sales_count = sales_count.next
-        end
-        result[:sales] << { user: { id: user.id, name: user.short_name }, sum: sum, count: user_sales.count, sales: user_sales_hash }
-      end
-    end
-    result[:sales_sum] = sales_sum
-    result[:sales_count] = sales_count
+    #sales_sum = 0
+    #sales_count = 0
+    #sales = Sale.selling.posted.sold_at(period)
+    #result[:sales_sum] = sales_sum
+    #result[:sales_count] = sales_count
     result
   end
 
