@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 #source 'http://gems.rubyforge.org'
-ruby '2.1.1'
+ruby '2.1.0'
 gem 'rails', '3.2.17'
 gem 'unicorn', '~> 4.6.2'
 gem 'pg', '~> 0.14.1'
@@ -45,9 +45,9 @@ group :assets do
 end
 
 group :development do
-  gem 'debugger'# unless ENV['RM_INFO']
-  gem 'debugger-xml'
-  gem 'debugger-linecache'
+  #gem 'debugger' unless ENV['RM_INFO']
+  #gem 'debugger-xml'
+  #gem 'debugger-linecache'
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-rvm', '~> 0.1'
