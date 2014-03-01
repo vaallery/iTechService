@@ -7,6 +7,7 @@
   .modal-body
     = f.hidden_field :parent_id
     = f.association :product_category
+    = f.input :code
     = f.input :name, autofocus: true
 
   .modal-footer

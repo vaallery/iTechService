@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140224022045) do
+ActiveRecord::Schema.define(:version => 20140228082640) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -571,9 +571,11 @@ ActiveRecord::Schema.define(:version => 20140224022045) do
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.integer  "ancestry_depth",      :default => 0
+    t.string   "code"
   end
 
   add_index "product_groups", ["ancestry"], :name => "index_product_groups_on_ancestry"
+  add_index "product_groups", ["code"], :name => "index_product_groups_on_code"
   add_index "product_groups", ["product_category_id"], :name => "index_product_groups_on_product_category_id"
 
   create_table "product_prices", :force => true do |t|
@@ -604,16 +606,18 @@ ActiveRecord::Schema.define(:version => 20140224022045) do
     t.string   "name"
     t.string   "code"
     t.integer  "product_group_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.integer  "warranty_term"
     t.integer  "device_type_id"
     t.integer  "quantity_threshold"
     t.text     "comment"
+    t.integer  "product_category_id"
   end
 
   add_index "products", ["code"], :name => "index_products_on_code"
   add_index "products", ["device_type_id"], :name => "index_products_on_device_type_id"
+  add_index "products", ["product_category_id"], :name => "index_products_on_product_category_id"
   add_index "products", ["product_group_id"], :name => "index_products_on_product_group_id"
 
   create_table "purchases", :force => true do |t|

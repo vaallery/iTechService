@@ -294,6 +294,7 @@ ru:
         feature_accounting: 'Учёт по характеристикам'
         features: 'Характеристики'
         items: 'Единицы'
+        product_categroy: 'Категория'
         product_group: Группа
         purchase_price: 'Закупочная цена'
         quantity_in_store: 'Остаток на складе'
@@ -1025,6 +1026,12 @@ ru:
     index:
       title: 'Группы продуктов'
 
+  product_imports:
+    form:
+      do_import: "Импортировать"
+      importing: "Импортирую..."
+
+      title: "Импорт продуктов"
   products:
     add_good: 'Добавить товар'
     add_product: 'Добавить Продукт'
@@ -1512,6 +1519,7 @@ ru:
   done: "Готово"
   edit: Редактировать
   everywhere: "Везде"
+  file: 'Файл'
   from_date: "от %{date}"
   hour_min: "%{hour} ч %{min} мин."
   in_time: через

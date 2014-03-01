@@ -27,6 +27,10 @@ window.product_groups_tree = (container)->
           name: data.rslt.new_name
   ).bind('select_node.jstree', (e, data)->
     $container.jstree('open_node', data.rslt.obj[0])
+#  ).bind('drag_finish.jstree', (e, data)->
+#    alert 'drag_finish'
+#  ).bind('drop_finish.jstree', (e, data)->
+#    alert 'drop_finish'
   ).jstree(
     core:
       strings:
@@ -42,13 +46,23 @@ window.product_groups_tree = (container)->
       icons: false
     ui:
       select_limit: 1
-    dnd:
-      drop_finish: ->
-        json_data:
-          ajax:
-            url: "/product_groups/#{root_id}.json"
-            data: (n)->
-              id: (if n.attr then n.attr("id") else 0)
+#    dnd:
+#      drop_finish: ->
+#        alert 'drop_finish'
+#      drag_finish: (data)->
+#        alert 'drag_finish'
+#        parent_id = data.r.obj[0].id.replace("product_group_", "")
+#        $.ajax
+#          type: "PUT"
+#          url: "/product_groups/#{data.o.obj[0].id.replace("product_group_", "")}"
+#          data:
+#            product_group:
+#              parent_id: parent_id
+#        json_data:
+#          ajax:
+#            url: "/product_groups/#{root_id}.json"
+#            data: (n)->
+#              id: (if n.attr then n.attr("id") else 0)
     contextmenu:
       select_node: true
       items:
@@ -58,15 +72,11 @@ window.product_groups_tree = (container)->
             group_id = obj[0].id.replace("product_group_", "")
             $.get "/product_groups/new.js", {product_group: {parent_id: group_id}}
           separator_after: true
-        edit:
+        rename:
           label: "Редактировать"
           action: (obj)->
             group_id = obj[0].id.replace("product_group_", "")
             $.get "/product_groups/#{group_id}/edit.js"
-        rename:
-          label: "Переименовать"
-          action: (obj)->
-            @rename obj
           separator_after: true
         remove:
           label: "Удалить"

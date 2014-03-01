@@ -9,6 +9,7 @@ class Product < ActiveRecord::Base
   scope :services, joins(product_group: :product_category).where(product_categories: {kind: 'service'})
   scope :spare_parts, joins(product_group: :product_category).where(product_categories: {kind: 'spare_part'})
 
+  belongs_to :product_category, inverse_of: :products
   belongs_to :product_group, inverse_of: :products
   belongs_to :device_type, inverse_of: :product
   has_many :items, inverse_of: :product, dependent: :destroy
@@ -19,24 +20,26 @@ class Product < ActiveRecord::Base
   has_many :product_relations, as: :parent, dependent: :destroy
   has_many :related_products, through: :product_relations, source: :relatable, source_type: 'Product'
   has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'
-  has_one :top_salable, dependent: :nullify
   has_many :store_products, dependent: :destroy
+  has_one :top_salable, dependent: :nullify
 
   accepts_nested_attributes_for :items, allow_destroy: true
   accepts_nested_attributes_for :task, allow_destroy: false
   accepts_nested_attributes_for :store_products
 
-  delegate :feature_accounting, :feature_types, :is_service, :is_equipment, :is_spare_part, :request_price, :product_category, to: :product_group, allow_nil: true
+  delegate :feature_accounting, :feature_types, :is_service, :is_equipment, :is_spare_part, :request_price, to: :product_category, allow_nil: true
+  delegate :name, to: :product_category, prefix: :category, allow_nil: true
   delegate :full_name, to: :device_type, prefix: true, allow_nil: true
   delegate :color, to: :top_salable, allow_nil: true
   delegate :cost, to: :task, prefix: true, allow_nil: true
 
-  attr_accessible :code, :name, :product_group_id, :device_type_id, :warranty_term, :quantity_threshold, :warning_quantity, :comment, :items_attributes, :task_attributes, :related_product_ids, :related_product_group_ids, :store_products_attributes
-  validates_presence_of :name, :code, :product_group
-  validates_presence_of :device_type, if: :is_equipment
+  attr_accessible :code, :name, :product_group_id, :product_category_id, :device_type_id, :warranty_term, :quantity_threshold, :warning_quantity, :comment, :items_attributes, :task_attributes, :related_product_ids, :related_product_group_ids, :store_products_attributes
+  validates_presence_of :name, :code, :product_group, :product_category
+  #validates_presence_of :device_type, if: :is_equipment
   validates_uniqueness_of :code
   after_initialize do
     self.warranty_term ||= default_warranty_term
+    self.product_category_id ||= product_group.try(:product_category).try(:id)
     #self.build_task if self.is_service and self.task.nil?
   end
 

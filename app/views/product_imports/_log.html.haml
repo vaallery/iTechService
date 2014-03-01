@@ -1,0 +1,7 @@
+%ul.unstyled
+  - @product_import.import_log.each do |log|
+    %li
+      - if log[0] == 'inverse'
+        %span.label{class: "label-#{log[0]}"}= log[1]
+      - else
+        %p{class: "text-#{log[0]}"}= log[1]

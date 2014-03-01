@@ -1,2 +1,4 @@
-User.create(username: 'admin', email: 'admin@itechstore.ru', role: 'admin', password: 'wrfswrfs', password_confirmation: 'wrfswrfs', card_number: '1b12abe8')
-User.create(username: 'vova', email: 'kvn@itechdevs.com', role: 'admin', password: '3163115', password_confirmation: '3163115', card_number: '7777')
+ProductCategory::KINDS.each do |kind|
+  product_category = ProductCategory.find_or_create_by_kind(kind: kind, name: I18n.t("product_categories.kinds.#{kind}"))
+  product_category.product_groups.find_or_create_by_name(name: I18n.t("product_categories.kinds.#{kind}"))
+end

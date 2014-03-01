@@ -18,7 +18,7 @@ class ProductGroup < ActiveRecord::Base
 
   delegate :feature_accounting, :feature_types, :warranty_term, :is_service, :is_equipment, :is_spare_part, :request_price, to: :product_category, allow_nil: true
 
-  attr_accessible :name, :ancestry, :parent_id, :product_category_id, :related_product_ids, :related_product_group_ids
+  attr_accessible :code, :name, :ancestry, :parent_id, :product_category_id, :related_product_ids, :related_product_group_ids
   validates_presence_of :name, :product_category
 
   after_initialize do |product_group|

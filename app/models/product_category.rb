@@ -2,7 +2,8 @@ class ProductCategory < ActiveRecord::Base
 
   KINDS = %w[equipment accessory service protector spare_part]
 
-  has_many :product_groups
+  has_many :product_groups, inverse_of: :product_category
+  has_many :products, inverse_of: :product_category
   has_and_belongs_to_many :feature_types, uniq: true
   attr_accessible :name, :kind, :feature_accounting, :request_price, :warranty_term, :feature_type_ids
   validates_presence_of :name, :kind
@@ -23,6 +24,10 @@ class ProductCategory < ActiveRecord::Base
 
   def is_spare_part
     kind == 'spare_part'
+  end
+
+  def self.equipment_with_imei
+    ProductCategory.where(kind: 'equipment').joins(:feature_types).where('feature_types.kind = ?', 'imei').first
   end
 
 end

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 #source 'http://gems.rubyforge.org'
-ruby '2.0.0'
+#ruby '1.9.3'
 gem 'rails', '3.2.17'
 gem 'unicorn', '~> 4.6.2'
 gem 'pg', '~> 0.14.1'
@@ -26,6 +26,7 @@ gem 'json', '~> 1.7.7'
 gem 'irwi', git: 'git://github.com/alno/irwi.git'
 gem 'RedCloth', '~> 4.2.9'
 gem 'roo', '~> 1.11.2'
+#gem 'rubyzip', '< 1.0.0'
 gem 'paperclip', '~> 3.4.0'
 gem 'barby', '~> 0.5.1'
 gem 'acts_as_list', '~> 0.2.0'
@@ -45,9 +46,9 @@ group :assets do
 end
 
 group :development do
-  #gem 'debugger' unless ENV['RM_INFO']
-  #gem 'debugger-xml'
-  #gem 'debugger-linecache'
+  gem 'debugger' unless ENV['RM_INFO']
+  gem 'debugger-xml'
+  gem 'debugger-linecache'
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-rvm', '~> 0.1'

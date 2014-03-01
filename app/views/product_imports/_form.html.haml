@@ -1,0 +1,20 @@
+.page-header
+  %h1= t '.title'
+= form_for @product_import, remote: true, html: {class: 'form-horizontal'} do |f|
+  - if @product_import.errors.any?
+    #error_explanation
+      %ul
+        - @product_import.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-fields
+    .control-group
+      %label.control-label= t 'activerecord.models.store'
+      .controls= f.select :store_id, Store.all.map{|s|[s.name, s.id]}
+    .control-group
+      %label.control-label= t 'file'
+      .controls= f.file_field :file
+  .form-actions
+    = f.submit t('.do_import'), disable_with: t('.importing'), class: 'btn btn-primary'
+
+#product_import_log= render 'log' if @product_import.import_log.any?

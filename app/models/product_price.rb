@@ -9,8 +9,8 @@ class ProductPrice < ActiveRecord::Base
   default_scope order('date desc')
   scope :newest_first, order('date desc')
   scope :with_type, lambda { |type| where(price_type_id: type.is_a?(PriceType) ? type.id : type) }
-  scope :purchase, where(price_type_id: PriceType.purchase)
-  scope :retail, where(price_type_id: PriceType.retail)
+  scope :purchase, where(price_type_id: PriceType.purchase.id)
+  scope :retail, where(price_type_id: PriceType.retail.id)
 
   after_initialize do
     date ||= Time.current

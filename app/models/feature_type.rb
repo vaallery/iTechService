@@ -19,4 +19,12 @@ class FeatureType < ActiveRecord::Base
     kind == 'other'
   end
 
+  def self.imei
+    FeatureType.find_or_create_by_kind kind: 'imei', name: 'IMEI'
+  end
+
+  def self.serial_number
+    FeatureType.find_or_create_by_kind kind: 'serial_number', name: 'Serial Number'
+  end
+
 end
