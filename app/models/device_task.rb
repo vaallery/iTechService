@@ -18,7 +18,7 @@ class DeviceTask < ActiveRecord::Base
   delegate :client_presentation, to: :device, allow_nil: true
   delegate :department, to: :device
 
-  attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes, :repair_tasks_attributes
+  attr_accessible :done, :done_at, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes, :repair_tasks_attributes
   validates :task, :cost, presence: true
   #validates :cost, numericality: true
   validates_numericality_of :cost#, greater_than_or_equal_to: :repair_cost

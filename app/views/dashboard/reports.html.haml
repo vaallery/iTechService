@@ -30,5 +30,6 @@
           %li= link_to t('reports.payments_report'), '#', data: { report: 'payments_report' }
           %li= link_to t('reports.few_remnants_goods'), '#', data: { report: 'few_remnants_goods' }
           %li= link_to t('reports.few_remnants_spare_parts'), '#', data: { report: 'few_remnants_spare_parts' }
+          %li= link_to t('reports.repair_jobs'), '#', data: { report: 'repair_jobs' }
 
 #reports_tables= render "dashboard/reports/#{params[:report]}" if params[:report].present?

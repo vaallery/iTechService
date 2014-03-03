@@ -240,4 +240,15 @@ module Report
     result
   end
 
+  def self.repair_jobs_report(period)
+    result = {technicians: {}}
+    repair_tasks = RepairTask.includes(:device_task).where(device_tasks: {done_at: period})
+    repair_tasks.each do |repair_task|
+      user_id = repair_task.user.id
+      user_name = repair_task.user.short_name
+
+    end
+    result
+  end
+
 end

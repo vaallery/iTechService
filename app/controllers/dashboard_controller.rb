@@ -94,6 +94,7 @@ class DashboardController < ApplicationController
       when 'few_remnants_goods' then @report = Report.few_remnants_report :goods
       when 'few_remnants_spare_parts' then @report = Report.few_remnants_report :spare_parts
       when 'supply_report' then @report = Report.supply_report period
+      when 'repair_jobs' then @report = Report.repair_jobs_report period
     end
   end
 

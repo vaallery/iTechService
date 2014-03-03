@@ -1151,6 +1151,7 @@ ru:
 
     remnants: "Остатки"
     payments_report: "Отчёт по платежам"
+    repair_jobs: "Отчёт работ технических специалистов"
   revaluation_acts:
     created: 'Акт Переоценки создан'
     updated: 'Акт Переоценки изменён'

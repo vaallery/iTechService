@@ -6,6 +6,7 @@ class RepairTask < ActiveRecord::Base
   accepts_nested_attributes_for :repair_parts
   delegate :name, to: :repair_service, allow_nil: true
   delegate :price, to: :repair_service, prefix: true, allow_nil: true
+  delegate :user, to: :device_task, allow_nil: true
   attr_accessible :price, :repair_service_id, :device_task_id, :store_id, :repair_parts_attributes
   validates_presence_of :price, :repair_service, :store
   validates_numericality_of :price#, greater_than_or_equal_to: :repair_service_price
