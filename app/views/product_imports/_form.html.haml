@@ -12,8 +12,11 @@
       %label.control-label= t 'activerecord.models.store'
       .controls= f.select :store_id, Store.all.map{|s|[s.name, s.id]}
     .control-group
-      %label.control-label= t 'file'
+      %label.control-label= t '.remnants_file'
       .controls= f.file_field :file
+    .control-group
+      %label.control-label= t '.purchases_file'
+      .controls= f.file_field :prices_file
   .form-actions
     = f.submit t('.do_import'), disable_with: t('.importing'), class: 'btn btn-primary'
 

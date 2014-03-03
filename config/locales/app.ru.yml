@@ -1032,6 +1032,8 @@ ru:
       importing: "Импортирую..."
 
       title: "Импорт продуктов"
+      remnants_file: "Файл с остатками"
+      purchases_file: "Файл с закупами"
   products:
     add_good: 'Добавить товар'
     add_product: 'Добавить Продукт'

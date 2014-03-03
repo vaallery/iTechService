@@ -22,12 +22,20 @@ class ProductCategory < ActiveRecord::Base
     kind == 'equipment'
   end
 
+  def is_accessory
+    kind == 'accessory'
+  end
+
   def is_spare_part
     kind == 'spare_part'
   end
 
+  def self.accessory_with_sn
+    ProductCategory.where(kind: 'accessory').includes(:feature_types).where('feature_types.kind = ?', 'serial_number').first || ProductCategory.create(name: 'Accessory with SN', kind: 'accessory', feature_type_ids: [FeatureType.serial_number.id])
+  end
+
   def self.equipment_with_imei
-    ProductCategory.where(kind: 'equipment').joins(:feature_types).where('feature_types.kind = ?', 'imei').first
+    ProductCategory.where(kind: 'equipment').includes(:feature_types).where('feature_types.kind = ?', 'imei').first || ProductCategory.create(kind: 'equipment', feature_type_ids: [FeatureType.serial_number.id, FeatureType.imei.id])
   end
 
 end
