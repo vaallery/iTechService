@@ -3,7 +3,7 @@ class ProductImport
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_accessor :file, :store_id
+  attr_accessor :file, :store_id, :prices_file
 
   def initialize(attributes = {})
     attributes.each { |name, value| send("#{name}=", value) }
@@ -47,14 +47,13 @@ class ProductImport
       row = sheet.row i
       import_log << ['inverse', "#{i} #{'-'*140}"]
       import_log << ['info', row]
-      if (code = row[0][/\d+/]).present?
+      if (code = row[0][/\d+(?=.\|)/]).present?
         name = row[0][/(?<=\|\s).+(?=,)/]
         if row[8].blank?
           parent_id = product_group.id if product_group.present? and product_group.is_root?
           product_group = ProductGroup.find_or_create_by_code(code: code, name: name, parent_id: parent_id)
         elsif product_group.present? and name.present?
-          unless (prod = Product.find_by_code(code)).present?
-            product = prod
+          unless (product = Product.find_by_code(code)).present?
             next_row = sheet.row i+1
             product_attributes = {code: code, name: name, product_group_id: product_group.id}
             if next_row[0].length > 3 and next_row[0] =~ /,/
@@ -65,8 +64,7 @@ class ProductImport
             import_log << ['success', 'New product: ' + product_attributes.inspect]
           end
         end
-      elsif product.present? and (quantity = row[3].to_i) > 0
-        import_log << ['info', 'Quantity: ' + quantity.inspect]
+      elsif (quantity = row[3].to_i) > 0 and product.present?
         # Item
         if row[0].length > 3
           features = row[0].split ', '
@@ -94,10 +92,10 @@ class ProductImport
         store_item_attributes = {store_id: store.id, quantity: quantity}
         if (store_item = item.store_items.in_store(store).first).present?
           store_item.attributes = store_item_attributes
-          import_log << ['success', 'Update store_item: ' + store_item.inspect]
+          import_log << ['success', 'Update Store Item: ' + store_item.inspect]
         else
           store_item = item.store_items.build store_item_attributes
-          import_log << ['success', 'New store_item: ' + store_item.inspect]
+          import_log << ['success', 'New Store Item: ' + store_item.inspect]
         end
         store_items << store_item
 
@@ -106,7 +104,7 @@ class ProductImport
         retail_price = row[9]
         product_price = product.prices.build price_type_id: PriceType.retail.id, value: retail_price, date: @import_time
         product_prices << product_price
-        import_log << ['success', 'New retail product_price: ' + product_price.inspect]
+        import_log << ['success', 'New retail Product Price: ' + product_price.inspect]
       end
     end
     import_log << ['inverse', '-'*160]
@@ -114,6 +112,16 @@ class ProductImport
     imported_items = items
     imported_store_items = store_items
     imported_product_prices = product_prices
+  end
+
+  def load_purchase_prices
+    sheet = FileLoader.open_spreadsheet file
+    prices = {}
+    (6..sheet.last_row-1).each do |i|
+      row = sheet.row i
+
+    end
+    prices
   end
 
   def imported_products
@@ -130,6 +138,10 @@ class ProductImport
 
   def imported_product_prices
     @imported_product_prices ||= []
+  end
+
+  def imported_prices
+    @imported_prices ||= []
   end
 
   def import_log
