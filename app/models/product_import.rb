@@ -63,7 +63,7 @@ class ProductImport
       import_log << ['info', row]
       if (code = row[0][/\d+(?=.\|)/]).present?
         name = row[0][/(?<=\|\s).+(?=,)/]
-        if row[8].blank?
+        if row[10].blank?
           parent_id = product_group.id if product_group.present? and product_group.is_root?
           product_group = ProductGroup.find_or_create_by_code(code: code, name: name, parent_id: parent_id)
         elsif product_group.present? and name.present?
