@@ -8,6 +8,7 @@ class DeviceTask < ActiveRecord::Base
 
   belongs_to :device
   belongs_to :task
+  belongs_to :performer, class_name: 'User'
   has_many :history_records, as: :object
   has_many :repair_tasks
   has_many :repair_parts, through: :repair_tasks
@@ -16,9 +17,9 @@ class DeviceTask < ActiveRecord::Base
 
   delegate :name, :role, :is_important?, :is_actual_for?, :is_repair?, :item, to: :task, allow_nil: true
   delegate :client_presentation, to: :device, allow_nil: true
-  delegate :department, to: :device
+  delegate :department, :user, to: :device
 
-  attr_accessible :done, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :task, :device_attributes, :repair_tasks_attributes
+  attr_accessible :done, :done_at, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :performer_id, :task, :device_attributes, :repair_tasks_attributes
   validates :task, :cost, presence: true
   #validates :cost, numericality: true
   validates_numericality_of :cost#, greater_than_or_equal_to: :repair_cost
@@ -27,11 +28,13 @@ class DeviceTask < ActiveRecord::Base
   after_commit :update_device_done_attribute
   after_save :deduct_spare_parts if :is_repair?
   after_initialize { self.done ||= false }
+  after_initialize :set_performer
 
   before_save do |dt|
     old_done = changed_attributes['done']
     if dt.done and (!old_done or old_done.nil?)
       dt.done_at = DateTime.current
+      dt.performer_id = User.current.try(:id)
     elsif !dt.done and old_done
       dt.done_at = nil
     end
@@ -64,14 +67,6 @@ class DeviceTask < ActiveRecord::Base
     device.present? ? device.presentation : ''
   end
 
-  def performer
-    if (completions = history_records.task_completions).any?
-      completions.last.try :user
-    else
-      nil
-    end
-  end
-
   def performer_name
     performer.present? ? performer.short_name : ''
   end
@@ -99,7 +94,7 @@ class DeviceTask < ActiveRecord::Base
   end
 
   def deduct_spare_parts
-    repair_parts.each { |repair_part| repair_part.deduct_spare_parts }
+    repair_parts.each { |repair_part| repair_part.deduct_spare_parts } if done_changed?
   end
 
   def valid_repair
@@ -127,6 +122,13 @@ class DeviceTask < ActiveRecord::Base
       end
     end
     is_valid
+  end
+
+  def set_performer
+    if performer_id.nil? and done and (user = history_records.task_completions.order_by_newest.where(new_value: true).first.try(:user)).present?
+    #if done and (user = history_records.task_completions.where(user_id: 1..10000).order_by_newest.first.user).present?
+      update_attribute :performer_id, user.id
+    end
   end
 
 end
