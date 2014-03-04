@@ -1121,9 +1121,12 @@ ru:
     average_duration: Средняя длительность, мин.
     choose: Выберите отчет
     clients_count: Количество клиентов
-    clients_report: Новые клиенты
-    device_types_report: Принятые девайсы по типам
-    devices_movements_report: Перемещения девайсов
+    clients_report:
+      title: Новые клиенты
+    device_types_report:
+      title: Принятые девайсы по типам
+    devices_movements_report:
+      title: Перемещения девайсов
     done_at: Выполнен
     duration: Длительность, мин.
     includes: Из них
@@ -1138,20 +1141,33 @@ ru:
     received: Принято
     received_done: готовы
     received_archived: выданы
-    salary_report: Отчет по зарплате
+    salary_report:
+      title: Отчет по зарплате
     sum: Сумма
-    tasks_durations_report: Длительность выполнения задач
-    tasks_report: Выполненные задачи
+    tasks_durations_report:
+      title: Длительность выполнения задач
+    tasks_report:
+      title: Выполненные задачи
     total: Всего
-    users_report: Принятые девайсы по сотрудникам
-    sales_report: "Отчет по продажам"
-    supply_report: 'Отчёт водителя'
-    few_remnants_goods: "Заканчивающийся товар"
-    few_remnants_spare_parts: 'Заканчивающиеся запчасти'
-
+    users_report:
+      title: Принятые девайсы по сотрудникам
+    sales_report:
+      title: "Отчет по продажам"
+    supply_report:
+      title: 'Отчёт водителя'
+    few_remnants_goods:
+      title: "Заканчивающийся товар"
+    few_remnants_spare_parts:
+      title: 'Заканчивающиеся запчасти'
     remnants: "Остатки"
-    payments_report: "Отчёт по платежам"
-    repair_jobs: "Отчёт работ технических специалистов"
+    payments_report:
+      title: "Отчёт по платежам"
+    repair_jobs:
+      title: "Отчёт работ технических специалистов"
+      user: 'Имя тех. специалиста'
+      quantity: "Количество работ"
+      sum: "Сумма наценки работ"
+
   revaluation_acts:
     created: 'Акт Переоценки создан'
     updated: 'Акт Переоценки изменён'

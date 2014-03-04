@@ -1,0 +1,22 @@
+%table#repair_jobs_report.table.table-bordered.table-hover
+  %caption
+    %h4= t 'reports.repair_jobs.title'
+  %thead
+    %tr
+      %th.center= t 'reports.repair_jobs.user'
+      %th.center= t 'reports.repair_jobs.quantity'
+      %th.center= t 'reports.repair_jobs.sum'
+  %tbody
+    - @report.each_pair do |key, value|
+      %tr.detailable
+        %td.name= key.to_i.present? ? link_to(value[:name], user_path(key), target: '_blank') : '-'
+        %td.number= value[:jobs_qty]
+        %td.price.number= human_currency value[:jobs_sum], false
+      - value[:jobs].each do |job|
+        %tr.details
+          %td.name= job[:name]
+          %td= link_to job[:device_presentation], device_path(job[:device_id]), target: '_blank'
+          %td.number.job_price
+            = human_currency job[:margin], false
+            %small= "Job Price: #{human_currency(job[:price], false)}"
+            %small= "Parts Cost: #{human_currency(job[:parts_cost], false)}"

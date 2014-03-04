@@ -13,23 +13,24 @@
     %ul.nav
       %li.dropdown
         = link_to '#', id: 'selected_report', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-          %span= t "reports.#{params[:report] || 'choose'}"
+          -#%span= t "reports.#{params[:report] || 'choose'}"
+          %span= t "reports.#{params[:report].present? ? params[:report]+'.title' : 'choose'}"
           %b.caret
         %ul#reports_select.dropdown-menu
-          %li= link_to t('reports.device_types_report'), '#', data: { report: 'device_types_report' }
-          %li= link_to t('reports.users_report'), '#', data: { report: 'users_report' }
-          %li= link_to t('reports.tasks_report'), '#', data: { report: 'tasks_report' }
-          %li= link_to t('reports.clients_report'), '#', data: { report: 'clients_report' }
-          %li= link_to t('reports.tasks_durations_report'), '#', data: { report: 'tasks_durations_report' }
-          %li= link_to t('reports.sales_report'), '#', data: { report: 'sales_report' }
-          %li= link_to t('reports.devices_movements_report'), '#', data: { report: 'devices_movements_report' }
+          %li= link_to t('reports.device_types_report.title'), '#', data: { report: 'device_types_report' }
+          %li= link_to t('reports.users_report.title'), '#', data: { report: 'users_report' }
+          %li= link_to t('reports.tasks_report.title'), '#', data: { report: 'tasks_report' }
+          %li= link_to t('reports.clients_report.title'), '#', data: { report: 'clients_report' }
+          %li= link_to t('reports.tasks_durations_report.title'), '#', data: { report: 'tasks_durations_report' }
+          %li= link_to t('reports.sales_report.title'), '#', data: { report: 'sales_report' }
+          %li= link_to t('reports.devices_movements_report.title'), '#', data: { report: 'devices_movements_report' }
           -#%li= link_to t('reports.done_orders_report'), '#', remote: true, data: {report: 'done_orders_report'}
           - if can? :manage, Salary
-            %li= link_to t('reports.salary_report'), '#', data: { report: 'salary_report' }
-          %li= link_to t('reports.supply_report'), '#', data: { report: 'supply_report' }
-          %li= link_to t('reports.payments_report'), '#', data: { report: 'payments_report' }
-          %li= link_to t('reports.few_remnants_goods'), '#', data: { report: 'few_remnants_goods' }
-          %li= link_to t('reports.few_remnants_spare_parts'), '#', data: { report: 'few_remnants_spare_parts' }
-          %li= link_to t('reports.repair_jobs'), '#', data: { report: 'repair_jobs' }
+            %li= link_to t('reports.salary_report.title'), '#', data: { report: 'salary_report' }
+          %li= link_to t('reports.supply_report.title'), '#', data: { report: 'supply_report' }
+          %li= link_to t('reports.payments_report.title'), '#', data: { report: 'payments_report' }
+          %li= link_to t('reports.few_remnants_goods.title'), '#', data: { report: 'few_remnants_goods' }
+          %li= link_to t('reports.few_remnants_spare_parts.title'), '#', data: { report: 'few_remnants_spare_parts' }
+          %li= link_to t('reports.repair_jobs.title'), '#', data: { report: 'repair_jobs' }
 
 #reports_tables= render "dashboard/reports/#{params[:report]}" if params[:report].present?

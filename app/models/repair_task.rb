@@ -6,7 +6,7 @@ class RepairTask < ActiveRecord::Base
   accepts_nested_attributes_for :repair_parts
   delegate :name, to: :repair_service, allow_nil: true
   delegate :price, to: :repair_service, prefix: true, allow_nil: true
-  delegate :user, to: :device_task, allow_nil: true
+  delegate :user, :device, :performer, to: :device_task, allow_nil: true
   attr_accessible :price, :repair_service_id, :device_task_id, :store_id, :repair_parts_attributes
   validates_presence_of :price, :repair_service, :store
   validates_numericality_of :price#, greater_than_or_equal_to: :repair_service_price
@@ -20,6 +20,14 @@ class RepairTask < ActiveRecord::Base
     if repair_service.present? and repair_parts.empty?
       repair_service.spare_parts.each { |spare_part| repair_parts.build(item_id: spare_part.product.item.id, quantity: spare_part.quantity) }
     end
+  end
+
+  def margin
+    price - parts_cost
+  end
+
+  def parts_cost
+    repair_parts.to_a.sum(&:purchase_price)
   end
 
 end

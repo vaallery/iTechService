@@ -1,7 +1,7 @@
 class RepairPart < ActiveRecord::Base
   belongs_to :repair_task, inverse_of: :repair_parts
   belongs_to :item
-  delegate :name, :store_item, :code, to: :item, allow_nil: true
+  delegate :name, :store_item, :code, :purchase_price, to: :item, allow_nil: true
   delegate :store, to: :repair_task, allow_nil: true
   attr_accessible :quantity, :warranty_term, :defect_qty, :repair_task_id, :item_id
   validates_presence_of :item

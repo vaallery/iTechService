@@ -46,8 +46,7 @@ class Task < ActiveRecord::Base
   end
 
   def is_repair?
-    # TODO define repair task
-    true
+    has_role? 'technician'
   end
 
 end
