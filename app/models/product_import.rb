@@ -152,8 +152,8 @@ class ProductImport
     batches = []
     (9..sheet.last_row-1).each do |i|
       row = sheet.row i
-      unless row[0][/\d+.\|/]
-        sn = row[0][/[^,]+/]
+      unless row[0].to_s[/\d+.\|/]
+        sn = row[0].to_s[/[^,]+/]
         if (item = Item.search(q: sn).first).present?
           price = row[3]
           batch = item.batches.build quantity: 1, price: row[3]
