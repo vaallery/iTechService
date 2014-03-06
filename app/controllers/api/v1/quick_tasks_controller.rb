@@ -5,7 +5,7 @@ module Api
       #load_and_authorize_resource
 
       def index
-        respond_with @quick_tasks
+        respond_with @quick_tasks.as_json(only: [:id, :name])
       end
 
     end

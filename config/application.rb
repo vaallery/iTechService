@@ -70,5 +70,10 @@ module ItechService
     config.assets.initialize_on_precompile = false
     
     config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td', 'th', 'thead', 'hbody', 'tfoot'
+
+    I18n.enforce_available_locales = true
+
+    config.paths.add 'app/api', glob: '**/*.rb'
+    config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
   end
 end

@@ -204,6 +204,8 @@ ItechService::Application.routes.draw do
 
   match '/delayed_job' => DelayedJobWeb, anchor: false
 
+  #mount API => '/'
+
   namespace :api, defaults: {format: 'json'} do
     namespace :v1 do
       match 'signin' => 'tokens#create', via: :post
