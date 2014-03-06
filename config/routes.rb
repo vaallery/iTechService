@@ -217,6 +217,7 @@ ItechService::Application.routes.draw do
       resources :items, only: [:index, :show]
       resources :devices, only: [:show, :update]
       resources :quick_orders, only: [:create]
+      resources :quick_tasks, only: [:index]
     end
   end
 
