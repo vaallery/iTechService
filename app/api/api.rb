@@ -46,4 +46,5 @@ class API < Grape::API
   mount UserApi
   mount BarcodeApi
   mount DeviceApi
+  mount ProductApi
 end
