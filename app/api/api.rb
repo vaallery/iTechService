@@ -5,10 +5,27 @@ class API < Grape::API
   REALM = 'ise_api'
 
   helpers do
+    def logger
+      API.logger
+    end
+
+    def auth_token_from_headers
+      if (env['HTTP_AUTHORIZATION'] || headers['Authorization']).to_s[/^Token (.*)/]
+        values = Hash[$1.split(',').map do |value|
+          value.strip!                      # remove any spaces between commas and values
+          key, value = value.split(/\=\"?/) # split key=value pairs
+          value.chomp!('"')                 # chomp trailing " in value
+          value.gsub!(/\\\"/, '"')          # unescape remaining quotes
+          [key, value]
+        end]
+        #[values.delete("token"), values.with_indifferent_access]
+        values.delete("token")
+      end
+    end
+
     def current_user
-      #@current_user ||= User.authorize!(env)
-      authenticate_or_request_with_http_token do |token, options|
-        @current_user = User.active.find_by_authentication_token token
+      if (token = auth_token_from_headers).present?
+        @current_user ||= User.where(is_fired: [false, nil], authentication_token: token).first
       end
     end
 
@@ -17,12 +34,6 @@ class API < Grape::API
     end
   end
 
-  #http_digest({realm: 'ContactsKeeper', opaque: 'app secret'}) do |username|
-  http_basic do |username|
-    users_hash[username]
-  end
-
   mount Token
-
 
 end
