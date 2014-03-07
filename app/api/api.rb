@@ -32,8 +32,18 @@ class API < Grape::API
     def authenticate!
       error!('401 Unauthorized', 401) unless current_user
     end
+
+    def authorize!(*args)
+      ::Ability.new(current_user).authorize!(*args)
+    end
   end
 
-  mount Token
+  rescue_from CanCan::AccessDenied do |exception|
+    error!({error: exception.message}, 403)
+  end
 
+  mount TokenApi
+  mount UserApi
+  mount BarcodeApi
+  mount DeviceApi
 end
