@@ -40,3 +40,6 @@ Gemfile.lock
 /config/application.yml
 /coverage/*
 /projectFilesBackup
+/Procfile
+/shared/
+/config/deploy/
