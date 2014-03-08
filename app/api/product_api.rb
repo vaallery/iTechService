@@ -22,6 +22,8 @@ class ProductApi < Grape::API
   get 'products_remnants' do
     authorize! :read, Product
     if (store = current_user.retail_store).present?
+      product_group = ProductGroup.find params[:group_id]
+      products = product_group.present? ? product_group.products : Product.all
     else
       error!({error: 'retail_store_undefined'}, 404)
     end

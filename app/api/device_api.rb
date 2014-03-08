@@ -1,6 +1,5 @@
 class DeviceApi < Grape::API
   version 'v1', using: :path
-
   before { authenticate! }
 
   desc 'Move device'
