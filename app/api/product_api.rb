@@ -18,4 +18,13 @@ class ProductApi < Grape::API
     products_hash Product.goods
   end
 
+  desc 'Get products remnants'
+  get 'products_remnants' do
+    authorize! :read, Product
+    if (store = current_user.retail_store).present?
+    else
+      error!({error: 'retail_store_undefined'}, 404)
+    end
+  end
+
 end
