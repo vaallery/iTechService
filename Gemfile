@@ -32,6 +32,7 @@ gem 'acts_as_list', '~> 0.2.0'
 gem 'delayed_job_active_record', '~> 0.4.4'
 gem 'delayed_job_web', '~> 1.2.0'
 gem 'whenever', '~> 0.8.4', require: false
+gem 'foreman'
 
 # Gems used only for assets and not required
 # in production environments by default.
