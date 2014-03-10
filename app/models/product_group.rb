@@ -48,6 +48,13 @@ class ProductGroup < ActiveRecord::Base
       end
     end
 
+    if (user_role = params[:user_role]).present?
+      case user_role
+        when 'software' then product_groups = product_groups.except_spare_parts_and_services
+        when 'technician' then product_groups = product_groups.spare_parts
+      end
+    end
+
     product_groups
   end
 

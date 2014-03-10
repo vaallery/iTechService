@@ -19,13 +19,21 @@ class ProductApi < Grape::API
   end
 
   desc 'Get products remnants'
-  get 'products_remnants' do
+  get 'remnants' do
     authorize! :read, Product
-    if (store = current_user.retail_store).present?
-      product_group = ProductGroup.find params[:group_id]
-      products = product_group.present? ? product_group.products : Product.all
+    if (store = current_user.default_store).present?
+      if params[:group_id].present?
+        product_group = ProductGroup.find params[:group_id]
+        product_groups = product_group.children
+        products = product_group.present? ? product_group.products : Product.all
+        present :groups, product_groups, with: Entities::ProductGroupEntity
+        present :remnants, products, with: Entities::ProductEntity, store: store
+      else
+        product_groups = ProductGroup.roots.search(user_role: current_user.role)
+        present :groups, product_groups, with: Entities::ProductGroupEntity
+      end
     else
-      error!({error: 'retail_store_undefined'}, 404)
+      error!({error: 'Retail store undefined'}, 404)
     end
   end
 

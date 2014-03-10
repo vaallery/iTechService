@@ -1,4 +1,4 @@
-class API::Main < Grape::API
+class API < Grape::API
   prefix 'api'
   format :json
   default_format :json
