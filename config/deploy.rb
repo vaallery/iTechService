@@ -16,7 +16,8 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
 
-set :rvm_ruby_version, 'ruby-1.9.3-p545' #'2.0.0-p451'
+set :rvm_type, :user
+set :rvm_ruby_version, "ruby-1.9.3-p545@#{application}" #'2.0.0-p451'
 
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
@@ -82,7 +83,7 @@ task :setup do
     #execute "mkdir #{shared_path}/system"
     upload!('shared/database.yml', "#{shared_path}/config/database.yml")
     upload!('shared/Procfile', "#{shared_path}/Procfile")
-    upload!('shared/nginx.conf', "#{shared_path}/nginx.conf")
+    #upload!('shared/nginx.conf', "#{shared_path}/nginx.conf")
     sudo 'start nginx'
     within release_path do
       with rails_env: fetch(:rails_env) do
