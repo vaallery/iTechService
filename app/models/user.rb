@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   validates_presence_of :username, :role, :department
   validates :password, presence: true, confirmation: true, if: :password_required?
   validates :role, inclusion: { in: ROLES }
-  validates_numericality_of :session_duration, only_integer: true, greater_than: 0
+  validates_numericality_of :session_duration, only_integer: true, greater_than: 0, allow_nil: true
   before_validation :validate_rights_changing
   before_save :ensure_authentication_token
 
@@ -369,6 +369,10 @@ class User < ActiveRecord::Base
 
   def defect_sp_store
     stores.defect_sp.first
+  end
+
+  def default_store
+    technician? ? spare_parts_store : retail_store
   end
 
   def cash_drawer

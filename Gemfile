@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 #source 'http://gems.rubyforge.org'
-#ruby '1.9.3'
+ruby '1.9.3'
 gem 'rails', '3.2.17'
 gem 'unicorn', '~> 4.6.2'
 gem 'pg', '~> 0.14.1'
@@ -33,6 +33,8 @@ gem 'delayed_job_active_record', '~> 0.4.4'
 gem 'delayed_job_web', '~> 1.2.0'
 gem 'whenever', '~> 0.8.4', require: false
 gem 'foreman'
+gem 'grape', '~> 0.6.1'
+gem 'grape-entity', '~> 0.4.1'
 
 # Gems used only for assets and not required
 # in production environments by default.
