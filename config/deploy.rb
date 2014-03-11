@@ -1,3 +1,4 @@
+set :filter, hosts: %w[192.168.4.200]
 set :application, 'itechservice'
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
 
