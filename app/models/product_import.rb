@@ -3,7 +3,7 @@ class ProductImport
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  attr_accessor :file, :store_id, :prices_file
+  attr_accessor :file, :store_id, :prices_file, :barcodes_file
 
   def initialize(attributes = {})
     attributes.each { |name, value| send("#{name}=", value) }
@@ -18,7 +18,6 @@ class ProductImport
     import_time = Time.current
     import_log << ['info', "Import started at [#{import_time.strftime(time_format)}]"]
     if file.present?
-      #load_imported_products
       if imported_products.map(&:valid?).all?
         imported_products.each &:save
         imported_count = imported_products.count
@@ -48,13 +47,27 @@ class ProductImport
         end
         false
       end
+    elsif barcodes_file.present?
+      if imported_barcodes.map(&:valid?).all?
+        imported_barcodes.each &:save!
+        imported_count = imported_barcodes.count
+        import_log << ['success', "Imported #{imported_count.to_s + " barcodes".pluralize(imported_count)}"]
+        import_log << ['info', "Import finished at [#{Time.current.strftime(time_format)}]"]
+        true
+      else
+        imported_barcodes.each_with_index do |barcode, index|
+          barcode.errors.full_messages.each do |message|
+            errors.add :base, "Row #{index+1} [barcode #{barcode.barcode_num}]: #{message}"
+          end
+        end
+        false
+      end
     end
   end
 
   def load_imported_products
     sheet = FileLoader.open_spreadsheet file
     store = Store.find store_id
-    #products = items = store_items = product_prices = batches = []
     products = []
     product_group = parent_id = product = nil
     (6..sheet.last_row-1).each do |i|
@@ -82,13 +95,13 @@ class ProductImport
             import_log << ['success', 'New product: ' + product_attributes.inspect]
           end
           # Purchase Price
-          purchase_price = product.prices.build price_type_id: PriceType.purchase.id, value: row[8], date: import_time
+          purchase_price = product.prices.build price_type_id: PriceType.purchase.id, value: row[10], date: import_time
           import_log << ['success', 'New purchase Product Price: ' + purchase_price.inspect]
           # Retail Price
-          retail_price = product.prices.build price_type_id: PriceType.retail.id, value: row[9], date: import_time
+          retail_price = product.prices.build price_type_id: PriceType.retail.id, value: row[11], date: import_time
           import_log << ['success', 'New retail Product Price: ' + retail_price.inspect]
         end
-      elsif (quantity = row[3].to_i) > 0 and product.present?
+      elsif (quantity = row[5].to_i) > 0 and product.present?
         # Item
         if row[0].length > 3
           features = row[0].split ', '
@@ -100,58 +113,37 @@ class ProductImport
             else
               item = product.items.build features_attributes: {0 => {feature_type_id: FeatureType.serial_number.id, value: features[0]}}
             end
-            #items << item
             import_log << ['success', 'New item: ' + features.inspect]
           end
         else
           unless (item = product.items.first).present?
             item = product.items.build
-            #items << item
             import_log << ['success', 'New item: ' + item.inspect]
           end
         end
 
         # Store Items
         store_item_attributes = {store_id: store.id, quantity: quantity}
-        if (store_item = item.store_items.in_store(store).first).present?
+        if (store_item = (item.feature_accounting) ? item.store_items.first : item.store_items.in_store(store).first).present?
           store_item.attributes = store_item_attributes
           import_log << ['success', 'Update Store Item: ' + store_item.inspect]
         else
           store_item = item.store_items.build store_item_attributes
           import_log << ['success', 'New Store Item: ' + store_item.inspect]
         end
-        #store_items << store_item
-
-        ## Prices
-        #if row[0].length > 3
-        #  #sn = row[0][/[^,]+/]
-        #  #batch = item.batches.build quantity: 1, price: row[8]
-        #  #batches << batch
-        #  #import_log << ['info', 'Purchase price: ' + purchase_prices[sn].inspect]
-        #  #import_log << ['success', 'New Batch: ' + batch.inspect]
-        #else
-        #  purchase_price = product.prices.build price_type_id: PriceType.purchase.id, value: row[8], date: import_time
-        #  product_prices << purchase_price
-        #  import_log << ['success', 'New purchase Product Price: ' + purchase_price.inspect]
-        #end
-        #retail_price = product.prices.build price_type_id: PriceType.retail.id, value: row[9], date: import_time
-        #product_prices << retail_price
-        #import_log << ['success', 'New retail Product Price: ' + retail_price.inspect]
       end
     end
     import_log << ['inverse', '-'*160]
-    #imported_products = products
-    #imported_items = items
-    #imported_store_items = store_items
-    #imported_product_prices = product_prices
     products
   end
 
-  def import_batches
+  def load_imported_batches
     sheet = FileLoader.open_spreadsheet prices_file
     batches = []
     (9..sheet.last_row-1).each do |i|
       row = sheet.row i
+      import_log << ['inverse', "#{i} #{'-'*140}"]
+      import_log << ['info', row]
       unless row[0].to_s[/\d+.\|/]
         sn = row[0].to_s[/[^,]+/]
         if (item = Item.search(q: sn).first).present?
@@ -164,6 +156,29 @@ class ProductImport
       end
     end
     batches
+  end
+
+  def load_imported_barcodes
+    sheet = FileLoader.open_spreadsheet barcodes_file
+    barcodes = []
+    (2..sheet.last_row).each do |i|
+      row = sheet.row i
+      import_log << ['inverse', "#{i} #{'-'*140}"]
+      import_log << ['info', row]
+      barcode = row[0].to_i.to_s
+      if barcode.length == 13 && barcode.start_with?('242')
+        name = row[1]
+        sn = row[2].to_s[/[^,]+/]
+        if (item = Item.search(q: sn || name).first).present?
+          item.barcode_num = barcode
+          barcodes << item
+          import_log << ['success', 'New barcode: ' + item.inspect]
+        else
+          import_log << ['warning', 'Item not found: ' + (sn || name)]
+        end
+      end
+    end
+    barcodes
   end
 
   def imported_products
@@ -183,7 +198,11 @@ class ProductImport
   end
 
   def imported_batches
-    @imported_batches ||= import_batches
+    @imported_batches ||= load_imported_batches
+  end
+
+  def imported_barcodes
+    @imported_barcodes ||= load_imported_barcodes
   end
 
   def import_log

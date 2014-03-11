@@ -1034,6 +1034,7 @@ ru:
       title: "Импорт продуктов"
       remnants_file: "Файл с остатками"
       purchases_file: "Файл с закупами"
+      barcodes_file: "Файл со штрихкодами"
   products:
     add_good: 'Добавить товар'
     add_product: 'Добавить Продукт'
@@ -1515,6 +1516,8 @@ ru:
       warning_text: 'На складе %{store} осталось %{quantity} %{product}'
     deletion:
       subject: "Айс. Удаление объекта."
+    product_import_log:
+      subject: "Product import log %{time}"
 
   errors:
     nothing_found: Ничего не найдено
