@@ -22,15 +22,45 @@ set :rvm_ruby_version, 'ruby-1.9.3-p545@itechservice' #'2.0.0-p451'
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
 
-namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      # Your restart mechanism here, for example:
-      execute :touch, release_path.join('tmp/restart.txt')
+namespace :foreman do
+  desc 'Start server'
+  task :start do
+    on roles(:all) do
+      sudo "start #{application}"
     end
   end
+
+  desc 'Stop server'
+  task :stop do
+    on roles(:all) do
+      sudo "stop #{application}"
+    end
+  end
+
+  desc 'Restart server'
+  task :restart do
+    on roles(:all) do
+      sudo "restart #{application}"
+    end
+  end
+
+  desc 'Server status'
+  task :status do
+    on roles(:all) do
+      execute "launchctl list | grep #{application}"
+    end
+  end
+end
+
+namespace :deploy do
+
+  #desc 'Restart application'
+  #task :restart do
+  #  on roles(:app), in: :sequence, wait: 5 do
+  #    # Your restart mechanism here, for example:
+  #    execute :touch, release_path.join('tmp/restart.txt')
+  #  end
+  #end
 
   #after :restart, :clear_cache do
   #  on roles(:web), in: :groups, limit: 3, wait: 10 do
@@ -105,36 +135,6 @@ namespace :deploy do
   before :setup, 'deploy:updating'
   before :setup, 'bundler:install'
 
-end
-
-namespace :foreman do
-  desc 'Start server'
-  task :start do
-    on roles(:all) do
-      sudo "start #{application}"
-    end
-  end
-
-  desc 'Stop server'
-  task :stop do
-    on roles(:all) do
-      sudo "stop #{application}"
-    end
-  end
-
-  desc 'Restart server'
-  task :restart do
-    on roles(:all) do
-      sudo "restart #{application}"
-    end
-  end
-
-  desc 'Server status'
-  task :status do
-    on roles(:all) do
-      execute "launchctl list | grep #{application}"
-    end
-  end
 end
 
 #before 'deploy:updated', 'deploy:setup_config'
