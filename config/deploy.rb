@@ -84,7 +84,7 @@ task :setup do
     upload!('shared/database.yml', "#{shared_path}/config/database.yml")
     upload!('shared/Procfile', "#{shared_path}/Procfile")
     #upload!('shared/nginx.conf', "#{shared_path}/nginx.conf")
-    sudo 'start nginx'
+    #sudo 'start nginx'
     within release_path do
       with rails_env: fetch(:rails_env) do
         execute :rake, 'db:create'
