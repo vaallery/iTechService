@@ -10,7 +10,7 @@ set :format, :pretty
 set :log_level, :debug
 set :pty, true
 
-set :linked_files, %w{config/database.yml Procfile}
+#set :linked_files, %w{config/database.yml Procfile}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -75,7 +75,7 @@ namespace :deploy do
   task :setup do
     on roles(:all) do
       deploy_path = fetch :deploy_to
-      execute "mkdir #{shared_path}/config/"
+      #execute "mkdir #{shared_path}/config/"
       #execute "mkdir #{shared_path}/system"
       upload!('shared/database.yml', "#{shared_path}/config/database.yml")
       upload!('shared/Procfile', "#{shared_path}/Procfile")
@@ -92,8 +92,8 @@ namespace :deploy do
   desc 'Create symlink'
   task :symlink do
     on roles(:all) do
-      execute "ln -s #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-      execute "ln -s #{shared_path}/Procfile #{release_path}/Procfile"
+      execute "ln -fs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+      execute "ln -fs #{shared_path}/Procfile #{release_path}/Procfile"
     end
   end
 

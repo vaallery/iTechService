@@ -41,7 +41,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: itech_service_development
+  database: itech_service_test
   pool: 5
   username: itech
   password:
@@ -49,7 +49,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: itech_service_development
+  database: itech_service_production
   pool: 5
   username: itech
   password:
