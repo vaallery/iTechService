@@ -10,7 +10,7 @@ set :format, :pretty
 set :log_level, :debug
 set :pty, true
 
-#set :linked_files, %w{config/database.yml Procfile}
+set :linked_files, %w{config/database.yml Procfile}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -89,13 +89,13 @@ namespace :deploy do
     end
   end
 
-  desc 'Create symlink'
-  task :symlink do
-    on roles(:all) do
-      execute "ln -fs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-      execute "ln -fs #{shared_path}/Procfile #{release_path}/Procfile"
-    end
-  end
+  #desc 'Create symlink'
+  #task :symlink do
+  #  on roles(:all) do
+  #    execute "ln -fs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
+  #    execute "ln -fs #{shared_path}/Procfile #{release_path}/Procfile"
+  #  end
+  #end
 
   desc 'Foreman init'
   task :foreman_init do
@@ -123,7 +123,7 @@ namespace :deploy do
   after :finishing, 'deploy:cleanup'
   after :finishing, 'deploy:restart'
 
-  after :updating, 'deploy:symlink'
+  #after :updating, 'deploy:symlink'
 
   after :setup, 'deploy:foreman_init'
 
