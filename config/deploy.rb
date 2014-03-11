@@ -27,28 +27,29 @@ namespace :foreman do
   desc 'Start server'
   task :start do
     on roles(:all) do
-      sudo "start #{application}"
+      sudo "launchctl load /Library/LaunchDaemons/#{fetch(:application)}-*"
     end
   end
 
   desc 'Stop server'
   task :stop do
     on roles(:all) do
-      sudo "stop #{application}"
+      sudo "launchctl unload /Library/LaunchDaemons/#{fetch(:application)}-*"
     end
   end
 
   desc 'Restart server'
   task :restart do
     on roles(:all) do
-      sudo "restart #{application}"
+      sudo "launchctl unload /Library/LaunchDaemons/#{fetch(:application)}-*"
+      sudo "launchctl load /Library/LaunchDaemons/#{fetch(:application)}-*"
     end
   end
 
   desc 'Server status'
   task :status do
     on roles(:all) do
-      execute "launchctl list | grep #{application}"
+      sudo "launchctl list | grep #{fetch(:application)}"
     end
   end
 end
@@ -81,7 +82,9 @@ namespace :deploy do
       upload!('shared/database.yml', "#{shared_path}/config/database.yml")
       upload!('shared/Procfile', "#{shared_path}/Procfile")
       #upload!('shared/nginx.conf', "#{shared_path}/nginx.conf")
-      #sudo 'start nginx'
+      #sudo 'mkdir /usr/local/nginx/conf/sites'
+      #sudo "ln -sf #{shared_path}/nginx.conf /usr/local/nginx/conf/sites/#{fetch(:application)}.conf"
+      #sudo 'nginx -s reload'
       within release_path do
         with rails_env: fetch(:rails_env) do
           execute :rake, 'db:create'
@@ -89,14 +92,6 @@ namespace :deploy do
       end
     end
   end
-
-  #desc 'Create symlink'
-  #task :symlink do
-  #  on roles(:all) do
-  #    execute "ln -fs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-  #    execute "ln -fs #{shared_path}/Procfile #{release_path}/Procfile"
-  #  end
-  #end
 
   desc 'Foreman init'
   task :foreman_init do
@@ -107,7 +102,7 @@ namespace :deploy do
 
       within current_path do
         execute "cd #{current_path}"
-        execute :bundle, "exec foreman export launchd #{foreman_temp} -a #{application} -u itech -l #{shared_path}/log -d #{current_path}"
+        execute :bundle, "exec foreman export launchd #{foreman_temp} -a #{fetch(:application)} -u itech -l #{shared_path}/log -d #{current_path}"
       end
       sudo "mv #{foreman_temp}/* /Library/LaunchDaemons/"
       sudo "rm -r #{foreman_temp}"
@@ -117,14 +112,13 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      sudo "restart #{application}"
+      sudo "launchctl unload /Library/LaunchDaemons/#{fetch(:application)}-*"
+      sudo "launchctl load /Library/LaunchDaemons/#{fetch(:application)}-*"
     end
   end
 
   after :finishing, 'deploy:cleanup'
   after :finishing, 'deploy:restart'
-
-  #after :updating, 'deploy:symlink'
 
   after :setup, 'deploy:foreman_init'
 
@@ -132,6 +126,7 @@ namespace :deploy do
 
   before :foreman_init, 'rvm:hook'
 
+  before :setup, 'deploy:set_rails_env'
   before :setup, 'deploy:starting'
   before :setup, 'deploy:updating'
   before :setup, 'bundler:install'
