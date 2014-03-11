@@ -17,7 +17,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public
 set :keep_releases, 5
 
 set :rvm_type, :user
-set :rvm_ruby_version, 'ruby-1.9.3-p545@itechservice' #'2.0.0-p451'
+set :rvm_ruby_version, 'ruby-1.9.3-p545' #'2.0.0-p451'
 
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
