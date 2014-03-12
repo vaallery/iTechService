@@ -30,7 +30,7 @@ class API < Grape::API
     end
 
     def authenticate!
-      error!('Unauthorized', 401) unless current_user
+      error!({error: 'Unauthorized'}, 401) unless current_user
     end
 
     def authorize!(*args)

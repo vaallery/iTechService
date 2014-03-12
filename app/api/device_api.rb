@@ -2,6 +2,13 @@ class DeviceApi < Grape::API
   version 'v1', using: :path
   before { authenticate! }
 
+  desc 'Show device'
+  get 'devices/:id', requirements: { id: /[0-9]*/ } do
+    authorize! :read, Device
+    device = Device.find params[:id]
+    present device
+  end
+
   desc 'Move device'
   params do
     requires :move
