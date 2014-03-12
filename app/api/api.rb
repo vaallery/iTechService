@@ -38,8 +38,8 @@ class API < Grape::API
     end
   end
 
-  rescue_from CanCan::AccessDenied do |exception|
-    error!({error: exception.message}, 403)
+  rescue_from CanCan::AccessDenied do |e|
+    Rack::Response.new({error: e.message}.to_json, 403).finish
   end
 
   mount TokenApi
