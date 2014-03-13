@@ -47,4 +47,5 @@ class API < Grape::API
   mount BarcodeApi
   mount DeviceApi
   mount ProductApi
+  mount QuickOrderApi
 end
