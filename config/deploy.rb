@@ -1,5 +1,5 @@
-set :filter, hosts: %w[192.168.4.200]
-set :application, 'itechservice'
+application = 'itechservice'
+set :application, application
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
 
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
@@ -24,6 +24,37 @@ set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
 
 namespace :foreman do
+
+  namespace :lin do
+    desc 'Start server on linux'
+    task :start do
+      on roles(:all) do
+        sudo "start #{application}"
+      end
+    end
+
+    desc 'Stop server on linux'
+    task :stop do
+      on roles(:all) do
+        sudo "stop #{application}"
+      end
+    end
+
+    desc 'Restart server on linux'
+    task :restart do
+      on roles(:all) do
+        sudo "restart #{application}"
+      end
+    end
+
+    desc 'Server status on linux'
+    task :status do
+      on roles(:all) do
+        execute "initctl list | grep #{application}"
+      end
+    end
+  end
+
   desc 'Start server'
   task :start do
     on roles(:all) do
@@ -55,6 +86,15 @@ namespace :foreman do
 end
 
 namespace :deploy do
+
+  namespace :lin do
+    desc 'Restart application on linux'
+    task :restart do
+      on roles(:app), in: :sequence, wait: 5 do
+        sudo "restart #{application}"
+      end
+    end
+  end
 
   #after :restart, :clear_cache do
   #  on roles(:web), in: :groups, limit: 3, wait: 10 do

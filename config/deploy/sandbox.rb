@@ -1,5 +1,5 @@
 set :stage, :sandbox
-set :deploy_to, '/usr/local/var/www/sandbox/itech_service'
+set :deploy_to, "/var/www/apps/#{fetch(:application)}"
 set :branch, 'sandbox'
 
 # Simple Role Syntax
@@ -17,7 +17,7 @@ set :branch, 'sandbox'
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server '192.168.0.1', user: 'itech', roles: %w{web app db}
+server '192.168.6.24', user: 'deployer', roles: %w{web app db}
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
@@ -41,4 +41,4 @@ server '192.168.0.1', user: 'itech', roles: %w{web app db}
 #   }
 # setting per server overrides global ssh_options
 
-fetch(:default_env).merge!(rails_env: :sandbox)
+#fetch(:default_env).merge!(rails_env: :production)
