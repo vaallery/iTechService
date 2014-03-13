@@ -12,7 +12,7 @@ set :log_level, :debug
 set :pty, true
 
 set :linked_files, %w{config/database.yml Procfile}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
@@ -71,6 +71,7 @@ namespace :deploy do
       deploy_path = fetch :deploy_to
       #execute "mkdir #{shared_path}/config/"
       #execute "mkdir #{shared_path}/system"
+      #execute "mkdir -p #{shared_path}/tmp/pdf"
       upload!('shared/database.yml', "#{shared_path}/config/database.yml")
       upload!('shared/Procfile', "#{shared_path}/Procfile")
       #upload!('shared/nginx.conf', "#{shared_path}/nginx.conf")

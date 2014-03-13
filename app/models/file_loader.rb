@@ -1,11 +1,16 @@
 module FileLoader
 
   def self.open_spreadsheet(file)
-    filename = rename_uploaded_file file
-    case File.extname(file.original_filename)
+    if file.is_a?(String)
+      filename = original_filename = file
+    else
+      filename = rename_uploaded_file(file)
+      original_filename = file.original_filename
+    end
+    case File.extname(original_filename)
       when ".xls" then Roo::Excel.new(filename, nil, :ignore)
-      when ".xlsx" then Roo::Excelx.new(file.path, nil, :ignore)
-      else raise "Unknown file type: #{file.original_filename}"
+      when ".xlsx" then Roo::Excelx.new(filename, nil, :ignore)
+      else raise "Unknown file type: #{original_filename}"
     end
   end
 
