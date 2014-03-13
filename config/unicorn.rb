@@ -7,8 +7,8 @@ pid "#{root}/tmp/pids/unicorn.pid"
 stderr_path "#{root}/log/unicorn.stderr.log"
 stdout_path "#{root}/log/unicorn.stdout.log"
 
-#listen '/tmp/unicorn.itech_service.sock'
-listen "#{root}/tmp/sockets/.unicorn.sock", :backlog => 64
+listen '/usr/local/var/www/itechservice/current/tmp/sockets/.unicorn.sock'
+#listen "#{root}/tmp/sockets/.unicorn.sock"#, :backlog => 64
 #listen 8080, :tcp_nopush => true
 
 # combine Ruby 2.0.0dev or REE with "preload_app true" for memory savings

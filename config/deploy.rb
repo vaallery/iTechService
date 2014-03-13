@@ -56,14 +56,14 @@ end
 
 namespace :deploy do
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      within release_path do
-        execute :rake, 'cache:clear'
-      end
-    end
-  end
+  #after :restart, :clear_cache do
+  #  on roles(:web), in: :groups, limit: 3, wait: 10 do
+  #    # Here we can do anything such as:
+  #    within release_path do
+  #      execute :rake, 'cache:clear'
+  #    end
+  #  end
+  #end
 
   desc 'Setup'
   task :setup do
@@ -109,19 +109,19 @@ namespace :deploy do
     end
   end
 
-  after :finishing, 'deploy:cleanup'
-  after :finishing, 'deploy:restart'
+  #after :finishing, 'deploy:cleanup'
+  #after :finishing, 'deploy:restart'
 
-  after :setup, 'deploy:foreman_init'
+  #after :setup, 'deploy:foreman_init'
 
-  after :foreman_init, 'foreman:start'
+  #after :foreman_init, 'foreman:start'
 
-  before :foreman_init, 'rvm:hook'
+  #before :foreman_init, 'rvm:hook'
 
-  before :setup, 'deploy:set_rails_env'
-  before :setup, 'deploy:starting'
-  before :setup, 'deploy:updating'
-  before :setup, 'bundler:install'
+  #before :setup, 'deploy:set_rails_env'
+  #before :setup, 'deploy:starting'
+  #before :setup, 'deploy:updating'
+  #before :setup, 'bundler:install'
 
 end
 
