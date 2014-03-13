@@ -8,7 +8,7 @@ class Item < ActiveRecord::Base
   has_many :movement_items, inverse_of: :item, dependent: :destroy
   has_many :features, inverse_of: :item, dependent: :destroy
   accepts_nested_attributes_for :features, allow_destroy: true
-  attr_accessible :product_id, :features_attributes
+  attr_accessible :product_id, :features_attributes, :barcode_num
   validates_presence_of :product
   validates_length_of :barcode_num, is: 13, allow_nil: true
   validates_uniqueness_of :barcode_num, allow_nil: true
