@@ -103,7 +103,7 @@ class Item < ActiveRecord::Base
   end
 
   def purchase_price
-    feature_accounting ? batches.newest.first.try(:price) || product.purchase_price : product.purchase_price
+    feature_accounting ? batches.last.first.try(:price) || product.purchase_price : product.purchase_price
   end
 
 end

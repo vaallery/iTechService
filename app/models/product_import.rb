@@ -147,8 +147,8 @@ class ProductImport
       unless row[0].to_s[/\d+.\|/]
         sn = row[0].to_s[/[^,]+/]
         if (item = Item.search(q: sn).first).present?
-          price = row[3]
-          batch = item.batches.build quantity: 1, price: row[3]
+          price = row[4]
+          batch = item.batches.build quantity: 1, price: price
           batches << batch
           import_log << ['info', 'Purchase price: ' + price.inspect]
           import_log << ['success', 'New Batch: ' + batch.inspect]
