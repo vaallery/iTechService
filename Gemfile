@@ -48,9 +48,9 @@ group :assets do
 end
 
 group :development do
-  gem 'debugger' unless ENV['RM_INFO']
-  gem 'debugger-xml'
-  gem 'debugger-linecache'
+  #gem 'debugger' unless ENV['RM_INFO']
+  #gem 'debugger-xml'
+  #gem 'debugger-linecache'
   gem 'capistrano', '~> 3.1'
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-rvm', '~> 0.1'
