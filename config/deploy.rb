@@ -11,7 +11,7 @@ set :format, :pretty
 set :log_level, :debug
 set :pty, true
 
-set :linked_files, %w{config/database.yml Procfile}
+set :linked_files, %w{config/database.yml Procfile config/unicorn.rb}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -94,16 +94,23 @@ namespace :deploy do
         sudo "restart #{application}"
       end
     end
-  end
 
-  #after :restart, :clear_cache do
-  #  on roles(:web), in: :groups, limit: 3, wait: 10 do
-  #    # Here we can do anything such as:
-  #    within release_path do
-  #      execute :rake, 'cache:clear'
-  #    end
-  #  end
-  #end
+    desc 'Foreman init'
+    task :foreman_init do
+      on roles(:all) do
+        foreman_temp = "/var/www/tmp/foreman"
+        execute "mkdir -p #{foreman_temp}"
+        execute "ln -s #{release_path} #{current_path}"
+
+        within current_path do
+          execute "cd #{current_path}"
+          execute :bundle, "exec foreman export upstart #{foreman_temp} -a #{application} -u deployer -l #{shared_path}/log -d #{current_path}"
+        end
+        sudo "mv #{foreman_temp}/* /etc/init/"
+        sudo "rm -r #{foreman_temp}"
+      end
+    end
+  end
 
   desc 'Setup'
   task :setup do
