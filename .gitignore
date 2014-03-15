@@ -43,3 +43,4 @@ Gemfile.lock
 /Procfile
 /shared/
 /config/deploy/
+/doc/
