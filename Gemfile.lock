@@ -283,6 +283,7 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    railroady (1.1.1)
     rails (3.2.17)
       actionmailer (= 3.2.17)
       actionpack (= 3.2.17)
@@ -449,6 +450,7 @@ DEPENDENCIES
   prawn (~> 0.14.0)
   private_pub (~> 1.0.3)
   quiet_assets
+  railroady
   rails (= 3.2.17)
   roo (~> 1.11.2)
   rspec-rails

@@ -74,6 +74,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'shoulda'
   gem 'shoulda-matchers'
+  gem 'railroady'
   #gem 'faker'
   #gem 'ffaker'
 end
