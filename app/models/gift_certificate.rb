@@ -102,7 +102,7 @@ class GiftCertificate < ActiveRecord::Base
   end
 
   def convert_nominal_and_status
-    if nominal < 5
+    if nominal && nominal < 5
       update_attribute :nominal, nominal_val
     end
     #if nominal

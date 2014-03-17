@@ -12,24 +12,7 @@
       %th= sortable 'created_at', GiftCertificate.human_attribute_name(:created_at)
       - if can? :manage, GiftCertificate
         %th
-  - @gift_certificates.each do |gift_certificate|
-    %tr[gift_certificate]
-      %td.id_col= link_to gift_certificate.id, gift_certificate_path(gift_certificate)
-      %td.number_col
-        = link_to gift_certificate.number, gift_certificate_path(gift_certificate)
-        - if can? :manage, GiftCertificate
-          = link_to icon_tag(:time), history_gift_certificate_path(gift_certificate), style: 'text-decoration:none;', remote: true
-      %td.nominal_col= human_gift_certificate_nominal gift_certificate
-      %td.consumed_col= number_to_currency gift_certificate.consumed, precision: 0
-      %td.status_col= gift_certificate.status_h
-      %td.updated_at_col= l gift_certificate.updated_at, format: :long_d
-      %td.created_at_col= l gift_certificate.created_at, format: :long_d
-      - if can? :manage, GiftCertificate
-        %td
-          .btn-group
-            = link_to icon_tag('certificate'), refresh_gift_certificate_path(gift_certificate), remote: true,
-                method: :post, class: 'btn btn-small', title: t('gift_certificates.refresh') if gift_certificate.used?
-            = link_to_edit_small gift_certificate
-            = link_to_destroy_small gift_certificate
+  %tbody= render @gift_certificates
+  -#- @gift_certificates.each do |gift_certificate|
 
-= paginate @gift_certificates
+= paginate @gift_certificates, remote: true
