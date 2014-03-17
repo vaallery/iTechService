@@ -73,15 +73,15 @@ ItechService::Application.configure do
   
   # config.action_mailer.default_url_options = { host: '' }
 
-  ActionMailer::Base.default from: 'noreply@itechstore.ru'
+  ActionMailer::Base.default from: 'iTechService <noreply@itechdevs.com>'
   config.action_mailer.default_url_options = { host: '5.100.75.201:3000' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.smtp_settings = {
-      :address              => 'smtp.yandex.ru',
-      :port                 => 25,
-      :domain               => 'itechstore.ru',
-      :user_name            => 'noreply@itechstore.ru',
+      :address              => 'smtp.gmail.com',
+      :port                 => 587,
+      :domain               => 'itechdevs.com',
+      :user_name            => 'noreply@itechdevs.com',
       :password             => '6Ra4yEho',
       :authentication       => 'plain',
       :enable_starttls_auto => true
@@ -91,7 +91,7 @@ ItechService::Application.configure do
 
   config.middleware.use ExceptionNotifier,
                         email_prefix: '[!!! Exception iTechService] ',
-                        sender_address: %{"iTechService" <noreply@itechstore.ru>},
+                        sender_address: %{"iTechService" <noreply@itechdevs.com>},
                         exception_recipients: %w{kvn@itechdevs.com}
 
   Paperclip.options[:command_path] = '/user/local/bin'
