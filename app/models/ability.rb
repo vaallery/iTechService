@@ -54,7 +54,7 @@ class Ability
         can :modify, Sale
         can [:choose, :select], Product
         can [:post, :edit, :attach_gift_certificate, :return_check], Sale, status: 0
-        can [:create, :read], Sale
+        can [:create, :read, :reprint_check], Sale
         can :create, CashOperation
         can :create, QuickOrder
       end
