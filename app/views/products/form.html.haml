@@ -1,5 +1,7 @@
 = auto_header_tag @product
 = simple_form_for @product, html: { class: 'form-horizontal' } do |f|
+  - if @product.errors.any?
+    = @product.errors.full_messages
 
   %ul.nav.nav-tabs
     %li.active= link_to t('.attributes'), '#attributes', 'data-toggle' => 'tab'
