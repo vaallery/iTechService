@@ -94,6 +94,6 @@ ItechService::Application.configure do
                         sender_address: %{"iTechService" <noreply@itechdevs.com>},
                         exception_recipients: %w{kvn@itechdevs.com}
 
-  Paperclip.options[:command_path] = '/user/local/bin'
+  Paperclip.options[:command_path] = '/usr/local/bin'
 
 end
