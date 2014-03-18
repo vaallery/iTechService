@@ -66,12 +66,12 @@ class Purchase < ActiveRecord::Base
         price_type = PriceType.purchase
         cur_date = Date.current
         batches.each do |batch|
+          new_price = (batch.product.remnants_cost + batch.sum) / (batch.product.quantity_in_store + batch.quantity)
           if batch.feature_accounting
             batch.store_item.present? ? batch.store_item.update_attributes(store_id: store_id) : StoreItem.create(store_id: store_id, item_id: batch.item_id, quantity: 1)
           else
             batch.store_item(store).add batch.quantity
           end
-          new_price = (batch.product.remnants_cost + batch.sum) / (batch.product.quantity_in_store + batch.quantity)
           batch.prices.create price_type_id: price_type.id, date: cur_date, value: new_price
         end
         update_attribute :status, 1
