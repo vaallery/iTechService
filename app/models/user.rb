@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-  ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin driver synchronizer]
-  ROLES_FOR_ADMIN = %w[admin software media technician marketing supervisor manager driver]
+  ROLES = %w[admin software media technician marketing programmer supervisor manager superadmin driver synchronizer universal]
+  ROLES_FOR_ADMIN = %w[admin software media technician marketing supervisor manager driver universal]
   HELPABLE = %w[software media technician]
   ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet]
 
@@ -114,11 +114,11 @@ class User < ActiveRecord::Base
   end
 
   def software?
-    has_role? 'software'
+    has_role? %w[software universal]
   end
 
   def media?
-    has_role? 'media'
+    has_role? %w[media universal]
   end
 
   def marketing?
@@ -148,7 +148,11 @@ class User < ActiveRecord::Base
   def synchronizer?
     role == 'synchronizer'
   end
-  
+
+  def universal?
+    role == 'universal'
+  end
+
   def has_role? role
     if role.is_a? Array
       role.include? self.role

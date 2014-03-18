@@ -1455,6 +1455,7 @@ ru:
       superadmin: Супер админ
       supervisor: Супервайзер
       technician: Технарь
+      universal: 'Универсальный солдат'
     errors:
       not_found: 'Пользователь не найден.'
     account: Учётка
