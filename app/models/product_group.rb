@@ -36,7 +36,7 @@ class ProductGroup < ActiveRecord::Base
         when 'repair_service' then product_groups = product_groups.spare_parts
         when 'purchase' then product_groups = product_groups.for_purchase
         when 'sale' then product_groups = product_groups.except_spare_parts_and_services
-        when 'movement_act' then product_groups = User.current.technician? ? product_groups.spare_parts : product_groups.except_spare_parts
+        when 'movement_act' then product_groups = User.current.technician? ? product_groups.spare_parts : product_groups.except_spare_parts unless User.current.any_admin?
         else product_groups
       end
     end
