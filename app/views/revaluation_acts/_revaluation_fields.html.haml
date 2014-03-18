@@ -4,7 +4,7 @@
   %td.product
     %strong= f.object.name
     = f.hidden_field :product_id
-  %td.purchase_price.number= f.object.purchase_price
-  %td.actual_price.number= f.object.retail_price
+  %td.purchase_price.number= human_currency f.object.purchase_price, false
+  %td.actual_price.number= human_currency f.object.retail_price, false
   %td.price.number= f.number_field :price, class: 'input-small', min: 0
   %td.action= link_to_remove_fields f
