@@ -5,7 +5,7 @@ class TicketPdf < Prawn::Document
   require 'barby/outputter/prawn_outputter'
 
   def initialize(device, view, part=nil)
-    super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: 10
+    super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: [10, 24, 10, 10]
     @device = device
     @view = view
     font_families.update 'DroidSans' => {

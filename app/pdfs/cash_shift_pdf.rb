@@ -6,7 +6,7 @@ class CashShiftPdf < Prawn::Document
     @font_height = 10
     @cash_shift = cash_shift
     @view = view
-    super page_size: [227, 380], page_layout: :portrait, margin: 10
+    super page_size: [227, 380], page_layout: :portrait, margin: [10, 24, 10, 10]
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
       bold: "#{Rails.root}/app/assets/fonts/droidsans-bold-webfont.ttf"

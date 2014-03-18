@@ -48,7 +48,7 @@ class DevicesController < ApplicationController
               pdf = TicketPdf.new @device, view_context
               filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
               pdf.render_file filepath
-              system 'lp', filepath
+              PrinterTools.print_file filepath, :ticket
             else
               pdf = TicketPdf.new @device, view_context, params[:part]
             end
@@ -202,5 +202,5 @@ class DevicesController < ApplicationController
     out = Barby::PrawnOutputter.new code
     out.to_pdf document: pdf
   end
-  
+
 end

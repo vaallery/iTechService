@@ -95,7 +95,7 @@ class SalesController < ApplicationController
         filename = "sale_check_#{@sale.id}.pdf"
         filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
         pdf.render_file filepath
-        system 'lp', filepath
+        PrinterTools.print_file filepath, :sale_check
         format.html { redirect_to new_sale_path, notice: t('documents.posted') }
       else
         flash.alert = @sale.errors.full_messages
@@ -121,7 +121,7 @@ class SalesController < ApplicationController
     end
     filepath = "#{Rails.root.to_s}/tmp/pdf/sale_check_#{@sale.id}.pdf"
     pdf.render_file filepath
-    system 'lp', filepath
+    PrinterTools.print_file filepath, :sale_check
     respond_to do |format|
       format.html { redirect_to new_sale_path }
       format.js { render nothing: true }

@@ -8,7 +8,7 @@ class SaleCheckPdf < Prawn::Document
     @is_copy = is_copy
     @font_height = 10
 
-    super page_size: [227, page_height], page_layout: :portrait, margin: 10
+    super page_size: [227, page_height], page_layout: :portrait, margin: [10, 24, 10, 10]
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
       bold: "#{Rails.root}/app/assets/fonts/droidsans-bold-webfont.ttf"
