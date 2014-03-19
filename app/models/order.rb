@@ -113,6 +113,12 @@ class Order < ActiveRecord::Base
     status == 'done' ? 'done' : 'undone'
   end
 
+  def status_info
+    {
+      status: status == 'done' ? 'done' : 'undone'
+    }
+  end
+
   private
 
   def generate_number

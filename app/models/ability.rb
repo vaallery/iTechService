@@ -30,9 +30,16 @@ class Ability
       cannot :close, CashShift
     elsif user.developer?
       can :manage, :all
+      can :view_reports
+      cannot :write_tech_notice, Device
+      can :view_purchase_price, Product
+      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
       cannot :manage, Salary unless user.able_to? :manage_salary
     elsif user.synchronizer?
       can :sync, Product
+      can :read, [Device, Order]
     else
       if user.manager?
         can :manage, :all

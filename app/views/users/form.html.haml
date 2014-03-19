@@ -85,7 +85,6 @@
       = f.association :location, label_method: :full_name
       = f.input :password
       = f.input :password_confirmation
-      = f.input :authentication_token, readonly: true if current_user.developer?
       = f.input :card_number
       = f.input :session_duration
   .form-actions
