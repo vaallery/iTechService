@@ -28,12 +28,9 @@ class Ability
       cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
       cannot :read, CashShift
       cannot :close, CashShift
-    elsif user.programmer?
+    elsif user.developer?
       can :manage, :all
       cannot :manage, Salary unless user.able_to? :manage_salary
-      cannot :manage_rights, User
-      cannot :manage, [BonusType, Bonus]
-      cannot [:edit, :destroy], Karma
     elsif user.synchronizer?
       can :sync, Product
     else
