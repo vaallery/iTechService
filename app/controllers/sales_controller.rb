@@ -121,7 +121,7 @@ class SalesController < ApplicationController
     end
     filepath = "#{Rails.root.to_s}/tmp/pdf/sale_check_#{@sale.id}.pdf"
     pdf.render_file filepath
-    PrinterTools.print_file filepath, :sale_check
+    PrinterTools.print_file filepath, :sale_check, pdf.page_height_mm
     respond_to do |format|
       format.html { redirect_to new_sale_path }
       format.js { render nothing: true }

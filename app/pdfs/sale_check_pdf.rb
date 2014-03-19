@@ -33,14 +33,8 @@ class SaleCheckPdf < Prawn::Document
     stroke { horizontal_line 0, 205 }
     move_down 5
 
-    sale.sale_items.each_with_index do |sale_item, index|
-      name = sale_item.name
-      #features = view.features_presentation(sale_item)
-      if sale_item.feature_accounting
-        features = sale_item.features.map(&:value).join(', ')
-        name = name + " (#{features})"
-      end
-      text "#{index+1}. #{name}   #{sale_item.quantity} #{view.t('sales.check_pdf.po')} #{currency_str(sale_item.price)}"
+    items_strings.each do |string|
+      text string
       move_down 2
     end
     stroke { horizontal_line 0, 205 }
@@ -76,14 +70,38 @@ class SaleCheckPdf < Prawn::Document
     encrypt_document permissions: { modify_contents: false }
   end
 
+  def page_height_mm
+    page_height / 1.mm
+  end
+
   private
 
   def currency_str(number)
     sprintf('%.2f', number).gsub('.', ',')
   end
 
+  def items_strings
+    @items_strings ||= load_items_strings
+  end
+
+  def load_items_strings
+    strings = []
+    @sale.sale_items.each_with_index do |sale_item, index|
+      name = sale_item.name
+      if sale_item.feature_accounting
+        features = sale_item.features.map(&:value).join(', ')
+        name = name + " (#{features})"
+      end
+      strings << "#{index+1}. #{name}   #{sale_item.quantity} #{I18n.t('sales.check_pdf.po')} #{currency_str(sale_item.price)}"
+    end
+    strings
+  end
+
   def page_height
-    500
+    line_height = @font_height+2
+    items_lines_count = items_strings.sum{|str|str.length/25}
+    payments_count = @sale.payments.count
+    200 + items_lines_count*line_height + payments_count*line_height
   end
 
 end
