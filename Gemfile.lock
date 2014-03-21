@@ -432,7 +432,7 @@ DEPENDENCIES
   devise (~> 2.2.1)
   exception_notification (~> 2.6.1)
   factory_girl_rails
-  foreman
+  foreman (~> 0.63.0)
   grape (~> 0.6.1)
   grape-entity (~> 0.4.1)
   haml-rails (~> 0.3.5)
