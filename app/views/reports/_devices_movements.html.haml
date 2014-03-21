@@ -1,12 +1,12 @@
 %table#users_report.table.table-bordered.table-hover
   %caption
-    %h4= t 'reports.devices_movements_report'
+    %h4= report_title @report
   %thead
     %tr
       %th.center= t 'activerecord.models.user'
       %th.center= t 'reports.moved'
   %tbody
-    - @report[:users_mv].each do |user|
+    - @report.result[:users_mv].each do |user|
       %tr.detailable
         %td.user= user[:user]
         %td.movement= "#{humanize_duration user[:avarage_duration]} (#{user[:qty]})"

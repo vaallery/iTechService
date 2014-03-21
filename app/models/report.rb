@@ -1,15 +1,63 @@
-module Report
+class Report
+  extend ActiveModel::Naming
+  include ActiveModel::Conversion
+  include ActiveModel::Validations
 
-  def self.device_types_report(period, device_type_id=nil)
-    result = {device_types: []}
+  NAMES = %w[device_types users done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs]
+
+  attr_accessor :name, :start_date, :end_date, :kind, :device_type
+
+  #alias_attribute :few_remnants_goods, :few_remnants
+  #alias_attribute :few_remnants_spare_parts, :few_remnants
+
+  def initialize(attributes = {})
+    attributes.each { |name, value| send("#{name}=", value) }
+  end
+
+  validates_presence_of :start_date, :end_date, :name
+
+  def persisted?
+    false
+  end
+
+  def save
+    if name.in? NAMES
+      send name
+    end
+  end
+
+  def result
+    @result ||= {}
+  end
+
+  def start_date
+    @start_date ||= 1.day.ago.beginning_of_day
+  end
+
+  def end_date
+    @end_date ||= 1.day.ago.end_of_day
+  end
+
+  def period
+    start_date..end_date
+  end
+
+  private
+
+  def device_types
+    result[:device_types] = []
     result[:devices_received_count] = result[:devices_received_done_count] = result[:devices_received_archived_count] = 0
-    result[:current_device_type] = DeviceType.find(device_type_id) if device_type_id.present?
+    result[:current_device_type] = DeviceType.find(device_type) if device_type.present?
     device_types = result[:current_device_type].present? ? result[:current_device_type].children : DeviceType.roots
     device_types.each do |device_type|
       device_ids = []
-      device_type.descendants.each do |sub_device_type|
-        if sub_device_type.is_childless?
-          device_ids << sub_device_type.devices.where(created_at: period).map { |d| d.id }
+      if device_type.is_childless?
+        device_ids << device_type.devices.where(created_at: period).map { |d| d.id }
+      else
+        device_type.descendants.each do |sub_device_type|
+          if sub_device_type.is_childless?
+            device_ids << sub_device_type.devices.where(created_at: period).map { |d| d.id }
+          end
         end
       end
       received_devices = Device.where id: device_ids
@@ -24,8 +72,8 @@ module Report
     result
   end
 
-  def self.users_report(period)
-    result = {users: []}
+  def users
+    result[:users] = []
     if (received_devices = Device.where(created_at: period)).present?
       received_devices.group('user_id').count('id').each_pair do |key, val|
         if key.present? and (user = User.find key).present?
@@ -41,8 +89,8 @@ module Report
     result
   end
 
-  def self.done_tasks_report(period)
-    result = {tasks: []}
+  def done_tasks
+    result[:tasks] = []
     archived_devices_ids = HistoryRecord.devices.movements_to_archive.in_period(period).collect { |hr| hr.object_id }.uniq
     result[:tasks_sum] = result[:tasks_qty] = result[:tasks_qty_free] = 0
     if archived_devices_ids.any?
@@ -68,8 +116,8 @@ module Report
     result
   end
 
-  def self.clients_report(period)
-    result = {new_clients: []}
+  def clients
+    result[:new_clients] = []
     new_clients = Client.where(created_at: period)
     new_clients.each do |client|
       client_devices = client.devices.where(created_at: period).map{|device| {id: device.id, presentation: device.presentation}}
@@ -80,8 +128,8 @@ module Report
     result
   end
 
-  def self.tasks_duration_report(period)
-    result = {tasks_durations: []}
+  def tasks_duration
+    result[:tasks_durations] = []
     Task.find_each do |task|
       task_durations = []
       device_tasks = []
@@ -104,8 +152,8 @@ module Report
     result
   end
 
-  def self.done_orders_report(period)
-    result = {orders: []}
+  def done_orders
+    result[:orders] = []
     done_orders = Order.done_at period
     done_orders.find_each do |order|
       result[:orders] << {order: order, done_at: order.done_at}
@@ -114,8 +162,8 @@ module Report
     result
   end
 
-  def self.devices_movements_report(period)
-    result = {users_mv: []}
+  def devices_movements
+    result[:users_mv] = []
     movements = HistoryRecord.in_period(period)
     movements = movements.movements_from(Location.bar_id)
     movements = movements.movements_to([Location.content_id, Location.repair_id])
@@ -142,8 +190,8 @@ module Report
     result
   end
 
-  def self.sales_report(period)
-    result = {sales: []}
+  def sales
+    result[:sales] = []
     #sales_sum = 0
     #sales_count = 0
     #sales = Sale.selling.posted.sold_at(period)
@@ -152,8 +200,8 @@ module Report
     result
   end
 
-  def self.payments_report(period)
-    result = {payment_kinds: {}}
+  def payments
+    result[:payment_kinds] = {}
     payments = Payment.includes(:sale).where(sales: {date: period, status: 1, is_return: false})
     result[:payments_sum] = payments.sum(:value)
     result[:payments_qty] = payments.count
@@ -165,8 +213,8 @@ module Report
     result
   end
 
-  def self.salary_report
-    result = {salary: []}
+  def salary
+    result[:salary] = []
     users = User.active
     users.find_each do |user|
       user_salaries = []
@@ -203,8 +251,8 @@ module Report
     result
   end
 
-  def self.supply_report(period)
-    result = {supply_categories: []}
+  def supply
+    result[:supply_categories] = []
     supply_reports = SupplyReport.where date: period
     supplies_sum = 0
     if supply_reports.present?
@@ -223,8 +271,16 @@ module Report
     result
   end
 
-  def self.few_remnants_report(kind)
-    result = {products: {}, stores: {}}
+  def few_remnants_goods
+    few_remnants 'goods'
+  end
+
+  def few_remnants_spare_parts
+    few_remnants 'spare_parts'
+  end
+
+  def few_remnants(kind)
+    result[:products] = result[:stores] = {}
     products = Product.send(kind)
     stores = Store.send(kind == :goods ? :retail : :spare_parts).order('id asc')
     stores.each { |store| result[:stores].store store.id.to_s, {code: store.code, name: store.name} }
@@ -240,8 +296,7 @@ module Report
     result
   end
 
-  def self.repair_jobs_report(period)
-    result = {}
+  def repair_jobs
     repair_tasks = RepairTask.includes(:device_task).where(device_tasks: {done_at: period})
     repair_tasks.each do |repair_task|
       user_id = repair_task.performer.try(:id).to_s

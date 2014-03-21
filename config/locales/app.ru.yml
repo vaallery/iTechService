@@ -674,7 +674,6 @@ ru:
     new_order: Новый Заказ
     new_user: Новый пользователь
     params: Параметры
-    reports: Отчёты
     new_sale: "Новая Продажа"
     references: "Справочники"
 
@@ -1128,15 +1127,10 @@ ru:
       title: 'Редактирование Вида ремонта'
 
   reports:
+    title: 'Отчёты'
     average_duration: Средняя длительность, мин.
     choose: Выберите отчет
     clients_count: Количество клиентов
-    clients_report:
-      title: Новые клиенты
-    device_types_report:
-      title: Принятые девайсы по типам
-    devices_movements_report:
-      title: Перемещения девайсов
     done_at: Выполнен
     duration: Длительность, мин.
     includes: Из них
@@ -1146,31 +1140,38 @@ ru:
     moved: Перемещено
     moved_at: Перемещен
     new_clients_count: Количество новых клиентов
-    done_orders_report: Выполненные заказы
+    total: Всего
     period: Период
     received: Принято
     received_done: готовы
     received_archived: выданы
-    salary_report:
-      title: Отчет по зарплате
     sum: Сумма
-    tasks_durations_report:
+    remnants: "Остатки"
+    done_orders:
+      title: Выполненные заказы
+    clients:
+      title: Новые клиенты
+    device_types:
+      title: Принятые девайсы по типам
+    devices_movements:
+      title: Перемещения девайсов
+    salary:
+      title: Отчет по зарплате
+    tasks_duration:
       title: Длительность выполнения задач
-    tasks_report:
+    done_tasks:
       title: Выполненные задачи
-    total: Всего
-    users_report:
+    users:
       title: Принятые девайсы по сотрудникам
-    sales_report:
+    sales:
       title: "Отчет по продажам"
-    supply_report:
+    supply:
       title: 'Отчёт водителя'
     few_remnants_goods:
       title: "Заканчивающийся товар"
     few_remnants_spare_parts:
       title: 'Заканчивающиеся запчасти'
-    remnants: "Остатки"
-    payments_report:
+    payments:
       title: "Отчёт по платежам"
     repair_jobs:
       title: "Отчёт работ технических специалистов"

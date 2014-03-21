@@ -1,12 +1,12 @@
 %table#tasks_durations_report.table.table-bordered.table-hover
   %caption
-    %h4= t 'reports.tasks_durations_report'
+    %h4= report_title @report
   %thead
     %tr
       %th= "#{t('activerecord.models.task')} / #{t('activerecord.models.device')}"
       %th= t 'reports.duration'
   %tbody
-    - @report[:tasks_durations].each do |task|
+    - @report.result[:tasks_durations].each do |task|
       %tr.task_row.detailable
         %td.task= task[:task_name]
         %td.duration= "#{humanize_duration(task[:average_duration])} (#{task[:device_tasks].count})"

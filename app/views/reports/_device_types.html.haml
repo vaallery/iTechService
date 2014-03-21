@@ -1,0 +1,42 @@
+%ul.breadcrumb
+  - if @report.result[:current_device_type].present?
+    %li
+      = link_to icon_tag(:home), reports_path(report: {name: @report.name, start_date: @report.start_date, end_date: @report.end_date}), method: :post, remote: true
+      %span.divider /
+    - @report.result[:current_device_type].ancestors.each do |device_type|
+      %li
+        = link_to device_type.full_name, reports_path(report: {name: @report.name, device_type: device_type.id, start_date: @report.start_date, end_date: @report.end_date}), method: :post, remote: true
+        %span.divider /
+    %li.active= @report.result[:current_device_type].full_name
+
+  - else
+    %li.active= icon_tag(:home)
+
+%table#device_types_report.table.table-bordered.table-hover
+  %caption
+    %h4= report_title @report
+  %thead
+    %tr
+      %th.center{rowspan: 2}= Device.human_attribute_name :device_type
+      %th.center{rowspan: 2}= t('reports.received')
+      %th.center{colspan: 2}= t('reports.includes')
+    %tr
+      %th.center= t('reports.received_done')
+      %th.center= t('reports.received_archived')
+  %tbody
+    - @report.result[:device_types].each do |device_type|
+      %tr
+        %td
+          - if device_type[:device_type].is_childless?
+            = device_type[:device_type].full_name
+          - else
+            = link_to device_type[:device_type].full_name, reports_path(report: {name: @report.name, device_type: device_type[:device_type].id, start_date: @report.start_date, end_date: @report.end_date}), method: :post, remote: true
+        %td= device_type[:qty]
+        %td= device_type[:qty_done]
+        %td= device_type[:qty_archived]
+  %tfoot
+    %tr
+      %td= t('reports.total')
+      %td= @report.result[:devices_received_count]
+      %td= @report.result[:devices_received_done_count]
+      %td= @report.result[:devices_received_archived_count]

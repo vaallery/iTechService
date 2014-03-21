@@ -1,13 +1,13 @@
 %table#users_report.table.table-bordered.table-hover
   %caption
-    %h4= t 'reports.sales_report'
+    %h4= report_title @report
   %thead
     %tr
       %th.center= "#{t('activerecord.models.user')} / #{t('activerecord.models.client')}"
       %th.center= t 'activerecord.models.device'
       %th.center= Sale.human_attribute_name :value
   %tbody
-    - @report[:sales].each do |user_sales|
+    - @report.result[:sales].each do |user_sales|
       %tr.detailable
         %td.user{colspan: 2}= link_to user_sales[:user][:name], user_path(user_sales[:user][:id])
         %td.sales= "#{human_currency user_sales[:sum]} (#{user_sales[:count]})"
@@ -24,4 +24,4 @@
   %tfoot
     %tr
       %td{colspan: 2}= t 'total'
-      %td= "#{human_currency(@report[:sales_sum])} (#{@report[:sales_count]})"
+      %td= "#{human_currency(@report.result[:sales_sum])} (#{@report.result[:sales_count]})"

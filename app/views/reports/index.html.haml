@@ -1,0 +1,34 @@
+#reports_filter.navbar.container
+  .navbar-inner
+    = form_tag reports_path, method: :get, id: 'search_form', class: 'navbar-search form-search' do
+      = hidden_field_tag :name, params[:name]
+      %button.btn.btn-info.btn-small
+        %i.icon-filter
+      = text_field_tag :start_date, @start_date.strftime('%d.%m.%Y'), class: 'datepicker input-small',
+          data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
+      = '_'
+      = text_field_tag :end_date, @end_date.strftime('%d.%m.%Y'), class: 'datepicker input-small',
+          data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
+
+    %ul.nav
+      %li.dropdown
+        = link_to '#', id: 'selected_report', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+          %span= t "reports.#{params[:name].present? ? params[:name]+'.title' : 'choose'}"
+          %b.caret
+        %ul#reports_select.dropdown-menu
+          %li= link_to t('reports.device_types.title'), '#', data: { name: 'device_types_report' }
+          %li= link_to t('reports.users.title'), '#', data: { name: 'users_report' }
+          %li= link_to t('reports.done_tasks.title'), '#', data: { name: 'tasks_report' }
+          %li= link_to t('reports.clients.title'), '#', data: { name: 'clients_report' }
+          %li= link_to t('reports.tasks_duration.title'), '#', data: { name: 'tasks_durations_report' }
+          %li= link_to t('reports.sales.title'), '#', data: { name: 'sales_report' }
+          %li= link_to t('reports.devices_movements.title'), '#', data: { name: 'devices_movements_report' }
+          - if can? :manage, Salary
+            %li= link_to t('reports.salary.title'), '#', data: { name: 'salary_report' }
+          %li= link_to t('reports.supply.title'), '#', data: { name: 'supply_report' }
+          %li= link_to t('reports.payments.title'), '#', data: { name: 'payments_report' }
+          %li= link_to t('reports.few_remnants_goods.title'), '#', data: { name: 'few_remnants_goods' }
+          %li= link_to t('reports.few_remnants_spare_parts.title'), '#', data: { name: 'few_remnants_spare_parts' }
+          %li= link_to t('reports.repair_jobs.title'), '#', data: { name: 'repair_jobs' }
+
+#reports_tables= render "reports/#{params[:name]}" if params[:name].present?

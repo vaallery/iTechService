@@ -1,13 +1,13 @@
 %table#clients_report.table.table-bordered.table-hover
   %caption
-    %h4= t 'reports.clients_report'
+    %h4= report_title @report
   %thead
     %tr
       %th= Client.human_attribute_name :created_at
       %th= t 'activerecord.models.client'
       %th= t 'activerecord.models.device'
   %tbody
-    - @report[:new_clients].each do |client|
+    - @report.result[:new_clients].each do |client|
       %tr
         %td= human_datetime client[:created_at]
         %td= link_to client[:presentation], client_path(client[:id])
@@ -18,4 +18,4 @@
   %tfoot
     %tr
       %td= t 'total'
-      %td{colspan: 2}= "#{@report[:new_clients_count]} (#{@report[:clients_count]})"
+      %td{colspan: 2}= "#{@report.result[:new_clients_count]} (#{@report.result[:clients_count]})"

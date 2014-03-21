@@ -166,7 +166,7 @@ class User < ActiveRecord::Base
   end
 
   def can_view_reports?
-    has_role? %w[admin superadmin]
+    has_role? %w[admin superadmin developer]
   end
 
   def self.search(params)

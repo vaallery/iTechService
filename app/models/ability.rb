@@ -8,35 +8,31 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.superadmin?
       can :manage, :all
-      can :view_reports
       cannot :write_tech_notice, Device
       can :view_purchase_price, Product
-      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
-      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
-      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
+      #cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      #cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      #cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
     elsif user.admin?
       can :manage, :all
-      can :view_reports
       can :finance, User if user.able_to? :manage_salary
       cannot :manage, Salary unless user.able_to? :manage_salary
       cannot :manage_rights, User
       cannot :manage, [BonusType, Bonus]
       cannot [:edit, :destroy], Karma
       cannot :write_tech_notice, Device
-      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
-      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
-      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
+      #cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      #cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      #cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
       cannot :read, CashShift
       cannot :close, CashShift
     elsif user.developer?
       can :manage, :all
-      can :view_reports
       cannot :write_tech_notice, Device
       can :view_purchase_price, Product
-      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
-      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
-      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
-      cannot :manage, Salary unless user.able_to? :manage_salary
+      #cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      #cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      #cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
     elsif user.synchronizer?
       can :sync, Product
       can :read, [Device, Order]
@@ -135,10 +131,14 @@ class Ability
       end
       cannot [:create, :update, :destroy], StolenPhone
       cannot :read, Salary
-      cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
-      cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
-      cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
+      #cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+      #cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+      #cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
+      cannot :manage, Report
     end
+    cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
+    cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
+    cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
     #
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are
