@@ -60,6 +60,7 @@ group :development do
   gem 'binding_of_caller'
   gem 'meta_request', '~> 0.2.8'
   gem 'mailcatcher'
+  gem 'rails-erd'
 end
 
 group :test do

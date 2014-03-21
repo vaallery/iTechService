@@ -87,6 +87,7 @@ GEM
     carrierwave (0.8.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
+    choice (0.1.6)
     chronic (0.10.2)
     ckeditor (3.7.3)
       mime-types
@@ -292,6 +293,11 @@ GEM
       activesupport (= 3.2.17)
       bundler (~> 1.0)
       railties (= 3.2.17)
+    rails-erd (1.1.0)
+      activerecord (>= 3.0)
+      activesupport (>= 3.0)
+      choice (~> 0.1.6)
+      ruby-graphviz (~> 1.0.4)
     rails_autolink (1.1.5)
       rails (> 3.1)
     railties (3.2.17)
@@ -322,6 +328,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    ruby-graphviz (1.0.9)
     ruby-ole (1.2.11.7)
     ruby-rc4 (0.1.5)
     rubyzip (0.9.9)
@@ -452,6 +459,7 @@ DEPENDENCIES
   quiet_assets
   railroady
   rails (= 3.2.17)
+  rails-erd
   roo (~> 1.11.2)
   rspec-rails
   seed_dumper (~> 0.1.3)
