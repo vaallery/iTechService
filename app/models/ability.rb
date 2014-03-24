@@ -57,6 +57,7 @@ class Ability
         can [:create, :read, :reprint_check], Sale
         can :create, CashOperation
         can :create, QuickOrder
+        can :create, Payment
       end
       if user.media?
         can :modify, [Device, Client, Order, QuickOrder]
