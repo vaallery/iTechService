@@ -26,6 +26,7 @@ class API < Grape::API
     def current_user
       if (token = auth_token_from_headers).present?
         @current_user ||= User.where(is_fired: [false, nil], authentication_token: token).first
+        User.current = @current_user
       end
     end
 

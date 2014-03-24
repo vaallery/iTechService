@@ -94,7 +94,7 @@ class QuickOrdersController < ApplicationController
   def print_ticket(pdf, filename)
     filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
     pdf.render_file filepath
-    system 'lp', filepath
+    PrinterTools.print_file filepath, :quick_order
   end
 
 end
