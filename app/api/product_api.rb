@@ -25,13 +25,12 @@ class ProductApi < Grape::API
       if params[:group_id].present?
         product_group = ProductGroup.find params[:group_id]
         product_groups = product_group.children
-        products = product_group.present? ? product_group.products : Product.all
-        present :groups, product_groups, with: Entities::ProductGroupEntity
+        products = product_group.products
         present :remnants, products, with: Entities::ProductEntity, store: store
       else
         product_groups = ProductGroup.roots.search(user_role: current_user.role)
-        present :groups, product_groups, with: Entities::ProductGroupEntity
       end
+      present :groups, product_groups, with: Entities::ProductGroupEntity
     else
       error!({error: 'Retail store undefined'}, 404)
     end
