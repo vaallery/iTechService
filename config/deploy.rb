@@ -12,13 +12,13 @@ set :log_level, :debug
 set :pty, true
 
 set :linked_files, %w{config/database.yml Procfile config/unicorn.rb config/private_pub.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system public/uploads}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
 
 set :rvm_type, :user
-set :rvm_ruby_version, 'ruby-2.0.0-p451@itechservice' #'1.9.3-p545'
+set :rvm_ruby_version, 'ruby-1.9.3-p545@itechservice' #'2.0.0-p451'
 
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
