@@ -52,14 +52,17 @@ class TicketPdf < Prawn::Document
 
   def receiver_part
     logo
-    move_down 70
-    font_size 24 do
-      text "№ #{@device.ticket_number}", align: :center, inlign_format: true, style: :bold
+    move_down 26
+    font_size 20 do
+      text @device.ticket_number, align: :right, inlign_format: true, style: :bold
     end
     text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
-    move_down 5
+    move_down 15
     text @device.client_short_name
-    text @device.client.human_phone_number
+    text @view.number_to_phone @device.client.full_phone_number || @device.client.phone_number, area_code: true
+    text "#{@view.t('tickets.device_contact_phone', number: @view.number_to_phone(@device.contact_phone, area_code: true))}"
+    move_down 5
+    text "#{Device.human_attribute_name(:security_code)}: #{@device.security_code}"
     move_down 5
     text @view.t('tickets.operations_list')
     text @device.tasks.map{|t|t.name}.join(', ')

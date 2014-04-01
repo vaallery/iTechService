@@ -146,6 +146,7 @@ ru:
         client_id: :activerecord.models.client
         client_notified: Клиент уведомлён
         comment: Комментарий
+        contact_phone: 'Контактный номер'
         device_tasks: Список задач
         done_at: Время завершения
         history_records: История изменений
@@ -696,6 +697,7 @@ ru:
   devices:
     edit:
       title: Редактирование девайса
+      copy_client_phone: "Копировать номер клиента"
     errors:
       already_archived: 'Девайс уже в архиве.'
       client_notification: Нужно уведомить клиента
@@ -1379,6 +1381,7 @@ ru:
     check_status_order: 'Вы можете проверить статус заказа по адресу: www.itechstore.ru/check.'
     #contact_phone: 'Конт. тел.: 2-672-673, 2-673-672'
     contact_phone: 'Телефон для связи: %{number}'
+    device_contact_phone: 'Конт. тел.: %{number}'
     email: 'e-mail: info@itechstore.ru'
     link: Талон
     notice: 'Сохраняйте этот талон до получения Вашего устройства.'

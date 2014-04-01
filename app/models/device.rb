@@ -31,8 +31,8 @@ class Device < ActiveRecord::Base
   delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
   delegate :department, to: :user
 
-  attr_accessible :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id
-  validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at
+  attr_accessible :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone
+  validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :contact_phone
   validates_presence_of :device_type, if: 'item.nil?'
   validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
@@ -49,6 +49,7 @@ class Device < ActiveRecord::Base
   after_create :new_device_announce
   after_create :create_alert
   after_initialize :set_user_and_location
+  after_initialize :set_contact_phone
 
   def as_json(options={})
     {
@@ -256,6 +257,10 @@ class Device < ActiveRecord::Base
     new_sale
   end
 
+  def contact_phone_none?
+    contact_phone.blank? or contact_phone == '-'
+  end
+
   private
 
   def generate_ticket_number
@@ -354,6 +359,10 @@ class Device < ActiveRecord::Base
       end
     end
     is_valid
+  end
+
+  def set_contact_phone
+    self.contact_phone ||= self.client.try(:contact_phone)
   end
 
 end

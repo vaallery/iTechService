@@ -15,6 +15,12 @@
     %td= t 'devices.itunes_string'
     %td= text_field_tag 'itunes_string', itunes_string_for(@device)
   %tr
+    %td= Device.human_attribute_name :client_id
+    %td= link_to @device.client.presentation, @device.client
+  %tr
+    %td= Device.human_attribute_name :contact_phone
+    %td= human_phone @device.contact_phone
+  %tr
     %td= Device.human_attribute_name :ticket_number
     %td= @device.ticket_number
   %tr
@@ -29,14 +35,6 @@
   %tr
     %td= Device.human_attribute_name :case_color
     %td= case_color_presentation @device.case_color
-  %tr
-    %td= Device.human_attribute_name :client_id
-    %td= link_to @device.client.presentation, @device.client
-
-  - if @device.client.contact_phone.present?
-    %tr
-      %td= Client.human_attribute_name :contact_phone
-      %td= human_phone @device.client.contact_phone
 
   - if @device.user_id == current_user.id
     %tr

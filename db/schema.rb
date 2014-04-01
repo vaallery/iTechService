@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140228082640) do
+ActiveRecord::Schema.define(:version => 20140331095140) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -223,11 +223,13 @@ ActiveRecord::Schema.define(:version => 20140228082640) do
     t.decimal  "cost"
     t.datetime "done_at"
     t.text     "user_comment"
+    t.integer  "performer_id"
   end
 
   add_index "device_tasks", ["device_id"], :name => "index_device_tasks_on_device_id"
   add_index "device_tasks", ["done"], :name => "index_device_tasks_on_done"
   add_index "device_tasks", ["done_at"], :name => "index_device_tasks_on_done_at"
+  add_index "device_tasks", ["performer_id"], :name => "index_device_tasks_on_performer_id"
   add_index "device_tasks", ["task_id"], :name => "index_device_tasks_on_task_id"
 
   create_table "device_types", :force => true do |t|
@@ -271,6 +273,7 @@ ActiveRecord::Schema.define(:version => 20140228082640) do
     t.text     "tech_notice"
     t.integer  "sale_id"
     t.integer  "case_color_id"
+    t.string   "contact_phone"
   end
 
   add_index "devices", ["case_color_id"], :name => "index_devices_on_case_color_id"

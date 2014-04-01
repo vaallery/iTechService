@@ -25,6 +25,15 @@ jQuery ->
       $('#device_security_code').val '-'
       event.preventDefault()
 
+    $('#device_contact_phone_none').click (event)->
+      $('#device_contact_phone').val '-'
+      event.preventDefault()
+
+    $('#device_contact_phone_copy').click (event)->
+      client_phone = $('#client_search').val().split('/')[1].match(/[0-9]/g).join('')
+      $('#device_contact_phone').val client_phone
+      event.preventDefault()
+
     $(document).on 'click', '#questionnaire_link', (event)->
       $this = $ this
       params = $this.parents('form:first').serialize()

@@ -9,11 +9,12 @@
   - else
     = f.input :client, as: :string, disabled: true, input_html: {class: 'input-xlarge'}
 
-  - if @device.persisted? and @device.client.contact_phone.present?
-    .control-group
-      = label_tag 'contact_phone', Client.human_attribute_name(:contact_phone), class: 'control-label'
-      .controls
-        = text_field_tag 'contact_phone', human_phone(@device.client.contact_phone), class: 'input-medium', disabled: true
+  = f.input :contact_phone, as: :contact_phone
+  -#- if @device.persisted? and @device.client.contact_phone.present?
+  -#  .control-group
+  -#    = label_tag 'contact_phone', Client.human_attribute_name(:contact_phone), class: 'control-label'
+  -#    .controls
+  -#      = text_field_tag 'contact_phone', human_phone(@device.client.contact_phone), class: 'input-medium', disabled: true
 
   - if can? :update, @device
     = f.input :device_type, as: :device_type

@@ -10,7 +10,6 @@
     = f.input :patronymic
     = f.input :full_phone_number, as: :phone_number
     = f.input :phone_number
-    = f.input :contact_phone
     = f.input :category, collection: client_categories_for_select if can? :change_category, @client
     = f.input :card_number
 
