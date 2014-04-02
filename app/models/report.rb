@@ -3,7 +3,7 @@ class Report
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  NAMES = %w[device_types users done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs]
+  NAMES = %w[device_types users done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs remnants]
 
   attr_accessor :name, :start_date, :end_date, :kind, :device_type
 
@@ -310,6 +310,12 @@ class Report
         result[user_id] = {name: user_name, jobs_qty: 1, jobs_sum: repair_task.margin, jobs: [job]}
       end
     end
+    result
+  end
+
+  def remnants
+    result[:remnants] = []
+
     result
   end
 
