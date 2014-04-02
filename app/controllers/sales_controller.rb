@@ -73,7 +73,7 @@ class SalesController < ApplicationController
         format.html { render 'form' }
         format.js do
           flash.now[:error] = @sale.errors.full_messages
-          params[:sale][:payments_attributes].present? ? render('shared/show_modal_form') : render('save')
+          params[:sale][:payments_attributes].present? or params[:sale][:sale_items_attributes].present? ? render('shared/show_modal_form') : render('save')
         end
       end
     end

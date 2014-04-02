@@ -1,4 +1,4 @@
-class Discount# < ActiveRecord::Base
+class Discount
 
   VALUES = {
       usual: {
@@ -30,16 +30,6 @@ class Discount# < ActiveRecord::Base
           limit: nil
       }
   }
-
-  #attr_accessible :limit, :value
-
-  def initialize(client, product)
-    if (client_category = client.category_s.to_sym).present? and (product_category = product.product_category.kind.to_sym).present?
-      value = VALUES[client_category][product_category][:value]
-      unit = VALUES[client_category][product_category][:unit]
-      margin = VALUES[client_category][product_category][:margin]
-    end
-  end
 
   def self.available_for(client, item)
     if (client_category = client.category_s.to_sym).present? and (product_category = item.product_category.kind.to_sym).present?

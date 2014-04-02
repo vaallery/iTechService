@@ -10,7 +10,7 @@ class SaleItem < ActiveRecord::Base
   validates_presence_of :item, :price, :quantity
   validates_numericality_of :quantity, only_integer: true, greater_than: 0, unless: :feature_accounting
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
-  validates_numericality_of :discount, greater_than_or_equal_to: 0, less_than_or_equal_to: :max_discount
+  validates_numericality_of :discount, greater_than_or_equal_to: 0, less_than_or_equal_to: :max_discount, message: I18n.t('sales.errors.unavailable_discount')
   validates_numericality_of :price, greater_than_or_equal_to: :min_price
 
   after_initialize do
@@ -24,24 +24,37 @@ class SaleItem < ActiveRecord::Base
   end
 
   def available_discount
-    (client.present? and item.present?) ? Discount::available_for(client, item) : 0
+    (client.present? and item.present?) ? Discount.available_for(client, item) : 0
   end
 
   def discount=(new_discount)
-    if retail_price.nil? or new_discount.to_f > available_discount
-      self.errors.add :discount, I18n.t('sales.errors.unavailable_discount')
-    else
+    if User.current.try :any_admin?
       self.price = retail_price - new_discount.to_f
       super
+    else
+      if retail_price.nil? or new_discount.to_f > available_discount
+        self.errors.add :discount, I18n.t('sales.errors.unavailable_discount')
+      else
+        self.price = retail_price - new_discount.to_f
+        super
+      end
     end
   end
 
   def max_discount
-    (product.present? and client.present?) ? Discount::max_available_for(client, item) : 0
+    if User.current.try :any_admin?
+      retail_price
+    else
+      (product.present? and client.present?) ? Discount.max_available_for(client, item) : 0
+    end
   end
 
   def min_price
-    retail_price.present? ? retail_price - max_discount : 0
+    if User.current.try :any_admin?
+      0
+    else
+      retail_price.present? ? retail_price - max_discount : 0
+    end
   end
 
 end

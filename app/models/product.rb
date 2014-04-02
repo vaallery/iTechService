@@ -102,7 +102,7 @@ class Product < ActiveRecord::Base
   end
 
   def discount_for(client)
-    client.present? ? Discount::available_for(client, self) : 0
+    client.present? ? Discount.available_for(client, self) : 0
   end
 
   def remnants_hash

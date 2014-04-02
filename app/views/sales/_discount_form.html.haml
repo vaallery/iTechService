@@ -13,7 +13,8 @@
         = f.simple_fields_for :sale_items do |ff|
           %tr
             %td= ff.object.name
-            %td= ff.number_field :discount, class: 'input-small', type: 'number'
+            %td= ff.input :discount, label: false, input_html: {class: 'input-small'}
+            -#= ff.number_field :discount, class: 'input-small', type: 'number'
 
     = f.input :total_discount, as: :float
 

@@ -1,14 +1,17 @@
+- sum_class = ''
+- if current_user.any_admin?
+  - if f.object.price.in? f.object.purchase_price..(f.object.retail_price-f.object.available_discount-1)
+    - sum_class = 'attention'
+  - elsif f.object.price < f.object.purchase_price
+    - sum_class = 'warning'
 %tr.sale_item_fields{data: {item: f.object.item_id}}
   %td.num.number
   %td.code.number= f.object.code
   %td.product
     %strong= f.object.name
-    -#.features= features_presentation f.object
+    .features= features_presentation f.object
     = f.hidden_field :item_id
   %td.quantity.number= f.number_field :quantity, class: 'input-mini', type: 'number', min: 1, readonly: f.object.feature_accounting
-  - if current_user.any_admin? or f.object.request_price# and f.object.is_service
-    %td.price.number= f.number_field :price, class: 'input-small', type: 'number'
-  - else
-    %td.price.number= human_currency f.object.retail_price, false
-  = f.hidden_field :discount, class: 'input-small sale_item_discount', min: 0, max: f.object.available_discount
-  %td.sum.number= human_currency f.object.sum, false
+  %td.price.number= human_currency f.object.retail_price, false
+  = f.hidden_field :discount, class: 'input-small sale_item_discount'
+  %td.sum.number{class: sum_class}= human_currency f.object.sum, false

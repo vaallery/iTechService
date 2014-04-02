@@ -28,7 +28,7 @@ class Sale < ActiveRecord::Base
   attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return, :payment_ids, :payments_attributes, :total_discount
   validates_presence_of :user, :store, :date, :status, :cash_shift
   validates_inclusion_of :status, in: Document::STATUSES.keys
-  validates_associated :payments
+  validates_associated :payments, :sale_items
   before_validation :set_user_and_cash_shift
   after_initialize :set_user_and_cash_shift
 
