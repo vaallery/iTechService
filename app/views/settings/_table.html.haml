@@ -3,6 +3,7 @@
   %table.table.table-striped.table-hover
     %thead
       %tr
+        %th= Setting.human_attribute_name :department
         %th= Setting.human_attribute_name :presentation
         %th= Setting.human_attribute_name :name
         %th= Setting.human_attribute_name :value
@@ -10,6 +11,7 @@
     %tbody
       - @settings.each do |setting|
         %tr
+          %td= setting.department_name
           %td= setting.presentation
           %td= setting.name
           %td= setting.value

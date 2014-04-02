@@ -289,7 +289,7 @@ module ApplicationHelper
   end
 
   def duck_plan_tag
-    if (value = Setting.duck_plan).present? and (url = Setting.duck_plan_url).present?
+    if (value = Setting.duck_plan(current_user.department)).present? and (url = Setting.duck_plan_url(current_user.department)).present?
       link_to url, id: 'duck_plan_link' do
         concat t('plan_for')
         concat image_tag('duck_40.png')
