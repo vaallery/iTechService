@@ -5,8 +5,7 @@
       .row-fluid.quick_select_row
         - 10.times do |c|
           - pos = c+1+r*10
-          -#- if (top_salable = @top_salables.find_by_position pos).present?
-          - if @top_salables.present? and (top_salable = @top_salables[pos-1]).present?
+          - if (top_salable = @top_salables.find_by_position pos).present?
             .span.quick_select_cell{style: "background-color: #{top_salable.color}"}
               - if top_salable.product.present?
                 = link_to_product_quick_select top_salable.product
@@ -14,4 +13,4 @@
                 = link_to top_salable.title, top_salable_path(top_salable), title: top_salable.title, remote: true
           - else
             .span.quick_select_cell
-              = link_to '', '#'
+              %a
