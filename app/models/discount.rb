@@ -41,7 +41,7 @@ class Discount
       retail_price = item.retail_price
       if retail_price.present? and purchase_price.present?
         discount = unit == '%' ? retail_price * value.fdiv(100) : value
-        discount = retail_price - purchase_price + margin if (retail_price-discount) < (purchase_price+margin)
+        discount = retail_price - purchase_price + margin if (retail_price-discount) < (purchase_price+margin) and product_category != :protector
       else
         discount = 0
       end
@@ -57,7 +57,11 @@ class Discount
       margin = VALUES[client_category][product_category][:margin]
       purchase_price = item.purchase_price
       retail_price = item.retail_price
-      discount = (retail_price.present? and purchase_price.present?) ? retail_price - purchase_price + margin : 0
+      if product_category == :protector and retail_price.present?
+        discount = retail_price
+      else
+        discount = (retail_price.present? and purchase_price.present?) ? retail_price - purchase_price + margin : 0
+      end
       return discount
     else
       return 0
