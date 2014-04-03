@@ -24,7 +24,7 @@ class SaleItem < ActiveRecord::Base
   end
 
   def available_discount
-    (client.present? and item.present?) ? Discount.available_for(client, item) : 0
+    item.present? ? Discount.available_for(client, item) : 0
   end
 
   def discount=(new_discount)
@@ -45,7 +45,7 @@ class SaleItem < ActiveRecord::Base
     if User.current.try :any_admin?
       retail_price
     else
-      (product.present? and client.present?) ? Discount.max_available_for(client, item) : 0
+      item.present? ? Discount.max_available_for(client, item) : 0
     end
   end
 
