@@ -80,7 +80,9 @@ class ProductImport
           parent_id = product_group.id if product_group.present? and product_group.is_root?
           product_group = ProductGroup.find_or_create_by_code(code: code, name: name, parent_id: parent_id)
         elsif product_group.present? and name.present?
-          unless (product = Product.find_by_code(code)).present?
+          if (product = Product.find_by_code(code)).present?
+            import_log << ['info', 'Existing product: ' + product_attributes.inspect]
+          else
             next_row = sheet.row i+1
             product_attributes = {code: code, name: name, product_group_id: product_group.id}
             if next_row[0].length > 3
@@ -91,9 +93,9 @@ class ProductImport
               end
             end
             product = Product.new product_attributes
-            products << product
             import_log << ['success', 'New product: ' + product_attributes.inspect]
           end
+          products << product
           # Purchase Price
           purchase_price = product.prices.build price_type_id: PriceType.purchase.id, value: row[10], date: import_time
           import_log << ['success', 'New purchase Product Price: ' + purchase_price.inspect]
