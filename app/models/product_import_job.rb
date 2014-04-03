@@ -1,23 +1,16 @@
-class ProductImport
-  extend ActiveModel::Naming
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
+class ProductImportJob < Struct.new(:params)
 
-  attr_accessor :file, :store_id, :prices_file, :barcodes_file
-
-  def initialize(attributes = {})
-    attributes.each { |name, value| send("#{name}=", value) }
+  def perform1
+    product_import = ProductImport.new params
+    product_import.save
+    ImportMailer.product_import_log(product_import).deliver
   end
 
-  def persisted?
-    false
-  end
-
-  def save
+  def perform
     time_format = "%Y.%m.%d %H:%M:%S"
     import_time = Time.current
     import_log << ['info', "Import started at [#{import_time.strftime(time_format)}]"]
-    if file.present?
+    if params[:file].present?
       if imported_products.map(&:valid?).all?
         imported_products.each &:save
         imported_count = imported_products.count
@@ -32,7 +25,7 @@ class ProductImport
         end
         false
       end
-    elsif prices_file.present?
+    elsif params[:prices_file].present?
       if imported_batches.map(&:valid?).all?
         imported_batches.each &:save!
         imported_count = imported_batches.count
@@ -47,7 +40,7 @@ class ProductImport
         end
         false
       end
-    elsif barcodes_file.present?
+    elsif params[:barcodes_file].present?
       if imported_barcodes.map(&:valid?).all?
         imported_barcodes.each &:save!
         imported_count = imported_barcodes.count
@@ -63,11 +56,12 @@ class ProductImport
         false
       end
     end
+    ImportMailer.product_import_log(self).deliver
   end
 
   def load_imported_products
-    sheet = FileLoader.open_spreadsheet file
-    store = Store.find store_id
+    sheet = FileLoader.open_spreadsheet params[:file]
+    store = Store.find params[:store_id]
     products = []
     product_group = parent_id = product = nil
     (6..sheet.last_row-1).each do |i|
@@ -80,9 +74,7 @@ class ProductImport
           parent_id = product_group.id if product_group.present? and product_group.is_root?
           product_group = ProductGroup.find_or_create_by_code(code: code, name: name, parent_id: parent_id)
         elsif product_group.present? and name.present?
-          if (product = Product.find_by_code(code)).present?
-            import_log << ['info', 'Existing product: ' + product_attributes.inspect]
-          else
+          unless (product = Product.find_by_code(code)).present?
             next_row = sheet.row i+1
             product_attributes = {code: code, name: name, product_group_id: product_group.id}
             if next_row[0].length > 3
@@ -93,9 +85,9 @@ class ProductImport
               end
             end
             product = Product.new product_attributes
+            products << product
             import_log << ['success', 'New product: ' + product_attributes.inspect]
           end
-          products << product
           # Purchase Price
           purchase_price = product.prices.build price_type_id: PriceType.purchase.id, value: row[10], date: import_time
           import_log << ['success', 'New purchase Product Price: ' + purchase_price.inspect]
@@ -140,7 +132,7 @@ class ProductImport
   end
 
   def load_imported_batches
-    sheet = FileLoader.open_spreadsheet prices_file
+    sheet = FileLoader.open_spreadsheet params[:prices_file]
     batches = []
     (9..sheet.last_row-1).each do |i|
       row = sheet.row i
@@ -161,7 +153,7 @@ class ProductImport
   end
 
   def load_imported_barcodes
-    sheet = FileLoader.open_spreadsheet barcodes_file
+    sheet = FileLoader.open_spreadsheet params[:barcodes_file]
     barcodes = []
     (2..sheet.last_row).each do |i|
       row = sheet.row i
@@ -214,62 +206,6 @@ class ProductImport
   def import_time
     @import_time ||= Time.current
   end
-  #
-  #def imported_products
-  #  @imported_products ||= load_imported_products[:products]
-  #end
-  #
-  #def imported_items
-  #  @imported_items ||= load_imported_products[:items]
-  #end
-  #
-  #def imported_store_items
-  #  @imported_store_items ||= load_imported_products[:store_items]
-  #end
-  #
-  #def imported_product_prices
-  #  @imported_product_prices ||= load_imported_products[:product_prices]
-  #end
-
-  #def load_imported
-  #  sheet = open_spreadsheet
-  #  products = []
-  #  shop_cols = [4, 8]
-  #  shops = []
-  #  shop_cols.each do |col|
-  #    if (shop = Shop.find_by_name sheet.cell(4, col)).present?
-  #      shops << shop
-  #    end
-  #  end
-  #  (6..sheet.last_row-1).each do |i|
-  #    row = sheet.row i
-  #    import_log << ['inverse', "#{i} #{'-'*140}"]
-  #    import_log << ['info', row]
-  #    unless (code_1c = row[0][/\d+/]).blank?
-  #      if (product = Product.find_by_code_1c(code_1c)).present?
-  #        new_attributes = {}
-  #        new_attributes.merge! price: row[9].to_i unless product.is_fixed_price?
-  #        stock_items_attributes = {}
-  #        shops.each_with_index do |shop, s|
-  #          if (stock_item = StockItem.where(product_id: product.id, shop_id: shop.id)).present?
-  #            attributes = { id: stock_item.first.id, quantity: row[shop_cols[s]].to_i }
-  #          else
-  #            attributes = { quantity: row[shop_cols[s]].to_i, product_id: product.id, shop_id: shop.id }
-  #          end
-  #          stock_items_attributes.merge! s.to_s => attributes
-  #        end
-  #        new_attributes.merge! stock_items_attributes: stock_items_attributes
-  #        product.attributes = new_attributes
-  #        products << product
-  #        import_log << ['success', 'New attributes: ' + new_attributes.inspect]
-  #      else
-  #        import_log << ['important', "Product with code [#{code_1c}] not found!"]
-  #      end
-  #    end
-  #  end
-  #  import_log << ['inverse', '-'*160]
-  #  products
-  #end
 
   private
 
