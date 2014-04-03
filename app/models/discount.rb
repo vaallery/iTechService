@@ -32,7 +32,8 @@ class Discount
   }
 
   def self.available_for(client, item)
-    if (client_category = client.category_s.to_sym).present? and (product_category = item.product_category.kind.to_sym).present?
+    client_category = client.present? ? client.category_s.to_sym : :usual
+    if (product_category = item.product_category.kind.to_sym).present?
       value = VALUES[client_category][product_category][:value]
       unit = VALUES[client_category][product_category][:unit]
       margin = VALUES[client_category][product_category][:margin]
@@ -51,7 +52,8 @@ class Discount
   end
 
   def self.max_available_for(client, item)
-    if (client_category = client.category_s.to_sym).present? and (product_category = item.product_category.kind.to_sym).present?
+    client_category = client.present? ? client.category_s.to_sym : :usual
+    if (product_category = item.product_category.kind.to_sym).present?
       margin = VALUES[client_category][product_category][:margin]
       purchase_price = item.purchase_price
       retail_price = item.retail_price
