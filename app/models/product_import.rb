@@ -81,7 +81,7 @@ class ProductImport
           product_group = ProductGroup.find_or_create_by_code(code: code, name: name, parent_id: parent_id)
         elsif product_group.present? and name.present?
           if (product = Product.find_by_code(code)).present?
-            import_log << ['info', 'Existing product: ' + product_attributes.inspect]
+            import_log << ['info', "Existing product: [#{product.code}] #{product.name}"]
           else
             next_row = sheet.row i+1
             product_attributes = {code: code, name: name, product_group_id: product_group.id}
