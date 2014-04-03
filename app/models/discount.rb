@@ -5,28 +5,28 @@ class Discount
           equipment: {value: 0, unit: '', margin: 500},
           accessory: {value: 0, unit: '', margin: 100},
           service:   {value: 0, unit: '', margin: 0},
-          protector: {value: 0, unit: '', margin: 0},
+          protector: {value: 100, unit: '%', margin: 0},
           limit: 0
       },
       regular: {
           equipment: {value: 500, unit: 'r', margin: 500},
           accessory: {value: 10, unit: '%', margin: 100},
           service:   {value: 0, unit: '', margin: 0},
-          protector: {value: 0, unit: '', margin: 0},
+          protector: {value: 100, unit: '%', margin: 0},
           limit: 150000
       },
       super: {
           equipment: {value: 1000, unit: 'r', margin: 500},
           accessory: {value: 20, unit: '%', margin: 100},
           service:   {value: 0, unit: '', margin: 0},
-          protector: {value: 0, unit: '', margin: 0},
+          protector: {value: 100, unit: '%', margin: 0},
           limit: 700000
       },
       friend: {
           equipment: {value: 0, unit: '', margin: 0},
           accessory: {value: 0, unit: '', margin: 0},
           service:   {value: 0, unit: '', margin: 0},
-          protector: {value: 0, unit: '', margin: 0},
+          protector: {value: 100, unit: '%', margin: 0},
           limit: nil
       }
   }
