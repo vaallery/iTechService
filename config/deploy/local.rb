@@ -1,5 +1,6 @@
 set :stage, :local
-set :deploy_to, '/usr/local/var/www/itech_service'
+set :deploy_to, "/usr/local/var/www/#{fetch(:application)}"
+set :deploy_via, :copy
 
 # Simple Role Syntax
 # ==================
@@ -40,4 +41,4 @@ server 'localhost', user: 'v', roles: %w{web app db}
 #   }
 # setting per server overrides global ssh_options
 
-fetch(:default_env).merge!(rails_env: :local)
+fetch(:default_env).merge!(rails_env: :production)

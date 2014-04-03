@@ -9,7 +9,7 @@ set :scm, :git
 
 set :format, :pretty
 set :log_level, :debug
-set :pty, true
+set :pty, false
 
 set :linked_files, %w{config/database.yml Procfile config/unicorn.rb config/private_pub.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system public/uploads}
@@ -18,7 +18,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundl
 set :keep_releases, 5
 
 set :rvm_type, :user
-set :rvm_ruby_version, 'ruby-2.0.0-p451@itechservice' #'1.9.3-p545'
+set :rvm_ruby_version, 'ruby-2.0.0-p451@itechservice' #'ruby-1.9.3-p545@itechservice'
 
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
