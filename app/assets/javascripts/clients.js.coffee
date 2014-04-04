@@ -26,6 +26,11 @@ jQuery ->
     else
       $('#client_questionnaire_input').addClass 'hidden'
 
+  $(document).on 'click', '#questionnaire_link', (event)->
+    $this = $ this
+    params = $this.parents('form:first').serialize()
+    event.currentTarget.href = '/clients/questionnaire?' + params
+
   $client_input = $('#client_input')
   if $client_input.length > 0
 

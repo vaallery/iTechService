@@ -34,11 +34,6 @@ jQuery ->
       $('#device_contact_phone').val client_phone
       event.preventDefault()
 
-    $(document).on 'click', '#questionnaire_link', (event)->
-      $this = $ this
-      params = $this.parents('form:first').serialize()
-      event.currentTarget.href = '/clients/questionnaire?' + params
-
   $('#device_serial_number').keydown (event)->
     $this = $(this)
     if (event.keyCode in [65..90]) and (event.metaKey is false) and (event.ctrlKey is false) and (event.altKey is false)
