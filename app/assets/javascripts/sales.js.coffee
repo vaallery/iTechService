@@ -79,9 +79,10 @@ window.enterProductBarcode = ->
   $('#barcode_reader #barcode_reader_inner').show()
   $('#barcode_reader').fadeIn().addClass('in')
   $('#barcode_reader #barcode_field').on 'keydown', (event)->
-    if event.keyCode is 13 and $('#barcode_reader #barcode_field').val() isnt ''
+    value = $('#barcode_reader #barcode_field').val()
+    if event.keyCode is 13 and value isnt ''
       closeBarcodeReader()
-      $.get '/items.js?form=sale&association=sale_items&q='+$('#barcode_reader #barcode_field').val()
+      $.get '/items.js?form=sale&association=sale_items&q='+value
 
 window.scanClientCard = ->
   $('#client_card_reader').fadeIn().addClass('in')

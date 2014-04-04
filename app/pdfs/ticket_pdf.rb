@@ -5,7 +5,7 @@ class TicketPdf < Prawn::Document
   require 'barby/outputter/prawn_outputter'
 
   def initialize(device, view, part=nil)
-    super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: [10, 24, 10, 10]
+    super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: [10, 22, 10, 10]
     @device = device
     @view = view
     font_families.update 'DroidSans' => {
@@ -53,7 +53,7 @@ class TicketPdf < Prawn::Document
   def receiver_part
     logo
     move_down 26
-    font_size 20 do
+    font_size 22 do
       text @device.ticket_number, align: :right, inlign_format: true, style: :bold
     end
     text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center

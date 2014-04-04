@@ -31,6 +31,7 @@ class ItemsController < ApplicationController
     respond_to do |format|
       if @items.one?
         @item = @items.first
+        @product = @item.product
         format.js { render 'products/select' }
         format.json { render json: @item }
       else
