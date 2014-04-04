@@ -13,9 +13,9 @@ class ItemsController < ApplicationController
       @feature_types = @product.feature_types
     end
 
-    if (@form = params[:form]) == 'sale'
-      @items = @items.available
-    end
+    # if (@form = params[:form]) == 'sale'
+    #   @items = @items.available
+    # end
 
     if params[:choose] == 'true'
       @table_name = 'small_table'

@@ -105,7 +105,7 @@ class ProductsController < ApplicationController
       @product = Product.find params[:product_id]
       if @product.feature_accounting
         @items = @product.items
-        @items = @items.available if params[:form].in? %w[sale movement_act]
+        @items = @items.available if params[:form].in? %w[movement_act]
         @items = @items.in_store(@store) if @store.present?
         @items = @items.page(params[:page])
         @feature_types = @product.feature_types
