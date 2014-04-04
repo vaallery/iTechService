@@ -1,5 +1,5 @@
 - sum_class = ''
-- if current_user.any_admin?
+- if current_user.any_admin? and f.object.purchase_price.present? and f.object.retail_price.present?
   - if f.object.price.in? f.object.purchase_price..(f.object.retail_price-f.object.available_discount-1)
     - sum_class = 'attention'
   - elsif f.object.price < f.object.purchase_price
