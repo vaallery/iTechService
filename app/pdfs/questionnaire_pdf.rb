@@ -11,7 +11,7 @@ class QuestionnairePdf < Prawn::Document
     @patronymic = data[:patronymic]
     @email = data[:email]
     @full_phone_number = data[:full_phone_number]
-    @birthday = Date.current
+    @birthday = data[:birthday].to_date
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
       bold: "#{Rails.root}/app/assets/fonts/droidsans-bold-webfont.ttf"
