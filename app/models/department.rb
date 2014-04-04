@@ -28,7 +28,7 @@ class Department < ActiveRecord::Base
   private
 
   def only_one_main
-    errors.add :role, :main_exists if role == 0 and Department.exists?(role: 0)
+    errors.add :role, :main_exists if role == 0 and Department.where('id <> ? AND role = ?', self.id, 0).count > 1
     false
   end
 

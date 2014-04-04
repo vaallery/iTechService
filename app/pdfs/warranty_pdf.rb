@@ -16,7 +16,7 @@ class WarrantyPdf < Prawn::Document
     font_size @font_height
 
     # Organization info
-    text [@view.t('sales.warranty_pdf.org_name'), Setting.get_value(:city), Setting.get_value(:address), Setting.get_value(:contact_phone)].join(', '), align: :right, size: 8
+    text [@view.t('sales.warranty_pdf.org_name'), "г. #{@sale.department.city}", @sale.department.address, "Конт. тел.: #{@sale.department.contact_phone}"].join(', '), align: :right, size: 8
 
     # Logo
     move_down 20
@@ -27,25 +27,25 @@ class WarrantyPdf < Prawn::Document
     move_up 40
     image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 80, at: [20, cursor]
 
+    # Title
+    move_down 60
+    span 380, position: :right do
+      text @view.t('sales.warranty_pdf.title', num: @sale.id, date: @sale.date.strftime('%d.%m.%Y')), size: 12, style: :bold
+    end
+
     # Contact info
-    move_down 45
+    move_up 28
     font_size 8 do
       bounding_box [400, cursor], width: 130 do
         text 'e-mail: info@itechstore.ru', align: :right
         text 'сайт: http://itechstore.ru', align: :right
         text 'Режим работы:', align: :right
-        text Setting.get_value(:warranty_schedule), align: :right
+        text @sale.department.schedule, align: :right
       end
     end
 
-    # Title
-    move_up 30
-    span 380, position: :right do
-      text @view.t('sales.warranty_pdf.title', num: @sale.id, date: @sale.date.strftime('%d.%m.%Y')), size: 12, style: :bold
-    end
-
     # Text
-    move_down 40
+    move_down 20
 
     text "Все обязательства Сервисного центра по обеспечению гарантийного обслуживания оборудования перечислены в настоящем гарантийном талоне.\nУстановка и настройка программного обеспечения не входит в гарантийные обязательства Сервисного центра и выполняется за отдельную плату.", indent_paragraphs: 30
 
@@ -79,7 +79,7 @@ class WarrantyPdf < Prawn::Document
     end
 
     move_down 10
-    text "Для получения гарантийного обслуживания необходимо предоставить неисправный товар и гарантийный талон по адресу: #{Setting.get_value(:city)}, #{Setting.get_value(:address)}, #{Setting.get_value(:contact_phone)}, сайт: http://itechstore.ru"
+    text "Для получения гарантийного обслуживания необходимо предоставить неисправный товар и гарантийный талон по адресу: г. #{@sale.department.city}, #{@sale.department.address}, Конт. тел.: #{@sale.department.contact_phone}, сайт: http://itechstore.ru"
 
     # Products
     table_data = [['№', 'Артикул', 'Наименование', 'Колич.', 'Характерист.', 'Срок Гарантии']]
@@ -103,16 +103,16 @@ class WarrantyPdf < Prawn::Document
     # Signs
     group do
       y_pos = cursor
-      span 320, position: :left do
+      span 290, position: :left do
         text 'М.П.'
         move_down 5
         text 'Подтверждаю получение укомплектованного и исправного изделия. С условиями предоставления гарантийных обязательств и правилами эксплуатации ознакомлен.'
       end
       move_cursor_to y_pos
-      span 200, position: :right do
-        text "Подпись продавца /#{@sale.user_fio_short}/______________", align: :right
+      span 220, position: :right do
+        text "Подпись продавца /#{@sale.user_fio_short}/_________________"#, align: :right
         move_down 30
-        text 'Подпись покупателя ___________________', align: :right
+        text 'Подпись покупателя ___________________'#, align: :right
       end
     end
 

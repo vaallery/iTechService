@@ -444,8 +444,9 @@ ru:
     errors:
       models:
         department:
-          role:
-            main_exists: 'Не может быть больше одного главного'
+          attributes:
+            role:
+              main_exists: 'Не может быть больше одного главного'
         device:
           not_paid: 'Не оплачен!'
         device_task:
