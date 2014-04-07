@@ -51,10 +51,9 @@ class Ability
         can :modify, [Device, Client]
         can :create_sale, Device
         can [:issue, :activate, :scan, :find], GiftCertificate
-        can :modify, Sale
+        can [:modify, :read, :reprint_check, :print_warranty], Sale
         can [:choose, :select], Product
         can [:post, :edit, :attach_gift_certificate, :return_check], Sale, status: 0
-        can [:create, :read, :reprint_check], Sale
         can :create, CashOperation
         can :create, QuickOrder
         can :create, Payment

@@ -18,7 +18,7 @@ class Client < ActiveRecord::Base
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :sale_items, through: :purchases
   belongs_to :client_characteristic
-  has_many :sales, inverse_of: :client
+  has_many :sales, inverse_of: :client, dependent: :nullify
 
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
   accepts_nested_attributes_for :client_characteristic, allow_destroy: true
