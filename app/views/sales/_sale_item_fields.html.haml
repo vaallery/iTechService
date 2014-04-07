@@ -11,7 +11,7 @@
     %strong= f.object.name
     .features= features_presentation f.object
     = f.hidden_field :item_id
-  %td.quantity.number= f.number_field :quantity, class: 'input-mini', type: 'number', min: 1, readonly: f.object.feature_accounting
-  %td.price.number= human_currency f.object.retail_price, false
+  %td.quantity.number= f.number_field :quantity, class: 'input-mini', type: 'number', min: 1, readonly: f.object.feature_accounting || f.object.is_service
+  %td.price.number= human_currency f.object.retail_price || f.object.price, false
   = f.hidden_field :discount, class: 'input-small sale_item_discount'
   %td.sum.number{class: sum_class}= human_currency f.object.sum, false
