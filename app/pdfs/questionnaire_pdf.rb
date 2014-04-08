@@ -80,7 +80,7 @@ class QuestionnairePdf < Prawn::Document
     case type
       when :usual then content = content.ljust(21) unless length
       when :phone then content = '+'+content.ljust(11)
-      when :date then content = content.strftime '%d.%m.%y'
+      when :date then content = content.present? ? content.strftime('%d.%m.%y') : '  .  .  '
     end
     content = content.chars.to_a
     move_down 10
