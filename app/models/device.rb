@@ -362,7 +362,7 @@ class Device < ActiveRecord::Base
   end
 
   def set_contact_phone
-    self.contact_phone ||= self.client.try(:contact_phone)
+    self.contact_phone = self.client.try(:contact_phone) || '-' if self.contact_phone.blank?
   end
 
 end
