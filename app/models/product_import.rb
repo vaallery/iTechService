@@ -22,6 +22,7 @@ class ProductImport
         imported_products.each &:save
         imported_count = imported_products.count
         import_log << ['success', "Imported #{imported_count.to_s + " product".pluralize(imported_count)}"]
+        remove_zero_items
         import_log << ['info', "Import finished at [#{Time.current.strftime(time_format)}]"]
         true
       else
@@ -98,16 +99,17 @@ class ProductImport
           products << product
           # Purchase Price
           purchase_price = product.prices.build price_type_id: PriceType.purchase.id, value: row[10], date: import_time
-          import_log << ['success', 'New purchase Product Price: ' + purchase_price.inspect]
+          import_log << ['success', 'New purchase Product Price: ' + purchase_price.to_f]
           # Retail Price
           retail_price = product.prices.build price_type_id: PriceType.retail.id, value: row[11], date: import_time
-          import_log << ['success', 'New retail Product Price: ' + retail_price.inspect]
+          import_log << ['success', 'New retail Product Price: ' + retail_price.to_f]
         end
       elsif (quantity = row[5].to_i) > 0 and product.present?
         # Item
         if row[0].length > 3
           features = row[0].split ', '
           if (item = Item.search(q: features[0]).first).present?
+            imported_item_ids << item.id
             import_log << ['info', 'Item already present: ' + features.inspect]
           else
             if features.length == 2
@@ -152,7 +154,7 @@ class ProductImport
           price = row[4]
           batch = item.batches.build quantity: 1, price: price
           batches << batch
-          import_log << ['info', 'Purchase price: ' + price.inspect]
+          import_log << ['info', 'Purchase price: ' + price.to_f]
           import_log << ['success', 'New Batch: ' + batch.inspect]
         end
       end
@@ -183,20 +185,24 @@ class ProductImport
     barcodes
   end
 
+  def remove_zero_items
+    store = Store.find store_id
+    if store.present? and imported_item_ids.present?
+      items = Item.where 'id NOT IN (?)', imported_item_ids
+      items.each do |item|
+        item.remove_from_store store
+        import_log << ['warning', "Item [#{item.code}] {#{item.name} | #{item.features.map(&:value).join(', ')}} set quantity to 0"]
+      end
+      import_log << ['warning', "Set zero quantity for #{items.count.to_s + " item".pluralize(items.count)}"]
+    end
+  end
+
   def imported_products
     @imported_products ||= load_imported_products
   end
 
-  def imported_items
-    @imported_items ||= []
-  end
-
-  def imported_store_items
-    @imported_store_items ||= []
-  end
-
-  def imported_product_prices
-    @imported_product_prices ||= []
+  def imported_item_ids
+    @imported_item_ids ||= []
   end
 
   def imported_batches
@@ -214,62 +220,6 @@ class ProductImport
   def import_time
     @import_time ||= Time.current
   end
-  #
-  #def imported_products
-  #  @imported_products ||= load_imported_products[:products]
-  #end
-  #
-  #def imported_items
-  #  @imported_items ||= load_imported_products[:items]
-  #end
-  #
-  #def imported_store_items
-  #  @imported_store_items ||= load_imported_products[:store_items]
-  #end
-  #
-  #def imported_product_prices
-  #  @imported_product_prices ||= load_imported_products[:product_prices]
-  #end
-
-  #def load_imported
-  #  sheet = open_spreadsheet
-  #  products = []
-  #  shop_cols = [4, 8]
-  #  shops = []
-  #  shop_cols.each do |col|
-  #    if (shop = Shop.find_by_name sheet.cell(4, col)).present?
-  #      shops << shop
-  #    end
-  #  end
-  #  (6..sheet.last_row-1).each do |i|
-  #    row = sheet.row i
-  #    import_log << ['inverse', "#{i} #{'-'*140}"]
-  #    import_log << ['info', row]
-  #    unless (code_1c = row[0][/\d+/]).blank?
-  #      if (product = Product.find_by_code_1c(code_1c)).present?
-  #        new_attributes = {}
-  #        new_attributes.merge! price: row[9].to_i unless product.is_fixed_price?
-  #        stock_items_attributes = {}
-  #        shops.each_with_index do |shop, s|
-  #          if (stock_item = StockItem.where(product_id: product.id, shop_id: shop.id)).present?
-  #            attributes = { id: stock_item.first.id, quantity: row[shop_cols[s]].to_i }
-  #          else
-  #            attributes = { quantity: row[shop_cols[s]].to_i, product_id: product.id, shop_id: shop.id }
-  #          end
-  #          stock_items_attributes.merge! s.to_s => attributes
-  #        end
-  #        new_attributes.merge! stock_items_attributes: stock_items_attributes
-  #        product.attributes = new_attributes
-  #        products << product
-  #        import_log << ['success', 'New attributes: ' + new_attributes.inspect]
-  #      else
-  #        import_log << ['important', "Product with code [#{code_1c}] not found!"]
-  #      end
-  #    end
-  #  end
-  #  import_log << ['inverse', '-'*160]
-  #  products
-  #end
 
   private
 

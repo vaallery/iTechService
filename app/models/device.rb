@@ -36,7 +36,7 @@ class Device < ActiveRecord::Base
   validates_presence_of :device_type, if: 'item.nil?'
   validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
-  validates :imei, length: {is: 15}, allow_nil: true unless 'imei.blank?'
+  validates :imei, length: {is: 15}, allow_blank: true
   validates_associated :device_tasks
   validate :presence_of_payment
   before_validation :generate_ticket_number

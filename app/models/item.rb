@@ -70,7 +70,7 @@ class Item < ActiveRecord::Base
     end
   end
 
-  def remove_from_store(store, amount)
+  def remove_from_store(store, amount=nil)
     if store.present? and store.is_a? Store
       if feature_accounting
         if store_item.present?
@@ -79,10 +79,14 @@ class Item < ActiveRecord::Base
           return false
         end
       else
-        if store_item(store).quantity < amount
-          return false
+        if amount.nil?
+          store_item(store).update_attribute :quantity, 0
         else
-          store_item(store).dec amount
+          if store_item(store).quantity < amount
+            return false
+          else
+            store_item(store).dec amount
+          end
         end
       end
     end
