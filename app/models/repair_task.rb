@@ -4,7 +4,7 @@ class RepairTask < ActiveRecord::Base
   belongs_to :store
   has_many :repair_parts, inverse_of: :repair_task
   accepts_nested_attributes_for :repair_parts
-  delegate :name, to: :repair_service, allow_nil: true
+  delegate :name, :repair_group, to: :repair_service, allow_nil: true
   delegate :price, to: :repair_service, prefix: true, allow_nil: true
   delegate :user, :device, :performer, to: :device_task, allow_nil: true
   attr_accessible :price, :repair_service_id, :device_task_id, :store_id, :repair_parts_attributes

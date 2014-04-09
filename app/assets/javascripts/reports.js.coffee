@@ -14,23 +14,24 @@ $(document).on 'click', '.report_task_details', ->
 $(document).on 'click', '#report_result .detailable>td', ->
   $row = $(this).closest('tr')
   depth = Number($row.data('depth'))
-  if $row.hasClass 'open'
-    $row.nextUntil('.detailable[data-depth='+depth+']').removeClass('open').hide()
-#    $row.next('.details').each ->
-#      this_depth = Number($(this).data('depth'))
-#      if this_depth < depth
-#        $(this).removeClass('open').hide()
-#      else
-#        break
-    $row.removeClass('open')
+  if depth? or depth is 0
+    if $row.hasClass 'open'
+      $row.nextAll('.details').each ->
+        this_depth = Number($(this).data('depth'))
+        if this_depth > depth
+          $(this).removeClass('open').hide()
+        else
+          return false
+      $row.removeClass('open')
+    else
+      $row.nextAll('.details').each ->
+        this_depth = Number($(this).data('depth'))
+        $(this).show() if this_depth == depth+1
+        if this_depth <= depth
+          return false
+      $row.addClass('open')
   else
-    $row.nextUntil('.detailable[data-depth='+depth+']').filter('.details[data-depth='+(depth+1)+']').show()
-#    $row.next('.details').each ->
-#      this_depth = Number($(this).data('depth'))
-#      $(this).show() if this_depth == depth+1
-#      if this_depth >= depth
-#        break
-    $row.addClass('open')
+    $row.nextUntil('.detailable').toggle()
 
 $(document).on 'click', '#report_result .toggle_depth', ->
   depth = Number $(this).data('depth')
