@@ -8,7 +8,7 @@ class RepairService < ActiveRecord::Base
   validates_associated :spare_parts
 
   def total_cost
-    spare_parts.sum(&:purchase_price)
+    spare_parts.sum {|sp| sp.purchase_price || 0}
   end
 
 end
