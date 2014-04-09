@@ -108,4 +108,8 @@ class Item < ActiveRecord::Base
     feature_accounting ? batches.last.try(:price) || product.purchase_price : product.purchase_price
   end
 
+  def features_s
+    features.collect(&:value).join(', ')
+  end
+
 end

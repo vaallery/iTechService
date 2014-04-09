@@ -3,7 +3,7 @@ class Report
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  NAMES = %w[device_types users done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs remnants]
+  NAMES = %w[device_types users done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs remnants sales]
 
   attr_accessor :name, :start_date, :end_date, :kind, :device_type, :store_id
 
@@ -194,14 +194,21 @@ class Report
     result[:sales] = []
     sales_sum = 0
     sales_count = 0
-    sales = Sale.sold_at(period).posted.selling
+    discounts_sum = 0
+    sales = Sale.sold_at(period).posted.order('date asc')
 
-    sales.each do |sale|
-
+    sales.selling.each do |sale|
+      sale.sale_items.each do |sale_item|
+        result[:sales] << {time: sale.date, product: sale_item.name, features: sale_item.features_s, quantity: sale_item.quantity, price: sale_item.price, sum: sale_item[:price]*sale_item[:quantity], discount: sale_item.discount, client_id: sale.client_id, client: sale.client_short_name, user_id: sale.user_id, user: sale.user_short_name}
+        sales_count = sales_count + sale_item.quantity
+        sales_sum = sales_sum + sale_item.price
+        discounts_sum = discounts_sum + sale_item.discount
+      end
     end
 
-    result[:sales_sum] = sales_sum
     result[:sales_count] = sales_count
+    result[:sales_sum] = sales_sum
+    result[:discounts_sum] = discounts_sum
     result
   end
 
@@ -336,7 +343,7 @@ class Report
         products = product_group.products.find(product_ids).collect do |product|
           product_store_items = store_items.where('products.id = ?', product.id)
           items = product_store_items.collect do |item|
-            features = item.feature_accounting ? item.features.collect(&:value).join(', ') : '---'
+            features = item.feature_accounting ? item.features_s : '---'
             {type: 'item', depth: product_group.depth+2, id: item.item_id, name: features, quantity: item.quantity, details: [], purchase_price: item.purchase_price.to_f, price: item.retail_price.to_f, sum: item.retail_price.to_f*item.quantity}
           end
           product_quantity = product_store_items.sum(:quantity)

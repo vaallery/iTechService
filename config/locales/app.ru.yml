@@ -1165,6 +1165,14 @@ ru:
       title: Принятые девайсы по сотрудникам
     sales:
       title: "Отчет по продажам"
+      time: "Время"
+      product: "Продукт"
+      quantity: "Количество"
+      price: "Цена"
+      sum: "Сумма"
+      discount: "Скидка"
+      client: "Покупатель"
+      user: "Продавец"
     supply:
       title: 'Отчёт водителя'
     few_remnants_goods:

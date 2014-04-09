@@ -20,6 +20,20 @@
     font-size: 20px;
     line-height: 22px;
   }
+  tbody>tr:hover{
+    td.warning{
+      background-color: #faf2cc;
+    }
+    td.error{
+      background-color: #ebcccc;
+    }
+  }
+  td.warning{
+    background-color: #fcf8e3;
+  }
+  td.error{
+    background-color: #f2dede;
+  }
   .detailable{
     font-weight: bold;
     cursor: pointer;
@@ -60,20 +74,6 @@
       width: 30%;
     }
   }
-  tbody>tr:hover{
-    td.warning{
-      background-color: #faf2cc;
-    }
-    td.error{
-      background-color: #ebcccc;
-    }
-  }
-  td.warning{
-    background-color: #fcf8e3;
-  }
-  td.error{
-    background-color: #f2dede;
-  }
   #repair_jobs_report{
     .name{
       width: 40%;
@@ -96,5 +96,11 @@
     .price, .sum{
       width: 160px;
     }
+  }
+  #sales_report{
+    .time{width: 60px;}
+    .quantity{width: 80px;}
+    .price, .sum, .discount {width: 100px;}
+    .client, .user {width: 150px;}
   }
 }

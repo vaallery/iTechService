@@ -3,7 +3,7 @@ class SaleItem < ActiveRecord::Base
   belongs_to :sale, inverse_of: :sale_items
   belongs_to :item, inverse_of: :sale_items
 
-  delegate :product, :product_category, :features, :name, :code, :quantity_in_store, :retail_price, :purchase_price, :feature_accounting, :store_item, :store_items, :is_service, :request_price, :warranty_term, to: :item, allow_nil: true
+  delegate :product, :product_category, :features, :name, :code, :quantity_in_store, :retail_price, :purchase_price, :feature_accounting, :store_item, :store_items, :is_service, :request_price, :warranty_term, :features_s, to: :item, allow_nil: true
   delegate :store, :client, :date, to: :sale, allow_nil: true
 
   attr_accessible :sale_id, :item_id, :price, :quantity, :discount
