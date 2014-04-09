@@ -1,6 +1,5 @@
 %table#payments_report.table.table-bordered.table-hover
-  %caption
-    %h4= report_title @report
+  %caption= report_title @report
   %thead
     %tr
       %th.center= Payment.human_attribute_name :kind

@@ -13,8 +13,7 @@
     %li.active= icon_tag(:home)
 
 %table#device_types_report.table.table-bordered.table-hover
-  %caption
-    %h4= report_title @report
+  %caption= report_title @report
   %thead
     %tr
       %th.center{rowspan: 2}= Device.human_attribute_name :device_type

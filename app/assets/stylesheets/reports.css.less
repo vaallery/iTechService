@@ -2,4 +2,99 @@
   #report_name{
     width: 400px;
   }
+  #report_store_id{
+    display: none;
+  }
+}
+
+#report_result{
+  th{
+    text-align: center;
+  }
+
+  tfoot{
+    font-weight: bold;
+  }
+  caption{
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 22px;
+  }
+  .detailable{
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .details{
+    display: none;
+    &[data-depth='1'] td.name{
+      padding-left: 28px;
+    }
+    &[data-depth='2'] td.name{
+      padding-left: 48px;
+    }
+    &[data-depth='3'] td.name{
+      padding-left: 68px;
+    }
+    &[data-depth='4'] td.name{
+      padding-left: 88px;
+    }
+    &[data-depth='5'] td.name{
+      padding-left: 98px;
+    }
+  }
+
+  #users_report{
+    .user, .device{
+      width: 70%;
+    }
+    .movement{
+      width: 30%;
+    }
+  }
+
+  #tasks_durations_report{
+    .task{
+      width: 70%;
+    }
+    .duration{
+      width: 30%;
+    }
+  }
+  tbody>tr:hover{
+    td.warning{
+      background-color: #faf2cc;
+    }
+    td.error{
+      background-color: #ebcccc;
+    }
+  }
+  td.warning{
+    background-color: #fcf8e3;
+  }
+  td.error{
+    background-color: #f2dede;
+  }
+  #repair_jobs_report{
+    .name{
+      width: 40%;
+    }
+    .job_price, .price {
+      width: 30%;
+    }
+    .job_price small{
+      display: block;
+    }
+  }
+  #remnants_report{
+    tr.product>td{background-color:#d9edf7;}
+    tr.item>td{background-color:#dff0d8;}
+    tr.product:hover>td{background-color:#c4e3f3;}
+    tr.item:hover>td{background-color:#d0e9c6;}
+    .quantity{
+      width: 60px;
+    }
+    .price, .sum{
+      width: 160px;
+    }
+  }
 }

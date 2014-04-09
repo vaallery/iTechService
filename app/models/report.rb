@@ -5,7 +5,7 @@ class Report
 
   NAMES = %w[device_types users done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs remnants]
 
-  attr_accessor :name, :start_date, :end_date, :kind, :device_type
+  attr_accessor :name, :start_date, :end_date, :kind, :device_type, :store_id
 
   #alias_attribute :few_remnants_goods, :few_remnants
   #alias_attribute :few_remnants_spare_parts, :few_remnants
@@ -192,11 +192,16 @@ class Report
 
   def sales
     result[:sales] = []
-    #sales_sum = 0
-    #sales_count = 0
-    #sales = Sale.selling.posted.sold_at(period)
-    #result[:sales_sum] = sales_sum
-    #result[:sales_count] = sales_count
+    sales_sum = 0
+    sales_count = 0
+    sales = Sale.sold_at(period).posted.selling
+
+    sales.each do |sale|
+
+    end
+
+    result[:sales_sum] = sales_sum
+    result[:sales_count] = sales_count
     result
   end
 
@@ -314,9 +319,35 @@ class Report
   end
 
   def remnants
-    result[:remnants] = []
+    result[:data] = []
+
+    store = Store.find(store_id)
+    store_items = StoreItem.includes(item: {product: :product_group}).in_store(store_id).available
+    product_groups = ProductGroup.except_services.arrange
+    result[:data] = nested_product_groups_remnants product_groups, store_items, store
 
     result
+  end
+
+  def nested_product_groups_remnants(product_groups, store_items, store)
+    product_groups.collect do |product_group, sub_product_groups|
+      group_store_items = store_items.where('product_groups.id = ?', product_group.id)
+      if (product_ids = group_store_items.collect{|si|si.product.id}).present?
+        products = product_group.products.find(product_ids).collect do |product|
+          product_store_items = store_items.where('products.id = ?', product.id)
+          items = product_store_items.collect do |item|
+            features = item.feature_accounting ? item.features.collect(&:value).join(', ') : '---'
+            {type: 'item', depth: product_group.depth+2, id: item.item_id, name: features, quantity: item.quantity, details: [], purchase_price: item.purchase_price.to_f, price: item.retail_price.to_f, sum: item.retail_price.to_f*item.quantity}
+          end
+          product_quantity = product_store_items.sum(:quantity)
+          {type: 'product', depth: product_group.depth+1, id: product.id, name: "#{product.code} | #{product.name}", quantity: product_quantity, details: items, purchase_price: product.purchase_price.to_f, price: product.retail_price.to_f, sum: product.retail_price.to_f*product_quantity}
+        end
+      else
+        products = []
+      end
+      group_quantity = store_items.where(product_groups: {id: product_group.subtree_ids}).sum(:quantity)
+      {type: 'group', depth: product_group.depth, id: product_group.id, name: "#{product_group.code} | #{product_group.name}", quantity: group_quantity, details: nested_product_groups_remnants(sub_product_groups, store_items, store) + products}
+    end
   end
 
 end

@@ -1180,6 +1180,11 @@ ru:
       sum: "Сумма наценки работ"
     remnants:
       title: 'Отчёт по остаткам'
+      name: 'Номенклатура'
+      quantity: 'Остаток'
+      purchase_price: 'Закупочная цена'
+      price: 'Цена'
+      sum: 'Розн. сумма остатка'
 
   revaluation_acts:
     created: 'Акт Переоценки создан'

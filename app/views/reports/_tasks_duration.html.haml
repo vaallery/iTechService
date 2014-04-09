@@ -1,6 +1,5 @@
 %table#tasks_durations_report.table.table-bordered.table-hover
-  %caption
-    %h4= report_title @report
+  %caption= report_title @report
   %thead
     %tr
       %th= "#{t('activerecord.models.task')} / #{t('activerecord.models.device')}"

@@ -7,7 +7,10 @@
         = '_'
         = f.text_field :end_date, class: 'datepicker input-small', data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
         = f.select :name, reports_collection_for_select, prompt: t('reports.choose')
+        = f.select :store_id, Store.all.map{|s|[s.name, s.id]}, prompt: t('activerecord.models.store')
 
+#report_errors
+#report_result
 - if @report.errors.present?
   #report_errors
     - @report.errors.full_messages.each do |message|
