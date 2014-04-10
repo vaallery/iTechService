@@ -1686,6 +1686,38 @@ select#product_product_category_id{width:323px}
 #repair_services_table td.name>.label{font-size:14px;line-height:16px;font-weight:lighter;white-space:normal}
 #repair_services_table .price{width:80px}
 #repair_services_table .client_info{width:40%}
+#report_form #report_name{width:400px}
+#report_form #report_store_id{display:none}
+#report_result th{text-align:center}
+#report_result tfoot{font-weight:bold}
+#report_result caption{font-weight:bold;font-size:20px;line-height:22px}
+#report_result tbody>tr:hover td.warning{background-color:#faf2cc}
+#report_result tbody>tr:hover td.error{background-color:#ebcccc}
+#report_result td.warning{background-color:#fcf8e3}
+#report_result td.error{background-color:#f2dede}
+#report_result .detailable{font-weight:bold;cursor:pointer}
+#report_result .details{display:none}#report_result .details[data-depth='1'] td.name{padding-left:28px}
+#report_result .details[data-depth='2'] td.name{padding-left:48px}
+#report_result .details[data-depth='3'] td.name{padding-left:68px}
+#report_result .details[data-depth='4'] td.name{padding-left:88px}
+#report_result .details[data-depth='5'] td.name{padding-left:98px}
+#report_result #users_report .user,#report_result #users_report .device{width:70%}
+#report_result #users_report .movement{width:30%}
+#report_result #tasks_durations_report .task{width:70%}
+#report_result #tasks_durations_report .duration{width:30%}
+#report_result #repair_jobs_report .name{width:40%}
+#report_result #repair_jobs_report .job_price,#report_result #repair_jobs_report .price{width:30%}
+#report_result #repair_jobs_report .job_price small{display:block}
+#report_result #remnants_report tr.product>td{background-color:#d9edf7}
+#report_result #remnants_report tr.item>td{background-color:#dff0d8}
+#report_result #remnants_report tr.product:hover>td{background-color:#c4e3f3}
+#report_result #remnants_report tr.item:hover>td{background-color:#d0e9c6}
+#report_result #remnants_report .quantity{width:60px}
+#report_result #remnants_report .price,#report_result #remnants_report .sum{width:160px}
+#report_result #sales_report .time{width:60px}
+#report_result #sales_report .quantity{width:80px}
+#report_result #sales_report .price,#report_result #sales_report .sum,#report_result #sales_report .discount{width:100px}
+#report_result #sales_report .client,#report_result #sales_report .user{width:150px}
 table#revaluations .product{width:336px}
 table#revaluations .price,table#revaluations .actual_price,table#revaluations .purchase_price{width:102px}
 table#revaluations .code{width:60px}
