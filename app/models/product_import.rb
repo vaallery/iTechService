@@ -99,10 +99,10 @@ class ProductImport
           products << product
           # Purchase Price
           purchase_price = product.prices.build price_type_id: PriceType.purchase.id, value: row[10], date: import_time
-          import_log << ['success', 'New purchase Product Price: ' + purchase_price.to_f]
+          import_log << ['success', 'New purchase Product Price: ' + purchase_price.value.to_f]
           # Retail Price
           retail_price = product.prices.build price_type_id: PriceType.retail.id, value: row[11], date: import_time
-          import_log << ['success', 'New retail Product Price: ' + retail_price.to_f]
+          import_log << ['success', 'New retail Product Price: ' + retail_price.value.to_f]
         end
       elsif (quantity = row[5].to_i) > 0 and product.present?
         # Item
