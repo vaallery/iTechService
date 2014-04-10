@@ -6,6 +6,7 @@ class ProductGroup < ActiveRecord::Base
   scope :goods, joins(:product_category).where(product_categories: {kind: %w[equipment accessory]})
   scope :except_spare_parts, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector service]})
   scope :except_spare_parts_and_services, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector]})
+  scope :except_services, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector spare_part]})
   scope :spare_parts, joins(:product_category).where(product_categories: {kind: 'spare_part'})
   scope :for_purchase, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector spare_part]})
 

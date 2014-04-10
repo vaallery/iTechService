@@ -1,6 +1,5 @@
 %table#users_report.table.table-bordered.table-hover
-  %caption
-    %h4= t 'reports.users_report'
+  %caption= report_title @report
   %thead
     %tr
       %th.center{rowspan: 2}= Device.human_attribute_name :user
@@ -10,7 +9,7 @@
       %th.center= t('reports.received_done')
       %th.center= t('reports.received_archived')
   %tbody
-    - @report[:users].each do |user|
+    - @report.result[:users].each do |user|
       %tr.detailable
         %td= user[:name]
         %td= user[:qty]
@@ -28,6 +27,6 @@
   %tfoot
     %tr
       %td= t('reports.total')
-      %td= @report[:devices_received_count]
-      %td= @report[:devices_received_done_count]
-      %td= @report[:devices_received_archived_count]
+      %td= @report.result[:devices_received_count]
+      %td= @report.result[:devices_received_done_count]
+      %td= @report.result[:devices_received_archived_count]

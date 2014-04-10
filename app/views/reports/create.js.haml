@@ -1,0 +1,7 @@
+- if @report.errors.present?
+  - @report.errors.full_messages.each do |message|
+    :plain
+      $('#report_errors').append("#{j(content_tag(:p, message))}");
+- else
+  :plain
+    $('#report_result').html("#{j(render("reports/#{@report.name}"))}");

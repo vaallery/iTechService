@@ -5,7 +5,7 @@
     = link_to icon_tag('file-alt') + t('dashboard.new_order'), new_order_path, class: 'btn btn-success btn-large' if can? :create, Order
     = link_to icon_tag(:user) + t('dashboard.new_user'), new_user_path, class: 'btn btn-success btn-large' if can? :create, User
     = link_to glyph('file-alt') + t('supply_reports.new.title'), new_supply_report_path, class: 'btn btn-success btn-large' if current_user.driver?
-    = link_to icon_tag('bar-chart') + t('dashboard.reports'), reports_path, class: 'btn btn-link btn-medium btn-large pull-right' if current_user.can_view_reports?
+    = link_to icon_tag('bar-chart') + t('reports.title'), reports_path, class: 'btn btn-link btn-medium btn-large pull-right' if current_user.can_view_reports?
 
 %h4
   %ul#dashboard_navigation.nav.nav-pills

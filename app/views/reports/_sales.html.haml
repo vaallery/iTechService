@@ -1,0 +1,34 @@
+%table#sales_report.table.table-bordered.table-hover
+  %caption= report_title @report
+  %thead
+    %tr
+      %th.center= t '.time'
+      %th.center= t '.product'
+      %th.center= t '.quantity'
+      %th.center= t '.price'
+      %th.center= t '.sum'
+      %th.center= t '.discount'
+      %th.center= t '.client'
+      %th.center= t '.user'
+  %tbody
+    - @report.result[:sales].each do |sale|
+      %tr
+        %td.time= human_datetime sale[:time]
+        %td.product
+          = sale[:product]
+          %br
+          = sale[:features]
+        %td.quantity.number= sale[:quantity]
+        %td.price.number= human_currency sale[:price], false
+        %td.sum.number= human_currency sale[:sum], false
+        %td.discount.number= human_currency sale[:discount], false
+        %td.client= sale[:client_id].present? ? link_to(sale[:client], client_path(sale[:client_id]), target: '_blank') : '-'
+        %td.user= link_to sale[:user], user_path(sale[:user_id]), target: '_blank'
+  %tfoot
+    %tr
+      %td{colspan: 2}= t 'total'
+      %td.number= @report.result[:sales_count]
+      %td
+      %td.number= human_currency @report.result[:sales_sum], false
+      %td.number= human_currency @report.result[:discounts_sum], false
+      %td{colspan: 2}

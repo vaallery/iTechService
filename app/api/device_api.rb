@@ -1,6 +1,6 @@
 class DeviceApi < Grape::API
   version 'v1', using: :path
-  before { authenticate! }
+  before {authenticate!}
 
   desc 'Show device'
   get 'devices/:id', requirements: { id: /[0-9]*/ } do
@@ -41,6 +41,16 @@ class DeviceApi < Grape::API
       end
     else
       error!({error: I18n.t('devices.errors.no_action')}, 403)
+    end
+  end
+
+  desc 'Check device status'
+  get 'check_device_status/:ticket_number', requirements: {ticket_number: /[0-9]+/} do
+    authorize! :read, Device
+    if (device = Device.find_by_ticket_number(params[:ticket_number])).present?
+      device.status_info
+    else
+      {status: 'not_found'}
     end
   end
 end

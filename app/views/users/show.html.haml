@@ -142,6 +142,9 @@
         %dd= "#{@user.current_sign_in_ip} at #{l(@user.current_sign_in_at, format: :long_d)}" unless @user.current_sign_in_at.blank?
         %dt= t 'last_sign_in'
         %dd= "#{@user.last_sign_in_ip} at #{l(@user.last_sign_in_at, format: :long_d)}" unless @user.last_sign_in_at.blank?
+      - if current_user.developer?
+        %dt Authentication Token
+        %dd= @user.authentication_token
 
 - if can? :manage, User
   .form-actions

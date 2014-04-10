@@ -50,4 +50,5 @@ class API < Grape::API
   mount ProductApi
   mount QuickOrderApi
   mount RepairApi
+  mount OrderApi
 end
