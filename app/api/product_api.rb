@@ -27,6 +27,10 @@ class ProductApi < Grape::API
         product_groups = product_group.children
         products = product_group.products
         present :remnants, products, with: Entities::ProductEntity, store: store
+      elsif params[:product_q].present?
+        products = Product.search params[:q]
+        product_groups = ProductGroup.where id: products.collect(&:product_group_id)
+        present :remnants, products, with: Entities::ProductEntity, store: store, show_group: true
       else
         product_groups = ProductGroup.roots.search(user_role: current_user.role)
       end
