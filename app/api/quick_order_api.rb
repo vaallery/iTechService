@@ -21,7 +21,7 @@ class QuickOrderApi < Grape::API
       PrinterTools.print_file filepath, :quick_order
       present quick_order
     else
-      error!({error: quick_order.errors}, 422)
+      error!({error: quick_order.errors.full_messages.join('. ')}, 422)
     end
   end
 
