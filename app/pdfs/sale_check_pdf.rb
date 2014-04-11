@@ -101,7 +101,7 @@ class SaleCheckPdf < Prawn::Document
     line_height = @font_height+2
     items_lines_count = items_strings.sum{|str|str.length/25}
     payments_count = @sale.payments.count
-    200 + items_lines_count*line_height + payments_count*line_height
+    210 + items_lines_count*line_height + payments_count*line_height
   end
 
 end

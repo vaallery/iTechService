@@ -93,11 +93,13 @@ class SalesController < ApplicationController
     @sale = Sale.find params[:id]
     respond_to do |format|
       if @sale.post
-        pdf = SaleCheckPdf.new @sale, view_context, params[:copy].present?
-        filename = "sale_check_#{@sale.id}.pdf"
-        filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
-        pdf.render_file filepath
-        PrinterTools.print_file filepath, :sale_check
+        if @sale.calculation_amount > 0
+          pdf = SaleCheckPdf.new @sale, view_context, params[:copy].present?
+          filename = "sale_check_#{@sale.id}.pdf"
+          filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
+          pdf.render_file filepath
+          PrinterTools.print_file filepath, :sale_check, pdf.page_height_mm
+        end
         format.html { redirect_to new_sale_path, notice: t('documents.posted') }
       else
         load_top_salables
@@ -117,14 +119,16 @@ class SalesController < ApplicationController
 
   def print_check
     @sale = Sale.find params[:id]
-    if can?(:reprint_check, @sale)
-      pdf = SaleCheckPdf.new @sale, view_context, params[:copy].present?
-    else
-      pdf = SaleCheckPdf.new @sale, view_context, true
+    if @sale.calculation_amount > 0
+      if can?(:reprint_check, @sale)
+        pdf = SaleCheckPdf.new @sale, view_context, params[:copy].present?
+      else
+        pdf = SaleCheckPdf.new @sale, view_context, true
+      end
+      filepath = "#{Rails.root.to_s}/tmp/pdf/sale_check_#{@sale.id}.pdf"
+      pdf.render_file filepath
+      PrinterTools.print_file filepath, :sale_check, pdf.page_height_mm
     end
-    filepath = "#{Rails.root.to_s}/tmp/pdf/sale_check_#{@sale.id}.pdf"
-    pdf.render_file filepath
-    PrinterTools.print_file filepath, :sale_check, pdf.page_height_mm
     respond_to do |format|
       format.html { redirect_to new_sale_path }
       format.js { render nothing: true }
