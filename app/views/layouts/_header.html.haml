@@ -17,6 +17,11 @@
           = menu_item t('quick_orders.link'), quick_orders_path
         - elsif can? :create, QuickOrder
           = menu_item t('quick_orders.new.title'), new_quick_order_path
+      = drop_down t('navbar.cash_drawer') do
+        = menu_item t('sales.new.title'), new_sale_path if can? :create, Sale
+        = drop_down_divider
+        = menu_item t('cash_operations.cash_in'), new_cash_operation_path(cash_operation: {is_out: false}), remote: true if can? :create, CashOperation
+        = menu_item t('cash_operations.cash_out'), new_cash_operation_path(cash_operation: {is_out: true}), remote: true if can? :create, CashOperation
       = menu_item t('clients.link', default: 'Clients'), clients_path
       = menu_item t('products.index.title'), products_path if can? :read, Product
       = menu_item t('orders.link', default: 'Orders'), orders_path if can? :read, Order
@@ -25,12 +30,6 @@
         = menu_item t('prices.link', default: 'Prices'), prices_path
       - else
         = header_link_to_view_prices
-
-      = drop_down t('navbar.cash_drawer') do
-        = menu_item t('sales.new.title'), new_sale_path if can? :create, Sale
-        = drop_down_divider
-        = menu_item t('cash_operations.cash_in'), new_cash_operation_path(cash_operation: {is_out: false}), remote: true if can? :create, CashOperation
-        = menu_item t('cash_operations.cash_out'), new_cash_operation_path(cash_operation: {is_out: true}), remote: true if can? :create, CashOperation
 
       = drop_down t('dashboard.misc') do
         = menu_item t('purchases.link'), purchases_path if can? :manage, Purchase
