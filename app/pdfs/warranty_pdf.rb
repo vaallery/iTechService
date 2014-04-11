@@ -16,10 +16,11 @@ class WarrantyPdf < Prawn::Document
     font_size @font_height
 
     # Organization info
+    move_down 10
     text [@view.t('sales.warranty_pdf.org_name'), "г. #{@sale.department.city}", @sale.department.address, "Конт. тел.: #{@sale.department.contact_phone}"].join(', '), align: :right, size: 8
 
     # Logo
-    move_down 20
+    move_down 15
     stroke do
       line_width 2
       horizontal_line 0, 530
@@ -98,7 +99,7 @@ class WarrantyPdf < Prawn::Document
     table table_data, width: 520, header: true do
       cells.style align: :center
     end
-    move_down 10
+    move_down 25
 
     # Signs
     group do
@@ -110,9 +111,10 @@ class WarrantyPdf < Prawn::Document
       end
       move_cursor_to y_pos
       span 220, position: :right do
-        text "Подпись продавца /#{@sale.user_fio_short}/_________________"#, align: :right
+        # text "Подпись продавца /#{@sale.user_fio_short}/_________________"#, align: :right
+        text "Подпись продавца ___________________________________"#, align: :right
         move_down 30
-        text 'Подпись покупателя ___________________'#, align: :right
+        text 'Подпись покупателя _________________________________'#, align: :right
       end
     end
 

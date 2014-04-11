@@ -58,7 +58,7 @@
                 %li= device_task.name
           %td= device.location_name
 
-#purchases
+#client_purchases
   %table.table.table-bordered.table-condensed.table-hover
     %caption
       %h4= t 'users.purchased_devices'
@@ -71,7 +71,7 @@
         %th= SaleItem.human_attribute_name :sum
     %tbody
       - @client.sale_items.each do |sale_item|
-        %tr
+        %tr{class: sale_item.is_return ? 'error' : ''}
           %td= human_datetime sale_item.date
           %td
             = sale_item.name

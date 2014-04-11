@@ -79,7 +79,7 @@ class QuestionnairePdf < Prawn::Document
   def draw_field(name, content, type=:usual, length=nil)
     case type
       when :usual then content = content.ljust(21) unless length
-      when :phone then content = '+'+content.ljust(11)
+      when :phone then content = content.ljust(11)
       when :date then content = content.present? ? content.strftime('%d.%m.%y') : '  .  .  '
     end
     content = content.chars.to_a
