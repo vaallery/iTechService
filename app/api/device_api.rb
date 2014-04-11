@@ -33,7 +33,7 @@ class DeviceApi < Grape::API
         if device.update_attributes location_id: Location.send(location+'_id')
           present device
         else
-          error!({error: device.errors.full_messages}, 403)
+          error!({error: device.errors.full_messages.join('. ')}, 403)
           logger.info device.errors
         end
       else
