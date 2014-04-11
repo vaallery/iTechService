@@ -5,29 +5,19 @@ class ProductImportsController < ApplicationController
   end
 
   def create
-    @product_import = ProductImport.new params[:product_import]
-    if @product_import.save
-      ImportMailer.product_import_log(@product_import).deliver
-      render 'new', notice: 'Products imported.'
-    else
-      render 'new'
-    end
+    Delayed::Job.enqueue ProductImportJob.new params_for_job
+    redirect_to new_product_import_path, notice: 'Products import performed...'
   end
 
-  def create1
-    #@product_import = ProductImport.new params[:product_import]
-    Delayed::Job.enqueue ProductImportJob.new(params[:product_import])
-    render 'new', notice: 'Products importing...'
-    #if @product_import.save
-    #  if Rails.env.production?
-    #    ImportMailer.delay.product_import_log(@product_import)
-    #  else
-    #    ImportMailer.product_import_log(@product_import).deliver
-    #  end
-    #  render 'new', notice: 'Products imported.'
-    #else
-    #  render 'new'
-    #end
+  private
+
+  def params_for_job
+    if (import_params = params[:product_import]).present?
+      [:file, :prices_file, :barcodes_file].each { |f| import_params[f] = FileLoader.rename_uploaded_file(import_params[f]) if import_params[f].present? }
+      import_params
+    else
+      {}
+    end
   end
 
 end
