@@ -31,7 +31,7 @@ class SalesController < ApplicationController
 
   def new
     @sale = Sale.new params[:sale]
-    @top_salables = TopSalable.roots.ordered
+    load_top_salables
     respond_to do |format|
       format.html { render 'form' }
     end
@@ -39,7 +39,7 @@ class SalesController < ApplicationController
 
   def edit
     @sale = Sale.find params[:id]
-    @top_salables = TopSalable.roots.ordered
+    load_top_salables
     if can? :edit, @sale
       respond_to do |format|
         format.html { render 'form' }
@@ -57,6 +57,7 @@ class SalesController < ApplicationController
         format.html { redirect_back_or root_path, notice: t('sales.created') }
         format.js { render 'save' }
       else
+        load_top_salables
         format.html { render 'form' }
         format.js { flash.now[:error] = @sale.errors.full_messages; render 'save' }
       end
@@ -70,6 +71,7 @@ class SalesController < ApplicationController
         format.html { redirect_back_or root_path, notice: t('sales.updated') }
         format.js { render 'save' }
       else
+        load_top_salables
         format.html { render 'form' }
         format.js do
           flash.now[:error] = @sale.errors.full_messages
@@ -98,6 +100,7 @@ class SalesController < ApplicationController
         PrinterTools.print_file filepath, :sale_check
         format.html { redirect_to new_sale_path, notice: t('documents.posted') }
       else
+        load_top_salables
         flash.alert = @sale.errors.full_messages
         format.html { render 'form', error: t('documents.not_posted') }
       end
@@ -160,6 +163,10 @@ class SalesController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
+  end
+
+  def load_top_salables
+    @top_salables = TopSalable.roots.ordered
   end
 
 end
