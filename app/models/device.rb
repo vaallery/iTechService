@@ -32,7 +32,8 @@ class Device < ActiveRecord::Base
   delegate :department, to: :user
 
   attr_accessible :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone
-  validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :contact_phone
+  validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at
+  validates_presence_of :contact_phone, on: :create
   validates_presence_of :device_type, if: 'item.nil?'
   validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
