@@ -76,6 +76,7 @@ class ProductImport
       import_log << ['inverse', "#{i} #{'-'*140}"]
       import_log << ['info', row]
       if (code = row[0][/\d+(?=.\|)/]).present?
+        products << product if product.present?
         name = row[0][/(?<=\|\s).+(?=,)/]
         if row[10].blank?
           parent_id = product_group.id if product_group.present? and product_group.is_root?
@@ -96,7 +97,7 @@ class ProductImport
             product = Product.new product_attributes
             import_log << ['success', 'New product: ' + product_attributes.inspect]
           end
-          products << product
+          # products << product
           # Purchase Price
           purchase_price = product.prices.build price_type_id: PriceType.purchase.id, value: row[10], date: import_time
           import_log << ['success', 'New purchase Product Price: ' + purchase_price.value.to_s]
@@ -120,7 +121,8 @@ class ProductImport
             import_log << ['success', 'New item: ' + features.inspect]
           end
         else
-          unless (item = product.items.first).present?
+          item = product.items.first
+          unless item.present?
             item = product.items.build
             import_log << ['success', 'New item: ' + item.inspect]
           end
@@ -129,7 +131,8 @@ class ProductImport
         # Store Items
         store_item_attributes = {store_id: store.id, quantity: quantity}
         if (store_item = (item.feature_accounting) ? item.store_items.first : item.store_items.in_store(store).first).present?
-          store_item.attributes = store_item_attributes
+          # store_item.attributes = store_item_attributes
+          store_item.update_attributes store_item_attributes
           import_log << ['success', 'Update Store Item: ' + store_item.inspect]
         else
           store_item = item.store_items.build store_item_attributes
@@ -137,6 +140,7 @@ class ProductImport
         end
       end
     end
+    products << product if product.present?
     import_log << ['inverse', '-'*160]
     products
   end
