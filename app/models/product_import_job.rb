@@ -6,12 +6,6 @@ class ProductImportJob < Struct.new(:params)
     "Products import {#{params.inspect}}"
   end
 
-  # def perform1
-  #   product_import = ProductImport.new params
-  #   product_import.save
-  #   ImportMailer.product_import_log(product_import).deliver
-  # end
-
   def perform
     if store.present?
       load_remnants if file.present?
@@ -38,18 +32,6 @@ class ProductImportJob < Struct.new(:params)
   def store
     @store ||= params[:store_id].present? ? Store.find(params[:store_id]) : nil
   end
-  # #
-  # # def import_log
-  # #   @import_logs ||= []
-  # # end
-  # #
-  # # def import_time
-  # #   @import_time ||= Time.current
-  # # end
-  #
-  # def imported_item_ids
-  #   @imported_item_ids ||= []
-  # end
 
   private
 
