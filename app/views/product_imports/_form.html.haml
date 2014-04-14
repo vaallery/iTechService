@@ -1,6 +1,6 @@
 .page-header
   %h1= t '.title'
-= form_for @product_import, remote: true, html: {class: 'form-horizontal'} do |f|
+= form_for @product_import, remote: false, html: {class: 'form-horizontal'} do |f|
   - if @product_import.errors.any?
     #error_explanation
       %ul

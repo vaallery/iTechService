@@ -1543,7 +1543,7 @@ ru:
     deletion:
       subject: "Айс. Удаление объекта."
     product_import_log:
-      subject: "Product import log %{time}"
+      subject: "%{type} import log %{time}"
 
   errors:
     nothing_found: Ничего не найдено
