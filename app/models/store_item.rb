@@ -58,7 +58,7 @@ class StoreItem < ActiveRecord::Base
   private
 
   def warn_of_low_remnants
-    if (warning_quantity = product.warning_quantity_for_store(store)).present?
+    if product.present? and (warning_quantity = product.warning_quantity_for_store(store)).present?
       if product.quantity_in_store(store).pred <= warning_quantity
         RemnantsMailer.delay.warning(product, store)
       end

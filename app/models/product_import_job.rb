@@ -19,6 +19,7 @@ class ProductImportJob < Struct.new(:params)
       load_barcodes if barcodes_file.present?
     else
       import_log << ['error', 'Store is not defined!!!']
+      ImportMailer.product_import_log(import_log, Time.current, :remnants).deliver
     end
   end
 
@@ -57,7 +58,7 @@ class ProductImportJob < Struct.new(:params)
     import_log = []
     begin
       sheet = FileLoader.open_spreadsheet file
-      import_log << ['info', "Import started at [#{import_time.strftime(TIME_FORMAT)}]"]
+      import_log << ['info', "Import started at [#{import_time.strftime(TIME_FORMAT)}]. Store: #{store.name} [#{store.id}]"]
       product_group = parent_id = product = nil
       imported_item_ids = []
       (6..sheet.last_row-1).each do |i|
@@ -180,7 +181,7 @@ class ProductImportJob < Struct.new(:params)
     import_log = []
     begin
       sheet = FileLoader.open_spreadsheet prices_file
-      import_log << ['info', "Import started at [#{import_time.strftime(TIME_FORMAT)}]"]
+      import_log << ['info', "Import started at [#{import_time.strftime(TIME_FORMAT)}]. Store: #{store.name} [#{store.id}]"]
       batches_count = 0
       (9..sheet.last_row-1).each do |i|
         row = sheet.row i
@@ -214,7 +215,7 @@ class ProductImportJob < Struct.new(:params)
     import_log = []
     begin
       sheet = FileLoader.open_spreadsheet barcodes_file
-      import_log << ['info', "Import started at [#{import_time.strftime(TIME_FORMAT)}]"]
+      import_log << ['info', "Import started at [#{import_time.strftime(TIME_FORMAT)}]. Store: #{store.name} [#{store.id}]"]
       barcodes_count = 0
       (2..sheet.last_row).each do |i|
         row = sheet.row i
