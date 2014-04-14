@@ -28,7 +28,7 @@ class ProductApi < Grape::API
         products = product_group.products
         present :remnants, products, with: Entities::ProductEntity, store: store
       elsif params[:product_q].present?
-        products = Product.search params[:q]
+        products = Product.search params
         product_groups = ProductGroup.where id: products.collect(&:product_group_id)
         present :remnants, products, with: Entities::ProductEntity, store: store, show_group: true
       else
