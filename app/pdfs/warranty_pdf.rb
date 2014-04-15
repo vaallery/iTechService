@@ -80,7 +80,7 @@ class WarrantyPdf < Prawn::Document
     end
 
     move_down 10
-    text "Для получения гарантийного обслуживания необходимо предоставить неисправный товар и гарантийный талон по адресу: г. #{@sale.department.city}, #{@sale.department.address}, Конт. тел.: #{@sale.department.contact_phone}, сайт: http://itechstore.ru"
+    text "Для получения гарантийного обслуживания необходимо предоставить неисправный товар и гарантийный талон по адресу: #{Setting.get_value(:address_for_check)}, #{Setting.get_value(:contact_phone)}, сайт: http://itechstore.ru"
 
     # Products
     table_data = [['№', 'Артикул', 'Наименование', 'Колич.', 'Характерист.', 'Срок Гарантии']]

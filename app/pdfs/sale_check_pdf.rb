@@ -18,8 +18,10 @@ class SaleCheckPdf < Prawn::Document
 
     image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 30, height: 30, at: [0, cursor]
     move_down @font_height/2
-    text Setting.get_value(:address), align: :center
-    text view.t('sales.check_pdf.greeting'), align: :center
+    span 150, position: :center do
+      text Setting.get_value(:address_for_check), align: :center
+      text view.t('sales.check_pdf.greeting'), align: :center
+    end
     move_down @font_height
     stroke { horizontal_line 0, 205 }
     move_down 5

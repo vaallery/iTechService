@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140331095140) do
+ActiveRecord::Schema.define(:version => 20140402001212) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -793,10 +793,12 @@ ActiveRecord::Schema.define(:version => 20140331095140) do
     t.string   "presentation"
     t.text     "value"
     t.string   "value_type"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "department_id"
   end
 
+  add_index "settings", ["department_id"], :name => "index_settings_on_department_id"
   add_index "settings", ["name"], :name => "index_settings_on_name"
 
   create_table "spare_parts", :force => true do |t|

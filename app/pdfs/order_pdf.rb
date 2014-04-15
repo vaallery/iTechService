@@ -20,11 +20,12 @@ class OrderPdf < Prawn::Document
     vertical_line y-80, y-10, at: 60
     stroke
     font_size 10 do
-      text @view.t('tickets.site'), indent_paragraphs: 70
-      text @view.t('tickets.email'), indent_paragraphs: 70
-      text Setting.get_value(:city), indent_paragraphs: 70
-      text Setting.get_value(:address), indent_paragraphs: 70
-      text Setting.get_value(:schedule), indent_paragraphs: 70
+      span 135, position: :right do
+        text @view.t('tickets.site')
+        text @view.t('tickets.email')
+        text Setting.get_value(:address_for_check)
+        text Setting.get_value(:schedule)
+      end
     end
     move_down 4
     font_size 24 do
