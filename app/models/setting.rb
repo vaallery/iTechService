@@ -7,6 +7,8 @@ class Setting < ActiveRecord::Base
       address_for_check: 'string'
   }
 
+  VALUE_TYPES = ['boolean', 'integer', 'string', 'text']
+
   default_scope order('settings.id asc')
   scope :for_department, lambda { |department| where(department_id: department.is_a?(Department) ? department.id : department) }
 
@@ -15,9 +17,7 @@ class Setting < ActiveRecord::Base
 
   attr_accessible :name, :presentation, :value, :value_type, :department_id
   validates :name, :value_type, presence: true
-  validates_uniqueness_of :name
-
-  VALUE_TYPES = ['boolean', 'integer', 'string', 'text']
+  validates_uniqueness_of :name, scope: :department_id
 
   def self.ticket_prefix(department=nil)
     (setting = Setting.for_department(department).find_by_name('ticket_prefix')).present? ? setting.value : '25'
