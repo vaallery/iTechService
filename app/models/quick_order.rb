@@ -8,7 +8,7 @@ class QuickOrder < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :quick_tasks
   delegate :short_name, to: :user, prefix: true, allow_nil: true
-  attr_accessible :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids
+  attr_accessible :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code
   before_create :set_number
 
   after_initialize do

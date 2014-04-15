@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140402001212) do
+ActiveRecord::Schema.define(:version => 20140415040624) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -645,6 +645,7 @@ ActiveRecord::Schema.define(:version => 20140402001212) do
     t.text     "comment"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "security_code"
   end
 
   add_index "quick_orders", ["client_name"], :name => "index_quick_orders_on_client_name"

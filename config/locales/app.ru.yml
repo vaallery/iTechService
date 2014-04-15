@@ -318,6 +318,7 @@ ru:
         contact_phone: 'Телефон'
         number: 'Номер'
         quick_tasks: 'Задачи'
+        security_code: 'Пароль устройства'
 
       revaluation:
         revaluation_act: 'Акт переоценки'
