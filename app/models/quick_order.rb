@@ -10,6 +10,7 @@ class QuickOrder < ActiveRecord::Base
   delegate :short_name, to: :user, prefix: true, allow_nil: true
   attr_accessible :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code
   before_create :set_number
+  validates_presence_of :security_code
 
   after_initialize do
     self.user_id ||= User.current.try(:id)
