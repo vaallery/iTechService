@@ -8,7 +8,7 @@
     %small= timestamp_string_for @device
   -if can? :print_receipt, @device
     = link_to icon_tag(:print) + t('tickets.link'), device_path(@device, format: 'pdf', print: true), class: 'btn btn-primary', target: '_blank', id: 'print_device_ticket'
-    = link_to icon_tag('eye-open') + t('tickets.link'), device_path(@device, format: 'pdf', part: 1), class: 'btn btn-info pull-right', target: '_blank', id: 'print_device_ticket'
+    = link_to icon_tag('eye-open') + t('tickets.link'), device_path(@device, format: 'pdf'), class: 'btn btn-info pull-right', target: '_blank', id: 'print_device_ticket'
 
 %table.attributes_table
   %tr
