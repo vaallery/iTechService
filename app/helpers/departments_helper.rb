@@ -1,5 +1,9 @@
 module DepartmentsHelper
 
+  def current_department
+    Department.current
+  end
+
   def department_roles_for_select
     Department::ROLES.to_a.map {|r| [t("departments.roles.#{r[1]}"), r[0]]}
   end

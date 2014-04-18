@@ -10,6 +10,7 @@ class Task < ActiveRecord::Base
   has_many :device_tasks, dependent: :destroy
   has_many :devices, through: :device_tasks
   delegate :item, to: :product, allow_nil: true
+  delegate :name, to: :location, prefix: true, allow_nil: true
   attr_accessible :cost, :duration, :name, :priority, :role, :location_id
   after_initialize do
     if persisted? and product.nil?
@@ -35,10 +36,6 @@ class Task < ActiveRecord::Base
 
   def responcible_users
     User.where role: role
-  end
-
-  def location_name
-    location.try(:full_name) || '-'
   end
 
   def role_name

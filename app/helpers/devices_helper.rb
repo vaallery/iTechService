@@ -43,7 +43,7 @@ module DevicesHelper
     content_tag(:table, class: 'movement_history ') do
       history.map do |h|
         time = h[0].present? ? l(h[0], format: :long_d) : '-'
-        location = h[1].present? ? Location.find(h[1]).try(:full_name) || '-' : '-'
+        location = h[1].present? ? Location.find(h[1]).try(:name) || '-' : '-'
         user = h[2].present? ? User.find(h[2]).try(:full_name) || '-' : '-'
         content_tag(:tr) do
           content_tag(:td, time) + content_tag(:td, location) + content_tag(:td, user)

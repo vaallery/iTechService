@@ -1,1 +1,1 @@
-Department.current = Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first
+# Department.current = Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first

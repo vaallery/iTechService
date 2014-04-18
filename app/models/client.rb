@@ -1,7 +1,6 @@
 class Client < ActiveRecord::Base
   include ApplicationHelper
   
-
   CATEGORIES = {
     0 => 'usual',
     1 => 'regular',

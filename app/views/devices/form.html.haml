@@ -45,7 +45,7 @@
   - if can? :update, @device
     = f.input :location_id, as: :location, user: current_user
   - else
-    = text_field_tag :location, @device.location.try(:full_name), disabled: true, class: 'input-xlarge'
+    = text_field_tag :location, @device.location.try(:name), disabled: true, class: 'input-xlarge'
 
   = f.input :return_at, as: :my_datetime
 

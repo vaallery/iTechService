@@ -24,7 +24,7 @@
             -#%p.device_comment_tooltip{'data-title' => device.comment}
             -#  %i.icon-comment
           %td= client_presentation device.client
-          %td= device.location_name
+          %td= device.location_name || '-'
           %td= human_datetime device.created_at
           %td
             - if device.done? and device.done_at.present?
@@ -38,7 +38,7 @@
               = link_to_show_small device
               = link_to_edit_small device# if can? :update, device
               = link_to_destroy_small device if can? :destroy, device
-       
+
   = paginate @devices
   
 - else

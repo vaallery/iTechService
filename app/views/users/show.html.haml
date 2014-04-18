@@ -39,7 +39,7 @@
                 %p.device_comment_tooltip{'data-title' => device.comment}
                   %i.icon-comment
               %td= h device.client_presentation
-              %td= device.location.try :full_name
+              %td= device.location.try :name
               %td
                 .btn-group
                   = link_to_show_small device
@@ -135,7 +135,7 @@
       %dd= @user.department_name
 
       %dt= User.human_attribute_name :location
-      %dd= @user.location.try(:full_name) || '-'
+      %dd= @user.location.try(:name) || '-'
 
       - if current_user.any_admin?
         %dt= t 'current_sign_in'

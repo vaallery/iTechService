@@ -4,7 +4,7 @@
       %tr
         %th= Location.human_attribute_name :id
         %th= Location.human_attribute_name :name
-        %th= Location.human_attribute_name :ancestry
+        %th= Location.human_attribute_name :code
         %th= Location.human_attribute_name :position
         %th= Location.human_attribute_name :created_at
         %th
@@ -13,7 +13,7 @@
         %tr
           %td= location.id
           %td= location.name
-          %td= location.ancestors_names
+          %td= location.code
           %td= location.position
           %td= human_datetime location.created_at
           %td

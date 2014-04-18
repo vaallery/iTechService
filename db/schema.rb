@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140415040624) do
+ActiveRecord::Schema.define(:version => 20140418052918) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -274,10 +274,12 @@ ActiveRecord::Schema.define(:version => 20140415040624) do
     t.integer  "sale_id"
     t.integer  "case_color_id"
     t.string   "contact_phone"
+    t.integer  "department_id"
   end
 
   add_index "devices", ["case_color_id"], :name => "index_devices_on_case_color_id"
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
+  add_index "devices", ["department_id"], :name => "index_devices_on_department_id"
   add_index "devices", ["device_type_id"], :name => "index_devices_on_device_type_id"
   add_index "devices", ["done_at"], :name => "index_devices_on_done_at"
   add_index "devices", ["imei"], :name => "index_devices_on_imei"
@@ -368,15 +370,17 @@ ActiveRecord::Schema.define(:version => 20140415040624) do
   add_index "history_records", ["user_id"], :name => "index_history_records_on_user_id"
 
   create_table "infos", :force => true do |t|
-    t.string   "title",                           :null => false
-    t.text     "content",                         :null => false
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.boolean  "important",    :default => false
+    t.string   "title",                            :null => false
+    t.text     "content",                          :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "important",     :default => false
     t.integer  "recipient_id"
-    t.boolean  "is_archived",  :default => false
+    t.boolean  "is_archived",   :default => false
+    t.integer  "department_id"
   end
 
+  add_index "infos", ["department_id"], :name => "index_infos_on_department_id"
   add_index "infos", ["recipient_id"], :name => "index_infos_on_recipient_id"
   add_index "infos", ["title"], :name => "index_infos_on_title"
 
@@ -439,9 +443,11 @@ ActiveRecord::Schema.define(:version => 20140415040624) do
     t.datetime "updated_at",                :null => false
     t.boolean  "schedule"
     t.integer  "position",   :default => 0
+    t.string   "code"
   end
 
   add_index "locations", ["ancestry"], :name => "index_locations_on_ancestry"
+  add_index "locations", ["code"], :name => "index_locations_on_code"
   add_index "locations", ["name"], :name => "index_locations_on_name"
   add_index "locations", ["schedule"], :name => "index_locations_on_schedule"
 
@@ -496,10 +502,12 @@ ActiveRecord::Schema.define(:version => 20140415040624) do
     t.datetime "updated_at",    :null => false
     t.integer  "user_id"
     t.text     "user_comment"
+    t.integer  "department_id"
   end
 
   add_index "orders", ["customer_id", "customer_type"], :name => "index_orders_on_customer_id_and_customer_type"
   add_index "orders", ["customer_id"], :name => "index_orders_on_customer_id"
+  add_index "orders", ["department_id"], :name => "index_orders_on_department_id"
   add_index "orders", ["object_kind"], :name => "index_orders_on_object_kind"
   add_index "orders", ["status"], :name => "index_orders_on_status"
   add_index "orders", ["user_id"], :name => "index_orders_on_user_id"
@@ -551,9 +559,12 @@ ActiveRecord::Schema.define(:version => 20140415040624) do
 
   create_table "prices", :force => true do |t|
     t.string   "file"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "department_id"
   end
+
+  add_index "prices", ["department_id"], :name => "index_prices_on_department_id"
 
   create_table "product_categories", :force => true do |t|
     t.string   "name"
@@ -588,8 +599,10 @@ ActiveRecord::Schema.define(:version => 20140415040624) do
     t.decimal  "value"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "department_id"
   end
 
+  add_index "product_prices", ["department_id"], :name => "index_product_prices_on_department_id"
   add_index "product_prices", ["price_type_id"], :name => "index_product_prices_on_price_type_id"
   add_index "product_prices", ["product_id"], :name => "index_product_prices_on_product_id"
 
@@ -646,10 +659,12 @@ ActiveRecord::Schema.define(:version => 20140415040624) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.string   "security_code"
+    t.integer  "department_id"
   end
 
   add_index "quick_orders", ["client_name"], :name => "index_quick_orders_on_client_name"
   add_index "quick_orders", ["contact_phone"], :name => "index_quick_orders_on_contact_phone"
+  add_index "quick_orders", ["department_id"], :name => "index_quick_orders_on_department_id"
   add_index "quick_orders", ["number"], :name => "index_quick_orders_on_number"
   add_index "quick_orders", ["user_id"], :name => "index_quick_orders_on_user_id"
 
@@ -881,19 +896,24 @@ ActiveRecord::Schema.define(:version => 20140415040624) do
 
   create_table "supply_reports", :force => true do |t|
     t.date     "date"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "department_id"
   end
+
+  add_index "supply_reports", ["department_id"], :name => "index_supply_reports_on_department_id"
 
   create_table "supply_requests", :force => true do |t|
     t.integer  "user_id"
     t.string   "status"
     t.string   "object"
     t.text     "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "department_id"
   end
 
+  add_index "supply_requests", ["department_id"], :name => "index_supply_requests_on_department_id"
   add_index "supply_requests", ["status"], :name => "index_supply_requests_on_status"
   add_index "supply_requests", ["user_id"], :name => "index_supply_requests_on_user_id"
 

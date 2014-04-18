@@ -1,14 +1,16 @@
 class CashShift < ActiveRecord::Base
 
   scope :closed, where(is_closed: true)
+  scope :opened, where(is_closed: false)
 
-  belongs_to :cash_drawer
+  belongs_to :cash_drawer, inverse_of: :cash_shifts
   belongs_to :user
   has_many :sales, inverse_of: :cash_shift
   has_many :cash_operations, inverse_of: :cash_shift
   delegate :short_name, to: :user, prefix: true, allow_nil: true
   delegate :department, to: :cash_drawer
   attr_accessible :is_closed, :cash_drawer_id, :user_id
+  validates_presence_of :cash_drawer
 
   def close
     if is_closed

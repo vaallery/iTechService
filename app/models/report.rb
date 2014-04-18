@@ -165,8 +165,8 @@ class Report
   def devices_movements
     result[:users_mv] = []
     movements = HistoryRecord.in_period(period)
-    movements = movements.movements_from(Location.bar_id)
-    movements = movements.movements_to([Location.content_id, Location.repair_id])
+    movements = movements.movements_from(Location.bar.id)
+    movements = movements.movements_to([Location.content.id, Location.repairid])
     if movements.any?
       movements.group('user_id').count('id').each_pair do |key, val|
         if key.present? and (user = User.find key).present?

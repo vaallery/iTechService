@@ -128,7 +128,7 @@ module ApplicationHelper
           when 'client_id'
             val = Client.find(rec.new_value).try(:full_name)
           when 'location_id'
-            val = Location.find(rec.new_value).try(:full_name)
+            val = Location.find(rec.new_value).try(:name)
           when 'device_id'
             val = Device.find(rec.new_value).try(:presentation)
           when 'task_id'

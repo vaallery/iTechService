@@ -10,8 +10,8 @@ module LocationsHelper
     locations.each do |location|
       unless location === form.object
         content +=
-            content_tag :label, class: 'radio' do
-              form.radio_button(name, location.id) + location.full_name
+            content_tag(:label, class: 'radio') do
+              form.radio_button(name, location.id) + location.name
             end
       end
     end

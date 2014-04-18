@@ -56,7 +56,7 @@
             %ul.unstyled
               - device.device_tasks.each do |device_task|
                 %li= device_task.name
-          %td= device.location_name
+          %td= device.location_name || '-'
 
 #client_purchases
   %table.table.table-bordered.table-condensed.table-hover
