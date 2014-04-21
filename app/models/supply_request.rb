@@ -12,10 +12,10 @@ class SupplyRequest < ActiveRecord::Base
   attr_accessible :user_id, :status, :object, :description, :department_id
   validates_presence_of :user, :status, :object
 
-  after_initialize do |supply_request|
-    supply_request.user_id ||= User.current.id
-    supply_request.status ||= 'new'
-    supply_request.department_id ||= Department.current.id
+  after_initialize do
+    user_id ||= User.current.try(:id)
+    status ||= 'new'
+    department_id ||= Department.current.id
   end
 
   def self.search(params)

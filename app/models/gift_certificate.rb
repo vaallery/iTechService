@@ -3,15 +3,21 @@ class GiftCertificate < ActiveRecord::Base
   STATUSES = %w[available issued used]
   NOMINALS = %w[1500r 3000r 5000r 10000r 15000r]
 
+  belongs_to :department
   has_many :payments, dependent: :nullify
   has_many :history_records, as: :object, dependent: :destroy
 
-  attr_accessible :number, :nominal, :status, :consumed, :consume
+  attr_accessible :number, :nominal, :status, :consumed, :consume, :department_id
   validates :number, presence: true, uniqueness: {case_sensitive: false}
   before_validation { |cert| cert.status ||= 0 }
   before_validation :validate_consumption
   before_validation :validate_status, on: :update
-  after_initialize :convert_nominal_and_status
+  after_initialize do
+    department_id ||= Department.current.id
+    if nominal && nominal < 5
+      update_attribute :nominal, nominal_val
+    end
+  end
 
   def self.search(params)
     certificates = GiftCertificate.scoped
@@ -99,13 +105,6 @@ class GiftCertificate < ActiveRecord::Base
         errors.add :base, I18n.t('gift_certificates.errors.not_issued')
       end
     end
-  end
-
-  def convert_nominal_and_status
-    if nominal && nominal < 5
-      update_attribute :nominal, nominal_val
-    end
-    #if nominal
   end
 
 end

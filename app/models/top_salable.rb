@@ -1,9 +1,9 @@
 class TopSalable < ActiveRecord::Base
 
+  has_ancestry orphan_strategy: :restrict
   scope :ordered, order('position asc')
   belongs_to :product
   delegate :name, to: :product, prefix: true, allow_nil: true
-  has_ancestry orphan_strategy: :restrict
   attr_accessible :name, :color, :position, :ancestry, :parent_id, :product_id, :type
   validates_numericality_of :position, only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 20
   validates_uniqueness_of :position, scope: :ancestry

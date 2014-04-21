@@ -10,8 +10,8 @@ class SupplyReport < ActiveRecord::Base
   validates_associated :supplies
 
   after_initialize do
-    self.date ||= Date.current
-    self.department_id ||= Department.current.id
+    date ||= Date.current
+    department_id ||= Department.current.id
   end
 
   def total_cost
