@@ -8,7 +8,7 @@ class ImportMailer < ActionMailer::Base
 
   def product_import_log(import_log, time, type)
     @import_log = import_log
-    mail to: 'kvn@itechdevs.com', subject: t('mail.product_import_log.subject', type: type.to_s.humanize, time: l(time, format: :long))
+    mail to: 'kvn@itechdevs.com, nastya@itechstore.ru', subject: t('mail.product_import_log.subject', type: type.to_s.humanize, time: l(time, format: :long))
   end
 
 end
