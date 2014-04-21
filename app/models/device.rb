@@ -69,6 +69,7 @@ class Device < ActiveRecord::Base
         name: client.short_name,
         phone: client.phone_number
       },
+      contact_phone: contact_phone,
       tasks: device_tasks,
       total_cost: tasks_cost,
       case_color: case_color.as_json(only: [:name, :color])
