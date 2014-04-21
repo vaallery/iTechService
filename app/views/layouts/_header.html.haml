@@ -73,7 +73,7 @@
         = menu_item t('tasks.link'), tasks_path if can? :manage, Task
         = menu_item t('locations.link'), locations_path if can? :manage, Location
         = menu_item t('discounts.link'), discounts_path
-        = menu_item 'Import Products', new_product_import_path if can? :manage, Product
+        = menu_item t('product_imports.form.title'), new_product_import_path if can? :manage, Product
         = menu_item t('settings.link'), settings_path if can? :manage, Setting
 
     = menu_group pull: :right do

@@ -70,6 +70,7 @@ class Ability
         can :modify, Client
         can :modify, Sale
         can :modify, SalesImport
+        can :modify, Product
         cannot :modify, Device
       end
       if user.supervisor?
