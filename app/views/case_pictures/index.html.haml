@@ -1,0 +1,8 @@
+.page-header
+  %h3= 'Case pictures'
+
+= form_tag case_pictures_path, method: :post, multipart: true do
+  = file_field_tag :file, accept: 'image/png,image/jpeg'
+
+  .form-actions
+    = submit_tag 'Generate', class: 'btn btn-primary'

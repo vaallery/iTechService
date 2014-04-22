@@ -175,6 +175,7 @@ ItechService::Application.routes.draw do
   resources :case_colors, except: :show
   resources :quick_tasks, except: :show
   resources :product_imports, only: [:new, :create]
+  resources :case_pictures, only: [:index, :new, :create]
 
   resources :quick_orders do
     put :set_done, on: :member
