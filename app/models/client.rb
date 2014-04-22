@@ -8,15 +8,18 @@ class Client < ActiveRecord::Base
     3 => 'friend'
   }
 
-  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :category, :client_characteristic_attributes
+  default_scope where('clients.department_id = ?', Department.current.id)
 
+  scope :id_asc, order('id asc')
+
+  belongs_to :department
+  belongs_to :client_characteristic
   has_many :devices, inverse_of: :client, dependent: :destroy
   has_many :orders, as: :customer, dependent: :destroy
   has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
   has_many :history_records, as: :object
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :sale_items, through: :purchases
-  belongs_to :client_characteristic
   has_many :sales, inverse_of: :client, dependent: :nullify
 
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
@@ -24,7 +27,7 @@ class Client < ActiveRecord::Base
 
   delegate :client_category, to: :client_characteristic, allow_nil: true
 
-  scope :id_asc, order('id asc')
+  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :category, :client_characteristic_attributes
 
   validates_presence_of :name, :phone_number, :full_phone_number, :category
   validates_uniqueness_of :full_phone_number
@@ -34,9 +37,10 @@ class Client < ActiveRecord::Base
   validates_associated :client_characteristic
   before_destroy :send_mail
 
-  after_initialize do |client|
-    client.build_client_characteristic if client.client_characteristic.nil?
-    client.category ||= 0
+  after_initialize do
+    build_client_characteristic if client_characteristic.nil?
+    category ||= 0
+    department_id ||= Department.current.id
   end
 
   def self.search params
