@@ -17,7 +17,7 @@ class DevicesController < ApplicationController
       @devices = @devices.reorder 'devices.'+sort_column + ' ' + sort_direction
     end
     @devices = @devices.newest.page params[:page]
-    @location_name = params[:location].present? ? Location.find(params[:location]).full_name : 'everywhere'# I18n.t('everywhere')
+    @location_name = params[:location].present? ? Location.find(params[:location]).name : 'everywhere'# I18n.t('everywhere')
     @locations = Location.scoped
 
     respond_to do |format|

@@ -85,7 +85,7 @@ class DashboardController < ApplicationController
       if params[:location].present?
         location = Location.find params[:location]
         @devices = Device.located_at(location)
-        @location_name = location.full_name
+        @location_name = location.name
       else
         @devices = Device.pending
       end

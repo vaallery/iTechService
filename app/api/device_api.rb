@@ -13,7 +13,7 @@ class DeviceApi < Grape::API
   put 'archive_devices/:id', requirements: { id: /[0-9]*/ } do
     authorize! :modify, Device
     device = Device.find params[:id]
-    if device.update_attributes location_id: Location.archive_id
+    if device.update_attributes location_id: Location.archive.id
       present device
     else
       error!({error: device.errors.full_messages.join('. ')}, 403)

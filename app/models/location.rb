@@ -1,73 +1,44 @@
 # encoding: utf-8
 class Location < ActiveRecord::Base
-
-  has_ancestry
-  has_many :users
-  has_many :tasks
-  attr_accessible :name, :ancestry, :parent_id, :schedule, :position
   #default_scope order('position asc')
   scope :sorted, order('position asc')
   scope :for_schedule, where(schedule: true)
+  has_many :users
+  has_many :tasks
+
+  attr_accessible :name, :schedule, :position, :code
+  validates_presence_of :name
 
   def full_name
     path.all.map{|l|l.name}.join ' / '
   end
 
-  def presentation
-    full_name
-  end
-
-  def ancestors_names
-    ancestors.all.map{|l|l.name}.join ' / '
-  end
-
   def self.bar
-    Location.find_by_name 'Бар'
-  end
-
-  def self.bar_id
-    Location.find_by_name('Бар').try(:id)
+    Location.where(code: 'bar').first_or_create(name: 'Бар')
   end
 
   def self.content
-    Location.find_by_name 'Обновление контента'
-  end
-
-  def self.content_id
-    Location.find_by_name('Обновление контента').try(:id)
+    Location.where(code: 'content').first_or_create(name: 'Обновление контента')
   end
 
   def self.done
-    Location.find_by_name 'Готово'
-  end
-
-  def self.done_id
-    Location.find_by_name('Готово').try(:id)
+    Location.where(code: 'done').first_or_create(name: 'Готово')
   end
 
   def self.archive
-    Location.find_by_name 'Архив'
-  end
-
-  def self.archive_id
-    Location.find_by_name('Архив').try :id
+    Location.where(code: 'archive').first_or_create(name: 'Архив')
   end
 
   def self.repair
-    Location.find_by_name 'Ремонт'
-  end
-
-  def self.repair_id
-    Location.find_by_name('Ремонт').try(:id)
+    Location.where(code: 'repair').first_or_create(name: 'Ремонт')
   end
 
   def self.warranty
-    Location.find_by_name 'Гарантийники'
+    Location.where(code: 'warranty').first_or_create(name: 'Гарантийники')
   end
 
   def self.popov
-    #Location.where(id: 10).try(:first)
-    Location.where('LOWER(name) LIKE ?', "попов%").try(:first)
+    Location.where(code: 'repair_notebooks').first_or_create(name: 'Ремонт ноутбуков')
   end
 
   def self.allowed_for(user, device)
@@ -93,24 +64,27 @@ class Location < ActiveRecord::Base
   end
 
   def is_done?
-    name == 'Готово'
+    code == 'done'
   end
 
   def is_archive?
-    name == 'Архив'
+    code == 'archive'
   end
 
   def is_repair?
-    name == 'Ремонт'
+    code == 'repair'
   end
 
   def is_warranty?
-    name == 'Гарантийники'
+    code == 'warranty'
   end
 
-  def is_popov?
-    #id == 10
-    name.mb_chars.downcase.to_s.start_with? 'попов'
+  def is_repair_notebooks?
+    code == 'repair_notebooks'
+  end
+
+  def is_any_repair?
+    code.to_s.start_with?('repair')
   end
 
 end

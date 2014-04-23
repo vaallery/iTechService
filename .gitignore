@@ -44,3 +44,4 @@ Gemfile.lock
 /shared/
 /config/deploy/
 /doc/
+.env

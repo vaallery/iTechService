@@ -12,6 +12,9 @@
 
 %table.attributes_table
   %tr
+    %td= Device.human_attribute_name :department
+    %td= @device.department_name
+  %tr
     %td= t 'devices.itunes_string'
     %td= text_field_tag 'itunes_string', itunes_string_for(@device)
   %tr
@@ -50,7 +53,7 @@
       %td= @device.tech_notice
   %tr
     %td= Device.human_attribute_name :location
-    %td= @device.location_name
+    %td= @device.location_name || '-'
   %tr
     %td= Device.human_attribute_name :return_at
     %td= human_datetime @device.return_at

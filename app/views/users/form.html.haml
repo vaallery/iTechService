@@ -82,7 +82,7 @@
             = hidden_field_tag 'user[abilities][]', ''
 
       = f.association :department, prompt: false
-      = f.association :location, label_method: :full_name
+      = f.association :location, label_method: :name
       = f.input :password
       = f.input :password_confirmation
       = f.input :card_number

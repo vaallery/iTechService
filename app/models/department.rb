@@ -12,6 +12,8 @@ class Department < ActiveRecord::Base
   has_many :stores, dependent: :nullify
   has_many :cash_drawers, dependent: :nullify
   has_many :settings, dependent: :destroy
+  has_many :devices, inverse_of: :department
+  # cattr_accessor :current
 
   attr_accessible :name, :role, :code, :url, :city, :address, :contact_phone, :schedule
   validates_presence_of :name, :role, :code
@@ -24,6 +26,18 @@ class Department < ActiveRecord::Base
 
   def is_store?
     role == 2
+  end
+
+  def self.current
+    Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first
+  end
+
+  def default_cash_drawer
+    cash_drawers.first_or_create name: 'Cash drawer 1'
+  end
+
+  def current_cash_shift
+    default_cash_drawer.current_shift
   end
 
   private

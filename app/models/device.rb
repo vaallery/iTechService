@@ -1,19 +1,21 @@
 # encoding: utf-8
 class Device < ActiveRecord::Base
 
-  scope :newest, order('created_at desc')
-  scope :oldest, order('created_at asc')
+  default_scope where('devices.department_id = ?', User.current.present? ? User.current.department_id : Department.current.id)
+  scope :newest, order('devices.created_at desc')
+  scope :oldest, order('devices.created_at asc')
   scope :done, where('devices.done_at IS NOT NULL').order('devices.done_at desc')
   scope :pending, where(done_at: nil)
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   scope :replaced, where(replaced: true)
   scope :located_at, lambda {|location| where(location_id: location.id)}
-  scope :at_done, where(location_id: Location.done_id)
-  scope :not_at_done, where('devices.location_id <> ?', Location.done_id)
-  scope :at_archive, where(location_id: Location.archive_id)
-  scope :unarchived, where('devices.location_id <> ?', Location.archive_id)
+  scope :at_done, where(location_id: Location.done.id)
+  scope :not_at_done, where('devices.location_id <> ?', Location.done.id)
+  scope :at_archive, where(location_id: Location.archive.id)
+  scope :unarchived, where('devices.location_id <> ?', Location.archive.id)
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
+  belongs_to :department, inverse_of: :devices
   belongs_to :user, inverse_of: :devices
   belongs_to :client, inverse_of: :devices
   belongs_to :device_type
@@ -29,10 +31,11 @@ class Device < ActiveRecord::Base
   has_many :history_records, as: :object, dependent: :destroy
   accepts_nested_attributes_for :device_tasks
   delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
-  delegate :department, to: :user
+  delegate :name, to: :department, prefix: true
+  delegate :name, to: :location, prefix: true, allow_nil: true
 
-  attr_accessible :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone
-  validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at
+  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone
+  validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :department
   validates_presence_of :contact_phone, on: :create
   validates_presence_of :device_type, if: 'item.nil?'
   validates_presence_of :app_store_pass, if: :new_record?
@@ -80,16 +83,8 @@ class Device < ActiveRecord::Base
     device_type.try(:full_name) || '-'
   end
 
-  def location_name
-    location.try(:full_name) || '-'
-  end
-  
   def client_phone
     client.try(:phone_number) || '-'
-  end
-
-  def client_contact_phone
-    client.contact_phone.blank? ? client.full_phone_number : client.contact_phone
   end
 
   def client_presentation
@@ -297,6 +292,7 @@ class Device < ActiveRecord::Base
   def set_user_and_location
     self.location_id ||= User.try(:current).try(:location_id)
     self.user_id ||= User.try(:current).try(:id)
+    self.department_id ||= Department.current.try(:id)
   end
 
   def validate_location
@@ -317,7 +313,7 @@ class Device < ActiveRecord::Base
       if self.location.is_warranty? and !old_location.try(:is_repair?)
         self.errors.add :location_id, I18n.t('devices.errors.not_allowed')
       end
-      if self.location.is_popov? and old_location.present?
+      if self.location.is_repair_notebooks? and old_location.present?
         MovementMailer.notice(self).deliver
       end
 
