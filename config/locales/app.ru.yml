@@ -1459,11 +1459,11 @@ ru:
       title: ''
     created: ''
     updated: ''
-
     form:
       product: "Продукт"
       group: "Группа"
       type: "Тип"
+
   users:
     abilities:
       manage_salary: Редактировать зарплату
@@ -1508,9 +1508,10 @@ ru:
     timesheet: "Табель"
     updated: Пользователь изменён
     version: Версия
-
     serviced_devices: "Обслуживаемые девайсы"
     purchased_devices: "Купленные девайсы"
+    department_blank_error: '!!! Необходимо указать подразделение !!!'
+
   wiki:
     add_attachment: Добавить файл
     all_pages: Wiki

@@ -3,6 +3,8 @@
     %span.user_name= profile_link
     - if current_user.department.present?
       %span.user_department= "[#{current_user.department.name}]"
+    - else
+      %strong.text-error= t 'users.department_blank_error'
     - unless current_user.any_admin?
       %span= link_to karma_tag(current_user), rating_users_path
     = duck_plan_tag
