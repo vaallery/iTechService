@@ -6,7 +6,7 @@ class Announcement < ActiveRecord::Base
   belongs_to :department
   belongs_to :user, inverse_of: :announcements
   has_and_belongs_to_many :recipients, class_name: 'User', join_table: 'announcements_users', uniq: true
-  attr_accessible :content, :kind, :user_id, :user, :active, :recipient_ids
+  attr_accessible :content, :kind, :user_id, :user, :active, :recipient_ids, :department_id
   validates :kind, presence: true
   validates :kind, inclusion: { in: KINDS }
   scope :newest, order('created_at desc')
