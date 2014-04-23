@@ -1,5 +1,4 @@
 class CasePicturesController < ApplicationController
-  # authorize_resource
 
   def index
     respond_to do |format|
@@ -19,9 +18,6 @@ class CasePicturesController < ApplicationController
     else
       render nothing: true
     end
-    # respond_to do |format|
-    #   format.html
-    # end
   end
 
 end

@@ -1,4 +1,3 @@
-# encoding: utf-8
 class CasePicturePdf < Prawn::Document
   require 'prawn/measurement_extensions'
 
