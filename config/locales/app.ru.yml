@@ -582,6 +582,12 @@ ru:
     new:
       title: 'Новый Цвет чехла'
 
+  case_pictures:
+    index:
+      title: 'Картинки для чехлов'
+      submit: 'Создать'
+      contour: 'Контур'
+
   cash_drawers:
     created: 'Касса создана'
     updated: 'Касса изменена'
@@ -592,8 +598,8 @@ ru:
       title: 'Новая Касса'
     edit:
       title: 'Редактирование Кассы'
-
     x_report: "Х-Отчёт"
+
   cash_shifts:
     close: 'Закрыть смену'
     errors:

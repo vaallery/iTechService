@@ -1,11 +1,11 @@
 .page-header
-  %h3= 'Case pictures'
+  %h1= t '.title'
 
 = form_tag case_pictures_path, method: :post, multipart: true do
   = file_field_tag :file, accept: 'image/png,image/jpeg'
   %label.checkbox
     = check_box_tag :countour
-    = 'Countour'
+    = t '.contour'
 
   .form-actions
-    = submit_tag 'Generate', class: 'btn btn-primary'
+    = submit_tag t('.submit'), class: 'btn btn-primary'
