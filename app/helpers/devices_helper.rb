@@ -72,7 +72,7 @@ module DevicesHelper
             time_text = "#{t('in_time') if device.return_at.future?} #{distance_of_time_in_words(now, device.return_at)} #{t('ago') if device.return_at.past?}"
             content_tag(:td, time_text) +
             content_tag(:td, link_to(device.presentation, device_path(device), target: '_blank')) +
-            content_tag(:td, link_to(glyph(:phone), '#', class: 'returning_device_tooltip', data: {html: true, placement: 'top', trigger: 'manual', title: content_tag(:span, device.client_full_name) + tag(:br) + content_tag(:strong, human_phone(device.client_contact_phone))}))
+            content_tag(:td, link_to(glyph(:phone), '#', class: 'returning_device_tooltip', data: {html: true, placement: 'top', trigger: 'manual', title: content_tag(:span, device.client_full_name) + tag(:br) + content_tag(:strong, human_phone(device.contact_phone))}))
           end
         end.join.html_safe
       end.html_safe

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140422011734) do
+ActiveRecord::Schema.define(:version => 20140422012901) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -153,10 +153,12 @@ ActiveRecord::Schema.define(:version => 20140422011734) do
     t.string   "contact_phone"
     t.integer  "category"
     t.integer  "client_characteristic_id"
+    t.integer  "department_id"
   end
 
   add_index "clients", ["card_number"], :name => "index_clients_on_card_number"
   add_index "clients", ["category"], :name => "index_clients_on_category"
+  add_index "clients", ["department_id"], :name => "index_clients_on_department_id"
   add_index "clients", ["email"], :name => "index_clients_on_email"
   add_index "clients", ["full_phone_number"], :name => "index_clients_on_full_phone_number"
   add_index "clients", ["name"], :name => "index_clients_on_name"
