@@ -45,11 +45,11 @@ class CasePicturePdf < Prawn::Document
     line_to @x1, @y6
 
     # bottom side
-    rounded_vertex @r, [@x1, @y6], [@x1, @y2], [@x5, @y2]
+    curve_to [@x5, @y2], bounds: [[@x1+1.mm, @y2], [@x5, @y2]]
     line_to @x5, @y2 - 2.mm
     line_to @x6, @y2 - 2.mm
     line_to @x6, @y2
-    rounded_vertex @r, [@x6, @y2], [@x2, @y2], [@x2, @y6]
+    curve_to [@x2, @y6], bounds: [[@x6, @y2], [@x2-1.mm, @y2]]
 
     # right side
     line_to @x2, @y4
@@ -59,11 +59,11 @@ class CasePicturePdf < Prawn::Document
     line_to @x2, @y5
 
     # top side
-    rounded_vertex @r, [@x2, @y5], [@x2, @y1], [@x6, @y1]
+    curve_to [@x6, @y1], bounds: [[@x2, @y5], [@x2, @y1-1.mm]]
     line_to @x6, @y1 + 2.mm
     line_to @x5, @y1 + 2.mm
     line_to @x5, @y1
-    rounded_vertex @r, [@x5, @y1], [@x1, @y1], [@x1, @y5]
+    curve_to [@x1, @y5], bounds: [[@x5, @y1], [@x1+1.mm, @y1]]
   end
 
   def draw_contour
