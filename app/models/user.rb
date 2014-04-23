@@ -5,6 +5,11 @@ class User < ActiveRecord::Base
   HELPABLE = %w[software media technician]
   ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet]
 
+  attr_accessor :login
+  attr_accessor :auth_token
+  cattr_accessor :current
+
+  # default_scope where('users.department_id = ?', User.current.present? ? User.current.department_id : Department.current.id)
   scope :id_asc, order('id asc')
   scope :ordered, order('position asc')
   scope :any_admin, where(role: %w[admin superadmin])
@@ -27,10 +32,6 @@ class User < ActiveRecord::Base
   scope :for_changing, where(username: %w[vova admin test test_soft test_media test_tech test_market test_manager])
   scope :exclude, lambda { |user| where('id <> ?', user.is_a?(User) ? user.id : user) }
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
-
-  attr_accessor :login
-  attr_accessor :auth_token
-  cattr_accessor :current
 
   belongs_to :location
   belongs_to :department
@@ -62,6 +63,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :installment_plans, reject_if: lambda { |attrs| (attrs['object'].blank? or attrs['cost'].blank? or attrs['issued_at'].blank?) and (attrs['installments_attributes'].blank?) }
 
   delegate :name, to: :department, prefix: true, allow_nil: true
+  delegate :name, to: :location, prefix: true, allow_nil: true
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :registerable, :rememberable,
@@ -286,10 +288,6 @@ class User < ActiveRecord::Base
     abilities.include? ability.to_s
   end
 
-  def location_name(full=false)
-    location.blank? ? '' : (full ? location.full_name : location.name)
-  end
-
   def rating
     good_count = karmas.good.count
     bad_count = karmas.bad.count
@@ -384,7 +382,7 @@ class User < ActiveRecord::Base
   end
 
   def current_cash_shift
-    cash_drawer.try(:current_shift)
+    cash_drawer.current_shift
   end
 
   private

@@ -1,25 +1,7 @@
 class Order < ActiveRecord::Base
 
-  belongs_to :customer, polymorphic: true
-  belongs_to :user
-  has_many :history_records, as: :object
-  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment
-  validates :customer_id, :object, :object_kind, presence: true
-  before_validation :generate_number
-
-  before_validation do |order|
-    if order.new_record?
-      if order.customer_id.blank?
-        order.customer_id = User.current.id
-        order.customer_type = 'User'
-      else
-        order.customer_type = 'Client'
-      end
-      order.user_id ||= User.current.id
-    end
-  end
-
-  after_update :make_announcement
+  OBJECT_KINDS = %w[device accessory soft misc spare_part]
+  STATUSES = %w[new pending done canceled notified archive]
 
   scope :newest, order('orders.created_at desc')
   scope :oldest, order('orders.created_at asc')
@@ -39,8 +21,29 @@ class Order < ActiveRecord::Base
   scope :spare_part, where(object_kind: 'spare_part')
   scope :done_at, lambda { |period| joins(:history_records).where(history_records: {column_name: 'status', new_value: 'done', created_at: period}) }
 
-  OBJECT_KINDS = %w[device accessory soft misc spare_part]
-  STATUSES = %w[new pending done canceled notified archive]
+  belongs_to :department
+  belongs_to :customer, polymorphic: true
+  belongs_to :user
+  has_many :history_records, as: :object
+
+  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id
+  validates :customer_id, :object, :object_kind, presence: true
+  before_validation :generate_number
+
+  before_validation do |order|
+    if order.new_record?
+      if order.customer_id.blank?
+        order.customer_id = User.current.id
+        order.customer_type = 'User'
+      else
+        order.customer_type = 'Client'
+      end
+      order.user_id ||= User.current.id
+    end
+    order.department_id ||= Department.current.id
+  end
+
+  after_update :make_announcement
 
   def self.order_by_status
     ret = "CASE"

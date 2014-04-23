@@ -9,7 +9,7 @@ module UsersHelper
         karma_tag(user)
       end +
       content_tag(:td, t("users.roles.#{user.role}")) +
-      content_tag(:td, user.location_name(true)) +
+      content_tag(:td, user.location_name || '-') +
       content_tag(:td, l(user.created_at, format: :long_d)) +
       content_tag(:td) do
         content_tag(:div, class: 'btn-group') do

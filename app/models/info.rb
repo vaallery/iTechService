@@ -1,14 +1,14 @@
 class Info < ActiveRecord::Base
 
+  default_scope where('infos.department_id = ?', Department.current.id)
+
+  belongs_to :department
   belongs_to :recipient, class_name: 'User', foreign_key: 'recipient_id'
   has_many :comments, as: :commentable, dependent: :destroy
 
-  attr_accessor :comment
-  attr_accessible :content, :title, :important, :is_archived, :comment, :comments_attributes, :recipient_id
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
 
-  validates :title, :content, presence: true
-  validates_associated :comments
+  attr_accessor :comment
 
   scope :newest, order('created_at desc')
   scope :oldest, order('created_at asc')
@@ -19,6 +19,14 @@ class Info < ActiveRecord::Base
   scope :public, where(recipient_id: nil)
   scope :archived, where(is_archived: true)
   scope :actual, where(is_archived: false)
+
+  attr_accessible :content, :title, :important, :is_archived, :comment, :comments_attributes, :recipient_id, :department_id
+
+  validates :title, :content, presence: true
+  validates_associated :comments
+  after_initialize do
+    department_id ||= Department.current.id
+  end
 
   def comment=(content)
     comments.build content: content unless content.blank?

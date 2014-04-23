@@ -46,7 +46,7 @@ class Store < ActiveRecord::Base
   end
 
   def is_defect?
-    %[defect defect_sp].include? kind
+    kind.in? %w[defect defect_sp]
   end
 
 end

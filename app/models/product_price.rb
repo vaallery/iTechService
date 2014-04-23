@@ -1,8 +1,9 @@
 class ProductPrice < ActiveRecord::Base
 
+  belongs_to :department
   belongs_to :product
   belongs_to :price_type
-  attr_accessible :value, :date, :product_id, :price_type_id
+  attr_accessible :value, :date, :product_id, :price_type_id, :department_id
   validates_presence_of :product, :price_type, :date, :value
   delegate :kind, :kind_s, :is_purchase?, :is_retail?, to: :price_type, allow_nil: true
 
@@ -14,6 +15,7 @@ class ProductPrice < ActiveRecord::Base
 
   after_initialize do
     date ||= Time.current
+    department_id ||= Department.current.id
   end
 
 end

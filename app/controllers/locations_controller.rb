@@ -14,13 +14,16 @@ class LocationsController < ApplicationController
     @location = Location.new
 
     respond_to do |format|
-      format.html
+      format.html { render 'form'}
       format.json { render json: @location }
     end
   end
 
   def edit
     @location = Location.find(params[:id])
+    respond_to do |format|
+      format.html { render 'form'}
+    end
   end
 
   def create
@@ -31,7 +34,7 @@ class LocationsController < ApplicationController
         format.html { redirect_to locations_path, notice: t('locations.created') }
         format.json { render json: @location, status: :created, location: @location }
       else
-        format.html { render action: "new" }
+        format.html { render 'form'}
         format.json { render json: @location.errors, status: :unprocessable_entity }
       end
     end
@@ -45,7 +48,7 @@ class LocationsController < ApplicationController
         format.html { redirect_to locations_path, notice: t('locations.updated') }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render 'form'}
         format.json { render json: @location.errors, status: :unprocessable_entity }
       end
     end

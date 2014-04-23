@@ -35,6 +35,7 @@ gem 'whenever', '~> 0.8.4', require: false
 gem 'foreman', '~> 0.63.0'
 gem 'grape', '~> 0.6.1'
 gem 'grape-entity', '~> 0.4.1'
+gem 'figaro'
 
 # Gems used only for assets and not required
 # in production environments by default.

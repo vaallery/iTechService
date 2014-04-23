@@ -1,6 +1,7 @@
 class Sale < ActiveRecord::Base
   include Document
 
+  default_scope includes(cash_shift: :cash_drawer).where('cash_drawers.department_id = ?', User.current.present? ? User.current.department_id : Department.current.id)
   scope :sold_at, lambda { |period| where(date: period) }
   scope :posted, where(status: 1)
   scope :deleted, where(status: 2)
@@ -20,7 +21,7 @@ class Sale < ActiveRecord::Base
   accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: lambda{|a| a[:value].blank?}
 
   delegate :name, :short_name, :full_name, :fio_short, to: :user, prefix: true, allow_nil: true
-  delegate :department, to: :user
+  delegate :department, to: :cash_shift
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
   delegate :name, to: :store, prefix: true
@@ -172,7 +173,7 @@ class Sale < ActiveRecord::Base
 
   def set_user_and_cash_shift
     self.user_id ||= User.current.try(:id)
-    self.cash_shift_id ||= User.current.try(:current_cash_shift).try(:id)
+    self.cash_shift_id ||= User.current.present? ? User.current.current_cash_shift.id : Department.current.current_cash_shift.id
   end
 
   def is_valid_for_posting?
