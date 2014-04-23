@@ -52,11 +52,11 @@ class Sale < ActiveRecord::Base
     end
 
     unless (start_date = params[:start_date]).blank?
-      sales = sales.where('sold_at >= ?', start_date)
+      sales = sales.where('date >= ?', start_date)
     end
 
     unless (end_date = params[:end_date]).blank?
-      sales = sales.where('sold_at <= ?', end_date)
+      sales = sales.where('date <= ?', end_date)
     end
 
     if (search = params[:search]).present?

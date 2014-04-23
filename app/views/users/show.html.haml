@@ -132,7 +132,7 @@
       %dd= t "users.roles.#{@user.role}"
 
       %dt= User.human_attribute_name :department
-      %dd= @user.department_name
+      %dd= @user.department_name || '-'
 
       %dt= User.human_attribute_name :location
       %dd= @user.location.try(:full_name) || '-'

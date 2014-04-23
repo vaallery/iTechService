@@ -17,7 +17,7 @@ class QuickOrdersController < ApplicationController
       format.html # show.html.erb
       format.pdf do
         filename = "quick_order_#{@quick_order.number}.pdf"
-        pdf = QuickOrderPdf.new @quick_order, view_context
+        pdf = QuickOrderPdf.new @quick_order
         print_ticket(pdf, filename) if params[:print]
         send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
       end
