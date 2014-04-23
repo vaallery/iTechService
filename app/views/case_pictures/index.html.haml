@@ -3,6 +3,9 @@
 
 = form_tag case_pictures_path, method: :post, multipart: true do
   = file_field_tag :file, accept: 'image/png,image/jpeg'
+  %label.checkbox
+    = check_box_tag :countour
+    = 'Countour'
 
   .form-actions
     = submit_tag 'Generate', class: 'btn btn-primary'
