@@ -1,11 +1,13 @@
+require 'RMagick'
+
 class CasePicturePdf < Prawn::Document
   require 'prawn/measurement_extensions'
 
   def initialize(file, is_contour)
     super page_size: 'A4', page_layout: :portrait
-    @width = 61.mm
-    @height = 128.mm
-    @depth = 11.mm
+    @width = 62.mm
+    @height = 133.mm
+    @depth = 12.mm
     @r = 9.mm
     @x1 = (margin_box.width - @width) / 2
     @y1 = (margin_box.height + @height) / 2
@@ -20,6 +22,10 @@ class CasePicturePdf < Prawn::Document
     @y5 = @y1 - @r
     @y6 = @y2 + @r
 
+    image = Magick::Image.read(file).first
+    image.flop!
+    image.write file
+
     save_graphics_state do
       soft_mask do
         fill_color 'ffffff'
@@ -28,8 +34,6 @@ class CasePicturePdf < Prawn::Document
         end
       end
       image file, width: @x4 - @x3, height: @y3 - @y4, at: [@x3, @y3]
-      # fill_color 'ff0000'
-      # fill_and_stroke { draw_shape }
     end
     stroke { draw_contour } if is_contour
   end
