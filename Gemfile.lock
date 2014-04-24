@@ -317,6 +317,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.5)
+    rmagick (2.13.2)
     roo (1.11.2)
       nokogiri
       rubyzip
@@ -466,6 +467,7 @@ DEPENDENCIES
   railroady
   rails (= 3.2.17)
   rails-erd
+  rmagick
   roo (~> 1.11.2)
   rspec-rails
   seed_dumper (~> 0.1.3)
