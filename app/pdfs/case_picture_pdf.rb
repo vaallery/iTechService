@@ -5,7 +5,7 @@ class CasePicturePdf < Prawn::Document
 
   def initialize(file, is_contour)
     super page_size: 'A4', page_layout: :portrait
-    @width = 62.mm
+    @width = 62.5.mm
     @height = 133.mm
     @depth = 12.mm
     @r = 9.mm
