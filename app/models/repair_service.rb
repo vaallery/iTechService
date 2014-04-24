@@ -11,4 +11,17 @@ class RepairService < ActiveRecord::Base
     spare_parts.sum {|sp| sp.purchase_price || 0}
   end
 
+  def remnants_s(store)
+    value = spare_parts.min {|sp| sp.quantity_in_store(store)}
+    if value.nil?
+      '-'
+    elsif value <= 0
+      'none'
+    elsif value > (quantity_threshold || 0)
+      'many'
+    else
+      'low'
+    end
+  end
+
 end
