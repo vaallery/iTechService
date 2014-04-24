@@ -1,7 +1,7 @@
 class Announcement < ActiveRecord::Base
   KINDS = %w[help coffee for_coffee protector info birthday order_status order_done salary device_return]
 
-  # default_scope where('announcements.department_id = ?', Department.current.id)
+  default_scope where('announcements.department_id = ?', Department.current.id)
 
   belongs_to :department
   belongs_to :user, inverse_of: :announcements
