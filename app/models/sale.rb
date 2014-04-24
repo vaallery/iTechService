@@ -1,7 +1,7 @@
 class Sale < ActiveRecord::Base
   include Document
 
-  default_scope includes(cash_shift: :cash_drawer).where('cash_drawers.department_id = ?', User.current.present? ? User.current.department_id : Department.current.id)
+  # default_scope includes(cash_shift: :cash_drawer).where('cash_drawers.department_id = ?', User.current.present? ? User.current.department_id : Department.current.id)
   scope :sold_at, lambda { |period| where(date: period) }
   scope :posted, where(status: 1)
   scope :deleted, where(status: 2)

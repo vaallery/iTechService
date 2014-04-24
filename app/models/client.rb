@@ -8,7 +8,7 @@ class Client < ActiveRecord::Base
     3 => 'friend'
   }
 
-  default_scope where('clients.department_id = ?', Department.current.id)
+  # default_scope where('clients.department_id = ?', Department.current.id)
 
   scope :id_asc, order('id asc')
 
