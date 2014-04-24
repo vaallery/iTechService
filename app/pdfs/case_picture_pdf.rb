@@ -19,8 +19,8 @@ class CasePicturePdf < Prawn::Document
     @y4 = @y2 - 6.mm
     @x5 = @x1 + @r
     @x6 = @x2 - @r
-    @y5 = @y1 - @r
-    @y6 = @y2 + @r
+    @y5 = @y1 - @r + 0.5.mm
+    @y6 = @y2 + @r - 0.5.mm
 
     image = Magick::Image.read(file).first
     image.flop!
