@@ -112,15 +112,24 @@ class Product < ActiveRecord::Base
   end
 
   def remnant_s(store)
-    value = quantity_in_store store
-    if value.nil?
-      '-'
-    elsif value <= 0
+    value = quantity_in_store(store) || 0
+    if value <= 0
       'none'
     elsif value > (quantity_threshold || 0)
       'many'
     else
       'low'
+    end
+  end
+
+  def remnant_status(store)
+    value = quantity_in_store(store) || 0
+    if value <= 0
+      0
+    elsif value > (quantity_threshold || 0)
+      2
+    else
+      1
     end
   end
 

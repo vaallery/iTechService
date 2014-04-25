@@ -12,17 +12,7 @@ class RepairService < ActiveRecord::Base
   end
 
   def remnants_s(store)
-    # value = spare_parts.min {|sp| sp.remnant_s(store)}.quantity
-    # if value.nil?
-    #   '-'
-    # elsif value <= 0
-    #   'none'
-    # elsif value > (quantity_threshold || 0)
-    #   'many'
-    # else
-    #   'low'
-    # end
-    '-'
+    %w[none low many][spare_parts.map{|sp| sp.remnant_status(store)}.min]
   end
 
 end
