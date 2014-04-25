@@ -3,7 +3,7 @@ class GiftCertificate < ActiveRecord::Base
   STATUSES = %w[available issued used]
   NOMINALS = %w[1500r 3000r 5000r 10000r 15000r]
 
-  default_scope where('gift_certificates.department_id = ?', Department.current.id)
+  # default_scope where('gift_certificates.department_id = ?', Department.current.id)
 
   belongs_to :department
   has_many :payments, dependent: :nullify
