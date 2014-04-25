@@ -166,7 +166,7 @@ namespace :deploy do
 
   #before :foreman_init, 'rvm:hook'
 
-  #before :setup, 'deploy:set_rails_env'
+  before :setup, 'deploy:set_rails_env'
   #before :setup, 'deploy:starting'
   #before :setup, 'deploy:updating'
   #before :setup, 'bundler:install'
