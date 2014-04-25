@@ -12,7 +12,7 @@ class RepairService < ActiveRecord::Base
   end
 
   def remnants_s(store)
-    value = spare_parts.min {|sp| sp.quantity_in_store(store)}
+    value = spare_parts.min {|sp| sp.remnant_s(store)}.quantity
     if value.nil?
       '-'
     elsif value <= 0
@@ -22,6 +22,7 @@ class RepairService < ActiveRecord::Base
     else
       'low'
     end
+    # '-'
   end
 
 end
