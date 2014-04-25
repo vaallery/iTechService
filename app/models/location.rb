@@ -14,31 +14,31 @@ class Location < ActiveRecord::Base
   end
 
   def self.bar
-    # Location.where(code: 'bar').first_or_create(name: 'Бар')
+    Location.where(code: 'bar').first_or_create(name: 'Бар')
   end
 
   def self.content
-    # Location.where(code: 'content').first_or_create(name: 'Обновление контента')
+    Location.where(code: 'content').first_or_create(name: 'Обновление контента')
   end
 
   def self.done
-    # Location.where(code: 'done').first_or_create(name: 'Готово')
+    Location.where(code: 'done').first_or_create(name: 'Готово')
   end
 
   def self.archive
-    # Location.where(code: 'archive').first_or_create(name: 'Архив')
+    Location.where(code: 'archive').first_or_create(name: 'Архив')
   end
 
   def self.repair
-    # Location.where(code: 'repair').first_or_create(name: 'Ремонт')
+    Location.where(code: 'repair').first_or_create(name: 'Ремонт')
   end
 
   def self.warranty
-    # Location.where(code: 'warranty').first_or_create(name: 'Гарантийники')
+    Location.where(code: 'warranty').first_or_create(name: 'Гарантийники')
   end
 
   def self.popov
-    # Location.where(code: 'repair_notebooks').first_or_create(name: 'Ремонт ноутбуков')
+    Location.where(code: 'repair_notebooks').first_or_create(name: 'Ремонт ноутбуков')
   end
 
   def self.allowed_for(user, device)

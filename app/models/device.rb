@@ -8,11 +8,11 @@ class Device < ActiveRecord::Base
   scope :pending, where(done_at: nil)
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   scope :replaced, where(replaced: true)
-  scope :located_at, lambda {|location| where(location_id: location.id)}
-  scope :at_done, where(location_id: Location.done.id)
-  scope :not_at_done, where('devices.location_id <> ?', Location.done.id)
-  scope :at_archive, where(location_id: Location.archive.id)
-  scope :unarchived, where('devices.location_id <> ?', Location.archive.id)
+  # scope :located_at, lambda {|location| where(location_id: location.id)}
+  # scope :at_done, where(location_id: Location.done.id)
+  # scope :not_at_done, where('devices.location_id <> ?', Location.done.id)
+  # scope :at_archive, where(location_id: Location.archive.id)
+  # scope :unarchived, where('devices.location_id <> ?', Location.archive.id)
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
   belongs_to :department, inverse_of: :devices
