@@ -46,3 +46,4 @@ Gemfile.lock
 /doc/
 .env
 Vagrantfile
+.vagrant
