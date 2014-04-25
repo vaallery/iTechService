@@ -1001,8 +1001,8 @@ ActiveRecord::Schema.define(:version => 20140422012901) do
     t.boolean  "is_fired"
     t.string   "job_title"
     t.integer  "store_id"
-    t.integer  "department_id"
     t.integer  "session_duration"
+    t.integer  "department_id"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

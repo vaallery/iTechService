@@ -8,7 +8,7 @@ class AddDepartmentIdToDevices < ActiveRecord::Migration
     add_index :devices, :department_id
 
     Device.unscoped.find_each do |device|
-      device.update_attributes! department_id: Department.current.try(:id)
+      device.update_column :department_id, Department.current.try(:id)
     end
   end
 end
