@@ -8,7 +8,7 @@ class CasePicturePdf < Prawn::Document
     @width = 62.5.mm
     @height = 133.mm
     @depth = 12.mm
-    @r = 9.mm
+    @r = 5.mm
     @r2 = 5.mm
     @x1 = (margin_box.width - @width) / 2
     @y1 = (margin_box.height + @height) / 2
@@ -18,10 +18,10 @@ class CasePicturePdf < Prawn::Document
     @y3 = @y1 + 6.mm
     @x4 = @x2 + @depth
     @y4 = @y2 - 6.mm
-    @x5 = @x1 + @r
-    @x6 = @x2 - @r
-    @y5 = @y1 - @r + 0.5.mm
-    @y6 = @y2 + @r - 0.5.mm
+    @x5 = @x1 + 9.mm
+    @x6 = @x2 - 9.mm
+    @y5 = @y1 - @r
+    @y6 = @y2 + @r
 
     image = Magick::Image.read(file).first
     image.flop!
