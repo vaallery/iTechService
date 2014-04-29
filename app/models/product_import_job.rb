@@ -12,7 +12,7 @@ class ProductImportJob < Struct.new(:params)
       load_prices if prices_file.present?
       load_barcodes if barcodes_file.present?
     else
-      import_log << ['error', 'Store is not defined!!!']
+      import_log = ['error', 'Store is not defined!!!']
       ImportMailer.product_import_log(import_log, Time.current, :remnants).deliver
     end
   end
