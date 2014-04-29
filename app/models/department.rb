@@ -24,6 +24,14 @@ class Department < ActiveRecord::Base
     ROLES[role]
   end
 
+  def is_main?
+    role == 0
+  end
+
+  def is_branch?
+    role == 1
+  end
+
   def is_store?
     role == 2
   end
