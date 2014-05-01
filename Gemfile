@@ -37,6 +37,7 @@ gem 'grape', '~> 0.6.1'
 gem 'grape-entity', '~> 0.4.1'
 gem 'figaro'
 gem 'rmagick'
+gem 'ar-octopus'
 
 # Gems used only for assets and not required
 # in production environments by default.

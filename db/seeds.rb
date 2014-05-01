@@ -5,7 +5,7 @@ puts 'PRODUCT CATEGORIES'
 #end
 
 # Departments
-Department.where(code: 'vl').first_or_create(name: 'Владивосток', role: 0)
+Department.where(code: 'vl').first_or_create(name: 'Владивосток', role: 0, city: 'Владивосток', address: '-', contact_phone: '-', schedule: '-', url: '-')
 
 # Settings
 puts 'DEFAULT SETTINGS'
