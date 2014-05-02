@@ -1,5 +1,6 @@
 class CreateDepartments < ActiveRecord::Migration
   class Department < ActiveRecord::Base
+    attr_accessible :name, :role, :code, :url, :city, :address, :contact_phone, :schedule
   end
 
   def change
@@ -17,6 +18,6 @@ class CreateDepartments < ActiveRecord::Migration
     end
     add_index :departments, :role
     add_index :departments, :code
-    Department.where(code: ENV['DEPARTMENT_CODE'] || 'vl').first_or_create(name: ENV['DEPARTMENT_NAME'], role: ENV['DEPARTMENT_ROLE'])
+    Department.where(code: ENV['DEPARTMENT_CODE']).first_or_create(name: ENV['DEPARTMENT_NAME'] || 'Владивосток', role: ENV['DEPARTMENT_ROLE'] || 0, address: '-', contact_phone: '-', schedule: '-', url: '-')
   end
 end
