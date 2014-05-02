@@ -13,7 +13,7 @@ module DataSyncHelper
   end
 
   def data_sync_models_collection
-    (Sync::DataSyncJob::COMMON_MODELS + Sync::DataSyncJob::IMPORT_MODELS).uniq
+    Sync::DataSyncJob::COMMON_MODELS | Sync::DataSyncJob::IMPORT_MODELS
   end
 
 end

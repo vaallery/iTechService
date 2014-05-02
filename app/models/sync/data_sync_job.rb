@@ -4,7 +4,7 @@ module Sync
 
     TIME_FORMAT = '%Y.%m.%d %H:%M:%S'
     MODES = %w[clean update]
-    COMMON_MODELS = %w[Bank CaseColor CashDrawer ClientCategory Department DeviceType ProductCategory ProductGroup Product Item FeatureType Feature Location PaymentType PriceType ProductPrice ProductRelation RepairGroup SparePart Setting StolenPhone Store StoreItem StoreProduct Task User]
+    COMMON_MODELS = %w[Bank CaseColor CashDrawer ClientCategory Department DeviceType ProductCategory ProductGroup Product Item FeatureType Feature Location PaymentType PriceType ProductPrice RepairGroup SparePart Store StoreItem StoreProduct Task User]
     IMPORT_MODELS = %w[ClientCharacteristic GiftCertificate CashShift CashOperation Sale SaleItem Payment Device DeviceTask RepairTask StoreItem Client]
 
     def name
@@ -12,6 +12,7 @@ module Sync
     end
 
     def perform
+      log << ['info', "Synchronization started at #{DateTime.current.strftime(TIME_FORMAT)} with params: #{params.inspect}"]
       if Department.current.present? and Department.current.is_main?
         if remote_dep_code.present?
           if ActiveRecord::Base.configurations["remote_#{remote_dep_code}"].present?
@@ -52,18 +53,13 @@ module Sync
     end
 
     def transfer_table(model_name, direction)
-      if direction.in? [:import, :export]
+      if direction.in? [:import, :export] and model_name.in? (COMMON_MODELS | IMPORT_MODELS)
         log << ['info', "#{direction.to_s.humanize}ing #{model_name}"]
-        if direction == :import
-          src_model = remote_model model_name
-          dst_model = local_model model_name
-        else
-          src_model = local_model model_name
-          dst_model = remote_model model_name
-        end
-        dst_model.connection.execute "TRUNCATE #{dst_model.table_name} RESTART IDENTITY" if mode == 'clean'
+        @direction = direction
+        @current_model = model_name.constantize
+        dst_model.connection.execute "TRUNCATE #{@current_model.table_name} RESTART IDENTITY" if mode == 'clean'
         src_model.find_each do |src_rec|
-          src_attributes = src_rec.attributes.except 'id'
+          src_attributes = src_rec.attributes.except 'id', 'created_at', 'updated_at'
           case mode
             when 'clean'
               dst_rec = dst_model.new src_attributes
@@ -74,7 +70,7 @@ module Sync
               end
             when 'update'
               if (dst_rec = dst_model.where(id: src_rec.id).first).present?
-                if update_columns dst_rec, src_attributes
+                if dst_rec.update_attributes src_attributes
                   log << ['success', "Updated #{dst_rec.inspect}"]
                 else
                   log << ['error', "!!! Can not update #{dst_rec.inspect} with #{src_attributes}"]
@@ -98,18 +94,24 @@ module Sync
       end
     end
 
-    def local_model(model_name)
-      model_name.constantize
-      # model_class = model_name.constantize
-      # model_class.establish_connection Rails.env
-      # model_class
+    def src_model
+      @direction == :import ? remote_model : local_model
     end
 
-    def remote_model(model_name)
-      model_class = RemoteBase.new connection_name: "remote_#{remote_dep_code}", table_name: model_name.tableize
+    def dst_model
+      @direction == :export ? remote_model : local_model
+    end
+
+    def local_model#(model_name)
+      @current_model.establish_connection Rails.env
+      @current_model
+    end
+
+    def remote_model#(model_name)
+      # model_class = RemoteBase.new connection_name: "remote_#{remote_dep_code}", table_name: model_name.tableize
       # model_class = model_name.constantize
-      # model_class.establish_connection "remote_#{remote_dep_code}"
-      # model_class
+      @current_model.establish_connection "remote_#{remote_dep_code}"
+      @current_model
     end
 
     def remote_dep_code
