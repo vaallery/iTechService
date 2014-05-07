@@ -14,7 +14,8 @@ class AddUidToModels < ActiveRecord::Migration
     department_code = ENV['DEPARTMENT_CODE']
     if department_code.present?
       (TABLES + JOIN_TABLES).each do |table|
-        if column_exists? table, :id
+        # if column_exists? table, :id
+        if table.in? JOIN_TABLES
           add_column table, :uid, :string
           add_index table, :uid
         end
