@@ -5,7 +5,7 @@ class FeatureType < ActiveRecord::Base
   default_scope order('feature_types.kind asc')
   scope :ordered, order('feature_types.kind asc')
 
-  has_and_belongs_to_many :product_categories
+  has_and_belongs_to_many :product_categories, finder_sql: proc { "SELECT product_categories.* FROM product_categories INNER JOIN feature_types_product_categories ON product_categories.uid = feature_types_product_categories.product_category_id WHERE feature_types_product_categories.feature_type_id = '#{uid}'"}
   attr_accessible :name, :kind, :product_category_ids
   validates_presence_of :name, :kind
   validates_uniqueness_of :kind, unless: :is_other?

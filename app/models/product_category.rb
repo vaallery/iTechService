@@ -4,7 +4,7 @@ class ProductCategory < ActiveRecord::Base
 
   has_many :product_groups, inverse_of: :product_category
   has_many :products, inverse_of: :product_category
-  has_and_belongs_to_many :feature_types, uniq: true
+  has_and_belongs_to_many :feature_types, uniq: true, finder_sql: proc { "SELECT feature_types.* FROM feature_types INNER JOIN feature_types_product_categories ON feature_types.uid = feature_types_product_categories.feature_type_id WHERE feature_types_product_categories.product_category_id = '#{uid}'"}
   attr_accessible :name, :kind, :feature_accounting, :request_price, :warranty_term, :feature_type_ids
   validates_presence_of :name, :kind
   validates_inclusion_of :kind, in: KINDS
