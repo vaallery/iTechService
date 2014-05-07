@@ -8,7 +8,7 @@ class AddUidToModels < ActiveRecord::Migration
 
   # MODELS = %w[Bank CaseColor CashDrawer ClientCategory Department DeviceType ProductCategory ProductGroup Product Item FeatureType Feature Location PaymentType PriceType ProductPrice RepairGroup SparePart Store StoreItem StoreProduct Task User ClientCharacteristic GiftCertificate CashShift CashOperation Sale SaleItem Payment Device DeviceTask RepairTask Client]
 
-  TABLES = %w[banks case_colors cash_drawers client_categories departments device_types product_categories product_groups products items feature_types features locations payment_types price_types product_prices repair_groups spare_parts stores store_items store_products tasks users client_characteristics gift_certificates cash_shifts cash_operations sales sale_items payments devices device_tasks repair_tasks clients repair_parts repair_services]
+  TABLES = %w[banks case_colors cash_drawers cash_operations cash_shifts client_categories client_characteristics clients departments device_tasks device_types devices feature_types features gift_certificates items locations payment_types payments price_types product_categories product_groups product_prices products repair_groups repair_parts repair_services repair_tasks sale_items sales spare_parts store_items store_products stores tasks users]
 
   def up
     department_code = ENV['DEPARTMENT_CODE']
