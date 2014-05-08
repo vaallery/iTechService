@@ -5,7 +5,7 @@ module Sync
   MODES = %w[clean update]
   JOIN_TABLES = ENV['JOIN_TABLES'].split
 
-  MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory]}
+  MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory], both: %w[StoreItem]}
 
   MERGE_TABLES = {remote: %w[feature_types_product_categories price_types_stores]}
 

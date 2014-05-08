@@ -20,7 +20,7 @@ class AddUidToModels < ActiveRecord::Migration
       (COMMON_TABLES + IMPORT_TABLES).each do |table|
         # if column_exists? table, :id
         has_id = false
-        unless table.in? JOIN_TABLES
+        unless table.in? JOIN_TABLES or column_exists? table, :uid
           add_column table, :uid, :string, unique: true
           add_index table, :uid
           has_id = true
