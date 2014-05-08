@@ -4,8 +4,8 @@ class StoreItem < ActiveRecord::Base
   scope :available, where('quantity > ?', 0)
   scope :for_product, lambda { |product| includes(:item).where(items: {product_id: (product.is_a?(Product) ? product.id : product)}) }
 
-  belongs_to :item, inverse_of: :store_items
-  belongs_to :store, inverse_of: :store_items
+  belongs_to :item, inverse_of: :store_items, primary_key: :uid
+  belongs_to :store, inverse_of: :store_items, primary_key: :uid
 
   delegate :feature_accounting, :features, :name, :code, :quantity_threshold, :comment, :product, :product_group, :purchase_price, :retail_price, :features_s, to: :item, allow_nil: true
   delegate :name, :code, to: :store, prefix: true, allow_nil: true
@@ -17,6 +17,7 @@ class StoreItem < ActiveRecord::Base
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
   after_save :warn_of_low_remnants
   before_destroy :warn_of_low_remnants
+  after_create UidCallbacks
 
   def self.search(params)
     store_items = self.scoped

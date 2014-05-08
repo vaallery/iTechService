@@ -3,41 +3,40 @@ class AddUidToModels < ActiveRecord::Migration
     self.abstract_class = true
   end
 
-  # JOIN_TABLES = %w[announcements_users feature_types_product_categories price_types_stores quick_orders_quick_tasks]
+  JOIN_TABLES = ENV['JOIN_TABLES'].split
 
-  # MODELS = %w[Bank CaseColor CashDrawer ClientCategory Department DeviceType ProductCategory ProductGroup Product Item FeatureType Feature Location PaymentType PriceType ProductPrice RepairGroup SparePart Store StoreItem StoreProduct Task User ClientCharacteristic GiftCertificate CashShift CashOperation Sale SaleItem Payment Device DeviceTask RepairTask Client]
+  COMMON_TABLES = ENV['COMMON_MODELS'].split.map(&:tableize) + JOIN_TABLES
 
-  JOIN_TABLES = %w[feature_types_product_categories price_types_stores]
+  IMPORT_TABLES = ENV['IMPORT_MODELS'].split.map(&:tableize)
 
-  COMMON_TABLES = %w[banks case_colors cash_drawers client_categories departments product_categories product_groups products items feature_types features payment_types price_types product_prices repair_groups repair_services spare_parts stores store_items store_products]
+  COMMON_FOREIGN_KEYS = COMMON_TABLES.map(&:foreign_key)
 
-  IMPORT_TABLES = %w[cash_operations cash_shifts clients client_characteristics devices device_tasks device_types gift_certificates locations payments sales sale_items repair_tasks repair_parts store_items tasks users]
+  UNIQUE_FOREIGN_KEYS = IMPORT_TABLES.map(&:foreign_key)
 
-  TABLES = %w[banks case_colors cash_drawers cash_operations cash_shifts client_categories client_characteristics clients departments device_tasks device_types devices feature_types features gift_certificates items locations payment_types payments price_types product_categories product_groups product_prices products repair_groups repair_parts repair_services repair_tasks sale_items sales spare_parts store_items store_products stores tasks users]
+  FOREIGN_KEYS = COMMON_FOREIGN_KEYS + UNIQUE_FOREIGN_KEYS + %w[performer_id]
 
   def up
-    department_code = ENV['DEPARTMENT_CODE']
-    if department_code.present?
-      tables = COMMON_TABLES + IMPORT_TABLES
-      tables.each do |table|
+    if (department_code = ENV['DEPARTMENT_CODE']).present?
+      (COMMON_TABLES + IMPORT_TABLES).each do |table|
         # if column_exists? table, :id
+        has_id = false
         unless table.in? JOIN_TABLES
-          add_column table, :uid, :string
+          add_column table, :uid, :string, unique: true
           add_index table, :uid
+          has_id = true
         end
         Model.table_name = table
         Model.reset_column_information
-        foreign_keys = columns(table).keep_if{|c|c.name.ends_with?('_id')}.map(&:name)
+        foreign_keys = columns(table).keep_if{|c|c.name.ends_with?('_id')}.map(&:name) & FOREIGN_KEYS
         foreign_keys.each do |fk|
           change_column table, fk, :string
         end
-        has_id = column_exists?(table, :uid) and column_exists?(table, :id)
         Model.reset_column_information
         Model.all.each do |r|
-          r.update_column :uid, "#{department_code}#{r.id}" if has_id
+          r.update_column :uid, "#{department_code if table.in?(IMPORT_TABLES)}#{r.id}" if has_id
           foreign_keys.each do |fk|
             fid = r.send(fk)
-            r.update_column fk, "#{department_code}#{fid}" if fid.present?
+            r.update_column fk, "#{department_code if fk.in?(UNIQUE_FOREIGN_KEYS)}#{fid}" if fid.present?
           end
         end
       end
@@ -93,23 +92,20 @@ class AddUidToModels < ActiveRecord::Migration
   # end
 
   def down
-    department_code = ENV['DEPARTMENT_CODE']
-    if department_code.present?
-      (TABLES + JOIN_TABLES).each do |table|
-        remove_column table, :uid if column_exists? table, :uid
-        remove_index table, :uid if index_exists? table, :uid
-        Model.table_name = table
-        Model.reset_column_information
-        foreign_keys = Model.columns.keep_if{|c|c.name.ends_with?('_id')}.map(&:name)
-        Model.reset_column_information
-        Model.all.each do |r|
-          foreign_keys.each do |fk|
-            r.update_column fk, "#{r.send(fk)}"[/\d/]
-          end
-        end
+    (COMMON_TABLES + IMPORT_TABLES).each do |table|
+      remove_column table, :uid if column_exists? table, :uid
+      remove_index table, :uid if index_exists? table, :uid
+      Model.table_name = table
+      Model.reset_column_information
+      foreign_keys = Model.columns.keep_if{|c|c.name.ends_with?('_id')}.map(&:name) & FOREIGN_KEYS
+      Model.reset_column_information
+      Model.all.each do |r|
         foreign_keys.each do |fk|
-          change_column table, fk, "integer USING CAST(#{fk} AS integer)"
+          r.update_column fk, "#{r.send(fk)}"[/\d/]
         end
+      end
+      foreign_keys.each do |fk|
+        change_column table, fk, "integer USING CAST(#{fk} AS integer)"
       end
     end
   end

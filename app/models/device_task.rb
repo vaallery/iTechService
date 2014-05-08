@@ -6,12 +6,13 @@ class DeviceTask < ActiveRecord::Base
   scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
   scope :paid, where('device_tasks.cost > 0')
 
-  belongs_to :device
-  belongs_to :task
-  belongs_to :performer, class_name: 'User'
+  belongs_to :device, primary_key: :uid
+  belongs_to :task, primary_key: :uid
+  belongs_to :performer, class_name: 'User', primary_key: :uid
   has_many :history_records, as: :object
-  has_many :repair_tasks
-  has_many :repair_parts, through: :repair_tasks
+  has_many :repair_tasks, primary_key: :uid
+  has_many :repair_parts, through: :repair_tasks, primary_key: :uid
+
   accepts_nested_attributes_for :device, reject_if: proc { |attr| attr['tech_notice'].blank? }
   accepts_nested_attributes_for :repair_tasks, allow_destroy: true
 
@@ -29,6 +30,7 @@ class DeviceTask < ActiveRecord::Base
   after_save :deduct_spare_parts if :is_repair?
   after_initialize { self.done ||= false }
   after_initialize :set_performer
+  after_create UidCallbacks
 
   before_save do |dt|
     old_done = changed_attributes['done']

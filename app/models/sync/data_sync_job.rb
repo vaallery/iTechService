@@ -1,17 +1,19 @@
 module Sync
 
+  TIME_FORMAT = '%Y.%m.%d %H:%M:%S'
+  ACTIONS = %w[import export sync merge]
+  MODES = %w[clean update]
+  JOIN_TABLES = ENV['JOIN_TABLES'].split
+
+  MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory]}
+
+  MERGE_TABLES = {remote: %w[feature_types_product_categories price_types_stores]}
+
+  COMMON_MODELS = ENV['COMMON_MODELS'].split
+
+  IMPORT_MODELS = ENV['IMPORT_MODELS'].split
+
   class DataSyncJob < Struct.new(:params)
-
-    TIME_FORMAT = '%Y.%m.%d %H:%M:%S'
-    ACTIONS = %w[import export sync merge]
-    MODES = %w[clean update]
-    JOIN_TABLES = %w[feature_types_product_categories price_types_stores]
-
-    MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory]}
-
-    COMMON_MODELS = %w[Bank CaseColor CashDrawer ClientCategory Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct]
-
-    IMPORT_MODELS = %w[CashOperation CashShift Client ClientCharacteristic Device DeviceTask DeviceType GiftCertificate Location Payment Sale SaleItem RepairTask RepairPart StoreItem Task User]
 
     def name
       "Data sync {#{params.inspect}}"

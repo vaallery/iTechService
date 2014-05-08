@@ -10,6 +10,7 @@ class FeatureType < ActiveRecord::Base
   validates_presence_of :name, :kind
   validates_uniqueness_of :kind, unless: :is_other?
   validates_inclusion_of :kind, in: KINDS
+  after_create UidCallbacks
 
   def is_imei?
     kind == 'imei'

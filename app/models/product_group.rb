@@ -10,8 +10,8 @@ class ProductGroup < ActiveRecord::Base
   scope :spare_parts, joins(:product_category).where(product_categories: {kind: 'spare_part'})
   scope :for_purchase, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector spare_part]})
 
-  belongs_to :product_category
-  has_many :products, inverse_of: :product_group
+  belongs_to :product_category, primary_key: :uid
+  has_many :products, inverse_of: :product_group, primary_key: :uid
   has_many :product_relations, as: :parent, dependent: :destroy
   has_many :related_products, through: :product_relations, source: :relatable, source_type: 'Product'
   has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'
@@ -21,6 +21,7 @@ class ProductGroup < ActiveRecord::Base
   delegate :kind, to: :product_category, prefix: :category, allow_nil: true
   attr_accessible :code, :name, :ancestry, :parent_id, :product_category_id, :related_product_ids, :related_product_group_ids
   validates_presence_of :name, :product_category
+  after_create UidCallbacks
 
   after_initialize do |product_group|
     product_group.parent_id = nil if product_group.parent_id.blank?

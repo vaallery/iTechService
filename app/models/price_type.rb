@@ -9,11 +9,11 @@ class PriceType < ActiveRecord::Base
   has_many :product_prices, inverse_of: :price_type, primary_key: :uid
   has_many :revaluation_acts, inverse_of: :price_type
   has_and_belongs_to_many :stores, finder_sql: proc { "SELECT stores.* FROM stores INNER JOIN price_types_stores ON stores.uid = price_types_stores.store_id WHERE price_types_stores.price_type_id = '#{uid}'"}
-
   attr_accessible :name, :kind
   validates_presence_of :name, :kind
   validates_inclusion_of :kind, in: KINDS.keys
   validates_uniqueness_of :kind
+  after_create UidCallbacks
 
   def kind_s
     KINDS[kind]

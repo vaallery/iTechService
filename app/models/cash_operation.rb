@@ -3,8 +3,9 @@ class CashOperation < ActiveRecord::Base
   # default_scope includes(cash_shift: :cash_drawer).where('cash_drawers.department_id = ?', Department.current.id)
   scope :created_desc, order('created_at desc')
 
-  belongs_to :cash_shift, inverse_of: :cash_operations
-  belongs_to :user
+  belongs_to :cash_shift, inverse_of: :cash_operations, primary_key: :uid
+  belongs_to :user, primary_key: :uid
+
   delegate :short_name, to: :user, prefix: true, allow_nil: true
 
   attr_accessible :is_out, :value, :comment

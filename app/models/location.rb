@@ -3,11 +3,13 @@ class Location < ActiveRecord::Base
   #default_scope order('position asc')
   scope :sorted, order('position asc')
   scope :for_schedule, where(schedule: true)
-  has_many :users
-  has_many :tasks
+
+  has_many :users, primary_key: :uid
+  has_many :tasks, primary_key: :uid
 
   attr_accessible :name, :schedule, :position, :code
   validates_presence_of :name
+  after_create UidCallbacks
 
   def full_name
     path.all.map{|l|l.name}.join ' / '

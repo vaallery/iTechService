@@ -9,14 +9,15 @@ class Sale < ActiveRecord::Base
   scope :returning, where(is_return: true)
   scope :selling, where(is_return: false)
 
-  belongs_to :user, inverse_of: :sales
-  belongs_to :client, inverse_of: :sales
-  belongs_to :store
-  belongs_to :cash_shift, inverse_of: :sales
-  has_many :sale_items, inverse_of: :sale, dependent: :destroy
-  has_many :items, through: :sale_items
-  has_many :payments, inverse_of: :sale, dependent: :destroy
-  has_one :device, inverse_of: :sale
+  belongs_to :user, inverse_of: :sales, primary_key: :uid
+  belongs_to :client, inverse_of: :sales, primary_key: :uid
+  belongs_to :store, primary_key: :uid
+  belongs_to :cash_shift, inverse_of: :sales, primary_key: :uid
+  has_many :sale_items, inverse_of: :sale, dependent: :destroy, primary_key: :uid
+  has_many :items, through: :sale_items, primary_key: :uid
+  has_many :payments, inverse_of: :sale, dependent: :destroy, primary_key: :uid
+  has_one :device, inverse_of: :sale, primary_key: :uid
+
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda{|a| a[:id].blank? and a[:item_id].blank?}
   accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: lambda{|a| a[:value].blank?}
 
@@ -33,6 +34,7 @@ class Sale < ActiveRecord::Base
   validates_associated :payments, :sale_items
   before_validation :set_user_and_cash_shift
   after_initialize :set_user_and_cash_shift
+  after_create UidCallbacks
 
   after_initialize do
     self.date ||= DateTime.current

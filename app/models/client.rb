@@ -12,8 +12,8 @@ class Client < ActiveRecord::Base
 
   scope :id_asc, order('id asc')
 
-  belongs_to :department
-  belongs_to :client_characteristic
+  belongs_to :department, primary_key: :uid
+  belongs_to :client_characteristic, primary_key: :uid
   has_many :devices, inverse_of: :client, dependent: :destroy, primary_key: :uid
   has_many :orders, as: :customer, dependent: :destroy
   has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify, primary_key: :uid

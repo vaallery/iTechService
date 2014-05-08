@@ -9,19 +9,19 @@ class Product < ActiveRecord::Base
   scope :services, joins(product_group: :product_category).where(product_categories: {kind: 'service'})
   scope :spare_parts, joins(product_group: :product_category).where(product_categories: {kind: 'spare_part'})
 
-  belongs_to :product_category, inverse_of: :products
-  belongs_to :product_group, inverse_of: :products
-  belongs_to :device_type, inverse_of: :product
-  has_many :items, inverse_of: :product, dependent: :destroy
-  has_many :prices, class_name: 'ProductPrice', inverse_of: :product, dependent: :destroy
-  has_many :store_items, through: :items, dependent: :destroy
+  belongs_to :product_category, inverse_of: :products, primary_key: :uid
+  belongs_to :product_group, inverse_of: :products, primary_key: :uid
+  belongs_to :device_type, inverse_of: :product, primary_key: :uid
+  has_many :items, inverse_of: :product, dependent: :destroy, primary_key: :uid
+  has_many :prices, class_name: 'ProductPrice', inverse_of: :product, dependent: :destroy, primary_key: :uid
+  has_many :store_items, through: :items, dependent: :destroy, primary_key: :uid
   has_many :revaluations, inverse_of: :product, dependent: :destroy
-  has_one :task, inverse_of: :product, dependent: :nullify
+  has_one :task, inverse_of: :product, dependent: :nullify, primary_key: :uid
   has_many :product_relations, as: :parent, dependent: :destroy
   has_many :related_products, through: :product_relations, source: :relatable, source_type: 'Product'
   has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'
-  has_many :store_products, dependent: :destroy
-  has_many :spare_parts, dependent: :destroy
+  has_many :store_products, dependent: :destroy, primary_key: :uid
+  has_many :spare_parts, dependent: :destroy, primary_key: :uid
   has_one :top_salable, dependent: :nullify
 
   accepts_nested_attributes_for :items, allow_destroy: true
@@ -38,6 +38,7 @@ class Product < ActiveRecord::Base
   validates_presence_of :name, :code, :product_group, :product_category
   #validates_presence_of :device_type, if: :is_equipment
   validates_uniqueness_of :code
+  after_create UidCallbacks
   after_initialize do
     self.warranty_term ||= default_warranty_term
     self.product_category_id ||= product_group.try(:product_category).try(:id)

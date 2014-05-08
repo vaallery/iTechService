@@ -15,21 +15,23 @@ class Device < ActiveRecord::Base
   scope :unarchived, where('devices.location_id <> ?', Location.archive.id)
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
-  belongs_to :department, inverse_of: :devices
-  belongs_to :user, inverse_of: :devices
-  belongs_to :client, inverse_of: :devices
-  belongs_to :device_type
-  belongs_to :item
-  belongs_to :location
-  belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
-  belongs_to :sale, inverse_of: :device
-  belongs_to :case_color
-  has_many :device_tasks, dependent: :destroy
+  belongs_to :department, inverse_of: :devices, primary_key: :uid
+  belongs_to :user, inverse_of: :devices, primary_key: :uid
+  belongs_to :client, inverse_of: :devices, primary_key: :uid
+  belongs_to :device_type, primary_key: :uid
+  belongs_to :item, primary_key: :uid
+  belongs_to :location, primary_key: :uid
+  belongs_to :receiver, class_name: 'User', foreign_key: 'user_id', primary_key: :uid
+  belongs_to :sale, inverse_of: :device, primary_key: :uid
+  belongs_to :case_color, primary_key: :uid
+  has_many :device_tasks, dependent: :destroy, primary_key: :uid
   has_many :tasks, through: :device_tasks
   has_many :repair_tasks, through: :device_tasks
   has_many :repair_parts, through: :repair_tasks
   has_many :history_records, as: :object, dependent: :destroy
+
   accepts_nested_attributes_for :device_tasks
+
   delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :department, prefix: true
   delegate :name, to: :location, prefix: true, allow_nil: true
@@ -51,6 +53,7 @@ class Device < ActiveRecord::Base
   after_update :device_update_announce
   after_create :new_device_announce
   after_create :create_alert
+  after_create UidCallbacks
   after_initialize :set_user_and_location
   after_initialize :set_contact_phone
 

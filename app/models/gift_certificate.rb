@@ -5,15 +5,17 @@ class GiftCertificate < ActiveRecord::Base
 
   # default_scope where('gift_certificates.department_id = ?', Department.current.id)
 
-  belongs_to :department
-  has_many :payments, dependent: :nullify
-  has_many :history_records, as: :object, dependent: :destroy
+  belongs_to :department, primary_key: :uid
+  has_many :payments, dependent: :nullify, primary_key: :uid
+  has_many :history_records, as: :object, dependent: :destroy, primary_key: :uid
 
   attr_accessible :number, :nominal, :status, :consumed, :consume, :department_id
   validates :number, presence: true, uniqueness: {case_sensitive: false}
   before_validation { |cert| cert.status ||= 0 }
   before_validation :validate_consumption
   before_validation :validate_status, on: :update
+  after_create UidCallbacks
+
   after_initialize do
     department_id ||= Department.current.id
     if nominal && nominal < 5

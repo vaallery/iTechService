@@ -33,25 +33,25 @@ class User < ActiveRecord::Base
   scope :exclude, lambda { |user| where('id <> ?', user.is_a?(User) ? user.id : user) }
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
-  belongs_to :location
-  belongs_to :department
-  has_many :history_records, as: :object, dependent: :nullify, primary_key: :uid
-  has_many :schedule_days, dependent: :destroy, primary_key: :uid
-  has_many :duty_days, dependent: :destroy, primary_key: :uid
-  has_many :orders, as: :customer, dependent: :nullify, primary_key: :uid
-  has_many :announcements, inverse_of: :user, dependent: :destroy, primary_key: :uid
-  has_many :comments, dependent: :destroy, primary_key: :uid
+  belongs_to :location, primary_key: :uid
+  belongs_to :department, primary_key: :uid
+  has_many :history_records, as: :object, dependent: :nullify
+  has_many :schedule_days, dependent: :destroy
+  has_many :duty_days, dependent: :destroy
+  has_many :orders, as: :customer, dependent: :nullify
+  has_many :announcements, inverse_of: :user, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :devices, inverse_of: :user, primary_key: :uid
-  has_many :karmas, dependent: :destroy, inverse_of: :user, primary_key: :uid
-  has_many :karma_groups, through: :karmas, uniq: true, primary_key: :uid
-  has_many :bonuses, through: :karma_groups, uniq: true, primary_key: :uid
-  has_many :messages, dependent: :destroy, primary_key: :uid
-  has_many :infos, inverse_of: :recipient, dependent: :destroy, primary_key: :uid
-  has_many :salaries, inverse_of: :user, dependent: :destroy, primary_key: :uid
-  has_many :timesheet_days, inverse_of: :user, dependent: :destroy, primary_key: :uid
-  has_many :installment_plans, inverse_of: :user, dependent: :destroy, primary_key: :uid
+  has_many :karmas, dependent: :destroy, inverse_of: :user
+  has_many :karma_groups, through: :karmas, uniq: true
+  has_many :bonuses, through: :karma_groups, uniq: true
+  has_many :messages, dependent: :destroy
+  has_many :infos, inverse_of: :recipient, dependent: :destroy
+  has_many :salaries, inverse_of: :user, dependent: :destroy
+  has_many :timesheet_days, inverse_of: :user, dependent: :destroy
+  has_many :installment_plans, inverse_of: :user, dependent: :destroy
   has_many :sales, inverse_of: :user, dependent: :nullify, primary_key: :uid
-  has_many :movement_acts, dependent: :nullify, primary_key: :uid
+  has_many :movement_acts, dependent: :nullify
   has_many :stores, through: :department, primary_key: :uid
   has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users', uniq: true
 
@@ -79,6 +79,7 @@ class User < ActiveRecord::Base
   validates_numericality_of :session_duration, only_integer: true, greater_than: 0, allow_nil: true
   before_validation :validate_rights_changing
   before_save :ensure_authentication_token
+  after_create UidCallbacks
 
   acts_as_list
 
