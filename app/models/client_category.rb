@@ -1,10 +1,7 @@
 class ClientCategory < ActiveRecord::Base
+  default_scope order('id asc')
   attr_accessible :color, :name
   validates_presence_of :name
-  default_scope order('id asc')
-
-  after_initialize do
-    self.color ||= '#ffffff'
-  end
-
+  after_initialize { color ||= '#ffffff' }
+  after_create UidCallbacks
 end

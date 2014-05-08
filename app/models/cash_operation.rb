@@ -13,6 +13,7 @@ class CashOperation < ActiveRecord::Base
   validates_numericality_of :value, greater_than: 0
   before_validation :set_user_and_cash_shift
   after_initialize :set_user_and_cash_shift
+  after_create UidCallbacks
 
   def kind
     is_out ? 'cash_out' : 'cash_in'

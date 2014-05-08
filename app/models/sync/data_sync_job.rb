@@ -5,9 +5,13 @@ module Sync
     TIME_FORMAT = '%Y.%m.%d %H:%M:%S'
     ACTIONS = %w[import export sync merge]
     MODES = %w[clean update]
-    COMMON_TABLES = %w[feature_types_product_categories price_types_stores]
-    COMMON_MODELS = %w[Bank CaseColor CashDrawer ClientCategory Department DeviceType ProductCategory ProductGroup Product Item FeatureType Feature Location PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct Task User] + %w[FeatureTypesProductCategories PriceTypesStores]
-    IMPORT_MODELS = %w[CashOperation CashShift Client ClientCharacteristic Device DeviceTask GiftCertificate Payment Sale SaleItem RepairTask RepairPart StoreItem]
+    JOIN_TABLES = %w[feature_types_product_categories price_types_stores]
+
+    MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory]}
+
+    COMMON_MODELS = %w[Bank CaseColor CashDrawer ClientCategory Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct]
+
+    IMPORT_MODELS = %w[CashOperation CashShift Client ClientCharacteristic Device DeviceTask DeviceType GiftCertificate Location Payment Sale SaleItem RepairTask RepairPart StoreItem Task User]
 
     def name
       "Data sync {#{params.inspect}}"

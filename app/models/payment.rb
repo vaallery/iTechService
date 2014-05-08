@@ -10,7 +10,7 @@ class Payment < ActiveRecord::Base
   scope :trade_in, where(kind: 'trade_in')
 
   belongs_to :sale, inverse_of: :payments
-  belongs_to :bank
+  belongs_to :bank, primary_key: :uid
   belongs_to :gift_certificate
 
   delegate :balance, :nominal, :number, to: :gift_certificate, prefix: true, allow_nil: true

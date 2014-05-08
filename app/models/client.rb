@@ -14,13 +14,13 @@ class Client < ActiveRecord::Base
 
   belongs_to :department
   belongs_to :client_characteristic
-  has_many :devices, inverse_of: :client, dependent: :destroy
+  has_many :devices, inverse_of: :client, dependent: :destroy, primary_key: :uid
   has_many :orders, as: :customer, dependent: :destroy
-  has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
+  has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify, primary_key: :uid
   has_many :history_records, as: :object
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :sale_items, through: :purchases
-  has_many :sales, inverse_of: :client, dependent: :nullify
+  has_many :sales, inverse_of: :client, dependent: :nullify, primary_key: :uid
 
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
   accepts_nested_attributes_for :client_characteristic, allow_destroy: true
@@ -35,6 +35,7 @@ class Client < ActiveRecord::Base
   validates_inclusion_of :category, in: CATEGORIES.keys
   validates_associated :comments
   validates_associated :client_characteristic
+  after_create UidCallbacks
   before_destroy :send_mail
 
   after_initialize do

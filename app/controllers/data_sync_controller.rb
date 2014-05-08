@@ -12,11 +12,14 @@ class DataSyncController < ApplicationController
 
   def perform
     if Department.current.is_main? and current_user.able_to?(:sync_data)
-      # Delayed::Job.enqueue Sync::DataSyncJob.new params[:data_sync]
-      # redirect_to data_sync_path, notice: 'Sync performed...'
-      @data_sync_job = Sync::DataSyncJob.new(params[:data_sync])
-      @data_sync_job.perform
-      render 'log'
+      if Rails.env.development?
+        @data_sync_job = Sync::DataSyncJob.new(params[:data_sync])
+        @data_sync_job.perform
+        render 'log'
+      else
+        Delayed::Job.enqueue Sync::DataSyncJob.new params[:data_sync]
+        redirect_to data_sync_path, notice: 'Sync performed...'
+      end
     else
       redirect_to root_path, error: 'Access denied'
     end

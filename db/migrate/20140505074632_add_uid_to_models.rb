@@ -3,19 +3,25 @@ class AddUidToModels < ActiveRecord::Migration
     self.abstract_class = true
   end
 
-  JOIN_TABLES = %w[feature_types_product_categories price_types_stores]
   # JOIN_TABLES = %w[announcements_users feature_types_product_categories price_types_stores quick_orders_quick_tasks]
 
   # MODELS = %w[Bank CaseColor CashDrawer ClientCategory Department DeviceType ProductCategory ProductGroup Product Item FeatureType Feature Location PaymentType PriceType ProductPrice RepairGroup SparePart Store StoreItem StoreProduct Task User ClientCharacteristic GiftCertificate CashShift CashOperation Sale SaleItem Payment Device DeviceTask RepairTask Client]
+
+  JOIN_TABLES = %w[feature_types_product_categories price_types_stores]
+
+  COMMON_TABLES = %w[banks case_colors cash_drawers client_categories departments product_categories product_groups products items feature_types features payment_types price_types product_prices repair_groups repair_services spare_parts stores store_items store_products]
+
+  IMPORT_TABLES = %w[cash_operations cash_shifts clients client_characteristics devices device_tasks device_types gift_certificates locations payments sales sale_items repair_tasks repair_parts store_items tasks users]
 
   TABLES = %w[banks case_colors cash_drawers cash_operations cash_shifts client_categories client_characteristics clients departments device_tasks device_types devices feature_types features gift_certificates items locations payment_types payments price_types product_categories product_groups product_prices products repair_groups repair_parts repair_services repair_tasks sale_items sales spare_parts store_items store_products stores tasks users]
 
   def up
     department_code = ENV['DEPARTMENT_CODE']
     if department_code.present?
-      (TABLES + JOIN_TABLES).each do |table|
+      tables = COMMON_TABLES + IMPORT_TABLES
+      tables.each do |table|
         # if column_exists? table, :id
-        if table.in? JOIN_TABLES
+        unless table.in? JOIN_TABLES
           add_column table, :uid, :string
           add_index table, :uid
         end
