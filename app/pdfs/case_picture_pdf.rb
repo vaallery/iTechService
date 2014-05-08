@@ -3,11 +3,20 @@ require 'RMagick'
 class CasePicturePdf < Prawn::Document
   require 'prawn/measurement_extensions'
 
-  def initialize(file, is_contour)
+  def initialize(file, params)
     super page_size: 'A4', page_layout: :portrait
-    @width = 62.5.mm
-    @height = 133.mm
-    @depth = 12.mm
+    is_contour = params[:contour]
+    model = params[:model]
+    case model
+      when 'iphone4'
+        @width = 62.5.mm
+        @height = 117.5.mm # to correct
+        @depth = 13.mm
+      else
+        @width = 62.5.mm
+        @height = 133.mm
+        @depth = 12.mm
+    end
     @r = 5.mm
     @r2 = 5.mm
     @x1 = (margin_box.width - @width) / 2

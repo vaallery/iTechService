@@ -3,6 +3,8 @@
 
 = form_tag case_pictures_path, method: :post, multipart: true do
   = file_field_tag :file, accept: 'image/png,image/jpeg'
+  %br
+  = select_tag :model, options_for_select([['iPhone 5', 'iphone5'], ['iPhone 4', 'iphone4']])
   %label.checkbox
     = check_box_tag :countour
     = t '.contour'
