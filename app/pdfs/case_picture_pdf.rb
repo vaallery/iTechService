@@ -10,7 +10,7 @@ class CasePicturePdf < Prawn::Document
     case model
       when 'iphone4'
         @width = 62.5.mm
-        @height = 117.5.mm # to correct
+        @height = 124.mm #117.5.mm # to correct
         @depth = 13.mm
       else
         @width = 62.5.mm
