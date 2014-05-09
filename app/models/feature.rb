@@ -13,6 +13,7 @@ class Feature < ActiveRecord::Base
   def as_json(options={})
     {
       id: id,
+      uid: uid,
       kind: kind,
       name: name,
       value: value

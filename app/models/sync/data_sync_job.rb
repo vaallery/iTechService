@@ -4,14 +4,11 @@ module Sync
   ACTIONS = %w[import export sync merge]
   MODES = %w[clean update]
   JOIN_TABLES = ENV['JOIN_TABLES'].split
+  MERGE_TABLES = {remote: %w[feature_types_product_categories price_types_stores]}
+  COMMON_MODELS = ENV['COMMON_MODELS'].split
+  IMPORT_MODELS = ENV['IMPORT_MODELS'].split
 
   MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory], both: %w[StoreItem]}
-
-  MERGE_TABLES = {remote: %w[feature_types_product_categories price_types_stores]}
-
-  COMMON_MODELS = ENV['COMMON_MODELS'].split
-
-  IMPORT_MODELS = ENV['IMPORT_MODELS'].split
 
   class DataSyncJob < Struct.new(:params)
 

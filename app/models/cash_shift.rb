@@ -22,7 +22,7 @@ class CashShift < ActiveRecord::Base
       sales.unposted.destroy_all
       update_attribute :is_closed, true
       update_attribute :closed_at, DateTime.current
-      update_attribute :user_id, User.current
+      update_attribute :user_id, User.current.uid
     end
   end
 
@@ -32,7 +32,7 @@ class CashShift < ActiveRecord::Base
 
   def sales_total_by_kind(is_return=false)
     res = []
-    sale_ids = sales.posted.where(is_return: is_return).map(&:id)
+    sale_ids = sales.posted.where(is_return: is_return).map(&:uid)
     Payment::KINDS.each do |kind|
       value = Payment.where(kind: kind, sale_id: sale_ids).sum(:value)
       res << [kind, value]
@@ -54,8 +54,8 @@ class CashShift < ActiveRecord::Base
 
   def encashments_by_kind
     res = []
-    sale_ids = sales.posted.selling.map(&:id)
-    return_ids = sales.posted.returning.map(&:id)
+    sale_ids = sales.posted.selling.map(&:uid)
+    return_ids = sales.posted.returning.map(&:uid)
     Payment::KINDS.each do |kind|
       value = Payment.where(kind: kind, sale_id: sale_ids).sum(:value) - Payment.where(kind: kind, sale_id: return_ids).sum(:value)
       value = value + cash_operations_balance if kind == 'cash'

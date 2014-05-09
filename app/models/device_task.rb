@@ -36,7 +36,7 @@ class DeviceTask < ActiveRecord::Base
     old_done = changed_attributes['done']
     if dt.done and (!old_done or old_done.nil?)
       dt.done_at = DateTime.current
-      dt.performer_id = User.current.try(:id)
+      dt.performer_id = User.current.try(:uid)
     elsif !dt.done and old_done
       dt.done_at = nil
     end
@@ -45,6 +45,7 @@ class DeviceTask < ActiveRecord::Base
   def as_json(options={})
     {
       id: id,
+      uid: uid,
       name: name,
       done: done,
       cost: cost,
@@ -129,7 +130,7 @@ class DeviceTask < ActiveRecord::Base
   def set_performer
     if performer_id.nil? and done and (user = history_records.task_completions.order_by_newest.where(new_value: true).first.try(:user)).present?
     #if done and (user = history_records.task_completions.where(user_id: 1..10000).order_by_newest.first.user).present?
-      update_attribute :performer_id, user.id
+      update_attribute :performer_id, user.uid
     end
   end
 

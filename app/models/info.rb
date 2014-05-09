@@ -25,7 +25,7 @@ class Info < ActiveRecord::Base
   validates :title, :content, presence: true
   validates_associated :comments
   after_initialize do
-    department_id ||= Department.current.id
+    department_id ||= Department.current.uid
   end
 
   def comment=(content)

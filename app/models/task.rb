@@ -17,11 +17,11 @@ class Task < ActiveRecord::Base
 
   after_create UidCallbacks
 
-  after_initialize do
-    if persisted? and product.nil?
-      update_attribute :product_id, create_product(name: name, code: "task#{id}", product_group_id: ProductGroup.services.first_or_create(name: 'Services', product_category_id: ProductCategory.where(kind: 'service').first_or_create(name: 'Service', kind: 'service').id).id).id
-    end
-  end
+  # after_initialize do
+  #   if persisted? and product.nil?
+  #     update_attribute :product_id, create_product(name: name, code: "task#{id}", product_group_id: ProductGroup.services.first_or_create(name: 'Services', product_category_id: ProductCategory.where(kind: 'service').first_or_create(name: 'Service', kind: 'service').uid).uid).uid
+  #   end
+  # end
 
   def is_important?
     priority > IMPORTANCE_BOUND

@@ -8,11 +8,11 @@ class Device < ActiveRecord::Base
   scope :pending, where(done_at: nil)
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   scope :replaced, where(replaced: true)
-  scope :located_at, lambda {|location| where(location_id: location.id)}
-  scope :at_done, where(location_id: Location.done.id)
-  scope :not_at_done, where('devices.location_id <> ?', Location.done.id)
-  scope :at_archive, where(location_id: Location.archive.id)
-  scope :unarchived, where('devices.location_id <> ?', Location.archive.id)
+  scope :located_at, lambda {|location| where(location_id: location.uid)}
+  scope :at_done, where(location_id: Location.done.uid)
+  scope :not_at_done, where('devices.location_id <> ?', Location.done.uid)
+  scope :at_archive, where(location_id: Location.archive.uid)
+  scope :unarchived, where('devices.location_id <> ?', Location.archive.uid)
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
   belongs_to :department, inverse_of: :devices, primary_key: :uid
@@ -60,6 +60,7 @@ class Device < ActiveRecord::Base
   def as_json(options={})
     {
       id: id,
+      uid: uid,
       ticket_number: ticket_number,
       user_name: user_short_name,
       device_type: type_name,
@@ -245,14 +246,14 @@ class Device < ActiveRecord::Base
   end
 
   def create_filled_sale
-    sale_attributes = { client_id: client_id, store_id: User.current.retail_store.id, sale_items_attributes: {} }
+    sale_attributes = { client_id: client_id, store_id: User.current.retail_store.uid, sale_items_attributes: {} }
     device_tasks.paid.each_with_index do |device_task, index|
-      sale_item_attributes = {item_id: device_task.item.id, price: device_task.cost.to_f, quantity: 1}
+      sale_item_attributes = {item_id: device_task.item.uid, price: device_task.cost.to_f, quantity: 1}
       sale_attributes[:sale_items_attributes].store index.to_s, sale_item_attributes
       #new_sale.sale_items.build item_id: device_task.item.id, price: device_task.cost, quantity: 1
     end
     new_sale = create_sale sale_attributes
-    update_attribute :sale_id, new_sale.id
+    update_attribute :sale_id, new_sale.uid
     new_sale
   end
 
@@ -294,8 +295,8 @@ class Device < ActiveRecord::Base
 
   def set_user_and_location
     self.location_id ||= User.try(:current).try(:location_id)
-    self.user_id ||= User.try(:current).try(:id)
-    self.department_id ||= Department.current.try(:id)
+    self.user_id ||= User.try(:current).try(:uid)
+    self.department_id ||= Department.current.try(:uid)
   end
 
   def validate_location

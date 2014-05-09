@@ -1,14 +1,14 @@
 class StoreItem < ActiveRecord::Base
 
-  scope :in_store, lambda { |store| where(store_id: store.is_a?(Store) ? store.id : store) }
+  scope :in_store, lambda { |store| where(store_id: store.is_a?(Store) ? store.uid : store) }
   scope :available, where('quantity > ?', 0)
-  scope :for_product, lambda { |product| includes(:item).where(items: {product_id: (product.is_a?(Product) ? product.id : product)}) }
+  scope :for_product, lambda { |product| includes(:item).where(items: {product_id: (product.is_a?(Product) ? product.uid : product)}) }
 
   belongs_to :item, inverse_of: :store_items, primary_key: :uid
   belongs_to :store, inverse_of: :store_items, primary_key: :uid
 
-  delegate :feature_accounting, :features, :name, :code, :quantity_threshold, :comment, :product, :product_group, :purchase_price, :retail_price, :features_s, to: :item, allow_nil: true
   delegate :name, :code, to: :store, prefix: true, allow_nil: true
+  delegate :feature_accounting, :features, :name, :code, :quantity_threshold, :comment, :product, :product_group, :purchase_price, :retail_price, :features_s, to: :item, allow_nil: true
 
   attr_accessible :item_id, :store_id, :quantity
   validates_presence_of :item, :store, :quantity
@@ -45,13 +45,13 @@ class StoreItem < ActiveRecord::Base
 
   def move_to(dst_store, amount=0)
     if feature_accounting
-      update_attribute :store_id, dst_store.id
+      update_attribute :store_id, dst_store.uid
     else
       dec amount
-      if (store_item = StoreItem.find_by_item_id_and_store_id(item_id, dst_store.id)).present?
+      if (store_item = StoreItem.find_by_item_id_and_store_id(item_id, dst_store.uid)).present?
         store_item.add amount
       else
-        StoreItem.create store_id: dst_store.id, item_id: item_id, quantity: amount
+        StoreItem.create store_id: dst_store.uid, item_id: item_id, quantity: amount
       end
     end
   end

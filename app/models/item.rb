@@ -2,7 +2,7 @@ require 'barby/barcode/ean_13'
 class Item < ActiveRecord::Base
 
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
-  scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
+  scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.uid : store}) }
 
   belongs_to :product, inverse_of: :items, primary_key: :uid
   has_many :store_items, inverse_of: :item, dependent: :destroy, primary_key: :uid
@@ -28,6 +28,7 @@ class Item < ActiveRecord::Base
   def as_json(options={})
     {
       id: id,
+      uid: uid,
       barcode_num: barcode_num,
       product_id: product_id,
       name: name,
@@ -64,7 +65,7 @@ class Item < ActiveRecord::Base
         if store_items.any?
           return false
         else
-          store_items.create store_id: store.id, quantity: 1
+          store_items.create store_id: store.uid, quantity: 1
         end
       else
         store_item(store).add amount
@@ -104,7 +105,7 @@ class Item < ActiveRecord::Base
 
   def generate_barcode_num
     if self.barcode_num.blank?
-      num = self.id.to_s
+      num = self.uid.to_s
       code = Product::BARCODE_PREFIX + '0'*(9-num.length) + num
       update_attribute :barcode_num, Barby::EAN13.new(code).to_s
     end

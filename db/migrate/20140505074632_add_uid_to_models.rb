@@ -4,20 +4,15 @@ class AddUidToModels < ActiveRecord::Migration
   end
 
   JOIN_TABLES = ENV['JOIN_TABLES'].split
-
-  COMMON_TABLES = ENV['COMMON_MODELS'].split.map(&:tableize) + JOIN_TABLES
-
+  COMMON_TABLES = ENV['COMMON_MODELS'].split.map(&:tableize)
   IMPORT_TABLES = ENV['IMPORT_MODELS'].split.map(&:tableize)
-
-  COMMON_FOREIGN_KEYS = COMMON_TABLES.map(&:foreign_key)
-
-  UNIQUE_FOREIGN_KEYS = IMPORT_TABLES.map(&:foreign_key)
-
+  COMMON_FOREIGN_KEYS = ENV['COMMON_MODELS'].split.map(&:foreign_key)
+  UNIQUE_FOREIGN_KEYS = ENV['IMPORT_MODELS'].split.map(&:foreign_key)
   FOREIGN_KEYS = COMMON_FOREIGN_KEYS + UNIQUE_FOREIGN_KEYS + %w[performer_id]
 
   def up
     if (department_code = ENV['DEPARTMENT_CODE']).present?
-      (COMMON_TABLES + IMPORT_TABLES).each do |table|
+      (COMMON_TABLES + IMPORT_TABLES + JOIN_TABLES).each do |table|
         # if column_exists? table, :id
         has_id = false
         unless table.in? JOIN_TABLES or column_exists? table, :uid
@@ -92,7 +87,7 @@ class AddUidToModels < ActiveRecord::Migration
   # end
 
   def down
-    (COMMON_TABLES + IMPORT_TABLES).each do |table|
+    (COMMON_TABLES + IMPORT_TABLES + JOIN_TABLES).each do |table|
       remove_column table, :uid if column_exists? table, :uid
       remove_index table, :uid if index_exists? table, :uid
       Model.table_name = table

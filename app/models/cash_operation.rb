@@ -23,8 +23,8 @@ class CashOperation < ActiveRecord::Base
   private
 
   def set_user_and_cash_shift
-    self.user_id ||= User.current.try(:id)
-    self.cash_shift_id ||= User.current.try(:current_cash_shift).try(:id)
+    self.user_id ||= User.current.try(:uid)
+    self.cash_shift_id ||= User.current.try(:current_cash_shift).try(:uid)
   end
 
 end

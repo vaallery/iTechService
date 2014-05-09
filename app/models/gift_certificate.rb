@@ -17,7 +17,7 @@ class GiftCertificate < ActiveRecord::Base
   after_create UidCallbacks
 
   after_initialize do
-    department_id ||= Department.current.id
+    department_id ||= Department.current.uid
     if nominal && nominal < 5
       update_attribute :nominal, nominal_val
     end
@@ -27,7 +27,7 @@ class GiftCertificate < ActiveRecord::Base
     certificates = GiftCertificate.scoped
 
     if (q = params[:search_q]).present?
-      certificates = certificates.where 'LOWER(number) = ? OR id = ?', q.mb_chars.downcase.to_s, q.to_i
+      certificates = certificates.where 'LOWER(number) = ? OR id = ? OR ud = ?', q.mb_chars.downcase.to_s, q.to_i, q.to_i
     end
     certificates
   end

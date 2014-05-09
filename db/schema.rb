@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
 
   create_table "cash_drawers", :force => true do |t|
     t.string   "name"
-    t.integer  "department_id"
+    t.string   "department_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.string   "uid"
@@ -90,8 +90,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "cash_drawers", ["uid"], :name => "index_cash_drawers_on_uid"
 
   create_table "cash_operations", :force => true do |t|
-    t.integer  "cash_shift_id"
-    t.integer  "user_id"
+    t.string   "cash_shift_id"
+    t.string   "user_id"
     t.boolean  "is_out",        :default => false
     t.decimal  "value"
     t.datetime "created_at",                       :null => false
@@ -106,11 +106,11 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
 
   create_table "cash_shifts", :force => true do |t|
     t.boolean  "is_closed",      :default => false
-    t.integer  "user_id"
+    t.string   "user_id"
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
     t.datetime "closed_at"
-    t.integer  "cash_drawer_id"
+    t.string   "cash_drawer_id"
     t.string   "uid"
   end
 
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "client_categories", ["uid"], :name => "index_client_categories_on_uid"
 
   create_table "client_characteristics", :force => true do |t|
-    t.integer  "client_category_id"
+    t.string   "client_category_id"
     t.text     "comment"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
@@ -169,8 +169,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.text     "admin_info"
     t.string   "contact_phone"
     t.integer  "category"
-    t.integer  "client_characteristic_id"
-    t.integer  "department_id"
+    t.string   "client_characteristic_id"
+    t.string   "department_id"
     t.string   "uid"
   end
 
@@ -239,8 +239,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "departments", ["uid"], :name => "index_departments_on_uid"
 
   create_table "device_tasks", :force => true do |t|
-    t.integer  "device_id"
-    t.integer  "task_id"
+    t.string   "device_id"
+    t.string   "task_id"
     t.boolean  "done",         :default => false
     t.text     "comment"
     t.datetime "created_at",                      :null => false
@@ -280,16 +280,16 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "device_types", ["uid"], :name => "index_device_types_on_uid"
 
   create_table "devices", :force => true do |t|
-    t.integer  "device_type_id"
+    t.string   "device_type_id"
     t.string   "ticket_number"
-    t.integer  "client_id"
+    t.string   "client_id"
     t.text     "comment"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.datetime "done_at"
     t.string   "serial_number"
-    t.integer  "location_id"
-    t.integer  "user_id"
+    t.string   "location_id"
+    t.string   "user_id"
     t.string   "imei"
     t.boolean  "replaced",        :default => false
     t.string   "security_code"
@@ -298,12 +298,12 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.boolean  "client_notified"
     t.datetime "return_at"
     t.string   "app_store_pass"
-    t.integer  "item_id"
+    t.string   "item_id"
     t.text     "tech_notice"
-    t.integer  "sale_id"
-    t.integer  "case_color_id"
+    t.string   "sale_id"
+    t.string   "case_color_id"
     t.string   "contact_phone"
-    t.integer  "department_id"
+    t.string   "department_id"
     t.string   "uid"
   end
 
@@ -354,13 +354,13 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "feature_types", ["uid"], :name => "index_feature_types_on_uid"
 
   create_table "feature_types_product_categories", :force => true do |t|
-    t.integer "product_category_id"
-    t.integer "feature_type_id"
+    t.string "product_category_id"
+    t.string "feature_type_id"
   end
 
   create_table "features", :force => true do |t|
-    t.integer  "feature_type_id"
-    t.integer  "item_id"
+    t.string   "feature_type_id"
+    t.string   "item_id"
     t.string   "value"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
@@ -383,7 +383,7 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.integer  "consumed"
-    t.integer  "department_id"
+    t.string   "department_id"
     t.string   "uid"
   end
 
@@ -447,7 +447,7 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "installments", ["installment_plan_id"], :name => "index_installments_on_installment_plan_id"
 
   create_table "items", :force => true do |t|
-    t.integer  "product_id"
+    t.string   "product_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "barcode_num"
@@ -569,9 +569,9 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   create_table "payments", :force => true do |t|
     t.string   "kind"
     t.decimal  "value"
-    t.integer  "sale_id"
-    t.integer  "bank_id"
-    t.integer  "gift_certificate_id"
+    t.string   "sale_id"
+    t.string   "bank_id"
+    t.string   "gift_certificate_id"
     t.string   "device_name"
     t.string   "device_number"
     t.string   "client_info"
@@ -599,8 +599,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "price_types", ["uid"], :name => "index_price_types_on_uid"
 
   create_table "price_types_stores", :force => true do |t|
-    t.integer "price_type_id"
-    t.integer "store_id"
+    t.string "price_type_id"
+    t.string "store_id"
   end
 
   add_index "price_types_stores", ["price_type_id"], :name => "index_price_types_stores_on_price_type_id"
@@ -632,7 +632,7 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   create_table "product_groups", :force => true do |t|
     t.string   "name"
     t.string   "ancestry"
-    t.integer  "product_category_id"
+    t.string   "product_category_id"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
     t.integer  "ancestry_depth",      :default => 0
@@ -646,13 +646,13 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "product_groups", ["uid"], :name => "index_product_groups_on_uid"
 
   create_table "product_prices", :force => true do |t|
-    t.integer  "product_id"
-    t.integer  "price_type_id"
+    t.string   "product_id"
+    t.string   "price_type_id"
     t.datetime "date"
     t.decimal  "value"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.integer  "department_id"
+    t.string   "department_id"
     t.string   "uid"
   end
 
@@ -676,14 +676,14 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   create_table "products", :force => true do |t|
     t.string   "name"
     t.string   "code"
-    t.integer  "product_group_id"
+    t.string   "product_group_id"
     t.datetime "created_at",          :null => false
     t.datetime "updated_at",          :null => false
     t.integer  "warranty_term"
-    t.integer  "device_type_id"
+    t.string   "device_type_id"
     t.integer  "quantity_threshold"
     t.text     "comment"
-    t.integer  "product_category_id"
+    t.string   "product_category_id"
     t.string   "uid"
   end
 
@@ -751,8 +751,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "repair_groups", ["uid"], :name => "index_repair_groups_on_uid"
 
   create_table "repair_parts", :force => true do |t|
-    t.integer  "repair_task_id"
-    t.integer  "item_id"
+    t.string   "repair_task_id"
+    t.string   "item_id"
     t.integer  "quantity"
     t.integer  "warranty_term"
     t.integer  "defect_qty"
@@ -766,7 +766,7 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "repair_parts", ["uid"], :name => "index_repair_parts_on_uid"
 
   create_table "repair_services", :force => true do |t|
-    t.integer  "repair_group_id"
+    t.string   "repair_group_id"
     t.string   "name"
     t.decimal  "price"
     t.datetime "created_at",      :null => false
@@ -779,12 +779,12 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "repair_services", ["uid"], :name => "index_repair_services_on_uid"
 
   create_table "repair_tasks", :force => true do |t|
-    t.integer  "repair_service_id"
-    t.integer  "device_task_id"
+    t.string   "repair_service_id"
+    t.string   "device_task_id"
     t.decimal  "price"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
-    t.integer  "store_id"
+    t.string   "store_id"
     t.string   "uid"
   end
 
@@ -828,8 +828,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "salaries", ["user_id"], :name => "index_salaries_on_user_id"
 
   create_table "sale_items", :force => true do |t|
-    t.integer  "sale_id"
-    t.integer  "item_id"
+    t.string   "sale_id"
+    t.string   "item_id"
     t.decimal  "price",      :precision => 8, :scale => 2
     t.integer  "quantity"
     t.datetime "created_at",                                                :null => false
@@ -843,15 +843,15 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "sale_items", ["uid"], :name => "index_sale_items_on_uid"
 
   create_table "sales", :force => true do |t|
-    t.integer  "store_id"
-    t.integer  "user_id"
-    t.integer  "client_id"
+    t.string   "store_id"
+    t.string   "user_id"
+    t.string   "client_id"
     t.datetime "date"
     t.integer  "status"
     t.boolean  "is_return"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.integer  "cash_shift_id"
+    t.string   "cash_shift_id"
     t.string   "uid"
   end
 
@@ -887,8 +887,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "settings", ["name"], :name => "index_settings_on_name"
 
   create_table "spare_parts", :force => true do |t|
-    t.integer  "repair_service_id"
-    t.integer  "product_id"
+    t.string   "repair_service_id"
+    t.string   "product_id"
     t.integer  "quantity"
     t.integer  "warranty_term"
     t.datetime "created_at",        :null => false
@@ -909,8 +909,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "stolen_phones", ["imei"], :name => "index_stolen_phones_on_imei"
 
   create_table "store_items", :force => true do |t|
-    t.integer  "item_id"
-    t.integer  "store_id"
+    t.string   "item_id"
+    t.string   "store_id"
     t.integer  "quantity",   :default => 0
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
@@ -922,8 +922,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "store_items", ["uid"], :name => "index_store_items_on_uid"
 
   create_table "store_products", :force => true do |t|
-    t.integer  "store_id"
-    t.integer  "product_id"
+    t.string   "store_id"
+    t.string   "product_id"
     t.integer  "warning_quantity"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
@@ -941,7 +941,7 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.datetime "updated_at",    :null => false
     t.string   "code"
     t.string   "kind"
-    t.integer  "department_id"
+    t.string   "department_id"
     t.string   "uid"
   end
 
@@ -1002,8 +1002,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.datetime "updated_at",                 :null => false
     t.integer  "priority",    :default => 0
     t.string   "role"
-    t.integer  "location_id"
-    t.integer  "product_id"
+    t.string   "location_id"
+    t.string   "product_id"
     t.string   "uid"
   end
 
@@ -1056,7 +1056,7 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "authentication_token"
-    t.integer  "location_id"
+    t.string   "location_id"
     t.string   "photo"
     t.string   "surname"
     t.string   "name"
@@ -1073,8 +1073,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.integer  "position"
     t.boolean  "is_fired"
     t.string   "job_title"
-    t.integer  "store_id"
-    t.integer  "department_id"
+    t.string   "store_id"
+    t.string   "department_id"
     t.integer  "session_duration"
     t.string   "uid"
   end

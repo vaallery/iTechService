@@ -38,7 +38,7 @@ class Department < ActiveRecord::Base
   end
 
   def self.current
-    Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first
+    Department.find_by_code(ENV['DEPARTMENT_CODE']) || Department.first
   end
 
   def default_cash_drawer

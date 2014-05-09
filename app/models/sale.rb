@@ -1,7 +1,7 @@
 class Sale < ActiveRecord::Base
   include Document
 
-  # default_scope includes(cash_shift: :cash_drawer).where('cash_drawers.department_id = ?', Department.current.id)
+  # default_scope includes(cash_shift: :cash_drawer).where('cash_drawers.department_id = ?', Department.current.uid)
   scope :sold_at, lambda { |period| where(date: period) }
   scope :posted, where(status: 1)
   scope :deleted, where(status: 2)
@@ -40,7 +40,7 @@ class Sale < ActiveRecord::Base
     self.date ||= DateTime.current
     self.status ||= 0
     self.is_return ||= false
-    self.store_id ||= User.current.try(:retail_store).try(:id)
+    self.store_id ||= User.current.try(:retail_store).try(:uid)
   end
 
   def self.search(params)
@@ -63,7 +63,7 @@ class Sale < ActiveRecord::Base
     end
 
     if (search = params[:search]).present?
-      sales = sales.where id: search
+      sales = sales.where uid: search
     end
 
     if (client_q = params[:client]).present?
@@ -174,8 +174,8 @@ class Sale < ActiveRecord::Base
   private
 
   def set_user_and_cash_shift
-    self.user_id ||= User.current.try(:id)
-    self.cash_shift_id ||= User.current.present? ? User.current.current_cash_shift.id : Department.current.current_cash_shift.id
+    self.user_id ||= User.current.try(:uid)
+    self.cash_shift_id ||= User.current.present? ? User.current.current_cash_shift.uid : Department.current.current_cash_shift.uid
   end
 
   def is_valid_for_posting?

@@ -39,7 +39,7 @@ class Store < ActiveRecord::Base
   end
 
   def self.spare_part_ids
-    Store.spare_parts.map(&:id)
+    Store.spare_parts.map(&:uid)
   end
 
   def is_spare_parts?

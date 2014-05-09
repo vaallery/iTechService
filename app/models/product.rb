@@ -4,7 +4,7 @@ class Product < ActiveRecord::Base
 
   scope :name_asc, order('name asc')
   scope :available, includes(:store_items).where('store_items.quantity > ?', 0)
-  scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
+  scope :in_store, lambda { |store| includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.uid : store}) }
   scope :goods, joins(product_group: :product_category).where(product_categories: {kind: %w[equipment accessory protector]})
   scope :services, joins(product_group: :product_category).where(product_categories: {kind: 'service'})
   scope :spare_parts, joins(product_group: :product_category).where(product_categories: {kind: 'spare_part'})
@@ -41,7 +41,7 @@ class Product < ActiveRecord::Base
   after_create UidCallbacks
   after_initialize do
     self.warranty_term ||= default_warranty_term
-    self.product_category_id ||= product_group.try(:product_category).try(:id)
+    self.product_category_id ||= product_group.try(:product_category).try(:uid)
     #self.build_task if self.is_service and self.task.nil?
   end
 
@@ -91,7 +91,7 @@ class Product < ActiveRecord::Base
   end
 
   def quantity_by_stores
-    Store.all.collect { |store| {id: id, code: store.code, name: store.name, quantity: quantity_in_store(store)} }
+    Store.all.collect { |store| {id: id, uid: uid, code: store.code, name: store.name, quantity: quantity_in_store(store)} }
   end
 
   def item
@@ -135,7 +135,7 @@ class Product < ActiveRecord::Base
   end
 
   def warning_quantity_for_store(store)
-    store_products.find_by_store_id(store.id).try(:warning_quantity)
+    store_products.find_by_store_id(store.uid).try(:warning_quantity)
   end
 
   def remnants_cost

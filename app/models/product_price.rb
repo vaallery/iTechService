@@ -2,9 +2,9 @@ class ProductPrice < ActiveRecord::Base
 
   default_scope order('date desc')
   scope :newest_first, order('date desc')
-  scope :with_type, lambda { |type| where(price_type_id: type.is_a?(PriceType) ? type.id : type) }
-  scope :purchase, where(price_type_id: PriceType.purchase.id)
-  scope :retail, where(price_type_id: PriceType.retail.id)
+  scope :with_type, lambda { |type| where(price_type_id: type.is_a?(PriceType) ? type.uid : type) }
+  scope :purchase, where(price_type_id: PriceType.purchase.uid)
+  scope :retail, where(price_type_id: PriceType.retail.uid)
   belongs_to :department, primary_key: :uid
   belongs_to :product, primary_key: :uid
   belongs_to :price_type, primary_key: :uid
@@ -15,7 +15,7 @@ class ProductPrice < ActiveRecord::Base
 
   after_initialize do
     date ||= Time.current
-    department_id ||= Department.current.id
+    department_id ||= Department.current.uid
   end
 
 end

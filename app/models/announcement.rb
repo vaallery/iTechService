@@ -23,7 +23,7 @@ class Announcement < ActiveRecord::Base
 
   after_initialize do
     kind ||= 'info'
-    department_id ||= Department.current.id
+    department_id ||= Department.current.uid
   end
 
   def user_name
