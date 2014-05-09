@@ -4,11 +4,10 @@ module Sync
   ACTIONS = %w[import export sync merge]
   MODES = %w[clean update]
   JOIN_TABLES = ENV['JOIN_TABLES'].split
-  MERGE_TABLES = {remote: %w[feature_types_product_categories price_types_stores]}
   COMMON_MODELS = ENV['COMMON_MODELS'].split
   IMPORT_MODELS = ENV['IMPORT_MODELS'].split
 
-  MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory], both: %w[StoreItem]}
+  MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory]}#, both: %w[StoreItem]}
 
   class DataSyncJob < Struct.new(:params)
 
@@ -17,7 +16,7 @@ module Sync
     end
 
     def perform
-      log << ['info', "Synchronization started at #{DateTime.current.strftime(TIME_FORMAT)} with params: #{params.inspect}"]
+      log << ['info', "Synchronization started at #{DateTime.current.strftime(Sync::TIME_FORMAT)} with params: #{params.inspect}"]
       if Department.current.present? and Department.current.is_main?
         if remote_dep_code.present?
           if ActiveRecord::Base.configurations["remote_#{remote_dep_code}"].present?
@@ -46,32 +45,37 @@ module Sync
 
     private
 
-    # reflect_on_all_associations
-
     def sync_data
 
     end
 
     def merge_data
-      model_names = COMMON_MODELS
-
+      Sync::MERGE_MODELS[:remote].each do |model_name|
+        transfer_model model_name, :import
+      end
+      Sync::JOIN_TABLES.each do |table_name|
+        transfer_model table_name, :import
+      end
+      Sync::MERGE_MODELS[:local].each do |model_name|
+        transfer_model model_name, :export
+      end
     end
 
     def transfer_data(direction)
-      _model_names = model_names || (direction == :import ? IMPORT_MODELS : COMMON_MODELS)
+      _model_names = model_names || (direction == :import ? Sync::IMPORT_MODELS : Sync::COMMON_MODELS)
       (direction == :import ? ActiveRecord::Base : RemoteBase).transaction do
         _model_names.each do |model_name|
-          transfer_table model_name, direction unless model_name.blank?
+          transfer_model model_name, direction unless model_name.blank?
         end
       end
     end
 
-    def transfer_table(model_name, direction)
-      if direction.in? [:import, :export] and model_name.in? (COMMON_MODELS | IMPORT_MODELS)
+    def transfer_model(model_name, direction)
+      if direction.in? [:import, :export] and model_name.in? (Sync::COMMON_MODELS | Sync::IMPORT_MODELS | Sync::JOIN_TABLES)
         log << ['info', "#{direction.to_s.humanize}ing #{model_name}"]
         @direction = direction
         table_name = dst_model(model_name).table_name
-        # dst_model(model_name).transaction do
+        dst_model(model_name).transaction do
           dst_model(model_name).connection.execute "TRUNCATE #{table_name} RESTART IDENTITY" if mode == 'clean'
           src_model(model_name).find_each do |src_rec|
             src_attributes = src_rec.attributes.except 'id', 'created_at', 'updated_at'
@@ -86,14 +90,13 @@ module Sync
             else
               dst_rec = dst_model(model_name).new src_attributes
               if dst_rec.save
-                id_match.deep_merge! table_name => {src_rec.id.to_s => dst_rec.id.to_s}
                 log << ['success', "Created #{dst_rec.inspect}"]
               else
                 log << ['error', "!!! Can not create #{src_attributes}. #{dst_rec.errors.full_messages.join('. ')}"]
               end
             end
           end
-        # end
+        end
       end
     end
 
@@ -112,7 +115,9 @@ module Sync
     end
 
     def local_model(model_name)
-      model_name.constantize
+      # model_name.constantize
+      LocalBase.table_name = model_name.tableize
+      LocalBase
     end
 
     def remote_model(model_name)
@@ -134,11 +139,6 @@ module Sync
 
     def model_names
       @model_names ||= params[:model_names]
-    end
-
-    def id_match
-      # { 'table_name' => {'src_id' => 'dst_id'} }
-      @id_match ||= {}
     end
 
   end

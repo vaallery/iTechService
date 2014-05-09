@@ -13,7 +13,6 @@ class AddUidToModels < ActiveRecord::Migration
   def up
     if (department_code = ENV['DEPARTMENT_CODE']).present?
       (COMMON_TABLES + IMPORT_TABLES + JOIN_TABLES).each do |table|
-        # if column_exists? table, :id
         has_id = false
         unless table.in? JOIN_TABLES or column_exists? table, :uid
           add_column table, :uid, :string, unique: true
@@ -34,6 +33,25 @@ class AddUidToModels < ActiveRecord::Migration
             r.update_column fk, "#{department_code if fk.in?(UNIQUE_FOREIGN_KEYS)}#{fid}" if fid.present?
           end
         end
+      end
+    end
+  end
+
+  def down
+    (COMMON_TABLES + IMPORT_TABLES + JOIN_TABLES).each do |table|
+      remove_column table, :uid if column_exists? table, :uid
+      remove_index table, :uid if index_exists? table, :uid
+      Model.table_name = table
+      Model.reset_column_information
+      foreign_keys = Model.columns.keep_if{|c|c.name.ends_with?('_id')}.map(&:name) & FOREIGN_KEYS
+      Model.reset_column_information
+      Model.all.each do |r|
+        foreign_keys.each do |fk|
+          r.update_column fk, "#{r.send(fk)}"[/\d/]
+        end
+      end
+      foreign_keys.each do |fk|
+        change_column table, fk, "integer USING CAST(#{fk} AS integer)"
       end
     end
   end
@@ -85,25 +103,6 @@ class AddUidToModels < ActiveRecord::Migration
   #     end
   #   end
   # end
-
-  def down
-    (COMMON_TABLES + IMPORT_TABLES + JOIN_TABLES).each do |table|
-      remove_column table, :uid if column_exists? table, :uid
-      remove_index table, :uid if index_exists? table, :uid
-      Model.table_name = table
-      Model.reset_column_information
-      foreign_keys = Model.columns.keep_if{|c|c.name.ends_with?('_id')}.map(&:name) & FOREIGN_KEYS
-      Model.reset_column_information
-      Model.all.each do |r|
-        foreign_keys.each do |fk|
-          r.update_column fk, "#{r.send(fk)}"[/\d/]
-        end
-      end
-      foreign_keys.each do |fk|
-        change_column table, fk, "integer USING CAST(#{fk} AS integer)"
-      end
-    end
-  end
 
   # def down
   #   department_code = ENV['DEPARTMENT_CODE']
