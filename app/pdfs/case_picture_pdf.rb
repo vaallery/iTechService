@@ -5,8 +5,8 @@ class CasePicturePdf < Prawn::Document
 
   def initialize(file, params)
     super page_size: 'A4', page_layout: :portrait
-    is_contour = params[:contour]
-    model = params[:model]
+    is_contour = params['contour']
+    model = params['model']
     case model
       when 'iphone4'
         @width = 62.5.mm
