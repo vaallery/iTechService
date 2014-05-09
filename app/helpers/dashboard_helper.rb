@@ -40,7 +40,7 @@ module DashboardHelper
   end
 
   def device_row_tag(device)
-    content_tag(:tr, class: 'info device_row', data: {device_id: device.id}) do
+    content_tag(:tr, class: 'info device_row', data: {device_id: device.uid}) do
       content_tag(:td, device_movement_information_tag(device), class: 'device_movement_column') +
         content_tag(:td, class: 'device_task_column') do
         content_tag(:span, device.progress, class: "device_tasks_toggle #{progress_badge_class_for_device(device)}") +
@@ -61,7 +61,7 @@ module DashboardHelper
   end
 
   def ready_device_row_tag(device)
-    content_tag(:tr, class: 'device_row', data: {device_id: device.id}) do
+    content_tag(:tr, class: 'device_row', data: {device_id: device.uid}) do
       content_tag(:td, device_movement_information_tag(device), class: 'device_movement_column') +
       content_tag(:td) do
         link_to(device.presentation, device_path(device)) +
@@ -82,7 +82,7 @@ module DashboardHelper
 
   def device_task_row_tag(device_task)
     row_class = device_task.done ? 'success' : (is_actual_task?(device_task) ? 'error' : 'warning')
-    content_tag(:tr, class: "device_task_row #{row_class}", data: {device_task_id: device_task.id, device_id: device_task.device_id, task_id: device_task.task_id}) do
+    content_tag(:tr, class: "device_task_row #{row_class}", data: {device_task_id: device_task.uid, device_id: device_task.device_id, task_id: device_task.task_id}) do
       content_tag(:td, nil) +
       content_tag(:td, device_task.task_name) +
       content_tag(:td) do

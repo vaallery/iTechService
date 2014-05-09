@@ -168,8 +168,8 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.string   "email"
     t.text     "admin_info"
     t.string   "contact_phone"
-    t.integer  "category"
     t.string   "client_characteristic_id"
+    t.integer  "category"
     t.string   "department_id"
     t.string   "uid"
   end
@@ -241,10 +241,10 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   create_table "device_tasks", :force => true do |t|
     t.string   "device_id"
     t.string   "task_id"
-    t.boolean  "done",         :default => false
+    t.boolean  "done"
     t.text     "comment"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.decimal  "cost"
     t.datetime "done_at"
     t.text     "user_comment"
@@ -290,19 +290,19 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.string   "serial_number"
     t.string   "location_id"
     t.string   "user_id"
-    t.string   "imei"
-    t.boolean  "replaced",        :default => false
     t.string   "security_code"
     t.string   "status"
+    t.string   "imei"
+    t.boolean  "replaced",        :default => false
     t.boolean  "notify_client",   :default => false
     t.boolean  "client_notified"
     t.datetime "return_at"
     t.string   "app_store_pass"
-    t.string   "item_id"
     t.text     "tech_notice"
+    t.string   "contact_phone"
+    t.string   "item_id"
     t.string   "sale_id"
     t.string   "case_color_id"
-    t.string   "contact_phone"
     t.string   "department_id"
     t.string   "uid"
   end
@@ -1041,11 +1041,10 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "top_salables", ["product_id"], :name => "index_top_salables_on_product_id"
 
   create_table "users", :force => true do |t|
-    t.string   "username",               :default => "", :null => false
+    t.string   "username"
     t.string   "role"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "email",                  :default => ""
     t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -1056,6 +1055,7 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.string   "authentication_token"
+    t.string   "email",                  :default => ""
     t.string   "location_id"
     t.string   "photo"
     t.string   "surname"
@@ -1093,7 +1093,7 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   add_index "users", ["store_id"], :name => "index_users_on_store_id"
   add_index "users", ["surname"], :name => "index_users_on_surname"
   add_index "users", ["uid"], :name => "index_users_on_uid"
-  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+  add_index "users", ["username"], :name => "index_users_on_username"
 
   create_table "wiki_page_attachments", :force => true do |t|
     t.integer  "page_id",                           :null => false
