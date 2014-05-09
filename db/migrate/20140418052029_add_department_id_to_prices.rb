@@ -1,4 +1,5 @@
 class AddDepartmentIdToPrices < ActiveRecord::Migration
+  class Price < ActiveRecord::Base; end
   def change
     add_column :prices, :department_id, :integer
     add_index :prices, :department_id

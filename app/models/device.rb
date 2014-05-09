@@ -301,7 +301,7 @@ class Device < ActiveRecord::Base
 
   def validate_location
     if self.location.present?
-      old_location = changed_attributes['location_id'].present? ? Location.find(changed_attributes['location_id']) : nil
+      old_location = changed_attributes['location_id'].present? ? Location.where(uid: changed_attributes['location_id']).first : nil
       if self.location.is_done? and self.pending?
         self.errors.add :location_id, I18n.t('devices.errors.pending_tasks')
       end

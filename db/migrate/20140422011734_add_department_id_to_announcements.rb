@@ -1,4 +1,5 @@
 class AddDepartmentIdToAnnouncements < ActiveRecord::Migration
+  class Announcement < ActiveRecord::Base; end
   def change
     add_column :announcements, :department_id, :integer
     add_index :announcements, :department_id

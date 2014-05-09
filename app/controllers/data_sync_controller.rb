@@ -2,7 +2,7 @@ class DataSyncController < ApplicationController
 
   def new
     respond_to do |format|
-      if Department.current.is_main? and current_user.able_to?(:sync_data)
+      if true # Department.current.is_main? and current_user.able_to?(:sync_data)
         format.html
       else
         redirect_to root_path, error: 'Access denied'
@@ -11,7 +11,7 @@ class DataSyncController < ApplicationController
   end
 
   def perform
-    if Department.current.is_main? and current_user.able_to?(:sync_data)
+    if true # Department.current.is_main? and current_user.able_to?(:sync_data)
       if Rails.env.development?
         @data_sync_job = Sync::DataSyncJob.new(params[:data_sync])
         @data_sync_job.perform

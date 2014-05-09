@@ -1,4 +1,5 @@
 class AddDepartmentIdToSupplyRequests < ActiveRecord::Migration
+  class SupplyRequest < ActiveRecord::Base; end
   def change
     add_column :supply_requests, :department_id, :integer
     add_index :supply_requests, :department_id

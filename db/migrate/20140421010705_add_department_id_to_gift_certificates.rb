@@ -1,4 +1,5 @@
 class AddDepartmentIdToGiftCertificates < ActiveRecord::Migration
+  class GiftCertificate < ActiveRecord::Base; end
   def change
     add_column :gift_certificates, :department_id, :integer
     add_index :gift_certificates, :department_id

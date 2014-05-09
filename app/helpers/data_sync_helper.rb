@@ -9,7 +9,7 @@ module DataSyncHelper
   end
 
   def data_sync_actions_collection
-    [[t('data_sync.import'), 'import'], [t('data_sync.export'), 'export'], [t('data_sync.sync'), 'sync']]
+    Sync::DataSyncJob::ACTIONS.map{|a|[t("data_sync.#{a}"), a]}
   end
 
   def data_sync_models_collection
