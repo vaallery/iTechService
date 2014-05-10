@@ -1,10 +1,14 @@
 class DeviceType < ActiveRecord::Base
 
+  default_scope where('device_types.department_id = ?', Department.current.uid)
+
+  belongs_to :department, primary_key: :uid
   has_many :devices, primary_key: :uid
   has_one :product, inverse_of: :device_type, dependent: :nullify, primary_key: :uid
 
-  attr_accessible :name, :ancestry, :parent_id, :qty_for_replacement, :qty_replaced, :qty_shop, :qty_store, :qty_reserve, :expected_during, :code_1c
+  attr_accessible :name, :ancestry, :parent_id, :qty_for_replacement, :qty_replaced, :qty_shop, :qty_store, :qty_reserve, :expected_during, :code_1c, :department_id
   validates :name, presence: true
+  after_initialize UidCallbacks
   after_create UidCallbacks
 
   has_ancestry

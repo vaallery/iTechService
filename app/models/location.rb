@@ -1,14 +1,17 @@
 # encoding: utf-8
 class Location < ActiveRecord::Base
-  #default_scope order('position asc')
+
+  default_scope where('locations.department_id = ?', Department.current.uid)
   scope :sorted, order('position asc')
   scope :for_schedule, where(schedule: true)
 
+  belongs_to :department, primary_key: :uid
   has_many :users, primary_key: :uid
   has_many :tasks, primary_key: :uid
 
-  attr_accessible :name, :schedule, :position, :code
+  attr_accessible :name, :schedule, :position, :code, :department_id
   validates_presence_of :name
+  after_initialize UidCallbacks
   after_create UidCallbacks
 
   def full_name

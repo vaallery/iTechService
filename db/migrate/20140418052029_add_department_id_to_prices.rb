@@ -1,3 +1,4 @@
+# Unnecessary
 class AddDepartmentIdToPrices < ActiveRecord::Migration
   class Price < ActiveRecord::Base; end
   def change

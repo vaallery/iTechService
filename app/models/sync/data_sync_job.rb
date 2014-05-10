@@ -9,14 +9,14 @@ module Sync
     COMMON_MODELS = ENV['COMMON_MODELS'].split
     IMPORT_MODELS = ENV['IMPORT_MODELS'].split
 
-    MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory]}#, both: %w[StoreItem]}
+    MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory]}
 
     def name
       "Data sync {#{params.inspect}}"
     end
 
     def perform
-      log << ['info', "Synchronization started at #{DateTime.current.strftime(TIME_FORMAT)} with params: #{params.inspect}"]
+      log << ['info', "Synchronization started at #{Time.current.strftime(TIME_FORMAT)} with params: #{params.inspect}"]
       if Department.current.present? and Department.current.is_main?
         if remote_dep_code.present?
           if ActiveRecord::Base.configurations["remote_#{remote_dep_code}"].present?
@@ -46,8 +46,16 @@ module Sync
     private
 
     def sync_data
-      transfer_data :import
-      transfer_data :export
+      @mode = 'update'
+      last_synced_at = Setting.last_synced_at(remote_dep_code).to_datetime
+      sync_time = Time.current
+      @model_names = IMPORT_MODELS + 'StoreItem'
+      if transfer_data :import, last_synced_at
+        @model_names = COMMON_MODELS + JOIN_TABLES
+        if transfer_data :export, last_synced_at
+          Setting.last_sync(remote_dep_code).update_attribute :value, sync_time.to_s
+        end
+      end
     end
 
     def merge_data
@@ -66,54 +74,36 @@ module Sync
       end
     end
 
-    def transfer_data(direction)
+    def transfer_data(direction, from_date=nil)
       _model_names = model_names || (direction == :import ? IMPORT_MODELS : (COMMON_MODELS + JOIN_TABLES))
       (direction == :import ? LocalBase : RemoteBase).transaction do
         _model_names.each do |model_name|
-          transfer_model model_name, direction unless model_name.blank?
+          transfer_model model_name, direction, from_date
         end
       end
     end
 
-    def transfer_model(model_name, direction)
-      if direction.in? [:import, :export] and model_name.in? (COMMON_MODELS | IMPORT_MODELS | JOIN_TABLES)
+    def transfer_model(model_name, direction, from_date=nil)
+      if direction.in? [:import, :export] and model_name.in? (COMMON_MODELS + IMPORT_MODELS + JOIN_TABLES)
         log << ['info', "#{direction.to_s.humanize}ing #{model_name}"]
         @direction = direction
         table_name = dst_model(model_name).table_name
         src_model(model_name).reset_column_information
         dst_model(model_name).reset_column_information
-        # dst_model(model_name).transaction do
-          dst_model(model_name).connection.execute "TRUNCATE #{table_name} RESTART IDENTITY" if mode == 'clean'
-          src_model(model_name).find_each do |src_rec|
-            src_attributes = src_rec.attributes.except 'id', 'created_at', 'updated_at'
-            # src_attributes.each_key { |attr| dst_model(model_name).attr_accessible attr }
-            if mode == 'update'
-              if (dst_rec = dst_model(model_name).where(id: src_rec.id).first).present?
-                if dst_rec.update_attributes src_attributes
-                  log << ['success', "Updated #{dst_rec.inspect}"]
-                else
-                  log << ['error', "!!! Can not update #{dst_rec.inspect} with #{src_attributes}"]
-                end
-              end
-            else
-              # begin
-              #   dst_model(model_name).connection.execute %Q(INSERT INTO "price_types_stores" ("price_type_id", "store_id") VALUES ($1, $2) RETURNING "id"  [["price_type_id", 2], ["store_id", 1]])
-              #   log << ['success', "Created #{src_attributes}"]
-                dst_rec = dst_model(model_name).new# src_attributes
-                if dst_rec.save
-                  src_attributes.each_pair do |k, v|
-                    dst_rec.update_column k, v
-                  end
-                  log << ['success', "Created #{dst_rec.inspect}"]
-                else
-                  log << ['error', "!!! Can not create #{src_attributes}. #{dst_rec.errors.full_messages.join('. ')}"]
-                end
-              # rescue ActiveRecord::UnknownAttributeError
-              #   dst_model(model_name)
-              # end
+        dst_model(model_name).connection.execute "TRUNCATE #{table_name} RESTART IDENTITY" if mode == 'clean'
+        (from_date.present? ? src_model(model_name).where(updated_at: from_date..Time.current) : src_model(model_name)).find_each do |src_rec|
+          src_attributes = src_rec.attributes.except 'id', 'created_at', 'updated_at'
+          dst_rec = dst_model(model_name).where(uid: src_rec.uid).first_or_initialize
+          event = dst_rec.new_record? ? 'Created' : 'Updated'
+          if dst_rec.save
+            src_attributes.each_pair do |k, v|
+              dst_rec.update_column k, v
             end
+            log << ['success', "#{event} #{model_name} #{dst_rec.inspect}"]
+          else
+            log << ['error', "!!! Can not create #{src_attributes}. #{dst_rec.errors.full_messages.join('. ')}"]
           end
-        # end
+        end
       end
     end
 
@@ -132,7 +122,6 @@ module Sync
     end
 
     def local_model(model_name)
-      # model_name.constantize
       LocalBase.table_name = model_name.tableize
       LocalBase
     end

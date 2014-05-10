@@ -1,3 +1,4 @@
+# Unnecessary
 class AddDepartmentIdToSupplyRequests < ActiveRecord::Migration
   class SupplyRequest < ActiveRecord::Base; end
   def change

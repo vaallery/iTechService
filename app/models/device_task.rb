@@ -28,7 +28,7 @@ class DeviceTask < ActiveRecord::Base
   validate :valid_repair if :is_repair?
   after_commit :update_device_done_attribute
   after_save :deduct_spare_parts if :is_repair?
-  after_initialize { self.done ||= false }
+  after_initialize { self.done ||= false } # TODO define in column default
   after_initialize :set_performer
   after_create UidCallbacks
 

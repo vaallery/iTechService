@@ -1,8 +1,5 @@
 class Info < ActiveRecord::Base
 
-  # default_scope where('infos.department_id = ?', Department.current.id)
-
-  belongs_to :department
   belongs_to :recipient, class_name: 'User', foreign_key: 'recipient_id'
   has_many :comments, as: :commentable, dependent: :destroy
 
@@ -20,13 +17,10 @@ class Info < ActiveRecord::Base
   scope :archived, where(is_archived: true)
   scope :actual, where(is_archived: false)
 
-  attr_accessible :content, :title, :important, :is_archived, :comment, :comments_attributes, :recipient_id, :department_id
+  attr_accessible :content, :title, :important, :is_archived, :comment, :comments_attributes, :recipient_id
 
   validates :title, :content, presence: true
   validates_associated :comments
-  after_initialize do
-    department_id ||= Department.current.uid
-  end
 
   def comment=(content)
     comments.build content: content unless content.blank?

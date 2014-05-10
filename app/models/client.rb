@@ -8,7 +8,7 @@ class Client < ActiveRecord::Base
     3 => 'friend'
   }
 
-  # default_scope where('clients.department_id = ?', Department.current.id)
+  default_scope where('clients.department_id = ?', Department.current.uid)
 
   scope :id_asc, order('id asc')
 
@@ -37,11 +37,11 @@ class Client < ActiveRecord::Base
   validates_associated :client_characteristic
   after_create UidCallbacks
   before_destroy :send_mail
+  after_initialize UidCallbacks
 
   after_initialize do
     build_client_characteristic if client_characteristic.nil?
     category ||= 0
-    department_id ||= Department.current.uid
   end
 
   def self.search params

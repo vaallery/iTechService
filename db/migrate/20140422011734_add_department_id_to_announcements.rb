@@ -1,3 +1,4 @@
+# Unnecessary
 class AddDepartmentIdToAnnouncements < ActiveRecord::Migration
   class Announcement < ActiveRecord::Base; end
   def change

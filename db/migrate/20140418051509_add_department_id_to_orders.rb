@@ -1,3 +1,4 @@
+# Unnecessary
 class AddDepartmentIdToOrders < ActiveRecord::Migration
   class Order < ActiveRecord::Base; end
 

@@ -5,16 +5,14 @@ class QuickOrder < ActiveRecord::Base
   scope :in_month, where('created_at > ?', 1.month.ago)
   scope :undone, where(is_done: false)
 
-  belongs_to :department
   belongs_to :user
   has_and_belongs_to_many :quick_tasks
   delegate :short_name, to: :user, prefix: true, allow_nil: true
-  attr_accessible :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code, :department_id
+  attr_accessible :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code
   before_create :set_number
   validates_presence_of :security_code
 
   after_initialize do
-    self.department_id ||= Department.current.id
     self.user_id ||= User.current.try(:id)
     self.is_done ||= false
   end

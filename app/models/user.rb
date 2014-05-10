@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   attr_accessor :auth_token
   cattr_accessor :current
 
-  # default_scope where('users.department_id = ?', Department.current.uid)
+  default_scope where('users.department_id = ?', Department.current.uid)
   scope :id_asc, order('id asc')
   scope :ordered, order('position asc')
   scope :any_admin, where(role: %w[admin superadmin])
@@ -77,6 +77,7 @@ class User < ActiveRecord::Base
   validates :password, presence: true, confirmation: true, if: :password_required?
   validates :role, inclusion: { in: ROLES }
   validates_numericality_of :session_duration, only_integer: true, greater_than: 0, allow_nil: true
+  after_initialize UidCallbacks
   before_validation :validate_rights_changing
   before_save :ensure_authentication_token
   after_create UidCallbacks
@@ -379,7 +380,7 @@ class User < ActiveRecord::Base
   end
 
   def cash_drawer
-    department.cash_drawers.first
+    department.default_cash_drawer
   end
 
   def current_cash_shift
