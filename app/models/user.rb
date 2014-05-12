@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   attr_accessor :auth_token
   cattr_accessor :current
 
-  # default_scope where('users.department_id = ?', Department.current.id)
+  default_scope where('users.department_id = ?', Department.current.uid)
   scope :id_asc, order('id asc')
   scope :ordered, order('position asc')
   scope :any_admin, where(role: %w[admin superadmin])
@@ -33,15 +33,15 @@ class User < ActiveRecord::Base
   scope :exclude, lambda { |user| where('id <> ?', user.is_a?(User) ? user.id : user) }
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
-  belongs_to :location
-  belongs_to :department
+  belongs_to :location, primary_key: :uid
+  belongs_to :department, primary_key: :uid
   has_many :history_records, as: :object, dependent: :nullify
   has_many :schedule_days, dependent: :destroy
   has_many :duty_days, dependent: :destroy
   has_many :orders, as: :customer, dependent: :nullify
   has_many :announcements, inverse_of: :user, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :devices, inverse_of: :user
+  has_many :devices, inverse_of: :user, primary_key: :uid
   has_many :karmas, dependent: :destroy, inverse_of: :user
   has_many :karma_groups, through: :karmas, uniq: true
   has_many :bonuses, through: :karma_groups, uniq: true
@@ -49,11 +49,11 @@ class User < ActiveRecord::Base
   has_many :infos, inverse_of: :recipient, dependent: :destroy
   has_many :salaries, inverse_of: :user, dependent: :destroy
   has_many :timesheet_days, inverse_of: :user, dependent: :destroy
-  has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users', uniq: true
   has_many :installment_plans, inverse_of: :user, dependent: :destroy
-  has_many :sales, inverse_of: :user, dependent: :nullify
+  has_many :sales, inverse_of: :user, dependent: :nullify, primary_key: :uid
   has_many :movement_acts, dependent: :nullify
-  has_many :stores, through: :department
+  has_many :stores, through: :department, primary_key: :uid
+  has_and_belongs_to_many :addressed_announcements, class_name: 'Announcement', join_table: 'announcements_users', uniq: true
 
   mount_uploader :photo, PhotoUploader
 
@@ -77,8 +77,10 @@ class User < ActiveRecord::Base
   validates :password, presence: true, confirmation: true, if: :password_required?
   validates :role, inclusion: { in: ROLES }
   validates_numericality_of :session_duration, only_integer: true, greater_than: 0, allow_nil: true
+  after_initialize UidCallbacks
   before_validation :validate_rights_changing
   before_save :ensure_authentication_token
+  after_create UidCallbacks
 
   acts_as_list
 
@@ -378,7 +380,7 @@ class User < ActiveRecord::Base
   end
 
   def cash_drawer
-    department.cash_drawers.first
+    department.default_cash_drawer
   end
 
   def current_cash_shift

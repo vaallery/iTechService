@@ -1,3 +1,4 @@
+# Unnecessary
 class AddDepartmentIdToQuickOrders < ActiveRecord::Migration
   def change
     add_column :quick_orders, :department_id, :integer

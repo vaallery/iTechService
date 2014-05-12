@@ -3,8 +3,9 @@ class CashOperation < ActiveRecord::Base
   # default_scope includes(cash_shift: :cash_drawer).where('cash_drawers.department_id = ?', Department.current.id)
   scope :created_desc, order('created_at desc')
 
-  belongs_to :cash_shift, inverse_of: :cash_operations
-  belongs_to :user
+  belongs_to :cash_shift, inverse_of: :cash_operations, primary_key: :uid
+  belongs_to :user, primary_key: :uid
+
   delegate :short_name, to: :user, prefix: true, allow_nil: true
 
   attr_accessible :is_out, :value, :comment
@@ -13,6 +14,7 @@ class CashOperation < ActiveRecord::Base
   validates_numericality_of :value, greater_than: 0
   before_validation :set_user_and_cash_shift
   after_initialize :set_user_and_cash_shift
+  after_create UidCallbacks
 
   def kind
     is_out ? 'cash_out' : 'cash_in'
@@ -21,8 +23,8 @@ class CashOperation < ActiveRecord::Base
   private
 
   def set_user_and_cash_shift
-    self.user_id ||= User.current.try(:id)
-    self.cash_shift_id ||= User.current.try(:current_cash_shift).try(:id)
+    self.user_id ||= User.current.try(:uid)
+    self.cash_shift_id ||= User.current.try(:current_cash_shift).try(:uid)
   end
 
 end

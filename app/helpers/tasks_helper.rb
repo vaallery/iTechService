@@ -8,4 +8,12 @@ module TasksHelper
     end
   end
 
+  def service_products_collection
+    Product.services.all.map{|p| ["#{p.name} [#{p.code}]", p.uid]}
+  end
+
+  def locations_collection
+    Location.all.map{|l|[l.name, l.uid]}
+  end
+
 end
