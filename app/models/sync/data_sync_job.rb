@@ -18,7 +18,7 @@ module Sync
     def perform
       log << ['info', "Synchronization started at #{Time.current.strftime(TIME_FORMAT)} with params: #{params.inspect}"]
       if Department.current.present? and Department.current.is_main?
-        if remote_dep_code.present?
+        if remote_department.present?
           if ActiveRecord::Base.configurations["remote_#{remote_dep_code}"].present?
             if action.in? %w[import export]
               transfer_data action.to_sym
@@ -31,7 +31,7 @@ module Sync
             log << ['error', "!!! Database configuration is not defined (remote_#{remote_dep_code})"]
           end
         else
-          log << ['error', '!!! Remote department code is not defined']
+          log << ['error', '!!! Remote department is not defined']
         end
       else
         log << ['error', '!!! Current department is not main']
@@ -47,7 +47,7 @@ module Sync
 
     def sync_data
       @mode = 'update'
-      last_synced_at = Setting.last_synced_at(remote_dep_code).to_datetime
+      last_synced_at = Setting.last_synced_at(remote_department).to_datetime
       sync_time = Time.current
       LocalBase.transaction do
         begin
@@ -56,7 +56,7 @@ module Sync
           RemoteBase.transaction do
             @model_names = COMMON_MODELS + JOIN_TABLES
             transfer_data :export, last_synced_at
-            Setting.last_sync(remote_dep_code).update_attribute :value, sync_time.to_s
+            Setting.last_sync(remote_department).update_attribute :value, sync_time.to_s
           end
         rescue => e #RemoteBase::Rollback
           log << ['error', "#{e.class}: #{e.message}"]
@@ -141,6 +141,10 @@ module Sync
 
     def remote_dep_code
       @remote_dep_code ||= 'kh' #params[:remote_dep_code]
+    end
+
+    def remote_department
+      @remote_department ||= Department.where(code: remote_dep_code).first
     end
 
     def action
