@@ -2,20 +2,24 @@ class Task < ActiveRecord::Base
 
   IMPORTANCE_BOUND = 5
 
+  default_scope where('tasks.department_id = ?', Department.current.uid)
   scope :important, where('priority > ?', IMPORTANCE_BOUND)
   scope :tasks_for, lambda { |user| where(task: {role: user.role}) }
 
   belongs_to :product, inverse_of: :task, primary_key: :uid
   belongs_to :location, primary_key: :uid
+  belongs_to :department, primary_key: :uid
   has_many :device_tasks, dependent: :destroy, primary_key: :uid
   has_many :devices, through: :device_tasks, primary_key: :uid
 
   delegate :item, to: :product, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
 
-  attr_accessible :cost, :duration, :name, :priority, :role, :location_id
+  attr_accessible :cost, :duration, :name, :priority, :role, :location_id, :department_id
 
+  after_initialize UidCallbacks
   after_create UidCallbacks
+  validates_uniqueness_of :product_id, scope: :department_id
 
   # after_initialize do
   #   if persisted? and product.nil?

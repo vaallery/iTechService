@@ -4,6 +4,6 @@ class UidCallbacks
   end
 
   def self.after_initialize(record)
-    record.department_id ||= Department.current.uid if record.has_attribute? :department_id
+    record.department_id ||= Department.current.respond_to?(:uid) ? Department.current.uid : Department.current.id if record.has_attribute? :department_id
   end
 end

@@ -47,17 +47,18 @@ module Sync
 
     def sync_data
       @mode = 'update'
-      last_synced_at = Setting.last_synced_at(remote_department).to_datetime
+      last_synced_at = Setting.last_synced_at(remote_department).try :to_datetime
       sync_time = Time.current
       LocalBase.transaction do
         begin
-          @model_names = IMPORT_MODELS + 'StoreItem'
+          @model_names = IMPORT_MODELS << 'StoreItem'
           transfer_data :import, last_synced_at
           RemoteBase.transaction do
             @model_names = COMMON_MODELS + JOIN_TABLES
             transfer_data :export, last_synced_at
             Setting.last_sync(remote_department).update_attribute :value, sync_time.to_s
           end
+        # rescue ActiveRecord::Rollback => e
         rescue => e #RemoteBase::Rollback
           log << ['error', "#{e.class}: #{e.message}"]
           # raise LocalBase::Rollback
@@ -68,16 +69,22 @@ module Sync
 
     def merge_data
       LocalBase.transaction do
-        MERGE_MODELS[:remote].each do |model_name|
-          transfer_model model_name, :import
-        end
-        JOIN_TABLES.each do |table_name|
-          transfer_model table_name, :import
-        end
-      end
-      RemoteBase.transaction do
-        MERGE_MODELS[:local].each do |model_name|
-          transfer_model model_name, :export
+        begin
+          MERGE_MODELS[:remote].each do |model_name|
+            transfer_model model_name, :import
+          end
+          JOIN_TABLES.each do |table_name|
+            transfer_model table_name, :import
+          end
+          RemoteBase.transaction do
+            MERGE_MODELS[:local].each do |model_name|
+              transfer_model model_name, :export
+            end
+          end
+        rescue => e #RemoteBase::Rollback
+          log << ['error', "#{e.class}: #{e.message}"]
+          # raise LocalBase::Rollback
+          raise ActiveRecord::Rollback
         end
       end
     end
@@ -101,7 +108,11 @@ module Sync
         dst_model(model_name).connection.execute "TRUNCATE #{table_name} RESTART IDENTITY" if mode == 'clean'
         (from_date.present? ? src_model(model_name).where(updated_at: from_date..Time.current) : src_model(model_name)).find_each do |src_rec|
           src_attributes = src_rec.attributes.except 'id', 'created_at', 'updated_at'
-          dst_rec = dst_model(model_name).where(uid: src_rec.uid).first_or_initialize
+          if model_name.in? JOIN_TABLES
+            dst_rec = dst_model(model_name).where(src_attributes).first_or_initialize
+          else
+            dst_rec = dst_model(model_name).where(uid: src_rec.uid).first_or_initialize
+          end
           event = dst_rec.new_record? ? 'Created' : 'Updated'
           if dst_rec.save
             src_attributes.each_pair do |k, v|
@@ -112,12 +123,6 @@ module Sync
             log << ['error', "!!! Can not create #{src_attributes}. #{dst_rec.errors.full_messages.join('. ')}"]
           end
         end
-      end
-    end
-
-    def update_columns(record, attributes)
-      attributes.each do |k, v|
-        record.update_column k, v
       end
     end
 
