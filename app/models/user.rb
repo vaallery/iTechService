@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   attr_accessor :auth_token
   cattr_accessor :current
 
-  default_scope where('users.department_id = ?', Department.current.respond_to?(:uid) ? Department.current.uid : Department.current.id)
+  default_scope where('users.department_id = ?', Department.current.respond_to?(:uid) ? Department.current.uid : Department.current.id) if User.respond_to? :department_id
   scope :id_asc, order('id asc')
   scope :ordered, order('position asc')
   scope :any_admin, where(role: %w[admin superadmin])
