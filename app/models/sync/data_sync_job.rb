@@ -49,11 +49,18 @@ module Sync
       @mode = 'update'
       last_synced_at = Setting.last_synced_at(remote_dep_code).to_datetime
       sync_time = Time.current
-      @model_names = IMPORT_MODELS + 'StoreItem'
-      if transfer_data :import, last_synced_at
-        @model_names = COMMON_MODELS + JOIN_TABLES
-        if transfer_data :export, last_synced_at
-          Setting.last_sync(remote_dep_code).update_attribute :value, sync_time.to_s
+      LocalBase.transaction do
+        begin
+          @model_names = IMPORT_MODELS + 'StoreItem'
+          transfer_data :import, last_synced_at
+          RemoteBase.transaction do
+            @model_names = COMMON_MODELS + JOIN_TABLES
+            transfer_data :export, last_synced_at
+            Setting.last_sync(remote_dep_code).update_attribute :value, sync_time.to_s
+          end
+        rescue => e #RemoteBase::Rollback
+          log << ['error', "#{e.class}: #{e.message}"]
+          raise LocalBase::Rollback
         end
       end
     end
@@ -76,11 +83,11 @@ module Sync
 
     def transfer_data(direction, from_date=nil)
       _model_names = model_names || (direction == :import ? IMPORT_MODELS : (COMMON_MODELS + JOIN_TABLES))
-      (direction == :import ? LocalBase : RemoteBase).transaction do
+      # (direction == :import ? LocalBase : RemoteBase).transaction do
         _model_names.each do |model_name|
           transfer_model model_name, direction, from_date
         end
-      end
+      # end
     end
 
     def transfer_model(model_name, direction, from_date=nil)

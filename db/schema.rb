@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140505074632) do
+ActiveRecord::Schema.define(:version => 20140510023034) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -272,10 +272,12 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
     t.integer  "expected_during"
     t.integer  "code_1c"
     t.string   "uid"
+    t.string   "department_id"
   end
 
   add_index "device_types", ["ancestry"], :name => "index_device_types_on_ancestry"
   add_index "device_types", ["code_1c"], :name => "index_device_types_on_code_1c"
+  add_index "device_types", ["department_id"], :name => "index_device_types_on_department_id"
   add_index "device_types", ["name"], :name => "index_device_types_on_name"
   add_index "device_types", ["uid"], :name => "index_device_types_on_uid"
 
@@ -480,16 +482,18 @@ ActiveRecord::Schema.define(:version => 20140505074632) do
   create_table "locations", :force => true do |t|
     t.string   "name"
     t.string   "ancestry"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.boolean  "schedule"
-    t.integer  "position",   :default => 0
+    t.integer  "position",      :default => 0
     t.string   "code"
     t.string   "uid"
+    t.string   "department_id"
   end
 
   add_index "locations", ["ancestry"], :name => "index_locations_on_ancestry"
   add_index "locations", ["code"], :name => "index_locations_on_code"
+  add_index "locations", ["department_id"], :name => "index_locations_on_department_id"
   add_index "locations", ["name"], :name => "index_locations_on_name"
   add_index "locations", ["schedule"], :name => "index_locations_on_schedule"
   add_index "locations", ["uid"], :name => "index_locations_on_uid"
