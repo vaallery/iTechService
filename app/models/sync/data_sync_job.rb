@@ -60,7 +60,8 @@ module Sync
           end
         rescue => e #RemoteBase::Rollback
           log << ['error', "#{e.class}: #{e.message}"]
-          raise LocalBase::Rollback
+          # raise LocalBase::Rollback
+          raise ActiveRecord::Rollback
         end
       end
     end
