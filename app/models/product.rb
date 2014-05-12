@@ -42,7 +42,7 @@ class Product < ActiveRecord::Base
   after_initialize do
     self.warranty_term ||= default_warranty_term
     self.product_category_id ||= product_group.try(:product_category).try(:uid)
-    #self.build_task if self.is_service and self.task.nil?
+    # self.build_task if is_service and task.nil?
   end
 
   def self.search(params)

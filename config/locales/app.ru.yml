@@ -387,6 +387,7 @@ ru:
         location_id: :activerecord.attributes.task.location
         name: Название
         priority: Приоритет
+        product: Продукт
         role: Роль
 
       timesheet_day:

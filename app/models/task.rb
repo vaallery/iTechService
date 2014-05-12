@@ -15,7 +15,7 @@ class Task < ActiveRecord::Base
   delegate :item, to: :product, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
 
-  attr_accessible :cost, :duration, :name, :priority, :role, :location_id, :department_id
+  attr_accessible :cost, :duration, :name, :priority, :role, :location_id, :department_id, :product_id
 
   after_initialize UidCallbacks
   after_create UidCallbacks
