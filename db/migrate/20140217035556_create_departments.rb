@@ -19,7 +19,7 @@ class CreateDepartments < ActiveRecord::Migration
     add_index :departments, :role
     add_index :departments, :code
     Department.where(code: 'kh').first_or_create(name: 'Хабаровск', role: 1, address: '-', contact_phone: '-', schedule: '-', url: '-')
-    Department.where(code: ENV['DEPARTMENT_CODE']).first_or_create(name: ENV['DEPARTMENT_NAME'] || 'Владивосток', role: ENV['DEPARTMENT_ROLE'] || 0, address: '-', contact_phone: '-', schedule: '-', url: '-')
+    Department.where(code: ENV['DEPARTMENT_CODE']).first_or_create(name: ENV['DEPARTMENT_NAME'], role: ENV['DEPARTMENT_ROLE'], address: '-', contact_phone: '-', schedule: '-', url: '-')
   end
 
   def down
