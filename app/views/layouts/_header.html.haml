@@ -18,11 +18,11 @@
       - if can? :read, WikiPage
         = menu_item t("wiki.link"), wiki_all_path
       = drop_down t('devices.link') do
+        = menu_item t('devices.new.title', default: 'Devices'), new_device_path
         = menu_item t('devices.link', default: 'Devices'), devices_path
-        - if can? :manage, QuickOrder
-          = menu_item t('quick_orders.link'), quick_orders_path
-        - elsif can? :create, QuickOrder
-          = menu_item t('quick_orders.new.title'), new_quick_order_path
+        = drop_down_divider
+        = menu_item t('quick_orders.new.title'), new_quick_order_path if can? :create, QuickOrder
+        = menu_item t('quick_orders.link'), quick_orders_path if can? :manage, QuickOrder
       = drop_down t('navbar.cash_drawer') do
         = menu_item t('sales.new.title'), new_sale_path if can? :create, Sale
         = drop_down_divider
