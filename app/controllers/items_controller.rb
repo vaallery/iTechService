@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
       @items.each {|item| @feature_types + item.feature_types.to_a}
       @feature_types.uniq!
     else
-      @product = Product.find(params[:product_id]) unless params[:product_id].blank?
+      @product = Product.find_by_uid(params[:product_id]) unless params[:product_id].blank?
       @items = @product.items.search(params)
       @feature_types = @product.feature_types
     end
@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
     end
 
     if @items.many?
-      @products = Product.where(id: @items.map{|i|i.product_id})
+      @products = Product.where(uid: @items.map{|i|i.product_id})
       @products.page(params[:page])
     end
 
@@ -111,7 +111,7 @@ class ItemsController < ApplicationController
 
   def remains_in_store
     item = Item.find params[:id]
-    store = Store.find params[:store_id]
+    store = Store.find_by_uid params[:store_id]
     quantity = item.actual_quantity store
     respond_to do |format|
       format.json { render json: {quantity: quantity} }

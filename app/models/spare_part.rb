@@ -11,4 +11,12 @@ class SparePart < ActiveRecord::Base
     self.warranty_term ||= product.try(:warranty_term)
   end
 
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+    end
+  end
+
 end

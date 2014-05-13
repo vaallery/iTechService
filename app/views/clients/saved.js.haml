@@ -1,6 +1,6 @@
 :plain
   $('#client_search').val("#{@client.presentation}");
-  $('#device_client_id').val("#{@client.id}");
+  $('#device_client_id').val("#{@client.uid}");
   $('#order_customer_id').val("#{@client.id}");
   $('#edit_client_link').attr('href', "#{edit_client_path(@client)}");
   $devices = $('#client_devices');

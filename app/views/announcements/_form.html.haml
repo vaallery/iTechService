@@ -1,7 +1,7 @@
 = simple_form_for @announcement, :html => { :class => 'form-horizontal' } do |f|
   = f.input :active
   = f.input :kind
-  = f.input :user_id
+  = f.association :user
   = f.input :content
   .form-actions
     = submit_button f

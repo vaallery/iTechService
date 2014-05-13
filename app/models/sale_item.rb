@@ -20,6 +20,14 @@ class SaleItem < ActiveRecord::Base
     self.discount ||= available_discount
   end
 
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+    end
+  end
+
   def sum
     (price || 0) * (quantity || 0)
   end

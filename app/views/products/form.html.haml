@@ -52,8 +52,8 @@
                 %td= item.barcode_num
                 - item.features.each do |feature|
                   %td
-                    = hidden_field_tag "item[features_attributes][#{feature.id}][feature_type_id]", feature.feature_type_id
-                    = text_field_tag "item[features_attributes][#{feature.id}][value]", feature.value
+                    = hidden_field_tag "item[features_attributes][#{feature.uid}][feature_type_id]", feature.feature_type_id
+                    = text_field_tag "item[features_attributes][#{feature.uid}][value]", feature.value
 
     #related_products.tab-pane
       = f.input :related_product_ids, as: :filterable_association, collection: Product.goods.name_asc, label: false

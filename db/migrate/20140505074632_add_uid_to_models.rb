@@ -8,7 +8,8 @@ class AddUidToModels < ActiveRecord::Migration
   IMPORT_TABLES = ENV['IMPORT_MODELS'].split.map(&:tableize)
   COMMON_FOREIGN_KEYS = ENV['COMMON_MODELS'].split.map(&:foreign_key)
   UNIQUE_FOREIGN_KEYS = ENV['IMPORT_MODELS'].split.map(&:foreign_key)
-  FOREIGN_KEYS = COMMON_FOREIGN_KEYS + UNIQUE_FOREIGN_KEYS + %w[performer_id]
+  FOREIGN_KEYS = COMMON_FOREIGN_KEYS + UNIQUE_FOREIGN_KEYS + %w[performer_id parent_id]
+  # %w[bank_id|case_color_id|cash_drawer_id|client_category_id|department_id|product_category_id|product_group_id|product_id|item_id|feature_type_id|feature_id|payment_type_id|price_type_id|product_price_id|repair_group_id|repair_service_id|spare_part_id|store_id|store_item_id|store_product_id|cash_operation_id|cash_shift_id|client_id|client_characteristic_id|device_id|device_task_id|device_type_id|gift_certificate_id|location_id|payment_id|sale_id|sale_item_id|repair_task_id|repair_part_id|task_id|user_id|performer_id]
 
   def up
     if (department_code = ENV['DEPARTMENT_CODE']).present?

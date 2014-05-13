@@ -12,7 +12,7 @@
         = label_tag 'contact_phone', Client.human_attribute_name(:contact_phone), class: 'control-label'
         .controls= text_field_tag 'contact_phone', human_phone(@device.client.contact_phone), class: 'input-medium', disabled: true
 
-    = f.input :location_id, collection: Location.allowed_for(current_user, @device), prompt: false
+    = f.association :location, collection: Location.allowed_for(current_user, @device), prompt: false
 
     .control-group
       %label.control-label= Device.human_attribute_name :case_color

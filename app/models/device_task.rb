@@ -32,6 +32,15 @@ class DeviceTask < ActiveRecord::Base
   after_initialize :set_performer
   after_create UidCallbacks
 
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+    end
+  end
+
+
   before_save do |dt|
     old_done = changed_attributes['done']
     if dt.done and (!old_done or old_done.nil?)

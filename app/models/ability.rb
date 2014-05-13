@@ -115,7 +115,7 @@ class Ability
       can :destroy, Order, user_id: user.id
       can :update, Device#, location_id: user.location_id
       can :print_receipt, Device do |device|
-        (device.user_id == user.id) or user.any_admin? or user.able_to?(:print_receipt)
+        (device.user_id == user.uid) or user.any_admin? or user.able_to?(:print_receipt)
       end
       can :profile, User, id: user.id
       can :update_wish, User, id: user.id

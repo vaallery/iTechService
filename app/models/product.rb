@@ -45,6 +45,14 @@ class Product < ActiveRecord::Base
     # self.build_task if is_service and task.nil?
   end
 
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+    end
+  end
+
   def self.search(params)
     products = self.scoped
 

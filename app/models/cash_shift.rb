@@ -15,6 +15,15 @@ class CashShift < ActiveRecord::Base
   validates_presence_of :cash_drawer
   after_create UidCallbacks
 
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+      # self.find_by_uid(args[0]) if self.attribute_method?(:uid)
+    end
+  end
+
   def close
     if is_closed
       errors[:base] << t('cash_shifts.errors.already_closed')

@@ -57,6 +57,14 @@ class Device < ActiveRecord::Base
   after_initialize :set_user_and_location
   after_initialize :set_contact_phone
 
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+    end
+  end
+
   def as_json(options={})
     {
       id: id,

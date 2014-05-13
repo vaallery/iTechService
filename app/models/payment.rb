@@ -29,6 +29,14 @@ class Payment < ActiveRecord::Base
   before_validation :clear_unnecessary_attributes
   after_create UidCallbacks
 
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+    end
+  end
+
   def is_cash?
     kind == 'cash'
   end

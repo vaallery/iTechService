@@ -44,6 +44,15 @@ class Client < ActiveRecord::Base
     category ||= 0
   end
 
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+      # self.find_by_uid(args[0]) if self.attribute_method?(:uid)
+    end
+  end
+
   def self.search params
     clients = Client.scoped
     unless (client_q = params[:client_q] || params[:client]).blank?

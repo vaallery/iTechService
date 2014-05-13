@@ -84,6 +84,14 @@ class User < ActiveRecord::Base
 
   acts_as_list
 
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+    end
+  end
+
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if auth_token = conditions.delete(:auth_token)
