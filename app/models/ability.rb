@@ -1,6 +1,8 @@
 class Ability
   include CanCan::Ability
 
+  MAIN_MODELS = ENV['COMMON_MODELS'].split.map(&:constantize) + [Purchase, RevaluationAct, MovementAct, Contractor]
+
   def initialize(user)
     # Define abilities for the passed in user here. For example:
     #
@@ -140,7 +142,7 @@ class Ability
     cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct], status: [1, 2]
     cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct], status: [0, 2]
     cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct], status: 1
-    cannot [:modify, :destroy], ENV['COMMON_MODELS'].split.map(&:constantize) unless Department.current.is_main?
+    cannot [:modify, :destroy], MAIN_MODELS unless Department.current.is_main?
     #
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are
