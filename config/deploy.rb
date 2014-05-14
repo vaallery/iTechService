@@ -11,7 +11,7 @@ set :format, :pretty
 set :log_level, :debug
 set :pty, false
 
-set :linked_files, %w{config/database.yml Procfile config/unicorn.rb config/private_pub.yml config/application.yml .env}
+set :linked_files, %w{config/database.yml Procfile config/unicorn.rb config/private_pub.yml config/application.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system public/uploads}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
