@@ -20,7 +20,7 @@
   = require private_pub
   = require bootstrap-colorpicker
   = require bootstrap-datepicker
-  = require bootstrap-datetimepicker.min
+   require bootstrap-datetimepicker.min
    require validation/jquery.validate.min
    require validation/additional-methods.min
    require validation/messages_ru
