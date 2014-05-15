@@ -9,7 +9,7 @@ module Sync
     COMMON_MODELS = ENV['COMMON_MODELS'].split
     IMPORT_MODELS = ENV['IMPORT_MODELS'].split
 
-    MERGE_MODELS = {remote: %w[CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory]}
+    MERGE_MODELS = {remote: %w[Bank CaseColor CashDrawer Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct], local: %w[ClientCategory]}
 
     def name
       "Data sync {#{params.inspect}}"

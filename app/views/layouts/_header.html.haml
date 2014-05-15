@@ -58,6 +58,7 @@
         = drop_down_divider
         = menu_item t('gift_certificates.link'), gift_certificates_path
         = menu_item t('stolen_phones.link'), stolen_phones_path
+        = drop_down_divider
         = drop_down_submenu t('dashboard.references') do
           = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService
           = menu_item t('device_types.link', default: 'Device types'), device_types_path if can? :manage, DeviceType
@@ -80,7 +81,6 @@
         -#= menu_item t('product_imports.form.title'), new_product_import_path if can? :modify, Product
         = menu_item t('data_sync.title'), data_sync_path if current_user.able_to? :sync_data
         = menu_item t('case_pictures.index.title'), case_pictures_path
-        = drop_down_divider
         = menu_item t('settings.link'), settings_path if can? :manage, Setting
 
     = menu_group pull: :right do
