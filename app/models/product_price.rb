@@ -7,7 +7,7 @@ class ProductPrice < ActiveRecord::Base
   scope :retail, where(price_type_id: PriceType.retail.uid)
   belongs_to :department, primary_key: :uid
   belongs_to :product, primary_key: :uid
-  belongs_to :price_type, primary_key: :uid
+  belongs_to :price_type, inverse_of: :product_prices, primary_key: :uid
   delegate :kind, :kind_s, :is_purchase?, :is_retail?, to: :price_type, allow_nil: true
   attr_accessible :value, :date, :product_id, :price_type_id, :department_id
   validates_presence_of :product, :price_type, :date, :value
