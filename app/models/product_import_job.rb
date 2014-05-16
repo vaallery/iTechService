@@ -57,12 +57,12 @@ class ProductImportJob < Struct.new(:params)
               import_log << ['info', "Existing product: [#{product.code}] #{product.name}"]
             else
               next_row = sheet.row i+1
-              product_attributes = {code: code, name: name, product_group_id: product_group.id}
+              product_attributes = {code: code, name: name, product_group_id: product_group.uid}
               if next_row[0].length > 3
                 if next_row[0] =~ /,/
-                  product_attributes.merge! product_category_id: ProductCategory.equipment_with_imei.id
+                  product_attributes.merge! product_category_id: ProductCategory.equipment_with_imei.uid
                 else
-                  product_attributes.merge! product_category_id: ProductCategory.accessory_with_sn.id if product_group.is_accessory
+                  product_attributes.merge! product_category_id: ProductCategory.accessory_with_sn.uid if product_group.is_accessory
                 end
               end
               product = Product.new product_attributes
@@ -74,14 +74,14 @@ class ProductImportJob < Struct.new(:params)
             end
 
             # Purchase Price
-            purchase_price = product.prices.build price_type_id: PriceType.purchase.id, value: row[10], date: import_time
+            purchase_price = product.prices.build price_type_id: PriceType.purchase.uid, value: row[10], date: import_time
             if purchase_price.save
               import_log << ['success', 'New purchase Product Price: ' + purchase_price.value.to_s]
             else
               import_log << ['error', '!!! Unable to create purchase price: ' + purchase_price.errors.full_messages.join('. ')]
             end
             # Retail Price
-            retail_price = product.prices.build price_type_id: PriceType.retail.id, value: row[11], date: import_time
+            retail_price = product.prices.build price_type_id: PriceType.retail.uid, value: row[11], date: import_time
             if retail_price.save
               import_log << ['success', 'New retail Product Price: ' + retail_price.value.to_s]
             else
@@ -96,9 +96,9 @@ class ProductImportJob < Struct.new(:params)
               import_log << ['info', 'Item already present: ' + features.inspect]
             else
               if features.length == 2
-                item = product.items.build features_attributes: {0 => {feature_type_id: FeatureType.serial_number.id, value: features[0]}, 1 => {feature_type_id: FeatureType.imei.id, value: features[1]}}
+                item = product.items.build features_attributes: {0 => {feature_type_id: FeatureType.serial_number.uid, value: features[0]}, 1 => {feature_type_id: FeatureType.imei.id, value: features[1]}}
               else
-                item = product.items.build features_attributes: {0 => {feature_type_id: FeatureType.serial_number.id, value: features[0]}}
+                item = product.items.build features_attributes: {0 => {feature_type_id: FeatureType.serial_number.uid, value: features[0]}}
               end
               if item.save
                 import_log << ['success', 'New item: ' + features.inspect]
@@ -119,7 +119,7 @@ class ProductImportJob < Struct.new(:params)
           end
 
           # Store Items
-          store_item_attributes = {store_id: store.id, quantity: quantity}
+          store_item_attributes = {store_id: store.uid, quantity: quantity}
           if (store_item = (item.feature_accounting) ? item.store_items.first : item.store_items.in_store(store).first).present?
             # store_item.attributes = store_item_attributes
             if store_item.update_attributes store_item_attributes
