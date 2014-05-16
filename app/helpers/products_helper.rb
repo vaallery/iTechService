@@ -36,8 +36,9 @@ module ProductsHelper
   def product_fields(form, association, object, options={})
     partial_name = "#{form.tableize}/#{association.singularize}_fields"
     parent = form.classify.constantize.new
-    object_class = parent.class.reflect_on_association(association.to_sym).klass
-    attributes = {object.class.to_s.foreign_key => object.id}
+    reflection = parent.class.reflect_on_association(association.to_sym)
+    object_class = reflection.klass
+    attributes = {object.class.to_s.foreign_key => object.send(reflection.options[:primary_key] || :id)}
     #attributes[:quantity] = 1 if object_class.attribute_method? :quantity
     new_object = object_class.new attributes
     form_for(parent) { |f| f.simple_fields_for(association, new_object, child_index: Time.new.to_i) { |ff| return render(partial_name, f: ff, options: options) } }
