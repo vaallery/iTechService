@@ -96,7 +96,7 @@ class ProductImportJob < Struct.new(:params)
               import_log << ['info', 'Item already present: ' + features.inspect]
             else
               if features.length == 2
-                item = product.items.build features_attributes: {0 => {feature_type_id: FeatureType.serial_number.uid, value: features[0]}, 1 => {feature_type_id: FeatureType.imei.id, value: features[1]}}
+                item = product.items.build features_attributes: {0 => {feature_type_id: FeatureType.serial_number.uid, value: features[0]}, 1 => {feature_type_id: FeatureType.imei.uid, value: features[1]}}
               else
                 item = product.items.build features_attributes: {0 => {feature_type_id: FeatureType.serial_number.uid, value: features[0]}}
               end
