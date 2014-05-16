@@ -32,10 +32,6 @@
       = menu_item t('products.index.title'), products_path if can? :read, Product
       = menu_item t('orders.link', default: 'Orders'), orders_path if can? :read, Order
       = menu_item t('infos.link', default: 'Infos'), infos_path if can? :read, Info
-      - if can? :manage, Price
-        = menu_item t('prices.link', default: 'Prices'), prices_path
-      - else
-        = header_link_to_view_prices
 
       = drop_down t('dashboard.misc') do
         = menu_item t('purchases.link'), purchases_path if can? :manage, Purchase
@@ -56,8 +52,13 @@
         = menu_item t('salaries.index.title'), salaries_path if can? :manage, Salary
         = menu_item t('announcements.link'), announcements_path if current_user.any_admin?
         = drop_down_divider
+        - if can? :manage, Price
+          = menu_item t('prices.link', default: 'Prices'), prices_path
+        - else
+          = header_link_to_view_prices
         = menu_item t('gift_certificates.link'), gift_certificates_path
         = menu_item t('stolen_phones.link'), stolen_phones_path
+        = menu_item t('case_pictures.index.title'), case_pictures_path
         = drop_down_divider
         = drop_down_submenu t('dashboard.references') do
           = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService
@@ -80,7 +81,7 @@
           = menu_item t('supply_categories.index.title'), supply_categories_path if can? :manage, SupplyCategory
         = menu_item t('product_imports.form.title'), new_product_import_path if can? :modify, Product
         = menu_item t('data_sync.title'), data_sync_path if current_user.able_to? :sync_data
-        = menu_item t('case_pictures.index.title'), case_pictures_path
+        = menu_item 'Delayed job', delayed_job_path #if current_user.developer?
         = menu_item t('settings.link'), settings_path if can? :manage, Setting
 
     = menu_group pull: :right do
