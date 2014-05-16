@@ -226,7 +226,7 @@ module UsersHelper
   end
 
   def accessible_roles
-    current_user.superadmin? ? User::ROLES : User::ROLES_FOR_ADMIN
+    (current_user.superadmin? or current_user.developer?) ? User::ROLES : User::ROLES_FOR_ADMIN
   end
 
   private
