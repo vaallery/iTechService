@@ -1,7 +1,7 @@
 class
 CreateSales < ActiveRecord::Migration
   def change
-    create_table :sales do |t|
+    create_table :sales, force: true do |t|
       t.references :store
       t.references :user
       t.references :client

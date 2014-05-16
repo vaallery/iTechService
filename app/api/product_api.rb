@@ -23,13 +23,13 @@ class ProductApi < Grape::API
     authorize! :read, Product
     if (store = current_user.default_store).present?
       if params[:group_id].present?
-        product_group = ProductGroup.find params[:group_id]
+        product_group = ProductGroup.where(uid: params[:group_id]).first
         product_groups = product_group.children
         products = product_group.products
         present :remnants, products, with: Entities::ProductEntity, store: store
       elsif params[:product_q].present?
         products = Product.search params
-        product_groups = ProductGroup.where id: products.collect(&:product_group_id)
+        product_groups = ProductGroup.where uid: products.collect(&:product_group_id)
         present :remnants, products, with: Entities::ProductEntity, store: store, show_group: true
       else
         product_groups = ProductGroup.roots.search(user_role: current_user.role)

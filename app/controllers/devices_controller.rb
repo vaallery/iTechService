@@ -127,7 +127,6 @@ class DevicesController < ApplicationController
   end
   
   def task_history
-    device = Device.find params[:device_id]
     device_task = DeviceTask.find params[:id]
     @records = device_task.history_records
     render 'shared/show_history'

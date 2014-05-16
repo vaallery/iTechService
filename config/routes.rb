@@ -10,6 +10,8 @@ ItechService::Application.routes.draw do
   match 'ready_devices' => 'dashboard#ready_devices', via: :get
   match 'goods_for_sale' => 'dashboard#goods_for_sale', via: :get
   match 'check_session_status' => 'dashboard#check_session_status', via: :get
+  match 'data_sync' => 'data_sync#new', via: :get
+  match 'data_sync' => 'data_sync#perform', via: :post
 
   mount Ckeditor::Engine => '/ckeditor'
 

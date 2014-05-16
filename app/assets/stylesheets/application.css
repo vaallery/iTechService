@@ -12,7 +12,6 @@
  *= require jquery-ui-1.9.1.custom.min
  *= require jstree/apple/style
  *= require bootstrap-colorpicker
- *= require datepicker
  *= require bootstrap-datetimepicker.min
  *= require customicons
  *= require_tree .

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 #source 'http://gems.rubyforge.org'
 ruby '2.0.0'
-gem 'rails', '3.2.17'
+gem 'rails', '3.2.18'
 gem 'unicorn', '~> 4.6.2'
 gem 'pg', '~> 0.14.1'
 gem 'thin', '~> 1.5.0'
@@ -36,7 +36,8 @@ gem 'foreman', '~> 0.63.0'
 gem 'grape', '~> 0.6.1'
 gem 'grape-entity', '~> 0.4.1'
 gem 'figaro'
-gem 'rmagick'
+# gem 'rmagick'
+# gem 'ar-octopus'
 
 # Gems used only for assets and not required
 # in production environments by default.

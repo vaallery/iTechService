@@ -44,7 +44,7 @@ module ProductsHelper
   end
 
   def link_to_product_quick_select(product)
-    link_to product.name, choose_products_path(product_id: product.id, form: 'sale', association: 'sale_items'), remote: true, title: product.name, class: 'product_quick_select_link'
+    link_to product.name, choose_products_path(product_id: product.uid, form: 'sale', association: 'sale_items'), remote: true, title: product.name, class: 'product_quick_select_link'
   end
 
 end

@@ -93,10 +93,10 @@
 
 .form-actions
   - if can? :create, Device
-    = link_to new_device_path(device: {client_id: @client.id}), class: 'btn' do
+    = link_to new_device_path(device: {client_id: @client.uid}), class: 'btn' do
       = icon_tag('plus-sign') + t('.new_device')
   - if can? :create, Sale
-    = link_to new_sale_path(sale: {client_id: @client.id}), class: 'btn' do
+    = link_to new_sale_path(sale: {client_id: @client.uid}), class: 'btn' do
       = icon_tag('plus-sign') + t('.new_sale')
   - if can? :create, Order
     = link_to new_order_path(order: {customer_type: 'Client', customer_id: @client.id}), class: 'btn' do

@@ -12,20 +12,29 @@ class Store < ActiveRecord::Base
   scope :retail, where(kind: 'retail')
   scope :spare_parts, where(kind: 'spare_parts')
 
-  belongs_to :department
+  belongs_to :department, primary_key: :uid
   has_many :purchases, inverse_of: :store
-  has_many :sales, inverse_of: :store
+  has_many :sales, inverse_of: :store, primary_key: :uid
   has_many :movement_acts
-  has_many :store_items, inverse_of: :store
+  has_many :store_items, inverse_of: :store, primary_key: :uid
   has_many :items, through: :store_items
   has_many :products, through: :items
-  has_and_belongs_to_many :price_types
-  has_many :store_products, dependent: :destroy
+  has_many :store_products, dependent: :destroy, primary_key: :uid
+  has_and_belongs_to_many :price_types, finder_sql: proc { "SELECT price_types.* FROM price_types INNER JOIN price_types_stores ON price_types.uid = price_types_stores.price_type_id WHERE price_types_stores.store_id = '#{uid}'"}
 
   delegate :name, to: :department, prefix: true, allow_nil: true
 
   attr_accessible :code, :name, :kind, :department_id, :price_type_ids
   validates_presence_of :name, :kind, :department
+  after_create UidCallbacks
+
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+    end
+  end
 
   def self.search(params)
     stores = self.scoped
@@ -38,7 +47,7 @@ class Store < ActiveRecord::Base
   end
 
   def self.spare_part_ids
-    Store.spare_parts.map(&:id)
+    Store.spare_parts.map(&:uid)
   end
 
   def is_spare_parts?

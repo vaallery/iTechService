@@ -1,6 +1,6 @@
 :plain
   $("#modal_form").modal('hide');
-  $task_row = $(".device_task_row[data-device-task-id=#{@device_task.id}]", '#actual_tasks_table');
+  $task_row = $(".device_task_row[data-device-task-id=#{@device_task.uid}]", '#actual_tasks_table');
   $task_row.replaceWith("#{j(device_task_row_tag(@device_task))}");
   $device_row = $(".device_row[data-device-id=#{@device_task.device_id}]", '#actual_tasks_table');
   $device_row.replaceWith("#{j(device_row_tag(@device_task.device))}");

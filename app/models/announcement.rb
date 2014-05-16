@@ -1,9 +1,6 @@
 class Announcement < ActiveRecord::Base
   KINDS = %w[help coffee for_coffee protector info birthday order_status order_done salary device_return]
 
-  default_scope where('announcements.department_id = ?', Department.current.id)
-
-  belongs_to :department
   belongs_to :user, inverse_of: :announcements
   has_and_belongs_to_many :recipients, class_name: 'User', join_table: 'announcements_users', uniq: true
   attr_accessible :content, :kind, :user_id, :user, :active, :recipient_ids
@@ -23,7 +20,6 @@ class Announcement < ActiveRecord::Base
 
   after_initialize do
     kind ||= 'info'
-    department_id ||= Department.current.id
   end
 
   def user_name

@@ -21,12 +21,11 @@ class Order < ActiveRecord::Base
   scope :spare_part, where(object_kind: 'spare_part')
   scope :done_at, lambda { |period| joins(:history_records).where(history_records: {column_name: 'status', new_value: 'done', created_at: period}) }
 
-  belongs_to :department
   belongs_to :customer, polymorphic: true
   belongs_to :user
   has_many :history_records, as: :object
 
-  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id
+  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment
   validates :customer_id, :object, :object_kind, presence: true
   before_validation :generate_number
 
@@ -40,7 +39,6 @@ class Order < ActiveRecord::Base
       end
       order.user_id ||= User.current.id
     end
-    order.department_id ||= Department.current.id
   end
 
   after_update :make_announcement

@@ -1,13 +1,25 @@
 class DeviceType < ActiveRecord::Base
-  has_many :devices
-  has_one :product, inverse_of: :device_type, dependent: :nullify
-  attr_accessible :name, :ancestry, :parent_id, :qty_for_replacement, :qty_replaced, :qty_shop, :qty_store, :qty_reserve, :expected_during, :code_1c
+
+  default_scope where('device_types.department_id = ?', Department.current.uid)
+
+  belongs_to :department, primary_key: :uid
+  has_many :devices, primary_key: :uid
+  has_one :product, inverse_of: :device_type, dependent: :nullify, primary_key: :uid
+
+  attr_accessible :name, :ancestry, :parent_id, :qty_for_replacement, :qty_replaced, :qty_shop, :qty_store, :qty_reserve, :expected_during, :code_1c, :department_id
   validates :name, presence: true
-  #validates :name, uniqueness: true
+  after_initialize UidCallbacks
+  after_create UidCallbacks
+
   has_ancestry
 
-  #scope :not_root, where('ancestry != NULL')
-  #scope :for_sale, not_root.and(self.arel_table[:descendants_count].eq(0))
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+    end
+  end
 
   def full_name
     path.all.map { |t| t.name }.join ' '

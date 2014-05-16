@@ -33,10 +33,10 @@
 
   - if @product.is_service
     %dt= Task.human_attribute_name :role
-    %dd= @product.task.role_name
+    %dd= @product.task.try(:role_name) || '-'
 
     %dt= Task.human_attribute_name :location
-    %dd= @product.task.location_name || '-'
+    %dd= @product.task.try(:location_name) || '-'
 
 - if @product.feature_accounting
   %hr

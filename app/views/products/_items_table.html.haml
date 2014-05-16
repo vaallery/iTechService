@@ -10,13 +10,13 @@
           %td= feature.value
 
     %tr#new_item_fields
-      = hidden_field_tag "item[product_id]", @product.try(:id), disabled: true
+      = hidden_field_tag "item[product_id]", @product.try(:uid), disabled: true
       - @feature_types.each_with_index do |feature_type, i|
         %td
-          = hidden_field_tag "item[features_attributes][#{i}][feature_type_id]", feature_type.id, disabled: true
+          = hidden_field_tag "item[features_attributes][#{i}][feature_type_id]", feature_type.uid, disabled: true
           = text_field_tag "item[features_attributes][#{i}][value]", nil, disabled: true, maxlength: (feature_type.is_imei? ? 15 : nil)
 
-= paginate @items, remote: true, params: { controller: 'items', action: 'index', product_id: @product.try(:id) }
+= paginate @items, remote: true, params: { controller: 'items', action: 'index', product_id: @product.try(:uid) }
 
 - if params[:form] == 'purchase'
   = link_to t('new'), '#', id: 'add_product_item', class: 'btn btn-small btn-success'

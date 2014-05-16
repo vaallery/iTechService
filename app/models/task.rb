@@ -2,19 +2,36 @@ class Task < ActiveRecord::Base
 
   IMPORTANCE_BOUND = 5
 
+  default_scope where('tasks.department_id = ?', Department.current.uid)
   scope :important, where('priority > ?', IMPORTANCE_BOUND)
   scope :tasks_for, lambda { |user| where(task: {role: user.role}) }
 
-  belongs_to :product, inverse_of: :task
-  belongs_to :location
-  has_many :device_tasks, dependent: :destroy
-  has_many :devices, through: :device_tasks
+  belongs_to :product, inverse_of: :task, primary_key: :uid
+  belongs_to :location, primary_key: :uid
+  belongs_to :department, primary_key: :uid
+  has_many :device_tasks, dependent: :destroy, primary_key: :uid
+  has_many :devices, through: :device_tasks, primary_key: :uid
+
   delegate :item, to: :product, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
-  attr_accessible :cost, :duration, :name, :priority, :role, :location_id
-  after_initialize do
-    if persisted? and product.nil?
-      update_attribute :product_id, create_product(name: name, code: "task#{id}", product_group_id: ProductGroup.services.first_or_create(name: 'Services', product_category_id: ProductCategory.where(kind: 'service').first_or_create(name: 'Service', kind: 'service').id).id).id
+
+  attr_accessible :cost, :duration, :name, :priority, :role, :location_id, :department_id, :product_id
+
+  after_initialize UidCallbacks
+  after_create UidCallbacks
+  validates_uniqueness_of :product_id, scope: :department_id
+
+  # after_initialize do
+  #   if persisted? and product.nil?
+  #     update_attribute :product_id, create_product(name: name, code: "task#{id}", product_group_id: ProductGroup.services.first_or_create(name: 'Services', product_category_id: ProductCategory.where(kind: 'service').first_or_create(name: 'Service', kind: 'service').uid).uid).uid
+  #   end
+  # end
+
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
     end
   end
 

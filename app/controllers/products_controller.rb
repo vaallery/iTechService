@@ -90,7 +90,7 @@ class ProductsController < ApplicationController
 
   def choose
     @product_groups = ProductGroup.roots.search(params).ordered
-    @product = Product.find params[:product_id] if params[:product_id].present?
+    @product = Product.find_by_uid params[:product_id] if params[:product_id].present?
     params[:form_name] = 'products/choose_form'
     respond_to do |format|
       format.js
@@ -98,11 +98,11 @@ class ProductsController < ApplicationController
   end
 
   def select
-    @store = Store.find params[:store_id] if params[:store_id].present?
-    @client = Client.find params[:client_id] if params[:client_id].present?
+    @store = Store.find_by_uid params[:store_id] if params[:store_id].present?
+    @client = Client.find_by_uid params[:client_id] if params[:client_id].present?
 
     if params[:product_id].present?
-      @product = Product.find params[:product_id]
+      @product = Product.find_by_uid params[:product_id]
       if @product.feature_accounting
         @items = @product.items
         @items = @items.available if params[:form].in? %w[movement_act]
@@ -115,7 +115,7 @@ class ProductsController < ApplicationController
     end
 
     if params[:item_id].present?
-      @item = Item.find params[:item_id]
+      @item = Item.find_by_uid params[:item_id]
     end
 
     if params[:item].present?
@@ -151,7 +151,7 @@ class ProductsController < ApplicationController
 
   def remains_in_store
     product = Product.find params[:id]
-    store = Store.find params[:store_id]
+    store = Store.find_by_uid params[:store_id]
     quantity = product.quantity_in_store store
     respond_to do |format|
       format.json { render json: {quantity: quantity} }

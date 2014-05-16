@@ -13,7 +13,7 @@ class CasePicturesController < ApplicationController
   def create
     if (file = params[:file]).present?
       filepath = file.path
-      pdf = CasePicturePdf.new filepath, params[:countour]
+      pdf = CasePicturePdf.new filepath, params
       send_data pdf.render, filename: 'case_picture', type: 'application/pdf', disposition: 'inline'
     else
       render nothing: true

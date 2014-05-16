@@ -45,3 +45,5 @@ Gemfile.lock
 /config/deploy/
 /doc/
 .env
+Vagrantfile
+.vagrant

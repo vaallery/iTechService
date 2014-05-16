@@ -1,7 +1,7 @@
 class SaleItem < ActiveRecord::Base
 
-  belongs_to :sale, inverse_of: :sale_items
-  belongs_to :item, inverse_of: :sale_items
+  belongs_to :sale, inverse_of: :sale_items, primary_key: :uid
+  belongs_to :item, inverse_of: :sale_items, primary_key: :uid
 
   delegate :product, :product_category, :features, :name, :code, :quantity_in_store, :retail_price, :purchase_price, :feature_accounting, :store_item, :store_items, :is_service, :request_price, :warranty_term, :features_s, to: :item, allow_nil: true
   delegate :store, :client, :date, :is_return, to: :sale, allow_nil: true
@@ -12,11 +12,20 @@ class SaleItem < ActiveRecord::Base
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
   validates_numericality_of :discount, greater_than_or_equal_to: 0, less_than_or_equal_to: :max_discount, message: I18n.t('sales.errors.unavailable_discount'), allow_nil: true, unless: Proc.new { |a| a.discount.nil? }
   validates_numericality_of :price, greater_than_or_equal_to: :min_price, unless: Proc.new { |a| a.min_price.nil? }
+  after_create UidCallbacks
 
   after_initialize do
     self.quantity ||= 1
     self.price ||= retail_price - available_discount if retail_price.present?
     self.discount ||= available_discount
+  end
+
+  def self.find(*args, &block)
+    begin
+      super
+    rescue ActiveRecord::RecordNotFound
+      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
+    end
   end
 
   def sum
