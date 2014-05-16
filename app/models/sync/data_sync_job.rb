@@ -37,6 +37,7 @@ module Sync
         log << ['error', '!!! Current department is not main']
       end
       log
+      ImportMailer.data_sync_log(log, Time.current).deliver
     end
 
     def log
