@@ -42,7 +42,7 @@ Gemfile.lock
 /projectFilesBackup
 /Procfile
 /shared/
-/config/deploy/
+#/config/deploy/
 /doc/
 .env
 Vagrantfile
