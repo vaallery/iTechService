@@ -20,7 +20,7 @@ class SalariesController < ApplicationController
 
   def new
     @salary = Salary.new user_id: params[:user_id]
-    @user = User.find_by_uid params[:user_id] if params[:user_id].present?
+    @user = User.find params[:user_id] if params[:user_id].present?
 
     respond_to do |format|
       format.html

@@ -73,7 +73,7 @@ class StoresController < ApplicationController
 
   def product_details
     store = Store.find params[:id]
-    @product = Product.find_by_uid params[:product_id]
+    @product = Product.find params[:product_id]
     @store_items = @product.store_items.in_store store
     respond_to do |format|
       format.js
