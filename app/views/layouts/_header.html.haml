@@ -78,7 +78,7 @@
           = menu_item t('stores.index.title'), stores_path if can? :manage, Store
           = menu_item t('departments.link'), departments_path if can? :manage, Department
           = menu_item t('supply_categories.index.title'), supply_categories_path if can? :manage, SupplyCategory
-        -#= menu_item t('product_imports.form.title'), new_product_import_path if can? :modify, Product
+        = menu_item t('product_imports.form.title'), new_product_import_path if can? :modify, Product
         = menu_item t('data_sync.title'), data_sync_path if current_user.able_to? :sync_data
         = menu_item t('case_pictures.index.title'), case_pictures_path
         = menu_item t('settings.link'), settings_path if can? :manage, Setting

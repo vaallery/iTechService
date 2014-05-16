@@ -18,48 +18,18 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundl
 set :keep_releases, 5
 
 set :rvm_type, :user
-set :rvm_ruby_version, 'ruby-2.0.0-p451@itechservice' #'ruby-1.9.3-p545@itechservice'
+set :rvm_ruby_version, 'ruby-2.0.0-p451@itechservice'
 
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
 
 namespace :server do
 
-  namespace :lin do
-    desc 'Start server on linux'
-    task :start do
-      on roles(:all) do
-        sudo "start #{application}"
-      end
-    end
-
-    desc 'Stop server on linux'
-    task :stop do
-      on roles(:all) do
-        sudo "stop #{application}"
-      end
-    end
-
-    desc 'Restart server on linux'
-    task :restart do
-      on roles(:all) do
-        sudo "restart #{application}"
-      end
-    end
-
-    desc 'Server status on linux'
-    task :status do
-      on roles(:all) do
-        execute "initctl list | grep #{application}"
-      end
-    end
-  end
-
   desc 'Start server'
   task :start do
     on roles(:all) do
       if fetch(:stage) == :staging
-        sudo "start #{application}"
+        sudo "start #{fetch(:application)}"
       else
         sudo "launchctl load /Library/LaunchDaemons/#{fetch(:application)}-*"
       end
@@ -70,7 +40,7 @@ namespace :server do
   task :stop do
     on roles(:all) do
       if fetch(:stage) == :staging
-        sudo "stop #{application}"
+        sudo "stop #{fetch(:application)}"
       else
         sudo "launchctl unload /Library/LaunchDaemons/#{fetch(:application)}-*"
       end
@@ -81,7 +51,7 @@ namespace :server do
   task :restart do
     on roles(:all) do
       if fetch(:stage) == :staging
-        sudo "restart #{application}"
+        sudo "restart #{fetch(:application)}"
       else
         sudo "launchctl unload /Library/LaunchDaemons/#{fetch(:application)}-*"
         sudo "launchctl load /Library/LaunchDaemons/#{fetch(:application)}-*"
@@ -93,7 +63,7 @@ namespace :server do
   task :status do
     on roles(:all) do
       if fetch(:stage) == :staging
-        execute "initctl list | grep #{application}"
+        execute "initctl list | grep #{fetch(:application)}"
       else
         sudo "launchctl list | grep #{fetch(:application)}"
       end
@@ -103,31 +73,6 @@ namespace :server do
 end
 
 namespace :deploy do
-
-  namespace :lin do
-    desc 'Restart application on linux'
-    task :restart do
-      on roles(:app), in: :sequence, wait: 5 do
-        sudo "restart #{application}"
-      end
-    end
-
-    desc 'Foreman init'
-    task :foreman_init do
-      on roles(:all) do
-        foreman_temp = "/var/www/tmp/foreman"
-        execute "mkdir -p #{foreman_temp}"
-        execute "ln -s #{release_path} #{current_path}"
-
-        within current_path do
-          execute "cd #{current_path}"
-          execute :bundle, "exec foreman export upstart #{foreman_temp} -a #{application} -u deployer -l #{shared_path}/log -d #{current_path}"
-        end
-        sudo "mv #{foreman_temp}/* /etc/init/"
-        sudo "rm -r #{foreman_temp}"
-      end
-    end
-  end
 
   desc 'Setup'
   task :setup do
@@ -153,16 +98,29 @@ namespace :deploy do
   desc 'Foreman init'
   task :foreman_init do
     on roles(:all) do
-      foreman_temp = "/usr/local/var/www/tmp/foreman"
-      execute "mkdir -p #{foreman_temp}"
-      execute "ln -s #{release_path} #{current_path}"
+      if fetch(:stage) == :staging
+        foreman_temp = "/var/www/tmp/foreman"
+        execute "mkdir -p #{foreman_temp}"
+        execute "ln -s #{release_path} #{current_path}"
 
-      within current_path do
-        execute "cd #{current_path}"
-        execute :bundle, "exec foreman export launchd #{foreman_temp} -a #{fetch(:application)} -u itech -l #{shared_path}/log -d #{current_path}"
+        within current_path do
+          execute "cd #{current_path}"
+          execute :bundle, "exec foreman export upstart #{foreman_temp} -a #{application} -u deployer -l #{shared_path}/log -d #{current_path}"
+        end
+        sudo "mv #{foreman_temp}/* /etc/init/"
+        sudo "rm -r #{foreman_temp}"
+      else
+        foreman_temp = "/usr/local/var/www/tmp/foreman"
+        execute "mkdir -p #{foreman_temp}"
+        execute "ln -s #{release_path} #{current_path}"
+
+        within current_path do
+          execute "cd #{current_path}"
+          execute :bundle, "exec foreman export launchd #{foreman_temp} -a #{fetch(:application)} -u itech -l #{shared_path}/log -d #{current_path}"
+        end
+        sudo "mv #{foreman_temp}/* /Library/LaunchDaemons/"
+        sudo "rm -r #{foreman_temp}"
       end
-      sudo "mv #{foreman_temp}/* /Library/LaunchDaemons/"
-      sudo "rm -r #{foreman_temp}"
     end
   end
 
@@ -174,7 +132,7 @@ namespace :deploy do
   end
 
   #after :finishing, 'deploy:cleanup'
-  after :finishing, 'server:restart'
+  # after :finishing, 'server:restart'
 
   #after :setup, 'deploy:foreman_init'
 
