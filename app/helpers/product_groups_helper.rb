@@ -22,7 +22,7 @@ module ProductGroupsHelper
     opened ||= []
     product_groups.map do |product_group, sub_product_groups|
       is_current = product_group.uid == current_id
-      li_class = (opened.include?(product_group.uid)) ? 'opened' : 'closed'
+      li_class = (opened.include?(product_group.id)) ? 'opened' : 'closed'
       li_class << ' current' if is_current
       url = options[:url].present? ? "#{options[:url]}?product_group_id=#{product_group.uid}" : product_group_path(product_group, options)
       content_tag(:li, link_to(product_group.name, url, remote: true) + content_tag(:ul, nested_product_groups_list(sub_product_groups, opened, current_id, options)), class: "product_group #{li_class}", id: "product_group_#{product_group.id}", title: product_group.name, data: {product_group_id: product_group.id, depth: product_group.depth, products: product_items(product_group.products)})
