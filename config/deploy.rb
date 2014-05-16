@@ -174,7 +174,7 @@ namespace :deploy do
   end
 
   #after :finishing, 'deploy:cleanup'
-  #after :finishing, 'server:restart'
+  after :finishing, 'server:restart'
 
   #after :setup, 'deploy:foreman_init'
 
