@@ -7,6 +7,7 @@ class Department < ActiveRecord::Base
   }
 
   default_scope order('departments.id asc')
+  scope :branches, where(role: 1)
 
   has_many :users, dependent: :nullify
   has_many :stores, dependent: :nullify
@@ -22,6 +23,14 @@ class Department < ActiveRecord::Base
 
   def role_s
     ROLES[role]
+  end
+
+  def is_main?
+    role == 0
+  end
+
+  def is_branch?
+    role == 1
   end
 
   def is_store?

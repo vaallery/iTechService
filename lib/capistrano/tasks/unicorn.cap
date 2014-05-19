@@ -61,7 +61,7 @@ namespace :unicorn do
     end
   end
 
-  desc "|DarkRecipes| Restarts unicorn directly"
+  desc "||DarkRecipes|| Restarts unicorn directly"
   task :restart do
     on roles(:app) do
       execute unicorn_restart_cmd

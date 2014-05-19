@@ -16,7 +16,7 @@ class AddCodeToLocations < ActiveRecord::Migration
     add_index :locations, :code
 
     Location.all.each do |location|
-      location.update_attributes! code: CODES[location.name]
+      location.update_column :code, CODES[location.name]
     end
   end
 end

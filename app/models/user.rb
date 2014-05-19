@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
   attr_accessor :auth_token
   cattr_accessor :current
 
-  # default_scope where('users.department_id = ?', User.current.present? ? User.current.department_id : Department.current.id)
   scope :id_asc, order('id asc')
   scope :ordered, order('position asc')
   scope :any_admin, where(role: %w[admin superadmin])
@@ -86,9 +85,9 @@ class User < ActiveRecord::Base
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if auth_token = conditions.delete(:auth_token)
-      active.where(conditions).where(["lower(username) = :value OR lower(card_number) = :value", {value: auth_token.mb_chars.downcase.to_s}]).first
+      User.active.where(conditions).where(["lower(username) = :value OR lower(card_number) = :value", {value: auth_token.mb_chars.downcase.to_s}]).first
     else
-      active.where(conditions).first
+      User.active.where(conditions).first
     end
   end
 

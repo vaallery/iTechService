@@ -1,7 +1,5 @@
 class Info < ActiveRecord::Base
 
-  default_scope where('infos.department_id = ?', Department.current.id)
-
   belongs_to :department
   belongs_to :recipient, class_name: 'User', foreign_key: 'recipient_id'
   has_many :comments, as: :commentable, dependent: :destroy

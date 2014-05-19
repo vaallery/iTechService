@@ -1,7 +1,6 @@
 # encoding: utf-8
 class Device < ActiveRecord::Base
 
-  default_scope where('devices.department_id = ?', User.current.present? ? User.current.department_id : Department.current.id)
   scope :newest, order('devices.created_at desc')
   scope :oldest, order('devices.created_at asc')
   scope :done, where('devices.done_at IS NOT NULL').order('devices.done_at desc')

@@ -1,4 +1,7 @@
 class CreateDepartments < ActiveRecord::Migration
+  class Department < ActiveRecord::Base
+  end
+
   def change
     create_table :departments do |t|
       t.string :name
@@ -14,5 +17,6 @@ class CreateDepartments < ActiveRecord::Migration
     end
     add_index :departments, :role
     add_index :departments, :code
+    Department.where(code: ENV['DEPARTMENT_CODE'] || 'vl').first_or_create(name: ENV['DEPARTMENT_NAME'], role: ENV['DEPARTMENT_ROLE'])
   end
 end

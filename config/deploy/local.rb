@@ -1,6 +1,7 @@
 set :stage, :local
 set :deploy_to, "/usr/local/var/www/#{fetch(:application)}"
 set :deploy_via, :copy
+set :branch, 'staging'
 
 # Simple Role Syntax
 # ==================
