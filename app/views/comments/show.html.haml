@@ -3,7 +3,7 @@
   %h1=t '.title', :default => model_class.model_name.human
 
 %p
-  %strong= model_class.human_attribute_name(:user) + ':'
+  %strong= model_class.human_attribute_name(:user_id) + ':'
   %br
   = @comment.user_id
 %p

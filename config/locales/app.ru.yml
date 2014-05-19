@@ -387,7 +387,6 @@ ru:
         location_id: :activerecord.attributes.task.location
         name: Название
         priority: Приоритет
-        product: Продукт
         role: Роль
 
       timesheet_day:
@@ -687,14 +686,6 @@ ru:
     params: Параметры
     new_sale: "Новая Продажа"
     references: "Справочники"
-
-  data_sync:
-    title: 'Синхронизация данных'
-    import: "Импорт"
-    export: "Экспорт"
-    merge: 'Объединение'
-    sync: "Синхронизация"
-    submit: "Выполнить"
 
   departments:
     created: 'Подразделение создано'
@@ -1480,7 +1471,6 @@ ru:
       manage_wiki: Редактировать Wiki
       print_receipt: "Печатать чеки"
       manage_timesheet: "Редактировать табель"
-      sync_data: 'Синхронизировать данные'
     index:
       title: Пользователи
     edit:

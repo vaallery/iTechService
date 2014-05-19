@@ -1,7 +1,7 @@
 %tr.device_task.fields{class: row_class_for_task(f.object)}
   - if can? :update, f.object
     %td= f.check_box :done
-    %td= f.select :task_id, Task.all.collect{|t|[t.name,t.uid]}, {include_blank: true}, class: 'device_task_task'
+    %td= f.select :task_id, Task.all.collect{|t|[t.name,t.id]}, {include_blank: true}, class: 'device_task_task'
     %td.align_right= f.number_field :cost, class: 'device_task_cost input-small'
     %td= f.text_area :comment, rows: 3
     - if can? :remove_device_tasks, f.object.device

@@ -128,7 +128,7 @@ class UsersController < ApplicationController
     @msg = ''
     @user = User.find params[:id]
     @day = params[:day]
-    @msg = 'User location not set' if (@location_id = @user.location.try(:uid)).nil?
+    @msg = 'User location not set' if (@location_id = @user.location.try(:id)).nil?
     @schedule_day = @user.schedule_days.find_by_day @day
   end
 

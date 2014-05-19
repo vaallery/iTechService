@@ -59,7 +59,7 @@ jQuery ->
       $.getJSON '/items?q=' + val, (res)->
         $this.parent().siblings('.sales_info').remove()
         if res.id
-          $('#device_item_id').val res.uid
+          $('#device_item_id').val res.id
           $('#device_type_name').text res.name
           $('.device_form .imei_input').addClass 'hidden'
           for feature in res.features

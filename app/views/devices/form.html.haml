@@ -28,7 +28,7 @@
 
   = f.input :serial_number, as: :serial_number, input_html: {autocomplete: 'off'}, required: true
 
-  - if @device.new_record? or @device.user_id == current_user.uid
+  - if @device.new_record? or @device.user_id == current_user.id
     = f.input :app_store_pass, required: @device.new_record?
 
   = f.association :case_color, as: :radio_buttons, collection: CaseColor.ordered_by_name, label_method: lambda{|c|case_color_presentation(c)}

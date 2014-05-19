@@ -24,10 +24,9 @@
       = f.input :comment, input_html: {rows: 3}
 
       - if @product.is_service
-        -#= f.simple_fields_for @product.task || @product.build_task do |ff|
-        = f.simple_fields_for :task do |ff|
+        = f.simple_fields_for @product.task || @product.build_task do |ff|
           -#= ff.input :name
-          = ff.input :role, collection: User::ROLES_FOR_ADMIN, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
+          = ff.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
           = ff.association :location, label_method: :name
 
       .control-group
@@ -52,8 +51,8 @@
                 %td= item.barcode_num
                 - item.features.each do |feature|
                   %td
-                    = hidden_field_tag "item[features_attributes][#{feature.uid}][feature_type_id]", feature.feature_type_id
-                    = text_field_tag "item[features_attributes][#{feature.uid}][value]", feature.value
+                    = hidden_field_tag "item[features_attributes][#{feature.id}][feature_type_id]", feature.feature_type_id
+                    = text_field_tag "item[features_attributes][#{feature.id}][value]", feature.value
 
     #related_products.tab-pane
       = f.input :related_product_ids, as: :filterable_association, collection: Product.goods.name_asc, label: false

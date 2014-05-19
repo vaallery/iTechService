@@ -2,7 +2,7 @@
 
 = simple_form_for @department, html: { class: 'form-horizontal' } do |f|
   = f.input :name
-  = f.input :code, readonly: true
+  = f.input :code
   = f.input :role, collection: department_roles_for_select, prompt: false
   = f.input :url
   = f.input :city

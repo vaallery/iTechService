@@ -1,14 +1,14 @@
 - if @client.present?
   - if params[:form] == 'sale' or params[:form] == 'modal'
     :plain
-      $('#sale_client_id').val(#{@client.uid});
+      $('#sale_client_id').val(#{@client.id});
       $('#sale_client_name').html("#{j(client_link(@client))}");
       $('#sale_client_category').text("#{human_client_category(@client)}");
       saveSale();
   - else
     :plain
       $('#client_search').val("#{@client.presentation}");
-      $('#device_client_id, #sale_client_id').val("#{@client.uid}");
+      $('#device_client_id, #sale_client_id').val("#{@client.id}");
       $('#order_customer_id').val("#{@client.id}");
       $('#edit_client_link').attr('href', "#{edit_client_path(@client)}");
       $('#edit_client_link').attr('data-remote', true);

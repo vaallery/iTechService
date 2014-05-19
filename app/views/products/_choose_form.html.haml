@@ -1,7 +1,7 @@
 #modal_form.modal.fade.hide
   = form_tag select_products_path, remote: true, id: 'product_choose_form' do
     = hidden_field_tag 'product_id', params[:product_id], disabled: params[:product_id].blank?
-    = hidden_field_tag 'item_id', params[:item_id], disabled: params[:item_id].blank?
+    = hidden_field_tag 'item_id', params[:product_id], disabled: params[:item_id].blank?
     = hidden_field_tag 'form', params[:form]
     = hidden_field_tag 'association', params[:association]
     = hidden_field_tag 'is_product_only', params[:is_product_only]

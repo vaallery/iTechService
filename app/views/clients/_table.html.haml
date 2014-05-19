@@ -17,7 +17,7 @@
           %td=l client.created_at, format: :long_d
           %td.btn-group
             - if can? :create, Device
-              = link_to icon_tag('plus-sign'), new_device_path(device: {client_id: client.uid}), class: 'btn btn-small'
+              = link_to icon_tag('plus-sign'), new_device_path(device: {client_id: client.id}), class: 'btn btn-small'
             = link_to_show_small client
             = link_to_edit_small client
             = link_to_destroy_small client

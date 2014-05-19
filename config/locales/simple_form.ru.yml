@@ -11,18 +11,9 @@ ru:
     error_notification:
       default_message: "Посмотрите ошибки ниже:"
     # Labels and hints examples
-    labels:
-      data_sync:
-        remote_dep_code: 'Удалённое подразделение'
-        action: 'Операция'
-        mode: 'Режим'
-        model_names: 'Модели'
-    prompts:
-      data_sync:
-        remote_dep_code: 'Все'
-
-#      defaults:
-#        password: 'Password'
+    # labels:
+    #   defaults:
+    #     password: 'Password'
     #   user:
     #     new:
     #       email: 'E-mail to sign in.'

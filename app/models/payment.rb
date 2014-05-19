@@ -9,9 +9,9 @@ class Payment < ActiveRecord::Base
   scope :gift_certificates, where(kind: 'certificate')
   scope :trade_in, where(kind: 'trade_in')
 
-  belongs_to :sale, inverse_of: :payments, primary_key: :uid
-  belongs_to :bank, primary_key: :uid
-  belongs_to :gift_certificate, primary_key: :uid
+  belongs_to :sale, inverse_of: :payments
+  belongs_to :bank
+  belongs_to :gift_certificate
 
   delegate :balance, :nominal, :number, to: :gift_certificate, prefix: true, allow_nil: true
   delegate :name, to: :bank, prefix: true, allow_nil: true
@@ -27,15 +27,6 @@ class Payment < ActiveRecord::Base
   validates_numericality_of :value, greater_than: 0
   validates_numericality_of :value, less_than_or_equal_to: :gift_certificate_balance, if: 'is_gift_certificate? and !is_return'
   before_validation :clear_unnecessary_attributes
-  after_create UidCallbacks
-
-  def self.find(*args, &block)
-    begin
-      super
-    rescue ActiveRecord::RecordNotFound
-      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
-    end
-  end
 
   def is_cash?
     kind == 'cash'

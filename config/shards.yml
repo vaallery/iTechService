@@ -1,6 +1,0 @@
-octopus:
-  environments:
-    - development
-    - production
-    - staging
-  development:

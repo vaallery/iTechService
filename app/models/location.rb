@@ -1,26 +1,13 @@
 # encoding: utf-8
 class Location < ActiveRecord::Base
-
-  default_scope where('locations.department_id = ?', Department.current.uid)
+  #default_scope order('position asc')
   scope :sorted, order('position asc')
   scope :for_schedule, where(schedule: true)
+  has_many :users
+  has_many :tasks
 
-  belongs_to :department, primary_key: :uid
-  has_many :users, primary_key: :uid
-  has_many :tasks, primary_key: :uid
-
-  attr_accessible :name, :schedule, :position, :code, :department_id
+  attr_accessible :name, :schedule, :position, :code
   validates_presence_of :name
-  after_initialize UidCallbacks
-  after_create UidCallbacks
-
-  def self.find(*args, &block)
-    begin
-      super
-    rescue ActiveRecord::RecordNotFound
-      self.find_by_uid(args[0]) if self.respond_to?(:find_by_uid)
-    end
-  end
 
   def full_name
     path.all.map{|l|l.name}.join ' / '

@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
     end
 
     if @items.many?
-      @products = Product.where(uid: @items.map{|i|i.product_id})
+      @products = Product.where(id: @items.map{|i|i.product_id})
       @products.page(params[:page])
     end
 
