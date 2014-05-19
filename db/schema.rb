@@ -151,8 +151,8 @@ ActiveRecord::Schema.define(:version => 20140422012901) do
     t.string   "email"
     t.text     "admin_info"
     t.string   "contact_phone"
-    t.integer  "category"
     t.integer  "client_characteristic_id"
+    t.integer  "category"
     t.integer  "department_id"
   end
 
@@ -272,12 +272,12 @@ ActiveRecord::Schema.define(:version => 20140422012901) do
     t.boolean  "notify_client",   :default => false
     t.boolean  "client_notified"
     t.datetime "return_at"
-    t.integer  "item_id"
     t.string   "app_store_pass"
     t.text     "tech_notice"
+    t.string   "contact_phone"
+    t.integer  "item_id"
     t.integer  "sale_id"
     t.integer  "case_color_id"
-    t.string   "contact_phone"
     t.integer  "department_id"
   end
 
