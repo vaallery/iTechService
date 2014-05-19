@@ -3,17 +3,14 @@ class CashShift < ActiveRecord::Base
   scope :closed, where(is_closed: true)
   scope :opened, where(is_closed: false)
 
-  belongs_to :cash_drawer, inverse_of: :cash_shifts, primary_key: :uid
-  belongs_to :user, primary_key: :uid
-  has_many :sales, inverse_of: :cash_shift, primary_key: :uid
-  has_many :cash_operations, inverse_of: :cash_shift, primary_key: :uid
-
+  belongs_to :cash_drawer, inverse_of: :cash_shifts
+  belongs_to :user
+  has_many :sales, inverse_of: :cash_shift
+  has_many :cash_operations, inverse_of: :cash_shift
   delegate :short_name, to: :user, prefix: true, allow_nil: true
   delegate :department, to: :cash_drawer
-
   attr_accessible :is_closed, :cash_drawer_id, :user_id
   validates_presence_of :cash_drawer
-  after_create UidCallbacks
 
   def self.find(*args, &block)
     begin
@@ -31,7 +28,7 @@ class CashShift < ActiveRecord::Base
       sales.unposted.destroy_all
       update_attribute :is_closed, true
       update_attribute :closed_at, DateTime.current
-      update_attribute :user_id, User.current.uid
+      update_attribute :user_id, User.current
     end
   end
 
@@ -41,7 +38,7 @@ class CashShift < ActiveRecord::Base
 
   def sales_total_by_kind(is_return=false)
     res = []
-    sale_ids = sales.posted.where(is_return: is_return).map(&:uid)
+    sale_ids = sales.posted.where(is_return: is_return).map(&:id)
     Payment::KINDS.each do |kind|
       value = Payment.where(kind: kind, sale_id: sale_ids).sum(:value)
       res << [kind, value]
@@ -63,8 +60,8 @@ class CashShift < ActiveRecord::Base
 
   def encashments_by_kind
     res = []
-    sale_ids = sales.posted.selling.map(&:uid)
-    return_ids = sales.posted.returning.map(&:uid)
+    sale_ids = sales.posted.selling.map(&:id)
+    return_ids = sales.posted.returning.map(&:id)
     Payment::KINDS.each do |kind|
       value = Payment.where(kind: kind, sale_id: sale_ids).sum(:value) - Payment.where(kind: kind, sale_id: return_ids).sum(:value)
       value = value + cash_operations_balance if kind == 'cash'

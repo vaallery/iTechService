@@ -8,19 +8,19 @@ class Client < ActiveRecord::Base
     3 => 'friend'
   }
 
-  default_scope where('clients.department_id = ?', Department.current.uid)
+  # default_scope where('clients.department_id = ?', Department.current.id)
 
   scope :id_asc, order('id asc')
 
-  belongs_to :department, primary_key: :uid
-  belongs_to :client_characteristic, primary_key: :uid
-  has_many :devices, inverse_of: :client, dependent: :destroy, primary_key: :uid
+  belongs_to :department
+  belongs_to :client_characteristic
+  has_many :devices, inverse_of: :client, dependent: :destroy
   has_many :orders, as: :customer, dependent: :destroy
-  has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify, primary_key: :uid
+  has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
   has_many :history_records, as: :object
   has_many :comments, as: :commentable, dependent: :destroy
   has_many :sale_items, through: :purchases
-  has_many :sales, inverse_of: :client, dependent: :nullify, primary_key: :uid
+  has_many :sales, inverse_of: :client, dependent: :nullify
 
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
   accepts_nested_attributes_for :client_characteristic, allow_destroy: true
@@ -35,13 +35,12 @@ class Client < ActiveRecord::Base
   validates_inclusion_of :category, in: CATEGORIES.keys
   validates_associated :comments
   validates_associated :client_characteristic
-  after_create UidCallbacks
   before_destroy :send_mail
-  after_initialize UidCallbacks
 
   after_initialize do
     build_client_characteristic if client_characteristic.nil?
     category ||= 0
+    department_id ||= Department.current.id
   end
 
   def self.find(*args, &block)

@@ -9,11 +9,11 @@ module DataSyncHelper
   end
 
   def data_sync_actions_collection
-    Sync::DataSyncJob::ACTIONS.map{|a|[t("data_sync.#{a}"), a]}
+    [[t('data_sync.import'), 'import'], [t('data_sync.export'), 'export'], [t('data_sync.sync'), 'sync']]
   end
 
   def data_sync_models_collection
-    Sync::DataSyncJob::COMMON_MODELS | Sync::DataSyncJob::IMPORT_MODELS
+    (Sync::DataSyncJob::COMMON_MODELS + Sync::DataSyncJob::IMPORT_MODELS).uniq
   end
 
 end

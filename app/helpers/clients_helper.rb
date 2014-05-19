@@ -42,7 +42,7 @@ module ClientsHelper
   end
 
   def human_client_category(client)
-    (client.present? and client.try(:category_s).present?) ? t("clients.categories.#{client.category_s}") : '-'
+    client.present? ? t("clients.categories.#{client.category_s}") : ''
   end
 
   def client_link(client)

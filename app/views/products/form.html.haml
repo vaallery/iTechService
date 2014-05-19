@@ -24,10 +24,9 @@
       = f.input :comment, input_html: {rows: 3}
 
       - if @product.is_service
-        -#= f.simple_fields_for @product.task || @product.build_task do |ff|
-        = f.simple_fields_for :task do |ff|
+        = f.simple_fields_for @product.task || @product.build_task do |ff|
           -#= ff.input :name
-          = ff.input :role, collection: User::ROLES_FOR_ADMIN, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
+          = ff.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
           = ff.association :location, label_method: :name
 
       .control-group

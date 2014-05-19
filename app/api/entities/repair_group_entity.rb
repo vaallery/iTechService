@@ -1,3 +1,3 @@
 class Entities::RepairGroupEntity < Grape::Entity
-  expose :id, :uid, :name
+  expose :id, :name
 end

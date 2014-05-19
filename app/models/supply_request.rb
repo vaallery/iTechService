@@ -9,12 +9,13 @@ class SupplyRequest < ActiveRecord::Base
   belongs_to :user
   delegate :name, :short_name, :presentation, to: :user, prefix: true
 
-  attr_accessible :user_id, :status, :object, :description
+  attr_accessible :user_id, :status, :object, :description, :department_id
   validates_presence_of :user, :status, :object
 
   after_initialize do
     user_id ||= User.current.try(:id)
     status ||= 'new'
+    department_id ||= Department.current.id
   end
 
   def self.search(params)

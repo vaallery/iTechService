@@ -35,12 +35,4 @@ class Setting < ActiveRecord::Base
     Setting.for_department(department).find_by_name('duck_plan_url').try :value
   end
 
-  def self.last_sync(department)
-    Setting.where(name: 'last_synced_at', department_id: department.id).first_or_create(presentation: 'Last synced at', value_type: 'string')
-  end
-
-  def self.last_synced_at(dep_code)
-    self.last_sync(dep_code).try :value
-  end
-
 end

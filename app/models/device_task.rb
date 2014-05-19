@@ -6,13 +6,12 @@ class DeviceTask < ActiveRecord::Base
   scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
   scope :paid, where('device_tasks.cost > 0')
 
-  belongs_to :device, primary_key: :uid
-  belongs_to :task, primary_key: :uid
-  belongs_to :performer, class_name: 'User', primary_key: :uid
+  belongs_to :device
+  belongs_to :task
+  belongs_to :performer, class_name: 'User'
   has_many :history_records, as: :object
-  has_many :repair_tasks, primary_key: :uid
-  has_many :repair_parts, through: :repair_tasks, primary_key: :uid
-
+  has_many :repair_tasks
+  has_many :repair_parts, through: :repair_tasks
   accepts_nested_attributes_for :device, reject_if: proc { |attr| attr['tech_notice'].blank? }
   accepts_nested_attributes_for :repair_tasks, allow_destroy: true
 
@@ -28,9 +27,8 @@ class DeviceTask < ActiveRecord::Base
   validate :valid_repair if :is_repair?
   after_commit :update_device_done_attribute
   after_save :deduct_spare_parts if :is_repair?
-  after_initialize { self.done ||= false } # TODO define in column default
+  after_initialize { self.done ||= false }
   after_initialize :set_performer
-  after_create UidCallbacks
 
   def self.find(*args, &block)
     begin
@@ -45,7 +43,7 @@ class DeviceTask < ActiveRecord::Base
     old_done = changed_attributes['done']
     if dt.done and (!old_done or old_done.nil?)
       dt.done_at = DateTime.current
-      dt.performer_id = User.current.try(:uid)
+      dt.performer_id = User.current.try(:id)
     elsif !dt.done and old_done
       dt.done_at = nil
     end
@@ -54,7 +52,6 @@ class DeviceTask < ActiveRecord::Base
   def as_json(options={})
     {
       id: id,
-      uid: uid,
       name: name,
       done: done,
       cost: cost,
@@ -139,7 +136,7 @@ class DeviceTask < ActiveRecord::Base
   def set_performer
     if performer_id.nil? and done and (user = history_records.task_completions.order_by_newest.where(new_value: true).first.try(:user)).present?
     #if done and (user = history_records.task_completions.where(user_id: 1..10000).order_by_newest.first.user).present?
-      update_attribute :performer_id, user.uid
+      update_attribute :performer_id, user.id
     end
   end
 
