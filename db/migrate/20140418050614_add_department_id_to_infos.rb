@@ -1,4 +1,5 @@
 class AddDepartmentIdToInfos < ActiveRecord::Migration
+  class Info < ActiveRecord::Base; end
   def change
     add_column :infos, :department_id, :integer
     add_index :infos, :department_id

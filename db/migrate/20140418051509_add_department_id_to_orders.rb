@@ -1,4 +1,5 @@
 class AddDepartmentIdToOrders < ActiveRecord::Migration
+  class Order < ActiveRecord::Base; end
   def change
     add_column :orders, :department_id, :integer
     add_index :orders, :department_id
