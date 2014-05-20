@@ -4,11 +4,17 @@ class InfosController < ApplicationController
 
   def index
     if params[:important].present?
-      @info = Info.actual.important.first
-      render @info, layout: false
+      if (@info = Info.actual.important.first).present?
+        render @info, layout: false
+      else
+        render nothing: true
+      end
     elsif params[:personal].present?
-      @infos = Info.actual.addressed_to current_user
-      render @infos, layout: false
+      if (@infos = Info.actual.addressed_to(current_user)).present?
+        render @infos, layout: false
+      else
+        render nothing: true
+      end
     else
       @infos = params[:archive].present? ? Info.archived.newest : Info.actual.newest
       if can? :manage, Info

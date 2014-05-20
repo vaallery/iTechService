@@ -4,8 +4,11 @@ class AnnouncementsController < ApplicationController
   def index
     if params[:actual].present?
       #@announcements = Announcement.actual_for current_user
-      @announcements = current_user.addressed_announcements.active
-      render @announcements, layout: false
+      if (@announcements = current_user.addressed_announcements.active).present?
+        render @announcements, layout: false
+      else
+        render nothing: true
+      end
     else
       @announcements = Announcement.newest.page params[:page]
     end
