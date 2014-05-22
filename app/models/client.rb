@@ -101,7 +101,7 @@ class Client < ActiveRecord::Base
   end
 
   def category_s
-    CATEGORIES[category]
+    CATEGORIES[category || 0]
   end
 
   private
