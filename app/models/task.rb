@@ -11,10 +11,10 @@ class Task < ActiveRecord::Base
   has_many :devices, through: :device_tasks
   delegate :item, to: :product, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
-  attr_accessible :cost, :duration, :name, :priority, :role, :location_id
+  attr_accessible :cost, :duration, :name, :priority, :role, :location_id, :product_id
   after_initialize do
     if persisted? and product.nil?
-      update_attribute :product_id, create_product(name: name, code: "task#{id}", product_group_id: ProductGroup.services.first_or_create(name: 'Services', product_category_id: ProductCategory.where(kind: 'service').first_or_create(name: 'Service', kind: 'service').id).id).id
+      update_attribute :product_id, Product.services.where(code: "task#{id}").first_or_create(name: name, product_group_id: ProductGroup.services.first_or_create(name: 'Services', product_category_id: ProductCategory.where(kind: 'service').first_or_create(name: 'Service', kind: 'service').id).id).id
     end
   end
 
