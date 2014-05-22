@@ -15,8 +15,6 @@
   = nav_bar static: :top, brand: image_tag('logo.png'), responsive: true, fluid: true do
     = menu_group do
       = menu_item t('chat.title'), messages_path, class: 'nav_chat'
-      - if can? :read, WikiPage
-        = menu_item t("wiki.link"), wiki_all_path
       = drop_down t('devices.link') do
         = menu_item t('devices.new.title', default: 'Devices'), new_device_path
         = menu_item t('devices.link', default: 'Devices'), devices_path
@@ -29,14 +27,15 @@
         = drop_down_divider
         = menu_item t('cash_operations.cash_in'), new_cash_operation_path(cash_operation: {is_out: false}), remote: true if can? :create, CashOperation
         = menu_item t('cash_operations.cash_out'), new_cash_operation_path(cash_operation: {is_out: true}), remote: true if can? :create, CashOperation
-      = menu_item t('clients.link', default: 'Clients'), clients_path
-      = menu_item t('products.index.title'), products_path if can? :read, Product
       = menu_item t('orders.link', default: 'Orders'), orders_path if can? :read, Order
+      = menu_item t('clients.link', default: 'Clients'), clients_path
       = menu_item t('infos.link', default: 'Infos'), infos_path if can? :read, Info
       - if can? :manage, Price
         = menu_item t('prices.link', default: 'Prices'), prices_path
       - else
         = header_link_to_view_prices
+      - if can? :read, WikiPage
+        = menu_item t("wiki.link"), wiki_all_path
 
       = drop_down t('dashboard.misc') do
         = menu_item t('purchases.link'), purchases_path if can? :manage, Purchase
@@ -64,6 +63,7 @@
           = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService
           = menu_item t('device_types.link', default: 'Device types'), device_types_path if can? :manage, DeviceType
           = menu_item t('product_categories.index.title'), product_categories_path if can? :manage, ProductCategory
+          = menu_item t('products.index.title'), products_path if can? :read, Product
           = menu_item t('top_salables.index.title'), top_salables_path if can? :manage, TopSalable
           = menu_item t('feature_types.index.title'), feature_types_path if can? :manage, FeatureType
           = menu_item t('quick_tasks.link'), quick_tasks_path if can? :manage, QuickTask
