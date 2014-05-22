@@ -35,7 +35,7 @@
       - else
         = header_link_to_view_prices
       - if can? :read, WikiPage
-        = menu_item t("wiki.link"), wiki_all_path
+        = menu_item t('wiki.link'), wiki_all_path
 
       = drop_down t('dashboard.misc') do
         = menu_item t('purchases.link'), purchases_path if can? :manage, Purchase
