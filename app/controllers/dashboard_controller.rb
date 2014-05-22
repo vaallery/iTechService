@@ -45,13 +45,6 @@ class DashboardController < ApplicationController
     end
   end
 
-  def goods_for_sale
-    @device_types = DeviceType.for_sale
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def sign_in_by_card
     respond_to do |format|
       if (user = User.find_by_card_number params[:card_number]).present?

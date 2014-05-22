@@ -8,7 +8,6 @@ ItechService::Application.routes.draw do
   match 'actual_tasks' => 'dashboard#actual_tasks', via: :get
   match 'actual_supply_requests' => 'dashboard#actual_supply_requests', via: :get
   match 'ready_devices' => 'dashboard#ready_devices', via: :get
-  match 'goods_for_sale' => 'dashboard#goods_for_sale', via: :get
   match 'check_session_status' => 'dashboard#check_session_status', via: :get
 
   mount Ckeditor::Engine => '/ckeditor'

@@ -30,7 +30,6 @@
         - if current_user.driver?
           %li.actual_requests_nav= link_to t('dashboard.actual_requests'), actual_supply_requests_path, remote: true
       %li.ready_devices_nav= link_to t('dashboard.ready_devices'), ready_devices_path, remote: true
-    %li.goods_for_sale_nav= link_to t('dashboard.goods_for_sale'), goods_for_sale_path, remote: true
 
 #dashboard_table_filter= render @table_name+'_filter'
 #dashboard_content= render @table_name
