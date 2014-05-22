@@ -37,8 +37,8 @@ class Client < ActiveRecord::Base
 
   after_initialize do
     build_client_characteristic if client_characteristic.nil?
-    category ||= 0
-    department_id ||= Department.current.id
+    self.category ||= 0
+    self.department_id ||= Department.current.id
   end
 
   def self.search params
