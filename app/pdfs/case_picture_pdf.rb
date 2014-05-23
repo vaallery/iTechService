@@ -1,4 +1,4 @@
-# require 'RMagick'
+require 'RMagick'
 
 class CasePicturePdf < Prawn::Document
   require 'prawn/measurement_extensions'
