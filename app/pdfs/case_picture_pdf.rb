@@ -32,9 +32,9 @@ class CasePicturePdf < Prawn::Document
     @y5 = @y1 - @r
     @y6 = @y2 + @r
 
-    # image = Magick::Image.read(file).first
-    # image.flop!
-    # image.write file
+    image = Magick::Image.read(file).first
+    image.flop!
+    image.write file
 
     save_graphics_state do
       soft_mask do
