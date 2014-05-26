@@ -31,11 +31,11 @@ class Report
   end
 
   def start_date=(value)
-    @start_date = value.to_time
+    @start_date = value.to_time.beginning_of_day
   end
 
   def end_date=(value)
-    @end_date = value.to_time
+    @end_date = value.to_time.end_of_day
   end
 
   def start_date
