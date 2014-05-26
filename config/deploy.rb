@@ -27,7 +27,7 @@ namespace :server do
 
   desc 'Start server'
   task :start do
-    on roles(:all) do
+    on roles(:app) do
       if fetch(:stage) == :staging
         sudo "start #{fetch(:application)}"
       else
@@ -38,7 +38,7 @@ namespace :server do
 
   desc 'Stop server'
   task :stop do
-    on roles(:all) do
+    on roles(:app) do
       if fetch(:stage) == :staging
         sudo "stop #{fetch(:application)}"
       else
@@ -49,7 +49,7 @@ namespace :server do
 
   desc 'Restart server'
   task :restart do
-    on roles(:all) do
+    on roles(:app) do
       if fetch(:stage) == :staging
         sudo "restart #{fetch(:application)}"
       else
@@ -61,7 +61,7 @@ namespace :server do
 
   desc 'Server status'
   task :status do
-    on roles(:all) do
+    on roles(:app) do
       if fetch(:stage) == :staging
         execute "initctl list | grep #{fetch(:application)}"
       else
@@ -155,7 +155,7 @@ end
 namespace :logs do
   desc 'Watch server logs'
   task :watch do
-    on roles(:all) do
+    on roles(:app) do
       if fetch(:stage) == :staging
         execute "tail -f #{current_path}/log/staging.log"
       else
@@ -165,20 +165,100 @@ namespace :logs do
   end
 end
 
+namespace :unicorn do
+
+  desc 'Start unicorn server'
+  task :start do
+    on roles(:app) do
+      run "#{current_path}/bin/unicorn_init.sh start"
+    end
+  end
+
+  desc 'Stop unicorn server'
+  task :stop do
+    on roles(:app) do
+      run "#{current_path}/bin/unicorn_init.sh stop"
+    end
+  end
+
+  desc 'Restart unicorn server'
+  task :restart do
+    on roles(:app) do
+      run "#{current_path}/bin/unicorn_init.sh restart"
+    end
+  end
+
+  desc 'Check unicorn server status'
+  task :status do
+    on roles(:app) do
+      run "#{current_path}/bin/unicorn_init.sh status"
+    end
+  end
+
+end
+
+namespace :delayed_job do
+
+  desc 'Start delayed_job'
+  task :start do
+    on roles(:app) do
+      run "#{current_path}/bin/delayed_job_init.sh start"
+    end
+  end
+
+  desc 'Stop delayed_job'
+  task :stop do
+    on roles(:app) do
+      run "#{current_path}/bin/delayed_job_init.sh stop"
+    end
+  end
+
+  desc 'Restart delayed_job'
+  task :restart do
+    on roles(:app) do
+      run "#{current_path}/bin/delayed_job_init.sh restart"
+    end
+  end
+
+  desc 'Check delayed_job status'
+  task :status do
+    on roles(:app) do
+      run "#{current_path}/bin/delayed_job_init.sh status"
+    end
+  end
+
+end
+
 namespace :private_pub do
+
   desc 'Start private_pub server'
   task :start do
-    run "cd #{current_path}; RAILS_ENV=#{fetch(:rails_env)} bundle exec rackup private_pub.ru -s thin -E production -D -P tmp/pids/private_pub.pid"
+    on roles(:app) do
+      run "#{current_path}/bin/private_pub_init.sh start"
+      # run "cd #{current_path}; RAILS_ENV=#{fetch(:rails_env)} bundle exec rackup private_pub.ru -s thin -E production -D -P tmp/pids/private_pub.pid"
+    end
   end
 
   desc 'Stop private_pub server'
   task :stop do
-    run "cd #{current_path}; if [ -f tmp/pids/private_pub.pid ] && [ -e /proc/$(cat tmp/pids/private_pub.pid) ]; then kill -9 `cat tmp/pids/private_pub.pid`; fi"
+    on roles(:app) do
+      run "#{current_path}/bin/private_pub_init.sh stop"
+      # run "cd #{current_path}; if [ -f tmp/pids/private_pub.pid ] && [ -e /proc/$(cat tmp/pids/private_pub.pid) ]; then kill -9 `cat tmp/pids/private_pub.pid`; fi"
+    end
   end
 
   desc 'Restart private_pub server'
   task :restart do
-    stop
-    start
+    on roles(:app) do
+      run "#{current_path}/bin/private_pub_init.sh restart"
+    end
   end
+
+  desc 'Check private_pub server status'
+  task :status do
+    on roles(:app) do
+      run "#{current_path}/bin/private_pub_init.sh status"
+    end
+  end
+
 end
