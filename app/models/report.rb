@@ -5,7 +5,7 @@ class Report
 
   NAMES = %w[device_types users done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales]
 
-  attr_accessor :name, :start_date, :end_date, :kind, :device_type, :store_id
+  attr_accessor :name, :kind, :device_type, :store_id
 
   #alias_attribute :few_remnants_goods, :few_remnants
   #alias_attribute :few_remnants_spare_parts, :few_remnants
@@ -28,6 +28,14 @@ class Report
 
   def result
     @result ||= {}
+  end
+
+  def start_date=(value)
+    @start_date = value.to_time
+  end
+
+  def end_date=(value)
+    @end_date = value.to_time
   end
 
   def start_date
