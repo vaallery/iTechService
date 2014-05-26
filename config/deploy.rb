@@ -164,3 +164,21 @@ namespace :logs do
     end
   end
 end
+
+namespace :private_pub do
+  desc 'Start private_pub server'
+  task :start do
+    run "cd #{current_path}; RAILS_ENV=#{fetch(:rails_env)} bundle exec rackup private_pub.ru -s thin -E production -D -P tmp/pids/private_pub.pid"
+  end
+
+  desc 'Stop private_pub server'
+  task :stop do
+    run "cd #{current_path}; if [ -f tmp/pids/private_pub.pid ] && [ -e /proc/$(cat tmp/pids/private_pub.pid) ]; then kill -9 `cat tmp/pids/private_pub.pid`; fi"
+  end
+
+  desc 'Restart private_pub server'
+  task :restart do
+    stop
+    start
+  end
+end
