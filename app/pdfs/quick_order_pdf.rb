@@ -25,8 +25,7 @@ class QuickOrderPdf < Prawn::Document
     move_down 30
     text I18n.t('tickets.user', name: @quick_order.user_short_name)
     move_down 5
-    horizontal_line 0, 205
-    stroke
+    stroke { horizontal_line 0, 205 }
     move_down 5
     text I18n.t('tickets.contact_phone', number: @quick_order.user.try(:department).try(:contact_phone))
   end
@@ -38,14 +37,14 @@ class QuickOrderPdf < Prawn::Document
     text @quick_order.client_name
     text @quick_order.contact_phone
     move_down 5
-    horizontal_line 0, 205
-    stroke
+    text "#{QuickOrder.human_attribute_name(:security_code)}: #{@quick_order.security_code}"
+    move_down 3
+    stroke { horizontal_line 0, 205 }
     move_down 5
     text I18n.t('tickets.operations_list')
     text @quick_order.quick_tasks.map(&:name).join(', ')
     move_down 5
-    horizontal_line 0, 205
-    stroke
+    stroke { horizontal_line 0, 205 }
     move_down 5
     text I18n.t('tickets.user', name: @quick_order.user_short_name)
   end
