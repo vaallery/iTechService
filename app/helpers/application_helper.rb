@@ -248,7 +248,7 @@ module ApplicationHelper
     value.nil? ? '-' : number_to_percentage(value, precision: 0)
   end
 
-  def human_currency(value, with_unit=true)
+  def human_currency(value, with_unit=false)
     value.nil? ? '-' : (with_unit ? number_to_currency(value, precision: 0, delimiter: ' ', separator: ',') : number_to_currency(value, precision: 2, delimiter: ' ', separator: ',', unit: ''))
   end
 

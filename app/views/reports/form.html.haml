@@ -1,7 +1,7 @@
 .page-header
   #reports_filter.navbar.container
     .navbar-inner
-      = form_for @report, remote: true, html: {id: 'report_form', class: 'navbar-search form-search'} do |f|
+      = form_for @report, remote: false, html: {id: 'report_form', class: 'navbar-search form-search'} do |f|
         = button_tag glyph(:filter), class: 'btn btn-info', type: 'submit'
         = f.text_field :start_date, class: 'bootstrap-datepicker input-small'
         = '_'
@@ -9,8 +9,8 @@
         = f.select :name, reports_collection_for_select, prompt: t('reports.choose')
         = f.select :store_id, Store.all.map{|s|[s.name, s.id]}, prompt: t('activerecord.models.store')
 
-#report_errors
-#report_result
+-##report_errors
+-##report_result
 - if @report.errors.present?
   #report_errors
     - @report.errors.full_messages.each do |message|

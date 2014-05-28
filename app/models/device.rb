@@ -242,7 +242,7 @@ class Device < ActiveRecord::Base
   def create_filled_sale
     sale_attributes = { client_id: client_id, store_id: User.current.retail_store.id, sale_items_attributes: {} }
     device_tasks.paid.each_with_index do |device_task, index|
-      sale_item_attributes = {item_id: device_task.item.id, price: device_task.cost.to_f, quantity: 1}
+      sale_item_attributes = {device_type_id: device_task.id, item_id: device_task.item.id, price: device_task.cost.to_f, quantity: 1}
       sale_attributes[:sale_items_attributes].store index.to_s, sale_item_attributes
       #new_sale.sale_items.build item_id: device_task.item.id, price: device_task.cost, quantity: 1
     end

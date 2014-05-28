@@ -33,4 +33,10 @@ describe DeviceTask do
     
   end
 
+  context 'repair' do
+    subject { create :device_task, :repair }
+
+
+  end
+
 end

@@ -9,7 +9,7 @@ class Task < ActiveRecord::Base
   belongs_to :location
   has_many :device_tasks, dependent: :destroy
   has_many :devices, through: :device_tasks
-  delegate :item, to: :product, allow_nil: true
+  delegate :item, :is_repair?, to: :product, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
   attr_accessible :cost, :duration, :name, :priority, :role, :location_id, :product_id
   after_initialize do
@@ -40,10 +40,6 @@ class Task < ActiveRecord::Base
 
   def role_name
     role.blank? ? '-' : I18n.t("users.roles.#{role}")
-  end
-
-  def is_repair?
-    has_role? 'technician'
   end
 
 end

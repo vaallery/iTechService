@@ -141,4 +141,8 @@ class Product < ActiveRecord::Base
     quantity_in_store * (purchase_price || 0)
   end
 
+  def is_repair?
+    code.present? and code.start_with? 'repair'
+  end
+
 end

@@ -14,7 +14,7 @@ $(document).on 'click', '.report_task_details', ->
 $(document).on 'click', '#report_result .detailable>td', ->
   $row = $(this).closest('tr')
   depth = Number($row.data('depth'))
-  if depth? or depth is 0
+  if depth >= 0
     if $row.hasClass 'open'
       $row.nextAll('.details').each ->
         this_depth = Number($(this).data('depth'))

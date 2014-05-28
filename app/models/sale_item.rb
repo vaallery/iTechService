@@ -3,7 +3,7 @@ class SaleItem < ActiveRecord::Base
   belongs_to :sale, inverse_of: :sale_items
   belongs_to :item, inverse_of: :sale_items
 
-  delegate :product, :product_category, :features, :name, :code, :quantity_in_store, :retail_price, :purchase_price, :feature_accounting, :store_item, :store_items, :is_service, :request_price, :warranty_term, :features_s, to: :item, allow_nil: true
+  delegate :product, :product_category, :features, :name, :code, :quantity_in_store, :retail_price, :purchase_price, :feature_accounting, :store_item, :store_items, :is_service, :is_repair?, :request_price, :warranty_term, :features_s, to: :item, allow_nil: true
   delegate :store, :client, :date, :is_return, to: :sale, allow_nil: true
 
   attr_accessible :sale_id, :item_id, :price, :quantity, :discount
@@ -15,7 +15,7 @@ class SaleItem < ActiveRecord::Base
 
   after_initialize do
     self.quantity ||= 1
-    self.price ||= retail_price - available_discount if retail_price.present?
+    self.price ||= retail_price if retail_price.present?
     self.discount ||= available_discount
   end
 
@@ -55,6 +55,10 @@ class SaleItem < ActiveRecord::Base
     else
       retail_price.present? ? retail_price - max_discount : 0
     end
+  end
+
+  def margin
+    price - (purchase_price || 0)
   end
 
 end
