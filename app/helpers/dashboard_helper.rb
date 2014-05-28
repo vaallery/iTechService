@@ -75,7 +75,7 @@ module DashboardHelper
         tag(:br, false) +
         device.comment
       end +
-      content_tag(:td, l(device.done_at, format: :long_d)) +
+      content_tag(:td, device.done_at.present? ? l(device.done_at, format: :long_d) : '-') +
       content_tag(:td, link_to_move_device(device))
     end
   end
