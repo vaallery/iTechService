@@ -1,0 +1,19 @@
+%table#margin_report.table.table-bordered.table-hover
+  %caption= report_title @report
+  %thead
+    %tr
+      %th= t 'reports.margin.kind'
+      %th= t 'reports.sum'
+  %tbody
+    - [:repair, :service, :sale].each do |kind|
+      %tr.detailable
+        %td= t "reports.margin.kinds.#{kind}"
+        %td= human_currency @report.result[kind][:sum], false
+      - @report.result[kind][:details].each do |d|
+        %tr.details
+          %td= "ID: #{d[:id]}, Name: #{d[:name]}, Quantity: #{d[:quantity]}, Price: #{human_currency d[:price]}, Discount: #{human_currency d[:discount]}, Purchase Price: #{human_currency d[:purchase_price]}"
+          %td= human_currency d[:margin]
+  %tfoot
+    %tr
+      %td= t 'reports.total'
+      %td= human_currency @report.result[:sum], false

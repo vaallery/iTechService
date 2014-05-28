@@ -1209,6 +1209,13 @@ ru:
       purchase_price: 'Закупочная цена'
       price: 'Цена'
       sum: 'Розн. сумма остатка'
+    margin:
+      title: 'Отчёт по наценке'
+      kind: "Вид"
+      kinds:
+        repair: 'Ремонт'
+        service: 'Услуги'
+        sale: 'Продажи'
 
   revaluation_acts:
     created: 'Акт Переоценки создан'
