@@ -12,6 +12,7 @@ class DeviceTask < ActiveRecord::Base
   has_many :history_records, as: :object
   has_many :repair_tasks
   has_many :repair_parts, through: :repair_tasks
+  has_one :sale_item, inverse_of: :device_task
   accepts_nested_attributes_for :device, reject_if: proc { |attr| attr['tech_notice'].blank? }
   accepts_nested_attributes_for :repair_tasks, allow_destroy: true
 
