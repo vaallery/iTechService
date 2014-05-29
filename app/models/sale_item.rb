@@ -59,7 +59,11 @@ class SaleItem < ActiveRecord::Base
   end
 
   def margin
-    price - (purchase_price || 0)
+    if is_repair? and device_task.present?
+      price - (device_task.repair_cost)
+    else
+      price - (purchase_price || 0)
+    end
   end
 
 end
