@@ -33,7 +33,11 @@ class ItemsController < ApplicationController
         @item = @items.first
         @product = @item.product
         format.js { render 'products/select' }
-        format.json { render json: @item }
+        if params[:saleinfo].present?
+          format.json { render json: @item.as_json.merge(@item.sale_info) }
+        else
+          format.json { render json: @item }
+        end
       else
         format.html
         format.js

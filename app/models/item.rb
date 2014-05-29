@@ -7,6 +7,7 @@ class Item < ActiveRecord::Base
   has_many :sale_items, inverse_of: :item, dependent: :destroy
   has_many :movement_items, inverse_of: :item, dependent: :destroy
   has_many :features, inverse_of: :item, dependent: :destroy
+  has_many :sales, through: :sale_items
   accepts_nested_attributes_for :features, allow_destroy: true
   attr_accessible :product_id, :features_attributes, :barcode_num
   validates_presence_of :product
@@ -114,6 +115,15 @@ class Item < ActiveRecord::Base
 
   def features_s
     features.collect(&:value).join(', ')
+  end
+
+  def sale_info
+    if (sale = sales.posted.order('date asc').last).present?
+      # {sale_info: {date: sale.date, is_return: sale.is_return, price: sale_items.where(sale_id: sale.id).first.price}}
+      {sale_info: "[#{sale.date.strftime('%d.%m.%y %H:%M')}] #{'-' if sale.is_return}#{sale_items.where(sale_id: sale.id).first.price}"}
+    else
+      {}
+    end
   end
 
 end

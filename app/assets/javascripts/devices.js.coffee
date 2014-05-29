@@ -56,20 +56,23 @@ jQuery ->
     $this = $(this)
     val = $this.prev('input').val()
     if val isnt ''
-      $.getJSON '/items?q=' + val, (res)->
+      $.getJSON '/items?saleinfo=1&q=' + val, (res)->
         $this.parent().siblings('.sales_info').remove()
         if res.id
-          $('#device_item_id').val res.id
-          $('#device_type_name').text res.name
-          $('.device_form .imei_input').addClass 'hidden'
-          for feature in res.features
-            if feature.kind is 'imei'
-              $('#device_imei').closest('.imei_input').removeClass 'hidden'
-            $("#device_#{feature.kind}").val feature.value
-          info_s = res.name
+          #$('#device_item_id').val res.id
+          #$('#device_type_name').text res.name
+          #$('.device_form .imei_input').addClass 'hidden'
+          #for feature in res.features
+          #  if feature.kind is 'imei'
+          #    $('#device_imei').closest('.imei_input').removeClass 'hidden'
+          #  $("#device_#{feature.kind}").val feature.value
+          if res.sale_info
+            info_s = res.sale_info
+          else
+            info_s = '-'
         else
-          $('#device_item_id').val null
-          $('#device_type_name').text '-'
+          #$('#device_item_id').val null
+          #$('#device_type_name').text '-'
           info_s = res.message
         $this.parent().after "<span class='help-inline sales_info'>#{info_s}</span>"
 
