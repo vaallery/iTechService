@@ -18,7 +18,7 @@ set :branch, 'master'
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-# server '192.168.0.1', user: 'itech', roles: %w{web app db}
+server '192.168.0.1', user: 'itech', roles: %w{web app db}
 server '192.168.4.200', user: 'itech', roles: %w{web app db}
 
 # you can set custom ssh options
