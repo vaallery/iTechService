@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140422012901) do
+ActiveRecord::Schema.define(:version => 20140528091321) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -771,13 +771,15 @@ ActiveRecord::Schema.define(:version => 20140422012901) do
   create_table "sale_items", :force => true do |t|
     t.integer  "sale_id"
     t.integer  "item_id"
-    t.decimal  "price",      :precision => 8, :scale => 2
+    t.decimal  "price",          :precision => 8, :scale => 2
     t.integer  "quantity"
-    t.datetime "created_at",                                                :null => false
-    t.datetime "updated_at",                                                :null => false
-    t.decimal  "discount",                                 :default => 0.0
+    t.datetime "created_at",                                                    :null => false
+    t.datetime "updated_at",                                                    :null => false
+    t.decimal  "discount",                                     :default => 0.0
+    t.integer  "device_task_id"
   end
 
+  add_index "sale_items", ["device_task_id"], :name => "index_sale_items_on_device_task_id"
   add_index "sale_items", ["item_id"], :name => "index_sale_items_on_item_id"
   add_index "sale_items", ["sale_id"], :name => "index_sale_items_on_sale_id"
 

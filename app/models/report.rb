@@ -3,7 +3,7 @@ class Report
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  NAMES = %w[device_types users done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales]
+  NAMES = %w[device_types users done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin]
 
   attr_accessor :name, :kind, :device_type, :store_id
 
@@ -402,6 +402,9 @@ class Report
       sale.sale_items.each do |sale_item|
         if sale_item.is_repair?
           kind = :repair
+          # if (repair_tasks = sale_item.device_task.try(:repair_tasks)).present?
+
+          # end
         elsif sale_item.is_service
           kind = :service
         else
