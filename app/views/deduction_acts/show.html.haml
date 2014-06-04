@@ -1,0 +1,39 @@
+.page-header
+  %h3
+    = link_back_to_index
+    = document_presentation @deduction_act
+
+.dl.dl-horizontal
+  - if can? :manage, DeductionAct
+    %dt= DeductionAct.human_attribute_name :status
+    %dd= status_presentation @deduction_act
+    %dt= DeductionAct.human_attribute_name :store
+    %dd= link_to @deduction_act.store_name, store_path(@deduction_act.store)
+  %dt= DeductionAct.human_attribute_name :comment
+  %dd= @deduction_act.comment.blank? ? '-' : @deduction_act.comment
+
+%table#deduction_items.table.table-condensed.table-striped.table-bordered
+  %caption
+    %h4= t 'products.index.title'
+  %thead
+    %tr
+      %th.num
+      %th.code= Product.human_attribute_name :code
+      %th.product= t 'activerecord.models.product'
+      %th.available_quantity= Product.human_attribute_name :quantity_in_store
+      %th.quantity= DeductionItem.human_attribute_name :quantity
+  %tbody
+    - @deduction_act.deduction_items.each_with_index do |deduction_item, index|
+      %tr{class: (deduction_item.quantity_in_store(@deduction_act.store) < deduction_item.quantity) ? 'error' : ''}
+        %td.num= index.next
+        %td.code= deduction_item.code
+        %td.product
+          = link_to deduction_item.name, product_path(deduction_item.product)
+          .features= features_presentation deduction_item if deduction_item
+        %td.available_quantity= deduction_item.quantity_in_store @deduction_act.store
+        %td.quantity= deduction_item.quantity
+
+.form-actions
+  = link_to_edit @deduction_act if can? :edit, @deduction_act
+  = button_to_post @deduction_act if can? :post, @deduction_act# and !@deduction_act.is_insufficient?
+  = link_to_destroy @deduction_act if can? :destroy, @deduction_act

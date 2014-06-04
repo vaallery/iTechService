@@ -1,0 +1,21 @@
+- if @deduction_acts.any?
+  - model_class = DeductionAct
+  %table.table.table-striped
+    %thead
+      %tr
+        %th= model_class.human_attribute_name :id
+        %th= model_class.human_attribute_name :date
+        %th= model_class.human_attribute_name :store
+        %th.actions
+    %tbody
+      - @deduction_acts.each do |deduction_act|
+        %tr{class: document_row_class(deduction_act)}
+          %td= link_to deduction_act.id, deduction_act_path(deduction_act)
+          %td= link_to human_datetime(deduction_act.date), deduction_act_path(deduction_act)
+          %td= link_to deduction_act.store_name, store_path(deduction_act.store)
+          %td.actions.btn-group
+            = link_to_show_small deduction_act
+            = link_to_edit_small deduction_act if can? :edit, deduction_act
+            = link_to_destroy_small deduction_act if can? :destroy, deduction_act
+
+  = paginate @deduction_acts, remote: true

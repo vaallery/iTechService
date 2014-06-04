@@ -195,6 +195,10 @@ ItechService::Application.routes.draw do
     get 'make_defect_sp', on: :collection
   end
 
+  resources :deduction_acts do
+    put 'post', on: :member
+  end
+
   resources :repair_services do
     get :choose, on: :collection, defaults: {format: :js}
     get :select, on: :member, defaults: {format: :js}

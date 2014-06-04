@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140528091321) do
+ActiveRecord::Schema.define(:version => 20140604034734) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -184,6 +184,30 @@ ActiveRecord::Schema.define(:version => 20140528091321) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "deduction_acts", :force => true do |t|
+    t.integer  "status",     :default => 0, :null => false
+    t.datetime "date"
+    t.integer  "store_id"
+    t.integer  "user_id"
+    t.text     "comment"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "deduction_acts", ["store_id"], :name => "index_deduction_acts_on_store_id"
+  add_index "deduction_acts", ["user_id"], :name => "index_deduction_acts_on_user_id"
+
+  create_table "deduction_items", :force => true do |t|
+    t.integer  "item_id",                         :null => false
+    t.integer  "deduction_act_id"
+    t.integer  "quantity",         :default => 1, :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "deduction_items", ["deduction_act_id"], :name => "index_deduction_items_on_deduction_act_id"
+  add_index "deduction_items", ["item_id"], :name => "index_deduction_items_on_item_id"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0

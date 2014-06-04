@@ -26,6 +26,5 @@
    require validation/messages_ru
   = require accounting
   = require association_filter
-  = require_self
   = require_tree .
 */

@@ -1,0 +1,29 @@
+= auto_header_tag @deduction_act
+= simple_form_for @deduction_act, html: {class: 'form-horizontal', id: 'deduction_act_form'} do |f|
+  - if can? :manage, DeductionAct
+    = f.input :date, as: :my_datetime
+    = f.association :store, as: :select
+  - else
+    = f.hidden_field :store_id
+
+  = f.input :comment, input_html: {rows: 5}
+
+  %table#deduction_items.enumerable.table.table-condensed.table-striped.table-bordered
+    %caption
+      %h4= t 'products.index.title'
+    %thead
+      %tr
+        %th.num
+        %th.code= Product.human_attribute_name :code
+        %th.product= t 'activerecord.models.product'
+        %th= Product.human_attribute_name :available
+        %th.quantity= DeductionItem.human_attribute_name :quantity
+        %th.action
+    %tbody
+      = f.simple_fields_for :deduction_items do |ff|
+        = render 'deduction_item_fields', f: ff
+
+  = link_to_add_product :deduction_act, :deduction_items, false
+
+  .form-actions
+    = submit_button f, name: t(:save)
