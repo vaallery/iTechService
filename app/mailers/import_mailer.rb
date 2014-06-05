@@ -2,7 +2,7 @@ class ImportMailer < ActionMailer::Base
 
   def sales_import_log(import_logs)
     @import_logs = import_logs
-    mail to: 'kvn@itechdevs.com', subject: "Sales import log [#{l(Time.current, format: :long_d)}]"
+    mail to: 'kvn@itechdevs.com, oleg@itechstore.ru', subject: "Sales import log [#{l(Time.current, format: :long_d)}]"
   end
 
   def product_import_log(import_log, time, type)

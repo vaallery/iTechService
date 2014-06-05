@@ -1,0 +1,32 @@
+!!!
+%html{style: "font-family:'Helvetica-Neue', 'Helvetica', sans-serif;"}
+  %head
+    %meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
+
+  %body
+    %h1= t 'document', name: t("activerecord.models.#{@deduction_act.class.to_s.underscore}"), num: @deduction_act.id, time: l(@deduction_act.date, format: :long_d)
+    %p
+      %strong= DeductionAct.human_attribute_name :store
+      = @deduction_act.store_name
+    %p
+      %strong= DeductionAct.human_attribute_name :comment
+      = @deduction_act.comment
+
+    %table
+      %caption
+        %h4= t 'products.index.title'
+      %thead
+        %tr
+          %th.num
+          %th.code= Product.human_attribute_name :code
+          %th.product= t 'activerecord.models.product'
+          %th.quantity= DeductionItem.human_attribute_name :quantity
+      %tbody
+        - @deduction_act.deduction_items.each_with_index do |deduction_item, index|
+          %tr
+            %td.num= index.next
+            %td.code= deduction_item.code
+            %td.product
+              = deduction_item.name
+              .features= deduction_item.features.map {|feature| "#{feature.name}: #{feature.value}"}.join(', ').html_safe
+            %td.quantity= deduction_item.quantity

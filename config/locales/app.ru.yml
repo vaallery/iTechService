@@ -1585,6 +1585,8 @@ ru:
     product_import_log:
       subject: "%{type} import log %{time}"
 
+    document:
+      deduction_notification: "Акт списания"
   errors:
     nothing_found: Ничего не найдено
 
