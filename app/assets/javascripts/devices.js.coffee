@@ -76,6 +76,19 @@ jQuery ->
           info_s = res.message
         $this.parent().after "<span class='help-inline sales_info'>#{info_s}</span>"
 
+      $.getJSON '/imported_sales?search='+val, (res)->
+        info_tag = "<span class='help-inline imported_sales_info'>"
+        if res.length > 0
+          for r in res
+            d = new Date(r.sold_at)
+            info_tag += '[' + d.toLocaleDateString() + ': '
+            info_tag += r.quantity + '] '
+        else
+          info_tag += 'Not found'
+        info_tag += "</span>"
+        $this.parent().siblings('.imported_sales_info').remove()
+        $this.parent().after info_tag
+
   $('#new_device_popup').mouseleave ->
     setTimeout (->
       $('#new_device_popup').fadeOut()

@@ -5,14 +5,19 @@ class SalesImportsController < ApplicationController
   end
 
   def create
-    @sales_import = SalesImport.new params[:sales_import]
-    if @sales_import.save
-      ImportMailer.sales_import_log(@sales_import).deliver
-      #render 'result', notice: 'Sales imported.'
-    #else
-    #  render 'new'
+    Delayed::Job.enqueue SalesImportJob.new params_for_job
+    redirect_to new_sales_import_path, notice: 'Sales import performed...'
+  end
+
+  private
+
+  def params_for_job
+    if (import_params = params[:sales_import]).present?
+      import_params[:file] = FileLoader.rename_uploaded_file import_params[:file]
+      import_params
+    else
+      {}
     end
-    render 'new'
   end
 
 end

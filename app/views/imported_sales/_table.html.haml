@@ -6,7 +6,6 @@
       %tr
         %th= model_class.human_attribute_name :id
         %th= model_class.human_attribute_name :device
-        %th= model_class.human_attribute_name :value
         %th= model_class.human_attribute_name :quantity
         %th= model_class.human_attribute_name :sold_at
         %th= model_class.human_attribute_name :created_at
@@ -18,7 +17,6 @@
             = imported_sale.device_type_name
             %br
             = [imported_sale.serial_number, imported_sale.imei].join ' | '
-          %td= human_currency imported_sale.value
           %td= imported_sale.quantity
           %td= human_datetime imported_sale.sold_at
           %td= human_datetime imported_sale.created_at

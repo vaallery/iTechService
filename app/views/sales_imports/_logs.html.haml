@@ -1,5 +1,5 @@
 %ul.unstyled
-  - @sales_import.import_logs.each do |log|
+  - @import_logs.each do |log|
     %li
       - if log[0] == 'inverse'
         %span.label{class: "label-#{log[0]}"}= log[1]

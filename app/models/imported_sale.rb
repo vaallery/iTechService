@@ -1,7 +1,7 @@
 class ImportedSale < ActiveRecord::Base
   scope :sold_at, lambda { |period| where(sold_at: period) }
   belongs_to :device_type
-  attr_accessible :imei, :quantity, :serial_number, :sold_at
+  attr_accessible :imei, :quantity, :serial_number, :sold_at, :device_type_id
 
   def self.search(params)
     sales = ImportedSale.scoped
