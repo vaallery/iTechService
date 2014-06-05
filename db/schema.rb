@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140604034734) do
+ActiveRecord::Schema.define(:version => 20140605013512) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -398,6 +398,18 @@ ActiveRecord::Schema.define(:version => 20140604034734) do
   add_index "history_records", ["column_name"], :name => "index_history_records_on_column_name"
   add_index "history_records", ["object_id", "object_type"], :name => "index_history_records_on_object_id_and_object_type"
   add_index "history_records", ["user_id"], :name => "index_history_records_on_user_id"
+
+  create_table "imported_sales", :force => true do |t|
+    t.integer  "device_type_id"
+    t.string   "imei"
+    t.string   "serial_number"
+    t.datetime "sold_at"
+    t.string   "quantity"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "imported_sales", ["device_type_id"], :name => "index_imported_sales_on_device_type_id"
 
   create_table "infos", :force => true do |t|
     t.string   "title",                            :null => false

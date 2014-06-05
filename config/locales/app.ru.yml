@@ -28,6 +28,7 @@ ru:
       feature_type: Тип характеристики
       gift_certificate: Подарочный сертификат
       history_record: history_record
+      imported_sale: 'Продажа 1С'
       info: Новость
       installment_plan: Рассрочка
       installment: Взнос
@@ -220,6 +221,13 @@ ru:
         old_value: Прежнее значение
         user: :activerecord.models.user  #g
         user_id: :activerecord.models.user  #g
+
+      imported_sale:
+        device: :activerecord.models.device
+        device_type: Тип девайса
+        quantity: Количество
+        sold_at: Время продажи
+        value: "Цена"
 
       info:
         important: Важно
@@ -1622,3 +1630,8 @@ ru:
   update: Сохранить
   yep: "Да"
   not_accessible: "Не доступен"
+  imported_sales:
+    index:
+      title: "Продажи 1С"
+      import_link: "Загрузить"
+      device_search_placeholder: "Серийный номер или IMEI"

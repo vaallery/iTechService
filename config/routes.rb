@@ -204,6 +204,9 @@ ItechService::Application.routes.draw do
     get :select, on: :member, defaults: {format: :js}
   end
 
+  resources :imported_sales, only: :index
+  resources :sales_imports, only: [:new, :create]
+
   wiki_root '/wiki'
 
   match '/delayed_job' => DelayedJobWeb, anchor: false
