@@ -4,13 +4,13 @@ class ImportedSale < ActiveRecord::Base
   attr_accessible :imei, :quantity, :serial_number, :sold_at, :device_type_id
 
   def self.search(params)
-    sales = ImportedSale.scoped
+    imported_sales = ImportedSale.scoped
 
     if (search = params[:search]).present?
-      sales = sales.where 'LOWER(sales.serial_number) = :s OR LOWER(sales.imei) = :s', s: "#{search.mb_chars.downcase.to_s}"
+      imported_sales = imported_sales.where 'LOWER(imported_sales.serial_number) = :s OR LOWER(imported_sales.imei) = :s', s: "#{search.mb_chars.downcase.to_s}"
     end
 
-    sales
+    imported_sales
   end
 
   def device_type_name
