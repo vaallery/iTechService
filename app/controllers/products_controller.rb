@@ -105,12 +105,12 @@ class ProductsController < ApplicationController
       @product = Product.find params[:product_id]
       if @product.feature_accounting
         @items = @product.items
-        @items = @items.available if params[:form].in? %w[movement_act]
+        @items = @items.available if params[:form].in? %w[movement_act deduction_act]
         @items = @items.in_store(@store) if @store.present?
         @items = @items.page(params[:page])
         @feature_types = @product.feature_types
       else
-        @item = @product.items.first_or_create
+        @item = @product.item
       end
     end
 
