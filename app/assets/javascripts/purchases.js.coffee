@@ -70,22 +70,30 @@ jQuery ->
 #    $('.product_name', $selector).text('-')
 #    $('.product_selector', $selector).next('.product_id').val('')
 
-  $(document).on 'change', '#product_category_id', ->
-    id = $(this).val()
-    $('#feature_types').load '/products/category_select?category_id=' + id, ->
-      if $('#feature_types').length > 0
-        $('#feature_types').removeClass('hidden')
-      else
-        $('#feature_types').addClass('hidden')
+$(document).on 'change', '#product_category_id', ->
+  id = $(this).val()
+  $('#feature_types').load '/products/category_select?category_id=' + id, ->
+    if $('#feature_types').length > 0
+      $('#feature_types').removeClass('hidden')
+    else
+      $('#feature_types').addClass('hidden')
 
-  $(document).on 'change', '#products_to_revaluate :checkbox', ->
-    ids = $('#products_to_revaluate :checkbox:checked').map(->
-      return $(this).attr('product_id')
-    ).get().join(',')
-    $('#new_revaluation_act_link').attr('href', "/revaluation_acts/new?revaluation_act%5Bproduct_ids%5D=#{ids}")
+$(document).on 'click', '.purchase #new_revaluation_act_link', ->
+  ids = $('#batches :checkbox:checked').map(->
+    return $(this).attr('product_id')
+  ).get().join(',')
+  url = $('#new_revaluation_act_link').attr('href').split('?')[0]
+  $('#new_revaluation_act_link').attr('href', "#{url}?product_ids=#{ids}")
 
-#  $(document).on 'change', '#purchase_contractor_id', ->
+$(document).on 'click', '.purchase #new_movement_act_link', ->
+  ids = $('#batches :checkbox:checked').map(->
+    $(this).attr('item_id')
+  ).get().join(',')
+  url = $('#new_movement_act_link').attr('href').split('?')[0]
+  $('#new_movement_act_link').attr('href', "#{url}?item_ids=#{ids}")
 
-#  $('#purchase_form').validate
-#    submitHandler: (form)->
-#      form.submit()
+$(document).on 'change', '#purchase_select_all_batches', ->
+  is_checked = this.checked
+  $('#batches .batch_fields :checkbox').each ->
+    this.checked = is_checked
+    true

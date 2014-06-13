@@ -21,7 +21,7 @@ class MovementActsController < ApplicationController
   end
 
   def new
-    @movement_act = MovementAct.new
+    @movement_act = MovementAct.new params[:movement_act]
 
     respond_to do |format|
       format.html { render 'form' }

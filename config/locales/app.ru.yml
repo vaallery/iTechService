@@ -1094,7 +1094,8 @@ ru:
     choose_products: 'Выберите продукты'
     created: 'Приход создан'
     link: :purchases.index.title
-    new_revaluation_act: 'Создать Акт Переоценки'
+    new_revaluation_act: 'Создать Акт переоценки'
+    new_movement_act: "Создать Акт перемещения"
     posted: 'Приход проведён'
     updated: 'Приход изменён'
     edit:

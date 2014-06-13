@@ -60,8 +60,10 @@ class RevaluationAct < ActiveRecord::Base
   end
 
   def product_ids=(product_ids)
-    product_ids.split(',').each do |product_id|
-      self.revaluations.build product_id: product_id
+    if product_ids.present?
+      product_ids.split(',').each do |product_id|
+        self.revaluations.build product_id: product_id
+      end
     end
   end
 

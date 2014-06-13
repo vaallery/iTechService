@@ -103,4 +103,28 @@ class PurchasesController < ApplicationController
     end
   end
 
+  def revaluate_products
+    purchase = Purchase.find params[:id]
+    revaluation_act = purchase.build_revaluation_act params[:product_ids]
+    respond_to do |format|
+      if revaluation_act.save
+        format.html { redirect_to edit_revaluation_act_path(revaluation_act) }
+      else
+        format.html { redirect_to purchase, error: revaluation_act.errors.full_messages.join('. ') }
+      end
+    end
+  end
+
+  def move_items
+    purchase = Purchase.find params[:id]
+    movement_act = purchase.build_movement_act params[:item_ids]
+    respond_to do |format|
+      if movement_act.save
+        format.html { redirect_to edit_movement_act_path(movement_act) }
+      else
+        format.html { redirect_to purchase, error: movement_act.errors.full_messages.join('. ') }
+      end
+    end
+  end
+
 end

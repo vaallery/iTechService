@@ -1,46 +1,54 @@
-.page-header
-  %h3
-    = link_back_to_index
-    = document_presentation @purchase
+%div[@purchase]
+  .page-header
+    %h3
+      = link_back_to_index
+      = document_presentation @purchase
 
-%dl.dl-horizontal
-  %dt= Purchase.human_attribute_name :status
-  %dd= purchase_status @purchase
-  %dt= Purchase.human_attribute_name :contractor
-  %dd= link_to @purchase.contractor_name, contractor_path(@purchase.contractor)
-  %dt= Purchase.human_attribute_name :store
-  %dd= link_to @purchase.store_name, store_path(@purchase.store)
+  %dl.dl-horizontal
+    %dt= Purchase.human_attribute_name :status
+    %dd= purchase_status @purchase
+    %dt= Purchase.human_attribute_name :contractor
+    %dd= link_to @purchase.contractor_name, contractor_path(@purchase.contractor)
+    %dt= Purchase.human_attribute_name :store
+    %dd= link_to @purchase.store_name, store_path(@purchase.store)
 
-%table#batches.table.table-condensed.table-hover
-  %caption
-    %h4= t 'products.index.title'
-  %thead
-    %tr
-      %th.num
-      %th.product= Batch.human_attribute_name :product
-      %th.price= Batch.human_attribute_name :price
-      %th.quantity= Batch.human_attribute_name :quantity
-      %th.sum= Batch.human_attribute_name :sum
+  %table#batches.table.table-condensed.table-hover
+    %caption
+      %h4= t 'products.index.title'
+    %thead
+      %tr
+        -#%th.checkbox
+        %th.num
+        %th.product
+          = check_box_tag 'purchase_select_all_batches', 1, false
+          = Batch.human_attribute_name :product
+        %th.price= Batch.human_attribute_name :price
+        %th.quantity= Batch.human_attribute_name :quantity
+        %th.sum= Batch.human_attribute_name :sum
 
-  %tbody
-    - @purchase.batches.each_with_index do |batch, index|
-      %tr.batch_fields
-        %td.num= index.next
-        %td.product
-          = link_to batch.name, product_path(batch.product)
-          .features= features_presentation batch.item if batch.item.present?
-        %td.price= batch.price
-        %td.quantity= batch.quantity
-        %td.sum= batch.sum
+    %tbody
+      - @purchase.batches.each_with_index do |batch, index|
+        %tr.batch_fields
+          -#%td.checkbox
+          %td.num= index.next
+          %td.product
+            %label.checkbox
+              = check_box_tag("purchase_batch_#{batch.id}", 1, false, item_id: batch.item.id, product_id: batch.product.id)
+              = link_to batch.name, product_path(batch.product)
+              .features= features_presentation batch.item if batch.item.present?
+          %td.price= batch.price
+          %td.quantity= batch.quantity
+          %td.sum= batch.sum
 
-  %tfoot
-    %tr
-      %td{colspan: 4}= t 'total'
-      %td.total_sum= @purchase.total_sum
+    %tfoot
+      %tr
+        %td{colspan: 4}= t 'total'
+        %td.total_sum= @purchase.total_sum
 
-.form-actions
-  = link_to_edit @purchase if can? :edit, @purchase
-  = button_to_post @purchase if can? :post, @purchase
-  = link_to_print_barcodes @purchase if can? :print_barcodes, Purchase
-  = link_to_new_revaluation_act(@purchase) if @purchase.is_posted?
-  = link_to_destroy @purchase if can? :destroy, @purchase
+  .form-actions
+    = link_to_edit @purchase if can? :edit, @purchase
+    = button_to_post @purchase if can? :post, @purchase
+    = link_to_print_barcodes @purchase if can? :print_barcodes, Purchase
+    = link_to t('purchases.new_revaluation_act'), revaluate_products_purchase_path(@purchase), method: :put, id: 'new_revaluation_act_link', class: 'btn btn-success' if @purchase.is_posted?
+    = link_to t('purchases.new_movement_act'), move_items_purchase_path(@purchase), method: :put, id: 'new_movement_act_link', class: 'btn btn-success' if @purchase.is_posted?
+    = link_to_destroy @purchase if can? :destroy, @purchase

@@ -97,6 +97,8 @@ ItechService::Application.routes.draw do
     put :post, on: :member
     put :unpost, on: :member
     put :print_barcodes, on: :member, defaults: {format: :pdf}
+    put :move_items, on: :member
+    put :revaluate_products, on: :member
   end
 
   resources :sales do
