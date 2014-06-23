@@ -63,6 +63,10 @@
       %td= Device.human_attribute_name :notify_client
       %td= Device.human_attribute_name :client_notified if @device.client_notified?
 
+  %tr
+    %td= t 'devices.sales_info'
+    %td= sales_info @device
+
 %table.table.table-bordered.table-condensed.table-hover
   %caption
     %h4= Device.human_attribute_name :tasks

@@ -118,9 +118,10 @@ class Item < ActiveRecord::Base
   end
 
   def sale_info
-    if (sale = sales.posted.order('date asc').last).present?
+    if (posted_sales = sales.posted.order('date asc')).present?
       # {sale_info: {date: sale.date, is_return: sale.is_return, price: sale_items.where(sale_id: sale.id).first.price}}
-      {sale_info: "[#{sale.date.strftime('%d.%m.%y %H:%M')}] #{'-' if sale.is_return}#{sale_items.where(sale_id: sale.id).first.price}"}
+      # {sale_info: "[#{sale.date.strftime('%d.%m.%y')}: #{'-' if sale.is_return}#{sale_items.where(sale_id: sale.id).first.price}]"}
+      {sale_info: posted_sales.map{|s|"[#{s.date.strftime('%d.%m.%y')}: #{'-' if s.is_return}#{sale_items.where(sale_id: s.id).first.price}]"}.join(' ')}
     else
       {}
     end

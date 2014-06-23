@@ -8,7 +8,7 @@ class ImportedSalesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.js { render 'shared/index' }
-      format.json { render json: @imported_sales }
+      format.json { render json: @imported_sales.any? ? @imported_sales : {message: t('devices.not_found')} }
     end
   end
 

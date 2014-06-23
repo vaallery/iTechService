@@ -769,6 +769,7 @@ ru:
     service_duration_placeholder: "м | ч.м | д.ч.м"
     updated: Девайс изменён
 
+    sales_info: "Информация о продаже"
   device_tasks:
     add_repair_task: "Добавить"
     errors:

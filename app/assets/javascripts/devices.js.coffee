@@ -40,17 +40,17 @@ jQuery ->
       $this.val($this.val()+String.fromCharCode(event.keyCode))
       event.preventDefault()
 
-  $('#device_imei').blur ()->
-    $.getJSON '/devices/check_imei?imei_q='+$(this).val(), (data)->
-      if data.present
-        $('#device_imei').parents('.control-group').addClass 'warning'
-        if $('#device_imei').siblings('.help-inline').length
-          $('#device_imei').siblings('.help-inline').html data.msg
-        else
-          $('#device_imei').parents('.controls').append "<span class='help-inline'>"+data.msg+"</span>"
-      else
-        $('#device_imei').parents('.control-group').removeClass 'warning'
-        $('#device_imei').siblings('.help-inline').remove()
+#  $('#device_imei').blur ()->
+#    $.getJSON '/devices/check_imei?imei_q='+$(this).val(), (data)->
+#      if data.present
+#        $('#device_imei').parents('.control-group').addClass 'warning'
+#        if $('#device_imei').siblings('.help-inline').length
+#          $('#device_imei').siblings('.help-inline').html data.msg
+#        else
+#          $('#device_imei').parents('.controls').append "<span class='help-inline'>"+data.msg+"</span>"
+#      else
+#        $('#device_imei').parents('.control-group').removeClass 'warning'
+#        $('#device_imei').siblings('.help-inline').remove()
 
   $('#device_imei_search, #device_serial_number_search').click ()->
     $this = $(this)
@@ -61,30 +61,20 @@ jQuery ->
         if res.length > 0
           for r in res
             d = new Date(r.sold_at)
-            info_tag += '[' + d.toLocaleDateString() + ': '
-            info_tag += r.quantity + '] '
+            info_tag += '[' + d.toLocaleDateString() + ': ' + r.quantity + '] '
         else
-          info_tag += 'Not found'
+          info_tag += res.message
         info_tag += "</span>"
         $this.parent().siblings('.imported_sales_info').remove()
         $this.parent().after info_tag
       $.getJSON '/items?saleinfo=1&q=' + val, (res)->
         $this.parent().siblings('.sales_info').remove()
         if res.id
-          #$('#device_item_id').val res.id
-          #$('#device_type_name').text res.name
-          #$('.device_form .imei_input').addClass 'hidden'
-          #for feature in res.features
-          #  if feature.kind is 'imei'
-          #    $('#device_imei').closest('.imei_input').removeClass 'hidden'
-          #  $("#device_#{feature.kind}").val feature.value
           if res.sale_info
             info_s = res.sale_info
           else
             info_s = '-'
         else
-          #$('#device_item_id').val null
-          #$('#device_type_name').text '-'
           info_s = res.message
         $this.parent().after "<span class='help-inline sales_info'>#{info_s}</span>"
 
