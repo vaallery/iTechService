@@ -11,7 +11,8 @@ class SaleItem < ActiveRecord::Base
   validates_presence_of :item, :price, :quantity
   validates_numericality_of :quantity, only_integer: true, greater_than: 0, unless: :feature_accounting
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
-  validates_numericality_of :discount, greater_than_or_equal_to: 0, less_than_or_equal_to: :max_discount, message: I18n.t('sales.errors.unavailable_discount'), allow_nil: true, unless: Proc.new { |a| a.discount.nil? }
+  validates_numericality_of :discount, less_than_or_equal_to: :max_discount, message: I18n.t('sales.errors.unavailable_discount'), allow_nil: true, unless: Proc.new { |a| a.discount.nil? }
+  # validates_numericality_of :discount, greater_than_or_equal_to: 0, less_than_or_equal_to: :max_discount, message: I18n.t('sales.errors.unavailable_discount'), allow_nil: true, unless: Proc.new { |a| a.discount.nil? }
   validates_numericality_of :price, greater_than_or_equal_to: :min_price, unless: Proc.new { |a| a.min_price.nil? }
 
   after_initialize do
@@ -25,7 +26,7 @@ class SaleItem < ActiveRecord::Base
   end
 
   def available_discount
-    item.present? ? Discount.available_for(client, item) : 0
+    item.present? ? Discount.available_for(client, item) : nil
   end
 
   def discount=(new_discount)

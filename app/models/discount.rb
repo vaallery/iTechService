@@ -45,7 +45,7 @@ class Discount
       else
         discount = 0
       end
-      return discount
+      return discount > 0 ? discount : 0
     else
       return 0
     end
@@ -62,7 +62,7 @@ class Discount
       else
         discount = (retail_price.present? and purchase_price.present?) ? retail_price - purchase_price + margin : 0
       end
-      return discount
+      return discount > 0 ? discount : 0
     else
       return 0
     end
