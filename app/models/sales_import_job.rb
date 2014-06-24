@@ -30,7 +30,7 @@ class SalesImportJob < Struct.new(:params)
             import_logs << ['info', row[0]]
           when :date
             date = RGXP_DATE.match(row[0])[1]
-            qty = row[3].to_i
+            qty = row[4].to_i
             sale = ImportedSale.find_or_initialize_by_serial_number serial_number: sn, imei: imei, sold_at: date.to_date, device_type_id: device_type.try(:id), quantity: qty
             unless !sale.new_record? and sale.sold_at == date.to_date
               if sale.save
