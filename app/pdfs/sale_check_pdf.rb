@@ -2,9 +2,8 @@
 class SaleCheckPdf < Prawn::Document
   require 'prawn/measurement_extensions'
 
-  def initialize(sale, view, is_copy=false)
+  def initialize(sale, is_copy=false)
     @sale = sale
-    @view = view
     @is_copy = is_copy
     @font_height = 10
 
@@ -20,16 +19,16 @@ class SaleCheckPdf < Prawn::Document
     move_down @font_height/2
     span 150, position: :center do
       text Setting.get_value(:address_for_check), align: :center
-      text view.t('sales.check_pdf.greeting'), align: :center
+      text I18n.t('sales.check_pdf.greeting'), align: :center
     end
     move_down @font_height
     stroke { horizontal_line 0, 205 }
     move_down 5
 
-    text [view.t("sales.check_pdf.#{sale.is_return ? 'return' : 'sale'}"), is_copy ? "(#{view.t('sales.check_pdf.copy')})" : nil].join(' ')
+    text [I18n.t("sales.check_pdf.#{sale.is_return ? 'return' : 'sale'}"), is_copy ? "(#{I18n.t('sales.check_pdf.copy')})" : nil].join(' ')
     move_up font.height
     text sale.user_short_name, align: :right
-    text "#{view.t('sales.check_pdf.open')} #{sale.created_at.strftime('%H:%M:%S')}", align: :center
+    text "#{I18n.t('sales.check_pdf.open')} #{sale.created_at.strftime('%H:%M:%S')}", align: :center
 
     move_down 5
     stroke { horizontal_line 0, 205 }
@@ -42,32 +41,32 @@ class SaleCheckPdf < Prawn::Document
     stroke { horizontal_line 0, 205 }
     move_down font.height
 
-    text view.t('sales.payment')
+    text I18n.t('sales.payment')
     sale.payments.each do |payment|
-      text view.human_payment_kind(payment), indent_paragraphs: 10
+      text I18n.t("payments.kinds.#{payment.kind}"), indent_paragraphs: 10
       move_up font.height
       text "#{currency_str(payment.value)}", align: :right
       move_down 2
     end
 
-    text view.t('sales.check_pdf.discount')
+    text I18n.t('sales.check_pdf.discount')
     move_up font.height
     text "#{currency_str(sale.total_discount)}", align: :right
     move_down font.height
 
     font_size @font_height*1.6 do
-      text view.t('sales.check_pdf.total')
+      text I18n.t('sales.check_pdf.total')
       move_up font.height
       text "#{currency_str(sale.calculation_amount)}", align: :right
     end
     move_down font.height
 
-    text "##{sale.cash_shift_id} #{view.t('sales.check_pdf.doc')} #{sale.id}"
+    text "##{sale.cash_shift_id} #{I18n.t('sales.check_pdf.doc')} #{sale.id}"
     move_up font.height
     text sale.date.strftime('%d-%m-%y %H:%M'), align: :right
 
-    text view.t('sales.check_pdf.thanks1'), align: :center
-    text view.t('sales.check_pdf.thanks2'), align: :center
+    text I18n.t('sales.check_pdf.thanks1'), align: :center
+    text I18n.t('sales.check_pdf.thanks2'), align: :center
 
     encrypt_document permissions: { modify_contents: false }
   end
