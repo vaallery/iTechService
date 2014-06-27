@@ -1,0 +1,15 @@
+%table#users_report.table.table-bordered.table-hover
+  %caption= report_title @report
+  %thead
+    %tr
+      %th.center= t 'activerecord.models.user'
+      %th.center= t '.archived'
+  %tbody
+    - @report.result[:users_mv].each do |user|
+      %tr
+        %td.user= user[:user]
+        %td.movement= user[:qty]
+  %tfoot
+    %tr
+      %td= t 'reports.total'
+      %td= @report.result[:total_qty]

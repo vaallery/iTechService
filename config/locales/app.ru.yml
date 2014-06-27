@@ -1189,6 +1189,9 @@ ru:
       title: Новые клиенты
     device_types:
       title: Принятые девайсы по типам
+    devices_archived:
+      title: 'Девайсы, переведённые в архив'
+      archived: "Переведено в архив"
     devices_movements:
       title: Перемещения девайсов
     salary:

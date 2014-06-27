@@ -3,7 +3,7 @@ class Report
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  NAMES = %w[device_types users done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin]
+  NAMES = %w[device_types users devices_archived done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin]
 
   attr_accessor :name, :kind, :device_type, :store_id
 
@@ -31,24 +31,44 @@ class Report
   end
 
   def start_date=(value)
-    @start_date = value.to_time(:local).beginning_of_day
-  end
-
-  def end_date=(value)
-    @end_date = value.to_time(:local).end_of_day
+    @start_date = (value.is_a?(String) ? value.to_time(:local) : value).strftime('%d.%m.%Y')
   end
 
   def start_date
-    @start_date ||= 1.day.ago.beginning_of_day
+    @start_date ||= Time.current.strftime('%d.%m.%Y')
+  end
+
+  def end_date=(value)
+    @end_date = (value.is_a?(String) ? value.to_time(:local) : value).strftime('%d.%m.%Y')
   end
 
   def end_date
-    @end_date ||= 1.day.ago.end_of_day
+    @end_date ||= start_date
   end
 
   def period
-    start_date..end_date
+    start_date.to_time(:local).beginning_of_day..end_date.to_time(:local).end_of_day
   end
+
+  # def start_date=(value)
+  #   @start_date = value.to_time(:local).beginning_of_day
+  # end
+  #
+  # def end_date=(value)
+  #   @end_date = value.to_time(:local).end_of_day
+  # end
+  #
+  # def start_date
+  #   @start_date ||= 1.day.ago.beginning_of_day
+  # end
+  #
+  # def end_date
+  #   @end_date ||= 1.day.ago.end_of_day
+  # end
+  #
+  # def period
+  #   start_date..end_date
+  # end
 
   private
 
@@ -195,6 +215,26 @@ class Report
         end
       end
     end
+    result
+  end
+
+  def devices_archived
+    result[:users_mv] = []
+    movements = HistoryRecord.in_period(period)
+    movements = movements.movements_from(Location.bar.id)
+    movements = movements.movements_to([Location.content.id, Location.repair.id])
+    total_qty = 0
+    if movements.any?
+      movements.group('user_id').count('id').each_pair do |key, val|
+        if key.present? and (user = User.find key).present?
+          result[:users_mv] << {user: user.short_name, qty: val}
+        else
+          result[:users_mv] << {user: '?', qty: val}
+        end
+        total_qty += val
+      end
+    end
+    result[:total_qty] = total_qty
     result
   end
 
