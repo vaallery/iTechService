@@ -18,7 +18,7 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundl
 set :keep_releases, 5
 
 set :rvm_type, :user
-set :rvm_ruby_version, 'ruby-2.0.0-p451@itechservice'
+set :rvm_ruby_version, 'ruby-2.1.2@itechservice'
 
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
@@ -78,20 +78,24 @@ namespace :deploy do
   task :setup do
     on roles(:all) do
       deploy_path = fetch :deploy_to
-      #execute "mkdir #{shared_path}/config/"
-      #execute "mkdir #{shared_path}/system"
-      #execute "mkdir -p #{shared_path}/tmp/pdf"
+      execute "mkdir -p #{shared_path}/config"
+      execute "mkdir -p #{shared_path}/system"
+      execute "mkdir -p #{shared_path}/tmp/pdf"
       upload!('shared/database.yml', "#{shared_path}/config/database.yml")
+      upload!('shared/unicorn.rb', "#{shared_path}/config/unicorn.rb")
+      upload!('shared/private_pub.yml', "#{shared_path}/config/private_pub.yml")
+      upload!('shared/application.yml', "#{shared_path}/config/application.yml")
       upload!('shared/Procfile', "#{shared_path}/Procfile")
-      #upload!('shared/nginx.conf', "#{shared_path}/nginx.conf")
-      #sudo 'mkdir /usr/local/nginx/conf/sites'
-      #sudo "ln -sf #{shared_path}/nginx.conf /usr/local/nginx/conf/sites/#{fetch(:application)}.conf"
-      #sudo 'nginx -s reload'
-      within release_path do
-        with rails_env: fetch(:rails_env) do
-          execute :rake, 'db:create'
-        end
-      end
+      upload!('shared/nginx.conf', "#{shared_path}/nginx.conf")
+      execute 'mkdir -p /usr/local/etc/nginx/sites-available'
+      execute 'mkdir -p /usr/local/etc/nginx/sites-enabled'
+      execute "ln -sf #{shared_path}/nginx.conf /usr/local/etc/nginx/sites-enabled/#{application}.conf"
+      # sudo 'nginx -s reload'
+      # within release_path do
+      #   with rails_env: fetch(:rails_env) do
+      #     execute :rake, 'db:create'
+      #   end
+      # end
     end
   end
 

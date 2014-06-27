@@ -431,9 +431,9 @@ DEPENDENCIES
   bootstrap-colorpicker-rails (~> 0.3.1)
   cancan (~> 1.6.8)
   capistrano (~> 3.1)
-  capistrano-bundler
+  capistrano-bundler (>= 1.1.0)
   capistrano-rails (~> 1.1)
-  capistrano-rvm (~> 0.1)
+  capistrano-rvm
   capybara
   carrierwave (~> 0.10.0)
   ckeditor (~> 3.7.3)
