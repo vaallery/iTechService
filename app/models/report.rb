@@ -174,7 +174,7 @@ class Report
     result[:users_mv] = []
     movements = HistoryRecord.in_period(period)
     movements = movements.movements_from(Location.bar.id)
-    movements = movements.movements_to([Location.content.id, Location.repairid])
+    movements = movements.movements_to([Location.content.id, Location.repair.id])
     if movements.any?
       movements.group('user_id').count('id').each_pair do |key, val|
         if key.present? and (user = User.find key).present?
