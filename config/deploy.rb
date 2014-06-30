@@ -99,7 +99,7 @@ namespace :deploy do
       # sudo 'nginx -s reload'
       upload! 'shared/itechservice*1.plist', shared_path
       sudo "cp #{shared_path}/itechservice*1.plist /Library/LaunchDaemons"
-
+      # execute "rvm install #{fetch(:rvm_ruby_version)[/.*@/]}"
       execute "rvm alias create ise #{fetch(:rvm_ruby_version)}"
       # within release_path do
       #   with rails_env: fetch(:rails_env) do
