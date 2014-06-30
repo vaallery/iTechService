@@ -101,13 +101,17 @@ module DevicesHelper
 
   def sales_info(device)
     content = []
-    if (item = Item.search(q: device.serial_number, saleinfo: true).first).present?
-      content << content_tag(:span, item.sale_info[:sale_info], class: 'sales_info')
+    if (number = device.serial_number.present? ? device.serial_number : device.imei).present?
+      if (item = Item.search(q: number, saleinfo: true).first).present?
+        content << content_tag(:span, item.sale_info[:sale_info], class: 'sales_info')
+      end
+      if (imported_sales = ImportedSale.search(search: number)).any?
+        content << content_tag(:span, imported_sales.map { |sale| "[#{sale.sold_at.strftime('%d.%m.%y')}: #{sale.quantity}]" }.join(' '), class: 'imported_sales_info')
+      end
+      content.present? ? content.join(' ').html_safe : '-'
+    else
+      '?'
     end
-    if (imported_sales = ImportedSale.search(search: device.serial_number)).any?
-      content << content_tag(:span, imported_sales.map { |sale| "[#{sale.sold_at.strftime('%d.%m.%y')}: #{sale.quantity}]" }.join(' '), class: 'imported_sales_info')
-    end
-    content.present? ? content.join(' ').html_safe : '-'
   end
 
 end
