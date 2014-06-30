@@ -1,6 +1,6 @@
 set :stage, :staging
 set :deploy_to, "/var/www/#{fetch(:application)}"
-set :branch, 'staging'
+set :branch, 'master'
 
 # Simple Role Syntax
 # ==================
@@ -17,8 +17,8 @@ set :branch, 'staging'
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server '192.168.6.68', user: 'v', roles: %w{web app db}
-# server '192.168.6.67', user: 'v', roles: %w{web app db}
+server '192.168.6.67', user: 'v', roles: %w{web app db}
+# server '192.168.6.68', user: 'v', roles: %w{web app db}
 # server '192.168.6.24', user: 'deployer', roles: %w{web app db}
 
 # you can set custom ssh options

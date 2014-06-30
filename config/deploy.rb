@@ -77,7 +77,6 @@ namespace :deploy do
   desc 'Setup'
   task :setup do
     on roles(:all) do
-      deploy_path = fetch :deploy_to
       execute "mkdir -p #{shared_path}/config"
       execute "mkdir -p #{shared_path}/system"
       execute "mkdir -p #{shared_path}/tmp/pdf"
@@ -102,11 +101,10 @@ namespace :deploy do
   desc 'Foreman init'
   task :foreman_init do
     on roles(:all) do
+      foreman_temp = "/var/www/tmp/foreman"
       if fetch(:stage) == :staging
-        foreman_temp = "/var/www/tmp/foreman"
         execute "mkdir -p #{foreman_temp}"
         execute "ln -s #{release_path} #{current_path}"
-
         within current_path do
           execute "cd #{current_path}"
           execute :bundle, "exec foreman export upstart #{foreman_temp} -a #{application} -u deployer -l #{shared_path}/log -d #{current_path}"
@@ -114,10 +112,8 @@ namespace :deploy do
         sudo "mv #{foreman_temp}/* /etc/init/"
         sudo "rm -r #{foreman_temp}"
       else
-        foreman_temp = "/usr/local/var/www/tmp/foreman"
         execute "mkdir -p #{foreman_temp}"
         execute "ln -s #{release_path} #{current_path}"
-
         within current_path do
           execute "cd #{current_path}"
           execute :bundle, "exec foreman export launchd #{foreman_temp} -a #{fetch(:application)} -u itech -l #{shared_path}/log -d #{current_path}"

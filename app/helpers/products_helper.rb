@@ -33,7 +33,7 @@ module ProductsHelper
     link_to "#{glyph(:plus)} #{t('products.add_product')}".html_safe, choose_products_path(form: form, association: association, is_product_only: is_product_only, options: options), remote: true, class: 'btn btn-success'
   end
 
-  def product_fields(form, association, object, options={})
+  def product_fields(form='sale', association, object, options={})
     partial_name = "#{form.tableize}/#{association.singularize}_fields"
     parent = form.classify.constantize.new
     reflection = parent.class.reflect_on_association(association.to_sym)
