@@ -1,6 +1,7 @@
 set :stage, :staging
 set :deploy_to, "/var/www/#{fetch(:application)}"
 set :branch, 'master'
+# set :branch, 'staging'
 
 # Simple Role Syntax
 # ==================
