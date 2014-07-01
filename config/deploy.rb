@@ -19,8 +19,11 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundl
 set :keep_releases, 5
 
 set :rvm_type, :user
-set :rvm_ruby_version, 'ruby-2.0.0-p481@itechservice'
-# set :rvm_ruby_version, 'ruby-2.1.2@itechservice'
+# set :rvm_ruby_version, 'ruby-2.0.0-p481@itechservice'
+set :rvm_ruby_version, 'ruby-2.1.2@itechservice'
+
+set :bundle_flags, '--deployment'
+# set :bundle_env_variables, { nokogiri_use_system_libraries: 1 }
 
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
