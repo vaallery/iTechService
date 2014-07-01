@@ -457,6 +457,7 @@ DEPENDENCIES
   mailcatcher
   meta_request (~> 0.2.8)
   mini_magick (~> 3.4)
+  nokogiri
   paperclip (~> 3.4.0)
   pg (~> 0.14.1)
   prawn (~> 0.14)
