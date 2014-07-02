@@ -1,4 +1,4 @@
-set :filter, hosts: %w[192.168.0.1]
+set :filter, hosts: %w[192.168.0.1 192.168.4.200]
 application = 'itechservice'
 ruby = 'ruby-2.1.2'
 set :application, application
@@ -91,22 +91,22 @@ namespace :deploy do
       execute "mkdir -p #{shared_path}/tmp/pdf"
       execute 'mkdir -p /usr/local/etc/nginx/sites-available'
       execute 'mkdir -p /usr/local/etc/nginx/sites-enabled'
-      upload! 'shared/database.yml', "#{shared_path}/config/database.yml"
-      upload! 'shared/unicorn.rb', "#{shared_path}/config/unicorn.rb"
-      upload! 'shared/private_pub.yml', "#{shared_path}/config/private_pub.yml"
-      upload! 'shared/application.yml', "#{shared_path}/config/application.yml"
-      upload! 'shared/Procfile', "#{shared_path}/Procfile"
-      upload! 'shared/unicorn_init.sh', "#{shared_path}/bin/unicorn_init.sh"
+      upload! 'deploy_files/database.yml', "#{shared_path}/config/database.yml"
+      upload! 'deploy_files/unicorn.rb', "#{shared_path}/config/unicorn.rb"
+      upload! 'deploy_files/private_pub.yml', "#{shared_path}/config/private_pub.yml"
+      upload! 'deploy_files/application.yml', "#{shared_path}/config/application.yml"
+      upload! 'deploy_files/Procfile', "#{shared_path}/Procfile"
+      upload! 'deploy_files/unicorn_init.sh', "#{shared_path}/bin/unicorn_init.sh"
       execute "ln -sf #{shared_path}/bin/unicorn_init.sh /usr/local/bin/ise_unicorn"
-      upload! 'shared/delayed_job_init.sh', "#{shared_path}/bin/delayed_job_init.sh"
+      upload! 'deploy_files/delayed_job_init.sh', "#{shared_path}/bin/delayed_job_init.sh"
       execute "ln -sf #{shared_path}/bin/delayed_job_init.sh /usr/local/bin/ise_delayed_job"
-      upload! 'shared/private_pub_init.sh', "#{shared_path}/bin/private_pub_init.sh"
+      upload! 'deploy_files/private_pub_init.sh', "#{shared_path}/bin/private_pub_init.sh"
       execute "ln -sf #{shared_path}/bin/private_pub_init.sh /usr/local/bin/ise_private_pub"
-      upload! 'shared/nginx.conf', '/usr/local/etc/nginx/nginx.conf'
-      upload! 'shared/nginx_app.conf', "#{shared_path}/nginx_app.conf"
+      upload! 'deploy_files/nginx.conf', '/usr/local/etc/nginx/nginx.conf'
+      upload! 'deploy_files/nginx_app.conf', "#{shared_path}/nginx_app.conf"
       execute "ln -sf #{shared_path}/nginx_app.conf /usr/local/etc/nginx/sites-enabled/#{application}.conf"
       # sudo 'nginx -s reload'
-      upload! 'shared/itechservice*1.plist', shared_path
+      upload! 'deploy_files/itechservice*1.plist', shared_path
       sudo "cp #{shared_path}/itechservice*1.plist /Library/LaunchDaemons"
       # execute "rvm install #{fetch(:rvm_ruby_version)[/.*@/]}"
       execute "rvm alias create ise #{fetch(:rvm_ruby_version)}"
