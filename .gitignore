@@ -41,7 +41,7 @@ Gemfile.lock
 /coverage/*
 /projectFilesBackup
 /Procfile
-/shared/
+/deploy_files/
 /config/deploy/
 /doc/
 .env
