@@ -41,8 +41,6 @@ Gemfile.lock
 /coverage/*
 /projectFilesBackup
 /Procfile
-/shared/
-/config/deploy/
 /doc/
 .env
 Vagrantfile

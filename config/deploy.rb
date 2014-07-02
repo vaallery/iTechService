@@ -1,5 +1,6 @@
 set :filter, hosts: %w[192.168.0.1]
 application = 'itechservice'
+ruby = 'ruby-2.1.2'
 set :application, application
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
 
@@ -19,12 +20,14 @@ set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundl
 set :keep_releases, 5
 
 set :rvm_type, :user
-# set :rvm_ruby_version, 'ruby-2.0.0-p451@itechservice'
-# set :rvm_ruby_version, 'ruby-2.0.0-p481@itechservice'
-set :rvm_ruby_version, 'ruby-2.1.2@itechservice'
+set :rvm_ruby_version, "#{ruby}@#{application}"
 
-# set :bundle_flags, '--deployment'
-# set :bundle_env_variables, { nokogiri_use_system_libraries: 1 }
+set :bundle_flags, '--deployment'
+set :bundle_env_variables, {
+    path: "/Users/itech/.rvm/gems/#{fetch(:rvm_ruby_version)}/bin:/Users/itech/.rvm/gems/#{ruby}@global/bin:/Users/itech/.rvm/rubies/#{ruby}/bin:/Users/itech/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/Cellar/imagemagick/6.8.9-1/bin",
+    magick_home: '/usr/local/Cellar/imagemagick/6.8.9-1',
+    pkg_config_path: '/usr/local/bin'
+}
 
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
@@ -187,32 +190,28 @@ namespace :unicorn do
   desc 'Start unicorn server'
   task :start do
     on roles(:app) do
-      # execute "#{current_path}/bin/unicorn_init.sh start"
-      execute 'ise_unicorn start'
+      execute "#{current_path}/bin/unicorn_init.sh start"
     end
   end
 
   desc 'Stop unicorn server'
   task :stop do
     on roles(:app) do
-      # execute "#{current_path}/bin/unicorn_init.sh stop"
-      execute 'ise_unicorn stop'
+      execute "#{current_path}/bin/unicorn_init.sh stop"
     end
   end
 
   desc 'Restart unicorn server'
   task :restart do
     on roles(:app) do
-      # execute "#{current_path}/bin/unicorn_init.sh restart"
-      execute 'ise_unicorn restart'
+      execute "#{current_path}/bin/unicorn_init.sh restart"
     end
   end
 
   desc 'Check unicorn server status'
   task :status do
     on roles(:app) do
-      # execute "#{current_path}/bin/unicorn_init.sh status"
-      execute 'ise_unicorn status'
+      execute "#{current_path}/bin/unicorn_init.sh status"
     end
   end
 
@@ -223,32 +222,28 @@ namespace :delayed_job do
   desc 'Start delayed_job'
   task :start do
     on roles(:app) do
-      # execute "#{current_path}/bin/delayed_job_init.sh start"
-      execute 'ise_delayed_job start'
+      execute "#{current_path}/bin/delayed_job_init.sh start"
     end
   end
 
   desc 'Stop delayed_job'
   task :stop do
     on roles(:app) do
-      # execute "#{current_path}/bin/delayed_job_init.sh stop"
-      execute 'ise_delayed_job stop'
+      execute "#{current_path}/bin/delayed_job_init.sh stop"
     end
   end
 
   desc 'Restart delayed_job'
   task :restart do
     on roles(:app) do
-      # execute "#{current_path}/bin/delayed_job_init.sh restart"
-      execute 'ise_delayed_job restart'
+      execute "#{current_path}/bin/delayed_job_init.sh restart"
     end
   end
 
   desc 'Check delayed_job status'
   task :status do
     on roles(:app) do
-      # execute "#{current_path}/bin/delayed_job_init.sh status"
-      execute 'ise_delayed_job status'
+      execute "#{current_path}/bin/delayed_job_init.sh status"
     end
   end
 
@@ -259,32 +254,28 @@ namespace :private_pub do
   desc 'Start private_pub server'
   task :start do
     on roles(:app) do
-      # execute "#{current_path}/bin/private_pub_init.sh start"
-      execute 'ise_private_pub start'
+      execute "#{current_path}/bin/private_pub_init.sh start"
     end
   end
 
   desc 'Stop private_pub server'
   task :stop do
     on roles(:app) do
-      # execute "#{current_path}/bin/private_pub_init.sh stop"
-      execute 'ise_private_pub stop'
+      execute "#{current_path}/bin/private_pub_init.sh stop"
     end
   end
 
   desc 'Restart private_pub server'
   task :restart do
     on roles(:app) do
-      # execute "#{current_path}/bin/private_pub_init.sh restart"
-      execute 'ise_private_pub restart'
+      execute "#{current_path}/bin/private_pub_init.sh restart"
     end
   end
 
   desc 'Check private_pub server status'
   task :status do
     on roles(:app) do
-      # execute "#{current_path}/bin/private_pub_init.sh status"
-      execute 'ise_private_pub status'
+      execute "#{current_path}/bin/private_pub_init.sh status"
     end
   end
 
