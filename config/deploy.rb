@@ -1,4 +1,5 @@
-set :filter, hosts: %w[192.168.0.1 192.168.4.200]
+# set :filter, hosts: %w[192.168.0.1 192.168.4.200]
+# set :filter, hosts: %w[192.168.4.200]
 application = 'itechservice'
 ruby = 'ruby-2.1.2'
 set :application, application
