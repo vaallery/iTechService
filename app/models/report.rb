@@ -368,8 +368,8 @@ class Report
         if result[repair_group_id].present?
           if result[repair_group_id][:services][repair_service_id].present?
             result[repair_group_id][:jobs_qty] = result[repair_group_id][:jobs_qty] + 1
-            result[repair_group_id][:services][repair_service_id][:jobs_qty] = result[repair_group_id][:services][repair_service_id][:jobs_qty] + 1
-            result[repair_group_id][:services][repair_service_id][:jobs_sum] = result[repair_group_id][:services][repair_service_id][:jobs_sum] + repair_task.margin
+            result[repair_group_id][:services][repair_service_id][:jobs_qty] = (result[repair_group_id][:services][repair_service_id][:jobs_qty] || 0) + 1
+            result[repair_group_id][:services][repair_service_id][:jobs_sum] = (result[repair_group_id][:services][repair_service_id][:jobs_sum] || 0) + repair_task.margin
             result[repair_group_id][:services][repair_service_id][:jobs] << job
           else
             result[repair_group_id][:jobs_qty] = result[repair_group_id][:jobs_qty] + 1
