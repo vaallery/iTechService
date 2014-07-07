@@ -366,15 +366,16 @@ class Report
         repair_service_name = repair_task.name || '-'
         job = {id: repair_task.id, price: repair_task.price, parts_cost: repair_task.parts_cost, margin: repair_task.margin, device_id: repair_task.device.id, device_presentation: repair_task.device.presentation}
         if result[repair_group_id].present?
-          if result[repair_group_id][:services][repair_service_id].present?
+          if result[repair_group_id][:services][repair_service_id].is_a? Hash
             result[repair_group_id][:jobs_qty] = result[repair_group_id][:jobs_qty] + 1
-            result[repair_group_id][:services][repair_service_id][:jobs_qty] = (result[repair_group_id][:services][repair_service_id][:jobs_qty] || 0) + 1
-            result[repair_group_id][:services][repair_service_id][:jobs_sum] = (result[repair_group_id][:services][repair_service_id][:jobs_sum] || 0) + repair_task.margin
+            result[repair_group_id][:services][repair_service_id][:jobs_qty] = result[repair_group_id][:services][repair_service_id][:jobs_qty] + 1
+            result[repair_group_id][:services][repair_service_id][:jobs_sum] = result[repair_group_id][:services][repair_service_id][:jobs_sum] + repair_task.margin
             result[repair_group_id][:services][repair_service_id][:jobs] << job
           else
             result[repair_group_id][:jobs_qty] = result[repair_group_id][:jobs_qty] + 1
             result[repair_group_id][:services_qty] = result[repair_group_id][:services_qty] + 1
-            result[repair_group_id][:services][repair_service_id] = {repair_service_id => {name: repair_service_name, jobs_qty: 1, jobs_sum: repair_task.margin, jobs: [job]}}
+            result[repair_group_id][:services][repair_service_id] = {name: repair_service_name, jobs_qty: 1, jobs_sum: repair_task.margin, jobs: [job]}
+            # result[repair_group_id][:services][repair_service_id] = {repair_service_id => {name: repair_service_name, jobs_qty: 1, jobs_sum: repair_task.margin, jobs: [job]}}
           end
         else
           result[repair_group_id] = {name: repair_group_name, services_qty: 1, jobs_qty: 1, services: {repair_service_id => {name: repair_service_name, jobs_qty: 1, jobs_sum: repair_task.margin, jobs: [job]}}}
