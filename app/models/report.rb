@@ -375,7 +375,6 @@ class Report
             result[repair_group_id][:jobs_qty] = result[repair_group_id][:jobs_qty] + 1
             result[repair_group_id][:services_qty] = result[repair_group_id][:services_qty] + 1
             result[repair_group_id][:services][repair_service_id] = {name: repair_service_name, jobs_qty: 1, jobs_sum: repair_task.margin, jobs: [job]}
-            # result[repair_group_id][:services][repair_service_id] = {repair_service_id => {name: repair_service_name, jobs_qty: 1, jobs_sum: repair_task.margin, jobs: [job]}}
           end
         else
           result[repair_group_id] = {name: repair_group_name, services_qty: 1, jobs_qty: 1, services: {repair_service_id => {name: repair_service_name, jobs_qty: 1, jobs_sum: repair_task.margin, jobs: [job]}}}
