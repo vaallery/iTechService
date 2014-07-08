@@ -90,8 +90,7 @@ ItechService::Application.configure do
   config.action_mailer.perform_deliveries = true
 
   config.middleware.use ExceptionNotifier,
-                        email_prefix: '[!!! Exception iTechService] ',
-                        sender_address: %{"iTechService" <noreply@itechdevs.com>},
+                        sender_address: 'iTechService <noreply@itechdevs.com>',
                         exception_recipients: %w{kvn@itechdevs.com}
 
   Paperclip.options[:command_path] = '/usr/local/bin'
