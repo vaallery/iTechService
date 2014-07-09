@@ -13,8 +13,8 @@ module DashboardHelper
     end
   end
 
-  def link_to_move_device(device)
-    link_to icon_tag('share'), edit_device_path(device), class: 'btn btn-small', remote: true
+  def link_to_edit_device(device)
+    link_to icon_tag(:edit), edit_device_path(device), class: 'btn btn-small', remote: true
             #, disabled: !is_movable_device?(device)
   end
 
@@ -56,7 +56,7 @@ module DashboardHelper
         tag(:br, false) +
         device.comment
       end +
-      content_tag(:td, link_to_move_device(device), class: 'device_task_action_column')
+      content_tag(:td, link_to_edit_device(device), class: 'device_task_action_column')
     end
   end
 
@@ -76,7 +76,7 @@ module DashboardHelper
         device.comment
       end +
       content_tag(:td, device.done_at.present? ? l(device.done_at, format: :long_d) : '-') +
-      content_tag(:td, link_to_move_device(device))
+      content_tag(:td, link_to_edit_device(device))
     end
   end
 
