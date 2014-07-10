@@ -35,6 +35,7 @@ module ProductsHelper
 
   def product_fields(form, association, object, options={})
     form ||= 'sale'
+    association ||= 'sale_items'
     partial_name = "#{form.tableize}/#{association.singularize}_fields"
     parent = form.classify.constantize.new
     reflection = parent.class.reflect_on_association(association.to_sym)
