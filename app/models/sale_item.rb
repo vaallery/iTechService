@@ -29,15 +29,19 @@ class SaleItem < ActiveRecord::Base
   end
 
   def discount=(new_discount)
-    if User.current.try :any_admin?
-      self.price = retail_price - new_discount.to_f
+    if is_return
       super
     else
-      if retail_price.nil? or new_discount.to_f > available_discount
-        self.errors.add :discount, I18n.t('sales.errors.unavailable_discount')
-      else
+      if User.current.try :any_admin?
         self.price = retail_price - new_discount.to_f
         super
+      else
+        if retail_price.nil? or new_discount.to_f > available_discount
+          self.errors.add :discount, I18n.t('sales.errors.unavailable_discount')
+        else
+          self.price = retail_price - new_discount.to_f
+          super
+        end
       end
     end
   end
