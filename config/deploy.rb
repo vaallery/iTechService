@@ -33,6 +33,8 @@ set :bundle_env_variables, {
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
 
+set :whenever_identifier, application
+
 namespace :server do
 
   desc 'Start server'
@@ -122,7 +124,7 @@ namespace :deploy do
   desc 'Foreman init'
   task :foreman_init do
     on roles(:all) do
-      foreman_temp = "/var/www/tmp/foreman"
+      foreman_temp = '/var/www/tmp/foreman'
       if fetch(:stage) == :staging
         execute "mkdir -p #{foreman_temp}"
         execute "ln -s #{release_path} #{current_path}"
