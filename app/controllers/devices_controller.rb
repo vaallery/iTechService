@@ -181,6 +181,13 @@ class DevicesController < ApplicationController
     end
   end
 
+  def quick_search
+    @devices = Device.quick_search params[:quick_search]
+    respond_to do |format|
+      format.js { render nothing: true if @devices.count > 10 }
+    end
+  end
+
   private
   
   def sort_column
