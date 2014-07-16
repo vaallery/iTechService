@@ -119,12 +119,10 @@ $(document).on 'keydown', '#quick_search', (e)->
   $input = $('#quick_search')
   $form = $('#devices_quick_search_form')
   $result_list = $('#quick_search_result')
-  console.log e.which
   switch e.which
     when 13
       if $('.active', $result_list).length
         $('.active>a', $result_list).click()
-        console.log 'element selected'
       else
         $form.submit()
       e.preventDefault()
