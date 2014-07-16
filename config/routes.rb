@@ -64,6 +64,7 @@ ItechService::Application.routes.draw do
     get :device_select, on: :collection
     get :check_imei, on: :collection
     get :movement_history, on: :member
+    get :quick_search, on: :collection
     post :create_sale, on: :member
   end
 

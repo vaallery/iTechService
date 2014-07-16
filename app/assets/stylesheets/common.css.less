@@ -247,12 +247,16 @@ form.button_to{
   left: 0;
   width: 100%;
   #current_user_name {
+    display: inline;
     margin-left: 20px;
     #profile_link {
       font-weight: bold;
       font-size: 16px;
       color: red;
     }
+  }
+  .user_department {
+    display: inline;
   }
   #duck_plan_link{
     margin-left: 10px;
@@ -264,6 +268,30 @@ form.button_to{
     }
     &:hover>img{
       height: 24px;
+    }
+  }
+  #quick_search_form {
+    margin-left: 40px;
+    #devices_quick_search_form {
+      display: inline;
+    }
+    #quick_search_result {
+      display: none;
+      position: fixed;
+      background-color: #fcfcfc;
+      padding: 0 4px 4px;
+      margin: 3px 8px;
+
+      left: 262px;
+      li {
+        cursor: pointer;
+        a:hover {
+          text-decoration: none;
+        }
+      }
+      &>li:hover, &>li.active {
+        background-color: #d4d4d4;
+      }
     }
   }
   #current_department_name{

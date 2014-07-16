@@ -1,0 +1,5 @@
+%li
+  = link_to edit_device_path(device), remote: true do
+    = "#{device.ticket_number} | #{device.type_name}"
+    %br
+    = "#{device.client_short_name} #{contact_phones_for(device)}"

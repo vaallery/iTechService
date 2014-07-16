@@ -138,7 +138,17 @@ class Device < ActiveRecord::Base
     
     devices
   end
-  
+
+  def self.quick_search(query)
+    devices = Device.scoped
+
+    unless query.blank?
+      devices = devices.joins(:client).where 'devices.ticket_number LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%"
+    end
+
+    devices
+  end
+
   def done_tasks
     device_tasks.done
   end

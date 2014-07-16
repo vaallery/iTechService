@@ -115,6 +115,46 @@ $(document).on 'keydown', 'textarea', ->
   cursorX = $(this).offset().left + $('#spinner').outerWidth() / 2
   cursorY = $(this).offset().top + $('#spinner').outerHeight() / 2
 
+$(document).on 'keydown', '#quick_search', (e)->
+  $input = $('#quick_search')
+  $form = $('#devices_quick_search_form')
+  $result_list = $('#quick_search_result')
+  switch e.which
+    when 13
+      if $('.active', $result_list).length
+        $('.active>a', $result_list).click()
+      else
+        $form.submit()
+      e.preventDefault()
+    when 38 # up
+      if $result_list.length
+        if $('.active', $result_list).length
+          active_item = $('#quick_search_result>.active')[0]
+          prev_item = active_item.previousElementSibling
+          prev_item = $('#quick_search_result>:last')[0] if prev_item is null
+          $(active_item).removeClass('active')
+          $(prev_item).addClass('active')
+        else
+          $('#quick_search_result>:last').addClass('active')
+      e.preventDefault()
+    when 40 # down
+      if $result_list.length
+        if $('.active', $result_list).length
+          active_item = $('#quick_search_result>.active')[0]
+          next_item = active_item.nextElementSibling
+          next_item = $('#quick_search_result>:first')[0] if next_item is null
+          $(active_item).removeClass('active')
+          $(next_item).addClass('active')
+        else
+          $('#quick_search_result>:first').addClass('active')
+      e.preventDefault()
+    when 27 # esc
+      $input.val('')
+      $('#quick_search_result>.active').removeClass('active')
+      $('#quick_search_result:visible').slideUp(100)
+    else
+      $('#quick_search_result>.active').removeClass('active')
+
 $(document).ajaxSend ->
   showSpinner()
 
