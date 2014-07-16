@@ -153,7 +153,7 @@ $(document).on 'keydown', '#quick_search', (e)->
       $('#quick_search_result>.active').removeClass('active')
       $('#quick_search_result:visible').slideUp(100)
     else
-      #$('#quick_search_result:hidden').slideDown(100)
+      $('#quick_search_result>.active').removeClass('active')
 
 $(document).ajaxSend ->
   showSpinner()
