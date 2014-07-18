@@ -4,6 +4,9 @@
     $('#top_salable_product_id').val("#{@product.id}");
     $('#top_salable_product_select').text("#{@product.name}");
     hideModal();
+  - elsif params[:form] == 'order'
+    $('#order_object').val("#{@product.name}");
+    hideModal();
   - else
     $selector = $("##{params[:association]}>tbody");
     - if is_product_only
