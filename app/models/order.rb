@@ -106,7 +106,7 @@ class Order < ActiveRecord::Base
     end
 
     if (user_q = params[:user]).present?
-      orders = orders.joins(:user).where 'LOWER(users.name) LIKE :q OR LOWER(users.surname) LIKE :q OR LOWER(users.username) LIKE :q', q: "%#{user_q.mb_chars.downcase.to_s}%"
+      orders = orders.joins(:user).where 'LOWER(users.name) LIKE :q OR LOWER(users.surname) LIKE :q OR LOWER(users.username) LIKE :q OR LOWER(users.card_number) LIKE :q', q: "%#{user_q.mb_chars.downcase.to_s}%"
     end
 
     orders
