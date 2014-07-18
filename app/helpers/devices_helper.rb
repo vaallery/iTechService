@@ -114,4 +114,8 @@ module DevicesHelper
     end
   end
 
+  def link_to_archive_device(device, options={})
+    link_to glyph(:archive)+t('devices.move_to_archive'), device_path(device, device: {location_id: Location.archive.id}), method: :put, class: 'btn btn-warning', remote: options[:remote]
+  end
+
 end

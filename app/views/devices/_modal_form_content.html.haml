@@ -48,5 +48,6 @@
     = link_to_add_fields t('devices.add_task'), '#device_tasks_small tbody', f, :device_tasks unless @device.at_done? or @device.in_archive?
     = f.error :base, class: 'text-error'
   .modal-footer
+    = link_to_archive_device @device, remote: true if @device.at_done?
     = link_to glyph(:money) + t('sales.payment').html_safe, create_sale_device_path(@device), method: :post, class: 'btn btn-success', target: '_blank' if @device.at_done?
     = submit_button f

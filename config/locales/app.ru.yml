@@ -770,6 +770,7 @@ ru:
     updated: Девайс изменён
 
     sales_info: "Информация о продаже"
+    move_to_archive: "В архив"
   device_tasks:
     add_repair_task: "Добавить"
     errors:

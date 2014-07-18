@@ -99,4 +99,5 @@
 
 .form-actions
   = link_to_edit @device
+  = link_to_archive_device @device if @device.at_done?
   = link_to_destroy @device if can? :destroy, @device
