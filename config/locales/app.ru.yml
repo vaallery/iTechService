@@ -326,6 +326,7 @@ ru:
       quick_order:
         client_name: 'Имя клиента'
         contact_phone: 'Телефон'
+        device_kind: 'Тип устройства'
         number: 'Номер'
         quick_tasks: 'Задачи'
         security_code: 'Пароль устройства'
@@ -1125,14 +1126,18 @@ ru:
     updated: 'Быстрый заказ изменён'
     link: :quick_orders.index.title
     title: 'Быстрый заказ №%{num}'
+    set_done: "Выполнен"
     index:
       title: 'Быстрые заказы'
     new:
       title: 'Новый Быстрый заказ'
     edit:
       title: 'Редактирование Быстрого заказа'
+    device_kinds:
+      iphone: 'iPhone'
+      ipad: 'iPad'
+      ipod: 'iPod'
 
-    set_done: "Выполнен"
   quick_tasks:
     created: 'Быстрая задача создана'
     updated: 'Быстрая задача изменена'

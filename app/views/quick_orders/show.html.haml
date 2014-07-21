@@ -9,6 +9,9 @@
 
 %table.attributes_table
   %tr
+    %td= model_class.human_attribute_name(:device_kind)
+    %td= @quick_order.device_kind
+  %tr
     %td= model_class.human_attribute_name(:number)
     %td= @quick_order.number
   %tr

@@ -5,6 +5,8 @@
       .user_department= "[#{current_user.department.name}]"
     - else
       %strong.text-error= t 'users.department_blank_error'
+    - unless Rails.env.production?
+      = "<#{Rails.env}>"
     - unless current_user.any_admin?
       %span= link_to karma_tag(current_user), rating_users_path
     = duck_plan_tag
@@ -12,10 +14,6 @@
       = form_tag quick_search_devices_path, method: :get, remote: true, id: 'devices_quick_search_form', class: 'form-search' do
         = text_field_tag :quick_search, nil, class: 'search-query span4'
       %ul#quick_search_result.unstyled.span4
-    #current_department_name
-      = current_department.name
-      - unless Rails.env.production?
-        = "<#{Rails.env}>"
   = nav_bar static: :top, brand: image_tag('logo.png'), responsive: true, fluid: true do
     = menu_group do
       = menu_item t('chat.title'), messages_path, class: 'nav_chat'

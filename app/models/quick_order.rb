@@ -1,5 +1,7 @@
 class QuickOrder < ActiveRecord::Base
 
+  DEVICE_KINDS = %w[iPhone iPad iPod]
+
   scope :id_asc, order('id asc')
   scope :created_desc, order('created_at desc')
   scope :in_month, where('created_at > ?', 1.month.ago)
@@ -9,9 +11,9 @@ class QuickOrder < ActiveRecord::Base
   belongs_to :user
   has_and_belongs_to_many :quick_tasks
   delegate :short_name, to: :user, prefix: true, allow_nil: true
-  attr_accessible :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code, :department_id
+  attr_accessible :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code, :department_id, :device_kind
   before_create :set_number
-  validates_presence_of :security_code
+  validates_presence_of :security_code, :device_kind
 
   after_initialize do
     self.department_id ||= Department.current.id
