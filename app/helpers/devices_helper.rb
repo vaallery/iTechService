@@ -118,4 +118,15 @@ module DevicesHelper
     link_to glyph(:archive)+t('devices.move_to_archive'), device_path(device, device: {location_id: Location.archive.id}), method: :put, class: 'btn btn-warning', remote: options[:remote]
   end
 
+  def device_tasks_list(device)
+    content_tag(:ul, id: 'device_tasks_list') do
+      device.device_tasks.collect do |device_task|
+        content_tag :li do
+          content_tag(:span, device_task.name) +
+          content_tag(:span, "#{distance_of_time_in_words_to_now(device_task.created_at)} #{t(:ago)}", class: 'help-block')
+        end
+      end.join.html_safe
+    end
+  end
+
 end

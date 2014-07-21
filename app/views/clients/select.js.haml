@@ -19,7 +19,7 @@
       if($devices.length > 0){
         $('.popover-content', $devices).html("#{j(client_devices_list(@client))}");
         if($('.client_devices_list', $devices).length > 0)
-          $devices.show()
+          $devices.show();
         else
           $devices.hide();
       }

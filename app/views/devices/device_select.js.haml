@@ -16,3 +16,5 @@
     $('#device_imei').val('');
     $('.imei_input').addClass('hidden')();
   }
+
+  $('#client_devices .popover-content').html("#{j(device_tasks_list(@device))}");
