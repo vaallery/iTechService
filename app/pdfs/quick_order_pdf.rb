@@ -3,7 +3,7 @@ class QuickOrderPdf < Prawn::Document
   require 'prawn/measurement_extensions'
 
   def initialize(quick_order)
-    super page_size: [80.mm, 65.mm], page_layout: :portrait, margin: [10, 24, 10, 10]
+    super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: [10, 24, 10, 10]
     @quick_order = quick_order
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
@@ -18,7 +18,7 @@ class QuickOrderPdf < Prawn::Document
 
   def client_part
     device_kind_image
-    move_down 26
+    move_down 45
     logo
     move_down 22
     font_size 24 do
@@ -34,7 +34,7 @@ class QuickOrderPdf < Prawn::Document
 
   def receiver_part
     device_kind_image
-    move_down 32
+    move_down 55
     font_size 24 do
       text "№ #{@quick_order.number_s}", align: :center, inlign_format: true, style: :bold
     end
@@ -60,7 +60,7 @@ class QuickOrderPdf < Prawn::Document
   end
 
   def device_kind_image
-    image File.join(Rails.root, "app/assets/images/#{@quick_order.device_kind}.png"), height: 30, at: [90, cursor] if @quick_order.device_kind.in?(QuickOrder::DEVICE_KINDS)
+    image File.join(Rails.root, "app/assets/images/#{@quick_order.device_kind}.png"), height: 50, at: [70, cursor] if @quick_order.device_kind.in?(QuickOrder::DEVICE_KINDS)
   end
 
 end
