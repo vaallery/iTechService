@@ -1430,7 +1430,7 @@ a .icon-rotate-90:before,a .icon-rotate-180:before,a .icon-rotate-270:before,a .
 body{padding-bottom:40px}
 .hidden{display:none}
 #modal_form form{margin:0 0 0 0}
-.navbar-static-top{margin-top:27px}.navbar-static-top a.brand{text-decoration:none;margin:0;padding:5px 0}.navbar-static-top a.brand img{height:30px}
+.navbar-static-top{margin-top:36px}.navbar-static-top a.brand{text-decoration:none;margin:0;padding:5px 0}.navbar-static-top a.brand img{height:30px}
 #history{position:fixed;left:50%;width:50%;max-height:80%;padding:10px 5px 5px 5px;margin-left:-25%;margin-top:-57%;overflow-y:scroll;z-index:1050;background-color:white;-webkit-border-radius:6px;-moz-border-radius:6px;border-radius:6px;-webkit-box-shadow:0 3px 7px rgba(0,0,0,0.3);-moz-box-shadow:0 3px 7px rgba(0,0,0,0.3);box-shadow:0 3px 7px rgba(0,0,0,0.3);-webkit-background-clip:padding-box;-moz-background-clip:padding-box;background-clip:padding-box;outline:none}#history table{margin-top:10px}
 td.align_right{text-align:right}
 .datepicker{margin-top:0}
