@@ -122,8 +122,10 @@ module DevicesHelper
     content_tag(:ul, id: 'device_tasks_list') do
       device.device_tasks.collect do |device_task|
         content_tag :li do
-          content_tag(:span, device_task.name) +
-          content_tag(:span, "#{distance_of_time_in_words_to_now(device_task.created_at)} #{t(:ago)}", class: 'help-block')
+          content_tag(:div, device_task.name) +
+          content_tag(:div, device_task.comment, class: 'text-info') +
+          content_tag(:div, device_task.user_comment, class: 'text-error') +
+          content_tag(:div, "#{distance_of_time_in_words_to_now(device_task.created_at)} #{t(:ago)}", class: 'muted')
         end
       end.join.html_safe
     end
