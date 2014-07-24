@@ -52,6 +52,7 @@ class Ability
       if user.media?
         can :modify, [Device, Client, Order, QuickOrder]
         can :set_done, QuickOrder
+        can [:choose, :select], Product
       end
       if user.marketing?
         can :modify, Info

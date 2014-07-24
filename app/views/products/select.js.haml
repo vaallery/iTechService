@@ -5,7 +5,7 @@
     $('#top_salable_product_select').text("#{@product.name}");
     hideModal();
   - elsif params[:form] == 'order'
-    $('#order_object').val("#{@product.name}");
+    $('#order_object').val("#{j(@product.name.html_safe)}");
     hideModal();
   - else
     $selector = $("##{params[:association]}>tbody");
