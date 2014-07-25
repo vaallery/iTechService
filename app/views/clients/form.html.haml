@@ -1,15 +1,19 @@
 = auto_header_tag @client
 = simple_form_for @client, html: { class: 'form-horizontal' } do |f|
 
-  = f.input :name, autofocus: true
-  = f.input :surname
-  = f.input :patronymic
-  = f.input :birthday, as: :my_date, viewmode: 'years'
-  = f.input :full_phone_number, as: :phone_number
-  = f.input :phone_number
-  = f.input :email
+  = f.input :name, autofocus: true, readonly: current_user.not_admin?
+  = f.input :surname, readonly: current_user.not_admin?
+  = f.input :patronymic, readonly: current_user.not_admin?
+  - if current_user.any_admin?
+    = f.input :birthday, as: :my_date, viewmode: 'years'
+    = f.input :full_phone_number, as: :phone_number
+  - else
+    = f.input :birthday, as: :my_date, readonly: true
+    = f.input :full_phone_number, readonly: true
+  = f.input :phone_number, readonly: current_user.not_admin?
+  = f.input :email, readonly: current_user.not_admin?
   = f.input :category, collection: client_categories_for_select if can? :change_category, @client
-  = f.input :card_number
+  = f.input :card_number, readonly: current_user.not_admin?
   #client_questionnaire_input{class: @client.card_number.blank? ? 'hidden' : ''}
     = f.input :email
     .control-group

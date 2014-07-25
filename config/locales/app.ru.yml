@@ -885,6 +885,12 @@ ru:
     submit: Выполнить
     updated: Подарочный сертификат изменен.
 
+  imported_sales:
+    index:
+      title: "Продажи 1С"
+      import_link: "Загрузить"
+      device_search_placeholder: "Серийный номер или IMEI"
+
   imports:
     do_import: Импортировать
     importing: Импортирую...
@@ -1600,6 +1606,8 @@ ru:
       deduction_notification: "Акт списания"
   errors:
     nothing_found: Ничего не найдено
+    messages:
+      changing_denied: "изменение запрещено"
 
   add: "Добавить"
   object: "Объект"
@@ -1643,8 +1651,3 @@ ru:
   update: Сохранить
   yep: "Да"
   not_accessible: "Не доступен"
-  imported_sales:
-    index:
-      title: "Продажи 1С"
-      import_link: "Загрузить"
-      device_search_placeholder: "Серийный номер или IMEI"
