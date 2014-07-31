@@ -8,6 +8,8 @@ class Client < ActiveRecord::Base
     3 => 'friend'
   }
 
+  RESTRICTED_ATTRIBUTES = %w[surname name patronymic birthday card_number phone_number full_phone_number client_characteristic_id category email contact_phone]
+
   scope :id_asc, order('id asc')
 
   belongs_to :department
@@ -33,6 +35,7 @@ class Client < ActiveRecord::Base
   validates_inclusion_of :category, in: CATEGORIES.keys
   validates_associated :comments
   validates_associated :client_characteristic
+  validate :restricted_attributes, unless: Proc.new { User.current.any_admin? }
   before_destroy :send_mail
 
   after_initialize do
@@ -105,6 +108,12 @@ class Client < ActiveRecord::Base
   end
 
   private
+
+  def restricted_attributes
+    if (changed_attrs = changed & RESTRICTED_ATTRIBUTES).any?
+      changed_attrs.each { |a| errors.add(a.to_sym, I18n.t('errors.messages.changing_denied')) }
+    end
+  end
 
   def send_mail
     DeletionMailer.delay.notice({presentation: self.presentation}, User.current.presentation, DateTime.current)
