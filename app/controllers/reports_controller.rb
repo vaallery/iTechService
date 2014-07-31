@@ -1,4 +1,5 @@
 class ReportsController < ApplicationController
+  authorize_resource
 
   #def index
   #  @start_date = (params[:start_date] || 1.day.ago).to_datetime.beginning_of_day
