@@ -110,7 +110,7 @@ class Client < ActiveRecord::Base
   private
 
   def restricted_attributes
-    if (changed_attrs = changed & RESTRICTED_ATTRIBUTES).any?
+    if (changed_attrs = changed & RESTRICTED_ATTRIBUTES).any? and persisted?
       changed_attrs.each { |a| errors.add(a.to_sym, I18n.t('errors.messages.changing_denied')) }
     end
   end

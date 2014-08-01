@@ -388,10 +388,8 @@ class User < ActiveRecord::Base
   private
 
   def validate_rights_changing
-    unless new_record?
-      if (changed_attributes[:role].present? or changed_attributes[:abilities].present?) and !User.current.superadmin?
-        errors[:base] << 'Rights changing denied!'
-      end
+    if (changed_attributes[:role].present? or changed_attributes[:abilities].present?) and !User.current.superadmin?
+      errors[:base] << 'Rights changing denied!'
     end
   end
 
