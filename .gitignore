@@ -32,7 +32,6 @@ doc/
 /public/system
 .idea/*
 .powrc
-.idea/misc.xml
 .elasticbeanstalk/
 Gemfile.lock
 /config/database.yml
@@ -45,3 +44,4 @@ Gemfile.lock
 .env
 Vagrantfile
 .vagrant
+.sass-cache
