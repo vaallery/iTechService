@@ -17,7 +17,6 @@ class DeviceApi < Grape::API
       present device
     else
       error!({error: device.errors.full_messages.join('. ')}, 403)
-      logger.info device.errors
     end
   end
 
@@ -34,7 +33,6 @@ class DeviceApi < Grape::API
           present device
         else
           error!({error: device.errors.full_messages.join('. ')}, 403)
-          logger.info device.errors
         end
       else
         error!({error: I18n.t('devices.errors.invalid_action')}, 403)
