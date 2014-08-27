@@ -1,23 +1,24 @@
-%table#repair_jobs_report.table.table-bordered.table-hover
-  %caption= report_title @report
-  %thead
-    %tr
-      %th.center= t '.group'
-      %th.center= t '.service'
-      %th.center= t '.quantity'
-  %tbody
-    - @report.result.each_pair do |group_key, group_value|
+- %i[with_parts without_parts].each do |group|
+  %table#repair_jobs_report.table.table-bordered.table-hover
+    %caption= "#{report_title(@report)} #{t 'reports.repair_jobs.' + group.to_s}"
+    %thead
       %tr
-        %td.group{rowspan: group_value[:jobs_qty]+group_value[:services_qty]+1}= group_value[:name]
-        %td.hidden{colspan: 2}
-      - group_value[:services].each_pair do |service_key, service_value|
-        %tr.detailable1
-          %td.service= service_value[:name]
-          %td.quantity.number= service_value[:jobs_qty]
-        - service_value[:jobs].each do |job|
-          %tr.details1
-            %td= link_to job[:device_presentation], device_path(job[:device_id]), target: '_blank'
-            %td.number.job_price
-              = human_currency job[:margin], false
-              %small= "Job Price: #{human_currency(job[:price], false)}"
-              %small= "Parts Cost: #{human_currency(job[:parts_cost], false)}"
+        %th.center= t '.group'
+        %th.center= t '.service'
+        %th.center= t '.quantity'
+    %tbody
+      - @report.result[group].each_pair do |group_key, group_value|
+        %tr
+          %td.group{rowspan: group_value[:jobs_qty]+group_value[:services_qty]+1}= group_value[:name]
+          %td.hidden{colspan: 2}
+        - group_value[:services].each_pair do |service_key, service_value|
+          %tr
+            %td.service= service_value[:name]
+            %td.quantity.number= service_value[:jobs_qty]
+          - service_value[:jobs].each do |job|
+            %tr
+              %td= link_to job[:device_presentation], device_path(job[:device_id]), target: '_blank'
+              %td.number.job_price
+                %span.has-tooltip{'data-title' => "Job Price: #{human_currency(job[:price], false)}. Parts Cost: #{human_currency(job[:parts_cost], false)}"}= human_currency job[:margin], false
+                -#%small= "Job Price: #{human_currency(job[:price], false)}"
+                -#%small= "Parts Cost: #{human_currency(job[:parts_cost], false)}"
