@@ -211,6 +211,13 @@ namespace :unicorn do
     end
   end
 
+  desc 'Upgrade unicorn server'
+  task :upgrade do
+    on roles(:app) do
+      execute "#{current_path}/bin/unicorn_init.sh upgrade"
+    end
+  end
+
   desc 'Check unicorn server status'
   task :status do
     on roles(:app) do
