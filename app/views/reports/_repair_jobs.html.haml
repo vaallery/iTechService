@@ -1,4 +1,4 @@
-- %i[with_parts without_parts].each do |group|
+- %i[with_parts without_parts without_payment].each do |group|
   %table#repair_jobs_report.table.table-bordered.table-hover
     %caption= "#{report_title(@report)} #{t 'reports.repair_jobs.' + group.to_s}"
     %thead

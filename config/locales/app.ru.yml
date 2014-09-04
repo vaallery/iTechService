@@ -1239,6 +1239,7 @@ ru:
       quantity: "Кол-во"
       with_parts: 'с использованием запчастей'
       without_parts: 'без использования запчастей'
+      without_payment: 'без оплаты'
     technicians_jobs:
       title: "Отчёт работ технических специалистов"
       user: 'Имя тех. специалиста'
