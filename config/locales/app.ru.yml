@@ -311,6 +311,7 @@ ru:
         quantity_in_store: 'Остаток на складе'
         related_products: 'Сопутствующие продукты'
         related_product_groups: 'Сопутствующие группы продуктов'
+        retail_price: 'Розничная цена'
         quantity_threshold: 'Пороговое количество'
         warning_quantities: 'Количество для уведомления'
 
@@ -470,6 +471,8 @@ ru:
         repair_part:
           quantity:
             insufficient: ''
+        product:
+          no_retail_price: 'Нет розничной цены'
 
   attributes:
     client_category: 'Категория клиента'
