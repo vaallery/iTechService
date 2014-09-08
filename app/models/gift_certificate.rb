@@ -67,6 +67,7 @@ class GiftCertificate < ActiveRecord::Base
   def consume=(amount)
     self.consumed = (self.consumed || 0) + amount
     self.status = 2 if self.consumed == nominal
+    save
   end
 
   def balance
