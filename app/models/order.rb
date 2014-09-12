@@ -26,8 +26,11 @@ class Order < ActiveRecord::Base
   belongs_to :user
   has_many :history_records, as: :object
 
-  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id
-  validates :customer_id, :object, :object_kind, presence: true
+  delegate :name, to: :department, prefix: true, allow_nil: true, prefix: true
+
+  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id, :quantity
+  validates :customer, :department, :quantity, :object, :object_kind, presence: true
+  after_initialize { self.department_id ||= Department.current.id }
   before_validation :generate_number
 
   before_validation do |order|
@@ -40,7 +43,6 @@ class Order < ActiveRecord::Base
       end
       order.user_id ||= User.current.id
     end
-    order.department_id ||= Department.current.id
   end
 
   after_update :make_announcement

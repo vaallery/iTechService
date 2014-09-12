@@ -6,6 +6,7 @@
       .controls= text_field_tag 'order_user', @order.user.short_name, class: 'input-xlarge', disabled: true
 
   = f.input :number, disabled: true, input_html: { class: 'input-xlarge' }
+  = f.association :department, prompt: false
   - if @order.new_record?
     = f.input :customer_id, as: :client, wrapper_html: {id: 'client_fields'}, no_devices: true
   - else
@@ -14,6 +15,7 @@
       .controls= text_field_tag :customer, @order.customer.presentation, class: 'input-xlarge', disabled: true
   = f.input :object_kind, as: :object_kind
   = f.input :object, as: :object
+  = f.input :quantity
   = f.input :comment, input_html: {rows: 5, class: 'input-xlarge'}
   = f.input :user_comment, input_html: {rows: 5, class: 'input-xlarge'} if current_user.marketing?
   = f.input :desired_date, as: :my_date

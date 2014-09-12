@@ -183,7 +183,7 @@ class Report
   def device_orders
     result[:orders] = []
     orders_count = 0
-    Order.device.where(created_at: period).group(:object).count(:id).each_pair do |key, val|
+    Order.device.where(created_at: period).group(:object).sum(:quantity).each_pair do |key, val|
       result[:orders] << { name: key, quantity: val }
       orders_count = orders_count + val
     end
