@@ -26,7 +26,7 @@ class Order < ActiveRecord::Base
   belongs_to :user
   has_many :history_records, as: :object
 
-  delegate :name, to: :department, prefix: true, allow_nil: true, prefix: true
+  delegate :name, to: :department, prefix: true, allow_nil: true
 
   attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id, :quantity
   validates :customer, :department, :quantity, :object, :object_kind, presence: true
