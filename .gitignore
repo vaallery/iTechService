@@ -35,6 +35,7 @@ doc/
 .elasticbeanstalk/
 Gemfile.lock
 /config/database.yml
+/config/nginx.conf
 # Ignore application configuration
 /config/application.yml
 /coverage/*
