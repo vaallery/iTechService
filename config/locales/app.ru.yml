@@ -1262,6 +1262,8 @@ ru:
         repair: 'Ремонт'
         service: 'Услуги'
         sale: 'Продажи'
+    device_orders:
+      title: "Отчёт по заказам на технику"
 
   revaluation_acts:
     created: 'Акт Переоценки создан'

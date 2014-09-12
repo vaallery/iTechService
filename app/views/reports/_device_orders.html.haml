@@ -1,0 +1,15 @@
+%table#device_orders_report.table.table.table-bordered.table-hover
+  %caption= report_title @report
+  %thead
+    %tr
+      %th= t 'attributes.name'
+      %th= t 'attributes.quantity'
+  %tbody
+    - @report.result[:orders].each do |order|
+      %tr.order_row
+        %td= order[:name]
+        %td= order[:quantity]
+  %tfoot
+    %tr
+      %td= t 'reports.total'
+      %td= @report.result[:orders_count]

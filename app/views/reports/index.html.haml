@@ -30,5 +30,6 @@
           %li= link_to t('reports.few_remnants_goods.title'), '#', data: { name: 'few_remnants_goods' }
           %li= link_to t('reports.few_remnants_spare_parts.title'), '#', data: { name: 'few_remnants_spare_parts' }
           %li= link_to t('reports.repair_jobs.title'), '#', data: { name: 'repair_jobs' }
+          %li= link_to t('reports.device_orders.title'), '#', data: { name: 'orders' }
 
 #reports_tables= render "reports/#{params[:name]}" if params[:name].present?

@@ -3,7 +3,7 @@ class Report
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  NAMES = %w[device_types users devices_archived done_tasks clients tasks_duration done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin]
+  NAMES = %w[device_types users devices_archived done_tasks clients tasks_duration device_orders done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin]
 
   attr_accessor :name, :kind, :device_type, :store_id
 
@@ -177,6 +177,15 @@ class Report
       average_duration = task_durations.present? ? (task_durations.sum/task_durations.size).round : 0
       result[:tasks_durations] << {task_name: task.name, average_duration: average_duration, device_tasks: device_tasks}
     end
+    result
+  end
+
+  def device_orders
+    result[:orders] = []
+    orders = Order.device.where(created_at: period).group(:object).count(:id).each_pair do |key, val|
+      result[:orders] << { name: key, quantity: val }
+    end
+    result[:orders_count] = orders.count
     result
   end
 
