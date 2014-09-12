@@ -7,7 +7,7 @@
   %tbody
     - @report.result[:orders].each do |order|
       %tr.order_row
-        %td= order[:name]
+        %td= link_to order[:name], orders_path(object_kind: 'Device', object: order[:name]), target: '_blank'
         %td= order[:quantity]
   %tfoot
     %tr
