@@ -81,7 +81,7 @@ module DashboardHelper
   end
 
   def device_task_row_tag(device_task)
-    row_class = device_task.done ? 'success' : (is_actual_task?(device_task) ? 'error' : 'warning')
+    row_class = device_task.done? ? 'success' : (is_actual_task?(device_task) ? 'error' : 'warning')
     content_tag(:tr, class: "device_task_row #{row_class}", data: {device_task_id: device_task.id, device_id: device_task.device_id, task_id: device_task.task_id}) do
       content_tag(:td, nil) +
       content_tag(:td, device_task.task_name) +

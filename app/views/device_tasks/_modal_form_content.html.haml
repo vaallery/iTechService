@@ -1,4 +1,4 @@
-- if @device_task.done and @device_task.errors.empty?
+- if @device_task.done? and @device_task.errors.empty?
   .modal-header
     %a.close{'data-dismiss' => 'modal', href: '#'}
       %i.icon-remove-sign
@@ -74,3 +74,21 @@
 
     .modal-footer
       = submit_button f
+
+-#:javascript
+-#  $('.tristate_checkbox').tristate({
+-#      change: function(state, value) {
+-#          console.log('Input:', this);
+-#          console.log('Unknown?', state === null);
+-#          console.log('Known?', state !== null);
+-#          console.log('Checked?', state === true);
+-#          console.log('Unhecked?', state === false);
+-#      }
+-#  });
+-#  function ts(cb) {
+-#    if (cb.readOnly) cb.checked=cb.readOnly=false;
+-#    else if (!cb.checked) cb.readOnly=cb.indeterminate=true;
+-#    console.log(cb.value);
+-#    console.log(cb.indeterminate);
+-#    console.log(cb.checked);
+//  }
