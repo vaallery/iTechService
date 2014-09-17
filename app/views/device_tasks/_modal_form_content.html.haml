@@ -56,7 +56,7 @@
         = @device_task.comment
       = f.input :user_comment, input_html: {rows: 3}
       = f.input :cost
-      = f.input :done, disabled: @device_task.done
+      = f.input :done, as: :done_status, disabled: @device_task.done
 
       - if can? :write_tech_notice, @device_task.device || Device
         = f.simple_fields_for :device do |ff|

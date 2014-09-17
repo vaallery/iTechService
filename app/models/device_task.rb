@@ -1,8 +1,9 @@
 class DeviceTask < ActiveRecord::Base
 
   scope :ordered, joins(:task).order('done asc, tasks.priority desc')
-  scope :done, where(done: true)
-  scope :pending, where(done: false)
+  scope :pending, where(done: 0)
+  scope :done, where(done: 1)
+  scope :undone, where(done: 2)
   scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
   scope :paid, where('device_tasks.cost > 0')
 
@@ -85,6 +86,18 @@ class DeviceTask < ActiveRecord::Base
 
   def repair_cost
     repair_tasks.sum(:price)
+  end
+
+  def pending?
+    done == 0
+  end
+
+  def done?
+    done == 1
+  end
+
+  def undone?
+    done == 2
   end
 
   private

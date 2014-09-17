@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140912021352) do
+ActiveRecord::Schema.define(:version => 20140916055512) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -244,10 +244,10 @@ ActiveRecord::Schema.define(:version => 20140912021352) do
   create_table "device_tasks", :force => true do |t|
     t.integer  "device_id"
     t.integer  "task_id"
-    t.boolean  "done"
+    t.integer  "done",         :default => 0
     t.text     "comment"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.decimal  "cost"
     t.datetime "done_at"
     t.text     "user_comment"
