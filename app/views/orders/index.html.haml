@@ -29,28 +29,12 @@
           %i.icon-remove
 
       .input-append
-        = text_field_tag :user, params[:user], id: 'search_user_input', class: 'search-query input-medium', placeholder: t('orders.index.search_user_placeholder')
+        = text_field_tag :user, params[:user], id: 'search_user_input', class: 'search-query input-small', placeholder: t('orders.index.search_user_placeholder')
         %span.add-on.btn.clear_search_input
           %i.icon-remove
 
-    %ul.nav
-      %li.dropdown
-        = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-          = t "orders.object_kinds.#{(params[:object_kind].blank? ? 'all_kinds' : params[:object_kind])}"
-          %b.caret
-        %ul.dropdown-menu
-          %li= link_to t("orders.object_kinds.all_kinds"), orders_path
-          - Order::OBJECT_KINDS.each do |object_kind|
-            %li= link_to t("orders.object_kinds.#{object_kind}"), orders_path(object_kind: object_kind)
-
-    %ul.nav
-      %li.dropdown
-        = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
-          = t "orders.statuses.#{params[:status].blank? ? 'all_statuses' : params[:status]}"
-          %b.caret
-        %ul.dropdown-menu
-          %li= link_to t("orders.statuses.all_statuses"), orders_path
-          - Order::STATUSES.each do |status|
-            %li= link_to t("orders.statuses.#{status}"), orders_path(status: status)
+    = orders_department_filter_tag
+    = orders_object_kind_filter_tag
+    = orders_status_filter_tag
 
 #resource_table= render 'table'

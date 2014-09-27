@@ -729,6 +729,7 @@ ru:
       branch: 'Филиал'
       store: 'Склад'
 
+    all: "Все"
   devices:
     edit:
       title: Редактирование девайса

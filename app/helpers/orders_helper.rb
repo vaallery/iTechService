@@ -34,4 +34,50 @@ module OrdersHelper
     end.html_safe
   end
 
+  def orders_department_filter_tag
+    departments = Department.all.map { |d| [d.id.to_s, d.name] }.to_h
+    content_tag(:ul, class: 'nav') do
+      content_tag(:li, class: 'dropdown') do
+        link_to('#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown') do
+          (params[:department].present? ? departments[params[:department]] : Order.human_attribute_name(:department)).html_safe +
+          caret_tag
+        end +
+        content_tag(:ul, class: 'dropdown-menu') do
+          content_tag(:li, link_to(t('departments.all'), orders_path(params.except(:department)))) +
+          departments.to_a.map { |id, name| content_tag(:li, link_to(name, orders_path(params.merge({department: id})))) }.join.html_safe
+        end
+      end
+    end
+  end
+
+  def orders_object_kind_filter_tag
+    content_tag(:ul, class: 'nav') do
+      content_tag(:li, class: 'dropdown') do
+        link_to('#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown') do
+          t("orders.object_kinds.#{(params[:object_kind].blank? ? 'all_kinds' : params[:object_kind])}").html_safe +
+          caret_tag
+        end +
+        content_tag(:ul, class: 'dropdown-menu') do
+          content_tag(:li, link_to(t('orders.object_kinds.all_kinds'), orders_path(params.except(:object_kind)))) +
+          Order::OBJECT_KINDS.map { |object_kind| content_tag(:li, link_to(t("orders.object_kinds.#{object_kind}"), orders_path(params.merge({object_kind: object_kind})))) }.join.html_safe
+        end
+      end
+    end
+  end
+
+  def orders_status_filter_tag
+    content_tag(:ul, class: 'nav') do
+      content_tag(:li, class: 'dropdown') do
+        link_to('#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown') do
+          t("orders.statuses.#{params[:status].blank? ? 'all_statuses' : params[:status]}").html_safe +
+          caret_tag
+        end +
+        content_tag(:ul, class: 'dropdown-menu') do
+          content_tag(:li, link_to(t('orders.statuses.all_statuses'), orders_path(params.except(:status)))) +
+          Order::STATUSES.map { |status| content_tag(:li, link_to(t("orders.statuses.#{status}"), orders_path(params.merge({status: status})))) }.join.html_safe
+        end
+      end
+    end
+  end
+
 end

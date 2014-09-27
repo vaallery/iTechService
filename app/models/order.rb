@@ -111,6 +111,9 @@ class Order < ActiveRecord::Base
       orders = orders.joins(:user).where 'LOWER(users.name) LIKE :q OR LOWER(users.surname) LIKE :q OR LOWER(users.username) LIKE :q OR LOWER(users.card_number) LIKE :q', q: "%#{user_q.mb_chars.downcase.to_s}%"
     end
 
+    (department = params[:department]).present? and
+      (orders = orders.where(department_id: department))
+
     orders
   end
 
