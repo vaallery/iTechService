@@ -29,15 +29,15 @@ class DeviceTask < ActiveRecord::Base
   validate :valid_repair if :is_repair?
   after_commit :update_device_done_attribute
   after_save :deduct_spare_parts if :is_repair?
-  after_initialize { self.done ||= false }
+  # after_initialize { self.done ||= false }
   after_initialize :set_performer
 
   before_save do |dt|
     old_done = changed_attributes['done']
-    if dt.done and (!old_done or old_done.nil?)
+    if dt.done? and old_done != 1
       dt.done_at = DateTime.current
       dt.performer_id = User.current.try(:id)
-    elsif !dt.done and old_done
+    elsif dt.done != 1 and old_done == 1
       dt.done_at = nil
     end
   end
