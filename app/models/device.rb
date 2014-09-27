@@ -152,7 +152,15 @@ class Device < ActiveRecord::Base
   def done_tasks
     device_tasks.done
   end
-  
+
+  def undone_tasks
+    device_tasks.undone
+  end
+
+  def processed_tasks
+    device_tasks.done.undone
+  end
+
   def pending_tasks
     device_tasks.pending
   end
@@ -162,11 +170,11 @@ class Device < ActiveRecord::Base
   end
   
   def progress
-    "#{done_tasks.count} / #{device_tasks.count}"
+    "#{processed_tasks.count} / #{device_tasks.count}"
   end
   
   def progress_pct
-    (done_tasks.count * 100.0 / device_tasks.count).to_i
+    (processed_tasks.count * 100.0 / device_tasks.count).to_i
   end
 
   def tasks_cost
