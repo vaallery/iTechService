@@ -74,21 +74,3 @@
 
     .modal-footer
       = submit_button f
-
--#:javascript
--#  $('.tristate_checkbox').tristate({
--#      change: function(state, value) {
--#          console.log('Input:', this);
--#          console.log('Unknown?', state === null);
--#          console.log('Known?', state !== null);
--#          console.log('Checked?', state === true);
--#          console.log('Unhecked?', state === false);
--#      }
--#  });
--#  function ts(cb) {
--#    if (cb.readOnly) cb.checked=cb.readOnly=false;
--#    else if (!cb.checked) cb.readOnly=cb.indeterminate=true;
--#    console.log(cb.value);
--#    console.log(cb.indeterminate);
--#    console.log(cb.checked);
-//  }
