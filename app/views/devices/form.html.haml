@@ -47,7 +47,7 @@
   - else
     = text_field_tag :location, @device.location.try(:name), disabled: true, class: 'input-xlarge'
 
-  = f.input :return_at, as: :my_datetime
+  = f.input :return_at, as: :datetime_quick_select
 
   -if f.error(:device_tasks).present?
     .control-group.required.error

@@ -155,6 +155,10 @@ $(document).on 'keydown', '#quick_search', (e)->
     else
       $('#quick_search_result>.active').removeClass('active')
 
+$(document).on 'click', '.datetime_quick_select .time_link', (event)->
+  $(this).closest('.datetime_quick_select').find('input').val($(this).data('value'))
+  event.preventDefault()
+
 $(document).ajaxSend ->
   showSpinner()
 

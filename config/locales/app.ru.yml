@@ -1618,6 +1618,18 @@ ru:
     messages:
       changing_denied: "изменение запрещено"
 
+  datetime_select:
+    x_minutes:
+      few: ! '%{count} минуты'
+      many: ! '%{count} минут'
+      one: ! '%{count} минуту'
+      other: ! '%{count} минут'
+    x_hours:
+      few: ! '%{count} часа'
+      many: ! '%{count} часов'
+      one: ! '%{count} час'
+      other: ! '%{count} часов'
+
   add: "Добавить"
   object: "Объект"
   time: "Время"
