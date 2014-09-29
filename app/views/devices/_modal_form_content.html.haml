@@ -5,6 +5,11 @@
       = @device.type_name
 
   .modal-body
+
+    .control-group
+      %label.control-label= Device.human_attribute_name :ticket_number
+      .controls= @device.ticket_number
+
     .control-group
       %label.control-label= Device.human_attribute_name :client
       .controls
