@@ -5,6 +5,13 @@
       = @device.type_name
 
   .modal-body
+    .control-group
+      %label.control-label= Device.human_attribute_name :client
+      .controls
+        = link_to @device.client_name, client_path(@device.client_id), target: '_blank'
+        %br
+        = human_phone @device.contact_phone
+
     = f.input :client_notified, as: :radio_buttons, collection: [[true, t('yep')], [false, t('not_accessible')]], required: true, value_method: :first, label_method: :last if @device.notify_client?
 
     - if @device.persisted? and @device.client.contact_phone.present?
