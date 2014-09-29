@@ -3,7 +3,7 @@ class Report
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  NAMES = %w[device_types users devices_archived done_tasks clients tasks_duration device_orders done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin]
+  NAMES = %w[device_types users devices_archived done_tasks tasks_undone clients tasks_duration device_orders done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin]
 
   attr_accessor :name, :kind, :device_type, :store_id
 
@@ -368,8 +368,7 @@ class Report
   end
 
   def repair_jobs
-    repair_tasks = RepairTask.includes(:device_task).where(device_tasks: {done_at: period})
-    # result['with_parts'] = result['without_parts'] = {}
+    repair_tasks = RepairTask.includes(:device_task).where(device_tasks: {done_at: period, done: 1})
     result.store :with_parts, {}
     result.store :without_parts, {}
     result.store :without_payment, {}
@@ -400,7 +399,22 @@ class Report
         end
       end
     end
-    # {'with_parts' => {'group_id' => {name: 'group_name', services: {'service_id' => {name: 'service_name', jobs_qty: '1', jobs_sum: '1', jobs: []}}}}, 'without_parts' => {...}}
+    result
+  end
+
+  def tasks_undone
+    tasks = DeviceTask.where(device_tasks: {done_at: period, done: 2})
+    tasks.each do |task|
+      task_id = (task.task_id || '-').to_s
+      task_name = task.name || '-'
+      task = {id: task.id, device_id: task.device_id, device: task.device_presentation, comment: task.comment, user_comment: task.user_comment}
+      if result[task_id].present?
+        result[task_id][:tasks_qty] = result[task_id][:tasks_qty] + 1
+        result[task_id][:tasks] << task
+      else
+        result[task_id] = {name: task_name, tasks_qty: 1, tasks: [task]}
+      end
+    end
     result
   end
 

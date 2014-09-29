@@ -18,6 +18,7 @@ class DeviceTask < ActiveRecord::Base
   accepts_nested_attributes_for :repair_tasks, allow_destroy: true
 
   delegate :name, :role, :is_important?, :is_actual_for?, :is_repair?, :item, to: :task, allow_nil: true
+  delegate :cost, to: :task, prefix: true, allow_nil: true
   delegate :client_presentation, to: :device, allow_nil: true
   delegate :department, :user, to: :device
 
