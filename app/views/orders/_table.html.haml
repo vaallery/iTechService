@@ -14,6 +14,7 @@
         %th= sortable 'object_kind', model_class.human_attribute_name(:object_kind)
         %th= sortable 'object', model_class.human_attribute_name(:object)
         %th= sortable 'quantity', model_class.human_attribute_name(:quantity)
+        %th= sortable 'priority', model_class.human_attribute_name(:priority)
         %th= sortable 'status', model_class.human_attribute_name(:status)
         %th= sortable 'desired_date', model_class.human_attribute_name(:desired_date)
         %th= sortable 'created_at', model_class.human_attribute_name(:created_at)
@@ -29,6 +30,7 @@
           %td= t("orders.object_kinds.#{order.object_kind}")
           %td= order.object
           %td= order.quantity
+          %td= (icon_tag(:star) * order.priority).html_safe
           %td= t("orders.statuses.#{order.status}")
           %td= order.desired_date.present? ? l(order.desired_date) : '-'
           %td

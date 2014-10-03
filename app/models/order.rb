@@ -28,7 +28,7 @@ class Order < ActiveRecord::Base
 
   delegate :name, to: :department, prefix: true, allow_nil: true
 
-  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id, :quantity
+  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id, :quantity, :priority
   validates :customer, :department, :quantity, :object, :object_kind, presence: true
   after_initialize { self.department_id ||= Department.current.id }
   before_validation :generate_number

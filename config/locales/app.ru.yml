@@ -397,7 +397,6 @@ ru:
         location: Локация
         location_id: :activerecord.attributes.task.location
         name: Название
-        priority: Приоритет
         role: Роль
 
       timesheet_day:
@@ -501,6 +500,7 @@ ru:
     price: 'Цена'
     prices: 'Цены'
     price_type: 'Категория цен'
+    priority: Приоритет
     product_category: 'Категория продуктов'
     quantity: 'Количество'
     serial_number: Серийный номер
