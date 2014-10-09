@@ -4,7 +4,7 @@
     %td= feature.value
   %td
     .btn-group
-      = link_to_edit_small item, remote: true
+      = link_to_edit_small item, remote: true if @product.feature_accounting
       = link_to '#', class: 'btn btn-small dropdown-toggle', 'data-toggle' => 'dropdown' do
         = glyph(:barcode)
         = caret_tag
