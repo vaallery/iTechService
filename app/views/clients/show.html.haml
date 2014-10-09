@@ -48,13 +48,13 @@
         %th= Device.human_attribute_name :tasks
         %th= Device.human_attribute_name :location
     %tbody
-      - @client.devices.each do |device|
+      - @client.devices.find_each do |device|
         %tr
           %td= l device.created_at, format: :long_d
           %td= link_to device.presentation, device_path(device)
           %td
             %ul.unstyled
-              - device.device_tasks.each do |device_task|
+              - device.device_tasks.find_each do |device_task|
                 %li= device_task.name
           %td= device.location_name || '-'
 
@@ -70,7 +70,7 @@
         %th= SaleItem.human_attribute_name :quantity
         %th= SaleItem.human_attribute_name :sum
     %tbody
-      - @client.sale_items.each do |sale_item|
+      - @client.sale_items.find_each do |sale_item|
         %tr{class: sale_item.is_return ? 'error' : ''}
           %td= human_datetime sale_item.date
           %td
@@ -90,6 +90,28 @@
           %td{colspan: 2}
             %strong= t 'clients.available_discount'
           %td= human_percent @client.discount_value
+
+#client_orders
+  %table.table.table-bordered.table-hover.table-condensed
+    %caption
+      %h4= t 'users.actual_orders'
+    %thead
+      %tr
+        %th= t '.date'
+        %th= Order.human_attribute_name :number
+        %th= Order.human_attribute_name :status
+        %th= Order.human_attribute_name :object
+        %th= Order.human_attribute_name :quantity
+        %th= Order.human_attribute_name :desired_date
+    %tbody
+      - @client.orders.actual_orders.find_each do |order|
+        %tr
+          %td= l order.created_at, format: :long_d
+          %td= link_to order.number, order
+          %td= t("orders.statuses.#{order.status}")
+          %td= order.object
+          %td= order.quantity
+          %td= l order.desired_date, format: :long_d
 
 .form-actions
   - if can? :create, Device

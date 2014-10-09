@@ -1570,6 +1570,7 @@ ru:
     purchased_devices: "Купленные девайсы"
     department_blank_error: '!!! Необходимо указать подразделение !!!'
 
+    actual_orders: "Актуальные заказы"
   wiki:
     add_attachment: Добавить файл
     all_pages: Wiki

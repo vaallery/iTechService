@@ -17,7 +17,7 @@ class ClientsController < ApplicationController
   end
 
   def show
-    @client = Client.find(params[:id])
+    @client = Client.includes(:sale_items, :orders, devices: :device_tasks).where(orders: {status: %w[new pending notified done]}).find(params[:id])
     respond_to do |format|
       format.html
       format.json { render json: @client }
