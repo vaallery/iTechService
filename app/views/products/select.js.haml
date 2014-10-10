@@ -7,6 +7,12 @@
   - elsif params[:form] == 'order'
     $('#order_object').val("#{j(@product.name.html_safe)}");
     hideModal();
+  - elsif params[:form] == 'print_tags'
+    $('#print_tags_form').attr('action', "#{item_path(@item, format: 'pdf')}");
+    $('#product_name').text("#{@item.name}");
+    $('#price').val("#{@item.retail_price}");
+    $('#print_tags_form').find('button').removeAttr('disabled');
+    hideModal();
   - else
     $selector = $("##{params[:association]}>tbody");
     - if is_product_only

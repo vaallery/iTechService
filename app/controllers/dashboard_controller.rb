@@ -71,6 +71,10 @@ class DashboardController < ApplicationController
     render json: {timeout: !user_signed_in?}
   end
 
+  def print_tags
+
+  end
+
   private
 
   def load_actual_devices

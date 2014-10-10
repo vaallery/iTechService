@@ -52,12 +52,12 @@ class ItemsController < ApplicationController
       format.pdf do
         filename = "product_tag_#{@item.barcode_num}.pdf"
         if params[:print]
-          pdf = ProductTagPdf.new @item, view_context
+          pdf = ProductTagPdf.new @item, view_context, params
           filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
           pdf.render_file filepath
           system 'lp', filepath
         else
-          pdf = ProductTagPdf.new @item, view_context, params[:type]
+          pdf = ProductTagPdf.new @item, view_context, params
         end
         send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
       end

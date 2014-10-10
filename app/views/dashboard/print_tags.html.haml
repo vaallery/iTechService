@@ -1,0 +1,11 @@
+.page-header
+  %h1= t '.title'
+
+= form_tag '#', method: :get, id: 'print_tags_form', class: 'form-inline', target: '_blank' do
+  = link_to choose_products_path(form: 'print_tags', is_product_only: false), remote: true, class: 'btn btn-info' do
+    = glyph(:search)
+    = content_tag(:span, t('.choose_product'), id: 'product_name')
+  = hidden_field_tag :id, nil
+  = number_field_tag :price, nil, placeholder: Product.human_attribute_name(:price), class: 'input-small'
+  = number_field_tag :quantity, nil, placeholder: Product.human_attribute_name(:quantity), class: 'input-small'
+  = button_tag "#{glyph(:print)} #{t('.print')}".html_safe, class: 'btn btn-primary', disabled: true

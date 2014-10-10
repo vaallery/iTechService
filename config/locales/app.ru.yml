@@ -699,7 +699,11 @@ ru:
     params: Параметры
     new_sale: "Новая Продажа"
     references: "Справочники"
+    print_tags:
+      title: "Печать штрихкодов"
 
+      print: "Печатать"
+      choose_product: "Выбрать продукт"
   deduction_acts:
     created: 'Акт Списания создан'
     updated: 'Акт Списания изменён'

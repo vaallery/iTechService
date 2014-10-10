@@ -10,4 +10,4 @@
         = caret_tag
       %ul.dropdown-menu
         %li= link_to t('items.tag.without_price'), item_path(item, format: 'pdf'), target: '_blank'
-        %li= link_to t('items.tag.with_price'), item_path(item, format: 'pdf', type: :with_price), target: '_blank'
+        %li= link_to t('items.tag.with_price'), item_path(item, format: 'pdf', price: true), target: '_blank'

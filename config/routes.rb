@@ -1,14 +1,15 @@
 ItechService::Application.routes.draw do
 
   root to: 'dashboard#index'
-  match 'dashboard' => 'dashboard#index', via: :get
-  match 'become/:id' => 'dashboard#become', via: :get, as: 'become'
-  match 'sign_in_by_card' => 'dashboard#sign_in_by_card', via: :get, as: 'sign_in_by_card'
-  match 'actual_orders' => 'dashboard#actual_orders', via: :get
-  match 'actual_tasks' => 'dashboard#actual_tasks', via: :get
-  match 'actual_supply_requests' => 'dashboard#actual_supply_requests', via: :get
-  match 'ready_devices' => 'dashboard#ready_devices', via: :get
-  match 'check_session_status' => 'dashboard#check_session_status', via: :get
+  get 'dashboard', to: 'dashboard#index'
+  get 'become/:id', to: 'dashboard#become', as: 'become'
+  get 'sign_in_by_card', to: 'dashboard#sign_in_by_card'
+  get 'actual_orders', to: 'dashboard#actual_orders'
+  get 'actual_tasks', to: 'dashboard#actual_tasks'
+  get 'actual_supply_requests', to: 'dashboard#actual_supply_requests'
+  get 'ready_devices', to: 'dashboard#ready_devices'
+  get 'check_session_status', to: 'dashboard#check_session_status'
+  get 'print_tags', to: 'dashboard#print_tags'
 
   mount Ckeditor::Engine => '/ckeditor'
 
@@ -38,7 +39,7 @@ ItechService::Application.routes.draw do
 
   resources :karma_groups, except: [:new]
 
-  match 'profile' => 'users#profile', via: :get
+  get 'profile', to: 'users#profile'
   match 'users/:id/update_wish' => 'users#update_wish', via: [:post, :put], as: 'update_wish_user'
 
   resources :clients do

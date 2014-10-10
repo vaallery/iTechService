@@ -61,6 +61,7 @@
         = drop_down_divider
         = menu_item t('gift_certificates.link'), gift_certificates_path
         = menu_item t('stolen_phones.link'), stolen_phones_path
+        = menu_item t('dashboard.print_tags.title'), print_tags_path if current_user.any_admin?
         = drop_down_divider
         = drop_down_submenu t('dashboard.references') do
           = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService

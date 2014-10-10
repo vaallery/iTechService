@@ -27,7 +27,7 @@ module ApplicationHelper
 
     if column == sort_column
       css_class = "current #{sort_direction} nav nav-pills"
-      direction = sort_direction == "asc" ? "desc" : "asc"
+      direction = sort_direction == 'asc' ? 'desc' : 'asc'
       icon_name = (sort_direction == 'asc') ? 'caret-up' : 'caret-down'
     else
       css_class = 'nav nav-pills'
@@ -39,7 +39,7 @@ module ApplicationHelper
   end
 
   def search_button
-    button_tag type: 'submit', class: "btn btn-info" do
+    button_tag type: 'submit', class: 'btn btn-info' do
       icon_tag(:search) + t(:search)
     end
   end

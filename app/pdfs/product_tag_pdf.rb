@@ -4,22 +4,26 @@ class ProductTagPdf < Prawn::Document
   require 'barby/barcode/ean_13'
   require 'barby/outputter/prawn_outputter'
 
-  def initialize(item, view, type=nil)
+  def initialize(item, view, options={})
     super page_size: [3.cm, 2.cm], page_layout: :portrait, margin: 4
     @item = item
     @view = view
     font_families.update 'DroidSans' => {
-        normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
-        bold: "#{Rails.root}/app/assets/fonts/droidsans-bold-webfont.ttf"
+      normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
+      bold: "#{Rails.root}/app/assets/fonts/droidsans-bold-webfont.ttf"
     }
     font 'DroidSans'
     title = ''
-    title << "#{item.code}: " if params[:with_price].blank?
+    title << "#{item.code}: " if options[:price].blank?
     title << item.name
     title << "(#{item.features.map(&:value).join(', ')})" if item.feature_accounting
-    price = type == :with_price ? item.retail_price : nil
-    item_tag title, item.barcode_num, price
-    item_tag title, item.barcode_num, price
+    price = options[:price].present? ? (options[:price] == true ? item.retail_price : options[:price]) : nil
+    if options[:quantity].present?
+      options[:quantity].to_i.times { item_tag(title, item.barcode_num, price) }
+    else
+      item_tag title, item.barcode_num, price
+      item_tag title, item.barcode_num, price
+    end
   end
 
   private
