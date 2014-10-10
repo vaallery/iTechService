@@ -3,7 +3,7 @@ module DevicesHelper
   
   def row_class_for_task task
     if task.present?
-      task.done ? 'success' : task.is_important? ? 'error' : 'warning'
+      task.done? ? 'success' : task.pending? ? (task.is_important? ? 'error' : 'warning') : ''
     else
       ''
     end
@@ -19,7 +19,7 @@ module DevicesHelper
 
   def progress_badge_class_for_device device
     badge_class = 'badge badge-'
-    badge_class << (device.done_tasks.count == 0 ? 'important' : (device.pending? ? 'warning' : 'success'))
+    badge_class << (device.processed_tasks.count == 0 ? 'important' : (device.pending? ? 'warning' : 'success'))
   end
 
   def device_moved_by device

@@ -195,3 +195,30 @@ table>tbody>tr>td.num, table tr>td.number {
     width: 100px;
   }
 }
+
+.device_task_row {
+  &.pending > td {
+    background-color: @warningBackground;
+  }
+  &.pending.actual > td {
+    background-color: @errorBackground;
+  }
+  &.done > td {
+    background-color: @successBackground;
+  }
+//  &.undone > td {
+//    background-color: @infoBackground;
+//  }
+  &.pending:hover > td {
+    background-color: darken(@warningBackground, 5%);
+  }
+  &.pending.actual:hover > td {
+    background-color: darken(@errorBackground, 5%);
+  }
+  &.done:hover > td {
+    background-color: darken(@successBackground, 5%);
+  }
+//  &.undone:hover > td {
+//    background-color: darken(@infoBackground, 5%);
+//  }
+}

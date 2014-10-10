@@ -1,8 +1,9 @@
 class DeviceTask < ActiveRecord::Base
 
   scope :ordered, joins(:task).order('done asc, tasks.priority desc')
-  scope :done, where(done: true)
-  scope :pending, where(done: false)
+  scope :pending, where(done: 0)
+  scope :done, where(done: 1)
+  scope :undone, where(done: 2)
   scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
   scope :paid, where('device_tasks.cost > 0')
 
@@ -17,26 +18,25 @@ class DeviceTask < ActiveRecord::Base
   accepts_nested_attributes_for :repair_tasks, allow_destroy: true
 
   delegate :name, :role, :is_important?, :is_actual_for?, :is_repair?, :item, to: :task, allow_nil: true
+  delegate :cost, to: :task, prefix: true, allow_nil: true
   delegate :client_presentation, to: :device, allow_nil: true
   delegate :department, :user, to: :device
 
   attr_accessible :done, :done_at, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :performer_id, :task, :device_attributes, :repair_tasks_attributes
   validates :task, :cost, presence: true
-  #validates :cost, numericality: true
-  validates_numericality_of :cost#, greater_than_or_equal_to: :repair_cost
-  validates_associated :repair_tasks
+  validates :cost, numericality: true
   validate :valid_repair if :is_repair?
+  validates_associated :repair_tasks
   after_commit :update_device_done_attribute
   after_save :deduct_spare_parts if :is_repair?
-  after_initialize { self.done ||= false }
   after_initialize :set_performer
 
   before_save do |dt|
-    old_done = changed_attributes['done']
-    if dt.done and (!old_done or old_done.nil?)
+    old_done = dt.done_was
+    if dt.done != 0 and old_done == 0
       dt.done_at = DateTime.current
       dt.performer_id = User.current.try(:id)
-    elsif !dt.done and old_done
+    elsif dt.done != 1 and old_done == 1
       dt.done_at = nil
     end
   end
@@ -87,6 +87,22 @@ class DeviceTask < ActiveRecord::Base
     repair_tasks.sum(:price)
   end
 
+  def done_s
+    %w(pending done undone)[done]
+  end
+
+  def pending?
+    done == 0
+  end
+
+  def done?
+    done == 1
+  end
+
+  def undone?
+    done == 2
+  end
+
   private
 
   def update_device_done_attribute
@@ -101,7 +117,7 @@ class DeviceTask < ActiveRecord::Base
   def valid_repair
     is_valid = true
     if done_changed?
-      if done_was
+      if done_was == 1
         errors.add :done, :already_done
         is_valid = false
       else

@@ -1250,6 +1250,10 @@ ru:
       with_parts: 'с использованием запчастей'
       without_parts: 'без использования запчастей'
       without_payment: 'без оплаты'
+    tasks_undone:
+      title: 'Отчёт по невыполненным задачам'
+      tasks_devices: "Задача / Девайс"
+      quantity_comment: "Кол-во / Комментарий"
     technicians_jobs:
       title: "Отчёт работ технических специалистов"
       user: 'Имя тех. специалиста'

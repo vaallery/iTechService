@@ -1,0 +1,17 @@
+%table#tasks_undone_report.table.table-bordered.table-hover
+  %caption= report_title @report
+  %thead
+    %tr
+      %th.center= t '.tasks_devices'
+      %th.center= t '.quantity_comment'
+  %tbody
+    - @report.result.each_pair do |task_id, task_value|
+      %tr.detailable
+        %td.task= task_value[:name]
+        %td.quantity.number= task_value[:tasks_qty]
+      - task_value[:tasks].each do |task_data|
+        %tr.details
+          %td.device= link_to task_data[:device], device_path(task_data[:device_id]), target: '_blank'
+          %td.comment
+            %p.text-info= task_data[:comment]
+            %p.text-error= task_data[:user_comment]
