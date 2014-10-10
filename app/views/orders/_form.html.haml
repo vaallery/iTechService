@@ -8,7 +8,7 @@
   = f.input :number, disabled: true, input_html: { class: 'input-xlarge' }
   = f.association :department, prompt: false
   - if @order.new_record?
-    = f.input :customer_id, as: :client, wrapper_html: {id: 'client_fields'}, no_devices: true
+    = f.input :customer, as: :client, wrapper_html: {id: 'client_fields'}, no_devices: true
   - else
     .control-group.string.disabled.optional
       %label.control-label.string.optional= Order.human_attribute_name :customer

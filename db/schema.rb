@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141003061956) do
+ActiveRecord::Schema.define(:version => 20141010071534) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -878,12 +878,17 @@ ActiveRecord::Schema.define(:version => 20141003061956) do
   add_index "spare_parts", ["repair_service_id"], :name => "index_spare_parts_on_repair_service_id"
 
   create_table "stolen_phones", :force => true do |t|
-    t.string   "imei",       :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "imei",           :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "serial_number"
+    t.integer  "client_id"
+    t.text     "client_comment"
   end
 
+  add_index "stolen_phones", ["client_id"], :name => "index_stolen_phones_on_client_id"
   add_index "stolen_phones", ["imei"], :name => "index_stolen_phones_on_imei"
+  add_index "stolen_phones", ["serial_number"], :name => "index_stolen_phones_on_serial_number"
 
   create_table "store_items", :force => true do |t|
     t.integer  "item_id"

@@ -5,7 +5,7 @@
   = f.full_error :ticket_number
 
   - if can? :update, @device
-    = f.input :client_id, as: :client, wrapper_html: {id: 'client_fields'}
+    = f.input :client, as: :client, wrapper_html: {id: 'client_fields'}
   - else
     = f.input :client, as: :string, disabled: true, input_html: {class: 'input-xlarge'}
 

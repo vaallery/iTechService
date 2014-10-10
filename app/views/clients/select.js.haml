@@ -8,8 +8,7 @@
   - else
     :plain
       $('#client_search').val("#{@client.presentation}");
-      $('#device_client_id, #sale_client_id').val("#{@client.id}");
-      $('#order_customer_id').val("#{@client.id}");
+      $('#client_input').find('.client_id').val("#{@client.id}");
       $('#edit_client_link').attr('href', "#{edit_client_path(@client)}");
       $('#edit_client_link').attr('data-remote', true);
       $('#client_search').css({color: "#{@client.category_color}"}).attr('title', "#{@client.characteristic}").attr('data-original-title', "#{@client.characteristic}");

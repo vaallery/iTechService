@@ -381,7 +381,7 @@ ru:
         price_types: 'Типы цен'
 
       stolen_phone:
-        imei: IMEI
+        client_comment: 'Обстоятельства кражи'
 
       supply:
         supply_category: :activerecord.models.supply_category
@@ -474,12 +474,14 @@ ru:
           no_retail_price: 'Нет розничной цены'
 
   attributes:
+    client: 'Клиент'
     client_category: 'Категория клиента'
+    comment: Комментарий
+    comments: 'Комментарии'
     created_at: Время создания
     color: Цвет
     code: 'Код'
     color: 'Цвет'
-    comment: Комментарий
     content: Содержание
     date: 'Дата'
     description: 'Описание'

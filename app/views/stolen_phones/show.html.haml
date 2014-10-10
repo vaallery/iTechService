@@ -1,0 +1,21 @@
+= auto_header_tag
+
+%table.attributes_table
+  %tr
+    %td= StolenPhone.human_attribute_name :imei
+    %td= @stolen_phone.imei
+  %tr
+    %td= StolenPhone.human_attribute_name :serial_number
+    %td= @stolen_phone.serial_number
+  %tr
+    %td= StolenPhone.human_attribute_name :client
+    %td= link_to_if @stolen_phone.client.present?, @stolen_phone.client_presentation, @stolen_phone.client
+  %tr
+    %td= StolenPhone.human_attribute_name :client_comment
+    %td= @stolen_phone.client_comment
+  %tr
+    %td= StolenPhone.human_attribute_name :comments
+    %td= render @comments
+
+.form-actions
+  = link_to_edit @stolen_phone

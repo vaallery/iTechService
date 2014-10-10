@@ -8,7 +8,15 @@ class StolenPhonesController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.js { render 'shared/index' }
       format.json { render json: @stolen_phones }
+    end
+  end
+
+  def show
+    @comments = @stolen_phone.comments
+    respond_to do |format|
+      format.html
     end
   end
 

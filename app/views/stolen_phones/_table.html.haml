@@ -5,25 +5,26 @@
   %table.table.table-striped.table-hover
     %thead
       %tr
-        %th= model_class.human_attribute_name(:id)
         %th= model_class.human_attribute_name(:imei)
+        %th= model_class.human_attribute_name(:serial_number)
+        %th= model_class.human_attribute_name(:client)
         %th= model_class.human_attribute_name(:created_at)
-        - if can? :manage, StolenPhone
+        - if can? :manage, model_class
           %th
     %tbody
       - @stolen_phones.each do |stolen_phone|
         %tr
-          %td= stolen_phone.id
-          %td
-            = h stolen_phone.imei
-            = link_to_comments_for stolen_phone
+          %td= link_to stolen_phone.imei, stolen_phone
+          %td= link_to stolen_phone.serial_number, stolen_phone if stolen_phone.serial_number.present?
+          %td= link_to stolen_phone.client_presentation, stolen_phone.client if stolen_phone.client.present?
           %td=l stolen_phone.created_at, format: :long_d
-          - if can? :manage, StolenPhone
+          - if can? :manage, model_class
             %td.btn-group
+              = link_to_show_small stolen_phone
               = link_to_edit_small stolen_phone
               = link_to_destroy_small stolen_phone
 
-  = paginate @stolen_phones
+  = paginate @stolen_phones, remote: true
 
 - else
   = render 'shared/empty'

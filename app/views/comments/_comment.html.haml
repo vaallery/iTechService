@@ -1,4 +1,4 @@
 - if comment.content.present?
   %blockquote
     %p= comment.content
-    %small= "#{comment.user_name} at #{comment.created_at.present? ? l(comment.created_at, format: :long_d) : '-'}"
+    %small= "#{comment.user_name} [#{comment.created_at.present? ? l(comment.created_at, format: :long_d) : '-'}]"

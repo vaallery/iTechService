@@ -81,7 +81,7 @@ ItechService::Application.routes.draw do
   end
 
   resources :infos
-  resources :stolen_phones, except: :show
+  resources :stolen_phones
   resources :prices
 
   resources :announcements do

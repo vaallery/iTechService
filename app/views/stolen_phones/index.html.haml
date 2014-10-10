@@ -8,8 +8,15 @@
   .navbar-inner
     = form_tag stolen_phones_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
       .input-append
-        = text_field_tag :imei_q, params[:imei_q], id: 'search_stolen_phone_input', class: 'search-query input-medium',
-            placeholder: 'IMEI'
+        = text_field_tag :imei_q, params[:imei_q], id: 'search_stolen_phone_input', class: 'search-query input-medium', placeholder: 'IMEI'
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+      .input-append
+        = text_field_tag :serial_number_q, params[:serial_number_q], class: 'search-query input-medium', placeholder: StolenPhone.human_attribute_name(:serial_number)
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+      .input-append
+        = text_field_tag :client_q, params[:client_q], class: 'search-query input-medium', placeholder: StolenPhone.human_attribute_name(:client)
         %span.add-on.btn.clear_search_input
           %i.icon-remove
 
