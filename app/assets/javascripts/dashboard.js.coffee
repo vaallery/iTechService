@@ -18,4 +18,4 @@ jQuery ->
     false
 
 $(document).on 'click', '.device_tasks_toggle', ->
-  $(this).parents('.device_row').nextAll('.device_task_row.success').toggle()
+  $(this).parents('.device_row').nextAll('.device_task_row.done, .device_task_row.undone').toggle()

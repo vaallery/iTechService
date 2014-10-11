@@ -158,7 +158,7 @@ class Device < ActiveRecord::Base
   end
 
   def processed_tasks
-    device_tasks.done.undone
+    device_tasks.processed
   end
 
   def pending_tasks
