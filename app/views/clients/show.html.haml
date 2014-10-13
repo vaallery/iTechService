@@ -111,7 +111,7 @@
           %td= t("orders.statuses.#{order.status}")
           %td= order.object
           %td= order.quantity
-          %td= l order.desired_date, format: :long_d
+          %td= l order.desired_date, format: :long_d if order.desired_date.present?
 
 .form-actions
   - if can? :create, Device
