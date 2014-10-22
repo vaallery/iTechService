@@ -7,11 +7,11 @@
     <dict>
       <key>PORT</key><string>5100</string>
       <key>RAILS_ENV</key><string>production</string>
-      <key>RUBY_VERSION</key><string>2.1.2</string>
-      <key>GEM_HOME</key><string>/Users/itech/.rvm/gems/ruby-2.1.2@itechservice</string>
-      <key>GEM_PATH</key><string>/Users/itech/.rvm/gems/ruby-2.1.2@itechservice</string>
-      <key>BUNDLE_PATH</key><string>/Users/itech/.rvm/gems/ruby-2.1.2@itechservice</string>
-      <key>PATH</key><string>/var/www/itechservice/current/bin:/Users/itech/.rvm/wrappers/ise:/Users/itech/.rvm/gems/ruby-2.1.2/bin:/Users/itech/.rvm/gems/ruby-2.1.2@global/bin:/Users/itech/.rvm/rubies/ruby-2.1.2/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/itech/.rvm/bin</string>
+      <key>RUBY_VERSION</key><string>2.1.3</string>
+      <key>GEM_HOME</key><string>/Users/itech/.rvm/gems/ruby-2.1.3@itechservice</string>
+      <key>GEM_PATH</key><string>/Users/itech/.rvm/gems/ruby-2.1.3@itechservice</string>
+      <key>BUNDLE_PATH</key><string>/Users/itech/.rvm/gems/ruby-2.1.3@itechservice</string>
+      <key>PATH</key><string>/var/www/itechservice/current/bin:/Users/itech/.rvm/wrappers/ise:/Users/itech/.rvm/gems/ruby-2.1.3/bin:/Users/itech/.rvm/gems/ruby-2.1.3@global/bin:/Users/itech/.rvm/rubies/ruby-2.1.3/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/Users/itech/.rvm/bin</string>
     </dict>
     <key>ProgramArguments</key>
     <array>

@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 #source 'http://gems.rubyforge.org'
-# ruby '2.0.0'
-ruby '2.1.2'
+ruby '2.1.3'
 # gem 'nokogiri', '1.6.1'
 gem 'rails', '3.2.19'
 gem 'unicorn', '~> 4.6.2'

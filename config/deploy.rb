@@ -1,7 +1,8 @@
 # set :filter, hosts: %w[192.168.0.1 192.168.4.200]
 # set :filter, hosts: %w[192.168.4.200]
 application = 'itechservice'
-ruby = 'ruby-2.1.2'
+ruby = 'ruby-2.1.3'
+user = fetch :user
 set :application, application
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
 
@@ -25,8 +26,8 @@ set :rvm_ruby_version, "#{ruby}@#{application}"
 
 set :bundle_flags, '--deployment'
 set :bundle_env_variables, {
-    path: "/Users/itech/.rvm/gems/#{fetch(:rvm_ruby_version)}/bin:/Users/itech/.rvm/gems/#{ruby}@global/bin:/Users/itech/.rvm/rubies/#{ruby}/bin:/Users/itech/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/Cellar/imagemagick/6.8.9-1/bin",
-    magick_home: '/usr/local/Cellar/imagemagick/6.8.9-1',
+    path: "/Users/#{user}/.rvm/gems/#{fetch(:rvm_ruby_version)}/bin:/Users/#{user}/.rvm/gems/#{ruby}@global/bin:/Users/#{user}/.rvm/rubies/#{ruby}/bin:/Users/#{user}/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/Cellar/imagemagick/6.8.9-7/bin",
+    magick_home: '/usr/local/Cellar/imagemagick/6.8.9-7',
     pkg_config_path: '/usr/local/bin'
 }
 
@@ -91,28 +92,31 @@ namespace :deploy do
     on roles(:all) do
       execute "mkdir -p #{shared_path}/config"
       execute "mkdir -p #{shared_path}/system"
+      execute "mkdir -p #{shared_path}/bin"
       execute "mkdir -p #{shared_path}/tmp/pdf"
       execute 'mkdir -p /usr/local/etc/nginx/sites-available'
       execute 'mkdir -p /usr/local/etc/nginx/sites-enabled'
-      upload! 'deploy_files/database.yml', "#{shared_path}/config/database.yml"
-      upload! 'deploy_files/unicorn.rb', "#{shared_path}/config/unicorn.rb"
-      upload! 'deploy_files/private_pub.yml', "#{shared_path}/config/private_pub.yml"
-      upload! 'deploy_files/application.yml', "#{shared_path}/config/application.yml"
-      upload! 'deploy_files/Procfile', "#{shared_path}/Procfile"
-      upload! 'deploy_files/unicorn_init.sh', "#{shared_path}/bin/unicorn_init.sh"
+      upload! 'shared/database.yml', "#{shared_path}/config/database.yml"
+      upload! 'shared/unicorn.rb', "#{shared_path}/config/unicorn.rb"
+      upload! 'shared/private_pub.yml', "#{shared_path}/config/private_pub.yml"
+      upload! 'shared/application.yml', "#{shared_path}/config/application.yml"
+      upload! 'shared/Procfile', "#{shared_path}/Procfile"
+      upload! 'shared/unicorn_init.sh', "#{shared_path}/bin/unicorn_init.sh"
       execute "ln -sf #{shared_path}/bin/unicorn_init.sh /usr/local/bin/ise_unicorn"
-      upload! 'deploy_files/delayed_job_init.sh', "#{shared_path}/bin/delayed_job_init.sh"
+      upload! 'shared/delayed_job_init.sh', "#{shared_path}/bin/delayed_job_init.sh"
       execute "ln -sf #{shared_path}/bin/delayed_job_init.sh /usr/local/bin/ise_delayed_job"
-      upload! 'deploy_files/private_pub_init.sh', "#{shared_path}/bin/private_pub_init.sh"
+      upload! 'shared/private_pub_init.sh', "#{shared_path}/bin/private_pub_init.sh"
       execute "ln -sf #{shared_path}/bin/private_pub_init.sh /usr/local/bin/ise_private_pub"
-      upload! 'deploy_files/nginx.conf', '/usr/local/etc/nginx/nginx.conf'
-      upload! 'deploy_files/nginx_app.conf', "#{shared_path}/nginx_app.conf"
+      upload! 'shared/nginx.conf', '/usr/local/etc/nginx/nginx.conf'
+      upload! 'shared/nginx_app.conf', "#{shared_path}/nginx_app.conf"
       execute "ln -sf #{shared_path}/nginx_app.conf /usr/local/etc/nginx/sites-enabled/#{application}.conf"
       # sudo 'nginx -s reload'
-      upload! 'deploy_files/itechservice*1.plist', shared_path
-      sudo "cp #{shared_path}/itechservice*1.plist /Library/LaunchDaemons"
+      upload! 'shared/itechservice-web-1.plist', "#{shared_path}/itechservice-web-1.plist"
+      upload! 'shared/itechservice-job-1.plist', "#{shared_path}/itechservice-job-1.plist"
+      upload! 'shared/itechservice-pb-1.plist', "#{shared_path}/itechservice-pb-1.plist"
+      # sudo "cp #{shared_path}/itechservice*.plist /Library/LaunchDaemons"
       # execute "rvm install #{fetch(:rvm_ruby_version)[/.*@/]}"
-      execute "rvm alias create ise #{fetch(:rvm_ruby_version)}"
+      # execute "rvm alias create ise #{fetch(:rvm_ruby_version)}"
       # within release_path do
       #   with rails_env: fetch(:rails_env) do
       #     execute :rake, 'db:create'
