@@ -1,17 +1,20 @@
-puts 'PRODUCT CATEGORIES'
+Department.where(code: ENV['DEPARTMENT_CODE']).first_or_create!(name: ENV['DEPARTMENT_NAME'], role: ENV['DEPARTMENT_ROLE'], address: '-', contact_phone: '-', schedule: '-', url: '-')
+puts 'Departments'
+
+User.where(username: ENV['ADMIN_USERNAME']).first_or_create!(role: 'superadmin', password: ENV['ADMIN_PASSWORD'], password_confirmation: ENV['ADMIN_PASSWORD'], department_id: Department.current.id, email: ENV['ADMIN_EMAIL'])
+puts 'Admin'
+
 #ProductCategory::KINDS.each do |kind|
 #  product_category = ProductCategory.find_or_create_by_kind(kind: kind, name: I18n.t("product_categories.kinds.#{kind}"))
 #  product_category.product_groups.find_or_create_by_name(name: I18n.t("product_categories.kinds.#{kind}"))
 #end
-
-# Departments
-Department.where(code: ENV['DEPARTMENT_CODE']).first_or_create(name: ENV['DEPARTMENT_NAME'], role: ENV['DEPARTMENT_ROLE'], address: '-', contact_phone: '-', schedule: '-', url: '-')
+puts 'PRODUCT CATEGORIES'
 
 # Settings
-puts 'DEFAULT SETTINGS'
 Setting::DEFAULT_SETTINGS.each_pair do |key, value|
   Department.all.each do |department|
-    Setting.where(department_id: department.id, name: key).first_or_create(value_type: value)
+    Setting.where(department_id: department.id, name: key).first_or_create!(value_type: value)
   end
-  Setting.where(department_id: nil, name: key).first_or_create(value_type: value)
+  Setting.where(department_id: nil, name: key).first_or_create!(value_type: value)
 end
+puts 'DEFAULT SETTINGS'
