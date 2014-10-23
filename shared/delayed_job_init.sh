@@ -5,8 +5,8 @@ set -e
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/var/www/itechservice/current
 PID=$APP_ROOT/tmp/pids/delayed_job.pid
-START_CMD="cd $APP_ROOT; rvm use ise; script/delayed_job start"
-STOP_CMD="cd $APP_ROOT; rvm use ise; script/delayed_job stop"
+START_CMD="cd $APP_ROOT; script/delayed_job start"
+STOP_CMD="cd $APP_ROOT; script/delayed_job stop"
 AS_USER=itech
 set -u
 

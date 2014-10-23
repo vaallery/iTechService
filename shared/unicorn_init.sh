@@ -14,7 +14,7 @@ set -e
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/var/www/itechservice/current
 PID=$APP_ROOT/tmp/pids/unicorn.pid
-CMD="cd $APP_ROOT; rvm use ise; bundle exec unicorn -D -c config/unicorn.rb -E production"
+CMD="cd $APP_ROOT; bundle exec unicorn -D -c config/unicorn.rb -E production"
 AS_USER=itech
 set -u
 

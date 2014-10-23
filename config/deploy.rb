@@ -90,6 +90,7 @@ namespace :deploy do
   desc 'Setup'
   task :setup do
     on roles(:all) do
+      execute 'mkdir /var/www/log'
       execute "mkdir -p #{shared_path}/config"
       execute "mkdir -p #{shared_path}/system"
       execute "mkdir -p #{shared_path}/bin"

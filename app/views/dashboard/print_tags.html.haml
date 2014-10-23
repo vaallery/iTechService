@@ -6,6 +6,7 @@
     = glyph(:search)
     = content_tag(:span, t('.choose_product'), id: 'product_name')
   = hidden_field_tag :id, nil
+  = hidden_field_tag :print, true
   = number_field_tag :price, nil, placeholder: Product.human_attribute_name(:price), class: 'input-small'
   = number_field_tag :quantity, nil, placeholder: Product.human_attribute_name(:quantity), class: 'input-small'
   = button_tag "#{glyph(:print)} #{t('.print')}".html_safe, class: 'btn btn-primary', disabled: true

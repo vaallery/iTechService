@@ -5,7 +5,7 @@ set -e
 TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/var/www/itechservice/current
 PID=$APP_ROOT/tmp/pids/private_pub.pid
-CMD="cd $APP_ROOT; rvm use ise; bundle exec rackup private_pub.ru -s thin -E production -D -P $PID"
+CMD="cd $APP_ROOT; bundle exec rackup private_pub.ru -s thin -E production -D -P $PID"
 AS_USER=itech
 set -u
 
