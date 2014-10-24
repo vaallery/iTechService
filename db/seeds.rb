@@ -11,10 +11,9 @@ puts 'Admin'
 puts 'PRODUCT CATEGORIES'
 
 # Settings
-Setting::DEFAULT_SETTINGS.each_pair do |key, value|
+Setting::DEFAULT_SETTINGS.each_pair do |name, value_type|
   Department.all.each do |department|
-    Setting.where(department_id: department.id, name: key).first_or_create!(value_type: value)
+    Setting.where(department_id: department.id, name: name.to_s).first_or_create!(value_type: value_type, presentation: I18n.t("settings.#{name}", default: name.to_s.humanize))
   end
-  # Setting.where(department_id: nil, name: key).first_or_create!(value_type: value)
 end
 puts 'DEFAULT SETTINGS'
