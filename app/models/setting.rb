@@ -2,6 +2,9 @@ class Setting < ActiveRecord::Base
 
   DEFAULT_SETTINGS = {
       ticket_prefix: 'string',
+      address: 'string',
+      contact_phone: 'string',
+      schedule: 'string',
       duck_plan: 'string',
       duck_plan_url: 'string',
       address_for_check: 'string'

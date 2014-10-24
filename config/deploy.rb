@@ -120,7 +120,7 @@ namespace :deploy do
       # execute "rvm alias create ise #{fetch(:rvm_ruby_version)}"
       # within release_path do
       #   with rails_env: fetch(:rails_env) do
-      #     execute :rake, 'db:create'
+      #     execute :rake, 'db:schema:load'
       #   end
       # end
     end
