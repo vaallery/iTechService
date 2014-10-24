@@ -1,5 +1,5 @@
 root = '/var/www/itechservice/current'
-user 'itech'
+user 'itech', 'staff'
 worker_processes 4
 timeout 30
 working_directory root
