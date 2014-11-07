@@ -328,6 +328,7 @@ ru:
         client_name: 'Имя клиента'
         contact_phone: 'Телефон'
         device_kind: 'Тип устройства'
+        is_done: 'Выполнен'
         number: 'Номер'
         quick_tasks: 'Задачи'
         security_code: 'Пароль устройства'

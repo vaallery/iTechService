@@ -58,7 +58,7 @@ ItechService::Application.routes.draw do
 
   resources :tasks
   resources :locations, except: :show
-  
+
   resources :devices do
     get :history, on: :member, defaults: { format: 'js' }
     get :device_type_select, on: :collection, defaults: { format: 'js' }
@@ -182,6 +182,7 @@ ItechService::Application.routes.draw do
 
   resources :quick_orders do
     put :set_done, on: :member
+    get :history, on: :member
   end
 
   resources :cash_shifts, only: :show do

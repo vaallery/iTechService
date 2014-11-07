@@ -94,6 +94,12 @@ class QuickOrdersController < ApplicationController
     end
   end
 
+  def history
+    quick_order = QuickOrder.find params[:id]
+    @records = quick_order.history_records
+    render 'shared/show_history'
+  end
+
   private
 
   def print_ticket(pdf, filename)

@@ -1,8 +1,8 @@
 class HistoryObserver < ActiveRecord::Observer
   include DeviseHelper
-  
-  observe :device, :device_task, :order, :user, :gift_certificate, :client
-  
+
+  observe :device, :device_task, :order, :user, :gift_certificate, :client, :quick_order
+
   def after_save model
     if model.is_a? Device
       tracked_attributes = %w[client_id device_task_ids comment location_id notify_client client_notified]
@@ -19,8 +19,10 @@ class HistoryObserver < ActiveRecord::Observer
       tracked_attributes = %w[card_number contact_phone email full_phone_number name phone_number surname]
     elsif model.is_a? StoreItem
       tracked_attributes = %w[store_id item_id quantity]
+    elsif model.is_a? QuickOrder
+      tracked_attributes = %w[is_done]
     end
-    
+
     unless (changed_attributes_keys = tracked_attributes & model.changed_attributes.keys).empty?
       changed_attributes_keys.each do |key|
         column_type = model.class.columns_hash[key].type
@@ -31,7 +33,7 @@ class HistoryObserver < ActiveRecord::Observer
         history_record.save
       end
     end
-    
+
   end
-  
+
 end
