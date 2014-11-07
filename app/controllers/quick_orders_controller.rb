@@ -2,7 +2,12 @@ class QuickOrdersController < ApplicationController
   authorize_resource
 
   def index
-    @quick_orders = QuickOrder.in_month.undone.created_desc.page(params[:page])
+    if params[:done].eql? 'true' and current_user.any_admin?
+      @quick_orders = QuickOrder.done
+    else
+      @quick_orders = QuickOrder.in_month.undone
+    end
+    @quick_orders = @quick_orders.created_desc.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

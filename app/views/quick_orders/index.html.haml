@@ -1,2 +1,9 @@
-= auto_header_tag
+.page-header
+  %h1
+    = t '.title'
+    - if current_user.any_admin?
+      %small
+        \/
+        = link_to_if params[:done].blank?, t('.done'), quick_orders_path(done: true)
+  = link_to_new QuickOrder if can? :create, QuickOrder
 #resource_table= render 'table'
