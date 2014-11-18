@@ -20,6 +20,7 @@ set :branch, 'master'
 # server '192.168.0.1', user: 'itech', roles: %w{web app db}
 # server '192.168.4.200', user: 'itech', roles: %w{web app db}
 # server '192.168.6.36', user: 'deployer', roles: %w{web app db}
+# server '172.17.10.8', user: 'deployer', roles: %w{web app db}
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
