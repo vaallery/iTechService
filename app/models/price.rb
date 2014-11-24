@@ -10,7 +10,7 @@ class Price < ActiveRecord::Base
   end
 
   def file_name
-    file.file.original_filename
+    file.try(:file).try(:original_filename)
   end
 
 end
