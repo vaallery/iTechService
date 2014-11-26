@@ -11,7 +11,7 @@ $(document).on 'keyup', '#product_choose_form #product_search_field', ->
   q = $(this).val()
   clearTimeout(search_timeout) if search_timeout?
   search_timeout = setTimeout (->
-    $.get '/products.js', q: q, choose: true, form: $('#modal_form form').attr('form')
+    $.get '/products.js', q: q, choose: true, form: $('#modal_form #form').val()
   ), 250
 
 $(document).on 'keyup', '#product_choose_form #item_search_field', ->
