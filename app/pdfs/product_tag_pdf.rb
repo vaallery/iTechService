@@ -5,7 +5,7 @@ class ProductTagPdf < Prawn::Document
   require 'barby/outputter/prawn_outputter'
 
   def initialize(item, view, options={})
-    super page_size: [28.mm, 20.mm], page_layout: :portrait, margin: 4
+    super page_size: [29.mm, 20.mm], page_layout: :portrait, margin: [2,3,8,5]
     @item = item
     @view = view
     font_families.update 'DroidSans' => {
