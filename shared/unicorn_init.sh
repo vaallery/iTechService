@@ -32,7 +32,8 @@ run () {
   if [ "$(id -un)" = "$AS_USER" ]; then
     eval $1
   else
-    su -c "$1" - $AS_USER
+    su $AS_USER -c "$1"
+    #su -c "$1" - $AS_USER
   fi
 }
 
