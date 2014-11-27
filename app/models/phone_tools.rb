@@ -4,6 +4,8 @@ module PhoneTools
   # 70-72 => 790-792
   # 73-77 => 703-707
 
+  # http://mobile.sakh.com/local/
+
   PATTERNS = {
       '2480' => '79502990',
       '2481' => '79502991',
@@ -63,7 +65,7 @@ module PhoneTools
       '95'   => '7908995',
   }
 
-  def self.convert_phone number
+  def self.convert_phone(number)
     full_number = nil
     unless number.blank?
       number = '2' + number if number.length == 6
