@@ -243,9 +243,9 @@ class ProductImportJob < Struct.new(:params)
         row = sheet.row i
         import_log << ['inverse', "#{i} #{'-'*140}"]
         import_log << ['info', row]
-        if (code = row[1]).present?
-          name = row[3]
-          if row[2].blank?
+        if (code = row[0].to_i.to_s).present?
+          name = row[2]
+          if row[1].blank?
             if (product_group = ProductGroup.find_by_code(code)).present?
               import_log << ['info', "Found product group: [#{product_group.code}] #{product_group.name}"]
             else
@@ -259,7 +259,6 @@ class ProductImportJob < Struct.new(:params)
             end
           end
         end
-        import_log << ['inverse', '-'*160]
       end
     rescue IOError
       import_log << ['error', '!!! Unable to load file ' + nomenclature_file.inspect]
