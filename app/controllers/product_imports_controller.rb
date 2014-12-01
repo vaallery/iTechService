@@ -18,7 +18,7 @@ class ProductImportsController < ApplicationController
   def params_for_job
     # if (import_params = params).present?
     if (import_params = params[:product_import]).present?
-      [:file, :prices_file, :barcodes_file].each { |f| import_params[f] = FileLoader.rename_uploaded_file(import_params[f]) if import_params[f].present? }
+      [:file, :prices_file, :barcodes_file, :nomenclature_file].each { |f| import_params[f] = FileLoader.rename_uploaded_file(import_params[f]) if import_params[f].present? }
       import_params
     else
       {}
