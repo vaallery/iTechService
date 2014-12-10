@@ -1,0 +1,15 @@
+%table#quick_orders_report.table.table-bordered.table-hover
+  %caption= report_title @report
+  %thead
+    %tr
+      %th= t 'activerecord.models.user'
+      %th= t 'reports.qty'
+  %tbody
+    - @report.result[:users].each do |user|
+      %tr.user_row
+        %td= user[:name]
+        %td= user[:qty]
+  %tfoot
+    %tr
+      %td= t 'reports.total'
+      %td= @report.result[:total_qty]
