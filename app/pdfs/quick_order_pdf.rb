@@ -25,7 +25,7 @@ class QuickOrderPdf < Prawn::Document
       text "№ #{@quick_order.number_s}", align: :center, inlign_format: true, style: :bold
     end
     font_size 10 do
-      text I18n.l(@quick_order.created_at, format: :long_d), align: :center, inline_format: true
+      text I18n.l(@quick_order.created_at.localtime, format: :long_d), align: :center, inline_format: true
     end
     move_down 30
     text I18n.t('tickets.user', name: @quick_order.user_short_name)
@@ -42,7 +42,7 @@ class QuickOrderPdf < Prawn::Document
       text "№ #{@quick_order.number_s}", align: :center, inlign_format: true, style: :bold
     end
     font_size 10 do
-      text I18n.l(@quick_order.created_at, format: :long_d), align: :center, inline_format: true
+      text I18n.l(@quick_order.created_at.localtime, format: :long_d), align: :center, inline_format: true
     end
     text @quick_order.client_name
     text @quick_order.contact_phone
