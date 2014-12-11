@@ -20,6 +20,9 @@
     .control-group
       %label.control-label= t '.barcodes_file'
       .controls= f.file_field :barcodes_file
+    .control-group
+      %label.control-label= t '.nomenclature_file'
+      .controls= f.file_field :nomenclature_file
   .form-actions
     = f.submit t('.do_import'), disable_with: t('.importing'), class: 'btn btn-primary'
 

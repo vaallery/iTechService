@@ -3,7 +3,7 @@ class Report
   include ActiveModel::Conversion
   include ActiveModel::Validations
 
-  NAMES = %w[device_types users devices_archived done_tasks tasks_undone clients tasks_duration device_orders done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin]
+  NAMES = %w[device_types users devices_archived done_tasks tasks_undone clients tasks_duration device_orders done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin quick_orders]
 
   attr_accessor :name, :kind, :device_type, :store_id
 
@@ -498,6 +498,20 @@ class Report
         result[kind][:sum] = result[kind][:sum] + sale_item.margin
         result[:sum] = result[:sum] + sale_item.margin
       end
+    end
+    result
+  end
+
+  def quick_orders
+    result[:users] = []
+    if (orders = QuickOrder.includes(:user).done.where(created_at: period)).any?
+      orders.group(:user_id).count('quick_orders.id').each_pair do |user_id, qty|
+        user = User.find(user_id)
+        result[:users] << {name: user.name, qty: qty}
+      end
+      result[:total_qty] = orders.count
+    else
+      result[:total_qty] = 0
     end
     result
   end

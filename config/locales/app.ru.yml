@@ -1088,6 +1088,7 @@ ru:
       remnants_file: "Файл с остатками"
       purchases_file: "Файл с закупами"
       barcodes_file: "Файл со штрихкодами"
+      nomenclature_file: "Файл с номенклатурой"
   products:
     add_good: 'Добавить товар'
     add_product: 'Добавить Продукт'
@@ -1244,6 +1245,8 @@ ru:
       title: 'Заканчивающиеся запчасти'
     payments:
       title: "Отчёт по платежам"
+    quick_orders:
+      title: 'Отчёт по быстрым заказам'
     repair_jobs:
       title: 'Отчёт по выполненным техническим работам'
       group: "Вид устройства"
@@ -1628,9 +1631,9 @@ ru:
       subject: "Айс. Удаление объекта."
     product_import_log:
       subject: "%{type} import log %{time}"
-
     document:
       deduction_notification: "Акт списания"
+
   errors:
     nothing_found: Ничего не найдено
     messages:

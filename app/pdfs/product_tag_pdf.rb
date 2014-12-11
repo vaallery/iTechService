@@ -5,7 +5,7 @@ class ProductTagPdf < Prawn::Document
   require 'barby/outputter/prawn_outputter'
 
   def initialize(item, view, options={})
-    super page_size: [29.mm, 20.mm], page_layout: :portrait, margin: [2,3,8,5]
+    super page_size: [29.mm, 20.mm], page_layout: :portrait, margin: [1.mm,2.mm,2.mm,2.mm]
     @item = item
     @view = view
     font_families.update 'DroidSans' => {
@@ -34,7 +34,7 @@ class ProductTagPdf < Prawn::Document
 
   def draw_barcode(number, options={})
     outputter = Barby::PrawnOutputter.new Barby::EAN13.new(number.chop)
-    outputter.annotate_pdf self, options.merge(height: 14, x: 0, xdim: 0.8)
+    outputter.annotate_pdf self, options.merge(height: 14, x: 1.mm, xdim: 0.75)
   end
 
   def item_tag(title, barcode_num, price=nil)

@@ -8,6 +8,7 @@ class ProductImportJob < Struct.new(:params)
 
   def perform
     if store.present?
+      load_nomenclature if nomenclature_file.present?
       load_remnants if file.present?
       load_prices if prices_file.present?
       load_barcodes if barcodes_file.present?
@@ -27,6 +28,10 @@ class ProductImportJob < Struct.new(:params)
 
   def barcodes_file
     @barcodes_file ||= params[:barcodes_file]
+  end
+
+  def nomenclature_file
+    @nomenclature_file ||= params[:nomenclature_file]
   end
 
   def store
@@ -224,6 +229,42 @@ class ProductImportJob < Struct.new(:params)
     end
     import_log << ['info', "Import finished at [#{Time.current.strftime(TIME_FORMAT)}]"]
     ImportMailer.product_import_log(import_log, import_time, :barcodes).deliver
+  end
+
+  def load_nomenclature
+    import_time = Time.current
+    import_log = []
+
+    begin
+      sheet = FileLoader.open_spreadsheet nomenclature_file
+      import_log << ['info', "Import started at [#{import_time.strftime(TIME_FORMAT)}]"]
+      product_group = nil
+      (2..sheet.last_row-1).each do |i|
+        row = sheet.row i
+        import_log << ['inverse', "#{i} #{'-'*140}"]
+        import_log << ['info', row]
+        if (code = row[0].to_i.to_s).present?
+          name = row[2]
+          if row[1].blank?
+            if (product_group = ProductGroup.find_by_code(code)).present?
+              import_log << ['info', "Found product group: [#{product_group.code}] #{product_group.name}"]
+            else
+              import_log << ['error', "!!! Product group not found: [#{code}] #{name}"]
+            end
+          elsif product_group.present? && (product = Product.find_by_code(code)).present?
+            if product.product_group_id != product_group.id
+              if product.update_attributes(product_group_id: product_group.id)
+                import_log << ['success', "Product group of #{product.name} [#{product.code}] changed to #{product_group.name} [#{product_group.code}]"]
+              end
+            end
+          end
+        end
+      end
+    rescue IOError
+      import_log << ['error', '!!! Unable to load file ' + nomenclature_file.inspect]
+    end
+    import_log << ['info', "Import finished at [#{Time.current.strftime(TIME_FORMAT)}]"]
+    ImportMailer.product_import_log(import_log, import_time, :nomenclature).deliver
   end
 
 end
