@@ -14,7 +14,7 @@
         %td= quick_order.client_name
         %td= quick_order.contact_phone
         %td= quick_order.comment
-        %td= human_datetime quick_order.created_at
+        %td= human_datetime quick_order.created_at.localtime
         %td.btn-group
           = link_to_show_small quick_order
           = link_to glyph(:check), set_done_quick_order_path(quick_order), method: :put, remote: true, class: 'btn btn-small btn-primary' unless quick_order.is_done
