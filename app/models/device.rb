@@ -227,11 +227,11 @@ class Device < ActiveRecord::Base
   end
 
   def at_done?
-    location.is_done?
+    location.try(:is_done?)
   end
 
   def in_archive?
-    location.is_archive?
+    location.try(:is_archive?)
   end
 
   def barcode_num

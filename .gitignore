@@ -46,3 +46,4 @@ Gemfile.lock
 Vagrantfile
 .vagrant
 .sass-cache
+.capistrano
