@@ -1,4 +1,3 @@
-# encoding: utf-8
 class TicketPdf < Prawn::Document
   require 'prawn/measurement_extensions'
   require 'barby/barcode/ean_13'
