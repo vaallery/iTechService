@@ -18,18 +18,18 @@ set :branch, 'master'
 # something that quacks like a hash can be used to set
 # extended properties on the server.
 server '192.168.0.1', user: 'itech', roles: %w{web app db}
-server '192.168.4.200', user: 'itech', roles: %w{web app db}
-server '192.168.9.180', user: 'deployer', roles: %w{web app db}
+# server '192.168.4.200', user: 'itech', roles: %w{web app db}
+# server '192.168.9.180', user: 'deployer', roles: %w{web app db}
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
 # you can see them in [net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start)
 # set it globally
-#  set :ssh_options, {
-#    keys: %w(/home/rlisowski/.ssh/id_rsa),
-#    forward_agent: false,
-#    auth_methods: %w(password)
-#  }
+set :ssh_options, {
+  keys: %w(/Users/vova/.ssh/id_rsa),
+  forward_agent: true,
+  auth_methods: %w(publickey)
+}
 # and/or per server
 # server 'example.com',
 #   user: 'user_name',
