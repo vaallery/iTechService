@@ -393,6 +393,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     ttfunk (1.1.1)
+    turbo-sprockets-rails3 (0.3.14)
+      railties (> 3.2.8, < 4.0.0)
+      sprockets (>= 2.2.0)
     twitter-bootstrap-rails (2.2.8)
       actionpack (>= 3.1)
       execjs
@@ -481,6 +484,7 @@ DEPENDENCIES
   stack_rescue
   therubyracer
   thin (~> 1.5.0)
+  turbo-sprockets-rails3 (~> 0.3.14)
   twitter-bootstrap-rails (~> 2.2.7)
   uglifier (>= 1.0.3)
   unicorn (~> 4.6.2)
