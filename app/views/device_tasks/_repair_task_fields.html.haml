@@ -3,7 +3,7 @@
   = f.full_error :repair_service_id, class: 'text-error'
   = f.hidden_field :store_id
   = f.full_error :store_id, class: 'text-error'
-  %strong= f.object.name
+  %strong= link_to f.object.name, f.object.repair_service
   %span.pull-right= link_to_remove_fields f
   = f.input :price, input_html: {class: 'input-small'}
   %table.repair_parts.table.table-condensed
@@ -16,7 +16,7 @@
       = f.simple_fields_for :repair_parts do |ff|
         %tr
           %td
-            = ff.object.name + " (#{ff.object.quantity})" if ff.object.name.present?
+            = link_to ff.object.name + " (#{ff.object.quantity})", ff.object.product if ff.object.name.present?
             = ff.hidden_field :item_id
             = ff.full_error :item_id, class: 'text-error'
             = ff.hidden_field :quantity

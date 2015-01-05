@@ -41,6 +41,14 @@ class Department < ActiveRecord::Base
     Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first
   end
 
+  def spare_parts_store
+    stores.spare_parts.first
+  end
+
+  def defect_sp_store
+    stores.defect_sp.first
+  end
+
   def default_cash_drawer
     cash_drawers.first_or_create name: 'Cash drawer 1'
   end

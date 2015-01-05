@@ -112,31 +112,39 @@ class DeviceTask < ActiveRecord::Base
   end
 
   def deduct_spare_parts
-    repair_parts.each { |repair_part| repair_part.deduct_spare_parts } if done_changed?
+    if done_change == [0, 1]
+      repair_tasks.each do |repair_task|
+        repair_task.repair_parts.all? do |repair_part|
+          repair_part.deduct_spare_parts
+        end
+      end
+    end
   end
 
   def valid_repair
     is_valid = true
-    if done_changed?
-      if done_was == 1
+    if done_change == [0, 1]
+      if done_was > 0
         errors.add :done, :already_done
         is_valid = false
-      else
-        repair_parts.each do |repair_part|
-          if repair_part.store.present?
-            if repair_part.store_item(repair_part.store).quantity < (repair_part.quantity + repair_part.defect_qty)
-              errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
-              is_valid = false
-            end
-          else
-            errors.add :base, :no_spare_parts_store
-            is_valid = false
-          end
-        end
-        if repair_parts.sum(:defect_qty) > 0 and (User.current.try(:defect_sp_store).nil?)
-          errors.add :base, :no_defect_store
-          is_valid = false
-        end
+      # else
+      #   repair_tasks.each do |repair_task|
+      #     repair_task.repair_parts.each do |repair_part|
+      #       if repair_part.store.present?
+      #         if repair_part.store_item(repair_part.store).quantity < (repair_part.quantity + repair_part.defect_qty)
+      #           errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
+      #           is_valid = false
+      #         end
+      #       else
+      #         errors.add :base, :no_spare_parts_store
+      #         is_valid = false
+      #       end
+      #     end
+      #     if repair_task.repair_parts.sum(:defect_qty) > 0 and (Department.current.defect_sp_store.nil?)
+      #       errors.add :base, :no_defect_store
+      #       is_valid = false
+      #     end
+      #   end
       end
     end
     is_valid

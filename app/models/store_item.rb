@@ -36,7 +36,9 @@ class StoreItem < ActiveRecord::Base
   end
 
   def dec(amount)
-    unless feature_accounting
+    if feature_accounting
+      false
+    else
       amount = amount.to_i
       update_attribute :quantity, (self.quantity || 0) - amount if amount.is_a? Integer
     end
