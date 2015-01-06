@@ -129,6 +129,7 @@ class Ability
     cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: [1, 2]
     cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: [0, 2]
     cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: 1
+    cannot :modify, Store
     #
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are
