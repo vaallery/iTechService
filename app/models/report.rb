@@ -258,9 +258,10 @@ class Report
 
     sales.selling.each do |sale|
       sale.sale_items.each do |sale_item|
-        result[:sales] << {time: sale.date, product: sale_item.name, features: sale_item.features_s, quantity: sale_item.quantity, price: sale_item.price, sum: sale_item[:price]*sale_item[:quantity], discount: sale_item.discount, client_id: sale.client_id, client: sale.client_short_name, user_id: sale.user_id, user: sale.user_short_name}
+        sale_item_sum = sale_item[:price]*sale_item[:quantity]
+        result[:sales] << {time: sale.date, product: sale_item.name, features: sale_item.features_s, quantity: sale_item.quantity, price: sale_item.price, sum: sale_item_sum, discount: sale_item.discount, client_id: sale.client_id, client: sale.client_short_name, user_id: sale.user_id, user: sale.user_short_name}
         sales_count = sales_count + sale_item.quantity
-        sales_sum = sales_sum + sale_item.price
+        sales_sum = sales_sum + sale_item_sum
         discounts_sum = discounts_sum + sale_item.discount
       end
     end
@@ -495,8 +496,8 @@ class Report
         # end
         # result[kind][:details] = result[kind][:details] + details
         result[kind][:details] << sale_item.as_json(methods: [:id, :name, :price, :quantity, :discount, :purchase_price, :margin])
-        result[kind][:sum] = result[kind][:sum] + sale_item.margin
-        result[:sum] = result[:sum] + sale_item.margin
+        result[kind][:sum] = result[kind][:sum] + (sale_item.margin * sale_item.quantity)
+        result[:sum] = result[:sum] + (sale_item.margin * sale_item.quantity)
       end
     end
     result
