@@ -8,11 +8,11 @@
         %th.center= t '.quantity'
     %tbody
       - if @report.result[group].present?
-        - @report.result[group].each_pair do |group_key, group_value|
+        - @report.result[group].each_pair do |_, group_value|
           %tr
             %td.group{rowspan: group_value[:jobs_qty]+group_value[:services_qty]+1}= group_value[:name]
             %td.hidden{colspan: 2}
-          - group_value[:services].each_pair do |service_key, service_value|
+          - group_value[:services].each_pair do |_, service_value|
             %tr
               %td.service= service_value[:name]
               %td.quantity.number= service_value[:jobs_qty]
