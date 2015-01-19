@@ -1252,6 +1252,7 @@ ru:
       group: "Вид устройства"
       service: "Вид работы"
       quantity: "Кол-во"
+      undone: 'Невыполненные'
       with_parts: 'с использованием запчастей'
       without_parts: 'без использования запчастей'
       without_payment: 'без оплаты'
