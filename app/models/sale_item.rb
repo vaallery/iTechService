@@ -3,7 +3,7 @@ class SaleItem < ActiveRecord::Base
   belongs_to :sale, inverse_of: :sale_items
   belongs_to :item, inverse_of: :sale_items
   belongs_to :device_task, inverse_of: :sale_item
-
+  # has_many :batches, through: :item, conditions: proc {  }
   delegate :product, :product_category, :features, :name, :code, :quantity_in_store, :retail_price, :feature_accounting, :store_item, :store_items, :is_service, :is_repair?, :request_price, :warranty_term, :features_s, to: :item, allow_nil: true
   delegate :store, :client, :date, :is_return, to: :sale, allow_nil: true
 
@@ -66,11 +66,15 @@ class SaleItem < ActiveRecord::Base
     end
   end
 
+  def batch
+    item.batches.includes(:purchase).where('purchases.date <= ?', date).order('purchases.date asc').last
+  end
+
   def purchase_price
     if is_repair?
       device_task.try(:repair_cost)
     else
-      item.try(:purchase_price)
+      batch.try(:price)
     end
   end
 
