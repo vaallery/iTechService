@@ -1,5 +1,9 @@
+- table_name = params[:mode] == 'edit' ? 'repair_services/editable_table' : 'repair_services/table'
 .page-header
-  %h1= auto_title
+  %h1
+    = auto_title
+    - if can? :edit, RepairService
+      %small= link_to glyph(:edit), repair_services_path(mode: :edit)
 
 .row-fluid
   .span4
@@ -7,7 +11,6 @@
       = link_to glyph(:file) + t('repair_groups.new.link').html_safe, new_repair_group_path, remote: true, class: 'btn btn-success'
       = link_to glyph(:file) + t('repair_services.new.title').html_safe, '#', id: 'new_repair_service_link', class: 'btn btn-success', disabled: true
 
-    -#= buttons_for_tree
-    #repair_groups{class: can?(:manage, RepairGroup) ? 'editable' : 'readonly'}= repair_groups_trees_tag @repair_groups, @repair_group.try(:id)
+    #repair_groups{class: can?(:manage, RepairGroup) ? 'editable' : 'readonly'}= repair_groups_trees_tag @repair_groups, @repair_group.try(:id), table_name: table_name
 
-  #resource_table.span8= render 'table'
+  #resource_table.span8= render table_name

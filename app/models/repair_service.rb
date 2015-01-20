@@ -15,4 +15,11 @@ class RepairService < ActiveRecord::Base
     %w[none low many][spare_parts.map{|sp| sp.remnant_status(store)}.min]
   end
 
+  def self.update_prices(params)
+    params.each do |key, value|
+      repair_service = RepairService.find(key)
+      repair_service.update_attributes price: value
+    end
+  end
+
 end

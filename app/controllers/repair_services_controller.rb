@@ -4,10 +4,10 @@ class RepairServicesController < ApplicationController
   def index
     @repair_groups = RepairGroup.roots.order('id asc')
     if params[:group].blank?
-      @repair_services = RepairService.scoped
+      @repair_services = RepairService.scoped.order('created_at asc')
     else
       @repair_group = RepairGroup.find params[:group]
-      @repair_services = @repair_group.repair_services
+      @repair_services = @repair_group.repair_services.order('created_at asc')
     end
 
     respond_to do |format|
@@ -57,6 +57,11 @@ class RepairServicesController < ApplicationController
         format.html { render 'form' }
       end
     end
+  end
+
+  def mass_update
+    RepairService.update_prices(params[:repair_services])
+    redirect_to repair_services_path
   end
 
   def destroy

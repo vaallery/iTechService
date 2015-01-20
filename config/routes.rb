@@ -207,6 +207,7 @@ ItechService::Application.routes.draw do
   resources :repair_services do
     get :choose, on: :collection, defaults: {format: :js}
     get :select, on: :member, defaults: {format: :js}
+    put :mass_update, on: :collection
   end
 
   resources :imported_sales, only: :index
