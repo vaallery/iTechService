@@ -24,6 +24,8 @@
         = drop_down_divider
         = menu_item t('quick_orders.new.title'), new_quick_order_path if can? :create, QuickOrder
         = menu_item t('quick_orders.link'), quick_orders_path if can? :modify, QuickOrder
+        = drop_down_divider
+        = menu_item t('media_orders.index.title'), media_orders_path if can? :read, MediaOrder
       = drop_down t('navbar.cash_drawer') do
         = menu_item t('sales.new.title'), new_sale_path if can? :create, Sale
         = drop_down_divider

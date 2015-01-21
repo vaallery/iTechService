@@ -1,0 +1,11 @@
+.page-header
+  %h1
+    = link_back_to_index
+    = t 'activerecord.models.media_order'
+
+%button#copy_content_button.btn.btn-default{'data-clipboard-target' => 'media_order_content', 'data-clipboard-text' => 'Default clipboard text from attribute', :title => 'Click me to copy to clipboard.'}
+  = glyph(:copy)
+  Copy To Clipboard...
+
+%br
+= text_area_tag :content, @media_order.full_content, id: 'media_order_content', rows: @media_order.full_content.lines.count, cols: 200
