@@ -26,5 +26,6 @@
    require validation/messages_ru
   = require accounting
   = require association_filter
+  = require zeroclipboard
   = require_tree .
 */

@@ -1,5 +1,8 @@
 ItechService::Application.routes.draw do
 
+  resources :media_orders
+
+
   root to: 'dashboard#index'
   get 'dashboard', to: 'dashboard#index'
   get 'become/:id', to: 'dashboard#become', as: 'become'

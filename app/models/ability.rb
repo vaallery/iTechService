@@ -50,7 +50,7 @@ class Ability
         can :create, Payment
       end
       if user.media?
-        can :modify, [Device, Client, Order, QuickOrder]
+        can :modify, [Device, Client, Order, QuickOrder, MediaOrder]
         can :set_done, QuickOrder
         can [:choose, :select], Product
       end
