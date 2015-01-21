@@ -495,7 +495,7 @@ class Report
         #   details << sale_item.as_json(methods: [:id, :name, :price, :quantity, :discount, :purchase_price, :margin])
         # end
         # result[kind][:details] = result[kind][:details] + details
-        result[kind][:details] << sale_item.as_json(methods: [:id, :name, :price, :quantity, :discount, :purchase_price, :margin])
+        result[kind][:details] << sale_item.as_json(methods: [:id, :name, :price, :quantity, :discount, :purchase_price, :margin, :product_id])
         result[kind][:sum] = result[kind][:sum] + (sale_item.margin * sale_item.quantity)
         result[:sum] = result[:sum] + (sale_item.margin * sale_item.quantity)
       end
