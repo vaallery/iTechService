@@ -3,6 +3,7 @@ class MediaOrder < ActiveRecord::Base
 
   def header
     [
+      "#{time.strftime('%d.%m.%Y %H:%M:%S')}, #{phone}, #{name}\n0\n\n",
       "Заказ от #{time.strftime('%d.%m.%Y %H:%M:%S.')}\n\n",
       "Имя: #{name}\n",
       "Телефон: #{phone}\n\n\n",
