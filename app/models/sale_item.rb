@@ -75,7 +75,7 @@ class SaleItem < ActiveRecord::Base
     if is_repair?
       device_task.try(:repair_cost)
     else
-      batch.try(:price) || product.prices.purchase.where('product_prices.date <= ?', created_at).order('created_at asc').last
+      batch.try(:price) || product.prices.purchase.where('product_prices.date <= ?', created_at).order('created_at asc').last.try(:value)
     end
   end
 
