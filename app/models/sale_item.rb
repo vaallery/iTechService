@@ -68,7 +68,7 @@ class SaleItem < ActiveRecord::Base
   end
 
   def batch
-    item.batches.includes(:purchase).where('purchases.date <= ?', created_at).order('purchases.date asc').last || item.batches.where('created_at <= ?', created_at).order('created_at asc').last
+    item.batches.includes(:purchase).where('purchases.date <= ?', created_at).order('purchases.date asc').last || item.batches.where('created_at <= ?', created_at).order('created_at asc').last || product.prices.purchase.where('product_prices.date <= ?', created_at)
   end
 
   def purchase_price

@@ -12,7 +12,7 @@ set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
 set :scm, :git
 
 set :format, :pretty
-set :log_level, :debug
+set :log_level, :info
 set :pty, false
 
 set :linked_files, %w{config/database.yml Procfile config/unicorn.rb config/private_pub.yml config/application.yml}
