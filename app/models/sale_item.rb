@@ -68,14 +68,14 @@ class SaleItem < ActiveRecord::Base
   end
 
   def batch
-    item.batches.includes(:purchase).where('purchases.date <= ?', created_at).order('purchases.date asc').last || item.batches.where('created_at <= ?', created_at).order('created_at asc').last || product.prices.purchase.where('product_prices.date <= ?', created_at)
+    item.batches.includes(:purchase).where('purchases.date <= ?', created_at).order('purchases.date asc').last || item.batches.where('created_at <= ?', created_at).order('created_at asc').last
   end
 
   def purchase_price
     if is_repair?
       device_task.try(:repair_cost)
     else
-      batch.try(:price)
+      batch.try(:price) || product.prices.purchase.where('product_prices.date <= ?', created_at).order('created_at asc').last
     end
   end
 
