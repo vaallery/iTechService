@@ -34,6 +34,7 @@ ru:
       installment: Взнос
       karma: Карма
       location: Локация
+      media_order: 'Заказ медиа'
       movement_act: 'Акт Перемещения'
       object: Обьект
       order: Заказ
@@ -260,6 +261,12 @@ ru:
         position: Позиция
         schedule: Отображать в календаре
         users: Пользователи
+
+      media_order:
+        name: 'Имя'
+        phone: 'Телефон'
+        content: 'Содержимое'
+        time: 'Время'
 
       movement_act:
         dst_store: 'Склад получатель'
@@ -940,6 +947,14 @@ ru:
     created: Локация создана
     link: Локации
     updated: Локация изменена
+
+  media_orders:
+    edit:
+      title: 'Редактирование Заказа медиа'
+    index:
+      title: 'Заказы медиа'
+    new:
+      title: 'Новый Заказ медиа'
 
   movement_acts:
     created: 'Акт Перемещения создан'
