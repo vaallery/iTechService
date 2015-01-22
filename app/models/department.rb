@@ -3,7 +3,8 @@ class Department < ActiveRecord::Base
   ROLES = {
     0 => 'main',
     1 => 'branch',
-    2 => 'store'
+    2 => 'store',
+    3 => 'remote',
   }
 
   default_scope order('departments.id asc')
@@ -14,11 +15,13 @@ class Department < ActiveRecord::Base
   has_many :cash_drawers, dependent: :nullify
   has_many :settings, dependent: :destroy
   has_many :devices, inverse_of: :department
+  has_many :locations, inverse_of: :department
   # cattr_accessor :current
 
   attr_accessible :name, :role, :code, :url, :city, :address, :contact_phone, :schedule
   validates_presence_of :name, :role, :code
-  validates_presence_of :city, :address, :contact_phone, :schedule, :url, unless: :is_store?
+  validates_presence_of :city, :address, :contact_phone, :schedule, unless: :is_store?
+  validates :url, presence: true, if: :has_server?
   validate :only_one_main
 
   def role_s
@@ -35,6 +38,14 @@ class Department < ActiveRecord::Base
 
   def is_store?
     role == 2
+  end
+
+  def is_remote?
+    role == 3
+  end
+
+  def has_server?
+    role.in? 0..1
   end
 
   def self.current

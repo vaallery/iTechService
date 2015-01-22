@@ -6,6 +6,7 @@
         %th= Location.human_attribute_name :name
         %th= Location.human_attribute_name :code
         %th= Location.human_attribute_name :position
+        %th= Location.human_attribute_name :department
         %th= Location.human_attribute_name :created_at
         %th
     %tbody
@@ -15,6 +16,7 @@
           %td= location.name
           %td= location.code
           %td= location.position
+          %td= location.department_name
           %td= human_datetime location.created_at
           %td
             .btn-group

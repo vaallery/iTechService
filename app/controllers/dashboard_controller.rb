@@ -39,7 +39,7 @@ class DashboardController < ApplicationController
   end
 
   def ready_devices
-    @devices = Device.at_done.search(params).page params[:page]
+    @devices = Device.at_done(current_user).search(params).page params[:page]
     respond_to do |format|
       format.js
     end

@@ -263,9 +263,9 @@ ru:
         users: Пользователи
 
       media_order:
+        content: 'Содержимое'
         name: 'Имя'
         phone: 'Телефон'
-        content: 'Содержимое'
         time: 'Время'
 
       movement_act:
@@ -951,10 +951,10 @@ ru:
   media_orders:
     edit:
       title: 'Редактирование Заказа медиа'
-    index:
-      title: 'Заказы медиа'
     new:
       title: 'Новый Заказ медиа'
+    index:
+      title: 'Заказы медиа'
 
   movement_acts:
     created: 'Акт Перемещения создан'

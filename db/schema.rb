@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141010071534) do
+ActiveRecord::Schema.define(:version => 20150121053305) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -481,17 +481,28 @@ ActiveRecord::Schema.define(:version => 20141010071534) do
   create_table "locations", :force => true do |t|
     t.string   "name"
     t.string   "ancestry"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.boolean  "schedule"
-    t.integer  "position",   :default => 0
+    t.integer  "position",      :default => 0
     t.string   "code"
+    t.integer  "department_id"
   end
 
   add_index "locations", ["ancestry"], :name => "index_locations_on_ancestry"
   add_index "locations", ["code"], :name => "index_locations_on_code"
+  add_index "locations", ["department_id"], :name => "index_locations_on_department_id"
   add_index "locations", ["name"], :name => "index_locations_on_name"
   add_index "locations", ["schedule"], :name => "index_locations_on_schedule"
+
+  create_table "media_orders", :force => true do |t|
+    t.datetime "time"
+    t.string   "name"
+    t.string   "phone"
+    t.text     "content"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "messages", :force => true do |t|
     t.integer  "user_id"
