@@ -741,9 +741,10 @@ ru:
     roles:
       main: 'Главное'
       branch: 'Филиал'
+      remote: 'Удалённый'
       store: 'Склад'
-
     all: "Все"
+
   devices:
     edit:
       title: Редактирование девайса
