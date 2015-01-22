@@ -90,7 +90,7 @@
 
     = menu_group pull: :right do
       = header_link_to_scan_barcode
-      = header_link_for_device_returning
+      -#= header_link_for_device_returning
       = header_link_for_coffee
       = header_link_to_announce
       = header_link_to_salaries if can? :manage, Salary
