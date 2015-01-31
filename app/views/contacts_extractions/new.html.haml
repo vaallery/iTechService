@@ -1,0 +1,11 @@
+.page-header
+  %h1= t '.title'
+
+= form_tag contacts_extractions_path, class: 'form-horizontal', multipart: true do
+
+  .form-fields
+    .control-group
+      %label.control-label= t '.contacts_file'
+      .controls= file_field_tag :contacts_file
+
+  .form-actions= submit_tag t('.submit'), disable_with: t('.extracting'), class: 'btn btn-primary'

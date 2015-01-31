@@ -87,6 +87,7 @@
           = menu_item t('supply_categories.index.title'), supply_categories_path if can? :manage, SupplyCategory
         = menu_item t('product_imports.form.title'), new_product_import_path if can? :modify, Product
         = menu_item t('imported_sales.index.title'), imported_sales_path if can? :modify, ImportedSale
+        = menu_item t('contacts_extractions.new.title'), new_contacts_extraction_path if can? :manage, ContactsExtractor
         = menu_item t('case_pictures.index.title'), case_pictures_path
         = menu_item t('settings.link'), settings_path if can? :manage, Setting
 

@@ -1,5 +1,9 @@
 ItechService::Application.routes.draw do
 
+  get "contacts_extraction/new"
+
+  get "contacts_extraction/create"
+
   root to: 'dashboard#index'
   get 'dashboard', to: 'dashboard#index'
   get 'become/:id', to: 'dashboard#become', as: 'become'
@@ -180,6 +184,7 @@ ItechService::Application.routes.draw do
   resources :product_imports, only: [:new, :create]
   resources :case_pictures, only: [:index, :new, :create]
   resources :media_orders
+  resources :contacts_extractions, only: [:new, :create]
 
   resources :quick_orders do
     put :set_done, on: :member
