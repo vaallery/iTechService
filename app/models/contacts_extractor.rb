@@ -6,14 +6,11 @@ class ContactsExtractor
 
   def initialize(contacts_file)
     @db_file = contacts_file
-    @card_file = File.open 'contacts.vcf', 'w'
-    # @card_file = File.open "#{Rails.root.to_s}/tmp/contacts.vcf", 'w'
+    @card_file = File.open "#{Rails.root.to_s}/tmp/contacts.vcf", 'w'
   end
 
   def perform
     SQLite3::Database.new(db_file, results_as_hash: true) do |db|
-      # file = File.open 'contacts.vcf', 'w'
-      # rows = db.execute("SELECT * FROM ZWACONTACT")
       if table_exists? db, 'ZWACONTACT'
         db.execute('SELECT * FROM ZWACONTACT') do |row|
           card = Vpim::Vcard::Maker.make2 do |maker|
@@ -26,10 +23,6 @@ class ContactsExtractor
               name.family = firstname unless firstname.nil?
               name.fullname = fullname unless fullname.nil?
             end
-            # puts sql_str = "SELECT * FROM ZWAPHONE WHERE ZCONTACT = #{id}"
-            # phones = db.execute sql_str
-            # puts "phones_count: #{phones.length}"
-            # phones.each do |phone_row|
             db.execute("SELECT * FROM ZWAPHONE WHERE ZCONTACT = #{id}") do |phone_row|
               phone = phone_row['ZPHONE']
               puts "phone: #{phone}"
