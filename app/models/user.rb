@@ -297,7 +297,7 @@ class User < ActiveRecord::Base
 
   def upcoming_salary_date
     today = Date.current
-    date = hiring_date.change month: today.month, year: today.year
+    date = today.end_of_month.day < hiring_date.day ? hiring_date.change(day: today.end_of_month.day, month: today.month, year: today.year) : hiring_date.change(month: today.month, year: today.year)
     date < today ? date.next_month : date
   end
 
