@@ -1,6 +1,7 @@
 = auto_header_tag
 = simple_form_for @location, html: { class: 'form-horizontal' } do |f|
 
+  = f.association :department
   = f.input :schedule
   = f.input :name, autofocus: true
   = f.input :code

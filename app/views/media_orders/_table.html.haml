@@ -1,0 +1,14 @@
+%table.table.table-hover
+  %thead
+    %tr
+      %th= MediaOrder.human_attribute_name(:time)
+      %th= MediaOrder.human_attribute_name(:name)
+      %th= MediaOrder.human_attribute_name(:phone)
+  %tbody
+    - @media_orders.each do |media_order|
+      %tr
+        %td= link_to human_datetime(media_order.time), media_order_path(media_order)
+        %td= link_to media_order.name, media_order_path(media_order)
+        %td= link_to media_order.phone, media_order_path(media_order)
+
+= paginate @media_orders, remote: true

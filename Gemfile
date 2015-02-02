@@ -37,6 +37,9 @@ gem 'grape', '~> 0.6.1'
 gem 'grape-entity', '~> 0.4.1'
 gem 'figaro', '~> 1.0.0'
 gem 'rmagick', '~> 2.13.2'
+gem 'zeroclipboard-rails'
+gem 'sqlite3'
+gem 'vpim', '~> 13.11.11'
 
 # Gems used only for assets and not required
 # in production environments by default.

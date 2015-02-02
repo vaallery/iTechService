@@ -72,8 +72,8 @@ save_check_w.png: 78887cfc500c48dbe9aa18cc42ce2a53
 scan_barcode_w.png: 5fad7a2ded464a3bba05e41e932b6cdb
 warranty_print.png: 0f5c1259caed6cbe1b820a0028bf58dc
 warranty_print_w.png: 252262a20e77ed7f8afdc5415930fc95
-application.js: c6e30617ac5835e4576bce57be68f3ef
-application.css: 0c48994bc82451ad49bb27a25b622b0b
+application.js: d17b2f39a19f813ef277a78c24ceae5f
+application.css: 8d61d3ace0d508ea2f903173f889a4f5
 jasny-bootstrap/iconic_fill.eot: e3e2c4f7ab7247ee54586f54c71b6d7b
 jasny-bootstrap/iconic_fill.otf: b8eaaefb6d707a121d41f8d7dbb85193
 jasny-bootstrap/iconic_fill.svg: c0c21e737927c58dbe5fd9aa3e12cfca
@@ -104,6 +104,7 @@ ui-icons_cd0a0a_256x240.png: d171aad6a78be29717b21f1327aaf7aa
 alpha.png: 476b1e06200f9b4cc82cc97806379fe3
 hue.png: f90e0ed315dcefff6a4ff88dd6c2de3c
 saturation.png: 982370d4e7e4584abbd539f150fce89d
+ZeroClipboard.swf: fd1aa5b5e10b7413cc0861df26e6a598
 fontawesome-webfont.eot: a229cc06f2c15b56b72ec6d25551a215
 fontawesome-webfont.svg: bacdba3eec139bde1bd9312a9a209708
 fontawesome-webfont.ttf: 371e696dc461956dc6041e86fd6e9db8

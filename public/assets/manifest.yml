@@ -145,10 +145,10 @@ warranty_print.png: warranty_print-0f5c1259caed6cbe1b820a0028bf58dc.png
 warranty_print/index.png: warranty_print-0f5c1259caed6cbe1b820a0028bf58dc.png
 warranty_print_w.png: warranty_print_w-252262a20e77ed7f8afdc5415930fc95.png
 warranty_print_w/index.png: warranty_print_w-252262a20e77ed7f8afdc5415930fc95.png
-application.js: application-0a4416b3e0f58604796a3e5b782ba854.js
-application/index.js: application-0a4416b3e0f58604796a3e5b782ba854.js
-application.css: application-de177fb9d5179fbd8767b1a11c3e7b72.css
-application/index.css: application-de177fb9d5179fbd8767b1a11c3e7b72.css
+application.js: application-ae6c8539be9c2dbca3c3e16d435bfb80.js
+application/index.js: application-ae6c8539be9c2dbca3c3e16d435bfb80.js
+application.css: application-534c3ad302040c28406ebcdf921fe42c.css
+application/index.css: application-534c3ad302040c28406ebcdf921fe42c.css
 jasny-bootstrap/iconic_fill.eot: jasny-bootstrap/iconic_fill-e3e2c4f7ab7247ee54586f54c71b6d7b.eot
 jasny-bootstrap/iconic_fill/index.eot: jasny-bootstrap/iconic_fill-e3e2c4f7ab7247ee54586f54c71b6d7b.eot
 jasny-bootstrap/iconic_fill.otf: jasny-bootstrap/iconic_fill-b8eaaefb6d707a121d41f8d7dbb85193.otf
@@ -209,6 +209,8 @@ hue.png: hue-f90e0ed315dcefff6a4ff88dd6c2de3c.png
 hue/index.png: hue-f90e0ed315dcefff6a4ff88dd6c2de3c.png
 saturation.png: saturation-982370d4e7e4584abbd539f150fce89d.png
 saturation/index.png: saturation-982370d4e7e4584abbd539f150fce89d.png
+ZeroClipboard.swf: ZeroClipboard-fd1aa5b5e10b7413cc0861df26e6a598.swf
+ZeroClipboard/index.swf: ZeroClipboard-fd1aa5b5e10b7413cc0861df26e6a598.swf
 fontawesome-webfont.eot: fontawesome-webfont-a229cc06f2c15b56b72ec6d25551a215.eot
 fontawesome-webfont/index.eot: fontawesome-webfont-a229cc06f2c15b56b72ec6d25551a215.eot
 fontawesome-webfont.svg: fontawesome-webfont-bacdba3eec139bde1bd9312a9a209708.svg

@@ -6,6 +6,7 @@ class SaleItem < ActiveRecord::Base
   # has_many :batches, through: :item, conditions: proc {  }
   delegate :product, :product_category, :features, :name, :code, :quantity_in_store, :retail_price, :feature_accounting, :store_item, :store_items, :is_service, :is_repair?, :request_price, :warranty_term, :features_s, to: :item, allow_nil: true
   delegate :store, :client, :date, :is_return, to: :sale, allow_nil: true
+  delegate :id, to: :product, prefix: true, allow_nil: true
 
   attr_accessible :sale_id, :item_id, :price, :quantity, :discount, :device_task_id
   validates_presence_of :item, :price, :quantity
@@ -67,14 +68,14 @@ class SaleItem < ActiveRecord::Base
   end
 
   def batch
-    item.batches.includes(:purchase).where('purchases.date <= ?', date).order('purchases.date asc').last
+    item.batches.includes(:purchase).where('purchases.date <= ?', created_at).order('purchases.date asc').last || item.batches.where('created_at <= ?', created_at).order('created_at asc').last
   end
 
   def purchase_price
     if is_repair?
       device_task.try(:repair_cost)
     else
-      batch.try(:price)
+      batch.try(:price) || product.prices.purchase.where('product_prices.date <= ?', created_at).order('created_at asc').last.try(:value)
     end
   end
 

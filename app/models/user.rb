@@ -54,6 +54,7 @@ class User < ActiveRecord::Base
   has_many :sales, inverse_of: :user, dependent: :nullify
   has_many :movement_acts, dependent: :nullify
   has_many :stores, through: :department
+  has_many :locations, through: :department
 
   mount_uploader :photo, PhotoUploader
 
@@ -356,6 +357,14 @@ class User < ActiveRecord::Base
 
   def timesheet_day(date)
     self.timesheet_days.find_by_date(date)
+  end
+
+  def archive_location
+    locations.where(code: 'archive').first_or_create(name: 'Архив', department_id: self.department_id)
+  end
+
+  def done_location
+    locations.where(code: 'done').first_or_create(name: 'Готово', department_id: self.department_id)
   end
 
   def retail_store

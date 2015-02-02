@@ -34,6 +34,7 @@ ru:
       installment: Взнос
       karma: Карма
       location: Локация
+      media_order: 'Заказ медиа'
       movement_act: 'Акт Перемещения'
       object: Обьект
       order: Заказ
@@ -260,6 +261,12 @@ ru:
         position: Позиция
         schedule: Отображать в календаре
         users: Пользователи
+
+      media_order:
+        content: 'Содержимое'
+        name: 'Имя'
+        phone: 'Телефон'
+        time: 'Время'
 
       movement_act:
         dst_store: 'Склад получатель'
@@ -675,6 +682,13 @@ ru:
     created: Комментарий создан
     updated: Комментарий изменён
 
+  contacts_extractions:
+    new:
+      title: 'Выгрузка контактов'
+      contacts_file: 'Файл базы данных с контактами'
+      submit: 'Выгрузить'
+      extracting: 'Выгружаю...'
+
   contractors:
     created: 'Поставщик создан'
     updated: 'Поставщик изменён'
@@ -734,9 +748,10 @@ ru:
     roles:
       main: 'Главное'
       branch: 'Филиал'
+      remote: 'Удалённый'
       store: 'Склад'
-
     all: "Все"
+
   devices:
     edit:
       title: Редактирование девайса
@@ -940,6 +955,14 @@ ru:
     created: Локация создана
     link: Локации
     updated: Локация изменена
+
+  media_orders:
+    edit:
+      title: 'Редактирование Заказа медиа'
+    new:
+      title: 'Новый Заказ медиа'
+    index:
+      title: 'Заказы медиа'
 
   movement_acts:
     created: 'Акт Перемещения создан'
