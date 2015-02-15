@@ -1,9 +1,5 @@
 ItechService::Application.routes.draw do
 
-  get "contacts_extraction/new"
-
-  get "contacts_extraction/create"
-
   root to: 'dashboard#index'
   get 'dashboard', to: 'dashboard#index'
   get 'become/:id', to: 'dashboard#become', as: 'become'
