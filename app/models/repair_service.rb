@@ -12,7 +12,7 @@ class RepairService < ActiveRecord::Base
   end
 
   def remnants_s(store)
-    %w[none low many][spare_parts.map{|sp| sp.remnant_status(store)}.min]
+    %w[none low many][spare_parts.map{|sp| sp.remnant_status(store)}.min] if spare_parts.present?
   end
 
   def self.update_prices(params)
