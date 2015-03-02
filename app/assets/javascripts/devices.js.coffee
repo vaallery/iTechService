@@ -83,6 +83,10 @@ jQuery ->
       $('#new_device_popup').fadeOut()
     ), 1000
 
+  $('#check_imei_link').click ->
+    imei = $(this).parent().find('input').val()
+    this.setAttribute('href', "http://iunlocker.net/check_imei.php?imei=#{imei}")
+    this.click()
 
 $(document).on 'click', '.returning_device_tooltip', ->
   $(this).tooltip()
