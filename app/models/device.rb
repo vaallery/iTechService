@@ -8,7 +8,7 @@ class Device < ActiveRecord::Base
   scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
   scope :replaced, where(replaced: true)
   scope :located_at, lambda {|location| where(location_id: location.id)}
-  scope :at_done, lambda { |user| where(location_id: user.present? ? user.done_location : Location.done.id) }
+  scope :at_done, lambda { |user=nil| where(location_id: user.present? ? user.done_location : Location.done.id) }
   scope :not_at_done, where('devices.location_id <> ?', Location.done.id)
   scope :at_archive, lambda { |user| where(location_id: user.present? ? user.archive_location : Location.archive.id) }
   scope :unarchived, where('devices.location_id <> ?', Location.archive.id)

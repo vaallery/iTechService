@@ -107,7 +107,7 @@ class Report
         if key.present? and (user = User.find key).present?
           devices = received_devices.where(user_id: key)
           #user_devices = devices.map{|d|{id: d.id, presentation: d.presentation}}
-          result[:users] << {name: user.short_name, qty: val, qty_done: devices.at_done.count, qty_archived: devices.at_archive.count, devices: devices}
+          result[:users] << {name: user.short_name, qty: val, qty_done: devices.at_done(user).count, qty_archived: devices.at_archive.count, devices: devices}
         end
       end
     end
