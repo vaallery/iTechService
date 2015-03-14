@@ -10,7 +10,7 @@ class Device < ActiveRecord::Base
   scope :located_at, lambda {|location| where(location_id: location.id)}
   scope :at_done, lambda { |user=nil| where(location_id: user.present? ? user.done_location : Location.done.id) }
   scope :not_at_done, where('devices.location_id <> ?', Location.done.id)
-  scope :at_archive, lambda { |user| where(location_id: user.present? ? user.archive_location : Location.archive.id) }
+  scope :at_archive, lambda { |user=nil| where(location_id: user.present? ? user.archive_location : Location.archive.id) }
   scope :unarchived, where('devices.location_id <> ?', Location.archive.id)
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
