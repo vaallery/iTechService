@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   ROLES = %w[admin software media technician marketing developer supervisor manager superadmin driver api universal engraver]
   ROLES_FOR_ADMIN = %w[admin software media technician marketing supervisor manager driver universal engraver]
   HELPABLE = %w[software media technician]
-  ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet]
+  ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet edit_clients]
 
   attr_accessor :login
   attr_accessor :auth_token

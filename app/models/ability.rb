@@ -39,7 +39,9 @@ class Ability
         cannot :destroy, [Client, Device]
       end
       if user.software?
-        can :modify, [Device, Client]
+        # can :modify, [Device, Client]
+        can :manage, Device
+        can :create, Client
         can :create_sale, Device
         can [:issue, :activate, :scan, :find], GiftCertificate
         can [:modify, :read, :reprint_check, :print_warranty], Sale
@@ -50,7 +52,8 @@ class Ability
         can :create, Payment
       end
       if user.media?
-        can :modify, [Device, Client, Order, QuickOrder, MediaOrder]
+        can :modify, [Device, Order, QuickOrder, MediaOrder]
+        can :create, Client
         can :set_done, QuickOrder
         can [:choose, :select], Product
       end
@@ -92,6 +95,7 @@ class Ability
         can :make_new, SupplyRequest, status: 'done'
         can [:create, :read], SupplyReport
       end
+      can :edit, Client if user.able_to? :edit_clients
       can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement
       can :close_all, Announcement
