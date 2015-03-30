@@ -282,7 +282,7 @@ module ApplicationHelper
       link_to(caret_tag, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown') +
       content_tag(:ul, class: 'dropdown-menu') do
         User.for_changing.map do |user|
-          content_tag(:li, link_to(user.username, become_path(user)))
+          content_tag(:li, link_to("#{user.username} [#{user.role}]", become_path(user)))
         end.join.html_safe
       end
     end

@@ -28,8 +28,8 @@ class User < ActiveRecord::Base
   scope :staff, where('role <> ?', 'synchronizer')
   scope :fired, where(is_fired: true)
   scope :active, where(is_fired: [false, nil])
-  scope :for_changing, where('users.username = ? OR users.username LIKE ?', 'vova', 'test_%')
-  # scope :for_changing, where(username: %w[vova admin test test_soft test_media test_tech test_market test_manager])
+  scope :for_changing, scoped
+  # scope :for_changing, where('users.username = ? OR users.username LIKE ?', 'vova', 'test_%')
   scope :exclude, lambda { |user| where('id <> ?', user.is_a?(User) ? user.id : user) }
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
