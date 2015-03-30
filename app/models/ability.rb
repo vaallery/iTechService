@@ -95,7 +95,7 @@ class Ability
         can :make_new, SupplyRequest, status: 'done'
         can [:create, :read], SupplyReport
       end
-      can :edit, Client if user.able_to? :edit_clients
+      can [:update], Client if user.able_to? :edit_clients
       can :manage, WikiPage if user.able_to? :manage_wiki
       can :make_announce, Announcement
       can :close_all, Announcement
