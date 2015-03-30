@@ -40,7 +40,7 @@ class Ability
       end
       if user.software?
         # can :modify, [Device, Client]
-        can :manage, Device
+        can :modify, Device
         can :create, Client
         can :create_sale, Device
         can [:issue, :activate, :scan, :find], GiftCertificate
