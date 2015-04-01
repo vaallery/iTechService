@@ -35,7 +35,7 @@ class Client < ActiveRecord::Base
   validates_inclusion_of :category, in: CATEGORIES.keys
   validates_associated :comments
   validates_associated :client_characteristic
-  validate :restricted_attributes, unless: Proc.new { User.current.any_admin? }
+  validate :restricted_attributes, unless: Proc.new { User.current.any_admin? or User.current.able_to?(:edit_clients) }
   before_destroy :send_mail
 
   after_initialize do
