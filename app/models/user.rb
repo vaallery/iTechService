@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup
     if auth_token = conditions.delete(:auth_token)
-      User.active.where(conditions).where(["lower(username) = :value OR lower(card_number) = :value", {value: auth_token.mb_chars.downcase.to_s}]).first
+      User.active.where(conditions).where(['lower(username) = :value OR lower(card_number) = :value', {value: auth_token.mb_chars.downcase.to_s}]).first
     else
       User.active.where(conditions).first
     end
