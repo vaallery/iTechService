@@ -34,7 +34,7 @@ class TicketPdf < Prawn::Document
     font_size 24 do
       text "№ #{@device.ticket_number}", align: :center, inlign_format: true, style: :bold
     end
-    text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
+    text @device.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
     move_down 5
     text @view.t('tickets.user', name: @device.user_short_name)
     move_down 5
@@ -56,7 +56,7 @@ class TicketPdf < Prawn::Document
     font_size 22 do
       text @device.ticket_number, align: :right, inlign_format: true, style: :bold
     end
-    text @device.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
+    text @device.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
     move_down 15
     text @device.client_short_name
     text @view.number_to_phone @device.client.full_phone_number || @device.client.phone_number, area_code: true

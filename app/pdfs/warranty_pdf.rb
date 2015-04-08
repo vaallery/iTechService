@@ -31,7 +31,7 @@ class WarrantyPdf < Prawn::Document
     # Title
     move_down 60
     span 380, position: :right do
-      text @view.t('sales.warranty_pdf.title', num: @sale.id, date: @sale.date.strftime('%d.%m.%Y')), size: 12, style: :bold
+      text @view.t('sales.warranty_pdf.title', num: @sale.id, date: @sale.date.localtime.strftime('%d.%m.%Y')), size: 12, style: :bold
     end
 
     # Contact info

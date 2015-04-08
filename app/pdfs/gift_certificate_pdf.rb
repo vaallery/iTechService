@@ -12,7 +12,7 @@ class GiftCertificatePdf < Prawn::Document
     font_size 14
     text view.t('activerecord.models.gift_certificate')
     text "№ #{certificate.id}"
-    text "#{view.l certificate.updated_at, format: :long_d}"
+    text "#{view.l certificate.updated_at.localtime, format: :long_d}"
     text "#{GiftCertificate.human_attribute_name(:consumed)}: #{view.number_to_currency consume, precision: 0}"
     encrypt_document permissions: { modify_contents: false }
   end

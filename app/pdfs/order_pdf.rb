@@ -31,7 +31,7 @@ class OrderPdf < Prawn::Document
     font_size 24 do
       text @view.t('orders.order_num', num: @order.number), align: :center, inlign_format: true, style: :bold
     end
-    text @order.created_at.strftime('%H:%M %d.%m.%Y'), align: :center, size: 10
+    text @order.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center, size: 10
     move_down 4
     text @order.object, style: :bold
     move_down 5

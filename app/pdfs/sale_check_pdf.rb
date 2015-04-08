@@ -28,7 +28,7 @@ class SaleCheckPdf < Prawn::Document
     text [I18n.t("sales.check_pdf.#{sale.is_return ? 'return' : 'sale'}"), is_copy ? "(#{I18n.t('sales.check_pdf.copy')})" : nil].join(' ')
     move_up font.height
     text sale.user_short_name, align: :right
-    text "#{I18n.t('sales.check_pdf.open')} #{sale.created_at.strftime('%H:%M:%S')}", align: :center
+    text "#{I18n.t('sales.check_pdf.open')} #{sale.created_at.localtime.strftime('%H:%M:%S')}", align: :center
 
     move_down 5
     stroke { horizontal_line 0, 205 }
@@ -63,7 +63,7 @@ class SaleCheckPdf < Prawn::Document
 
     text "##{sale.cash_shift_id} #{I18n.t('sales.check_pdf.doc')} #{sale.id}"
     move_up font.height
-    text sale.date.strftime('%d-%m-%y %H:%M'), align: :right
+    text sale.date.localtime.strftime('%d-%m-%y %H:%M'), align: :right
 
     text I18n.t('sales.check_pdf.thanks1'), align: :center
     text I18n.t('sales.check_pdf.thanks2'), align: :center
