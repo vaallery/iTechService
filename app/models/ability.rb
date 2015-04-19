@@ -24,7 +24,7 @@ class Ability
       can :manage, :all
       cannot :write_tech_notice, Device
       can :view_purchase_price, Product
-    elsif user.synchronizer?
+    elsif user.api?
       can :sync, Product
       can :read, [Device, Order]
     else

@@ -149,8 +149,8 @@ class User < ActiveRecord::Base
     self.role == 'driver'
   end
 
-  def synchronizer?
-    role == 'synchronizer'
+  def api?
+    role == 'api'
   end
 
   def universal?
