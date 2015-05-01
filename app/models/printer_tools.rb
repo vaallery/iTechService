@@ -12,6 +12,8 @@ module PrinterTools
       end
       puts "#{options} #{filepath}"
       system "lp #{options} #{filepath}"
+    else
+      puts "File not found #{filepath}"
     end
   end
 
