@@ -7,7 +7,8 @@ module PrinterTools
         when :sale_check then options << " -o media=Custom.72x#{height || 200}mm"
         when :ticket then options << ' -o media=Custom.72x90mm'
         when :quick_order then options << ' -o media=Custom.72x90mm'
-        when :tags then options = " -d 'tags' -o media=Custom.29mmx20mm"
+        when :tags then options = ' -d tags'
+        # when :tags then options = " -d 'tags' -o media=Custom.29mmx20mm"
         else options << ' -o media=Custom.72x90mm'
       end
       puts "#{options} #{filepath}"
