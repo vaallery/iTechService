@@ -166,7 +166,7 @@ $(document).ajaxComplete ->
   hideSpinner()
 
 add_fields = (target, association, content) ->
-  new_id = new Date().getTime() + Math.floor((Math.random() * 100) + 1)
+  new_id = String((new Date).getTime()) + String(Math.floor((Math.random() * 100) + 1))
   regexp = new RegExp "new_" + association, "g"
   $(target).append content.replace(regexp, new_id)
 
