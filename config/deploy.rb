@@ -11,7 +11,7 @@ set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
 #set :deploy_to, "/usr/local/var/www/#{application}"
 set :scm, :git
 
-set :format, :pretty
+# set :format, :pretty
 set :log_level, :info
 set :pty, false
 

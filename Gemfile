@@ -61,6 +61,7 @@ group :development do
   gem 'capistrano-rails', '~> 1.1'
   gem 'capistrano-rvm'
   gem 'capistrano-bundler', '~> 1.1'
+  gem 'airbrussh', require: false
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'stack_rescue'
