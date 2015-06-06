@@ -13,7 +13,7 @@
     %tbody
       - @records.each do |rec|
         %tr
-          %td= l rec.created_at, format: :long_d
+          %td= human_datetime rec.created_at
           %td= rec.object.class.human_attribute_name rec.column_name.to_s
           -#%td= human_history_value rec.old_value, rec.column_type
           %td= human_history_value rec#.new_value, rec.column_type
