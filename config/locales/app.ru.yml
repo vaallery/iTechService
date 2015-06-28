@@ -143,6 +143,7 @@ ru:
 
       device:
         app_store_pass: 'Пароль на учетную запись в App Store'
+        carrier: 'Оператор'
         case_color: 'Чехол'
         case_color_id: 'Чехол'
         client: :activerecord.models.client
@@ -155,6 +156,7 @@ ru:
         done_at: Время завершения
         history_records: История изменений
         imei: IMEI
+        is_tray_present: 'Есть ли лоток?'
         location: :activerecord.models.location
         location_id: :activerecord.models.location
         notify_client: Позвонить клиенту по готовности
