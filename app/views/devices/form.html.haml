@@ -33,6 +33,8 @@
 
   = f.input :is_tray_present, as: :radio_buttons
 
+  = f.association :carrier, as: :radio_buttons, collection: Carrier.scoped
+
   = f.association :case_color, as: :radio_buttons, collection: CaseColor.ordered_by_name, label_method: lambda{|c|case_color_presentation(c)}
 
   = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @device)

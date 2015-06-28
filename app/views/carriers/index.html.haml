@@ -1,0 +1,17 @@
+= auto_header_tag
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th= Carrier.human_attribute_name :id
+      %th= Carrier.human_attribute_name :name
+      %th
+
+  %tbody
+    - @carriers.each do |carrier|
+      %tr
+        %td= carrier.id
+        %td= carrier.name
+        %td.btn-group
+          = link_to_edit_small carrier
+          = link_to_destroy_small carrier

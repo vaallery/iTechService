@@ -179,6 +179,7 @@ ItechService::Application.routes.draw do
   resources :quick_tasks, except: :show
   resources :product_imports, only: [:new, :create]
   resources :case_pictures, only: [:index, :new, :create]
+  resources :carriers, except: [:show]
   resources :media_orders
   resources :contacts_extractions, only: [:new, :create]
 

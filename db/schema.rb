@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150628114335) do
+ActiveRecord::Schema.define(:version => 20150628123126) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -64,6 +64,12 @@ ActiveRecord::Schema.define(:version => 20150628114335) do
   end
 
   add_index "bonuses", ["bonus_type_id"], :name => "index_bonuses_on_bonus_type_id"
+
+  create_table "carriers", :force => true do |t|
+    t.string   "name",       :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "case_colors", :force => true do |t|
     t.string   "name"
@@ -304,8 +310,10 @@ ActiveRecord::Schema.define(:version => 20150628114335) do
     t.string   "contact_phone"
     t.integer  "department_id"
     t.boolean  "is_tray_present"
+    t.integer  "carrier_id"
   end
 
+  add_index "devices", ["carrier_id"], :name => "index_devices_on_carrier_id"
   add_index "devices", ["case_color_id"], :name => "index_devices_on_case_color_id"
   add_index "devices", ["client_id"], :name => "index_devices_on_client_id"
   add_index "devices", ["department_id"], :name => "index_devices_on_department_id"

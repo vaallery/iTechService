@@ -9,6 +9,7 @@ ru:
       #ckeditor/attachment_file: ckeditor/attachment_file
       #ckeditor/picture: ckeditor/picture
       batch: 'Партия'
+      carrier: 'Оператор'
       case_color: 'Цвет чехла'
       cash_drawer: 'Касса'
       cash_shift: 'Кассовая смена'
@@ -596,6 +597,16 @@ ru:
   batches:
     errors:
       feature_exists: 'Характеристика уже существует'
+
+  carriers:
+    created: 'Оператор создан'
+    updated: 'Оператор изменён'
+    index:
+      title: 'Операторы'
+    edit:
+      title: 'Редактирование Оператора'
+    new:
+      title: 'Новый Оператор'
 
   case_colors:
     created: 'Цвет чехла создан'

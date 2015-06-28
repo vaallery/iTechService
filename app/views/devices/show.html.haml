@@ -43,6 +43,15 @@
     %tr
       %td= Device.human_attribute_name :app_store_pass
       %td= @device.app_store_pass.blank? ? '-' : @device.app_store_pass
+
+  %tr
+    %td= Device.human_attribute_name :is_tray_present
+    %td= @device.is_tray_present ? icon_tag('check') : icon_tag('check-empty')
+
+  %tr
+    %td= Device.human_attribute_name :carrier
+    %td= @device.carrier.try(:name)
+
   %tr
     %td= Device.human_attribute_name :comment
     %td.device_comment= @device.comment
