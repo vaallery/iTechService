@@ -2,9 +2,9 @@ class QuickOrder < ActiveRecord::Base
 
   DEVICE_KINDS = %w[iPhone iPad iPod]
 
-  scope :id_asc, order('id asc')
-  scope :created_desc, order('created_at desc')
-  scope :in_month, where('created_at > ?', 1.month.ago)
+  scope :id_asc, order('quick_orders.id asc')
+  scope :created_desc, order('quick_orders.created_at desc')
+  scope :in_month, where('quick_orders.created_at > ?', 1.month.ago)
   scope :done, where(is_done: true)
   scope :undone, where(is_done: false)
 
@@ -21,6 +21,29 @@ class QuickOrder < ActiveRecord::Base
     self.department_id ||= Department.current.id
     self.user_id ||= User.current.try(:id)
     self.is_done ||= false
+  end
+
+  def self.search(params)
+    quick_orders = QuickOrder.scoped
+
+    if (is_done = params[:done]).present?
+      quick_orders = quick_orders.where is_done: is_done
+    end
+
+    if (number = params[:number]).present?
+      quick_orders = quick_orders.where number: number
+    end
+
+    if (contact_phone = params[:contact_phone]).present?
+      quick_orders = quick_orders.where 'quick_orders.contact_phone LIKE ?', "%#{contact_phone}%"
+    end
+
+    if (task = params[:task]).present?
+      quick_orders = quick_orders.includes(:quick_tasks).where('LOWER(quick_tasks.name) LIKE ?',
+                                                               "%#{task.mb_chars.downcase.to_s}%")
+    end
+
+    quick_orders
   end
 
   def set_done
