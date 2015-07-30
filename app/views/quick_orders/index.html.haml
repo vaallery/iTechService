@@ -1,10 +1,9 @@
 .page-header
   %h1
-    = t '.title'
-    - if current_user.any_admin?
-      %small
-        \/
-        = link_to_if params[:done].blank?, t('.done'), quick_orders_path(done: true)
+    = link_to_if params[:done].present?, t('.title'), quick_orders_path
+    %small
+      \/
+      = link_to_if params[:done].blank?, t('.done'), quick_orders_path(done: true)
   = link_to_new QuickOrder if can? :create, QuickOrder
 .table_filter.navbar.container
   .navbar-inner
@@ -12,17 +11,22 @@
       = hidden_field_tag :done, params[:done]
       
       .input-append
-        = text_field_tag :number, params[:number], id: 'search_order_input', class: 'search-query input-small', placeholder: QuickOrder.human_attribute_name(:number)
+        = text_field_tag :number, params[:number], id: 'search_quick_order_number_input', class: 'search-query input-small', placeholder: QuickOrder.human_attribute_name(:number)
         %span.add-on.btn.clear_search_input
           %i.icon-remove
 
       .input-append
-        = text_field_tag :contact_phone, params[:contact_phone], id: 'search_order_input', class: 'search-query input-medium', placeholder: QuickOrder.human_attribute_name(:contact_phone)
+        = text_field_tag :client_name, params[:client_name], id: 'search_quick_order_client_name_input', class: 'search-query input-medium', placeholder: QuickOrder.human_attribute_name(:client_name)
         %span.add-on.btn.clear_search_input
           %i.icon-remove
 
       .input-append
-        = text_field_tag :task, params[:task], id: 'search_order_input', class: 'search-query input-large', placeholder: QuickOrder.human_attribute_name(:quick_tasks)
+        = text_field_tag :contact_phone, params[:contact_phone], id: 'search_quick_order_contact_phone_input', class: 'search-query input-medium', placeholder: QuickOrder.human_attribute_name(:contact_phone)
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+
+      .input-append
+        = text_field_tag :task, params[:task], id: 'search_quick_order_task_input', class: 'search-query input-large', placeholder: QuickOrder.human_attribute_name(:quick_tasks)
         %span.add-on.btn.clear_search_input
           %i.icon-remove
 

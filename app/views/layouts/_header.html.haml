@@ -24,7 +24,7 @@
         = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService
         = drop_down_divider
         = menu_item t('quick_orders.new.title'), new_quick_order_path if can? :create, QuickOrder
-        = menu_item t('quick_orders.link'), quick_orders_path if can? :modify, QuickOrder
+        = menu_item t('quick_orders.link'), quick_orders_path if can? :read, QuickOrder
         = drop_down_divider
         = menu_item t('media_orders.index.title'), media_orders_path
       = drop_down t('navbar.cash_drawer') do
