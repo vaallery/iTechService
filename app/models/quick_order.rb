@@ -35,7 +35,8 @@ class QuickOrder < ActiveRecord::Base
     end
 
     if (client_name = params[:client_name]).present?
-      quick_orders = quick_orders.where 'quick_orders.client_name LIKE ?', "%#{client_name}%"
+      quick_orders = quick_orders.where 'LOWER(quick_orders.client_name) LIKE ?',
+                                        "%#{client_name.mb_chars.downcase.to_s}%"
     end
 
     if (contact_phone = params[:contact_phone]).present?
