@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150628123126) do
+ActiveRecord::Schema.define(:version => 20150809115956) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -246,6 +246,17 @@ ActiveRecord::Schema.define(:version => 20150628123126) do
 
   add_index "departments", ["code"], :name => "index_departments_on_code"
   add_index "departments", ["role"], :name => "index_departments_on_role"
+
+  create_table "device_notes", :force => true do |t|
+    t.integer  "device_id",  :null => false
+    t.integer  "user_id",    :null => false
+    t.text     "content",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "device_notes", ["device_id"], :name => "index_device_notes_on_device_id"
+  add_index "device_notes", ["user_id"], :name => "index_device_notes_on_user_id"
 
   create_table "device_tasks", :force => true do |t|
     t.integer  "device_id"

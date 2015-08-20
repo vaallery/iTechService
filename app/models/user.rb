@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   has_many :movement_acts, dependent: :nullify
   has_many :stores, through: :department
   has_many :locations, through: :department
+  has_many :device_notes, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
 

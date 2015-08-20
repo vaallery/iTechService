@@ -67,6 +67,7 @@ ItechService::Application.routes.draw do
     get :movement_history, on: :member
     get :quick_search, on: :collection
     post :create_sale, on: :member
+    resources :device_notes, only: %i[index new create]
   end
 
   match 'check_device_status' => 'devices#check_status', via: :get

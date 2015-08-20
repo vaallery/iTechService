@@ -1,0 +1,4 @@
+%div[device_note]
+  %small{style: "color: #{device_note.user.color}"}
+    = "#{device_note.user.short_name} [#{l(device_note.created_at, format: :long_d)}]"
+  %p= device_note.content

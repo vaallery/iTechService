@@ -21,6 +21,7 @@ ru:
       deduction_act: 'Акт Списания'
       department: 'Подразделение'
       device: Девайс
+      device_note: Заметка
       device_task: Задача
       device_type: Тип девайса
       discount: Скидка
@@ -813,6 +814,12 @@ ru:
     move_to_archive: "В архив"
     form:
       check_imei: "Проверить IMEI"
+
+  device_notes:
+    modal_form_content:
+      submit: 'Создать Заметку'
+      title: 'Заметки к %{device}'
+
   device_tasks:
     add_repair_task: "Добавить"
     errors:
@@ -821,6 +828,7 @@ ru:
 
     repair_task_fields:
       spare_part: "Запчасть (кол-во)"
+
   device_types:
     created: Тип девайса создан
     updated: Тип девайса изменён

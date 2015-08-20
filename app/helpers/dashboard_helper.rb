@@ -56,7 +56,10 @@ module DashboardHelper
         tag(:br, false) +
         device.comment
       end +
-      content_tag(:td, link_to_edit_device(device), class: 'device_task_action_column')
+      content_tag(:td, class: 'device_task_action_column') do
+        link_to_edit_device(device) +
+        link_to(icon_tag('file-text-alt'), device_device_notes_path(device), class: 'btn btn-small', remote: true)
+      end
     end
   end
 
