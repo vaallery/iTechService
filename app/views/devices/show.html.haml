@@ -2,7 +2,9 @@
   %h1
     = link_back_to_index
     = @device.type_name
-    %small= history_link_to history_device_path(@device)
+    %small
+      = history_link_to history_device_path(@device)
+      = link_to icon_tag('file-text-alt'), device_device_notes_path(@device), class: 'no-decoration', remote: true
 
   %span.help-block
     %small= timestamp_string_for @device
