@@ -122,6 +122,7 @@ class Ability
       can :rating, User
       can :manage, TimesheetDay if user.able_to? :manage_timesheet
       can :print_check, Sale
+      can :create, DeviceNote
       can :read, :all
       unless user.driver?
         cannot :read, SupplyReport
