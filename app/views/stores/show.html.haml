@@ -5,7 +5,7 @@
     %dt= Store.human_attribute_name :department
     %dd= @store.department_name || '-'
     %dt= Store.human_attribute_name :code
-    %dd= @store.code
+    %dd= @store.code || '-'
     %dt= Store.human_attribute_name :kind
     %dd= human_store_kind(@store) || '-'
     %dt= Store.human_attribute_name :price_types

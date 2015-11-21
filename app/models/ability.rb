@@ -22,7 +22,6 @@ class Ability
       cannot :close, CashShift
     elsif user.developer?
       can :manage, :all
-      cannot :write_tech_notice, Device
       can :view_purchase_price, Product
     elsif user.api?
       can :sync, Product
@@ -134,7 +133,7 @@ class Ability
     cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: [1, 2]
     cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: [0, 2]
     cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: 1
-    cannot [:edit, :destroy], Store
+    cannot :destroy, Store
     #
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are
