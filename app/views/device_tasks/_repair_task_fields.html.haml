@@ -12,6 +12,7 @@
         %th= t '.spare_part'
         %th= RepairPart.human_attribute_name(:warranty_term)
         %th= RepairPart.human_attribute_name(:defect_qty)
+        %th{title: t('.warranty_hint')}= t '.warranty'
     %tbody
       = f.simple_fields_for :repair_parts do |ff|
         %tr
@@ -27,3 +28,4 @@
           %td
             = ff.input_field :defect_qty, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:defect_qty), placeholder: RepairPart.human_attribute_name(:defect_qty)
             = ff.error :defect_qty, class: 'text-error'
+          %td= check_box_tag 'warranty_swap[]', ff.object.item.id, false, title: t('.warranty_hint')

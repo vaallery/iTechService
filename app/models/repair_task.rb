@@ -30,4 +30,13 @@ class RepairTask < ActiveRecord::Base
     repair_parts.to_a.sum(&:purchase_price)
   end
 
+  def self.return_defected_parts(item_ids)
+    items = Item.where id: item_ids
+    if (defect_sp_store = Department.current.defect_sp_store).present?
+      items.each do |item|
+        item.store_item(defect_sp_store).add 1
+      end
+    end
+  end
+
 end

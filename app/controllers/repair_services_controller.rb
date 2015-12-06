@@ -2,12 +2,12 @@ class RepairServicesController < ApplicationController
   authorize_resource
 
   def index
-    @repair_groups = RepairGroup.roots.order('id asc')
+    @repair_groups = RepairGroup.roots.order('name asc')
     if params[:group].blank?
-      @repair_services = RepairService.scoped.order('created_at asc')
+      @repair_services = RepairService.scoped.order('name asc')
     else
       @repair_group = RepairGroup.find params[:group]
-      @repair_services = @repair_group.repair_services.order('created_at asc')
+      @repair_services = @repair_group.repair_services.order('name asc')
     end
 
     respond_to do |format|

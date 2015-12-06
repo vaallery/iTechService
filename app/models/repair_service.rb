@@ -1,4 +1,5 @@
 class RepairService < ActiveRecord::Base
+  default_scope order('name asc')
   belongs_to :repair_group
   has_many :spare_parts, dependent: :destroy
   has_many :store_items, through: :spare_parts, uniq: true

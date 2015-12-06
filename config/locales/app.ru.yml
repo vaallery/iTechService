@@ -828,6 +828,8 @@ ru:
 
     repair_task_fields:
       spare_part: "Запчасть (кол-во)"
+      warranty: "Гарантия"
+      warranty_hint: "Замена по гарантии"
 
   device_types:
     created: Тип девайса создан
