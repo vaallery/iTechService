@@ -29,7 +29,7 @@ class DeviceTask < ActiveRecord::Base
   validate :valid_repair if :is_repair?
   validates_associated :repair_tasks
   after_commit :update_device_done_attribute
-  after_save :deduct_spare_parts if :is_repair?
+  # after_save :deduct_spare_parts if :is_repair?
   after_initialize :set_performer
 
   before_save do |dt|
@@ -111,15 +111,15 @@ class DeviceTask < ActiveRecord::Base
     self.device.update_attribute :done_at, done_time
   end
 
-  def deduct_spare_parts
-    if done_change == [0, 1]
-      repair_tasks.each do |repair_task|
-        repair_task.repair_parts.all? do |repair_part|
-          repair_part.deduct_spare_parts
-        end
-      end
-    end
-  end
+  # def deduct_spare_parts
+  #   if done_change == [0, 1]
+  #     repair_tasks.each do |repair_task|
+  #       repair_task.repair_parts.all? do |repair_part|
+  #         repair_part.deduct_spare_parts
+  #       end
+  #     end
+  #   end
+  # end
 
   def valid_repair
     is_valid = true

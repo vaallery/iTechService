@@ -14,16 +14,34 @@ class RepairPart < ActiveRecord::Base
 
   def deduct_spare_parts
     result = false
-    if (store_src = self.store).present?
-      # Deducting used spare parts
+    if (store_src = Department.current.repair_store).present?
       result = self.store_item(store_src).dec(self.quantity)
-
-      # Moving defected spare parts
-      if (store_dst = Department.current.defect_sp_store).present? and self.defect_qty > 0
-        self.store_item(store_src).move_to(store_dst, self.defect_qty)
-      end
     end
-    result != false
+    !!result
+  end
+
+  def move_defected
+    result = false
+    if (store_src = self.store).present? and (store_dst = Department.current.defect_sp_store).present?
+      result = self.store_item(store_src).move_to(store_dst, self.defect_qty)
+    end
+    !!result
+  end
+
+  def stash
+    result = false
+    if (store_src = self.store).present? and (store_dst = Department.current.repair_store).present?
+      result = self.store_item(store_src).move_to(store_dst, self.quantity)
+    end
+    !!result
+  end
+
+  def unstash
+    result = false
+    if (store_src = Department.current.repair_store).present? and (store_dst = self.store).present?
+      result = self.store_item(store_src).move_to(store_dst, self.quantity)
+    end
+    !!result
   end
 
   private

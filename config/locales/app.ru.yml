@@ -1473,6 +1473,7 @@ ru:
       purchase: 'Приход'
       spare_parts: 'Запчасти'
       retail: 'Розница'
+      repair: 'Ремонт'
     index:
       title: "Склады"
       spare_parts_link: "Запчасти"

@@ -26,6 +26,6 @@
             = ff.input_field :warranty_term, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:warranty_term)
             = ff.error :warranty_term, class: 'text-error'
           %td
-            = ff.input_field :defect_qty, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:defect_qty), placeholder: RepairPart.human_attribute_name(:defect_qty)
+            = ff.input_field :defect_qty, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:defect_qty), placeholder: RepairPart.human_attribute_name(:defect_qty), disabled: !ff.object.new_record?
             = ff.error :defect_qty, class: 'text-error'
-          %td= check_box_tag 'warranty_swap[]', ff.object.item.id, false, title: t('.warranty_hint')
+          %td= check_box_tag 'warranty_swap[]', ff.object.item.id, false, title: t('.warranty_hint'), disabled: !ff.object.new_record?

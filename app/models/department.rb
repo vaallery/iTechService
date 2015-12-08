@@ -60,6 +60,10 @@ class Department < ActiveRecord::Base
     stores.defect_sp.first
   end
 
+  def repair_store
+    stores.repair.first_or_create(name: I18n.t('stores.kinds.repair'))
+  end
+
   def default_cash_drawer
     cash_drawers.first_or_create name: 'Cash drawer 1'
   end

@@ -50,6 +50,7 @@ class Device < ActiveRecord::Base
   after_save :update_qty_replaced
   after_save :update_tasks_cost
   after_update :device_update_announce
+  after_update :deduct_spare_parts
   after_create :new_device_announce
   after_create :create_alert
   after_initialize :set_user_and_location
@@ -379,6 +380,14 @@ class Device < ActiveRecord::Base
 
   def set_contact_phone
     self.contact_phone = self.client.try(:contact_phone) || '-' if self.contact_phone.blank?
+  end
+
+  def deduct_spare_parts
+    if location_id_changed? and location.is_archive?
+      repair_parts.all? do |repair_part|
+        repair_part.deduct_spare_parts
+      end
+    end
   end
 
 end

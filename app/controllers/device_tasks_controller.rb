@@ -10,7 +10,7 @@ class DeviceTasksController < ApplicationController
   def update
     @device_task = DeviceTask.find params[:id]
     if @device_task.update_attributes params[:device_task]
-      RepairTask.return_defected_parts(params[:warranty_swap]) unless params[:warranty_swap].empty?
+      RepairTask.return_defected_parts(params[:warranty_swap]) unless params[:warranty_swap].present?
       render 'update'
     else
       render 'shared/show_modal_form'
