@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 #source 'http://gems.rubyforge.org'
 ruby '2.1.3'
+# ruby '2.2.3'
 # gem 'nokogiri', '1.6.1'
-gem 'rails', '3.2.21'
+gem 'rails', '3.2.22'
 gem 'pg', '~> 0.14.1'
 gem 'thin', '~> 1.5.0'
 gem 'haml-rails', '~> 0.3.5'
@@ -76,6 +77,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'test-unit'
   gem 'rspec-rails'
   gem 'capybara'
   gem 'database_cleaner'
