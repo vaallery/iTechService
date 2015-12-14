@@ -70,18 +70,18 @@ class SalesImport
           end
         when :device_1
           sn = RGXP_DEVICE_1.match(row[0])[1]
-          import_logs << ['info', row[0]]
+          # import_logs << ['info', row[0]]
         when :device_2
           sn = RGXP_DEVICE_2.match(row[0])[1]
           imei = RGXP_DEVICE_2.match(row[0])[2]
-          import_logs << ['info', row[0]]
+          # import_logs << ['info', row[0]]
         when :date
           date = RGXP_DATE.match(row[0])[1]
           qty = row[3].to_i
           sale = ImportedSale.find_or_initialize_by_serial_number serial_number: sn, imei: imei, sold_at: date.to_date, device_type_id: device_type.try(:id), quantity: qty
           unless !sale.new_record? and sale.sold_at == date.to_date
             sales << sale
-            import_logs << ['success', "#{sale.new_record? ? 'New' : 'Existing'} device #{device_type.try(:full_name)} [#{sale.serial_number}] sold_at: #{sale.sold_at}"]
+            # import_logs << ['success', "#{sale.new_record? ? 'New' : 'Existing'} device #{device_type.try(:full_name)} [#{sale.serial_number}] sold_at: #{sale.sold_at}"]
           end
         else
           # type code here
