@@ -22,8 +22,9 @@ doc/
 /public/ckeditor_assets/*
 .DS_Store
 .rvmrc*
-.ruby-gemset*
 .ruby-version*
+.ruby-gemset
+.rbenv-gemsets
 .project
 .sass-cache/
 #/public/assets/

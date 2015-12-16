@@ -7,6 +7,7 @@ class RepairPart < ActiveRecord::Base
   validates_presence_of :item
   validates_numericality_of :warranty_term, only_integer: true, greater_than_or_equal_to: 0
   validate :remnants_presence
+  after_update :move_defected, if: :defect_qty_changed?
   after_initialize do
     self.warranty_term ||= item.try(:warranty_term)
     self.defect_qty ||= 0
@@ -23,7 +24,8 @@ class RepairPart < ActiveRecord::Base
   def move_defected
     result = false
     if (store_src = self.store).present? and (store_dst = Department.current.defect_sp_store).present?
-      result = self.store_item(store_src).move_to(store_dst, self.defect_qty)
+      qty_to_move = defect_qty - (defect_qty_was || 0)
+      result = self.store_item(store_src).move_to(store_dst, qty_to_move)
     end
     !!result
   end
@@ -48,7 +50,8 @@ class RepairPart < ActiveRecord::Base
 
   def remnants_presence
     if store.present?
-      if store_item(store).quantity < (quantity + defect_qty)
+      defect_qty_diff = defect_qty - (defect_qty_was || 0)
+      if store_item(store).quantity < (quantity + defect_qty_diff)
         errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: name)
       end
     end
