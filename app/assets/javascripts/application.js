@@ -24,6 +24,8 @@
   = require accounting
   = require association_filter
   = require zeroclipboard
+  = require currency-in-words
+  = require app
   = require common
   = require announcements
   = require bonuses
@@ -54,4 +56,5 @@
   = require timesheet_days
   = require top_salables
   = require users
+  = require receipts
 */
