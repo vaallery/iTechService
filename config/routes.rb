@@ -217,6 +217,10 @@ ItechService::Application.routes.draw do
   resources :imported_sales, only: :index
   resources :sales_imports, only: [:new, :create]
 
+  get 'receipts/new'
+  get 'receipts/add_product'
+  post 'receipts/print'
+
   wiki_root '/wiki'
 
   match '/delayed_job' => DelayedJobWeb, anchor: false

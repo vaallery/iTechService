@@ -1,0 +1,58 @@
+%h1= t '.title'
+%hr
+
+= form_for :receipt, url: receipts_print_path(format: :pdf), html: {class: 'form-horizontal', id: 'receipt-form',
+                                                                    target: '_blank'} do
+
+  .control-group
+    %label.control-label= t '.number'
+    .controls= text_field_tag 'receipt[number]', nil, class: 'input-xlarge'
+
+  .control-group
+    %label.control-label= t '.date'
+    .controls= text_field_tag 'receipt[date]', l(Time.current.localtime.to_date), class: 'datepicker input-xlarge', data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1, 'date-viewmode' => 'days'}
+
+  .control-group
+    %label.control-label= t '.customer'
+    .controls= text_field_tag 'receipt[customer]', nil, class: 'input-xlarge'
+
+  .control-group
+    %label.control-label= t '.seller'
+    .controls= text_field_tag 'receipt[seller]', current_user.full_name, class: 'input-xlarge'
+
+  .control-group
+    %label.control-label= t '.seller_post'
+    .controls= text_field_tag 'receipt[seller_post]', current_user.job_title, class: 'input-xlarge'
+
+  %hr
+  %table.table
+    %thead
+      %th= t '.article'
+      %th= t '.name'
+      %th= t '.quantity'
+      %th= t '.serial_number'
+      %th= t '.imei'
+      %th= t '.warranty_term'
+      %th= t '.measure'
+      %th= t '.price'
+      %th
+    %tbody.products
+      = render 'product_fields'
+    %tfoot
+      %th{colspan: 9}= link_to t('.add_product'), receipts_add_product_path, class: 'btn btn-default', remote: true
+
+  .control-group
+    %label.control-label= t '.sum'
+    .controls
+      %span.receipt-sum
+      = hidden_field_tag 'receipt[sum]', nil, id: 'receipt-sum-value'
+
+  .control-group
+    %label.control-label= t '.sum_in_words'
+    .controls= text_field_tag 'receipt[sum_in_words]', nil, class: 'input-xxlarge', id: 'receipt-sum-in-words'
+
+  %hr
+  .control-group
+    .controls
+      = submit_tag t('.receipt'), name: 'print_receipt', class: 'btn btn-primary'
+      = submit_tag t('.warranty'), name: 'print_warranty', class: 'btn btn-primary'

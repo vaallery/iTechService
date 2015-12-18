@@ -2,9 +2,8 @@
 class WarrantyPdf < Prawn::Document
   require "prawn/measurement_extensions"
 
-  def initialize(sale, view)
+  def initialize(sale)
     super page_size: 'A4', page_layout: :portrait
-    @view = view
     @sale = sale
     @font_height = 9
     font_families.update 'DroidSans' => {
@@ -17,7 +16,7 @@ class WarrantyPdf < Prawn::Document
 
     # Organization info
     move_down 10
-    text [Setting.get_value(:org_name, @sale.department.id).presence || @view.t('sales.warranty_pdf.org_name'), "г. #{@sale.department.city}", @sale.department.address, "Конт. тел.: #{@sale.department.contact_phone}"].join(', '), align: :right, size: 8
+    text [Setting.get_value(:org_name, @sale.department.id).presence || I18n.t('sales.warranty_pdf.org_name'), "г. #{@sale.department.city}", @sale.department.address, "Конт. тел.: #{@sale.department.contact_phone}"].join(', '), align: :right, size: 8
 
     # Logo
     move_down 15
@@ -31,7 +30,7 @@ class WarrantyPdf < Prawn::Document
     # Title
     move_down 60
     span 380, position: :right do
-      text @view.t('sales.warranty_pdf.title', num: @sale.id, date: @sale.date.localtime.strftime('%d.%m.%Y')), size: 12, style: :bold
+      text I18n.t('sales.warranty_pdf.title', num: @sale.id, date: @sale.date.localtime.strftime('%d.%m.%Y')), size: 12, style: :bold
     end
 
     # Contact info
@@ -83,7 +82,7 @@ class WarrantyPdf < Prawn::Document
     text "Для получения гарантийного обслуживания необходимо предоставить неисправный товар и гарантийный талон по адресу: #{Setting.get_value(:address_for_check)}, #{Setting.get_value(:contact_phone)}, сайт: http://itechstore.ru"
 
     # Products
-    table_data = [['№', 'Артикул', 'Наименование', 'Колич.', 'Характерист.', 'Срок Гарантии']]
+    table_data = [['№', 'Артикул', 'Наименование', 'Колич.', 'Серийный номер / IMEI', 'Срок Гарантии']]
     @sale.sale_items.each_with_index do |sale_item, index|
       if (sale_item.warranty_term || 0) > 0
         features = sale_item.features.map(&:value).join(', ')

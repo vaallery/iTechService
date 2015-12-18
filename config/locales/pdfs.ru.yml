@@ -1,0 +1,22 @@
+ru:
+  pdfs:
+
+    receipt:
+      title: 'Товарный чек № %{num} от %{date}'
+      org_name: 'ИП Колесник В. В.'
+      num: '№'
+      article: 'Артикул'
+      product_name: 'Наименование товара'
+      measure: 'Ед.'
+      price: 'Цена'
+      quantity: 'Кол-во'
+      sum: 'Сумма'
+      sum_in_words: 'Прописью: %{sum}'
+      products_total: 'Всего наименований %{qty}, на сумму %{sum}'
+      sold: 'Отпустил: %{seller}'
+      seller_post: 'Должность: %{name}'
+      sign: 'Подпись: _____________________________'
+      serial_number: 'Серийный номер'
+      imei: 'IMEI'
+      seller: 'Покупатель'
+      customer: 'Продавец'
