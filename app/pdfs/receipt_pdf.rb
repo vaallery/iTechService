@@ -16,9 +16,8 @@ class ReceiptPdf < Prawn::Document
     font_size @font_height
 
     header
-    client_table
-    client_footer
-    seller_table
+    products_table
+    footer
   end
 
   private
@@ -57,13 +56,14 @@ class ReceiptPdf < Prawn::Document
     move_down 20
   end
 
-  def client_table
+  def products_table
     total_sum = 0
-    data = [[t(:num), t(:article), t(:product_name), t(:measure), t(:price), t(:quantity), t(:sum)]]
+    data = [[t(:num), t(:article), t(:product_name), t(:serial_number), t(:imei),
+             t(:price), t(:measure), t(:quantity), t(:sum)]]
     sale.sale_items.each_with_index do |sale_item, index|
       sum = sale_item.price * sale_item.quantity
-      data << [index.next.to_s, sale_item.code, sale_item.name, sale_item.measure,
-                number_to_currency(sale_item.price), sale_item.quantity, number_to_currency(sum)]
+      data << [index.next.to_s, sale_item.code, sale_item.name, sale_item.serial_number, sale_item.imei,
+               number_to_currency(sale_item.price), sale_item.measure, sale_item.quantity, number_to_currency(sum)]
       total_sum += sum
     end
     table data, width: 520, header: true do
@@ -75,35 +75,13 @@ class ReceiptPdf < Prawn::Document
     text t(:sum_in_words, sum: sale.sum_in_words)
   end
 
-  def client_footer
+  def footer
+    text "#{t(:customer)}: #{sale.customer}"
     text t(:sold, seller: sale.seller)
     text t(:seller_post, name: sale.seller_post)
     move_up 7
     draw_text t(:sign), at: [280, cursor]
     move_down 50
-    stroke do
-      stroke_color 'cccccc'
-      dash 10, space: 5
-      horizontal_line 0, 530
-    end
-    move_down 20
-  end
-
-  def seller_table
-    data = [[t(:num), t(:article), t(:product_name), t(:serial_number), t(:imei), t(:price), t(:quantity), t(:sum)]]
-    sale.sale_items.each_with_index do |sale_item, index|
-      sum = sale_item.price * sale_item.quantity
-      data << [index.next.to_s, sale_item.code, sale_item.name, sale_item.serial_number, sale_item.imei,
-               number_to_currency(sale_item.price), sale_item.quantity, number_to_currency(sum)]
-    end
-    table data, width: 520, header: true do
-      cells.style align: :center
-    end
-    move_down 10
-    default_leading 5
-    text "#{t(:sum)}: #{number_to_currency(sale.sum)}"
-    text "#{t(:customer)}: #{sale.customer}"
-    text "#{t(:seller)}: #{sale.seller}"
   end
 
   def t(key, options = {})
