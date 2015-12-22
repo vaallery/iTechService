@@ -3,10 +3,10 @@
 %tr.product-fields
   %td= text_field_tag "#{prefix}[article]", nil, class: 'input-small'
   %td= text_field_tag "#{prefix}[name]"
-  %td= number_field_tag "#{prefix}[quantity]", nil, class: 'input-mini'
+  %td= number_field_tag "#{prefix}[quantity]", nil, class: 'input-mini quantity', onchange: 'App.Receipts.calculate();'
   %td= text_field_tag "#{prefix}[serial_number]", nil, class: 'input-medium'
   %td= text_field_tag "#{prefix}[imei]", nil, class: 'input-small'
   %td= number_field_tag "#{prefix}[warranty_term]", nil, class: 'input-small'
   %td= text_field_tag "#{prefix}[measure]", t('receipts.new.measure_unit'), class: 'input-mini'
-  %td= number_field_tag "#{prefix}[price]", nil, class: 'input-small'
+  %td= number_field_tag "#{prefix}[price]", nil, class: 'input-small price', onchange: 'App.Receipts.calculate();'
   %td= link_to icon_tag('minus'), '#', class: 'btn btn-danger btn-small', data: {behavior: 'remove-receipt-product'}
