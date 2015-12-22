@@ -1712,6 +1712,9 @@ ru:
       subject: "%{type} import log %{time}"
     document:
       deduction_notification: "Акт списания"
+    orders:
+      new: 'Новый заказ'
+      presentation: 'Заказ № ${number} от %{time}'
 
   errors:
     nothing_found: Ничего не найдено

@@ -1,0 +1,31 @@
+!!!
+%html{style: "font-family:'Helvetica-Neue', 'Helvetica', sans-serif;"}
+  %head
+    %meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
+
+  %body
+    %h4= I18n.t('mail.orders.presentation', number: @order.number, time: I18n.l(@order.created_at))
+
+    %p
+      %strong= Order.human_attribute_name :customer
+      = @order.customer_presentation
+
+    %p
+      %strong= Order.human_attribute_name :object_kind
+      = I18n.t "orders.object_kinds.#{@order.object_kind}"
+
+    %p
+      %strong= Order.human_attribute_name :object
+      = @order.object
+
+    %p
+      %strong= Order.human_attribute_name :quantity
+      = @order.quantity
+
+    %p
+      %strong= Order.human_attribute_name :comment
+      = @order.comment.present? ? @order.comment : '-'
+
+    %p
+      %strong= Order.human_attribute_name :desired_date
+      = @order.desired_date.present? ? l(@order.desired_date) : '-'

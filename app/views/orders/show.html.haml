@@ -28,6 +28,9 @@
   %dt= model_class.human_attribute_name :object
   %dd= @order.object
 
+  %dt= model_class.human_attribute_name :quantity
+  %dd= @order.quantity
+
   %dt= model_class.human_attribute_name :comment
   %dd= @order.comment.present? ? @order.comment : '-'
 

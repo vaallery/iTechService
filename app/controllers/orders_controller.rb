@@ -64,6 +64,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
+        OrdersMailer.delay.notice(@order.id)
         format.html { redirect_to orders_url, notice: t('orders.created') }
         format.json { render json: @order, status: :created, location: @order }
       else
