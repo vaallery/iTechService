@@ -1719,7 +1719,7 @@ ru:
       presentation: 'Заказ № %{number} от %{time}'
 
   errors:
-    nothing_found: Ничего не найдено
+    nothing_found: 'Ничего не найдено'
     messages:
       changing_denied: "изменение запрещено"
 
