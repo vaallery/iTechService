@@ -1714,7 +1714,7 @@ ru:
       deduction_notification: "Акт списания"
     orders:
       new: 'Новый заказ'
-      presentation: 'Заказ № ${number} от %{time}'
+      presentation: 'Заказ № %{number} от %{time}'
 
   errors:
     nothing_found: Ничего не найдено
