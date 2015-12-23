@@ -7,6 +7,14 @@
     %h4= link_to I18n.t('mail.orders.presentation', number: @order.number, time: I18n.l(@order.created_at, format: :long)), order_url(@order)
 
     %p
+      %strong= Order.human_attribute_name :department
+      = @order.department.name
+
+    %p
+      %strong= Order.human_attribute_name :user
+      = @order.user.short_name
+
+    %p
       %strong= Order.human_attribute_name :customer
       = @order.customer_presentation
 
@@ -17,6 +25,10 @@
     %p
       %strong= Order.human_attribute_name :object
       = @order.object
+
+    %p
+      %strong= Order.human_attribute_name :object_url
+      = @order.object_url.present? ? link_to(@order.object_url) : '-'
 
     %p
       %strong= Order.human_attribute_name :quantity

@@ -15,6 +15,7 @@
       .controls= text_field_tag :customer, @order.customer.presentation, class: 'input-xlarge', disabled: true
   = f.input :object_kind, as: :object_kind
   = f.input :object, as: :object
+  = f.input :object_url, input_html: {class: 'input-xlarge'}
   = f.input :approximate_price, input_html: {class: 'input-xlarge'}
   = f.input :quantity, input_html: {class: 'input-xlarge'}
   = f.input :comment, input_html: {rows: 5, class: 'input-xlarge'}

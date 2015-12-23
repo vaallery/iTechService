@@ -1,16 +1,7 @@
 module OrdersHelper
 
-  def row_class_for_order order
-    case order.status
-      when 'new' then row_class = 'info'
-      when 'pending' then row_class = 'warning'
-      when 'done' then row_class = 'success'
-      when 'canceled' then row_class = 'error'
-    end
-  end
-
   def order_row_tag(order)
-    content_tag(:tr, class: row_class_for_order(order), data: {order_id: order.id}) do
+    content_tag(:tr, class: order.status, data: {order_id: order.id}) do
       content_tag(:td, link_to(order.number, order_path(order)), class: 'order_number_column') +
       content_tag(:td, t("orders.statuses.#{order.status}"), class: 'order_status_column') +
       content_tag(:td, t("orders.object_kinds.#{order.object_kind}"), class: 'order_object_kind_column') +

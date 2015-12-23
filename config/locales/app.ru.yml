@@ -288,6 +288,7 @@ ru:
         number: Номер
         object: Обьект
         object_kind: Тип обьекта
+        object_url: 'Ссылка'
         status: Статус
         user: :activerecord.models.user
         user_comment: Комментарий товароведа
