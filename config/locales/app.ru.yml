@@ -279,6 +279,7 @@ ru:
         store_id: :activerecord.models.movement_act.src_store
 
       order:
+        approximate_price: 'Ориентировочная цена'
         customer: Заказчик
         customer_id: Заказчик
         customer_type: Тип заказчика
