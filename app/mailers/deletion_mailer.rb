@@ -1,4 +1,4 @@
-class DeletionMailer < ActionMailer::Base
+class DeletionMailer < ApplicationMailer
   include ApplicationHelper
 
   def notice(object, user, time)

@@ -1,4 +1,4 @@
-class DocumentMailer < ActionMailer::Base
+class DocumentMailer < ApplicationMailer
   include ApplicationHelper
   include FeaturesHelper
 

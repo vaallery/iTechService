@@ -1,4 +1,4 @@
-class RemnantsMailer < ActionMailer::Base
+class RemnantsMailer < ApplicationMailer
   include ApplicationHelper
 
   def warning(product, store)

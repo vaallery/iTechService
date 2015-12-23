@@ -1,4 +1,4 @@
-class MovementMailer < ActionMailer::Base
+class MovementMailer < ApplicationMailer
   include ApplicationHelper
 
   def notice(device)

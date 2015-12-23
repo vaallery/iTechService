@@ -1,4 +1,4 @@
-class ImportMailer < ActionMailer::Base
+class ImportMailer < ApplicationMailer
 
   def sales_import_log(import_logs)
     @import_logs = import_logs

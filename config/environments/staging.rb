@@ -73,7 +73,6 @@ ItechService::Application.configure do
   
   # config.action_mailer.default_url_options = { host: '' }
 
-  ActionMailer::Base.default from: 'iTechService <noreply@itechdevs.com>'
   config.action_mailer.default_url_options = { host: '5.100.75.201:3000' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
@@ -91,7 +90,7 @@ ItechService::Application.configure do
 
   config.middleware.use ExceptionNotifier,
                         email_prefix: '[!!! Exception iTechService] ',
-                        sender_address: %{"iTechService" <noreply@itechdevs.com>},
+                        sender_address: %{"iTechService #{ENV['DEPARTMENT_NAME']}" <noreply@itechdevs.com>},
                         exception_recipients: %w{kvn@itechdevs.com}
 
   Paperclip.options[:command_path] = '/usr/bin'
