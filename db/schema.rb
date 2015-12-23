@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151223043254) do
+ActiveRecord::Schema.define(:version => 20151223062129) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -579,7 +579,7 @@ ActiveRecord::Schema.define(:version => 20151223043254) do
     t.integer  "quantity",          :default => 1
     t.integer  "priority",          :default => 1
     t.decimal  "approximate_price"
-    t.string   "object_url"
+    t.text     "object_url"
   end
 
   add_index "orders", ["customer_id", "customer_type"], :name => "index_orders_on_customer_id_and_customer_type"
