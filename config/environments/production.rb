@@ -75,7 +75,7 @@ ItechService::Application.configure do
     vl: '192.168.0.1',
     kh: '192.168.4.200',
     sah: '192.168.9.180'
-  }[Department.current.code.to_sym]
+  }[(ENV['DEPARTMENT_CODE'] || 'vl').to_sym]
   config.action_mailer.default_url_options = { host: host }
   ActionMailer::Base.default from: 'iTechService <noreply@itechdevs.com>'
   config.action_mailer.delivery_method = :smtp
