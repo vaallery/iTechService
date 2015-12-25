@@ -1038,6 +1038,13 @@ ru:
       notified: Уведомлён (позвонили)
       archive: Архив
       all_statuses: Все статусы
+      short:
+        new: Новый
+        pending: Выполняется
+        done: Выполнен
+        canceled: Отменен
+        notified: Уведомлён
+        archive: Архив
     created: Заказ создан
     updated: Заказ изменён
     order_num: "Заказ №%{num}"

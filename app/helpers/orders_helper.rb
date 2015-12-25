@@ -71,4 +71,18 @@ module OrdersHelper
     end
   end
 
+  def button_to_change_order_status(order)
+    statuses = Order::STATUSES
+    statuses.delete 'canceled'
+    next_status = statuses[statuses.index(order.status).next]
+    if next_status.present?
+      name = t "orders.statuses.short.#{next_status}"
+      form_for order, html: {class: 'button_to'} do |f|
+        hidden_field_tag('order[status]', next_status) +
+        f.submit(name, class: 'btn btn-primary btn-small')
+      end
+    else
+      nil
+    end
+  end
 end

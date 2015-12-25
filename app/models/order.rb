@@ -77,12 +77,20 @@ class Order < ActiveRecord::Base
     status == 'done'
   end
 
+  def canceled?
+    status == 'canceled'
+  end
+
+  def archived?
+    status == 'archive'
+  end
+
   def done_at
     history_records.where({column_name: 'status', new_value: 'done'}).last.try :created_at
   end
 
   def self.search params
-    orders = Order.scoped
+    orders = Order.newest
 
     if (status_q = params[:status]).present?
       orders = orders.where status: status_q if STATUSES.include? status_q
