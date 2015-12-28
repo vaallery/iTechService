@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151228045616) do
+ActiveRecord::Schema.define(:version => 20151228052522) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -788,9 +788,10 @@ ActiveRecord::Schema.define(:version => 20151228045616) do
     t.integer  "repair_group_id"
     t.string   "name"
     t.decimal  "price"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.text     "client_info"
+    t.boolean  "is_positive_price", :default => false
   end
 
   add_index "repair_services", ["repair_group_id"], :name => "index_repair_services_on_repair_group_id"

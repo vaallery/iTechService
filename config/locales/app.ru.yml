@@ -355,6 +355,7 @@ ru:
       repair_service:
         client_info: 'Информация для клиента'
         spare_parts: 'Запчасти'
+        is_positive_price: 'Ненулевая стоимость'
 
       repair_task:
         repair_parts: 'Запчасти'
