@@ -721,7 +721,6 @@ ActiveRecord::Schema.define(:version => 20151228045616) do
     t.integer  "status"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.text     "comment"
   end
 
   add_index "purchases", ["contractor_id"], :name => "index_purchases_on_contractor_id"
