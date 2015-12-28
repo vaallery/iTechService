@@ -10,7 +10,7 @@ class Purchase < ActiveRecord::Base
   has_many :items, through: :batches
   accepts_nested_attributes_for :batches, allow_destroy: true, reject_if: lambda { |a| a[:price].blank? or a[:quantity].blank? or a[:item_id].blank? }
 
-  attr_accessible :batches_attributes, :contractor_id, :store_id, :date
+  attr_accessible :batches_attributes, :contractor_id, :store_id, :date, :comment
   validates_presence_of :contractor, :store, :status, :date
   validates_inclusion_of :status, in: Document::STATUSES.keys
   validates_associated :batches

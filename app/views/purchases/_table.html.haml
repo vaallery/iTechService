@@ -8,6 +8,7 @@
         %th= model_class.human_attribute_name(:contractor)
         %th= model_class.human_attribute_name(:store)
         %th= model_class.human_attribute_name(:total_sum)
+        %th= model_class.human_attribute_name(:comment)
         %th.actions
     %tbody
       - @purchases.each do |purchase|
@@ -17,6 +18,7 @@
           %td= link_to_if purchase.contractor.present?, purchase.contractor_name, contractor_path(purchase.contractor)
           %td= link_to_if purchase.store.present?, purchase.store_name, store_path(purchase.store)
           %td.number= human_currency purchase.total_sum
+          %td= purchase.comment
           %td.actions.btn-group
             = link_to_show_small purchase
             = link_to_edit_small purchase if can? :edit, purchase
