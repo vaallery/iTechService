@@ -3,7 +3,7 @@
     = link_back_to_index
     = document_presentation @deduction_act
 
-.dl.dl-horizontal
+%dl.dl-horizontal
   - if can? :manage, DeductionAct
     %dt= DeductionAct.human_attribute_name :status
     %dd= status_presentation @deduction_act

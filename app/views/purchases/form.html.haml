@@ -3,6 +3,7 @@
   = f.input :date, as: :my_datetime
   = f.association :contractor, as: :select
   = f.association :store, collection: Store.for_purchase.all
+  = f.input :comment, input_html: {rows: 5}
 
   %table#batches.enumerable.table.table-condensed.table-hover
     %caption

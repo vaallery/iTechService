@@ -11,6 +11,8 @@
     %dd= link_to @purchase.contractor_name, contractor_path(@purchase.contractor)
     %dt= Purchase.human_attribute_name :store
     %dd= link_to @purchase.store_name, store_path(@purchase.store)
+    %dt= DeductionAct.human_attribute_name :comment
+    %dd= @purchase.comment.blank? ? '-' : @purchase.comment
 
   %table#batches.table.table-condensed.table-hover
     %caption
