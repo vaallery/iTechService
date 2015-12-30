@@ -159,6 +159,7 @@ ru:
         history_records: История изменений
         imei: IMEI
         is_tray_present: 'Есть ли лоток?'
+        keeper: 'Хранитель'
         location: :activerecord.models.location
         location_id: :activerecord.models.location
         notify_client: Позвонить клиенту по готовности

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151228052522) do
+ActiveRecord::Schema.define(:version => 20151229055625) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -322,6 +322,7 @@ ActiveRecord::Schema.define(:version => 20151228052522) do
     t.integer  "department_id"
     t.boolean  "is_tray_present"
     t.integer  "carrier_id"
+    t.integer  "keeper_id"
   end
 
   add_index "devices", ["carrier_id"], :name => "index_devices_on_carrier_id"

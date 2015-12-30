@@ -132,4 +132,19 @@ module DevicesHelper
     end
   end
 
+  def button_to_set_keeper_of_device(device)
+    button_class = 'device-keeper-button btn btn-small'
+    hint = "#{Device.human_attribute_name(:keeper)}: "
+    if device.keeper.present?
+      button_class += ' btn-info'
+      hint += device.keeper.short_name
+    else
+      button_class += ' btn-default'
+      hint += '-'
+    end
+    form_for [:set_keeper, device], remote: true, html: {class: 'button_to device-keeper-form'} do |f|
+      # hidden_field_tag('device[keeper_id]', current_user.id) +
+      button_tag(glyph('user'), class: button_class, title: hint)
+    end
+  end
 end

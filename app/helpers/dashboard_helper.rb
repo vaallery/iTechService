@@ -58,7 +58,8 @@ module DashboardHelper
       end +
       content_tag(:td, class: 'device_task_action_column') do
         link_to_edit_device(device) +
-        link_to(icon_tag('file-text-alt'), device_device_notes_path(device), class: 'btn btn-small', remote: true)
+        link_to(icon_tag('file-text-alt'), device_device_notes_path(device), class: 'btn btn-small', remote: true) +
+        button_to_set_keeper_of_device(device)
       end
     end
   end
@@ -119,5 +120,4 @@ module DashboardHelper
       end.join.html_safe
     end.gsub('\n', '')
   end
-
 end

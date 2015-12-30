@@ -1,8 +1,8 @@
 class DevicesController < ApplicationController
   include DevicesHelper
   helper_method :sort_column, :sort_direction
-  load_and_authorize_resource only: [:index, :new, :edit, :create, :update, :destroy]
-  skip_load_resource except: [:index, :new, :edit, :create, :update, :destroy]
+  load_and_authorize_resource only: [:index, :new, :edit, :create, :update, :destroy, :set_keeper]
+  skip_load_resource except: [:index, :new, :edit, :create, :update, :destroy, :set_keeper]
   skip_authorize_resource only: :check_status
   skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
 
@@ -185,6 +185,13 @@ class DevicesController < ApplicationController
     @devices = Device.quick_search params[:quick_search]
     respond_to do |format|
       format.js { render nothing: true if @devices.count > 10 }
+    end
+  end
+
+  def set_keeper
+    @device.update_attribute :keeper_id, current_user.id
+    respond_to do |format|
+      format.js
     end
   end
 

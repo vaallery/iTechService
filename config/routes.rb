@@ -67,6 +67,7 @@ ItechService::Application.routes.draw do
     get :movement_history, on: :member
     get :quick_search, on: :collection
     post :create_sale, on: :member
+    put :set_keeper, on: :member, defaults: { format: 'js' }
     resources :device_notes, only: %i[index new create]
   end
 

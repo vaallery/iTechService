@@ -24,6 +24,7 @@ class Device < ActiveRecord::Base
   belongs_to :sale, inverse_of: :device
   belongs_to :case_color
   belongs_to :carrier
+  belongs_to :keeper, class_name: 'User'
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
   has_many :repair_tasks, through: :device_tasks
@@ -35,7 +36,7 @@ class Device < ActiveRecord::Base
   delegate :name, to: :department, prefix: true
   delegate :name, to: :location, prefix: true, allow_nil: true
 
-  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id
+  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id
   validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :department
   validates_presence_of :contact_phone, on: :create
   validates_presence_of :device_type, if: 'item.nil?'
