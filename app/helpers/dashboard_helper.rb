@@ -58,7 +58,8 @@ module DashboardHelper
       end +
       content_tag(:td, class: 'device_task_action_column') do
         link_to_edit_device(device) +
-        link_to(icon_tag('file-text-alt'), device_device_notes_path(device), class: 'btn btn-small', remote: true) +
+        notes_icon_name = device.device_notes.exists? ? 'file-text-alt' : 'file-alt'
+        link_to(glyph(notes_icon_name), device_device_notes_path(device), class: 'device-notes-button btn btn-small', remote: true) +
         button_to_set_keeper_of_device(device)
       end
     end

@@ -189,7 +189,8 @@ class DevicesController < ApplicationController
   end
 
   def set_keeper
-    @device.update_attribute :keeper_id, current_user.id
+    new_keeper_id = @device.keeper == current_user ? nil : current_user.id
+    @device.update_attribute :keeper_id, new_keeper_id
     respond_to do |format|
       format.js
     end

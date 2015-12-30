@@ -1,1 +1,3 @@
 hideModal();
+$device_row = $(".device_row[data-device-id=<%= @device.id %>]", '#actual_tasks_table');
+$device_row.find('.device-notes-button').replaceWith('<%= j link_to(glyph('file-text-alt'), device_device_notes_path(@device), class: 'device-notes-button btn btn-small', remote: true) %>');
