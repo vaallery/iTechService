@@ -155,6 +155,15 @@ $(document).on 'keydown', '#quick_search', (e)->
     else
       $('#quick_search_result>.active').removeClass('active')
 
+$(document).on 'keyup', 'input.capitalize', (event)->
+  input = event.target;
+  start = input.selectionStart;
+  end = input.selectionEnd;
+  str = input.value.toLowerCase().replace /^[\u00C0-\u1FFF\u2C00-\uD7FF\w]|\s[\u00C0-\u1FFF\u2C00-\uD7FF\w]/g, (letter)->
+    letter.toUpperCase();
+  input.value = str
+  input.setSelectionRange(start, end);
+
 $(document).on 'click', '.datetime_quick_select .time_link', (event)->
   $(this).closest('.datetime_quick_select').find('input').val($(this).data('value'))
   event.preventDefault()

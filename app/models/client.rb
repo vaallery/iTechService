@@ -29,7 +29,7 @@ class Client < ActiveRecord::Base
 
   attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :category, :client_characteristic_attributes
 
-  validates_presence_of :name, :phone_number, :full_phone_number, :category
+  validates_presence_of :name, :surname, :phone_number, :full_phone_number, :category
   validates_uniqueness_of :full_phone_number
   validates_uniqueness_of :card_number, unless: 'card_number.blank?'
   validates_inclusion_of :category, in: CATEGORIES.keys
