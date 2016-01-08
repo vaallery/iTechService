@@ -43,4 +43,11 @@ namespace :app do
     log.info "Task finished at #{end_time} and last #{duration} minutes."
     log.close
   end
+
+  desc "Set default value for device's 'is_tray_present'"
+  task set_tray_presence: :environment do
+    Device.find_each do |device|
+      device.update_column(:is_tray_present, false) if device.is_tray_present.nil?
+    end
+  end
 end
