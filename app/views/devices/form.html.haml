@@ -3,7 +3,7 @@
 = simple_form_for @device, html: { class: 'form-horizontal device_form' } do |f|
 
   - if @device.errors.any?
-    %p= @device.errors.full_messages.join '. '
+    .alert.alert-danger= @device.errors.full_messages.join '. '
 
   = f.full_error :ticket_number
 
