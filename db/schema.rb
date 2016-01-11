@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20151229055625) do
+ActiveRecord::Schema.define(:version => 20160111042812) do
 
   create_table "announcements", :force => true do |t|
     t.string   "content"
@@ -1086,6 +1086,7 @@ ActiveRecord::Schema.define(:version => 20151229055625) do
     t.integer  "store_id"
     t.integer  "department_id"
     t.integer  "session_duration"
+    t.string   "phone_number"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

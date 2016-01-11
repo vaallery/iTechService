@@ -127,7 +127,6 @@ ru:
         name: Имя
         orders: Заказы
         patronymic: Отчество
-        phone_number: Телефонный номер
         surname: Фамилия
 
       comment:
@@ -514,6 +513,7 @@ ru:
     name: Название
     number: Номер
     object: Объект
+    phone_number: Телефонный номер
     position: 'Позиция'
     price: 'Цена'
     prices: 'Цены'
