@@ -65,6 +65,11 @@
   %tr
     %td= Device.human_attribute_name :location
     %td= @device.location_name || '-'
+
+  %tr
+    %td= Device.human_attribute_name :keeper
+    %td= @device.keeper.try(:short_name) || '-'
+
   %tr
     %td= Device.human_attribute_name :return_at
     %td= human_datetime @device.return_at

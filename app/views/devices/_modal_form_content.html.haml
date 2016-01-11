@@ -29,6 +29,10 @@
     = f.association :location, collection: Location.allowed_for(current_user, @device), prompt: false
 
     .control-group
+      %label.control-label= Device.human_attribute_name :keeper
+      .controls= @device.keeper.try(:short_name) || '-'
+
+    .control-group
       %label.control-label= Device.human_attribute_name :case_color
       .controls= case_color_presentation @device.case_color
 
