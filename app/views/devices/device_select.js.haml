@@ -11,10 +11,10 @@
     $('#device_replaced').attr('disabled', 'disabled');
   }
   if(#{@device.has_imei?}){
-    $('.imei_input').removeClass('hidden');
+    $('.imei_input, .tray_input, .carrier_input').removeClass('hidden');
   }else{
     $('#device_imei').val('');
-    $('.imei_input').addClass('hidden')();
+    $('.imei_input, .tray_input, .carrier_input').addClass('hidden');
   }
 
   $('#client_devices .popover-content').html("#{j(device_tasks_list(@device))}");
