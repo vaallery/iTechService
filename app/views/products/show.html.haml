@@ -1,5 +1,9 @@
-= auto_header_tag @product, @product.name
 - model_class = Product
+.page-header
+  %h1
+    = link_back_to_index
+    = @product.name
+    %small= @product.product_group.name
 
 %dl.dl-horizontal
 

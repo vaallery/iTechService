@@ -1,4 +1,9 @@
-= auto_header_tag @product
+.page-header
+  %h1
+    = link_back_to_index
+    = @product.name
+    %small= @product.product_group.name
+
 = simple_form_for @product, html: { class: 'form-horizontal' } do |f|
   - if @product.errors.any?
     = @product.errors.full_messages
