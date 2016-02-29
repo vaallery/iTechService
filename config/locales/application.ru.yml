@@ -1,5 +1,62 @@
 ru:
 
+  announcements:
+    edit:
+      title: Редактирование оповещения
+    index:
+      title: Оповещения
+    new:
+      title: Новое оповещение
+    birthday: "%{time} день рождения у %{user}"
+    close_all: "Закрыть все оповещения"
+    close_orders: Закрыть заказы
+    coffee_made: Кофе готов!
+    coffee_order: "Кофе %{content}"
+    coffee_order_popover_title: Какой кофе приготовить?
+    created: Оповещение создано
+    device_return: "Обещали вернуть в %{time} %{device} %{ticket} осталось %{term}."
+    link: Оповещения
+    needs_help: нуждается в помощи!!!
+    protector_made: Плёночка наклеена!
+    updated: Оповещение изменено
+
+  banks:
+    index:
+      title: 'Банки'
+    edit:
+      title: 'Редактирование Банка'
+    new:
+      title: 'Новый Банк'
+    created: 'Банк создан'
+    updated: 'Банк изменён'
+
+  bonuses:
+    edit:
+      title: 'Редактирование Бонуса'
+    new:
+      title: 'Новый Бонус'
+    index:
+      title: 'Бонусы'
+    created: 'Бонус создан'
+    updated: 'Бонус изменён'
+
+  bonus_types:
+    edit:
+      title: 'Редактирование Типа бонуса'
+    new:
+      title: 'Новый Тип бонуса'
+    index:
+      title: 'Типы бонусов'
+    created: 'Тип бонуса создан'
+    updated: 'Тип бонуса изменён'
+
+  cash_operations:
+    cash_in: 'Внесение наличных'
+    cash_out: 'Выплата наличных'
+    created:
+      cash_in: 'Операция внесения в кассу проведена'
+      cash_out: 'Операция выплаты из кассы проведена'
+
   client_categories:
     edit:
       title: 'Редактирование Категории клиента'

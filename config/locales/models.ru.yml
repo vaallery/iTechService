@@ -13,36 +13,36 @@ ru:
       case_color: 'Цвет чехла'
       cash_drawer: 'Касса'
       cash_shift: 'Кассовая смена'
-      category: Категория
-      client: Клиент
+      category: 'Категория'
+      client: 'Клиент'
       client_category: 'Категория клиента'
-      comment: Комментарий
+      comment: 'Комментарий'
       contractor: 'Поставщик'
       deduction_act: 'Акт Списания'
       department: 'Подразделение'
-      device: Девайс
-      device_note: Заметка
-      device_task: Задача
-      device_type: Тип девайса
-      discount: Скидка
-      duty_day: Дежурство
-      feature: Характеристика
-      feature_type: Тип характеристики
-      gift_certificate: Подарочный сертификат
-      history_record: history_record
+      device: 'Девайс'
+      device_note: 'Заметка'
+      device_task: 'Задача'
+      device_type: 'Тип девайса'
+      discount: 'Скидка'
+      duty_day: 'Дежурство'
+      feature: 'Характеристика'
+      feature_type: 'Тип характеристики'
+      gift_certificate: 'Подарочный сертификат'
+      history_record: 'Запись истории'
       imported_sale: 'Продажа 1С'
-      info: Новость
-      installment_plan: Рассрочка
-      installment: Взнос
-      karma: Карма
-      location: Локация
+      info: 'Новость'
+      installment_plan: 'Рассрочка'
+      installment: 'Взнос'
+      karma: 'Карма'
+      location: 'Локация'
       media_order: 'Заказ медиа'
       movement_act: 'Акт Перемещения'
-      object: Обьект
-      order: Заказ
+      object: 'Обьект'
+      order: 'Заказ'
       payment: 'Оплата'
       payment_type: 'Тип оплаты'
-      price: Прайс
+      price: 'Прайс'
       price_type: "Категория цен"
       product: 'Продукт'
       product_group: 'Группа продуктов'
@@ -55,25 +55,25 @@ ru:
       repair_part: 'Запчасть'
       revaluation: 'Переоценка'
       revaluation_act: 'Акт переоценки'
-      salary: Зарплата
-      sale: Продажа
-      schedule_day: Рабочий день
-      setting: Параметр
+      salary: 'Зарплата'
+      sale: 'Продажа'
+      schedule_day: 'Рабочий день'
+      setting: 'Параметр'
       spare_part: 'Запчасть'
-      stolen_phone: Краденый телефон
+      stolen_phone: 'Краденый телефон'
       store: "Склад"
       supply_category: 'Категория снабжения'
       supply_request: 'Заявка'
       supply_report: 'Отчёт водителя'
-      task: Задача
+      task: 'Задача'
       top_salable: 'Ходовой товар'
-      user: Пользователь
+      user: 'Пользователь'
 
     attributes:
       announcement:
-        active: Ативный
-        kind: Тип
-        user: Пользователь
+        active: 'Ативный'
+        kind: 'Тип'
+        user: 'Пользователь'
 
       bonus:
         bonus_type: :activerecord.models.bonus_type
@@ -87,50 +87,50 @@ ru:
 
       ckeditor/asset:
         assetable: :activerecord.models.assetable
-        assetable_type: assetable_type
-        data_content_type: data_content_type
-        data_file_name: data_file_name
-        data_file_size: data_file_size
-        height: height
-        width: width
+        assetable_type: 'assetable_type'
+        data_content_type: 'data_content_type'
+        data_file_name: 'data_file_name'
+        data_file_size: 'data_file_size'
+        height: 'height'
+        width: 'width'
 
       ckeditor/attachment_file:
-        assetable: assetable
-        assetable_type: assetable_type  #g
-        data_content_type: data_content_type  #g
-        data_file_name: data_file_name  #g
-        data_file_size: data_file_size  #g
-        height: height  #g
-        width: width  #g
+        assetable: 'assetable'
+        assetable_type: 'assetable_type'  #g
+        data_content_type: 'data_content_type'  #g
+        data_file_name: 'data_file_name'  #g
+        data_file_size: 'data_file_size'  #g
+        height: 'height'  #g
+        width: 'width'  #g
 
       ckeditor/picture:
-        assetable: assetable  #g
-        assetable_type: assetable_type  #g
-        data_content_type: data_content_type  #g
-        data_file_name: data_file_name  #g
-        data_file_size: data_file_size  #g
-        height: height  #g
-        width: width  #g
+        assetable: 'assetable'  #g
+        assetable_type: 'assetable_type'  #g
+        data_content_type: 'data_content_type'  #g
+        data_file_name: 'data_file_name'  #g
+        data_file_size: 'data_file_size'  #g
+        height: 'height'  #g
+        width: 'width'  #g
 
       client:
-        admin_info: Информация админа
-        birthday: День рождения
-        card_number: Номер карты
+        admin_info: 'Информация админа'
+        birthday: 'День рождения'
+        card_number: 'Номер карты'
         client_characteristic: 'Характеристика'
         category: 'Категория'
-        comments: Комментарии
-        contact_phone: Телефон для связи
-        device: Девайс
-        devices: Девайсы
-        email: E-mail
-        full_phone_number: Федеральный телефонный номер
-        name: Имя
-        orders: Заказы
-        patronymic: Отчество
-        surname: Фамилия
+        comments: 'Комментарии'
+        contact_phone: 'Телефон для связи'
+        device: 'Девайс'
+        devices: 'Девайсы'
+        email: 'E-mail'
+        full_phone_number: 'Федеральный телефонный номер'
+        name: 'Имя'
+        orders: 'Заказы'
+        patronymic: 'Отчество'
+        surname: 'Фамилия'
 
       comment:
-        content: Содержание
+        content: 'Содержание'
         user: :activerecord.models.user
         user_id: :activerecord.models.user
 
@@ -149,122 +149,122 @@ ru:
         case_color_id: 'Чехол'
         client: :activerecord.models.client
         client_id: :activerecord.models.client
-        client_notified: Клиент уведомлён
-        comment: Комментарий
+        client_notified: 'Клиент уведомлён'
+        comment: 'Комментарий'
         contact_phone: 'Контактный номер'
         department: :activerecord.models.department
-        device_tasks: Список задач
-        done_at: Время завершения
-        history_records: История изменений
-        imei: IMEI
+        device_tasks: 'Список задач'
+        done_at: 'Время завершения'
+        history_records: 'История изменений'
+        imei: 'IMEI'
         is_tray_present: 'Есть ли лоток?'
         keeper: 'Хранитель'
         location: :activerecord.models.location
         location_id: :activerecord.models.location
-        notify_client: Позвонить клиенту по готовности
-        receiver: Приемщик
-        replaced: Заменен
+        notify_client: 'Позвонить клиенту по готовности'
+        receiver: 'Приемщик'
+        replaced: 'Заменен'
         return_at: "Время возврата"
-        security_code: Пароль
-        serial_number: Серийный номер
+        security_code: 'Пароль'
+        serial_number: 'Серийный номер'
         service_duration: "Длительность обслуживания"
-        status: Статус
-        tasks: Список задач
+        status: 'Статус'
+        tasks: 'Список задач'
         tech_notice: 'Для истинных технарей'
-        ticket_number: Номер талона
+        ticket_number: 'Номер талона'
         user: :activerecord.models.user
         user_id: :activerecord.models.user
 
       device_task:
-        cost: Стоимость
+        cost: 'Стоимость'
         device: :activerecord.models.device
         device_id: :activerecord.models.device
-        done: Выполнено
-        done_at: Время выполнения
-        history_records: История
+        done: 'Выполнено'
+        done_at: 'Время выполнения'
+        history_records: 'История'
         repair_tasks: 'Ремонтные работы'
         task: :activerecord.models.task
         task_id: :activerecord.models.task
 
       device_type:
-        ancestry: Предок
-        code_1c: Код 1С
-        expected_during: Ожидается в течении
-        qty_for_replacement: Доступно для замены
-        qty_replaced: Заменено
-        qty_reserve: Зарезервировано
-        qty_shop: На магазине
-        qty_store: На складе
+        ancestry: 'Предок'
+        code_1c: 'Код 1С'
+        expected_during: 'Ожидается в течении'
+        qty_for_replacement: 'Доступно для замены'
+        qty_replaced: 'Заменено'
+        qty_reserve: 'Зарезервировано'
+        qty_shop: 'На магазине'
+        qty_store: 'На складе'
 
       discount:
-        value: Величина
-        limit: Лимит
+        value: 'Величина'
+        limit: 'Лимит'
 
       duty_day:
-        day: День
-        kind: Тип
-        user: user
-        user_id: user
+        day: 'День'
+        kind: 'Тип'
+        user: 'Сотрудник'
+        user_id: 'Сотрудник'
 
       feature:
         value: 'Значение'
 
       feature_type:
-        code: Код
+        code: 'Код'
 
       gift_certificate:
-        consumed: Израсходовано
-        nominal: Номинал
+        consumed: 'Израсходовано'
+        nominal: 'Номинал'
 
       history_record:
-        column_name: Название атрибута
-        column_type: Тип атрибута
-        deleted_at: Время удаления
-        new_value: Новое значение
-        object: object  #g
-        object_type: Тип обьекта
-        old_value: Прежнее значение
+        column_name: 'Название атрибута'
+        column_type: 'Тип атрибута'
+        deleted_at: 'Время удаления'
+        new_value: 'Новое значение'
+        object: 'Объект'  #g
+        object_type: 'Тип обьекта'
+        old_value: 'Прежнее значение'
         user: :activerecord.models.user  #g
         user_id: :activerecord.models.user  #g
 
       imported_sale:
         device: :activerecord.models.device
-        device_type: Тип девайса
-        quantity: Количество
-        sold_at: Время продажи
+        device_type: 'Тип девайса'
+        quantity: 'Количество'
+        sold_at: 'Время продажи'
         value: "Цена"
 
       info:
-        important: Важно
-        is_archived: В архиве
-        recipient: Адресант
+        important: 'Важно'
+        is_archived: 'В архиве'
+        recipient: 'Адресант'
         recipient_id: :activerecord.attributes.info.recipient
-        title: Заголовок
+        title: 'Заголовок'
 
       installment_plan:
-        cost: Стоимость
-        issued_at: Выдана
+        cost: 'Стоимость'
+        issued_at: 'Выдана'
 
       installment:
         installment_plan: :activerecord.models.installment_plan
         installment_plan_id: :activerecord.models.installment_plan
-        paid_at: Внесен
-        value: Сумма
+        paid_at: 'Внесен'
+        value: 'Сумма'
 
       item:
-        barcode: Штрихкод
-        barcode_num: Номер штрихкода
+        barcode: 'Штрихкод'
+        barcode_num: 'Номер штрихкода'
 
       karma:
-        good: good  #g
+        good: 'good'  #g
         user: :activerecord.models.user  #g
 
       location:
-        ancestry: Предок
-        name: Название
-        position: Позиция
-        schedule: Отображать в календаре
-        users: Пользователи
+        ancestry: 'Предок'
+        name: 'Название'
+        position: 'Позиция'
+        schedule: 'Отображать в календаре'
+        users: 'Пользователи'
 
       media_order:
         content: 'Содержимое'
@@ -280,18 +280,18 @@ ru:
 
       order:
         approximate_price: 'Ориентировочная цена'
-        customer: Заказчик
-        customer_id: Заказчик
-        customer_type: Тип заказчика
-        desired_date: Желаемая дата
-        history_records: История
-        number: Номер
-        object: Обьект
-        object_kind: Тип обьекта
+        customer: 'Заказчик'
+        customer_id: 'Заказчик'
+        customer_type: 'Тип заказчика'
+        desired_date: 'Желаемая дата'
+        history_records: 'История'
+        number: 'Номер'
+        object: 'Обьект'
+        object_kind: 'Тип обьекта'
         object_url: 'Ссылка'
-        status: Статус
+        status: 'Статус'
         user: :activerecord.models.user
-        user_comment: Комментарий товароведа
+        user_comment: 'Комментарий товароведа'
 
       payment:
         kind: 'Вид'
@@ -305,8 +305,8 @@ ru:
         appraiser: 'Имя оценщика'
 
       price:
-        file: Файл
-        remote_file_url: Ссылка на файл
+        file: 'Файл'
+        remote_file_url: 'Ссылка на файл'
 
       product:
         actual_price: 'Текущая цена'
@@ -319,7 +319,7 @@ ru:
         features: 'Характеристики'
         items: 'Единицы'
         product_categroy: 'Категория'
-        product_group: Группа
+        product_group: 'Группа'
         purchase_price: 'Закупочная цена'
         quantity_in_store: 'Остаток на складе'
         related_products: 'Сопутствующие продукты'
@@ -361,10 +361,10 @@ ru:
         repair_parts: 'Запчасти'
 
       salary:
-        amount: Сумма
-        is_prepayment: Аванс
-        issued_at: Выдана
-        user: Сотрудник
+        amount: 'Сумма'
+        is_prepayment: 'Аванс'
+        issued_at: 'Выдана'
+        user: 'Сотрудник'
 
       sale:
         calculation_amount: 'Сумма чека'
@@ -381,14 +381,13 @@ ru:
         discount: 'Скидка'
 
       schedule_day:
-        day: День
-        hours: Часы
+        day: 'День'
+        hours: 'Часы'
 
       setting:
-        presentation: Представление
-        value: Значение
-        value_type: Тип значения
-
+        presentation: 'Представление'
+        value: 'Значение'
+        value_type: 'Тип значения'
       spare_part:
         price: 'Стоимость закупа'
 
@@ -406,13 +405,13 @@ ru:
         sum: 'Сумма'
 
       task:
-        cost: Стоимость
-        devices: Девайсы
-        duration: Длительность
-        location: Локация
+        cost: 'Стоимость'
+        devices: 'Девайсы'
+        duration: 'Длительность'
+        location: 'Локация'
         location_id: :activerecord.attributes.task.location
-        name: Название
-        role: Роль
+        name: 'Название'
+        role: 'Роль'
 
       timesheet_day:
         date: "Дата"
@@ -427,46 +426,46 @@ ru:
         type: 'Тип'
 
       user:
-        abilities: Возможности
-        announcements: Оповещение
-        authentication_token: authentication_token  #g
-        birthday: День рождения
-        card_number: Номер карты
-        comments: Комментарии
-        current_sign_in_at: Время авторизации
-        current_sign_in_ip: IP авторизации
-        devices: Девайсы
-        duty_days: Дежурные дни
-        email: E-mail
-        encrypted_password: encrypted_password  #g
-        hiring_date: Дата приема на работу
-        history_records: history_records  #g
-        is_fired: Уволен
+        abilities: 'Возможности'
+        announcements: 'Оповещение'
+        authentication_token: 'authentication_token'  #g
+        birthday: 'День рождения'
+        card_number: 'Номер карты'
+        comments: 'Комментарии'
+        current_sign_in_at: 'Время авторизации'
+        current_sign_in_ip: 'IP авторизации'
+        devices: 'Девайсы'
+        duty_days: 'Дежурные дни'
+        email: 'E-mail'
+        encrypted_password: 'encrypted_password'  #g
+        hiring_date: 'Дата приема на работу'
+        history_records: 'history_records'  #g
+        is_fired: 'Уволен'
         job_title: "Должность"
-        karmas: Карма
-        last_sign_in_at: Время предыдущей авторизации
-        last_sign_in_ip: IP предыдущей авторизации
-        login: Логин
+        karmas: 'Карма'
+        last_sign_in_at: 'Время предыдущей авторизации'
+        last_sign_in_ip: 'IP предыдущей авторизации'
+        login: 'Логин'
         location: :activerecord.models.location  #g
-        name: Имя
-        orders: Заказы
-        patronymic: Отчество
-        password: Пароль
-        password_confirmation: Подтверждение пароля
-        photo: Фотография
+        name: 'Имя'
+        orders: 'Заказы'
+        patronymic: 'Отчество'
+        password: 'Пароль'
+        password_confirmation: 'Подтверждение пароля'
+        photo: 'Фотография'
         position: "Порядок"
-        prepayment: Аванс
-        remember_created_at: remember_created_at  #g
-        reset_password_sent_at: reset_password_sent_at  #g
-        reset_password_token: reset_password_token  #g
-        role: Роль
-        salary_date: Дата зарплаты
-        schedule: Отображать график
-        schedule_days: Рабочие дни
+        prepayment: 'Аванс'
+        remember_created_at: 'remember_created_at'  #g
+        reset_password_sent_at: 'reset_password_sent_at'  #g
+        reset_password_token: 'reset_password_token'  #g
+        role: 'Роль'
+        salary_date: 'Дата зарплаты'
+        schedule: 'Отображать график'
+        schedule_days: 'Рабочие дни'
         session_duration: 'Длительность сессии (мин.)'
-        surname: Фамилия
-        username: Логин
-        wish: Пожелание
+        surname: 'Фамилия'
+        username: 'Логин'
+        wish: 'Пожелание'
 
     errors:
       models:
@@ -488,46 +487,46 @@ ru:
         product:
           no_retail_price: 'Нет розничной цены'
 
-    attributes:
-      client: 'Клиент'
-      client_category: 'Категория клиента'
-      comment: Комментарий
-      comments: 'Комментарии'
-      created_at: Время создания
-      color: Цвет
-      code: 'Код'
-      color: 'Цвет'
-      content: Содержание
-      date: 'Дата'
-      description: 'Описание'
-      created_at: Время создания
-      date: 'Дата'
-      department: :activerecord.models.department
-      department_id: :activerecord.models.department
-      device_type: :activerecord.models.device_type
-      device_type_id: :activerecord.models.device_type
-      fio: ФИО
-      id: '№'
-      imei: IMEI
-      kind: 'Вид'
-      name: Название
-      number: Номер
-      object: Объект
-      phone_number: Телефонный номер
-      position: 'Позиция'
-      price: 'Цена'
-      prices: 'Цены'
-      price_type: 'Категория цен'
-      priority: Приоритет
-      product_category: 'Категория продуктов'
-      quantity: 'Количество'
-      serial_number: Серийный номер
-      status: Статус
-      sum: Сумма
-      store: 'Склад'
-      store_items: 'Остатки'
-      sum: Сумма
-      updated_at: Время обновления
-      user: Пользователь
-      user_comment: Комментарий сотрудника
-      warranty_term: 'Гарантийный срок (мес.)'
+  attributes:
+    client: 'Клиент'
+    client_category: 'Категория клиента'
+    comment: 'Комментарий'
+    comments: 'Комментарии'
+    created_at: 'Время создания'
+    color: 'Цвет'
+    code: 'Код'
+    color: 'Цвет'
+    content: 'Содержание'
+    date: 'Дата'
+    description: 'Описание'
+    created_at: 'Время создания'
+    date: 'Дата'
+    department: :activerecord.models.department
+    department_id: :activerecord.models.department
+    device_type: :activerecord.models.device_type
+    device_type_id: :activerecord.models.device_type
+    fio: 'ФИО'
+    id: '№'
+    imei: 'IMEI'
+    kind: 'Вид'
+    name: 'Название'
+    number: 'Номер'
+    object: 'Объект'
+    phone_number: 'Телефонный номер'
+    position: 'Позиция'
+    price: 'Цена'
+    prices: 'Цены'
+    price_type: 'Категория цен'
+    priority: 'Приоритет'
+    product_category: 'Категория продуктов'
+    quantity: 'Количество'
+    serial_number: 'Серийный номер'
+    status: 'Статус'
+    sum: 'Сумма'
+    store: 'Склад'
+    store_items: 'Остатки'
+    sum: 'Сумма'
+    updated_at: 'Время обновления'
+    user: 'Пользователь'
+    user_comment: 'Комментарий сотрудника'
+    warranty_term: 'Гарантийный срок (мес.)'
