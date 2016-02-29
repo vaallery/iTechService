@@ -1,0 +1,9 @@
+ru:
+  salaries:
+
+    index:
+      title: 'Зарплаты'
+    new:
+      title: 'Выдача зарплаты'
+    edit:
+      title: 'Редактирование зарплаты'

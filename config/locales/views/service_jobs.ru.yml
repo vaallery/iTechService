@@ -1,0 +1,15 @@
+ru:
+  service_jobs:
+
+    edit:
+      title: 'Редактирование Работы'
+    index:
+      title: 'Работы'
+    new:
+      title: 'Новая Работа'
+    form:
+      not_accessible: "Не доступен"
+    client_notified: "Уведомлён"
+    to_archive: "В архив"
+    moved: '%{user} %{time} назад'
+    movement_history: "История перемещений"

@@ -1,0 +1,8 @@
+ru:
+  repair_services:
+    edit:
+      title: 'Редактирование Вида ремонта'
+    index:
+      title: 'Виды ремонта'
+    new:
+      title: 'Новый Вид ремонта'

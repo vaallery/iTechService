@@ -1,0 +1,8 @@
+ru:
+  locations:
+    edit:
+      title: 'Редактирование Локации'
+    new:
+      title: 'Новая Локация'
+    index:
+      title: 'Локации'

@@ -1,0 +1,20 @@
+ru:
+  flash:
+    actions:
+      create:
+        notice: "%{resource_name} создан."
+        alert: "%{resource_name} не может быть создан."
+      update:
+        notice: "%{resource_name} изменён."
+        alert: "%{resource_name} не может быть изменён."
+      destroy:
+        notice: "%{resource_name} уничтожен."
+        alert: "%{resource_name} не может быть уничтожен."
+    departments:
+      create:
+        success: 'Подразделение создано'
+        failure: 'Подразделение не создано'
+      update:
+        success: ''
+      destroy:
+        success: ''

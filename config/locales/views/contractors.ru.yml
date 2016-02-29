@@ -1,0 +1,8 @@
+ru:
+  contractors:
+    edit:
+      title: 'Редактирование Поставщика'
+    index:
+      title: 'Поставщики'
+    new:
+      title: 'Новый Поставщик'

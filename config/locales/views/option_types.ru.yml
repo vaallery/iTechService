@@ -1,0 +1,8 @@
+ru:
+  option_types:
+    edit:
+      title: 'Редактирование Типа опции'
+    index:
+      title: 'Типы опций'
+    new:
+      title: 'Новый Тип опции'

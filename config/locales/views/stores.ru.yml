@@ -1,0 +1,15 @@
+ru:
+  stores:
+    edit:
+      title: 'Редактирование Склада'
+    index:
+      title: 'Склады'
+    new:
+      title: 'Новый Склад'
+    kinds:
+      purchase: 'Закуп'
+      retail: 'Розница'
+#      goods: 'Товары'
+      spare_parts: 'Запчасти'
+      defect: 'Брак'
+      defect_sp: 'Брак запчастей'

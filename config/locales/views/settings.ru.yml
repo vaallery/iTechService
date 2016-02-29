@@ -1,0 +1,11 @@
+ru:
+  settings:
+    edit:
+      title: 'Редактирование параметра'
+    index:
+      title: 'Параметры'
+    new:
+      title: 'Новый параметр'
+    codes:
+      duck_plan: 'План по уткам'
+      duck_plan_url: 'Ссылка на План по уткам'

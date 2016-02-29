@@ -1,0 +1,13 @@
+ru:
+  departments:
+    index:
+      title: 'Подразделения'
+    new:
+      title: 'Новое Подразделение'
+    edit:
+      title: 'Редактирование Подразделения'
+    roles:
+      branch: 'Филиал'
+      main: 'Главное'
+      remote: 'Удалённое'
+      warehouse: 'Склад'

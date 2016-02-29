@@ -1,0 +1,8 @@
+ru:
+  cash_drawers:
+    edit:
+      title: 'Редактирование Кассы'
+    index:
+      title: 'Кассы'
+    new:
+      title: 'Новая Касса'

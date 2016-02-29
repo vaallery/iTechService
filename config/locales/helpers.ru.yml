@@ -1,0 +1,59 @@
+ru:
+  helpers:
+
+    select:
+      prompt: 'Выберите: '
+    submit:
+      create: 'Создать %{model}'
+      submit: 'Сохранить %{model}'
+      update: 'Обновить %{model}'
+      save: 'Сохранить'
+      document:
+        post: 'Провести'
+        movement_act: 'Акт перемещения'
+        revaluation_act: 'Акт переоценки'
+      item:
+        create: 'Создать Экземпляр'
+        update: 'Обновить Экземпляр'
+      product_category:
+        create: 'Создать Категорию продукта'
+        update: 'Обновить Категорию продукта'
+      cash_operation:
+        create: 'Провести Операцию'
+    links:
+      add: "Добавить"
+      cancel: 'Отмена'
+      close: "Закрыть"
+      confirm: 'Вы уверены?'
+      destroy: 'Удалить'
+      edit: 'Редактировать'
+      new: 'Создать'
+      reset: "Сбросить"
+      show: 'Просмотр'
+      ticket: "Талон"
+      scan: "Сканировать"
+      import: "Импортировать"
+      done: "Готово"
+    placeholders:
+      client_input: 'Имя / телефон / карта'
+      item: 'Серийный номер / IMEI'
+      phone: "6, 7, 10 или 11 цифр"
+      search: "Поиск"
+    buttons:
+      copy_client_phone: 'Копировать номер клиента'
+      in_time: 'Через'
+      scan:
+        gift_certificate: 'Сканировать Подарочный сертификат'
+    datetime_select:
+      x_minutes:
+        one: ! '%{count} минуту'
+        few: ! '%{count} минуты'
+        many: ! '%{count} минут'
+        other: ! '%{count} минут'
+      x_hours:
+        one: ! '%{count} час'
+        few: ! '%{count} часа'
+        many: ! '%{count} часов'
+        other: ! '%{count} часов'
+    title:
+      scanning: "Сканирование"

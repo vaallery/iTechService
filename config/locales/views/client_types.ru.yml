@@ -1,0 +1,8 @@
+ru:
+  client_types:
+    edit:
+      title: 'Редактирование Типа клиента'
+    new:
+      title: 'Новый Тип клиента'
+    index:
+      title: 'Типы клиентов'

@@ -1,0 +1,15 @@
+ru:
+  quick_orders:
+    title: 'Быстрый заказ №%{num}'
+    set_done: "Выполнен"
+    index:
+      title: 'Быстрые заказы'
+      done: "Выполненные"
+    new:
+      title: 'Новый Быстрый заказ'
+    edit:
+      title: 'Редактирование Быстрого заказа'
+    device_kinds:
+      iphone: 'iPhone'
+      ipad: 'iPad'
+      ipod: 'iPod'

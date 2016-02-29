@@ -1,0 +1,14 @@
+ru:
+  product_categories:
+    edit:
+      title: 'Редактирование Категории продуктов'
+    index:
+      title: "Категории продуктов"
+    new:
+      title: 'Новая Категория продуктов'
+    kinds:
+      device: 'Техника'
+      accessory: 'Аксессуар'
+      service: 'Услуга'
+      film: 'Плёнка'
+      spare_part: 'Запчасть'

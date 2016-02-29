@@ -1,0 +1,8 @@
+ru:
+  device_types:
+    edit:
+      title: 'Редактирование Типа девайса'
+    index:
+      title: 'Типы девайсов'
+    new:
+      title: 'Новый Типа девайса'

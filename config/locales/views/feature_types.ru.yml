@@ -1,0 +1,12 @@
+ru:
+  feature_types:
+    edit:
+      title: 'Редактирование Типа характеристики'
+    index:
+      title: 'Типы характеристик'
+    new:
+      title: 'Новый Тип характеристики'
+    kinds:
+      imei: 'IMEI'
+      serial_number: 'Серийный номер'
+      other: 'Прочее'

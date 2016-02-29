@@ -1,0 +1,8 @@
+ru:
+  devices:
+    edit:
+      title: 'Редактирование Девайса'
+    index:
+      title: 'Девайсы'
+    new:
+      title: 'Новый Девайс'

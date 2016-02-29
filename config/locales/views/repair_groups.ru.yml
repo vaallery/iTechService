@@ -1,0 +1,8 @@
+ru:
+  repair_groups:
+    edit:
+      title: 'Редактирование Группы ремонта'
+    index:
+      title: 'Группы ремонта'
+    new:
+      title: 'Новая Группа ремонта'

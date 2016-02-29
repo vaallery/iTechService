@@ -1,0 +1,6 @@
+ru:
+  case_pictures:
+    index:
+      title: 'Картинки для чехлов'
+      submit: 'Создать'
+      contour: 'Контур'

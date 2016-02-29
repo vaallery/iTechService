@@ -1,0 +1,25 @@
+ru:
+
+  clients:
+    categories:
+      usual: 'Простой'
+      regular: 'Постоянный'
+      special: 'Супер'
+      friend: 'Друг'
+    edit:
+      title: 'Редактирование Клиента'
+    new:
+      title: 'Новый Клиент'
+    index:
+      title: 'Клиенты'
+      search_placeholder: 'Телефон или имя'
+    show:
+      date: "Дата"
+      new_device: "Новый девайс"
+      new_sale: "Новая продажа"
+    search:
+      title: 'Поиск клиента'
+    choose:
+      title: "Поиск клиента"
+    search_placeholder: "Телефон / Имя / Номер карты"
+    questionnaire: 'Анкета'

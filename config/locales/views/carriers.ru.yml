@@ -1,0 +1,9 @@
+ru:
+  carriers:
+
+    edit:
+      title: 'Редактирование Оператора'
+    index:
+      title: 'Операторы'
+    new:
+      title: 'Новый Оператор'

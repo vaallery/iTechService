@@ -1,0 +1,15 @@
+ru:
+  infos:
+    edit:
+      title: Редактирование новости
+    new:
+      title: Новая новость
+    index:
+      archive_link: Архив
+      archive_title: Архив новостей
+      actual_news_link: Актуальные новости
+      title: Новости
+      title_wiki: "Wiki"
+    kinds:
+      news: 'Новость'
+      wiki: 'Wiki'

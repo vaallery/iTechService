@@ -1,0 +1,22 @@
+ru:
+  announcements:
+
+    edit:
+      title: Редактирование оповещения
+    index:
+      title: Оповещения
+    new:
+      title: Новое оповещение
+
+    birthday: "%{time} день рождения у %{user}"
+    close_all: "Закрыть все оповещения"
+    close_orders: Закрыть заказы
+    coffee_made: Кофе готов!
+    coffee_order: "Кофе %{content}"
+    coffee_order_popover_title: Какой кофе приготовить?
+    created: Оповещение создано
+    device_return: "Обещали вернуть в %{time} %{device} %{ticket} осталось %{term}."
+    link: Оповещения
+    needs_help: нуждается в помощи!!!
+    protector_made: Плёночка наклеена!
+    updated: Оповещение изменено

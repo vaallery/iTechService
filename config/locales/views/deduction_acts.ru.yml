@@ -1,0 +1,8 @@
+ru:
+  deduction_acts:
+    edit:
+      title: 'Редактирование Акта списания'
+    new:
+      title: 'Новый Акт списания'
+    index:
+      title: 'Акты списания'

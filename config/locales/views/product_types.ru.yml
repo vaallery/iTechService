@@ -1,0 +1,10 @@
+ru:
+  product_types:
+    edit:
+      title: 'Редактирование Типа продукта'
+    index:
+      title: 'Типы Продуктов'
+    new:
+      title: 'Новый Тип продукта'
+    form:
+      product_options: "Опции"

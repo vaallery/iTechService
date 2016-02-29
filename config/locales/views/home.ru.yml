@@ -1,0 +1,10 @@
+ru:
+
+  home:
+    index:
+      new_device: :service_jobs.new.title
+      current_service_jobs: 'Текущие задачи'
+      done_service_jobs: 'Готовые устройства'
+      current_orders: 'Текущие заказы'
+    current_service_jobs:
+      moved_title: 'Перемещён'

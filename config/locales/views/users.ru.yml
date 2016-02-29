@@ -1,0 +1,47 @@
+ru:
+  users:
+
+    index:
+      title: 'Пользователи'
+
+    edit:
+      title: Редактирование пользователя
+    form:
+      info: "Информация"
+      schedule: "График"
+      account: "Учётка"
+    index:
+      title: Пользователи
+      all: "Все"
+      schedule: "График"
+      timesheet: "Табель"
+    new:
+      title: Новый пользователь
+    show:
+      received: "Принят"
+    roles:
+      admin: Админ
+      api: API
+      driver: 'Водитель'
+      developer: 'Разработчик'
+      engraver: 'Гравировщик'
+      manager: Менеджер
+      marketing: Маркетолог
+      media: Медийщик
+      software: Софтер
+      superadmin: Супер админ
+      supervisor: Супервайзер
+      technician: Технарь
+      universal: 'Универсальный солдат'
+    abilities:
+      manage_salary: Редактировать зарплату
+      manage_wiki: Редактировать Wiki
+      print_receipt: "Печатать чеки"
+      manage_timesheet: "Редактировать табель"
+      sync_data: 'Синхронизировать данные'
+    duty_schedule: "График дежурств"
+    duty_info: "Сегодня дежурный день!"
+    job_schedule: "График работы"
+    rating: "Рейтинг"
+    schedule: "График"
+    timesheet: 'Табель'

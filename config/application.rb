@@ -37,6 +37,7 @@ module ItechService
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :ru
 
     # Configure the default encoding used in templates for Ruby 1.9.
@@ -60,8 +61,12 @@ module ItechService
     config.active_record.whitelist_attributes = true
 
     config.generators do |g|
+      g.jbuilder = false
       g.assets = false
       g.helper = false
+      g.decorator = false
+      g.template_engine :slim
+      g.test_framework :minitest, spec: false, fixture: false, fixture_replacement: :factory_girl
     end
 
     # Enable the asset pipeline
@@ -80,5 +85,7 @@ module ItechService
 
     config.paths.add 'app/api', glob: '**/*.rb'
     config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
+
+    config.logger = Logger.new config.paths['log'].first, 5, 50*1024
   end
 end

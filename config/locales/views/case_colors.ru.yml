@@ -1,0 +1,8 @@
+ru:
+  case_colors:
+    edit:
+      title: 'Редактирование Цвета чехла'
+    index:
+      title: 'Цвета чехлов'
+    new:
+      title: 'Новый Цвет чехла'

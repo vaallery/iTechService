@@ -1,0 +1,8 @@
+ru:
+  purchases:
+    edit:
+      title: 'Редактирование Прихода'
+    index:
+      title: 'Приходы'
+    new:
+      title: 'Новый Приход'

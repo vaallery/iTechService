@@ -1,0 +1,8 @@
+ru:
+  media_orders:
+    edit:
+      title: 'Редактирование Заказа медиа'
+    new:
+      title: 'Новый Заказ медиа'
+    index:
+      title: 'Заказы медиа'

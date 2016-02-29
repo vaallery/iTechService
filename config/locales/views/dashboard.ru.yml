@@ -1,0 +1,16 @@
+ru:
+  dashboard:
+
+    index:
+      new_service_job: 'Приёмка Девайса'
+      actual_service_jobs: 'Текущие Работы'
+      my_service_jobs: 'Мои Работы'
+      done_service_jobs: 'Готовые Работы'
+      current_orders: 'Текущие Заказы'
+
+    actual_service_jobs:
+      client_comment: 'Клиент / Комментарий'
+      device_tasks: 'Устройство / Задачи'
+      everywhere: 'Локация (везде)'
+      moved_title: 'Перемещён'
+      search_placeholder: "Поиск"
