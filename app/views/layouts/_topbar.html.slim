@@ -1,0 +1,22 @@
+nav#topbar.navbar.navbar-default.navbar-fixed-top@navigation
+  .container-fluid
+    span.current_department = current_department.name
+    span.current_user = prac current_user, :icon_name_link
+    span.karma = link_to karma_tag(current_user), rating_users_path
+    /span.duck_plan = duck_plan_tag
+    /span.global_search_form
+    /  = form_tag global_search_path, method: :get, remote: true, id: 'global_search_form',
+    /                                                             class: 'navbar-form', role: 'search' do
+    /    .form-group
+    /      = text_field_tag :search, nil, class: 'form-control', placeholder: t('.search')
+    /  ul.unstyled#global_search_result
+
+    span.pull-right
+      /= header_link_to_scan_barcode
+      /- #= header_link_for_device_returning
+      /= header_link_for_coffee
+      /= header_link_to_announce
+      /= header_link_to_salaries if can? :manage, Salary
+      /= header_karma_button if can? :manage, Karma
+      /= menu_item icon_tag(:lock), destroy_user_session_path, method: :delete, remote: true, id: 'lock_session'
+      span.sign_out = link_to icon('sign-out'), destroy_user_session_path, method: :delete

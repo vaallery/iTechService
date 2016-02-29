@@ -18,31 +18,24 @@
     = favicon_link_tag 'logo2.png'
 
   %body
-    = yield :header
-    = spinner_tag
-    = yield :notifications
-    .container-fluid
-      #flash_place= bootstrap_flash
-      .row-fluid
-        .span12
-          = yield
-    = yield :new_device_popup
-    = yield :footer
-    #card_sign_in.modal-backdrop.fade
-      - if user_signed_in?
-        %a#unlock_session= glyph(:unlock)
-        = current_user.short_name
-    #barcode_reader.modal-backdrop.fade
-      #barcode_reader_inner.input-prepend
-        = link_to t('helpers.links.cancel'), '#', id: 'cancel_barcode_scan', class: 'btn'
-        = text_field_tag 'barcode_number', nil, id: 'barcode_field', autofocus: true
+    - if device_controller?
+      = yield
+    - else
+      = render 'header'
+      = spinner_tag
+      = render 'notifications'
 
-    #client_card_reader.modal-backdrop.fade
-      = link_to t('helpers.links.cancel'), '#', id: 'cancel_client_card_scan', class: 'btn'
+      .container-fluid
+        #flash_place= bootstrap_flash
+        .row-fluid
+          .span12
+            = yield
+      = render 'scanner'
 
-    #card_scanner.modal-backdrop.fade
-      #card_scanner_inner
-        = link_to t('helpers.links.cancel'), '#', id: 'cancel_card_scan', class: 'btn'
+      = subscribe_to '/announcements'
+      = subscribe_to '/devices/new'
+      = subscribe_to '/devices/update'
+      = subscribe_to '/chat/new'
 
     /
       Javascripts
