@@ -1,0 +1,16 @@
+ru:
+  mail:
+    movement:
+      subject: "Новый девайс %{device}"
+    remnants:
+      warn_subject: 'Заканчивается %{product}'
+      warning_text: 'На складе %{store} осталось %{quantity} %{product}'
+    deletion:
+      subject: "Айс. Удаление объекта."
+    product_import_log:
+      subject: "%{type} import log %{time}"
+    document:
+      deduction_notification: "Акт списания"
+    orders:
+      new: 'Новый заказ'
+      presentation: 'Заказ № %{number} от %{time}'

@@ -1,0 +1,11 @@
+ru:
+  prices:
+    created: 'Прайс создан'
+    updated: 'Прайс изменён'
+    edit:
+      title: 'Редактирование прайса'
+    new:
+      title: 'Новый прайс'
+    index:
+      title: 'Прайсы'
+    link: 'Прайсы'

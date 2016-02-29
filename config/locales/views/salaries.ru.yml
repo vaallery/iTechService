@@ -1,9 +1,12 @@
 ru:
   salaries:
-
-    index:
-      title: 'Зарплаты'
-    new:
-      title: 'Выдача зарплаты'
     edit:
       title: 'Редактирование зарплаты'
+    index:
+      title: 'Зарплата'
+    new:
+      title: 'Выдача зарплаты'
+    created: 'Создано'
+    issue: 'Выдать зарплату'
+    popover_title: 'Скоро зарплата'
+    updated: 'Изменено'

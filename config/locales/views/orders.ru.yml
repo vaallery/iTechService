@@ -1,37 +1,41 @@
 ru:
   orders:
     edit:
-      title: Редактирование заказа
+      title: 'Редактирование заказа'
     new:
-      title: Новый заказ
+      title: 'Новый заказ'
     index:
-      title: 'Заказы'
-      spare_parts: "Запчасти"
-      not_spare_parts: "Не запчасти"
-      archive: "Архив"
       search_number_placeholder: "Номер заказа"
       search_customer_placeholder: "Заказчик"
       search_object_placeholder: "Объект"
       search_user_placeholder: "Сотрудник"
-    show:
-      ticket: "Талон"
-    pdf:
-      notice_order: 'Сохраняйте этот талон до получения Вашего заказа.'
-      check_status_order: 'Вы можете проверить статус заказа по адресу: www.itechstore.ru/check.'
+      title: 'Заказы'
+    link: 'Заказы'
     object_kinds:
-      accessory: Аксессуар
-      all_kinds: Все типы
-      device: Техника
-      misc: Прочее
-      soft: Софт
-      spare_part: Запчасть
+      accessory: 'Аксессуар'
+      all_kinds: 'Все типы'
+      device: 'Техника'
+      misc: 'Прочее'
+      soft: 'Софт'
+      spare_part: 'Запчасть'
     statuses:
-      draft: Новый
-      pending: Выполняется
-      done: Выполнен (отправлен в магазин)
-      canceled: Отменен
-      notified: Уведомлён (позвонили)
-      archived: Архив
-      all_statuses: Все статусы
-    order_number: 'Заказ №%{number}'
-    presentation: 'Заказ №%{number} от %{time}'
+      new: 'Новый'
+      pending: 'Выполняется'
+      done: 'Выполнен (отправлен в магазин)'
+      canceled: 'Отменен'
+      notified: 'Уведомлён (позвонили)'
+      archive: 'Архив'
+      all_statuses: 'Все статусы'
+      short:
+        new: 'Новый'
+        pending: 'Выполняется'
+        done: 'Выполнен'
+        canceled: 'Отменен'
+        notified: 'Уведомлён'
+        archive: 'Архив'
+    created: 'Заказ создан'
+    updated: 'Заказ изменён'
+    order_num: "Заказ №%{num}"
+    not_found: "Заказ не найден"
+    spare_parts: "Запчасти"
+    not_spare_parts: "Не запчасти"

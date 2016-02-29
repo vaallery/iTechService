@@ -1,16 +1,22 @@
 ru:
   dashboard:
+    actual_orders: 'Текущие заказы'
+    actual_requests: "Текущие запросы"
+    actual_tasks: "Текущие задачи"
+    goods_for_sale: "Техника для продажи"
+    ready_devices: "Готовые девайсы"
+    misc: 'Прочее'
+    moved_title: 'Перемещен'
+    new_device: 'Новый Девайс'
+    new_device_message: 'Новый девайс!!!'
+    new_info: 'Создать новость'
+    new_order: 'Новый Заказ'
+    new_user: 'Новый пользователь'
+    params: 'Параметры'
+    new_sale: "Новая Продажа"
+    references: "Справочники"
+    print_tags:
+      title: "Печать штрихкодов"
 
-    index:
-      new_service_job: 'Приёмка Девайса'
-      actual_service_jobs: 'Текущие Работы'
-      my_service_jobs: 'Мои Работы'
-      done_service_jobs: 'Готовые Работы'
-      current_orders: 'Текущие Заказы'
-
-    actual_service_jobs:
-      client_comment: 'Клиент / Комментарий'
-      device_tasks: 'Устройство / Задачи'
-      everywhere: 'Локация (везде)'
-      moved_title: 'Перемещён'
-      search_placeholder: "Поиск"
+      print: "Печатать"
+      choose_product: "Выбрать продукт"

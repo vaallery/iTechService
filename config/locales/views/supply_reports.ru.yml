@@ -1,0 +1,12 @@
+ru:
+  supply_reports:
+     created: 'Отчёт водителя создан'
+     updated: 'Отчёт водителя изменён'
+     index:
+       title: 'Отчёты водителя'
+     new:
+       title: 'Новый Отчёт водителя'
+     edit:
+       title: 'Редактирование Отчёта водителя'
+     presentation: 'Отчёт водителя №%{num} от %{date}'
+     add_supply: 'Добавить объект'

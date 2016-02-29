@@ -6,6 +6,11 @@ ru:
       title: 'Параметры'
     new:
       title: 'Новый параметр'
-    codes:
-      duck_plan: 'План по уткам'
-      duck_plan_url: 'Ссылка на План по уткам'
+    created: 'Параметр создан'
+    link: 'Параметры'
+    updated: 'Параметр изменён'
+    address: 'Адрес'
+    address_for_check: 'Адрес на чеке'
+    contact_phone: 'Контактный телефон'
+    ticket_prefix: 'Префикс талона'
+    schedule: 'График работы'

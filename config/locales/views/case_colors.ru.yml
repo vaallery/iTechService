@@ -1,8 +1,11 @@
 ru:
   case_colors:
-    edit:
-      title: 'Редактирование Цвета чехла'
+    created: 'Цвет чехла создан'
+    updated: 'Цвет чехла изменён'
+    link: :case_colors.index.title
     index:
       title: 'Цвета чехлов'
+    edit:
+      title: 'Редактирование Цвета чехла'
     new:
       title: 'Новый Цвет чехла'

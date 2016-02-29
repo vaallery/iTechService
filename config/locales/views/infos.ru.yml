@@ -1,15 +1,14 @@
 ru:
   infos:
+    created: 'Новость создана'
+    updated: 'Новость изменена'
     edit:
-      title: Редактирование новости
+      title: 'Редактирование новости'
     new:
-      title: Новая новость
+      title: 'Новая новость'
     index:
-      archive_link: Архив
-      archive_title: Архив новостей
-      actual_news_link: Актуальные новости
-      title: Новости
-      title_wiki: "Wiki"
-    kinds:
-      news: 'Новость'
-      wiki: 'Wiki'
+      archive_link: 'Архив'
+      archive_title: 'Архив новостей'
+      actual_news_link: 'Актуальные новости'
+      title: 'Новости'
+    link: 'Новости'

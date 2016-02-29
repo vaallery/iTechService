@@ -1,0 +1,5 @@
+ru:
+  duty_days:
+    kinds:
+      kitchen: "на кухне"
+      salesroom: "в зале"

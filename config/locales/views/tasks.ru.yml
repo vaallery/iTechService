@@ -1,0 +1,11 @@
+ru:
+  tasks:
+    created: 'Задача создана'
+    updated: 'Задача изменена'
+    edit:
+      title: 'Редактирование задачи'
+    new:
+      title: 'Новая задача'
+    index:
+      title: 'Задачи'
+    link: 'Задачи'

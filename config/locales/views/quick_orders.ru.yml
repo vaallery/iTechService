@@ -1,9 +1,13 @@
 ru:
   quick_orders:
+    created: 'Быстрый заказ создан'
+    updated: 'Быстрый заказ изменён'
+    link: :quick_orders.index.title
     title: 'Быстрый заказ №%{num}'
     set_done: "Выполнен"
     index:
       title: 'Быстрые заказы'
+      pending: "Текущие"
       done: "Выполненные"
     new:
       title: 'Новый Быстрый заказ'

@@ -1,0 +1,16 @@
+ru:
+  payment_types:
+    created: 'Способ оплаты создан'
+    updated: 'Способ оплаты изменён'
+    index:
+      title: 'Способы оплаты'
+    new:
+      title: 'Новый Способ оплаты'
+    edit:
+      title: 'Редактирование Способа оплаты'
+    kinds:
+      cash: 'Наличный'
+      cashless: 'Безналичный'
+      mixed: 'Смешанный'
+      credit: 'Кредит'
+      gift_card: 'Подарочная карта'

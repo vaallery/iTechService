@@ -1,0 +1,95 @@
+ru:
+  reports:
+    title: 'Отчёты'
+    average_duration: Средняя длительность, мин.
+    choose: Выберите отчет
+    clients_count: Количество клиентов
+    done_at: Выполнен
+    duration: Длительность, мин.
+    includes: Из них
+    qty: Количество
+    qty_paid: платных
+    qty_free: бесплатных
+    moved: Перемещено
+    moved_at: Перемещен
+    new_clients_count: Количество новых клиентов
+    total: Всего
+    period: Период
+    received: Принято
+    received_done: готовы
+    received_archived: выданы
+    sum: Сумма
+    remnants: "Остатки"
+    done_orders:
+      title: Выполненные заказы
+    clients:
+      title: Новые клиенты
+    device_types:
+      title: Принятые девайсы по типам
+    devices_archived:
+      title: 'Девайсы, переведённые в архив'
+      archived: "Переведено в архив"
+    devices_movements:
+      title: Перемещения девайсов
+    salary:
+      title: Отчет по зарплате
+    tasks_duration:
+      title: Длительность выполнения задач
+    done_tasks:
+      title: Выполненные задачи
+    users:
+      title: Принятые девайсы по сотрудникам
+    sales:
+      title: "Отчет по продажам"
+      time: "Время"
+      product: "Продукт"
+      quantity: "Количество"
+      price: "Цена"
+      sum: "Сумма"
+      discount: "Скидка"
+      client: "Покупатель"
+      user: "Продавец"
+    supply:
+      title: 'Отчёт водителя'
+    few_remnants_goods:
+      title: "Заканчивающийся товар"
+    few_remnants_spare_parts:
+      title: 'Заканчивающиеся запчасти'
+    payments:
+      title: "Отчёт по платежам"
+    quick_orders:
+      title: 'Отчёт по быстрым заказам'
+    repair_jobs:
+      title: 'Отчёт по выполненным техническим работам'
+      group: "Вид устройства"
+      service: "Вид работы"
+      quantity: "Кол-во"
+      undone: 'Невыполненные'
+      with_parts: 'с использованием запчастей'
+      without_parts: 'без использования запчастей'
+      without_payment: 'без оплаты'
+    tasks_undone:
+      title: 'Отчёт по невыполненным задачам'
+      tasks_devices: "Задача / Девайс"
+      quantity_comment: "Кол-во / Комментарий"
+    technicians_jobs:
+      title: "Отчёт работ технических специалистов"
+      user: 'Имя тех. специалиста'
+      quantity: "Количество работ"
+      sum: "Сумма наценки работ"
+    remnants:
+      title: 'Отчёт по остаткам'
+      name: 'Номенклатура'
+      quantity: 'Остаток'
+      purchase_price: 'Закупочная цена'
+      price: 'Цена'
+      sum: 'Розн. сумма остатка'
+    margin:
+      title: 'Отчёт по наценке'
+      kind: "Вид"
+      kinds:
+        repair: 'Ремонт'
+        service: 'Услуги'
+        sale: 'Продажи'
+    device_orders:
+      title: "Отчёт по заказам на технику"

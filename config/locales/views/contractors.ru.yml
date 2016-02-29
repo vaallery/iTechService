@@ -1,8 +1,11 @@
 ru:
   contractors:
-    edit:
-      title: 'Редактирование Поставщика'
+    created: 'Поставщик создан'
+    updated: 'Поставщик изменён'
+    link: :contractors.index.title
     index:
       title: 'Поставщики'
     new:
       title: 'Новый Поставщик'
+    edit:
+      title: 'Редактирование Поставщика'

@@ -1,0 +1,14 @@
+ru:
+  cash_shifts:
+    close: 'Закрыть смену'
+    errors:
+      already_closed: "Смена уже закрыта"
+    pdf:
+      title: "Отчёт кассовой смены №%{num}"
+      sales_section: "ПРОДАЖИ:"
+      sales: "ПРОДАЖ"
+      pay_in: 'ВНЕСЕНИЕ'
+      pay_out: "ВЫПЛАТА"
+      returns: 'ВОЗВРАТОВ ПРОДАЖ'
+      encashment: "ИНКАССАЦИЯ"
+      shift_total: "СМЕННЫЙ ИТОГ ПРОДАЖ"

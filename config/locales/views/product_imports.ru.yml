@@ -1,6 +1,9 @@
 ru:
   product_imports:
-    new:
+    form:
+      do_import: "Импортировать"
+      importing: "Импортирую..."
+
       title: "Импорт продуктов"
       remnants_file: "Файл с остатками"
       purchases_file: "Файл с закупами"

@@ -1,0 +1,78 @@
+ru:
+  sales:
+    kinds:
+      sale: 'Продажа'
+      return: 'Возврат'
+      return_check: 'Возврат чека'
+    edit:
+      title: "Редактирование Продажы"
+    index:
+      import_link: 'Импорт'
+      title: 'Продажи'
+      client_search_placeholder: "Клиент: телефон | имя | карта"
+      device_search_placeholder: "Девайс: серийник | IMEI"
+      user_search_placeholder: "Сотрудник"
+      sale_search_placeholder: "№"
+    new:
+      title: "Новая Продажа"
+    errors:
+      out_of_stock: 'Товара нет в наличии'
+      unavailable_discount: 'не допустима'
+      deleting_posted: 'Невозможно удалить проведённую Продажу.'
+      item_already_present: '%{item} уже есть на складе %{store}'
+      no_payment_with_certificate: "Отсутствует платёж подарочным сертификатом"
+      create_gift_certificate_fail: "Ошибка при создании подарочного сертификата"
+    check_pdf:
+      discount: 'Скидка'
+      greeting: 'ДОБРО ПОЖАЛОВАТЬ!'
+      qty: 'Кол'
+      name: 'Наименование'
+      price: 'Цена'
+      sale: 'Продажа'
+      return: 'Возврат'
+      copy: 'Копия'
+      open: "Откр."
+      po: 'по'
+      total: "ИТОГ"
+      doc: "ДОК."
+      thanks1: 'СПАСИБО'
+      thanks2: 'ЗА ПОКУПКУ!'
+    title: 'Чек №%{num} от %{datetime}'
+    title_copy: 'Копия чека №%{num} от %{datetime}'
+    title_return: 'Чек возврата №%{num} от %{datetime}'
+    calculate: 'Расчитать'
+    choose_title: 'Выберите чек'
+    link: :sales.index.title
+    created: "Продажа создана"
+    updated: "Продажа изменена"
+    day_report: 'Отчёт по продажам за день'
+    doc_kind: 'Вид док.'
+    doc_num: '№ док./смены'
+    total: 'Итог'
+    num: '№'
+    sum: 'Сумма'
+    total_discount: 'Итог. скидка'
+    discounted_sum: 'Сум. со скид.'
+    scan_barcode: 'Запрос ШК'
+    enter_barcode: 'Ввод ШК вручную'
+    choose_product: 'Подбор товара в каталоге'
+    cancel_check: 'Отмена чека'
+    copy_check: 'Копия чека'
+    save_check: 'Сохранить чек'
+    restore_check: 'Возобновить чек'
+    close_check: 'Закрыть чек'
+    enter_client_card: 'Ввод карты клиента'
+    find_client: 'Поиск клиента'
+    manual_discount: 'Ручная скидка'
+    payment: 'Оплата'
+    print_warranty: 'Печать гарантии'
+    calculation: 'К рассчёту'
+    calculation_amount: 'Сумма к оплате: %{amount}'
+    add_product: "Добавить Продукт"
+    print_check: 'Распечатать чек'
+    view_check: 'Посмотреть чек'
+    attach_gift_certificate: "Прикрепить сертификат"
+
+    warranty_pdf:
+      org_name: "ИП Колесник В. В."
+      title: "Гарантийный талон №%{num} от %{date}"

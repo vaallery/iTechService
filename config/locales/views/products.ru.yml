@@ -1,8 +1,22 @@
 ru:
   products:
+    add_good: 'Добавить товар'
+    add_product: 'Добавить Продукт'
+    created: "Продукт создан"
+    updated: "Продукт изменён"
+    form:
+      attributes: 'Атрибуты'
+      add_store: "Добавить склад"
     edit:
-      title: 'Редактирование Продукта'
+      title: "Редактирование Продукта"
     index:
-      title: 'Продукты'
+      title: "Продукты"
+      few: "Заканчиваются"
     new:
-      title: 'Новый Продукт'
+      title: "Новый Продукт"
+    choose:
+      title: "Выбор товара"
+      submit: "Создать"
+    errors:
+      not_found: 'Продукт не найден.'
+    related_list_title: "Сопутствующие товары"

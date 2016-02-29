@@ -1,8 +1,12 @@
 ru:
   device_types:
+    created: 'Тип девайса создан'
+    updated: 'Тип девайса изменён'
     edit:
-      title: 'Редактирование Типа девайса'
+      title: 'Редактирование типа девайса'
+    new:
+      title: 'Новый тип девайса'
     index:
       title: 'Типы девайсов'
-    new:
-      title: 'Новый Типа девайса'
+    link: 'Типы девайсов'
+    available_for_replacement: 'Доступно для замены'

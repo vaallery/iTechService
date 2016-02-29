@@ -1,5 +1,8 @@
 ru:
   quick_tasks:
+    created: 'Быстрая задача создана'
+    updated: 'Быстрая задача изменена'
+    link: :quick_tasks.index.title
     index:
       title: 'Быстрые задачи'
     new:

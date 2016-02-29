@@ -1,9 +1,0 @@
-ru:
-  karma_groups:
-    edit:
-      title: "Бонус"
-
-  karmas:
-    select: "Выделить"
-    group: "Сгруппировать"
-    change_for_bonus: "Обменять на бонус"

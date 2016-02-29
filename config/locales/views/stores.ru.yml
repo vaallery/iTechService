@@ -1,15 +1,19 @@
 ru:
   stores:
-    edit:
-      title: 'Редактирование Склада'
-    index:
-      title: 'Склады'
-    new:
-      title: 'Новый Склад'
+    created: "Склад создан"
+    updated: 'Склад изменён'
     kinds:
-      purchase: 'Закуп'
-      retail: 'Розница'
-#      goods: 'Товары'
-      spare_parts: 'Запчасти'
       defect: 'Брак'
       defect_sp: 'Брак запчастей'
+      purchase: 'Приход'
+      spare_parts: 'Запчасти'
+      retail: 'Розница'
+      repair: 'Ремонт'
+    index:
+      title: "Склады"
+      spare_parts_link: "Запчасти"
+      usual_link: "Обычные"
+    new:
+      title: 'Новый Склад'
+    edit:
+      title: 'Редактирование Склада'

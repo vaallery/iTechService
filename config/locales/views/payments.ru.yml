@@ -12,6 +12,5 @@ ru:
       certificate: 'Подарочный сертификат'
       trade_in: 'Трейд-ин'
       mixed: 'Смешанный'
-    new:
-      title: "Оплата"
-    calculation: "К расчёту"
+    errors:
+      no_gift_certificate: "Подарочный сертификат не указан"

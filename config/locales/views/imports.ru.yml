@@ -1,0 +1,4 @@
+ru:
+  imports:
+    do_import: 'Импортировать'
+    importing: 'Импортирую...'

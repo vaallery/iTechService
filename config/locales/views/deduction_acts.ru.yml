@@ -1,8 +1,14 @@
 ru:
   deduction_acts:
+    created: 'Акт Списания создан'
+    updated: 'Акт Списания изменён'
+    link: :deduction_acts.index.title
     edit:
-      title: 'Редактирование Акта списания'
+      title: 'Редактирование Акта Списания'
     new:
-      title: 'Новый Акт списания'
+      title: 'Новый Акт Списания'
     index:
-      title: 'Акты списания'
+      title: 'Акты Списания'
+    errors:
+      deleting_posted: 'Невозможно удалить проведённый Акт Списания.'
+      insufficient: 'Недостаточно товара (%{product})'

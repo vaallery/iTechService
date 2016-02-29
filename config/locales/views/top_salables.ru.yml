@@ -1,0 +1,14 @@
+ru:
+  top_salables:
+    index:
+      title: 'Панель быстрого доступа'
+    edit:
+      title: ''
+    new:
+      title: ''
+    created: ''
+    updated: ''
+    form:
+      product: "Продукт"
+      group: "Группа"
+      type: "Тип"

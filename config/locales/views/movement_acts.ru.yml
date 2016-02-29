@@ -1,0 +1,17 @@
+ru:
+  movement_acts:
+    created: 'Акт Перемещения создан'
+    updated: 'Акт Перемещения изменён'
+    link: :movement_acts.index.title
+    defect_link: 'Списать брак'
+    edit:
+      title: 'Редактирование Акта Перемещения'
+    new:
+      title: 'Новый Акт Перемещения'
+    index:
+      title: 'Акты Перемещения'
+    errors:
+      deleting_posted: 'Невозможно удалить проведённый Акт Перемещения.'
+      insufficient: 'Недостаточно товара (%{product})'
+      prices_undefined: 'Не определены цены для %{product}'
+      stores_same: 'Склады должны быть разными.'

@@ -1,0 +1,28 @@
+ru:
+  timesheet_days:
+    index:
+      title: "Табель учёта рабочего времени"
+    days_count: "Кол-во дней"
+    hours_count: "Кол-во часов"
+    sickness_day: "Больничный"
+    lateness: "Опоздание"
+    statuses:
+      presence: "Пришел"
+      presence_late: "Пришел с опозданием"
+      presence_leave: "Пришел, отпросился, ушел"
+      presence_sickness: "Пришел, приболевший, отправлен домой"
+      sickness: "Болеет"
+      free: "Выходной"
+      fired: "Уволен"
+      business_trip: "Командировка"
+      training: "Обучение"
+    statuses_abbr:
+      presence: "Я"
+      presence_late: "Я/ОП"
+      presence_leave: "Я/ОТ"
+      presence_sickness: "Я/Б"
+      sickness: "Б"
+      free: "В"
+      fired: "УВ"
+      business_trip: "К"
+      training: "ОБ"
