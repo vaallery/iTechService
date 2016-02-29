@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   before_filter :set_current_user
   before_filter :store_location, except: [:create, :update, :destroy]
-  layout 'staff'
+  # layout 'staff'
 
   rescue_from CanCan::AccessDenied do |exception|
     Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"

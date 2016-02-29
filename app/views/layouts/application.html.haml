@@ -18,24 +18,25 @@
     = favicon_link_tag 'logo2.png'
 
   %body
-    - if device_controller?
-      = yield
-    - else
-      = render 'header'
+    - if user_signed_in?
+      = render 'shared/header'
       = spinner_tag
-      = render 'notifications'
+      = render 'shared/notifications'
 
       .container-fluid
         #flash_place= bootstrap_flash
         .row-fluid
           .span12
             = yield
-      = render 'scanner'
+      = render 'shared/scanner'
 
       = subscribe_to '/announcements'
       = subscribe_to '/devices/new'
       = subscribe_to '/devices/update'
       = subscribe_to '/chat/new'
+    - else
+      = yield
+      = render 'shared/scanner'
 
     /
       Javascripts

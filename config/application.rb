@@ -65,7 +65,8 @@ module ItechService
       g.assets = false
       g.helper = false
       g.decorator = false
-      g.template_engine :slim
+      g.template_engine :haml
+      # g.template_engine :slim
       g.test_framework :minitest, spec: false, fixture: false, fixture_replacement: :factory_girl
     end
 
