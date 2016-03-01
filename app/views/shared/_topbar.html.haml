@@ -1,0 +1,15 @@
+#current_user_row
+  #current_user_name= profile_link
+  - if current_user.department.present?
+    .user_department= "[#{current_user.department.name}]"
+  - else
+    %strong.text-error= t 'users.department_blank_error'
+  - unless Rails.env.production?
+    = "<#{Rails.env}>"
+  - unless current_user.any_admin?
+    %span= link_to karma_tag(current_user), rating_users_path
+  = duck_plan_tag
+  %span#quick_search_form
+    = form_tag quick_search_devices_path, method: :get, remote: true, id: 'devices_quick_search_form', class: 'form-search' do
+      = text_field_tag :quick_search, nil, class: 'search-query span4'
+    %ul#quick_search_result.unstyled.span4
