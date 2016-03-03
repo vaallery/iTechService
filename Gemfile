@@ -52,6 +52,7 @@ gem 'zeroclipboard-rails'
 gem 'sqlite3'
 gem 'vpim'#, '~> 13.11.11'
 gem 'figaro'
+gem 'puma'
 
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -86,7 +87,6 @@ group :development do
   # gem 'mailcatcher'
   gem 'letter_opener'
   gem 'rails-erd'
-  gem 'puma'
 end
 
 group :development, :test do
