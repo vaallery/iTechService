@@ -51,11 +51,12 @@ gem 'sqlite3'
 gem 'vpim', '~> 13.11.11'
 gem 'figaro'
 
-gem 'coffee-rails', '~> 3.2.1'
+gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 gem 'less-rails', '~> 2.4.2'
-gem 'uglifier', '>= 1.0.3'
+gem 'uglifier', '>= 1.3.0'
+gem 'turbolinks'
 gem 'bootstrap-colorpicker-rails', '~> 0.3.1', require: 'bootstrap-colorpicker-rails'#, :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
 # gem 'turbo-sprockets-rails3', '~> 0.3.14'
 
@@ -81,6 +82,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'debugger'
   gem 'test-unit'
   gem 'rspec-rails'
   gem 'capybara'
