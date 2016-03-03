@@ -40,7 +40,7 @@ ItechService::Application.routes.draw do
   resources :karma_groups, except: [:new]
 
   get 'profile', to: 'users#profile'
-  match 'users/:id/update_wish' => 'users#update_wish', via: %i[post patch], as: 'update_wish_user'
+  match 'users/:id/update_wish' => 'users#update_wish', as: 'update_wish_user', via: %i[post patch]
 
   resources :clients do
     get :check_phone_number, on: :collection
@@ -71,9 +71,9 @@ ItechService::Application.routes.draw do
     resources :device_notes, only: %i[index new create]
   end
 
-  match 'check_device_status' => 'devices#check_status', via: :get
-  match 'check_order_status' => 'orders#check_status', via: :get
-  match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: :get, as: :history_device_task, defaults: { format: 'js' }
+  get 'check_device_status' => 'devices#check_status'
+  get 'check_order_status' => 'orders#check_status'
+  get 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', as: :history_device_task, defaults: { format: 'js' }
 
   resources :device_tasks, only: [:edit, :update]
 
@@ -90,9 +90,8 @@ ItechService::Application.routes.draw do
     post :close, on: :member
     post :close_all, on: :collection
   end
-  match 'make_announce' => 'announcements#make_announce', via: :post
-  match 'cancel_announce' => 'announcements#cancel_announce', via: :post
-  #match 'close_all' => 'announcements#close_all', via: :post
+  post 'make_announce' => 'announcements#make_announce'
+  post 'cancel_announce' => 'announcements#cancel_announce'
 
   resources :comments
   resources :messages, path: 'chat', except: [:new, :edit, :update]
@@ -224,25 +223,7 @@ ItechService::Application.routes.draw do
 
   wiki_root '/wiki'
 
-  match '/delayed_job' => DelayedJobWeb, anchor: false
+  match '/delayed_job' => DelayedJobWeb, anchor: false, via: %i[get post]
 
   mount API => '/'
-
-  #namespace :api, defaults: {format: 'json'} do
-  #  namespace :v1 do
-  #    match 'signin' => 'tokens#create', via: :post
-  #    match 'signout' => 'tokens#destroy', via: :delete
-  #    match 'scan/:barcode_num' => 'barcodes#scan'
-  #    match 'profile' => 'users#profile'
-  #    resources :products, only: [:index, :show] do
-  #      post :sync, on: :collection
-  #      get :remnants, on: :member
-  #    end
-  #    resources :items, only: [:index, :show]
-  #    resources :devices, only: [:show, :update]
-  #    resources :quick_orders, only: [:create]
-  #    resources :quick_tasks, only: [:index]
-  #  end
-  #end
-
 end
