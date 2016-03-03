@@ -55,7 +55,7 @@ class Order < ActiveRecord::Base
     end
     ret << " END"
   end
-  scope :by_status, order: order_by_status
+  scope :by_status, -> { order order_by_status }
 
   def customer_full_name
     customer.try :full_name

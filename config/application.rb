@@ -2,14 +2,6 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-# Pick the frameworks you want:
-# require "active_record/railtie"
-# require "action_controller/railtie"
-# require "action_mailer/railtie"
-# require "active_resource/railtie"
-# require "sprockets/railtie"
-# # require "rails/test_unit/railtie"
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -51,7 +43,7 @@ module ItechService
       g.test_framework :minitest, spec: false, fixture: false, fixture_replacement: :factory_girl
     end
 
-    config.assets.initialize_on_precompile = false
+    # config.assets.initialize_on_precompile = false
     
     config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td', 'th', 'thead', 'hbody', 'tfoot'
 
