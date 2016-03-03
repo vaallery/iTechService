@@ -8,7 +8,7 @@ class Feature < ActiveRecord::Base
   validates_length_of :value, is: 15, if: :is_imei?
   delegate :name, :kind, :is_imei?, to: :feature_type, allow_nil: true
 
-  default_scope ->{order('feature_type_id asc')}
+  default_scope {order('feature_type_id asc')}
 
   def as_json(options={})
     {

@@ -7,7 +7,7 @@ class Department < ActiveRecord::Base
     3 => 'remote',
   }
 
-  default_scope ->{order('departments.id asc')}
+  default_scope {order('departments.id asc')}
   scope :branches, ->{where(role: 1)}
 
   has_many :users, dependent: :nullify

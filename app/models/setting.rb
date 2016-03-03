@@ -12,7 +12,7 @@ class Setting < ActiveRecord::Base
 
   VALUE_TYPES = ['boolean', 'integer', 'string', 'text']
 
-  default_scope ->{order('settings.id asc')}
+  default_scope {order('settings.id asc')}
   scope :for_department, ->(department) { where(department_id: department.is_a?(Department) ? department.id : department) }
 
   belongs_to :department

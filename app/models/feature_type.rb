@@ -2,7 +2,7 @@ class FeatureType < ActiveRecord::Base
 
   KINDS = %w[imei serial_number other]
 
-  default_scope ->{order('feature_types.kind asc')}
+  default_scope {order('feature_types.kind asc')}
   scope :ordered, ->{order('feature_types.kind asc')}
 
   has_and_belongs_to_many :product_categories

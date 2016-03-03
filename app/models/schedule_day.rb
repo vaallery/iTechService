@@ -4,7 +4,7 @@ class ScheduleDay < ActiveRecord::Base
 
   attr_accessible :day, :hours, :user, :user_id
 
-  default_scope ->{order('day asc')}
+  default_scope {order('day asc')}
 
   def hours_array
     hours.present? ? hours.split(',') : []
