@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.3.0'
 
 # gem 'nokogiri', '1.6.1'
-gem 'rails', '4.0.13'
+gem 'rails', '4.1.14.2'
 gem 'protected_attributes'
 gem 'rails-observers'
 # gem 'pg', '~> 0.14.1'
@@ -61,11 +61,11 @@ gem 'bootstrap-colorpicker-rails', '~> 0.3.1', require: 'bootstrap-colorpicker-r
 # gem 'turbo-sprockets-rails3', '~> 0.3.14'
 
 group :development do
+  gem 'spring'
   #gem 'debugger' unless ENV['RM_INFO']
   #gem 'debugger-xml'
   #gem 'debugger-linecache'
-  gem 'capistrano', '~> 3.2'
-  gem 'capistrano-rails', '~> 1.1'
+  gem 'capistrano-rails'
   # gem 'capistrano-rvm'
   gem 'capistrano-rbenv'
   gem 'capistrano-bundler', '~> 1.1'
@@ -118,3 +118,5 @@ group :production do
   # gem 'unicorn', '~> 4.6.2'
   gem 'passenger'
 end
+
+gem 'sdoc', '~> 0.4.0',          group: :doc
