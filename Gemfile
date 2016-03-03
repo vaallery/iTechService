@@ -52,7 +52,7 @@ gem 'vpim', '~> 13.11.11'
 gem 'figaro'
 
 gem 'coffee-rails', '~> 4.0.0'
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 gem 'less-rails', '~> 2.4.2'
 gem 'uglifier', '>= 1.3.0'
