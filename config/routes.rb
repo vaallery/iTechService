@@ -11,8 +11,6 @@ ItechService::Application.routes.draw do
   get 'check_session_status', to: 'dashboard#check_session_status'
   get 'print_tags', to: 'dashboard#print_tags'
 
-  mount Ckeditor::Engine => '/ckeditor'
-
   devise_for :users
 
   resources :departments
@@ -224,6 +222,6 @@ ItechService::Application.routes.draw do
   wiki_root '/wiki'
 
   match '/delayed_job' => DelayedJobWeb, anchor: false, via: %i[get post]
-
   mount API => '/'
+  mount Ckeditor::Engine => '/ckeditor'
 end
