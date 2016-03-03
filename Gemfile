@@ -61,7 +61,7 @@ gem 'bootstrap-colorpicker-rails', '~> 0.3.1', require: 'bootstrap-colorpicker-r
 # gem 'turbo-sprockets-rails3', '~> 0.3.14'
 
 group :development do
-  gem 'spring'
+  # gem 'spring'
   #gem 'debugger' unless ENV['RM_INFO']
   #gem 'debugger-xml'
   #gem 'debugger-linecache'

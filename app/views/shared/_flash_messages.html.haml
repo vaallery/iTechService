@@ -21,7 +21,7 @@
     - flash.each do |name, msg|
       .row
         .span6.alert_place
-          - if name == :error
+          - if name == 'error'
             .alert.alert-error
               %a.close{'data-dismiss' => 'alert', onclick: "$(this).parents('.row:first').remove()"}
                 &times
