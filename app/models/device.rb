@@ -335,7 +335,7 @@ class Device < ActiveRecord::Base
         self.errors.add :location_id, I18n.t('devices.errors.not_allowed')
       end
       if self.location.is_repair_notebooks? and old_location.present?
-        MovementMailer.notice(self).deliver
+        MovementMailer.notice(self).deliver_later
       end
 
       #if User.current.not_admin? and old_location != User.current.location

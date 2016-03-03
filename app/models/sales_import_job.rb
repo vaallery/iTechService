@@ -45,7 +45,7 @@ class SalesImportJob < Struct.new(:params)
       end
       import_logs << ['inverse', '-'*160]
     end
-    ImportMailer.sales_import_log(import_logs).deliver
+    ImportMailer.sales_import_log(import_logs).deliver_later
   end
 
   def file

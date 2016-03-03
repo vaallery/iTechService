@@ -62,6 +62,7 @@ gem 'bootstrap-colorpicker-rails', '~> 0.3.1', require: 'bootstrap-colorpicker-r
 
 group :development do
   # gem 'spring'
+  gem 'web-console', '~> 2.0'
   #gem 'debugger' unless ENV['RM_INFO']
   #gem 'debugger-xml'
   #gem 'debugger-linecache'
