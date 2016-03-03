@@ -20,13 +20,6 @@ module ItechService
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
-
-    # Only load the plugins named here, in the order given (default is alphabetical).
-    # :all can be used as a placeholder for all plugins not explicitly named.
-    # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
-
     # Activate observers that should always be running.
     config.active_record.observers = :history_observer
 
@@ -38,20 +31,6 @@ module ItechService
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :ru
-
-    # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = 'utf-8'
-
-    # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password]
-
-    # Enable escaping HTML in JSON.
-    config.active_support.escape_html_entities_in_json = true
-
-    # Use SQL instead of Active Record's schema dumper when creating the database.
-    # This is necessary if your schema can't be completely dumped by the schema dumper,
-    # like if you have constraints or database-specific column types
-    # config.active_record.schema_format = :sql
 
     # Enforce whitelist mode for mass assignment.
     # This will create an empty whitelist of attributes available for mass-assignment for all models
@@ -69,22 +48,11 @@ module ItechService
       g.test_framework :minitest, spec: false, fixture: false, fixture_replacement: :factory_girl
     end
 
-    # Enable the asset pipeline
-    config.assets.enabled = true
-
-    # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.9'
-    
-    config.assets.precompile += ['jquery.js', 'ckeditor/init.js']
-
     config.assets.initialize_on_precompile = false
     
     config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td', 'th', 'thead', 'hbody', 'tfoot'
 
     I18n.enforce_available_locales = true
-
-    config.paths.add 'app/api', glob: '**/*.rb'
-    config.autoload_paths += Dir["#{Rails.root}/app/api/*"]
 
     config.logger = Logger.new config.paths['log'].first, 5, 50*1024
   end
