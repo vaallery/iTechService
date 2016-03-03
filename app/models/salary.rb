@@ -6,11 +6,11 @@ class Salary < ActiveRecord::Base
   validates_presence_of :user, :amount
   attr_accessor :comment
 
-  default_scope order('issued_at desc')
-  scope :ordered, order('issued_at desc')
-  scope :issued_at, lambda { |period| where(issued_at: period) }
-  scope :salary, where(is_prepayment: [false, nil])
-  scope :prepayment, where(is_prepayment: true)
+  default_scope ->{order('issued_at desc')}
+  scope :ordered, ->{order('issued_at desc')}
+  scope :issued_at, ->(period) { where(issued_at: period) }
+  scope :salary, ->{where(is_prepayment: [false, nil])}
+  scope :prepayment, ->{where(is_prepayment: true)}
 
   def comment=(content)
     comments.build content: content unless content.blank?

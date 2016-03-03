@@ -1,8 +1,8 @@
 class Purchase < ActiveRecord::Base
   include Document
 
-  scope :posted, self.where(status: 1)
-  scope :deleted, self.where(status: 2)
+  scope :posted, -> { where(status: 1) }
+  scope :deleted, -> { where(status: 2) }
 
   belongs_to :contractor, inverse_of: :purchases
   belongs_to :store, inverse_of: :purchases
@@ -91,7 +91,7 @@ class Purchase < ActiveRecord::Base
   #          store_item.dec batch.quantity
   #        end
   #        #store.price_types.each do |price_type|
-  #        #  price = item.prices.find_or_initialize_by_price_type_id_and_date price_type_id: price_type.id, date: cur_date
+  #        #  price = item.prices.find_or_initialize_by price_type_id: price_type.id, date: cur_date
   #        #end
   #      end
   #      update_attribute :status, 0

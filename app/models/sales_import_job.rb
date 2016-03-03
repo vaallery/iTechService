@@ -31,7 +31,7 @@ class SalesImportJob < Struct.new(:params)
           when :date
             date = RGXP_DATE.match(row[0])[1]
             qty = row[4].to_i
-            sale = ImportedSale.find_or_initialize_by_serial_number serial_number: sn, imei: imei, sold_at: date.to_date, device_type_id: device_type.try(:id), quantity: qty
+            sale = ImportedSale.find_or_initialize_by serial_number: sn, imei: imei, sold_at: date.to_date, device_type_id: device_type.try(:id), quantity: qty
             unless !sale.new_record? and sale.sold_at == date.to_date
               if sale.save
                 import_logs << ['success', "#{sale.new_record? ? 'New' : 'Existing'} device #{device_type.try(:full_name)} [#{sale.serial_number}] sold_at: #{sale.sold_at}"]
@@ -88,7 +88,7 @@ class SalesImportJob < Struct.new(:params)
         when :date
           date = RGXP_DATE.match(row[0])[1]
           qty = row[3].to_i
-          sale = ImportedSale.find_or_initialize_by_serial_number serial_number: sn, imei: imei, sold_at: date.to_date, device_type_id: device_type.try(:id), quantity: qty
+          sale = ImportedSale.find_or_initialize_by serial_number: sn, imei: imei, sold_at: date.to_date, device_type_id: device_type.try(:id), quantity: qty
           unless !sale.new_record? and sale.sold_at == date.to_date
             sales << sale
             import_logs << ['success', "#{sale.new_record? ? 'New' : 'Existing'} device #{device_type.try(:full_name)} [#{sale.serial_number}] sold_at: #{sale.sold_at}"]

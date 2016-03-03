@@ -9,8 +9,8 @@ class RevaluationAct < ActiveRecord::Base
   validates_presence_of :price_type, :date, :status
   validates_inclusion_of :status, in: Document::STATUSES.keys
 
-  scope :posted, self.where(status: 1)
-  scope :deleted, self.where(status: 2)
+  scope :posted, ->{where(status: 1)}
+  scope :deleted, ->{where(status: 2)}
 
   after_initialize do
     self.status = 'new' if self.status.blank?

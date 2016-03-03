@@ -1,5 +1,5 @@
 - if @repair_services.any?
-  = form_tag mass_update_repair_services_path, method: :put do
+  = form_tag mass_update_repair_services_path, method: :patch do
     %table#repair_services_table.table.table-hover
       %thead
         %tr

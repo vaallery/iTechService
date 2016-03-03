@@ -5,7 +5,7 @@ class Installment < ActiveRecord::Base
 
   validates_presence_of :installment_plan, :value
 
-  scope :paid_at, lambda { |period| where(paid_at: period) }
+  scope :paid_at, ->(period) { where(paid_at: period) }
 
   after_initialize do |rec|
     rec.paid_at ||= Date.current

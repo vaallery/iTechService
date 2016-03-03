@@ -102,7 +102,7 @@
       %dd
         #wish_view= @user.wish
         #wish_edit.hide
-          = form_tag update_wish_user_path(@user), remote: true, method: :put, id: 'update_user_wish_form' do
+          = form_tag update_wish_user_path(@user), remote: true, method: :patch, id: 'update_user_wish_form' do
             = text_area_tag 'user_wish', @user.wish, class: 'span7', rows: 5
             %br
             %a#save_user_wish.btn.btn-primary= 'Save'

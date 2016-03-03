@@ -1,17 +1,17 @@
 # encoding: utf-8
 class Device < ActiveRecord::Base
 
-  scope :newest, order('devices.created_at desc')
-  scope :oldest, order('devices.created_at asc')
-  scope :done, where('devices.done_at IS NOT NULL').order('devices.done_at desc')
-  scope :pending, where(done_at: nil)
-  scope :important, includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)
-  scope :replaced, where(replaced: true)
-  scope :located_at, lambda {|location| where(location_id: location.id)}
-  scope :at_done, lambda { |user=nil| where(location_id: user.present? ? user.done_location : Location.done.id) }
-  scope :not_at_done, where('devices.location_id <> ?', Location.done.id)
-  scope :at_archive, lambda { |user=nil| where(location_id: user.present? ? user.archive_location : Location.archive.id) }
-  scope :unarchived, where('devices.location_id <> ?', Location.archive.id)
+  scope :newest, ->{order('devices.created_at desc')}
+  scope :oldest, ->{order('devices.created_at asc')}
+  scope :done, ->{where('devices.done_at IS NOT NULL').order('devices.done_at desc')}
+  scope :pending, ->{where(done_at: nil)}
+  scope :important, ->{includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)}
+  scope :replaced, ->{where(replaced: true)}
+  scope :located_at, ->(location) { where(location_id: location.id) }
+  scope :at_done, ->(user=nil) { where(location_id: user.present? ? user.done_location : Location.done.id) }
+  scope :not_at_done, ->{where('devices.location_id <> ?', Location.done.id)}
+  scope :at_archive, ->(user=nil) { where(location_id: user.present? ? user.archive_location : Location.archive.id) }
+  scope :unarchived, ->{where('devices.location_id <> ?', Location.archive.id)}
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
   belongs_to :department, inverse_of: :devices
@@ -258,7 +258,7 @@ class Device < ActiveRecord::Base
     else
       recipient_ids = User.active.not_technician.map &:id
     end
-    announcement = Announcement.find_or_create_by_kind_and_content 'device_return', self.id.to_s, active: true, recipient_ids: recipient_ids
+    announcement = Announcement.create_with(active: true, recipient_ids: recipient_ids).find_or_create_by(kind: 'device_return', content: self.id.to_s)
     PrivatePub.publish_to '/devices/returning_alert', announcement_id: announcement.id
   end
 

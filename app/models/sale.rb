@@ -1,12 +1,12 @@
 class Sale < ActiveRecord::Base
   include Document
 
-  scope :sold_at, lambda { |period| where(date: period) }
-  scope :posted, where(status: 1)
-  scope :deleted, where(status: 2)
-  scope :unposted, where('status <> ?', 1)
-  scope :returning, where(is_return: true)
-  scope :selling, where(is_return: false)
+  scope :sold_at, ->(period) { where(date: period) }
+  scope :posted, ->{where(status: 1)}
+  scope :deleted, ->{where(status: 2)}
+  scope :unposted, ->{where('status <> ?', 1)}
+  scope :returning, ->{where(is_return: true)}
+  scope :selling, ->{where(is_return: false)}
 
   belongs_to :user, inverse_of: :sales
   belongs_to :client, inverse_of: :sales

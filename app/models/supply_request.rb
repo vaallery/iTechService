@@ -2,8 +2,8 @@ class SupplyRequest < ActiveRecord::Base
 
   STATUSES = %w[new done]
 
-  scope :created_desc, order('created_at desc')
-  scope :actual, where(status: 'new')
+  scope :created_desc, ->{order('created_at desc')}
+  scope :actual, ->{where(status: 'new')}
 
   belongs_to :department
   belongs_to :user

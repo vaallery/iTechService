@@ -1,8 +1,8 @@
 # encoding: utf-8
 class Location < ActiveRecord::Base
   #default_scope order('position asc')
-  scope :sorted, order('position asc')
-  scope :for_schedule, where(schedule: true)
+  scope :sorted, ->{order('position asc')}
+  scope :for_schedule, ->{where(schedule: true)}
   belongs_to :department, inverse_of: :locations
   has_many :users
   has_many :tasks

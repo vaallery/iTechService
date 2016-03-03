@@ -1,5 +1,5 @@
 class ImportedSale < ActiveRecord::Base
-  scope :sold_at, lambda { |period| where(sold_at: period) }
+  scope :sold_at, ->(period) { where(sold_at: period) }
   belongs_to :device_type
   attr_accessible :imei, :quantity, :serial_number, :sold_at, :device_type_id
 

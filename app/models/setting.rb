@@ -12,8 +12,8 @@ class Setting < ActiveRecord::Base
 
   VALUE_TYPES = ['boolean', 'integer', 'string', 'text']
 
-  default_scope order('settings.id asc')
-  scope :for_department, lambda { |department| where(department_id: department.is_a?(Department) ? department.id : department) }
+  default_scope ->{order('settings.id asc')}
+  scope :for_department, ->(department) { where(department_id: department.is_a?(Department) ? department.id : department) }
 
   belongs_to :department
   delegate :name, to: :department, prefix: true, allow_nil: true

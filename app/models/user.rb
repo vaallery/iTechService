@@ -9,28 +9,28 @@ class User < ActiveRecord::Base
   attr_accessor :auth_token
   cattr_accessor :current
 
-  scope :id_asc, order('id asc')
-  scope :ordered, order('position asc')
-  scope :any_admin, where(role: %w[admin superadmin])
-  scope :superadmins, where(role: 'superadmin')
-  scope :software, where(role: 'software')
-  scope :media, where(role: 'media')
-  scope :technician, where(role: 'technician')
-  scope :not_technician, where('role <> ?', 'technician')
-  scope :marketing, where(role: 'marketing')
-  scope :programmer, where(role: 'programmer')
-  scope :supervisor, where(role: 'supervisor')
-  scope :manager, where(role: 'manager')
-  scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
-  scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
-  scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
-  scope :schedulable, where(schedule: true)
-  scope :staff, where('role <> ?', 'synchronizer')
-  scope :fired, where(is_fired: true)
-  scope :active, where(is_fired: [false, nil])
-  scope :for_changing, scoped
+  scope :id_asc, ->{order('id asc')}
+  scope :ordered, ->{order('position asc')}
+  scope :any_admin, ->{where(role: %w[admin superadmin])}
+  scope :superadmins, ->{where(role: 'superadmin')}
+  scope :software, ->{where(role: 'software')}
+  scope :media, ->{where(role: 'media')}
+  scope :technician, ->{where(role: 'technician')}
+  scope :not_technician, ->{where('role <> ?', 'technician')}
+  scope :marketing, ->{where(role: 'marketing')}
+  scope :programmer, ->{where(role: 'programmer')}
+  scope :supervisor, ->{where(role: 'supervisor')}
+  scope :manager, ->{where(role: 'manager')}
+  scope :working_at, ->(day) { joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
+  scope :with_active_birthdays, ->{joins(:announcements).where(announcements: {kind: 'birthday', active: true})}
+  scope :with_inactive_birthdays, ->{joins(:announcements).where(announcements: {kind: 'birthday', active: false})}
+  scope :schedulable, ->{where(schedule: true)}
+  scope :staff, ->{where('role <> ?', 'synchronizer')}
+  scope :fired, ->{where(is_fired: true)}
+  scope :active, ->{where(is_fired: [false, nil])}
+  scope :for_changing, ->{scoped}
   # scope :for_changing, where('users.username = ? OR users.username LIKE ?', 'vova', 'test_%')
-  scope :exclude, lambda { |user| where('id <> ?', user.is_a?(User) ? user.id : user) }
+  scope :exclude, ->(user) { where('id <> ?', user.is_a?(User) ? user.id : user) }
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
   belongs_to :location
@@ -268,7 +268,7 @@ class User < ActiveRecord::Base
   end
 
   def birthday_announcement
-    self.announcements.find_or_create_by_kind(kind: 'birthday', active: false, user: self)
+    self.announcements.create_with(active: false, user: self).find_or_create_by(kind: 'birthday')
   end
 
   def timeout_in

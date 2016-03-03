@@ -19,11 +19,11 @@ class PriceType < ActiveRecord::Base
   end
 
   def self.purchase
-    find_or_create_by_kind kind: 0, name: I18n.t('price_types.kinds.purchase')
+    create_with(name: I18n.t('price_types.kinds.purchase')).find_or_create_by(kind: 0)
   end
 
   def self.retail
-    find_or_create_by_kind kind: 1, name: I18n.t('price_types.kinds.retail')
+    create_with(name: I18n.t('price_types.kinds.retail')).find_or_create_by(kind: 1)
   end
 
   def is_purchase?

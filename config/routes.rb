@@ -40,7 +40,7 @@ ItechService::Application.routes.draw do
   resources :karma_groups, except: [:new]
 
   get 'profile', to: 'users#profile'
-  match 'users/:id/update_wish' => 'users#update_wish', via: [:post, :put], as: 'update_wish_user'
+  match 'users/:id/update_wish' => 'users#update_wish', via: %i[post patch], as: 'update_wish_user'
 
   resources :clients do
     get :check_phone_number, on: :collection
@@ -67,7 +67,7 @@ ItechService::Application.routes.draw do
     get :movement_history, on: :member
     get :quick_search, on: :collection
     post :create_sale, on: :member
-    put :set_keeper, on: :member, defaults: { format: 'js' }
+    patch :set_keeper, on: :member, defaults: { format: 'js' }
     resources :device_notes, only: %i[index new create]
   end
 
@@ -98,15 +98,15 @@ ItechService::Application.routes.draw do
   resources :messages, path: 'chat', except: [:new, :edit, :update]
 
   resources :purchases do
-    put :post, on: :member
-    put :unpost, on: :member
-    put :print_barcodes, on: :member, defaults: {format: :pdf}
-    put :move_items, on: :member
-    put :revaluate_products, on: :member
+    patch :post, on: :member
+    patch :unpost, on: :member
+    patch :print_barcodes, on: :member, defaults: {format: :pdf}
+    patch :move_items, on: :member
+    patch :revaluate_products, on: :member
   end
 
   resources :sales do
-    put :post, on: :member
+    patch :post, on: :member
     post :cancel, on: :member
     get :return_check, on: :member
     get :print_check, on: :member, defaults: {format: 'js'}
@@ -186,7 +186,7 @@ ItechService::Application.routes.draw do
   resources :contacts_extractions, only: [:new, :create]
 
   resources :quick_orders do
-    put :set_done, on: :member
+    patch :set_done, on: :member
     get :history, on: :member
   end
 
@@ -195,24 +195,24 @@ ItechService::Application.routes.draw do
   end
 
   resources :revaluation_acts do
-    put 'post', on: :member
-    put 'unpost', on: :member
+    patch 'post', on: :member
+    patch 'unpost', on: :member
   end
 
   resources :movement_acts do
-    put 'post', on: :member
-    put 'unpost', on: :member
+    patch 'post', on: :member
+    patch 'unpost', on: :member
     get 'make_defect_sp', on: :collection
   end
 
   resources :deduction_acts do
-    put 'post', on: :member
+    patch 'post', on: :member
   end
 
   resources :repair_services do
     get :choose, on: :collection, defaults: {format: :js}
     get :select, on: :member, defaults: {format: :js}
-    put :mass_update, on: :collection
+    patch :mass_update, on: :collection
   end
 
   resources :imported_sales, only: :index

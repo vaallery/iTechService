@@ -2,11 +2,11 @@ class QuickOrder < ActiveRecord::Base
 
   DEVICE_KINDS = %w[iPhone iPad iPod]
 
-  scope :id_asc, order('quick_orders.id asc')
-  scope :created_desc, order('quick_orders.created_at desc')
-  scope :in_month, where('quick_orders.created_at > ?', 1.month.ago)
-  scope :done, where(is_done: true)
-  scope :undone, where(is_done: false)
+  scope :id_asc, ->{order('quick_orders.id asc')}
+  scope :created_desc, ->{order('quick_orders.created_at desc')}
+  scope :in_month, ->{where('quick_orders.created_at > ?', 1.month.ago)}
+  scope :done, ->{where(is_done: true)}
+  scope :undone, ->{where(is_done: false)}
 
   belongs_to :department
   belongs_to :user

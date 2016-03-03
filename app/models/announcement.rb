@@ -7,15 +7,15 @@ class Announcement < ActiveRecord::Base
   attr_accessible :content, :kind, :user_id, :user, :active, :recipient_ids
   validates :kind, presence: true
   validates :kind, inclusion: { in: KINDS }
-  scope :newest, order('created_at desc')
-  scope :oldest, order('created_at asc')
-  scope :active, where(active: true)
-  scope :active_help, where(active: true, kind: 'help')
-  scope :active_coffee, where(active: true, kind: 'coffee')
-  scope :active_protector, where(active: true, kind: 'protector')
-  scope :active_birthdays, where(active: true, kind: 'birthday')
-  scope :device_return, where(kind: 'device_return')
-  scope :actual_for, lambda { |user| active.keep_if { |announcement| announcement.visible_for? user } }
+  scope :newest, -> { order('created_at desc') }
+  scope :oldest, -> { order('created_at asc') }
+  scope :active, -> { where(active: true) }
+  scope :active_help, -> { where(active: true, kind: 'help') }
+  scope :active_coffee, -> { where(active: true, kind: 'coffee') }
+  scope :active_protector, -> { where(active: true, kind: 'protector') }
+  scope :active_birthdays, -> { where(active: true, kind: 'birthday') }
+  scope :device_return, -> { where(kind: 'device_return')}
+  scope :actual_for, ->(user) { active.keep_if { |announcement| announcement.visible_for? user } }
 
   before_create :define_recipients
 

@@ -272,7 +272,7 @@ module ApplicationHelper
 
   def button_to_update(name, document, attributes)
     class_name = document.class.to_s.downcase
-    parameters = {controller: class_name.tableize, action: 'update', id: document.id, method: 'put', data: {confirm: t('confirmation')}}
+    parameters = {controller: class_name.tableize, action: 'update', id: document.id, method: :patch, data: {confirm: t('confirmation')}}
     parameters[class_name.to_sym] = attributes
     button_to name, parameters, {class: 'btn btn-primary'}
   end

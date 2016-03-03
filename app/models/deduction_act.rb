@@ -1,7 +1,7 @@
 class DeductionAct < ActiveRecord::Base
   include Document
-  scope :posted, self.where(status: 1)
-  scope :deleted, self.where(status: 2)
+  scope :posted, ->{where(status: 1)}
+  scope :deleted, ->{where(status: 2)}
   belongs_to :store
   belongs_to :user
   has_many :deduction_items, inverse_of: :deduction_act, dependent: :destroy

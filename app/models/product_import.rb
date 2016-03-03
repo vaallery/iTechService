@@ -80,7 +80,7 @@ class ProductImport
         name = row[0][/(?<=\|\s).+(?=,)/]
         if row[10].blank?
           parent_id = product_group.id if product_group.present? and product_group.is_root?
-          product_group = ProductGroup.find_or_create_by_code(code: code, name: name, parent_id: parent_id)
+          product_group = ProductGroup.create_with(name: name, parent_id: parent_id).find_or_create_by(code: code)
         elsif product_group.present? and name.present?
           if (product = Product.find_by_code(code)).present?
             import_log << ['info', "Existing product: [#{product.code}] #{product.name}"]

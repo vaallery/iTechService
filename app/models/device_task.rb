@@ -1,12 +1,12 @@
 class DeviceTask < ActiveRecord::Base
 
-  scope :ordered, joins(:task).order('done asc, tasks.priority desc')
-  scope :pending, where(done: 0)
-  scope :done, where(done: 1)
-  scope :undone, where(done: 2)
-  scope :processed, where(done: [1,2])
-  scope :tasks_for, lambda { |user| joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
-  scope :paid, where('device_tasks.cost > 0')
+  scope :ordered, ->{joins(:task).order('done asc, tasks.priority desc')}
+  scope :pending, ->{where(done: 0)}
+  scope :done, ->{where(done: 1)}
+  scope :undone, ->{where(done: 2)}
+  scope :processed, ->{where(done: [1,2])}
+  scope :tasks_for, ->(user) { joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
+  scope :paid, ->{where('device_tasks.cost > 0')}
 
   belongs_to :device
   belongs_to :task

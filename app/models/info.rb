@@ -8,15 +8,15 @@ class Info < ActiveRecord::Base
 
   attr_accessor :comment
 
-  scope :newest, order('created_at desc')
-  scope :oldest, order('created_at asc')
+  scope :newest, ->{order('created_at desc')}
+  scope :oldest, ->{order('created_at asc')}
   scope :grouped_by_date
-  scope :important, where(important: true)
-  scope :available_for, lambda { |user| where(recipient_id: [user.id, nil]) }
-  scope :addressed_to, lambda { |user| where(recipient_id: user.id) }
-  scope :public, where(recipient_id: nil)
-  scope :archived, where(is_archived: true)
-  scope :actual, where(is_archived: false)
+  scope :important, ->{where(important: true)}
+  scope :available_for, ->(user) { where(recipient_id: [user.id, nil]) }
+  scope :addressed_to, ->(user) { where(recipient_id: user.id) }
+  scope :public, ->{where(recipient_id: nil)}
+  scope :archived, ->{where(is_archived: true)}
+  scope :actual, ->{where(is_archived: false)}
 
   attr_accessible :content, :title, :important, :is_archived, :comment, :comments_attributes, :recipient_id, :department_id
 

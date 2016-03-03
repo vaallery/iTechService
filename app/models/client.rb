@@ -10,7 +10,7 @@ class Client < ActiveRecord::Base
 
   RESTRICTED_ATTRIBUTES = %w[surname name patronymic birthday card_number phone_number full_phone_number client_characteristic_id category email contact_phone]
 
-  scope :id_asc, order('id asc')
+  scope :id_asc, ->{order('id asc')}
 
   belongs_to :department
   belongs_to :client_characteristic
