@@ -18,7 +18,7 @@ class SalesImportJob < Struct.new(:params)
           when :device_type
             # code_1c = RGXP_PRODUCT_CODE_AND_NAME.match(row[0])[1].to_i
             # device_type_s = RGXP_PRODUCT_CODE_AND_NAME.match(row[0])[2]
-            code_1c = row[0]
+            code_1c = row[0].to_i
             device_type_s = row[1]
             unless (device_type = DeviceType.find_by_code_1c code_1c).present?
               import_logs << ['important', "Device type '#{device_type_s}' [#{code_1c}] not found!!!"]
@@ -69,13 +69,16 @@ class SalesImportJob < Struct.new(:params)
   RGXP_DATE = Regexp.new '(\d{2}.\d{2}.\d{4})'
 
   def row_type(val1, val2)
-    case val1
-      when RGXP_PRODUCT_CODE then RGXP_PRODUCT_NAME === val2 ? :device_type : nil
-      when RGXP_SERIAL_NUMBER then :device_1
-      when RGXP_SERIAL_NUMBER_IMEI then :device_2
-      when RGXP_DATE then :date
-      else nil
-    end
+    val1 = val1.to_s
+    val2 = val2.to_s
+    type = case val1
+             when RGXP_PRODUCT_CODE then RGXP_PRODUCT_NAME === val2 ? :device_type : nil
+             when RGXP_SERIAL_NUMBER then :device_1
+             when RGXP_SERIAL_NUMBER_IMEI then :device_2
+             when RGXP_DATE then :date
+             else nil
+           end
+    type
   end
 
 end
