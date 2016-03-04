@@ -13,7 +13,7 @@
 //= require association_filter
 //= require zeroclipboard
 //= require currency-in-words
-//= require app
+//= require app.init
 //= require common
 //= require announcements
 //= require bonuses
