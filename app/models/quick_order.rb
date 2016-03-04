@@ -10,7 +10,7 @@ class QuickOrder < ActiveRecord::Base
 
   belongs_to :department
   belongs_to :user
-  has_and_belongs_to_many :quick_tasks
+  has_and_belongs_to_many :quick_tasks, join_table: 'quick_orders_quick_tasks'
   has_many :history_records, as: :object, dependent: :destroy
   delegate :short_name, to: :user, prefix: true, allow_nil: true
   attr_accessible :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code, :department_id, :device_kind
