@@ -19,7 +19,7 @@ class SupplyRequest < ActiveRecord::Base
   end
 
   def self.search(params)
-    supply_requests = SupplyRequest.scoped
+    supply_requests = SupplyRequest.all
 
     if (number_q = params[:number]).present?
       supply_requests = supply_requests.where id: number_q

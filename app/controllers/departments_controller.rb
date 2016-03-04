@@ -2,7 +2,7 @@ class DepartmentsController < ApplicationController
   authorize_resource
 
   def index
-    @departments = Department.scoped
+    @departments = Department.all
     respond_to do |format|
       format.html
     end

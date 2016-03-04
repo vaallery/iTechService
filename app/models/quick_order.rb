@@ -24,7 +24,7 @@ class QuickOrder < ActiveRecord::Base
   end
 
   def self.search(params)
-    quick_orders = QuickOrder.scoped
+    quick_orders = QuickOrder.all
 
     if (is_done = params[:done]).present?
       quick_orders = quick_orders.where is_done: is_done

@@ -2,7 +2,7 @@ class CarriersController < ApplicationController
   authorize_resource
 
   def index
-    @carriers = Carrier.scoped
+    @carriers = Carrier.all
 
     respond_to do |format|
       format.html # index.html.erb

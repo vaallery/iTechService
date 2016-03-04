@@ -45,7 +45,7 @@ class Product < ActiveRecord::Base
   end
 
   def self.search(params)
-    products = self.scoped
+    products = self.all
 
     unless (product_q = params[:product_q]).blank?
       products = products.where 'LOWER(name) LIKE :q OR code LIKE :q', q: "%#{product_q.mb_chars.downcase.to_s}%"

@@ -19,7 +19,7 @@ class RevaluationAct < ActiveRecord::Base
   end
 
   def self.search(params)
-    revaluation_acts = RevaluationAct.scoped
+    revaluation_acts = RevaluationAct.all
 
     unless (q = params[:q]).blank?
       revaluation_acts = revaluation_acts.where('id LIKE ?', "%#{q}%")

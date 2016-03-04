@@ -10,11 +10,10 @@ class Info < ActiveRecord::Base
 
   scope :newest, ->{order('created_at desc')}
   scope :oldest, ->{order('created_at asc')}
-  scope :grouped_by_date
+  scope :grouped_by_date, -> { select("date(created_at) as info_date, count(title) as total_infos").group("infos.created_at::date)") }
   scope :important, ->{where(important: true)}
   scope :available_for, ->(user) { where(recipient_id: [user.id, nil]) }
   scope :addressed_to, ->(user) { where(recipient_id: user.id) }
-  scope :public, ->{where(recipient_id: nil)}
   scope :archived, ->{where(is_archived: true)}
   scope :actual, ->{where(is_archived: false)}
 
@@ -41,11 +40,4 @@ class Info < ActiveRecord::Base
   def private?
     recipient_id.present? and recipient_id == User.current.try(:id)
   end
-
-  private
-
-  def grouped_by_date
-    select("date(created_at) as info_date, count(title) as total_infos").group("infos.created_at::date)")
-  end
-
 end

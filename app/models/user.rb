@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   scope :staff, ->{where('role <> ?', 'synchronizer')}
   scope :fired, ->{where(is_fired: true)}
   scope :active, ->{where(is_fired: [false, nil])}
-  scope :for_changing, ->{scoped}
+  scope :for_changing, -> { all }
   # scope :for_changing, where('users.username = ? OR users.username LIKE ?', 'vova', 'test_%')
   scope :exclude, ->(user) { where('id <> ?', user.is_a?(User) ? user.id : user) }
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   validates :role, inclusion: { in: ROLES }
   validates_numericality_of :session_duration, only_integer: true, greater_than: 0, allow_nil: true
   before_validation :validate_rights_changing
-  before_save :ensure_authentication_token
+  # before_save :ensure_authentication_token
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :registerable, :rememberable,
@@ -175,7 +175,7 @@ class User < ActiveRecord::Base
   end
 
   def self.search(params)
-    users = params[:all].present? ? User.scoped : User.active
+    users = params[:all].present? ? User.all : User.active
     unless (q_name = params[:name]).blank?
       users = users.where 'username LIKE :q or name LIKE :q or surname LIKE :q', q: "%#{q_name}%"
     end
@@ -305,7 +305,7 @@ class User < ActiveRecord::Base
 
   def self.oncoming_salary
     today = Date.current
-    User.active.all.keep_if do |user|
+    User.active.to_a.keep_if do |user|
       if user.hiring_date.present?
         upcoming_salary_date = user.upcoming_salary_date
         upcoming_salary_date.between?(today, 2.days.from_now.end_of_day.to_datetime) and user.salaries.where(created_at: today..upcoming_salary_date, user_id: user.id).empty?

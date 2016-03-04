@@ -38,10 +38,10 @@ class Item < ActiveRecord::Base
   end
 
   def self.search(params)
-    items = Item.scoped
+    items = Item.all
 
     unless (q = params[:q]).blank?
-      items = items.includes(:features, :product).where('features.value = :q OR products.code = :q OR items.barcode_num = :q OR LOWER(products.name) LIKE :ql', q: q, ql: "%#{q.mb_chars.downcase.to_s}%")
+      items = items.includes(:features, :product).where('features.value = :q OR products.code = :q OR items.barcode_num = :q OR LOWER(products.name) LIKE :ql', q: q, ql: "%#{q.mb_chars.downcase.to_s}%").references(:features)
     end
 
     items

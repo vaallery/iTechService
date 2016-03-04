@@ -18,7 +18,7 @@ class DeductionAct < ActiveRecord::Base
   end
 
   def self.search(params)
-    deduction_acts = DeductionAct.scoped
+    deduction_acts = DeductionAct.all
 
     unless (start_date = params[:start_date]).blank?
       deduction_acts = deduction_acts.where('date >= ?', start_date)

@@ -3,7 +3,7 @@ class SupplyReportsController < ApplicationController
   authorize_resource
 
   def index
-    @supply_reports = SupplyReport.scoped.date_desc.page(params[:page])
+    @supply_reports = SupplyReport.all.date_desc.page(params[:page])
     respond_to do |format|
       format.html
     end

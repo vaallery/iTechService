@@ -45,7 +45,7 @@ class Client < ActiveRecord::Base
   end
 
   def self.search params
-    clients = Client.scoped
+    clients = Client.all
     unless (client_q = params[:client_q] || params[:client]).blank?
       client_q.chomp.split(/\s+/).each do |q|
         clients = clients.where ['LOWER(clients.surname) LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.patronymic) LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q', q: "%#{q.mb_chars.downcase.to_s}%"]

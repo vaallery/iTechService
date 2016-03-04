@@ -10,7 +10,7 @@ class StolenPhone < ActiveRecord::Base
   validates_associated :comments
 
   def self.search params
-    stolen_phones = StolenPhone.scoped
+    stolen_phones = StolenPhone.all
     unless (imei_q = params[:imei_q]).blank?
       stolen_phones = stolen_phones.where 'stolen_phones.imei LIKE :q', q: "%#{imei_q}%"
     end

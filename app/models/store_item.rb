@@ -19,7 +19,7 @@ class StoreItem < ActiveRecord::Base
   before_destroy :warn_of_low_remnants
 
   def self.search(params)
-    store_items = self.scoped
+    store_items = self.all
 
     if (product_group_id = params[:product_group_id]).present?
       store_items = store_items.includes(item: :product).where(products: {product_group_id: product_group_id})

@@ -41,7 +41,7 @@ class Sale < ActiveRecord::Base
   end
 
   def self.search(params)
-    sales = Sale.scoped
+    sales = Sale.all
 
     if (status_q = params[:status]).present?
       sales = sales.where(status: status_q)

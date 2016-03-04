@@ -260,9 +260,15 @@ ru:
   time:
     am: утра
     formats:
+      date: ! '%d.%m.%Y'
+      date_short: ! '%d.%m.%y'
+      date_long: ! '%a, %d %b %Y'
       default: ! '%a, %d %b %Y, %H:%M:%S %z'
       long: ! '%d %B %Y, %H:%M'
+      long_d: ! '%d.%m.%Y %H:%M'
       short: ! '%d %b, %H:%M'
+      short_r: ! '%H:%M, %d %b'
+      time: ! '%H:%M'
     pm: вечера
 
   confirmation: 'Вы уверены?'

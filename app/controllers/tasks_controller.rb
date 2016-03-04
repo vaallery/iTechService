@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @tasks = Task.scoped.page params[:page]
+    @tasks = Task.all.page params[:page]
 
     respond_to do |format|
       format.html

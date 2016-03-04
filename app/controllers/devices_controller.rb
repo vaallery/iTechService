@@ -18,7 +18,7 @@ class DevicesController < ApplicationController
     end
     @devices = @devices.newest.page params[:page]
     @location_name = params[:location].present? ? Location.find(params[:location]).name : 'everywhere'# I18n.t('everywhere')
-    @locations = Location.scoped
+    @locations = Location.all
 
     respond_to do |format|
       format.html

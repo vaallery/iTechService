@@ -23,7 +23,7 @@ class Purchase < ActiveRecord::Base
   #before_save :update_stock_items_and_prices
 
   def self.search(params)
-    purchases = Purchase.scoped
+    purchases = Purchase.all
 
     unless (purchase_q = params[:purchase_q]).blank?
       purchases = purchases.where(id: purchase_q)

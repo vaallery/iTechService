@@ -36,7 +36,7 @@
 
   = f.input :is_tray_present, as: :radio_buttons, wrapper_html: {class: @device.has_imei? ? 'tray_input' : 'tray_input hidden'}
 
-  = f.association :carrier, as: :radio_buttons, collection: Carrier.scoped, wrapper_html: {class: @device.has_imei? ? 'carrier_input' : 'carrier_input hidden'}
+  = f.association :carrier, as: :radio_buttons, collection: Carrier.all, wrapper_html: {class: @device.has_imei? ? 'carrier_input' : 'carrier_input hidden'}
 
   = f.association :case_color, as: :radio_buttons, collection: CaseColor.ordered_by_name, label_method: lambda{|c|case_color_presentation(c)}
 

@@ -29,7 +29,7 @@ class Store < ActiveRecord::Base
   validates_presence_of :name, :kind, :department
 
   def self.search(params)
-    stores = self.scoped
+    stores = self.all
 
     unless (kind = params[:kind]).blank?
       stores = stores.where kind: kind

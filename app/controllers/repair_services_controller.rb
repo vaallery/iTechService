@@ -4,7 +4,7 @@ class RepairServicesController < ApplicationController
   def index
     @repair_groups = RepairGroup.roots.order('name asc')
     if params[:group].blank?
-      @repair_services = RepairService.scoped.order('name asc')
+      @repair_services = RepairService.all.order('name asc')
     else
       @repair_group = RepairGroup.find params[:group]
       @repair_services = @repair_group.repair_services.order('name asc')

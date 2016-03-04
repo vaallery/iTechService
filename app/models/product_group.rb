@@ -30,7 +30,7 @@ class ProductGroup < ActiveRecord::Base
   end
 
   def self.search(params)
-    product_groups = ProductGroup.scoped
+    product_groups = ProductGroup.all
 
     if (form = params[:form]).present?
       case form

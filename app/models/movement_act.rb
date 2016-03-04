@@ -28,7 +28,7 @@ class MovementAct < ActiveRecord::Base
   end
 
   def self.search(params)
-    movement_acts = MovementAct.scoped
+    movement_acts = MovementAct.all
 
     unless (start_date = params[:start_date]).blank?
       movement_acts = movement_acts.where('date >= ?', start_date)

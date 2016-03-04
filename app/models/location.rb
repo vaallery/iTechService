@@ -45,7 +45,7 @@ class Location < ActiveRecord::Base
 
   def self.allowed_for(user, device)
     #if user.admin?
-    #  scoped
+    #  all
     #elsif user.location.nil?
     #  []
     #else
@@ -63,7 +63,7 @@ class Location < ActiveRecord::Base
       #locations
     #end
     if user.admin?
-      scoped
+      all
     else
       if user.present? && user.department.present?
         Location.where(department_id: user.department.id)
