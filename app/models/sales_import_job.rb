@@ -32,7 +32,7 @@ class SalesImportJob < Struct.new(:params)
             import_logs << ['info', row[0]]
           when :date
             date = RGXP_DATE.match(row[0])[1]
-            qty = row[4].to_i
+            qty = row[5].to_i
             sale = ImportedSale.find_or_initialize_by_serial_number serial_number: sn, imei: imei, sold_at: date.to_date, device_type_id: device_type.try(:id), quantity: qty
             unless !sale.new_record? and sale.sold_at == date.to_date
               if sale.save
@@ -63,22 +63,25 @@ class SalesImportJob < Struct.new(:params)
   RGXP_PRODUCT_CODE_AND_NAME = Regexp.new '(\d+) \| (.+)'
   RGXP_PRODUCT_CODE = Regexp.new '\d+'
   RGXP_PRODUCT_NAME = Regexp.new '.+'
-  RGXP_SERIAL_NUMBER = Regexp.new '\A(\w+)\Z'
+  RGXP_SERIAL_NUMBER = Regexp.new '\A([\w\+]+)\Z'
   RGXP_SERIAL_NUMBER_IMEI = Regexp.new '(\w+), (\d+)'
   RGXP_DATETIME = Regexp.new '(\d{2}.\d{2}.\d{4}\ \d{,2}:\d{2}:\d{2})'
-  RGXP_DATE = Regexp.new '(\d{2}.\d{2}.\d{4})'
+  RGXP_DATE = Regexp.new '(\d{2}\.\d{2}\.\d{4})'
 
   def row_type(val1, val2)
     val1 = val1.to_s
     val2 = val2.to_s
-    type = case val1
-             when RGXP_PRODUCT_CODE then RGXP_PRODUCT_NAME === val2 ? :device_type : nil
-             when RGXP_SERIAL_NUMBER then :device_1
-             when RGXP_SERIAL_NUMBER_IMEI then :device_2
-             when RGXP_DATE then :date
-             else nil
-           end
-    type
+    if RGXP_PRODUCT_CODE === val1 && RGXP_PRODUCT_NAME === val2
+      :device_type
+    elsif RGXP_SERIAL_NUMBER_IMEI === val1
+      :device_2
+    elsif RGXP_SERIAL_NUMBER === val1
+      :device_1
+    elsif RGXP_DATE === val1
+      :date
+    else
+      nil
+    end
   end
 
 end
