@@ -43,9 +43,9 @@ module AnnouncementsHelper
       state_class = ''
       link_path = make_announce_path(kind: kind)
     end
-    content_tag(:li, id: 'announce_button', class: state_class) do
+    # content_tag(:li, id: 'announce_button', class: state_class) do
       link_to glyph(icon), link_path, method: :post, remote: true, id: 'announce_link', class: state_class
-    end.html_safe
+    # end.html_safe
   end
 
   def header_link_for_coffee
@@ -61,9 +61,9 @@ module AnnouncementsHelper
                 class: 'btn btn-small')
       end.gsub('\n', '')
 
-      content_tag(:li, id: 'coffee_order_button') do
+      # content_tag(:li, id: 'coffee_order_button') do
         link_to glyph('coffee'), '#', rel: 'popover', id: 'coffer_order_link', data: {html: true, placement: 'bottom', title: t('announcements.coffee_order_popover_title'), content: coffee_order_form}
-      end
+      # end
     else
       nil
     end

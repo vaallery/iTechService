@@ -17,9 +17,10 @@ module KarmasHelper
   end
 
   def header_karma_button
-    content_tag(:li, id: 'header_karma_button') do
-      link_to "#{glyph('thumbs-up')}/#{glyph('thumbs-down')}".html_safe, '#', rel: 'popover', id: 'header_karma_link', data: { html: true, placement: 'bottom', title: "#{button_to_close_popover} #{t('users.add_karma')}".gsub('/n', ''), content: header_karma_form.gsub('/n', '') }
-    end
+    title = "#{button_to_close_popover} #{t('users.add_karma')}".gsub('/n', '')
+    # content_tag(:span, id: 'header_karma_button') do
+      link_to "#{glyph('thumbs-up')}/#{glyph('thumbs-down')}".html_safe, '#', rel: 'popover', id: 'header_karma_link', data: { html: true, placement: 'bottom', title: title, content: header_karma_form.gsub('/n', '') }
+    # end
   end
 
   def header_karma_form

@@ -1,5 +1,5 @@
 :plain
-  $('#announce_button').replaceWith("#{j header_link_to_announce}");
+  $('#announce_link').replaceWith("#{j header_link_to_announce}");
 - if @announcement.present?
   - publish_to "/announcements" do
     :plain
