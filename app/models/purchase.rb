@@ -57,7 +57,7 @@ class Purchase < ActiveRecord::Base
   end
 
   def total_sum
-    batches.sum { |batch| batch.sum }
+    batches.to_a.sum &:sum
   end
 
   def post
