@@ -308,4 +308,7 @@ module ApplicationHelper
     end
   end
 
+  def error_messages_for(record)
+    record.errors.full_messages.join('. ') if record.errors.present?
+  end
 end

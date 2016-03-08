@@ -168,6 +168,13 @@ Rails.application.routes.draw do
   end
 
   resources :product_groups
+  resources :option_types, except: :show
+
+  resources :product_types do
+    get :select, on: :member
+    resources :option_values, only: [:index]
+  end
+
   resources :price_types, except: :show
   resources :payment_types
   resources :banks, except: :show

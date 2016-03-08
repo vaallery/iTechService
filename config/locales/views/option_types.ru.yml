@@ -1,5 +1,7 @@
 ru:
   option_types:
+    created: 'Тип опции создан'
+    updated: 'Тип опции изменён'
     edit:
       title: 'Редактирование Типа опции'
     index:

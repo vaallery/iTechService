@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160229063837) do
+ActiveRecord::Schema.define(version: 20160308082337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -566,6 +566,30 @@ ActiveRecord::Schema.define(version: 20160229063837) do
 
   add_index "movement_items", ["item_id"], name: "index_movement_items_on_item_id", using: :btree
   add_index "movement_items", ["movement_act_id"], name: "index_movement_items_on_movement_act_id", using: :btree
+
+  create_table "option_types", force: :cascade do |t|
+    t.string   "name",                   null: false
+    t.string   "code"
+    t.integer  "position",   default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "option_types", ["code"], name: "index_option_types_on_code", using: :btree
+  add_index "option_types", ["name"], name: "index_option_types_on_name", using: :btree
+
+  create_table "option_values", force: :cascade do |t|
+    t.integer  "option_type_id",             null: false
+    t.string   "name",                       null: false
+    t.string   "code"
+    t.integer  "position",       default: 0, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "option_values", ["code"], name: "index_option_values_on_code", using: :btree
+  add_index "option_values", ["name"], name: "index_option_values_on_name", using: :btree
+  add_index "option_values", ["option_type_id"], name: "index_option_values_on_option_type_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.string   "number",            limit: 255
@@ -1144,4 +1168,5 @@ ActiveRecord::Schema.define(version: 20160229063837) do
   add_index "wiki_pages", ["creator_id"], name: "index_wiki_pages_on_creator_id", using: :btree
   add_index "wiki_pages", ["path"], name: "index_wiki_pages_on_path", unique: true, using: :btree
 
+  add_foreign_key "option_values", "option_types"
 end

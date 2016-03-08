@@ -278,6 +278,9 @@ ru:
         store: 'Склад отправитель'
         store_id: :activerecord.models.movement_act.src_store
 
+      option_type:
+        option_values: 'Значения опции'
+
       order:
         approximate_price: 'Ориентировочная цена'
         customer: 'Заказчик'
