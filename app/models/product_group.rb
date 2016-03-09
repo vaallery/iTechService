@@ -16,7 +16,7 @@ class ProductGroup < ActiveRecord::Base
   has_many :product_relations, as: :parent, dependent: :destroy
   has_many :related_products, through: :product_relations, source: :relatable, source_type: 'Product'
   has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'
-  has_and_belongs_to_many :option_values, uniq: true
+  has_and_belongs_to_many :option_values, join_table: 'product_groups_option_values', uniq: true
   has_many :option_types, -> { distinct }, through: :option_values
 
   delegate :feature_accounting, :feature_types, :warranty_term, :is_service, :is_equipment, :is_accessory, :is_spare_part, :request_price, to: :product_category, allow_nil: true

@@ -7,8 +7,18 @@
   .modal-body
     = f.hidden_field :parent_id
     = f.association :product_category
-    = f.input :code
     = f.input :name, autofocus: true
+    = f.input :code
+    = f.input :position
+
+    %h5.text-center= ProductGroup.human_attribute_name(:option_values)
+    .product_options
+      - @option_types.each do |option_type|
+        .control-group
+          %label.control-label= option_type.name
+          .controls
+            = f.collection_check_boxes :option_value_ids, option_type.option_values, :id, :name do |b|
+              = b.label(class: 'checkbox') { b.check_box + b.text }
 
   .modal-footer
     = submit_button f

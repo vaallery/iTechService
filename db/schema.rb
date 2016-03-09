@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160308120257) do
+ActiveRecord::Schema.define(version: 20160309030832) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -700,6 +700,14 @@ ActiveRecord::Schema.define(version: 20160308120257) do
   add_index "product_groups", ["code"], name: "index_product_groups_on_code", using: :btree
   add_index "product_groups", ["product_category_id"], name: "index_product_groups_on_product_category_id", using: :btree
 
+  create_table "product_groups_option_values", id: false, force: :cascade do |t|
+    t.integer "product_group_id"
+    t.integer "option_value_id"
+  end
+
+  add_index "product_groups_option_values", ["option_value_id"], name: "index_product_groups_option_values_on_option_value_id", using: :btree
+  add_index "product_groups_option_values", ["product_group_id"], name: "index_product_groups_option_values_on_product_group_id", using: :btree
+
   create_table "product_prices", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "price_type_id"
@@ -1170,4 +1178,6 @@ ActiveRecord::Schema.define(version: 20160308120257) do
   add_index "wiki_pages", ["path"], name: "index_wiki_pages_on_path", unique: true, using: :btree
 
   add_foreign_key "option_values", "option_types"
+  add_foreign_key "product_groups_option_values", "option_values"
+  add_foreign_key "product_groups_option_values", "product_groups"
 end

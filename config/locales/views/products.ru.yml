@@ -10,8 +10,10 @@ ru:
     edit:
       title: "Редактирование Продукта"
     index:
-      title: "Продукты"
       few: "Заканчиваются"
+      new_product: 'Новый продукт'
+      new_product_group: 'Новая группа'
+      title: "Продукты"
     new:
       title: "Новый Продукт"
     choose:

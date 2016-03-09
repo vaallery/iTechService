@@ -2,12 +2,12 @@
   %h1= auto_title
 
 .row-fluid
-  .span3
+  .span4
     - if can? :manage, Product
-      = link_to "#{glyph(:file)} #{t('product_groups.new_link')}".html_safe, new_product_group_path, remote: true, class: 'btn btn-success', id: 'new_product_group_link'
-      = link_to "#{glyph(:file)} #{t('products.new.title')}".html_safe, '#', class: 'btn btn-success', id: 'new_product_link', disabled: true
+      = link_to "#{glyph(:file)} #{t('.new_product_group')}".html_safe, new_product_group_path, remote: true, class: 'btn btn-success', id: 'new_product_group_link'
+      = link_to "#{glyph(:file)} #{t('.new_product')}".html_safe, '#', class: 'btn btn-success', id: 'new_product_link', disabled: true
 
-  .span9
+  .span8
     .table_filter.navbar
       .navbar-inner
         = form_tag products_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
@@ -17,7 +17,7 @@
               %i.icon-remove
 
 .row-fluid
-  .span3
+  .span4
     #product_groups= product_groups_trees_tag @product_groups, @opened_product_groups, @current_product_group_id
 
-  #resource_table.span9= render 'table'
+  #resource_table.span8= render 'table'

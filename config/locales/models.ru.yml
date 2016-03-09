@@ -335,6 +335,9 @@ ru:
         feature_types: "Типы характеристик"
         request_price: "Запрос цены"
 
+      product_group:
+        option_values: 'Опции продуктов'
+
       purchase:
         contractor: :activerecord.models.contractor
         store: :activerecord.models.store
