@@ -45,20 +45,20 @@
 
     - if @product.feature_accounting
       #items.tab-pane
-        -#%table.table.table-condensed
-        -#  %thead
-        -#    %tr
-        -#      %th= Item.human_attribute_name :barcode
-        -#      - @product.feature_types.each do |feature_type|
-        -#        %th= feature_type.name
-        -#  %tbody
-        -#    - @product.items.each do |item|
-        -#      %tr
-        -#        %td= item.barcode_num
-        -#        - item.features.each do |feature|
-        -#          %td
-        -#            = hidden_field_tag "item[features_attributes][#{feature.id}][feature_type_id]", feature.feature_type_id
-        -#            = text_field_tag "item[features_attributes][#{feature.id}][value]", feature.value
+        %table.table.table-condensed
+          %thead
+            %tr
+              %th= Item.human_attribute_name :barcode
+              - @product.feature_types.each do |feature_type|
+                %th= feature_type.name
+          %tbody
+            - @product.items.each do |item|
+              %tr
+                %td= item.barcode_num
+                - item.features.each do |feature|
+                  %td
+                    = hidden_field_tag "item[features_attributes][#{feature.id}][feature_type_id]", feature.feature_type_id
+                    = text_field_tag "item[features_attributes][#{feature.id}][value]", feature.value
 
     #related_products.tab-pane
       -#= f.input :related_product_ids, as: :filterable_association, collection: Product.goods.name_asc, label: false
