@@ -1,6 +1,9 @@
 require 'barby/barcode/ean_13'
 class Item < ActiveRecord::Base
 
+  scope :available, -> { includes(:store_items).where('store_items.quantity > ?', 0).references(:store_items) }
+  scope :in_store, ->(store) { includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
+
   belongs_to :product, inverse_of: :items
   has_many :store_items, inverse_of: :item, dependent: :destroy
   has_many :batches, inverse_of: :item, dependent: :destroy
@@ -9,16 +12,16 @@ class Item < ActiveRecord::Base
   has_many :features, inverse_of: :item, dependent: :destroy
   has_many :sales, through: :sale_items
   accepts_nested_attributes_for :features, allow_destroy: true
-  attr_accessible :product_id, :features_attributes, :barcode_num
+
+  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :actual_prices, :quantity_in_store, :product_category, :product_group, :discount_for, :is_service, :is_equipment, :is_spare_part, :is_repair?, :request_price, :warranty_term, :quantity_threshold, :comment, to: :product, allow_nil: true
+
   validates_presence_of :product
   validates_length_of :barcode_num, is: 13, allow_nil: true
   validates_uniqueness_of :barcode_num, allow_nil: true
   validates_uniqueness_of :product_id, unless: :feature_accounting
 
-  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :actual_prices, :quantity_in_store, :product_category, :product_group, :discount_for, :is_service, :is_equipment, :is_spare_part, :is_repair?, :request_price, :warranty_term, :quantity_threshold, :comment, to: :product, allow_nil: true
 
-  scope :available, ->{includes(:store_items).where('store_items.quantity > ?', 0)}
-  scope :in_store, ->(store) { includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
+  attr_accessible :product_id, :features_attributes, :barcode_num
 
   paginates_per 5
 

@@ -394,6 +394,7 @@ GEM
       rdoc (~> 4.0)
     seed_dumper (0.1.3)
       rails
+    seedbank (0.3.0)
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
       shoulda-matchers (>= 1.4.1, < 3.0)
@@ -541,6 +542,7 @@ DEPENDENCIES
   rspec-rails
   sdoc (~> 0.4.0)
   seed_dumper
+  seedbank
   shoulda
   shoulda-matchers
   simple_form

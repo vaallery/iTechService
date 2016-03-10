@@ -321,6 +321,7 @@ ru:
         feature_accounting: 'Учёт по характеристикам'
         features: 'Характеристики'
         items: 'Единицы'
+        options: 'Опции'
         product_categroy: 'Категория'
         product_group: 'Группа'
         purchase_price: 'Закупочная цена'

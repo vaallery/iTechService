@@ -1,4 +1,4 @@
-= simple_form_for @product, remote: true, html: { class: 'form-horizontal product_form' } do |f|
+= simple_form_for @product, remote: true, html: { id: 'product_form', class: 'form-horizontal remote' } do |f|
   = f.hidden_field :parent_id
   = f.association :category, as: :select
   = f.input :name

@@ -8,8 +8,8 @@
   product_id = "#product_#{@product.id}";
   product_tag = "#{j(product_li(@product))}";
 
-  $('#product_form').html('');
-  $('#product_form').slideUp();
+  $('#product_form.remote').html('');
+  $('#product_form.remote').slideUp();
 
   if($(product_id).length > 0) {
     $(product_id).replaceWith(product_tag);

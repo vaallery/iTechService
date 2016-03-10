@@ -27,7 +27,7 @@ class ProductGroup < ActiveRecord::Base
 
   after_initialize :set_product_category
 
-  attr_accessible :code, :name, :ancestry, :parent_id, :product_category_id, :related_product_ids, :related_product_group_ids
+  attr_accessible :code, :name, :ancestry, :parent_id, :product_category_id, :option_value_ids, :related_product_ids, :related_product_group_ids
 
   has_ancestry orphan_strategy: :restrict, cache_depth: true
   acts_as_list scope: [:ancestry]

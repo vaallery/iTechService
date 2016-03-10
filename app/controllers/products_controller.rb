@@ -8,7 +8,7 @@ class ProductsController < ApplicationController
       @products = Product.search(params)
     else
       @current_product_group = ProductGroup.find params[:group]
-      @opened_product_groups = @current_product_group.path_ids[1..-1].map { |g| "product_group_#{g}" }.join(', ')
+      @opened_product_groups = @current_product_group.path_ids[1..-1].map { |g| "product_group_#{g}" }#.join(', ')
       @products = @current_product_group.products.search(params)
     end
 

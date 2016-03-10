@@ -5,6 +5,7 @@
     %h3= @product_group.new_record? ? t('product_groups.new.title') : t('product_groups.edit.title')
 
   .modal-body
+    = f.error_notification message: error_messages_for(@product_group)
     = f.hidden_field :parent_id
     = f.association :product_category
     = f.input :name, autofocus: true

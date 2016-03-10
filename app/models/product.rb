@@ -11,10 +11,13 @@ class Product < ActiveRecord::Base
 
   belongs_to :product_category, inverse_of: :products
   belongs_to :product_group, inverse_of: :products
+  has_and_belongs_to_many :options, class_name: 'OptionValue', join_table: 'product_options'
+  has_many :option_types, through: :product_group
+  has_many :option_values, through: :product_group
   belongs_to :device_type, inverse_of: :product
-  has_many :items, inverse_of: :product, dependent: :destroy
+  has_many :items, inverse_of: :product, dependent: :restrict_with_error
   has_many :prices, class_name: 'ProductPrice', inverse_of: :product, dependent: :destroy
-  has_many :store_items, through: :items, dependent: :destroy
+  has_many :store_items, through: :items
   has_many :revaluations, inverse_of: :product, dependent: :destroy
   has_one :task, inverse_of: :product, dependent: :nullify
   has_many :product_relations, as: :parent, dependent: :destroy
@@ -30,11 +33,12 @@ class Product < ActiveRecord::Base
 
   delegate :feature_accounting, :feature_types, :is_service, :is_equipment, :is_spare_part, :request_price, to: :product_category, allow_nil: true
   delegate :name, to: :product_category, prefix: :category, allow_nil: true
+  delegate :available_options, :warranty_term, to: :product_group, allow_nil: true
   delegate :full_name, to: :device_type, prefix: true, allow_nil: true
   delegate :color, to: :top_salable, allow_nil: true
   delegate :cost, to: :task, prefix: true, allow_nil: true
 
-  attr_accessible :code, :name, :product_group_id, :product_category_id, :device_type_id, :warranty_term, :quantity_threshold, :warning_quantity, :comment, :items_attributes, :task_attributes, :related_product_ids, :related_product_group_ids, :store_products_attributes
+  attr_accessible :code, :name, :product_group_id, :product_category_id, :device_type_id, :warranty_term, :quantity_threshold, :warning_quantity, :comment, :option_ids, :items_attributes, :task_attributes, :related_product_ids, :related_product_group_ids, :store_products_attributes
   validates_presence_of :name, :code, :product_group, :product_category
   #validates_presence_of :device_type, if: :is_equipment
   validates_uniqueness_of :code
