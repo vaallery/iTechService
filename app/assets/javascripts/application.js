@@ -22,7 +22,7 @@
 //= require dashboard
 //= require device_tasks
 //= require device_types
-//= require devices
+// require devices
 //= require gift_certificates
 //= require karmas
 //= require media_orders
