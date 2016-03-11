@@ -11,7 +11,7 @@
       -##important_info
       -##personal_infos
       -##announcements
-  = content_for :new_device_popup do
+  = content_for :new_service_job_popup do
     -##new_device_popup
       -#= link_to root_path do
       -#  = image_tag 'duck.png', size: '150x150'
@@ -23,6 +23,6 @@
 = render template: 'layouts/application'
 - unless devise_controller?
   = subscribe_to '/announcements'
-  = subscribe_to '/devices/new'
-  = subscribe_to '/devices/update'
+  = subscribe_to '/service_jobs/new'
+  = subscribe_to '/service_jobs/update'
   = subscribe_to '/chat/new'

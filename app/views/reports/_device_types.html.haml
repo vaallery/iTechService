@@ -16,7 +16,7 @@
   %caption= report_title @report
   %thead
     %tr
-      %th.center{rowspan: 2}= Device.human_attribute_name :device_type
+      %th.center{rowspan: 2}= ServiceJob.human_attribute_name :device_type
       %th.center{rowspan: 2}= t('reports.received')
       %th.center{colspan: 2}= t('reports.includes')
     %tr
@@ -36,6 +36,6 @@
   %tfoot
     %tr
       %td= t('reports.total')
-      %td= @report.result[:devices_received_count]
-      %td= @report.result[:devices_received_done_count]
-      %td= @report.result[:devices_received_archived_count]
+      %td= @report.result[:service_jobs_received_count]
+      %td= @report.result[:service_jobs_received_done_count]
+      %td= @report.result[:service_jobs_received_archived_count]

@@ -1,0 +1,20 @@
+:plain
+  $('#device_device_type_id').val("#{@service_job.device_type_id}");
+  $('#service_job_security_code').val("#{@service_job.security_code}");
+  $('#service_job_imei').val("#{@service_job.imei}");
+  $('#service_job_serial_number').val("#{@service_job.serial_number}");
+  $('#device_type_name').text("#{@service_job.device_type.full_name}");
+  $('#available_for_replacement').text("#{@service_job.device_type.available_for_replacement}");
+  if(#{@service_job.device_type.available_for_replacement} > 0){
+    $('#device_replaced').removeAttr('disabled');
+  }else{
+    $('#device_replaced').attr('disabled', 'disabled');
+  }
+  if(#{@service_job.has_imei?}){
+    $('.imei_input, .tray_input, .carrier_input').removeClass('hidden');
+  }else{
+    $('#service_job_imei').val('');
+    $('.imei_input, .tray_input, .carrier_input').addClass('hidden');
+  }
+
+  $('#client_devices .popover-content').html("#{j(device_tasks_list(@service_job))}");

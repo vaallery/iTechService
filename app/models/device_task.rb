@@ -5,30 +5,30 @@ class DeviceTask < ActiveRecord::Base
   scope :done, ->{where(done: 1)}
   scope :undone, ->{where(done: 2)}
   scope :processed, ->{where(done: [1,2])}
-  scope :tasks_for, ->(user) { joins(:device, :task).where(devices: {location_id: user.location_id}, tasks: {role: user.role}) }
+  scope :tasks_for, ->(user) { joins(:service_job, :task).where(service_jobs: {location_id: user.location_id}, tasks: {role: user.role}) }
   scope :paid, ->{where('device_tasks.cost > 0')}
 
-  belongs_to :device
+  belongs_to :service_job
   belongs_to :task
   belongs_to :performer, class_name: 'User'
   has_many :history_records, as: :object
   has_many :repair_tasks
   has_many :repair_parts, through: :repair_tasks
   has_one :sale_item, inverse_of: :device_task
-  accepts_nested_attributes_for :device, reject_if: proc { |attr| attr['tech_notice'].blank? }
+  accepts_nested_attributes_for :service_job, reject_if: proc { |attr| attr['tech_notice'].blank? }
   accepts_nested_attributes_for :repair_tasks, allow_destroy: true
 
   delegate :name, :role, :is_important?, :is_actual_for?, :is_repair?, :item, to: :task, allow_nil: true
   delegate :cost, to: :task, prefix: true, allow_nil: true
-  delegate :client_presentation, to: :device, allow_nil: true
-  delegate :department, :user, to: :device
+  delegate :client_presentation, to: :service_job, allow_nil: true
+  delegate :department, :user, to: :service_job
 
-  attr_accessible :done, :done_at, :comment, :user_comment, :cost, :task, :device, :device_id, :task_id, :performer_id, :task, :device_attributes, :repair_tasks_attributes
+  attr_accessible :done, :done_at, :comment, :user_comment, :cost, :task, :service_job, :service_job_id, :task_id, :performer_id, :task, :service_job_attributes, :repair_tasks_attributes
   validates :task, :cost, presence: true
   validates :cost, numericality: true
   validate :valid_repair if :is_repair?
   validates_associated :repair_tasks
-  after_commit :update_device_done_attribute
+  after_commit :update_service_job_done_attribute
   # after_save :deduct_spare_parts if :is_repair?
   after_initialize :set_performer
 
@@ -65,24 +65,13 @@ class DeviceTask < ActiveRecord::Base
     task.try :duration
   end
 
-  def device_presentation
-    device.present? ? device.presentation : ''
+  def service_job_presentation
+    service_job.present? ? service_job.presentation : ''
   end
 
   def performer_name
     performer.present? ? performer.short_name : ''
   end
-
-  #def validate_device_tasks
-  #  roles = []
-  #  device_tasks.each do |dt|
-  #    if roles.include? dt.role and dt.role == 'software'
-  #      self.errors.add(:device_tasks, I18n.t('devices.device_tasks_error'))
-  #    else
-  #      roles << dt.role
-  #    end
-  #  end
-  #end
 
   def repair_cost
     repair_tasks.sum(:price)
@@ -106,9 +95,9 @@ class DeviceTask < ActiveRecord::Base
 
   private
 
-  def update_device_done_attribute
-    done_time = self.device.done? ? self.device.device_tasks.maximum(:done_at).getlocal : nil
-    self.device.update_attribute :done_at, done_time
+  def update_service_job_done_attribute
+    done_time = self.service_job.done? ? self.service_job.device_tasks.maximum(:done_at).getlocal : nil
+    self.service_job.update_attribute :done_at, done_time
   end
 
   # def deduct_spare_parts

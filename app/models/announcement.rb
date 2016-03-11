@@ -64,16 +64,16 @@ class Announcement < ActiveRecord::Base
     kind == 'device_return'
   end
 
-  def device
-    Device.find(content.to_i)
+  def service_job
+    ServiceJob.find(content.to_i)
   rescue ActiveRecord::RecordNotFound
     nil
   end
 
   def visible_for?(user)
     if self.device_return? and user.technician?
-      if self.device.present?
-        self.device.location.is_repair?
+      if self.service_job.present?
+        self.service_job.location.is_repair?
       else
         self.destroy
         return false
@@ -121,7 +121,7 @@ class Announcement < ActiveRecord::Base
         recipients = recipients + User.where(id: self.user_id).to_a if self.user_id.present?
       when 'device_return'
         recipients = User.software.media.to_a
-        recipients = recipients + User.technician.to_a if self.device.present? and self.device.location.is_repair?
+        recipients = recipients + User.technician.to_a if self.service_job.present? and self.service_job.location.is_repair?
       else
         recipients = []
     end

@@ -10,7 +10,7 @@
     %span= link_to karma_tag(current_user), rating_users_path
   = duck_plan_tag
   %span#quick_search_form
-    = form_tag quick_search_devices_path, method: :get, remote: true, id: 'devices_quick_search_form', class: 'form-search' do
+    = form_tag quick_search_service_jobs_path, method: :get, remote: true, id: 'service_jobs_quick_search_form', class: 'form-search' do
       = text_field_tag :quick_search, nil, class: 'search-query span4'
     %ul#quick_search_result.unstyled.span4
 

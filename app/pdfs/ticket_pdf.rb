@@ -3,9 +3,9 @@ class TicketPdf < Prawn::Document
   require 'barby/barcode/ean_13'
   require 'barby/outputter/prawn_outputter'
 
-  def initialize(device, view, part=nil)
+  def initialize(service_job, view, part=nil)
     super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: [10, 22, 10, 10]
-    @device = device
+    @service_job = service_job
     @view = view
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
@@ -32,11 +32,11 @@ class TicketPdf < Prawn::Document
     end
     move_cursor_to 160
     font_size 24 do
-      text "№ #{@device.ticket_number}", align: :center, inlign_format: true, style: :bold
+      text "№ #{@service_job.ticket_number}", align: :center, inlign_format: true, style: :bold
     end
-    text @device.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
+    text @service_job.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
     move_down 5
-    text @view.t('tickets.user', name: @device.user_short_name)
+    text @view.t('tickets.user', name: @service_job.user_short_name)
     move_down 5
     text Setting.get_value(:contact_phone)
     move_down 5
@@ -54,20 +54,20 @@ class TicketPdf < Prawn::Document
     logo
     move_down 26
     font_size 22 do
-      text @device.ticket_number, align: :right, inlign_format: true, style: :bold
+      text @service_job.ticket_number, align: :right, inlign_format: true, style: :bold
     end
-    text @device.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
+    text @service_job.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
     move_down 15
-    text @device.client_short_name
-    text @view.number_to_phone @device.client.full_phone_number || @device.client.phone_number, area_code: true
-    text "#{@view.t('tickets.device_contact_phone', number: @view.number_to_phone(@device.contact_phone, area_code: true))}"
+    text @service_job.client_short_name
+    text @view.number_to_phone @service_job.client.full_phone_number || @service_job.client.phone_number, area_code: true
+    text "#{@view.t('tickets.service_job_contact_phone', number: @view.number_to_phone(@service_job.contact_phone, area_code: true))}"
     move_down 5
-    text "#{Device.human_attribute_name(:security_code)}: #{@device.security_code}"
+    text "#{ServiceJob.human_attribute_name(:security_code)}: #{@service_job.security_code}"
     move_down 5
     text @view.t('tickets.operations_list')
-    text @device.tasks.map{|t|t.name}.join(', ')
+    text @service_job.tasks.map{|t|t.name}.join(', ')
     move_down 5
-    text @view.t('tickets.user', name: @device.user_short_name)
+    text @view.t('tickets.user', name: @service_job.user_short_name)
     barcode
   end
 
@@ -78,7 +78,7 @@ class TicketPdf < Prawn::Document
   end
 
   def barcode
-    num = @device.ticket_number
+    num = @service_job.ticket_number
     code = '0'*(12-num.length) + num
     code = Barby::EAN13.new code
     outputter = Barby::PrawnOutputter.new code

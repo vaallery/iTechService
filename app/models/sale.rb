@@ -15,7 +15,7 @@ class Sale < ActiveRecord::Base
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
   has_many :payments, inverse_of: :sale, dependent: :destroy
-  has_one :device, inverse_of: :sale
+  has_one :service_job, inverse_of: :sale
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda{|a| a[:id].blank? and a[:item_id].blank?}
   accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: lambda{|a| a[:value].blank?}
 
@@ -24,7 +24,7 @@ class Sale < ActiveRecord::Base
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
   delegate :name, to: :store, prefix: true
-  delegate :device_tasks, :repair_parts, to: :device, allow_nil: true
+  delegate :device_tasks, :repair_parts, to: :service_job, allow_nil: true
 
   attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return, :payment_ids, :payments_attributes, :total_discount
   validates_presence_of :user, :store, :date, :status, :cash_shift

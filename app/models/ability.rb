@@ -8,7 +8,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.superadmin?
       can :manage, :all
-      cannot :write_tech_notice, Device
+      cannot :write_tech_notice, ServiceJob
       can :view_purchase_price, Product
     elsif user.admin?
       can :manage, :all
@@ -17,7 +17,7 @@ class Ability
       cannot :manage_rights, User
       cannot :manage, [BonusType, Bonus]
       cannot [:edit, :destroy], Karma
-      cannot :write_tech_notice, Device
+      cannot :write_tech_notice, ServiceJob
       cannot :read, CashShift
       cannot :close, CashShift
     elsif user.developer?
@@ -25,7 +25,7 @@ class Ability
       can :view_purchase_price, Product
     elsif user.api?
       can :sync, Product
-      can :read, [Device, Order]
+      can :read, [ServiceJob, Order]
     else
       if user.manager?
         can :manage, :all
@@ -33,15 +33,14 @@ class Ability
         cannot :manage_rights, User
         cannot :manage, [BonusType, Bonus]
         cannot [:edit, :destroy], Karma
-        cannot :read_tech_notice, Device
-        cannot :write_tech_notice, Device
-        cannot :destroy, [Client, Device]
+        cannot :read_tech_notice, ServiceJob
+        cannot :write_tech_notice, ServiceJob
+        cannot :destroy, [Client, ServiceJob]
       end
       if user.software?
-        # can :modify, [Device, Client]
-        can :modify, Device
+        can :modify, ServiceJob
         can :create, Client
-        can :create_sale, Device
+        can :create_sale, ServiceJob
         can [:issue, :activate, :scan, :find], GiftCertificate
         can [:modify, :read, :reprint_check, :print_warranty], Sale
         can [:choose, :select], Product
@@ -51,7 +50,7 @@ class Ability
         can :create, Payment
       end
       if user.media?
-        can :modify, [Device, Order, QuickOrder, MediaOrder]
+        can :modify, [ServiceJob, Order, QuickOrder, MediaOrder]
         can :create, Client
         can :set_done, QuickOrder
         can [:choose, :select], Product
@@ -65,20 +64,20 @@ class Ability
         can :modify, Sale
         can :modify, SalesImport
         can :modify, Product
-        cannot :modify, Device
+        cannot :modify, ServiceJob
       end
       if user.supervisor?
         can :read, :all
-        cannot :update, Device
+        cannot :update, ServiceJob
         cannot :make_announce, Announcement
         cannot :create, Order
         cannot [:modify, :destroy], Comment
       end
       if user.technician?
         can :modify, Order
-        can :read_tech_notice, Device
-        can :write_tech_notice, Device
-        can :repair, Device
+        can :read_tech_notice, ServiceJob
+        can :write_tech_notice, ServiceJob
+        can :repair, ServiceJob
         can [:choose, :select], Product
         can [:choose, :select], RepairService
         can :make_defect_sp, MovementAct
@@ -106,14 +105,14 @@ class Ability
       end
       can :create, Order
       can :destroy, Order, user_id: user.id
-      can :update, Device#, location_id: user.location_id
-      can :print_receipt, Device do |device|
-        (device.user_id == user.id) or user.any_admin? or user.able_to?(:print_receipt)
+      can :update, ServiceJob#, location_id: user.location_id
+      can :print_receipt, ServiceJob do |service_job|
+        (service_job.user_id == user.id) or user.any_admin? or user.able_to?(:print_receipt)
       end
       can :profile, User, id: user.id
       can :update_wish, User, id: user.id
       can :duty_calendar, User, id: user.id
-      can :update, DeviceTask, task: {role: user.role}#, device: {location_id: user.location_id}#, done: false
+      can :update, DeviceTask, task: {role: user.role}
       can :create, Comment
       can :update, Comment, user_id: user.id
       can :create, Message
@@ -130,7 +129,7 @@ class Ability
       cannot :read, Salary
       cannot :manage, Report
     end
-    can :set_keeper, Device
+    can :set_keeper, ServiceJob
     cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: [1, 2]
     cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: [0, 2]
     cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: 1

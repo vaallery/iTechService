@@ -1,8 +1,8 @@
 #dashboard
   .page-header
-    = link_to icon_tag('mobile-phone') + t('dashboard.new_device'), new_device_path, class: 'btn btn-success btn-large' if can? :create, Device
+    = link_to icon_tag('mobile-phone') + t('dashboard.new_service_job'), new_service_job_path, class: 'btn btn-success btn-large' if can? :create, ServiceJob
     = link_to icon_tag('money') + t('dashboard.new_sale'), new_sale_path, class: 'btn btn-success btn-large' if can? :create, Sale
-    = link_to icon_tag('mobile-phone') + t('quick_orders.new.title'), new_quick_order_path, class: 'btn btn-success btn-large' if can? :create, Device
+    = link_to icon_tag('mobile-phone') + t('quick_orders.new.title'), new_quick_order_path, class: 'btn btn-success btn-large' if can? :create, ServiceJob
     = link_to icon_tag('file-alt') + t('dashboard.new_order'), new_order_path, class: 'btn btn-success btn-large' if can? :create, Order
     = link_to icon_tag(:user) + t('dashboard.new_user'), new_user_path, class: 'btn btn-success btn-large' if can? :create, User
     = link_to glyph('file-alt') + t('supply_reports.new.title'), new_supply_report_path, class: 'btn btn-success btn-large' if current_user.driver?
@@ -30,7 +30,7 @@
           %li.actual_orders_nav= link_to t('dashboard.actual_orders'), actual_orders_path, remote: true
         - if current_user.driver?
           %li.actual_requests_nav= link_to t('dashboard.actual_requests'), actual_supply_requests_path, remote: true
-      %li.ready_devices_nav= link_to t('dashboard.ready_devices'), ready_devices_path, remote: true
+      %li.ready_service_jobs_nav= link_to t('dashboard.ready_service_jobs'), ready_service_jobs_path, remote: true
 
 #dashboard_table_filter= render @table_name+'_filter'
 #dashboard_content= render @table_name

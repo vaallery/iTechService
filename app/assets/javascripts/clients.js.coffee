@@ -42,7 +42,7 @@ jQuery ->
       setTimeout (->
         $input = $('#client_search')
         if $input.val() is ''
-          $('#device_client_id').val("");
+          $('#service_job_client_id').val("");
           $('#order_customer_id').val("");
           $('#edit_client_link').attr('href', "#");
         else

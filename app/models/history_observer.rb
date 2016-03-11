@@ -1,13 +1,13 @@
 class HistoryObserver < ActiveRecord::Observer
   include DeviseHelper
 
-  observe :device, :device_task, :order, :user, :gift_certificate, :client, :quick_order
+  observe :service_job, :device_task, :order, :user, :gift_certificate, :client, :quick_order
 
   def after_save model
-    if model.is_a? Device
+    if model.is_a? ServiceJob
       tracked_attributes = %w[client_id device_task_ids comment location_id notify_client client_notified]
     elsif model.is_a? DeviceTask
-      tracked_attributes = %w[done comment user_comment cost device_id task_id]
+      tracked_attributes = %w[done comment user_comment cost service_job_id task_id]
     elsif model.is_a? User
       tracked_attributes = %w[role username location_id surname name patronymic birthday hiring_date salary_date
           prepayment wish photo]

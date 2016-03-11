@@ -1,0 +1,4 @@
+- if @service_job.present?
+  == window.location.assign("#{service_job_path(@service_job)}");
+- else
+  == $("#flash_place").html("#{j bootstrap_flash}");

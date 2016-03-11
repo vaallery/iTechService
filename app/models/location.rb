@@ -43,7 +43,7 @@ class Location < ActiveRecord::Base
     Location.where(code: 'repair_notebooks').first_or_create(name: 'Ремонт ноутбуков')
   end
 
-  def self.allowed_for(user, device)
+  def self.allowed_for(user, service_job)
     #if user.admin?
     #  all
     #elsif user.location.nil?

@@ -6,8 +6,6 @@ ru:
     errors:
       already_archived: 'Девайс уже в архиве.'
       client_notification: Нужно уведомить клиента
-      invalid_action: 'Неверное действие.'
-      no_action: 'Действие не указано.'
       not_done: 'Девайс не готов.'
       not_allowed: Вы не можете переместить девайс.
       pending_tasks: Не все задачи выполнены

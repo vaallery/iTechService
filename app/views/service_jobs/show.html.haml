@@ -1,0 +1,119 @@
+.page-header
+  %h1
+    = link_back_to_index
+    = @service_job.type_name
+    %small
+      = history_link_to history_service_job_path(@service_job)
+      = link_to icon_tag('file-text-alt'), device_device_notes_path(@service_job), class: 'no-decoration', remote: true
+
+  %span.help-block
+    %small= timestamp_string_for @service_job
+  -if can? :print_receipt, @service_job
+    = link_to icon_tag(:print) + t('tickets.link'), service_job_path(@service_job, format: 'pdf', print: true), class: 'btn btn-primary', target: '_blank', id: 'print_service_job_ticket'
+    = link_to icon_tag('eye-open') + t('tickets.link'), service_job_path(@service_job, format: 'pdf'), class: 'btn btn-info pull-right', target: '_blank', id: 'show_service_job_ticket'
+
+%table.attributes_table
+  %tr
+    %td= ServiceJob.human_attribute_name :department
+    %td= @service_job.department_name
+  %tr
+    %td= t 'service_jobs.itunes_string'
+    %td= text_field_tag 'itunes_string', itunes_string_for(@service_job)
+  %tr
+    %td= ServiceJob.human_attribute_name :client
+    %td= link_to @service_job.client.presentation, @service_job.client
+  %tr
+    %td= ServiceJob.human_attribute_name :contact_phone
+    %td= human_phone @service_job.contact_phone
+  %tr
+    %td= ServiceJob.human_attribute_name :ticket_number
+    %td= @service_job.ticket_number
+  %tr
+    %td= ServiceJob.human_attribute_name :security_code
+    %td= @service_job.security_code
+  %tr
+    %td= ServiceJob.human_attribute_name :imei
+    %td= @service_job.imei
+  %tr
+    %td= ServiceJob.human_attribute_name :serial_number
+    %td= @service_job.serial_number
+  %tr
+    %td= ServiceJob.human_attribute_name :case_color
+    %td= case_color_presentation @service_job.case_color
+
+  - if @service_job.user_id == current_user.id
+    %tr
+      %td= ServiceJob.human_attribute_name :app_store_pass
+      %td= @service_job.app_store_pass.blank? ? '-' : @service_job.app_store_pass
+
+  %tr
+    %td= ServiceJob.human_attribute_name :is_tray_present
+    %td= @service_job.is_tray_present ? icon_tag('check') : icon_tag('check-empty')
+
+  %tr
+    %td= ServiceJob.human_attribute_name :carrier
+    %td= @service_job.carrier.try(:name)
+
+  %tr
+    %td= ServiceJob.human_attribute_name :comment
+    %td.service_job_comment= @service_job.comment
+
+  - if can? :read_tech_notice, @service_job
+    %tr
+      %td= ServiceJob.human_attribute_name :tech_notice
+      %td= @service_job.tech_notice
+  %tr
+    %td= ServiceJob.human_attribute_name :location
+    %td= @service_job.location_name || '-'
+
+  %tr
+    %td= ServiceJob.human_attribute_name :keeper
+    %td= @service_job.keeper.try(:short_name) || '-'
+
+  %tr
+    %td= ServiceJob.human_attribute_name :return_at
+    %td= human_datetime @service_job.return_at
+
+  - if @service_job.notify_client?
+    %tr
+      %td= ServiceJob.human_attribute_name :notify_client
+      %td= ServiceJob.human_attribute_name :client_notified if @service_job.client_notified?
+
+  %tr
+    %td= t 'service_jobs.sales_info'
+    %td= sales_info @service_job
+
+%table.table.table-bordered.table-condensed.table-hover
+  %caption
+    %h4= ServiceJob.human_attribute_name :tasks
+  %thead
+    %tr
+      %th= Task.human_attribute_name :name
+      %th= DeviceTask.human_attribute_name :comment
+      %th= DeviceTask.human_attribute_name :user_comment
+      %th= DeviceTask.human_attribute_name :cost
+      %th= DeviceTask.human_attribute_name :done_at
+      %th= DeviceTask.human_attribute_name :created_at
+      %th
+  %tbody
+    - @service_job.device_tasks.ordered.each do |device_task|
+      %tr{class: row_class_for_task(device_task)}
+        %td= device_task.task_name
+        %td= h device_task.comment
+        %td
+          %strong.user_comment= h device_task.user_comment
+        %td.align_right= device_task.cost
+        %td= l device_task.done_at, format: :long_d unless device_task.done_at.blank?
+        %td= l device_task.created_at, format: :long_d
+        %td{style: "background:none;"}
+          = history_link_to history_device_task_path(@service_job, device_task)
+  %tfoot
+    %tr
+      %td{colspan: 3}= t 'total'
+      %td.align_right= @service_job.tasks_cost
+      %td{colspan: 4}
+
+.form-actions
+  = link_to_edit @service_job
+  = link_to_archive_device @service_job if @service_job.at_done?
+  = link_to_destroy @service_job if can? :destroy, @service_job

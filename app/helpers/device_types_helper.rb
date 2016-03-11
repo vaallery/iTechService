@@ -45,7 +45,7 @@ module DeviceTypesHelper
       if resource.to_s == 'order'
         content_tag :li, link_to(device_type.name, device_type_select_orders_path(device_type_id: device_type.id), remote: true)
       else
-        content_tag :li, link_to(device_type.name, device_type_select_devices_path(device_type_id: device_type.id), remote: true)
+        content_tag :li, link_to(device_type.name, device_type_select_service_jobs_path(device_type_id: device_type.id), remote: true)
       end
     end.join.html_safe
   end

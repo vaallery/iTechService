@@ -1,0 +1,6 @@
+ru:
+  api:
+    service_jobs:
+      errors:
+        invalid_action: 'Неверное действие.'
+        no_action: 'Действие не указано.'

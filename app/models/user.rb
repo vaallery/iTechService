@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   has_many :orders, as: :customer, dependent: :nullify
   has_many :announcements, inverse_of: :user, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :devices, inverse_of: :user
+  has_many :service_jobs, inverse_of: :user
   has_many :karmas, dependent: :destroy, inverse_of: :user
   has_many :karma_groups, through: :karmas
   has_many :bonuses, through: :karma_groups

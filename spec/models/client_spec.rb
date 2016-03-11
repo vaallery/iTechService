@@ -21,7 +21,7 @@ describe Client do
     
     it 'should have "devices" attribute' do
       client = create :client
-      client.should respond_to :devices
+      client.should respond_to :service_jobs
     end
 
     it 'creates "client_characteristic"' do

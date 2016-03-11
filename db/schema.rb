@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309053734) do
+ActiveRecord::Schema.define(version: 20160310091653) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -252,33 +252,33 @@ ActiveRecord::Schema.define(version: 20160309053734) do
   add_index "departments", ["role"], name: "index_departments_on_role", using: :btree
 
   create_table "device_notes", force: :cascade do |t|
-    t.integer  "device_id",  null: false
-    t.integer  "user_id",    null: false
-    t.text     "content",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "service_job_id", null: false
+    t.integer  "user_id",        null: false
+    t.text     "content",        null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
-  add_index "device_notes", ["device_id"], name: "index_device_notes_on_device_id", using: :btree
+  add_index "device_notes", ["service_job_id"], name: "index_device_notes_on_service_job_id", using: :btree
   add_index "device_notes", ["user_id"], name: "index_device_notes_on_user_id", using: :btree
 
   create_table "device_tasks", force: :cascade do |t|
-    t.integer  "device_id"
+    t.integer  "service_job_id"
     t.integer  "task_id"
-    t.integer  "done",         default: 0
+    t.integer  "done",           default: 0
     t.text     "comment"
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.decimal  "cost"
     t.datetime "done_at"
     t.text     "user_comment"
     t.integer  "performer_id"
   end
 
-  add_index "device_tasks", ["device_id"], name: "index_device_tasks_on_device_id", using: :btree
   add_index "device_tasks", ["done"], name: "index_device_tasks_on_done", using: :btree
   add_index "device_tasks", ["done_at"], name: "index_device_tasks_on_done_at", using: :btree
   add_index "device_tasks", ["performer_id"], name: "index_device_tasks_on_performer_id", using: :btree
+  add_index "device_tasks", ["service_job_id"], name: "index_device_tasks_on_service_job_id", using: :btree
   add_index "device_tasks", ["task_id"], name: "index_device_tasks_on_task_id", using: :btree
 
   create_table "device_types", force: :cascade do |t|
@@ -298,50 +298,6 @@ ActiveRecord::Schema.define(version: 20160309053734) do
   add_index "device_types", ["ancestry"], name: "index_device_types_on_ancestry", using: :btree
   add_index "device_types", ["code_1c"], name: "index_device_types_on_code_1c", using: :btree
   add_index "device_types", ["name"], name: "index_device_types_on_name", using: :btree
-
-  create_table "devices", force: :cascade do |t|
-    t.integer  "device_type_id"
-    t.string   "ticket_number",   limit: 255
-    t.integer  "client_id"
-    t.text     "comment"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.datetime "done_at"
-    t.string   "serial_number",   limit: 255
-    t.integer  "location_id"
-    t.integer  "user_id"
-    t.string   "security_code",   limit: 255
-    t.string   "status",          limit: 255
-    t.string   "imei",            limit: 255
-    t.boolean  "replaced",                    default: false
-    t.boolean  "notify_client",               default: false
-    t.boolean  "client_notified"
-    t.datetime "return_at"
-    t.string   "app_store_pass",  limit: 255
-    t.text     "tech_notice"
-    t.string   "contact_phone",   limit: 255
-    t.integer  "item_id"
-    t.integer  "sale_id"
-    t.integer  "case_color_id"
-    t.integer  "department_id"
-    t.boolean  "is_tray_present"
-    t.integer  "carrier_id"
-    t.integer  "keeper_id"
-  end
-
-  add_index "devices", ["carrier_id"], name: "index_devices_on_carrier_id", using: :btree
-  add_index "devices", ["case_color_id"], name: "index_devices_on_case_color_id", using: :btree
-  add_index "devices", ["client_id"], name: "index_devices_on_client_id", using: :btree
-  add_index "devices", ["department_id"], name: "index_devices_on_department_id", using: :btree
-  add_index "devices", ["device_type_id"], name: "index_devices_on_device_type_id", using: :btree
-  add_index "devices", ["done_at"], name: "index_devices_on_done_at", using: :btree
-  add_index "devices", ["imei"], name: "index_devices_on_imei", using: :btree
-  add_index "devices", ["item_id"], name: "index_devices_on_item_id", using: :btree
-  add_index "devices", ["location_id"], name: "index_devices_on_location_id", using: :btree
-  add_index "devices", ["sale_id"], name: "index_devices_on_sale_id", using: :btree
-  add_index "devices", ["status"], name: "index_devices_on_status", using: :btree
-  add_index "devices", ["ticket_number"], name: "index_devices_on_ticket_number", using: :btree
-  add_index "devices", ["user_id"], name: "index_devices_on_user_id", using: :btree
 
   create_table "discounts", force: :cascade do |t|
     t.integer  "value"
@@ -933,6 +889,50 @@ ActiveRecord::Schema.define(version: 20160309053734) do
 
   add_index "schedule_days", ["day"], name: "index_schedule_days_on_day", using: :btree
   add_index "schedule_days", ["user_id"], name: "index_schedule_days_on_user_id", using: :btree
+
+  create_table "service_jobs", force: :cascade do |t|
+    t.integer  "device_type_id"
+    t.string   "ticket_number",   limit: 255
+    t.integer  "client_id"
+    t.text     "comment"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.datetime "done_at"
+    t.string   "serial_number",   limit: 255
+    t.integer  "location_id"
+    t.integer  "user_id"
+    t.string   "security_code",   limit: 255
+    t.string   "status",          limit: 255
+    t.string   "imei",            limit: 255
+    t.boolean  "replaced",                    default: false
+    t.boolean  "notify_client",               default: false
+    t.boolean  "client_notified"
+    t.datetime "return_at"
+    t.string   "app_store_pass",  limit: 255
+    t.text     "tech_notice"
+    t.string   "contact_phone",   limit: 255
+    t.integer  "item_id"
+    t.integer  "sale_id"
+    t.integer  "case_color_id"
+    t.integer  "department_id"
+    t.boolean  "is_tray_present"
+    t.integer  "carrier_id"
+    t.integer  "keeper_id"
+  end
+
+  add_index "service_jobs", ["carrier_id"], name: "index_service_jobs_on_carrier_id", using: :btree
+  add_index "service_jobs", ["case_color_id"], name: "index_service_jobs_on_case_color_id", using: :btree
+  add_index "service_jobs", ["client_id"], name: "index_service_jobs_on_client_id", using: :btree
+  add_index "service_jobs", ["department_id"], name: "index_service_jobs_on_department_id", using: :btree
+  add_index "service_jobs", ["device_type_id"], name: "index_service_jobs_on_device_type_id", using: :btree
+  add_index "service_jobs", ["done_at"], name: "index_service_jobs_on_done_at", using: :btree
+  add_index "service_jobs", ["imei"], name: "index_service_jobs_on_imei", using: :btree
+  add_index "service_jobs", ["item_id"], name: "index_service_jobs_on_item_id", using: :btree
+  add_index "service_jobs", ["location_id"], name: "index_service_jobs_on_location_id", using: :btree
+  add_index "service_jobs", ["sale_id"], name: "index_service_jobs_on_sale_id", using: :btree
+  add_index "service_jobs", ["status"], name: "index_service_jobs_on_status", using: :btree
+  add_index "service_jobs", ["ticket_number"], name: "index_service_jobs_on_ticket_number", using: :btree
+  add_index "service_jobs", ["user_id"], name: "index_service_jobs_on_user_id", using: :btree
 
   create_table "settings", force: :cascade do |t|
     t.string   "name",          limit: 255

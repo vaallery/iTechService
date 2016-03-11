@@ -59,6 +59,7 @@ ru:
       sale: 'Продажа'
       schedule_day: 'Рабочий день'
       setting: 'Параметр'
+      service_job: 'Работа'
       spare_part: 'Запчасть'
       stolen_phone: 'Краденый телефон'
       store: "Склад"
@@ -121,12 +122,12 @@ ru:
         comments: 'Комментарии'
         contact_phone: 'Телефон для связи'
         device: 'Девайс'
-        devices: 'Девайсы'
         email: 'E-mail'
         full_phone_number: 'Федеральный телефонный номер'
         name: 'Имя'
         orders: 'Заказы'
         patronymic: 'Отчество'
+        service_jobs: 'Работы'
         surname: 'Фамилия'
 
       comment:
@@ -391,10 +392,44 @@ ru:
         day: 'День'
         hours: 'Часы'
 
+      service_job:
+        app_store_pass: 'Пароль на учетную запись в App Store'
+        carrier: 'Оператор'
+        case_color: 'Чехол'
+        case_color_id: 'Чехол'
+        client: :activerecord.models.client
+        client_id: :activerecord.models.client
+        client_notified: 'Клиент уведомлён'
+        comment: 'Комментарий'
+        contact_phone: 'Контактный номер'
+        department: :activerecord.models.department
+        device_tasks: 'Список задач'
+        done_at: 'Время завершения'
+        history_records: 'История изменений'
+        imei: 'IMEI'
+        is_tray_present: 'Есть ли лоток?'
+        keeper: 'Хранитель'
+        location: :activerecord.models.location
+        location_id: :activerecord.models.location
+        notify_client: 'Позвонить клиенту по готовности'
+        receiver: 'Приемщик'
+        replaced: 'Заменен'
+        return_at: "Время возврата"
+        security_code: 'Пароль'
+        serial_number: 'Серийный номер'
+        service_duration: "Длительность обслуживания"
+        status: 'Статус'
+        tasks: 'Список задач'
+        tech_notice: 'Для истинных технарей'
+        ticket_number: 'Номер талона'
+        user: :activerecord.models.user
+        user_id: :activerecord.models.user
+
       setting:
         presentation: 'Представление'
         value: 'Значение'
         value_type: 'Тип значения'
+
       spare_part:
         price: 'Стоимость закупа'
 
@@ -413,7 +448,6 @@ ru:
 
       task:
         cost: 'Стоимость'
-        devices: 'Девайсы'
         duration: 'Длительность'
         location: 'Локация'
         location_id: :activerecord.attributes.task.location
@@ -441,7 +475,6 @@ ru:
         comments: 'Комментарии'
         current_sign_in_at: 'Время авторизации'
         current_sign_in_ip: 'IP авторизации'
-        devices: 'Девайсы'
         duty_days: 'Дежурные дни'
         email: 'E-mail'
         encrypted_password: 'encrypted_password'  #g
@@ -480,8 +513,8 @@ ru:
           attributes:
             role:
               main_exists: 'Не может быть больше одного главного'
-        device:
-          not_paid: 'Не оплачен!'
+        service_job:
+          not_paid: 'Не оплачена!'
         device_task:
           no_defect_store: 'Склад брака не найден'
           no_spare_parts_store: "Склад запчастей не найден"
@@ -512,6 +545,7 @@ ru:
     department_id: :activerecord.models.department
     device_type: :activerecord.models.device_type
     device_type_id: :activerecord.models.device_type
+    devices: 'Девайсы'
     fio: 'ФИО'
     id: '№'
     imei: 'IMEI'

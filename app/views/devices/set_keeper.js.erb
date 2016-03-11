@@ -1,2 +1,0 @@
-$device_row = $(".device_row[data-device-id=<%= @device.id %>]", '#actual_tasks_table');
-$device_row.find('.device-keeper-form').replaceWith('<%= j button_to_set_keeper_of_device(@device) %>');

@@ -41,7 +41,7 @@ class ItemsController < ApplicationController
       else
         format.html
         format.js
-        format.json { render json: @items.any? ? @items : {message: t('devices.not_found')} }
+        format.json { render json: @items.any? ? @items : {message: t('service_jobs.not_found')} }
       end
     end
   end

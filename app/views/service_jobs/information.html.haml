@@ -1,0 +1,14 @@
+- if @service_job.present?
+  %hr
+  %dl.dl-horizontal
+    %dt= ServiceJob.human_attribute_name :client
+    %dd= @service_job.client_presentation
+
+    %dt= ServiceJob.human_attribute_name :device_type
+    %dd= @service_job.type_name
+
+    %dt= ServiceJob.human_attribute_name :serial_number
+    %dd= @service_job.serial_number
+
+    %dt= ServiceJob.human_attribute_name :status
+    %dd= @service_job.status

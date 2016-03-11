@@ -3,13 +3,57 @@ ru:
 
     edit:
       title: 'Редактирование Работы'
+      copy_client_phone: "Копировать номер клиента"
+
+    errors:
+      already_archived: 'Работа уже в архиве.'
+      client_notification: 'Нужно уведомить клиента'
+      invalid_action: 'Неверное действие.'
+      no_action: 'Действие не указано.'
+      not_done: 'Работа не выполнена.'
+      not_allowed: 'Вы не можете переместить Работу.'
+      pending_tasks: 'Не все задачи выполнены'
+
     index:
+      client_search_placeholder: "Клиент: телефон | имя | карта"
+      device_search_placeholder: "Девайс: серийник | IMEI"
       title: 'Работы'
+      archive: 'Архив'
+
+    form:
+      check_imei: "Проверить IMEI"
+
     new:
       title: 'Новая Работа'
-    form:
-      not_accessible: "Не доступен"
-    client_notified: "Уведомлён"
-    to_archive: "В архив"
-    moved: '%{user} %{time} назад'
-    movement_history: "История перемещений"
+
+    movement_history:
+      title: 'История перемещений'
+
+    status:
+      all: 'Все статусы'
+      done: 'Готово'
+      pending: 'Не готово'
+      important: 'Важно'
+
+    add_task: 'Добавить задачу'
+    client_devices: 'Девайсы клиента'
+    created: 'Работа создана'
+    device_tasks_error: 'Слишком много однотипных задач'
+    enter_ticket_number: 'Укажите номер талона'
+    information: 'Информация о Работе'
+    itunes_string: 'Строка для iTunes'
+    link: 'Работы'
+    not_found: 'Работа не найдена'
+    not_found_by_ticket: "Устройство с талоном № %{ticket} не найдено"
+    moved_at: 'Перемёщена в'
+    moved_by: 'Переместил(а)'
+    phone_stolen: 'этот телефон в чёрном списке!!!'
+    received: 'Принят'
+    returning_popover_title: "Напоминание о возврате девайсов"
+    search_placeholder: 'Талон или серийный номер'
+    seach_sales_btn: 'Искать продажи'
+    service_duration_placeholder: "м | ч.м | д.ч.м"
+    updated: 'Работа изменён'
+    sales_info: "Информация о продаже"
+    move_to_archive: "В архив"
+

@@ -30,8 +30,8 @@
       = render 'shared/scanner'
 
       = subscribe_to '/announcements'
-      = subscribe_to '/devices/new'
-      = subscribe_to '/devices/update'
+      = subscribe_to '/service_jobs/new'
+      = subscribe_to '/service_jobs/update'
       = subscribe_to '/chat/new'
     - else
       = yield

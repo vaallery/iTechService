@@ -1,9 +1,9 @@
 = nav_bar static: :top, brand: image_tag('logo.png'), responsive: true, fluid: true do
   = menu_group do
     = menu_item t('chat.title'), messages_path, class: 'nav_chat'
-    = drop_down t('devices.link') do
-      = menu_item t('devices.new.title', default: 'Devices'), new_device_path
-      = menu_item t('devices.link', default: 'Devices'), devices_path
+    = drop_down t('service_jobs.link') do
+      = menu_item t('service_jobs.new.title', default: 'Service jobs'), new_service_job_path
+      = menu_item t('service_jobs.link', default: 'Service jobs'), service_jobs_path
       = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService
       = drop_down_divider
       = menu_item t('quick_orders.new.title'), new_quick_order_path if can? :create, QuickOrder

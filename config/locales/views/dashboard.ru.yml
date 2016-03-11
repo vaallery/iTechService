@@ -4,11 +4,11 @@ ru:
     actual_requests: "Текущие запросы"
     actual_tasks: "Текущие задачи"
     goods_for_sale: "Техника для продажи"
-    ready_devices: "Готовые девайсы"
+    ready_service_jobs: "Готовые работы"
     misc: 'Прочее'
     moved_title: 'Перемещен'
-    new_device: 'Новый Девайс'
-    new_device_message: 'Новый девайс!!!'
+    new_service_job: 'Приёмка девайса'
+    new_device_message: 'Новая работа!!!'
     new_info: 'Создать новость'
     new_order: 'Новый Заказ'
     new_user: 'Новый пользователь'

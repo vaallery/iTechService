@@ -16,8 +16,8 @@
           %td= client.human_phone_number
           %td=l client.created_at, format: :long_d
           %td.btn-group
-            - if can? :create, Device
-              = link_to icon_tag('plus-sign'), new_device_path(device: {client_id: client.id}), class: 'btn btn-small'
+            - if can? :create, ServiceJob
+              = link_to icon_tag('plus-sign'), new_service_job_path(service_job: {client_id: client.id}), class: 'btn btn-small'
             = link_to_show_small client
             = link_to_edit_small client
             = link_to_destroy_small client

@@ -1,21 +1,21 @@
 module DashboardHelper
 
-  def device_information_content(device)
-    if device.present?
+  def service_job_information_content(service_job)
+    if service_job.present?
       (tag(:hr) +
           content_tag(:dl, class: 'dl-horizontal') do
-            content_tag(:dt, Device.human_attribute_name(:client))
-            content_tag(:dd, @device.client_presentation)
+            content_tag(:dt, ServiceJob.human_attribute_name(:client))
+            content_tag(:dd, @service_job.client_presentation)
           end
       ).html_safe
     else
-      t('devices.not_found', default: 'Device not found')
+      t('service_jobs.not_found', default: 'Service job not found')
     end
   end
 
-  def link_to_edit_device(device)
-    link_to icon_tag(:edit), edit_device_path(device), class: 'btn btn-small', remote: true
-            #, disabled: !is_movable_device?(device)
+  def link_to_edit_service_job(service_job)
+    link_to icon_tag(:edit), edit_service_job_path(service_job), class: 'btn btn-small', remote: true
+            #, disabled: !is_movable_device?(service_job)
   end
 
   def link_to_edit_device_task(device_task)
@@ -23,12 +23,12 @@ module DashboardHelper
             disabled: !is_editable_task?(device_task)
   end
 
-  def is_actual_device?(device)
-    device.is_actual_for?(current_user)
+  def is_actual_service_job?(service_job)
+    service_job.is_actual_for?(current_user)
   end
 
-  def is_movable_device?(device)
-    current_user.any_admin? ? true : device.is_actual_for?(current_user)
+  def is_movable_service_job?(service_job)
+    current_user.any_admin? ? true : service_job.is_actual_for?(current_user)
   end
 
   def is_actual_task?(task)
@@ -39,54 +39,54 @@ module DashboardHelper
     current_user.any_admin? ? true : device_task.is_actual_for?(current_user)
   end
 
-  def device_row_tag(device)
-    content_tag(:tr, class: 'info device_row', data: {device_id: device.id}) do
-      content_tag(:td, device_movement_information_tag(device), class: 'device_movement_column') +
+  def service_job_row_tag(service_job)
+    content_tag(:tr, class: 'info service_job_row', data: {service_job_id: service_job.id}) do
+      content_tag(:td, device_movement_information_tag(service_job), class: 'device_movement_column') +
         content_tag(:td, class: 'device_task_column') do
-        content_tag(:span, device.progress, class: "device_tasks_toggle #{progress_badge_class_for_device(device)}") +
-        link_to(device.presentation, device_path(device)) +
+        content_tag(:span, service_job.progress, class: "device_tasks_toggle #{progress_badge_class_for_service_job(service_job)}") +
+        link_to(service_job.presentation, service_job_path(service_job)) +
         tag(:br, false) +
         content_tag(:span, class: 'device_ticket_number') do
-          "#{Device.human_attribute_name(:ticket_number)}: #{device.ticket_number}"
+          "#{ServiceJob.human_attribute_name(:ticket_number)}: #{service_job.ticket_number}"
         end
       end +
       content_tag(:td, class: 'client_comment_column') do
-        (device.client.present? ? link_to(device.client_short_name, client_path(device.client)) : '-').html_safe +
-        " #{contact_phones_for(device)}".html_safe +
+        (service_job.client.present? ? link_to(service_job.client_short_name, client_path(service_job.client)) : '-').html_safe +
+        " #{contact_phones_for(service_job)}".html_safe +
         tag(:br, false) +
-        device.comment
+        service_job.comment
       end +
       content_tag(:td, class: 'device_task_action_column') do
-        notes_icon_name = device.device_notes.exists? ? 'file-text-alt' : 'file-alt'
-        link_to_edit_device(device) +
-        link_to(glyph(notes_icon_name), device_device_notes_path(device), class: 'device-notes-button btn btn-small', remote: true) +
-        button_to_set_keeper_of_device(device)
+        notes_icon_name = service_job.device_notes.exists? ? 'file-text-alt' : 'file-alt'
+        link_to_edit_service_job(service_job) +
+        link_to(glyph(notes_icon_name), service_job_device_notes_path(service_job), class: 'device_notes-button btn btn-small', remote: true) +
+        button_to_set_keeper_of_device(service_job)
       end
     end
   end
 
-  def ready_device_row_tag(device)
-    content_tag(:tr, class: 'device_row', data: {device_id: device.id}) do
-      content_tag(:td, device_movement_information_tag(device), class: 'device_movement_column') +
+  def ready_service_job_row_tag(service_job)
+    content_tag(:tr, class: 'service_job_row', data: {service_jobs_id: service_job.id}) do
+      content_tag(:td, device_movement_information_tag(service_job), class: 'device_movement_column') +
       content_tag(:td) do
-        link_to(device.presentation, device_path(device)) +
+        link_to(service_job.presentation, service_job_path(service_job)) +
         tag(:br, false) +
         content_tag(:span, class: 'device_ticket_number') do
-          "#{Device.human_attribute_name(:ticket_number)}: #{device.ticket_number}"
+          "#{ServiceJob.human_attribute_name(:ticket_number)}: #{service_job.ticket_number}"
         end
       end +
       content_tag(:td) do
-        link_to(device.client_presentation, client_path(device.client)) +
+        link_to(service_job.client_presentation, client_path(service_job.client)) +
         tag(:br, false) +
-        device.comment
+        service_job.comment
       end +
-      content_tag(:td, device.done_at.present? ? l(device.done_at, format: :long_d) : '-') +
-      content_tag(:td, link_to_edit_device(device))
+      content_tag(:td, service_job.done_at.present? ? l(service_job.done_at, format: :long_d) : '-') +
+      content_tag(:td, link_to_edit_service_job(service_job))
     end
   end
 
   def device_task_row_tag(device_task)
-    content_tag(:tr, class: "device_task_row #{device_task.done_s} #{'actual' if is_actual_task?(device_task)}", data: {device_task_id: device_task.id, device_id: device_task.device_id, task_id: device_task.task_id}) do
+    content_tag(:tr, class: "device_task_row #{device_task.done_s} #{'actual' if is_actual_task?(device_task)}", data: {device_task_id: device_task.id, service_jobs_id: device_task.service_job.id, task_id: device_task.task.id}) do
       content_tag(:td, nil) +
       content_tag(:td, device_task.task_name) +
       content_tag(:td) do

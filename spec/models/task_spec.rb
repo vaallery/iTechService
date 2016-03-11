@@ -16,7 +16,7 @@ describe Task do
     
     it "should have a 'devices' attribute" do
       task = create :task
-      task.should respond_to :devices
+      task.should respond_to :service_jobs
     end
     
     it "should have a 'location' attribute" do

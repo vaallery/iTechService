@@ -1,7 +1,7 @@
 ru:
   mail:
     movement:
-      subject: "Новый девайс %{device}"
+      subject: "Новый девайс %{service_job}"
     remnants:
       warn_subject: 'Заканчивается %{product}'
       warning_text: 'На складе %{store} осталось %{quantity} %{product}'

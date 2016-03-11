@@ -2,12 +2,12 @@
   .navbar-inner
     = form_tag actual_orders_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: true do
       .input-append
-        = text_field_tag :order_number, params[:order_number], id: 'search_device_input', class: 'search-query input-medium',
+        = text_field_tag :order_number, params[:order_number], id: 'search_order_input', class: 'search-query input-medium',
             placeholder: Order.human_attribute_name(:number)
         %span.add-on.btn.clear_search_input
           %i.icon-remove
       .input-append
-        = text_field_tag :object, params[:object], id: 'search_device_input', class: 'search-query input-medium',
+        = text_field_tag :object, params[:object], id: 'search_order_object_input', class: 'search-query input-medium',
             placeholder: Order.human_attribute_name(:object)
         %span.add-on.btn.clear_search_input
           %i.icon-remove

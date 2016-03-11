@@ -1,15 +1,15 @@
 module ClientsHelper
 
+  # TODO
   def client_devices_list client
-    if client.present? and client.devices.any?
+    if client.present? and client.service_jobs.any?
       content = content_tag(:ul, class: 'client_devices_list') do
-        # client.devices.uniq_by{|d|d.device_type_id}.collect do |device|
-        client.devices.distinct.collect do |device|
+        client.service_jobs.distinct.collect do |service_job|
           content_tag(:li) do
-            link_to device_select_devices_path(client, device_id: device.id),
-                    id: "client_device_select_#{device.id}", class: 'client_device_select', remote: true do
-              content_tag(:span, device.presentation) +
-              content_tag(:span, "#{distance_of_time_in_words_to_now(device.created_at)} #{t(:ago)}", class: 'help-block')
+            link_to device_select_service_jobs_path(client, service_jobs_id: service_job.id),
+                    id: "client_device_select_#{service_job.id}", class: 'client_device_select', remote: true do
+              content_tag(:span, service_job.presentation) +
+              content_tag(:span, "#{distance_of_time_in_words_to_now(service_job.created_at)} #{t(:ago)}", class: 'help-block')
             end
           end
         end.join.html_safe

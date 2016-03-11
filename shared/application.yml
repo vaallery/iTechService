@@ -11,6 +11,6 @@ DEPARTMENT_ROLE: '0'
 
 COMMON_MODELS: Bank CaseColor CashDrawer ClientCategory Department ProductCategory ProductGroup Product Item FeatureType Feature PaymentType PriceType ProductPrice RepairGroup RepairService SparePart Store StoreItem StoreProduct
 
-IMPORT_MODELS: CashOperation CashShift Client ClientCharacteristic Device DeviceTask DeviceType GiftCertificate Location Payment Sale SaleItem RepairTask RepairPart Task User
+IMPORT_MODELS: CashOperation CashShift Client ClientCharacteristic ServiceJob DeviceTask DeviceType GiftCertificate Location Payment Sale SaleItem RepairTask RepairPart Task User
 
 JOIN_TABLES: feature_types_product_categories price_types_stores

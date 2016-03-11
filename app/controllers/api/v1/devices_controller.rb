@@ -5,22 +5,22 @@ module Api
       load_and_authorize_resource
 
       def show
-        respond_with @device
+        respond_with @service_job
       end
 
       def update
         if (location = params[:move]).present?
           if Location.respond_to? location+'_id'
-              if @device.update_attributes location_id: Location.send(location+'_id')
-                render json: @device
+              if @service_job.update_attributes location_id: Location.send(location+'_id')
+                render json: @service_job
               else
-                render status: 403, json: {error: @device.errors}
+                render status: 403, json: {error: @service_job.errors}
               end
             else
-              render status: 403, json: {error: t('devices.errors.invalid_action')}
+              render status: 403, json: {error: t('api.service_jobs.errors.invalid_action')}
           end
         else
-          render status: 403, json: {error: t('devices.errors.no_action')}
+          render status: 403, json: {error: t('api.service_jobs.errors.no_action')}
         end
       end
 

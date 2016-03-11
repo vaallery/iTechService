@@ -14,8 +14,8 @@ module Api
         #  end
         #else
           barcode_num = barcode_num.gsub(/^0+/, '').chop if barcode_num.length == 13
-          if (device = Device.find_by_ticket_number(barcode_num)).present?
-            render json: {device: device}
+          if (service_job = ServiceJob.find_by_ticket_number(barcode_num)).present?
+            render json: {device: service_job}
           else
             render status: 403, json: {error: t('errors.nothing_found')}
           end

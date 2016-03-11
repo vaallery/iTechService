@@ -117,7 +117,7 @@ $(document).on 'keydown', 'textarea', ->
 
 $(document).on 'keydown', '#quick_search', (e)->
   $input = $('#quick_search')
-  $form = $('#devices_quick_search_form')
+  $form = $('#service_jobs_quick_search_form')
   $result_list = $('#quick_search_result')
   switch e.which
     when 13
@@ -217,7 +217,7 @@ scanTicket = ->
         ticket_number = scaned_code.replace(/^0+/, '')
         ticket_number = ticket_number[0..-2]
         $('#barcode_reader').removeClass('in').fadeOut()
-        $.get '/devices/' + ticket_number + '.js?find=ticket'
+        $.get '/service_jobs/' + ticket_number + '.js?find=ticket'
       else
         if event.keyCode in [48..57]
           scaned_code = scaned_code[1..-1] if scaned_code.length is 12

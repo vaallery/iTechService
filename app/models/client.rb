@@ -14,7 +14,7 @@ class Client < ActiveRecord::Base
 
   belongs_to :department
   belongs_to :client_characteristic
-  has_many :devices, inverse_of: :client, dependent: :destroy
+  has_many :service_jobs, inverse_of: :client, dependent: :destroy
   has_many :orders, as: :customer, dependent: :destroy
   has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
   has_many :history_records, as: :object

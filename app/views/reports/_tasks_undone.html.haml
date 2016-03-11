@@ -11,7 +11,7 @@
         %td.quantity.number= task_value[:tasks_qty]
       - task_value[:tasks].each do |task_data|
         %tr.details
-          %td.device= link_to task_data[:device], device_path(task_data[:device_id]), target: '_blank'
+          %td.service_job= link_to task_data[:service_job], service_job_path(task_data[:service_job_id]), target: '_blank'
           %td.comment
             %p.text-info= task_data[:comment]
             %p.text-error= task_data[:user_comment]

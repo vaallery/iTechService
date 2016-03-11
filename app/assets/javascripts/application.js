@@ -37,6 +37,7 @@
 //= require reports
 //= require revaluation_acts
 //= require sales
+//= require service_jobs
 //= require stores
 //= require supply_categories
 //= require supply_reports

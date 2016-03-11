@@ -4,15 +4,15 @@
     %tr
       %th= Client.human_attribute_name :created_at
       %th= t 'activerecord.models.client'
-      %th= t 'activerecord.models.device'
+      %th= ServiceJob.model_name.human
   %tbody
     - @report.result[:new_clients].each do |client|
       %tr
         %td= human_datetime client[:created_at]
         %td= link_to client[:presentation], client_path(client[:id])
         %td
-          - client[:devices].each do |device|
-            = link_to device[:presentation], device_path(device[:id])
+          - client[:service_jobs].each do |service_job|
+            = link_to service_job[:presentation], service_job_path(service_job[:id])
             %br
   %tfoot
     %tr

@@ -15,10 +15,10 @@
         %td= task[:qty]
         %td= task[:qty_paid]
         %td= task[:qty_free]
-      - task[:devices].each do |device|
-        %tr.device_row.details
-          %td.device_name= link_to device[:name], device_path(device[:id])
-          %td.task_cost= number_to_currency device[:cost], unit: '', precision: 0
+      - task[:service_jobs].each do |service_job|
+        %tr.service_job_row.details
+          %td.device_name= link_to service_job[:name], service_job_path(service_job[:id])
+          %td.task_cost= number_to_currency service_job[:cost], unit: '', precision: 0
           %td{colspan: 3}
   %tfoot
     %tr

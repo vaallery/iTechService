@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'actual_orders', to: 'dashboard#actual_orders'
   get 'actual_tasks', to: 'dashboard#actual_tasks'
   get 'actual_supply_requests', to: 'dashboard#actual_supply_requests'
-  get 'ready_devices', to: 'dashboard#ready_devices'
+  get 'ready_service_jobs', to: 'dashboard#ready_service_jobs'
   get 'check_session_status', to: 'dashboard#check_session_status'
   get 'print_tags', to: 'dashboard#print_tags'
 
@@ -59,7 +59,7 @@ Rails.application.routes.draw do
   resources :tasks
   resources :locations, except: :show
 
-  resources :devices do
+  resources :service_jobs do
     get :history, on: :member, defaults: { format: 'js' }
     get :device_type_select, on: :collection, defaults: { format: 'js' }
     get :device_select, on: :collection
@@ -71,9 +71,9 @@ Rails.application.routes.draw do
     resources :device_notes, only: %i[index new create]
   end
 
-  get 'check_device_status' => 'devices#check_status'
+  get 'check_device_status' => 'service_jobs#check_status'
   get 'check_order_status' => 'orders#check_status'
-  get 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', as: :history_device_task, defaults: { format: 'js' }
+  get 'service_jobs/:service_job_id/device_tasks/:id/history' => 'service_jobs#task_history', as: :history_device_task, defaults: { format: 'js' }
 
   resources :device_tasks, only: [:edit, :update]
 

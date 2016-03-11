@@ -2,4 +2,4 @@ ru:
   device_notes:
     modal_form_content:
       submit: 'Создать Заметку'
-      title: 'Заметки к %{device}'
+      title: 'Заметки к %{service_job}'

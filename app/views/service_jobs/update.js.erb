@@ -1,0 +1,5 @@
+hideModal();
+$(".device_task_row[data-service_job-id=<%= @service_job.id %>]", '#actual_tasks_table').remove();
+$service_job_row = $(".service_job_row[data-service_job-id=<%= @service_job.id %>]", '#actual_tasks_table');
+$service_job_row.next('.empty_row').remove();
+$service_job_row.remove();
