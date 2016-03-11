@@ -139,7 +139,7 @@ class ServiceJobsController < ApplicationController
       render 'device_type_refresh'
     else
       @device_type = DeviceType.find params[:device_type_id]
-      render 'service_job_type_select'
+      render 'device_type_select'
     end
   end
 
