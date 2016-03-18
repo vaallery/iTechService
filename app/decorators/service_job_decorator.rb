@@ -1,6 +1,10 @@
 class ServiceJobDecorator < ApplicationDecorator
   delegate_all
 
+  def device
+
+  end
+
   def device_name
     (object.item.present? ? object.item.name : object.type_name) || '-'
   end
