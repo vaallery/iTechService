@@ -2,9 +2,9 @@ class Product < ActiveRecord::Base
 
   BARCODE_PREFIX = '243'
 
-  scope :name_asc, ->{order('name asc')}
-  scope :available, ->{includes(:store_items).where('store_items.quantity > ?', 0)}
-  scope :in_store, ->(store) { includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}) }
+  scope :name_asc, -> { order('name asc') }
+  scope :available, -> { includes(:store_items).where('store_items.quantity > ?', 0).references(:store_items) }
+  scope :in_store, ->(store) { includes(:store_items).where(store_items: {store_id: store.is_a?(Store) ? store.id : store}).references(:store_items) }
   scope :goods, ->{joins(product_group: :product_category).where(product_categories: {kind: %w[equipment accessory protector]})}
   scope :services, ->{joins(product_group: :product_category).where(product_categories: {kind: 'service'})}
   scope :spare_parts, ->{joins(product_group: :product_category).where(product_categories: {kind: 'spare_part'})}

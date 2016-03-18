@@ -16,83 +16,83 @@ nav#navbar.navbar.navbar-default.navbar-static-top@navigation
           = navbar_item t('cash_operations.cash_in'), new_cash_operation_path(kind: :cash_in), remote: true
           = navbar_item t('cash_operations.cash_out'), new_cash_operation_path(kind: :cash_out), remote: true
 
-          = navbar_dropdown t('.service') do
-            = navbar_resource :service_jobs
-            = navbar_resource :repair_services
-            / TODO: Списать брак
-            = dropdown_divider
-            = navbar_resource :quick_orders
-            = navbar_resource :media_orders
-            = dropdown_divider
-            = navbar_resource :orders
-            = dropdown_divider
-            = navbar_resource :clients
-            = dropdown_divider
+        = navbar_dropdown t('.service') do
+          = navbar_resource :service_jobs
+          = navbar_resource :repair_services
+          / TODO: Списать брак
+          = dropdown_divider
+          = navbar_resource :quick_orders
+          = navbar_resource :media_orders
+          = dropdown_divider
+          = navbar_resource :orders
+          = dropdown_divider
+          = navbar_resource :clients
+          = dropdown_divider
 
-            = navbar_dropdown t('.trade') do
-              = navbar_resource :sales
-              = navbar_resource :purchases
-              = navbar_resource :revaluation_acts
-              = navbar_resource :movement_acts
-              = navbar_resource :deduction_acts
+        = navbar_dropdown t('.trade') do
+          = navbar_resource :sales
+          = navbar_resource :purchases
+          = navbar_resource :revaluation_acts
+          = navbar_resource :movement_acts
+          = navbar_resource :deduction_acts
+          = dropdown_divider
+          = navbar_resource :prices
+          = header_link_to_view_prices
+          = navbar_resource :gift_certificates
+          = dropdown_divider
+          = navbar_item t('product_imports.new.title'), new_product_import_path if can? :modify, Product
+          = navbar_resource :imported_sales
+          = navbar_resource :top_salables
+
+          = navbar_dropdown t('.staff') do
+            = navbar_resource :infos
+            = dropdown_divider
+            = navbar_resource :users
+            = navbar_item t('.rating'), rating_users_path
+            = navbar_item t('users.schedule'), schedule_users_path
+            = navbar_item t('users.timesheet'), timesheet_days_path
+            = dropdown_divider
+            / supply_requests
+            / supply_reports
+            = navbar_resource :salaries
+            / announcements
+            = dropdown_divider
+            = navbar_resource :bonus_types
+
+            = navbar_dropdown t('.directory') do
+              = navbar_resource :products
+              = navbar_resource :product_types
+              = navbar_resource :option_types
+              = navbar_resource :product_categories
               = dropdown_divider
-              = navbar_resource :prices
-              = header_link_to_view_prices
-              = navbar_resource :gift_certificates
+              = navbar_resource :tasks
+              = navbar_resource :quick_tasks
+              = navbar_resource :carriers
+              /= navbar_resource :supply_categories
               = dropdown_divider
-              = navbar_item t('product_imports.new.title'), new_product_import_path if can? :modify, Product
-              = navbar_resource :imported_sales
-              = navbar_resource :top_salables
+              = navbar_resource :stores
+              = navbar_resource :cash_drawers
+              = navbar_resource :banks
+              = navbar_resource :contractors
+              = dropdown_divider
+              = navbar_resource :client_types
+              = navbar_resource :case_colors
+              = navbar_resource :locations
+              = navbar_resource :departments
 
-              = navbar_dropdown t('.staff') do
-                = navbar_resource :infos
+              = navbar_dropdown t('.misc') do
+                /= navbar_item t('.wiki'), wiki_all_path
+                = navbar_item t('.reports'), new_report_path
                 = dropdown_divider
-                = navbar_resource :users
-                = navbar_item t('.rating'), rating_users_path
-                = navbar_item t('users.schedule'), schedule_users_path
-                = navbar_item t('users.timesheet'), timesheet_days_path
+                = navbar_item t('case_pictures.index.title'), case_pictures_path
+                = navbar_item t('contacts_extractions.new.title'), new_contacts_extraction_path
+                = navbar_resource :stolen_phones
+                /= menu_item t('dashboard.print_tags.title'), print_tags_path if current_user.any_admin?
+                /= menu_item t('receipts.new.title'), receipts_new_path
                 = dropdown_divider
-                / supply_requests
-                / supply_reports
-                = navbar_resource :salaries
-                / announcements
-                = dropdown_divider
-                = navbar_resource :bonus_types
-
-                = navbar_dropdown t('.directory') do
-                  = navbar_resource :products
-                  = navbar_resource :product_types
-                  = navbar_resource :option_types
-                  = navbar_resource :product_categories
-                  = dropdown_divider
-                  = navbar_resource :tasks
-                  = navbar_resource :quick_tasks
-                  = navbar_resource :carriers
-                  /= navbar_resource :supply_categories
-                  = dropdown_divider
-                  = navbar_resource :stores
-                  = navbar_resource :cash_drawers
-                  = navbar_resource :banks
-                  = navbar_resource :contractors
-                  = dropdown_divider
-                  = navbar_resource :client_types
-                  = navbar_resource :case_colors
-                  = navbar_resource :locations
-                  = navbar_resource :departments
-
-                  = navbar_dropdown t('.misc') do
-                    /= navbar_item t('.wiki'), wiki_all_path
-                    = navbar_item t('.reports'), new_report_path
-                    = dropdown_divider
-                    = navbar_item t('case_pictures.index.title'), case_pictures_path
-                    = navbar_item t('contacts_extractions.new.title'), new_contacts_extraction_path
-                    = navbar_resource :stolen_phones
-                    /= menu_item t('dashboard.print_tags.title'), print_tags_path if current_user.any_admin?
-                    /= menu_item t('receipts.new.title'), receipts_new_path
-                    = dropdown_divider
-                    = navbar_resource :settings
-                    = navbar_item t('.data_migration'), data_migration_path
-                      /= navbar_item 'Delayed jobs', delayed_job_path
+                = navbar_resource :settings
+                = navbar_item t('.data_migration'), data_migration_path
+                  /= navbar_item 'Delayed jobs', delayed_job_path
 
       ul.nav.navbar-nav.navbar-right
         = navbar_item t('.chat'), '#', class: 'chat_link'
