@@ -88,6 +88,14 @@ class ProductsController < ApplicationController
     end
   end
 
+  def find
+    @product = Product.find_by_group_and_options(params[:product_group_id], params[:option_ids])
+    if @product.present?
+      @item = @product.items.build
+      @item.features.build @product.feature_types.map{|ft|{feature_type_id: ft.id}}
+    end
+  end
+
   def choose
     @product_groups = ProductGroup.roots.search(params).ordered
     @product = Product.find params[:product_id] if params[:product_id].present?
@@ -166,5 +174,4 @@ class ProductsController < ApplicationController
       format.js
     end
   end
-
 end

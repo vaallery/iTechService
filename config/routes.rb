@@ -71,6 +71,11 @@ Rails.application.routes.draw do
     resources :device_notes, only: %i[index new create]
   end
 
+  resources :devices do
+    get :autocomplete, on: :collection
+    get :select, on: :member
+  end
+
   get 'check_device_status' => 'service_jobs#check_status'
   get 'check_order_status' => 'orders#check_status'
   get 'service_jobs/:service_job_id/device_tasks/:id/history' => 'service_jobs#task_history', as: :history_device_task, defaults: { format: 'js' }
@@ -160,14 +165,19 @@ Rails.application.routes.draw do
     get :remains_in_store, on: :member, defaults: {format: :json}
     get :related, on: :member, defaults: {format: :js}
     post :select, on: :collection, defaults: {format: :js}
+    get :find, on: :collection
     resources :items, except: [:show]
   end
 
   resources :items do
     get :remains_in_store, on: :member, defaults: {format: :json}
+    get :autocomplete, on: :collection
   end
 
-  resources :product_groups
+  resources :product_groups do
+    get :select, on: :member
+  end
+
   resources :option_types, except: :show
 
   resources :product_types do

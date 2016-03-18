@@ -1,6 +1,6 @@
 .page-header
   %h1
-    = t '.title', default: ServiceJob.model_name.pluralize
+    = t '.title', default: ServiceJob.model_name.plural
     %small= link_to t('.archive'), service_jobs_path(location: Location.archive.id)
   = link_to_new ServiceJob if can? :create, ServiceJob
   

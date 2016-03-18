@@ -3,9 +3,9 @@ class OptionValuesController < ApplicationController
   # authorize_resource
   # respond_to :json
   #
-  # def index
-  #   product_type = ProductType.find params[:product_type_id]
-  #   @option_values = product_type.option_values.ordered
-  #   respond_with option_values
-  # end
+  def index
+    product_group = ProductGroup.find params[:product_type_id]
+    @option_values = product_group.option_values.ordered
+
+  end
 end

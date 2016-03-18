@@ -118,7 +118,7 @@ module ServiceJobsHelper
     link_to glyph(:archive)+t('service_jobs.move_to_archive'), service_job_path(service_job, service_job: {location_id: current_user.archive_location.id}), method: :patch, class: 'btn btn-warning', remote: options[:remote]
   end
 
-  def device_tasks_list(service_job)
+  def service_tasks_list(service_job)
     content_tag(:ul, id: 'device_tasks_list') do
       service_job.device_tasks.collect do |device_task|
         content_tag :li do

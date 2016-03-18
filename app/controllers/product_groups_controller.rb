@@ -1,5 +1,5 @@
 class ProductGroupsController < ApplicationController
-  before_action :set_product_group, only: %i[show edit update destroy]
+  before_action :set_product_group, only: %i[show select edit update destroy]
   before_action :set_option_types, only: %i[new edit create update]
   authorize_resource
 
@@ -25,6 +25,15 @@ class ProductGroupsController < ApplicationController
       params[:table_name] = 'products/small_table'
     end
     @products = @products.page(params[:page])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def select
+    if @product_group.is_childless?
+      @available_options = @product_group.option_values.ordered.group_by {|ov|ov.option_type.name}
+    end
     respond_to do |format|
       format.js
     end

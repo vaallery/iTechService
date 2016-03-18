@@ -1,12 +1,31 @@
 module ClientsHelper
 
-  # TODO
-  def client_devices_list client
+  def client_devices_list(client)
+    if client.present? and client.devices.any?
+      devices = DeviceDecorator.decorate_collection client.devices
+      content = content_tag(:ul, class: 'client_devices_list') do
+        devices.collect do |device|
+          content_tag(:li) do
+            link_to select_device_path(device), id: "client_device_select_#{device.id}", class: 'client_device_select', remote: true do
+              content_tag(:span, device.presentation) +
+              content_tag(:span, device.serviced_last_time, class: 'help-block')
+                # content_tag(:span, "#{distance_of_time_in_words_to_now(device.created_at)} #{t(:ago)}", class: 'help-block')
+            end
+          end
+        end.join.html_safe
+      end
+    else
+      content = ''
+    end
+    content.html_safe
+  end
+
+  def client_service_jobs_list(client)
     if client.present? and client.service_jobs.any?
       content = content_tag(:ul, class: 'client_devices_list') do
         client.service_jobs.distinct.collect do |service_job|
           content_tag(:li) do
-            link_to device_select_service_jobs_path(client, service_jobs_id: service_job.id),
+            link_to device_select_service_jobs_path(client, service_job_id: service_job.id),
                     id: "client_device_select_#{service_job.id}", class: 'client_device_select', remote: true do
               content_tag(:span, service_job.presentation) +
               content_tag(:span, "#{distance_of_time_in_words_to_now(service_job.created_at)} #{t(:ago)}", class: 'help-block')
@@ -20,7 +39,7 @@ module ClientsHelper
     content.html_safe
   end
 
-  def clients_autocomplete_list clients = []
+  def clients_autocomplete_list(clients = [])
     if clients.any?
       clients.collect do |client|
         content_tag :li, link_to(client.presentation, select_client_path(client), remote: true)

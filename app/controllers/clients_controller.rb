@@ -98,7 +98,8 @@ class ClientsController < ApplicationController
   end
 
   def select
-    @client = Client.find params[:id]
+    @client = Client.includes(:devices).find(params[:id])
+    # @devices = @client.devices
     respond_to do |format|
       format.js
     end

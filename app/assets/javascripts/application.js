@@ -1,6 +1,11 @@
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui
+// require jquery-ui
+//= require jquery-ui/autocomplete
+//= require jquery-ui/draggable
+//= require jquery-ui/droppable
+//= require jquery-ui/selectable
+
 //= require twitter/bootstrap
 //= require jquery.jstree
 //= require ckeditor/init
@@ -13,7 +18,9 @@
 //= require zeroclipboard
 //= require currency-in-words
 //= require app.init
+//= require app.inputs
 //= require common
+//= require forms
 //= require announcements
 //= require bonuses
 //= require bootstrap
@@ -31,6 +38,7 @@
 //= require payments
 //= require product_groups
 //= require products
+//= require devices
 //= require purchases
 //= require repair_groups
 //= require repair_services

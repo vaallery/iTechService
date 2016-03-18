@@ -8,6 +8,9 @@ class Product < ActiveRecord::Base
   scope :goods, ->{joins(product_group: :product_category).where(product_categories: {kind: %w[equipment accessory protector]})}
   scope :services, ->{joins(product_group: :product_category).where(product_categories: {kind: 'service'})}
   scope :spare_parts, ->{joins(product_group: :product_category).where(product_categories: {kind: 'spare_part'})}
+  scope :defined, -> { where.not code: '?' }
+  scope :undefined, -> { where code: '?' }
+  scope :with_type_and_options, -> (product_type_id, option_ids) { product_type_id.present? && option_ids.present? ? where(id: includes(:options).where(product_type_id: product_type_id, product_options: {option_value_id: option_ids}).group('product_options.product_id').having('count(product_options.product_id) = ?', option_ids.length).count('products.id').keys.first) : none }
 
   belongs_to :product_category, inverse_of: :products
   belongs_to :product_group, inverse_of: :products
@@ -30,6 +33,8 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :items, allow_destroy: true
   accepts_nested_attributes_for :task, allow_destroy: false
   accepts_nested_attributes_for :store_products
+
+  alias_attribute :defined?, :options_defined?
 
   delegate :feature_accounting, :feature_types, :is_service, :is_equipment, :is_spare_part, :request_price, to: :product_category, allow_nil: true
   delegate :name, to: :product_category, prefix: :category, allow_nil: true
@@ -64,6 +69,16 @@ class Product < ActiveRecord::Base
     end
 
     products
+  end
+
+  def self.find_by_group_and_options(product_group_id, option_ids=nil)
+    if product_group_id.present? && option_ids.present?
+      where(id: includes(:options).where(product_group_id: product_group_id, product_options: {option_value_id: option_ids}).group('product_options.product_id').having('count(product_options.product_id) = ?', option_ids.length).count('products.id').keys.first).first
+    elsif product_group_id.present? && option_ids.blank? && ProductGroup.find(product_group_id).option_values.none?
+      (products = where(product_group_id: product_group_id)).many? ? nil : products.first
+    else
+      nil
+    end
   end
 
   def actual_price(price_type)
@@ -147,6 +162,10 @@ class Product < ActiveRecord::Base
 
   def is_repair?
     code.present? and code.start_with? 'repair'
+  end
+
+  def options_defined?
+    !options.exists?(code: '?')
   end
 
 end

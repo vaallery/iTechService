@@ -55,14 +55,9 @@ jQuery ->
         top: $('#client_input').offset().top + $('#client_input').outerHeight()
 
     $('#client_devices_resize_button').click ->
-      $('.client_devices_list').slideToggle(100)
+      $('.client_devices_list,#device_tasks_list').slideToggle(100)
 
     placeClientDevices()
-
-  $(document).on 'click', '#close_client_form_button', (event)->
-    event.preventDefault()
-    $('#client_form_place').fadeOut()
-    $('#client_form').remove()
 
 placeClientDevices = ()->
   $devices = $('#client_devices')

@@ -46,6 +46,13 @@ class ItemsController < ApplicationController
     end
   end
 
+  def autocomplete
+    @items = Item.filter(params).page(params[:page])
+    respond_to do |format|
+      format.json
+    end
+  end
+
   def show
     @item = Item.find params[:id]
     respond_to do |format|

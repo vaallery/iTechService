@@ -212,6 +212,8 @@ ru:
 
       feature_type:
         code: 'Код'
+        kind/imei: 'IMEI'
+        kind/serial_number: 'Серийный номер'
 
       gift_certificate:
         consumed: 'Израсходовано'
@@ -255,6 +257,7 @@ ru:
       item:
         barcode: 'Штрихкод'
         barcode_num: 'Номер штрихкода'
+        product_group: 'Группа продуктов'
 
       karma:
         good: 'good'  #g
@@ -408,6 +411,7 @@ ru:
         history_records: 'История изменений'
         imei: 'IMEI'
         is_tray_present: 'Есть ли лоток?'
+        item: 'Девайс'
         keeper: 'Хранитель'
         location: :activerecord.models.location
         location_id: :activerecord.models.location
@@ -559,6 +563,7 @@ ru:
     prices: 'Цены'
     price_type: 'Категория цен'
     priority: 'Приоритет'
+    product: 'Продукт'
     product_category: 'Категория продуктов'
     quantity: 'Количество'
     serial_number: 'Серийный номер'

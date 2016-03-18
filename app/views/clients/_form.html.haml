@@ -1,7 +1,6 @@
 = simple_form_for @client, remote: true, html: { id: 'client_form', class: 'form-horizontal' } do |f|
   .form-header
-    %a.close#close_client_form_button{href: '#'}
-      %i.icon-remove-sign
+    = secondary_form_close_button :small
     %h3= t("clients.#{@client.new_record? ? 'new' : 'edit'}.title")
 
   .form-body
@@ -21,4 +20,5 @@
         .controls= link_to icon_tag('print'), '#', class: 'btn', id: 'questionnaire_link', target: '_blank'
 
   .modal-footer
+    = secondary_form_close_button
     = submit_button f

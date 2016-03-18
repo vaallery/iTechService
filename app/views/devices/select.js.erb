@@ -1,0 +1,25 @@
+<% device = DeviceDecorator.decorate @device %>
+//$('#service_job_item_id').val("<%= device.id %>");
+//$('#item_search').val("<%= device.presentation %>");
+$input = $('.device_input');
+$input.find('.item_id').val("<%= device.id %>");
+$input.find('.item_search').val("<%= device.presentation %>");
+$input.find('.edit_item_btn').attr('href', "<%= edit_device_path(@device) %>").attr('data-remote', true);
+$input.find('.show_item_btn').attr('href', "<%= device_path(@device) %>").attr('data-remote', true);
+$('#service_job_security_code').val("<%= device.security_code %>");
+$('#service_job_app_store_pass').val("<%= device.app_store_pass %>");
+
+//$('#available_for_replacement').text("#{@service_job.device_type.available_for_replacement}");
+//if(#{@service_job.device_type.available_for_replacement} > 0){
+//  $('#device_replaced').removeAttr('disabled');
+//}else{
+//  $('#device_replaced').attr('disabled', 'disabled');
+//}
+$imei_inputs = $('.imei_input, .tray_input, .carrier_input');
+<% if device.has_imei? %>
+$imei_inputs.removeClass('hidden');
+<% else %>
+$imei_inputs.addClass('hidden');
+<% end %>
+
+$('.popover-content', '#client_devices').html("<%= j service_tasks_list(device.last_service_job) %>");

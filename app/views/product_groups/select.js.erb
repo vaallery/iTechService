@@ -1,0 +1,1 @@
+$('#product_options').html("<%= j render("#{params[:scope].presence || 'products'}/options_fields", available_options: @available_options) %>");

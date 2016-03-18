@@ -13,7 +13,7 @@ class Item < ActiveRecord::Base
   has_many :sales, through: :sale_items
   accepts_nested_attributes_for :features, allow_destroy: true
 
-  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :actual_prices, :quantity_in_store, :product_category, :product_group, :discount_for, :is_service, :is_equipment, :is_spare_part, :is_repair?, :request_price, :warranty_term, :quantity_threshold, :comment, to: :product, allow_nil: true
+  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :actual_prices, :quantity_in_store, :product_category, :product_group, :product_group_id, :discount_for, :is_service, :is_equipment, :is_spare_part, :is_repair?, :request_price, :warranty_term, :quantity_threshold, :comment, :options, :option_ids, :available_options, to: :product, allow_nil: true
 
   validates_presence_of :product
   validates_length_of :barcode_num, is: 13, allow_nil: true
@@ -21,7 +21,7 @@ class Item < ActiveRecord::Base
   validates_uniqueness_of :product_id, unless: :feature_accounting
 
 
-  attr_accessible :product_id, :features_attributes, :barcode_num
+  attr_accessible :product, :product_id, :features_attributes, :barcode_num
 
   paginates_per 5
 
@@ -50,6 +50,16 @@ class Item < ActiveRecord::Base
     items
   end
 
+  def self.filter(params={})
+    items = Item.all
+    unless (search = params[:search] || params[:term]).blank?
+      search.chomp.split(/\s+/).each do |q|
+        items = items.joins(:features).includes(:product).where('LOWER(features.value) LIKE :q OR LOWER(products.code) LIKE :q OR items.barcode_num LIKE :q OR LOWER(products.name) LIKE :q', q: "%#{q.mb_chars.downcase.to_s}%").references(:products)
+      end
+    end
+    items
+  end
+
   def store_item(store=nil)
     if feature_accounting
       store_items.first
@@ -58,6 +68,18 @@ class Item < ActiveRecord::Base
     else
       nil
     end
+  end
+
+  def serial_number
+    features.serial_number.first.try(:value)
+  end
+
+  def imei
+    features.imei.first.try(:value)
+  end
+
+  def has_imei?
+    features.imei.present?
   end
 
   def add_to_store(store, amount)

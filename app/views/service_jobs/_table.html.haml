@@ -18,11 +18,7 @@
         %tr{class: row_class_for_service_job(service_job)}
           %td= link_to service_job.id, service_job_path(service_job)
           %td= link_to service_job.ticket_number, service_job_path(service_job)
-          %td
-            = link_to service_job.type_name, service_job_path(service_job)
-            %small= service_job.serial_number
-            -#%p.device_comment_tooltip{'data-title' => service_job.comment}
-            -#  %i.icon-comment
+          %td= link_to service_job.presentation, service_job_path(service_job)
           %td= client_presentation service_job.client
           %td= service_job.location_name || '-'
           %td= human_datetime service_job.created_at

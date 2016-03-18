@@ -1,0 +1,7 @@
+<% device = @device.decorate %>
+$('#secondary_form_container').fadeOut().html('');
+$input = $('.device_input');
+$input.find('.item_id').val("<%= device.id %>");
+$input.find('.item_search').val("<%= device.presentation %>");
+$input.find('.edit_item_btn').attr('href', "<%= edit_device_path(@device) %>").attr('data-remote', true);
+$input.find('.show_item_btn').attr('href', "<%= device_path(@device) %>").attr('data-remote', true);

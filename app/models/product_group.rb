@@ -4,6 +4,7 @@ class ProductGroup < ActiveRecord::Base
   scope :ordered, ->{order('id asc')}
   scope :name_asc, ->{order('name asc')}
   scope :services, ->{joins(:product_category).where(product_categories: {kind: 'service'})}
+  scope :devices, -> { joins(:product_category).where(product_categories: {kind: 'equipment'}) }
   scope :goods, ->{joins(:product_category).where(product_categories: {kind: %w[equipment accessory]})}
   scope :except_spare_parts, ->{joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector service]})}
   scope :except_spare_parts_and_services, ->{joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector]})}

@@ -1,0 +1,23 @@
+= simple_form_for @device, url: devices_path, remote: true, html: {class: 'form-horizontal device_form item_form'} do |f|
+  .form-header
+    = secondary_form_close_button :small
+    %h3= t("devices.#{@device.new_record? ? 'new' : 'edit'}.title")
+
+  .form-body
+    = f.error_notification message: error_messages_for(@device)
+    = f.hidden_field :product_id
+
+    .control-group
+      %label.control-label(for='item_product_group_id')= Item.human_attribute_name(:product_group)
+      .controls= select_tag 'item[product_group_id]', options_from_collection_for_select(@device_groups, 'id', 'name_for_selects', selected: @device.product_group_id), class: 'product_group_select form-control'
+
+    #product_options= render 'items/options_fields', available_options: @device.available_options
+
+    #item_features
+      = f.simple_fields_for :features do |ff|
+        = render 'items/feature_fields', f: ff
+
+  .modal-footer
+    -# TODO data-behavior
+    = secondary_form_close_button
+    = submit_button f

@@ -1,0 +1,25 @@
+- device = @device.decorate
+.form-header
+  = secondary_form_close_button :small
+  %h3= t '.title'
+
+.form-body.form-horizontal
+
+  .control-group
+    %label.control-label= Item.human_attribute_name :product
+    .controls= device.product
+
+  .control-group
+    %label.control-label= Item.human_attribute_name :serial_number
+    .controls= device.serial_number
+
+  .control-group
+    %label.control-label= Item.human_attribute_name :imei
+    .controls= device.imei
+
+  .control-group
+    %label.control-label= t '.sales'
+    .controls= @sales
+
+.modal-footer
+  = secondary_form_close_button
