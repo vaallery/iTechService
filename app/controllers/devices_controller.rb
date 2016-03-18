@@ -1,5 +1,5 @@
 class DevicesController < ApplicationController
-  before_action :set_device, only: %i[show select edit update destroy]
+  before_action :set_device, only: %i[select edit update destroy]
   before_action :set_device_groups, only: %i[new edit create update]
 
   def index
@@ -14,7 +14,8 @@ class DevicesController < ApplicationController
   end
 
   def show
-    @sales = []
+    @device = Item.includes(:sales).find params[:id]
+    set_imported_sales
     respond_to do |format|
       format.js
     end
@@ -80,5 +81,11 @@ class DevicesController < ApplicationController
 
   def device_params
     params.require(:item).permit(:product_id, features_attributes: [:id, :feature_type_id, :value])
+  end
+
+  def set_imported_sales
+    imported_sales = ImportedSale.search search: @device.serial_number
+    imported_sales = ImportedSale.search search: @device.imei unless @imported_sales.present? && @device.imei.blank?
+    @imported_sales = imported_sales
   end
 end

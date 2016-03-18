@@ -17,6 +17,7 @@ ru:
     new:
       title: 'Новый девайс'
     info:
+      check_imei: "Проверить IMEI"
       title: 'Информация о девайсе'
       sales: 'Продажи'
     status:
@@ -46,5 +47,3 @@ ru:
 
     sales_info: "Информация о продаже"
     move_to_archive: "В архив"
-    form:
-      check_imei: "Проверить IMEI"
