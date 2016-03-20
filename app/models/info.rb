@@ -10,7 +10,7 @@ class Info < ActiveRecord::Base
 
   scope :newest, ->{order('created_at desc')}
   scope :oldest, ->{order('created_at asc')}
-  scope :grouped_by_date, -> { select("date(created_at) as info_date, count(title) as total_infos").group("infos.created_at::date)") }
+  # scope :grouped_by_date, -> { select("date(created_at) as info_date, count(title) as total_infos").group("infos.created_at::date)") }
   scope :important, ->{where(important: true)}
   scope :available_for, ->(user) { where(recipient_id: [user.id, nil]) }
   scope :addressed_to, ->(user) { where(recipient_id: user.id) }
@@ -23,6 +23,10 @@ class Info < ActiveRecord::Base
   validates_associated :comments
   after_initialize do
     department_id ||= Department.current.id
+  end
+
+  def self.grouped_by_date
+    select("date(created_at) as info_date, count(id) as total_infos").group("infos.created_at::date")
   end
 
   def comment=(content)
