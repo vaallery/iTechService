@@ -26,7 +26,7 @@ set :rvm_ruby_version, "#{ruby}@#{application}"
 
 set :bundle_flags, '--deployment'
 set :bundle_env_variables, {
-    path: "/Users/#{user}/.rvm/gems/#{fetch(:rvm_ruby_version)}/bin:/Users/#{user}/.rvm/gems/#{ruby}@global/bin:/Users/#{user}/.rvm/rubies/#{ruby}/bin:/Users/#{user}/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/Cellar/imagemagick/6.8.9-7/bin",
+    path: "/Users/#{user}/.rvm/gems/#{fetch(:rvm_ruby_version)}/bin:/Users/#{user}/.rvm/gems/ruby-#{ruby}@global/bin:/Users/#{user}/.rvm/rubies/ruby-#{ruby}/bin:/Users/#{user}/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/Cellar/imagemagick/6.8.9-7/bin",
     magick_home: '/usr/local/Cellar/imagemagick/6.8.9-7',
     pkg_config_path: '/usr/local/bin'
 }
