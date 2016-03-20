@@ -1,6 +1,7 @@
 set :stage, :production
 set :deploy_to, "/var/www/#{fetch(:application)}"
 set :branch, 'master'
+fetch(:default_env).merge!(rails_env: :production)
 
 # Simple Role Syntax
 # ==================
@@ -42,5 +43,3 @@ set :ssh_options, {
 #     # password: 'please use keys'
 #   }
 # setting per server overrides global ssh_options
-
-fetch(:default_env).merge!(rails_env: :production)
