@@ -1,7 +1,7 @@
 # set :filter, hosts: %w[192.168.0.1 192.168.4.200]
 # set :filter, hosts: %w[192.168.4.200]
 application = 'itechservice2'
-ruby = 'ruby-2.2.1'
+ruby = '2.3.0'
 user = fetch :user
 set :application, application
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
