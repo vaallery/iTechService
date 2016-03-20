@@ -81,7 +81,7 @@ class Client < ActiveRecord::Base
   end
 
   def purchases_sum
-    sale_items.all.sum &:sum
+    sale_items.all.to_a.sum &:sum
   end
 
   def discount_value
