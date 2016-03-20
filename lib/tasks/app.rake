@@ -50,4 +50,9 @@ namespace :app do
       service_job.update_column(:is_tray_present, false) if service_job.is_tray_present.nil?
     end
   end
+
+  desc "Set ServiceJobs items"
+  task set_service_jobs_items: :environment do
+    SetServiceJobsItems.new.call
+  end
 end
