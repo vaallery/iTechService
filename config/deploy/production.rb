@@ -1,7 +1,8 @@
 set :stage, :production
 set :deploy_to, "/var/www/#{fetch(:application)}"
-set :branch, 'master'
-fetch(:default_env).merge!(rails_env: :production)
+# set :branch, 'master'
+set :branch, 'version2'
+set :default_env, fetch(:default_env, {}).merge(rails_env: :production)
 
 # Simple Role Syntax
 # ==================
@@ -19,8 +20,8 @@ fetch(:default_env).merge!(rails_env: :production)
 # something that quacks like a hash can be used to set
 # extended properties on the server.
 server 'ise.vl', user: 'itech', roles: %w[web app db]
-server 'ise.kh', user: 'itech', roles: %w[web app db]
-server 'ise.sah', user: 'deployer', roles: %w[web app db]
+# server 'ise.kh', user: 'itech', roles: %w[web app db]
+# server 'ise.sah', user: 'deployer', roles: %w[web app db]
 
 # you can set custom ssh options
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
