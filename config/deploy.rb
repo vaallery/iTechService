@@ -15,6 +15,8 @@ set :scm, :git
 set :log_level, :info
 set :pty, false
 
+set :conditionally_migrate, true
+
 set :linked_files, %w{config/database.yml config/private_pub.yml config/application.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system public/uploads}
 
