@@ -75,8 +75,8 @@ group :development do
   gem 'byebug'
 
   gem 'capistrano-rails'
-  # gem 'capistrano-rvm'
-  gem 'capistrano-rbenv'
+  gem 'capistrano-rvm'
+  # gem 'capistrano-rbenv'
   gem 'capistrano-bundler', '~> 1.1'
   gem 'capistrano-passenger'
   gem 'airbrussh', require: false

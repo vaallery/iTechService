@@ -22,6 +22,7 @@ require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'capistrano/console'
+require 'capistrano/passenger'
 #require 'whenever/capistrano'
 require 'airbrussh/capistrano'
 
