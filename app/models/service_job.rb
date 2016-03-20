@@ -345,14 +345,14 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def new_service_job_announce
-    PrivatePub.publish_to '/service_jobs/new', service_job: self if Rails.env.production?
+    # PrivatePub.publish_to '/service_jobs/new', service_job: self if Rails.env.production?
   end
 
   def service_job_update_announce
     if changed_attributes['location_id'].present?
       Announcement.find_by_kind_and_content('device_return', self.id.to_s).try(:destroy) if self.at_done?
     end
-    PrivatePub.publish_to '/service_jobs/update', service_job: self if changed_attributes['location_id'].present? and Rails.env.production?
+    # PrivatePub.publish_to '/service_jobs/update', service_job: self if changed_attributes['location_id'].present? and Rails.env.production?
   end
 
   def create_alert
