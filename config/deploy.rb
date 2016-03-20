@@ -17,8 +17,8 @@ set :pty, false
 
 set :conditionally_migrate, true
 
-set :linked_files, %w{config/database.yml config/private_pub.yml config/application.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system public/uploads}
+set :linked_files, %w{config/database.yml config/secrets.yml config/private_pub.yml config/application.yml}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system public/uploads}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
@@ -35,6 +35,8 @@ set :bundle_env_variables, {
 
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
+
+set :passenger_restart_options, -> { "#{current_path} --ignore-app-not-running" }
 
 set :whenever_identifier, application
 
