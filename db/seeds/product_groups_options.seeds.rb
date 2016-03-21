@@ -10,7 +10,7 @@ after :product_options do
 
   end
 
-  ProductGroup.find_each do |product_group|
+  ProductGroup.devices.find_each do |product_group|
     option_value_ids = []
     product_group.products.find_each do |product|
       option_value_ids += product.option_ids

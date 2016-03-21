@@ -8,7 +8,7 @@ after :option_types do
     end
   end
 
-  Product.find_each do |product|
+  Product.devices.find_each do |product|
     set_options_for product if product.options.empty?
   end
 end
