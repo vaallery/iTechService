@@ -53,7 +53,7 @@ class CreateProductsOfGroup
   end
 
   def create_product(name, category_id, options)
-    code = name.parameterize
+    code = options.any?(&:undefined?) ? '?' : name.parameterize
     option_ids = options.map(&:id)
     Product.create! name: name, code: code, product_category_id: category_id,
                     product_group_id: product_group.id, option_ids: option_ids

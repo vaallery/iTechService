@@ -47,7 +47,7 @@ class Product < ActiveRecord::Base
   attr_accessible :code, :name, :product_group_id, :product_category_id, :device_type_id, :warranty_term, :quantity_threshold, :warning_quantity, :comment, :option_ids, :items_attributes, :task_attributes, :related_product_ids, :related_product_group_ids, :store_products_attributes
   validates_presence_of :name, :code, :product_group, :product_category
   #validates_presence_of :device_type, if: :is_equipment
-  validates_uniqueness_of :code
+  validates_uniqueness_of :code, unless: :undefined?
   after_initialize do
     self.warranty_term ||= default_warranty_term
     self.product_category_id ||= product_group.try(:product_category).try(:id)
@@ -169,4 +169,7 @@ class Product < ActiveRecord::Base
     !options.exists?(code: '?')
   end
 
+  def undefined?
+    code == '?'
+  end
 end
