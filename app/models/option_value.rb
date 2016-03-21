@@ -1,5 +1,5 @@
 class OptionValue < ActiveRecord::Base
-  default_scope { ordered }
+  # default_scope { ordered }
   scope :ordered, -> { includes(:option_type).order('option_types.position asc, option_values.position asc') }
   scope :defined, -> { where.not code: '?' }
   scope :undefined, -> { where code: '?' }

@@ -13,7 +13,7 @@ class ProductGroup < ActiveRecord::Base
   scope :for_purchase, ->{joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector spare_part]})}
 
   belongs_to :product_category, required: true
-  has_many :products, inverse_of: :product_group
+  has_many :products, dependent: :nullify, inverse_of: :product_group
   has_many :product_relations, as: :parent, dependent: :destroy
   has_many :related_products, through: :product_relations, source: :relatable, source_type: 'Product'
   has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'

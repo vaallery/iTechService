@@ -1,5 +1,6 @@
 class OptionType < ActiveRecord::Base
-  default_scope { order :position }
+  # default_scope { ordered }
+  scope :ordered, -> { order :position }
   has_many :option_values
   accepts_nested_attributes_for :option_values, allow_destroy: true, reject_if: proc { |a| a[:name].blank? }
   validates :name, presence: true, uniqueness: true
