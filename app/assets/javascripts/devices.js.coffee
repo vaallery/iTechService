@@ -4,7 +4,7 @@ $(document).on 'change', '.product_group_select', ->
   unless id is ''
     $.getScript "/product_groups/#{id}/select?scope=items"
 
-$(document).on 'change', '.product_option, .product_group_select', ->
+$(document).on 'change', '.item_form .product_option, .item_form  .product_group_select', ->
   product_group_id = $('.product_group_select').val()
   option_ids = $('#product_options select').serialize()
   unless product_group_id is ''
