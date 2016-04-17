@@ -12,9 +12,25 @@ jQuery ->
 
     $(document).on 'change', '.device_task_task', () ->
       task_id = $(this).val()
-      task_cost = $(this).parents('.device_task').find('.device_task_cost')
-      $.getJSON '/tasks/'+task_id+'.json', (data) ->
+      $row = $(this).parents('.device_task')
+      task_cost = $row.find('.device_task_cost')
+      is_change_location = $row.is(':first-child')
+      $.getJSON "/tasks/#{task_id}.json", (data)->
         task_cost.val data.cost
+        if is_change_location
+          $('#service_job_location_id').val(data.location_id)
+          $('#location_value').text(data.location_name)
+        if data['is_repair?']
+          document.getElementById('service_job_notify_client').checked = true
+
+#    $(document).on 'change', '.device_task:first-child .device_task_task', ->
+#      task_id = $(this).val()
+#      unless task_id is ''
+#        $.getJSON "/tasks/#{task_id}.json", (data)->
+#          $field = $('#service_job_location_id')
+#          if $field.find("[value='#{data.location_id}']").length == 0
+#            $field.append "<option value='#{data.location_id}'>#{data.location_name}</option>"
+#          $field.val(data.location_id)
 
     $('a', '#locations_list').click (event) ->
       $('#location_value').text $(this).text()

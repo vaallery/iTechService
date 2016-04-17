@@ -15,7 +15,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: {cost: @task.cost}}
+      format.json
     end
   end
 
