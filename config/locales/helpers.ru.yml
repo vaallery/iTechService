@@ -41,6 +41,7 @@ ru:
       search: "Поиск"
     buttons:
       copy_client_phone: 'Копировать номер клиента'
+      copy_to_clipboard: 'Копировать'
       in_time: 'Через'
       scan:
         gift_certificate: 'Сканировать Подарочный сертификат'
