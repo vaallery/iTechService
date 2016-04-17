@@ -5,6 +5,7 @@ ru:
       manage_salary: 'Редактировать зарплату'
       manage_wiki: 'Редактировать Wiki'
       print_receipt: "Печатать чеки"
+      manage_schedule: "Редактировать график"
       manage_timesheet: "Редактировать табель"
     index:
       title: 'Пользователи'

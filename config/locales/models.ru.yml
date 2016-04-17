@@ -506,6 +506,7 @@ ru:
         salary_date: 'Дата зарплаты'
         schedule: 'Отображать график'
         schedule_days: 'Рабочие дни'
+        service_jobs: 'Работы'
         session_duration: 'Длительность сессии (мин.)'
         surname: 'Фамилия'
         username: 'Логин'

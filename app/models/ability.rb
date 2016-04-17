@@ -119,6 +119,8 @@ class Ability
       can :read, Info, recipient_id: [nil, user.id]
       can :rating, User
       can :manage, TimesheetDay if user.able_to? :manage_timesheet
+      can :manage, [ScheduleDay, DutyDay] if user.able_to? :manage_schedule
+      can %i[duty_calendar staff_duty_schedule schedule create_duty_day destroy_duty_day], User if user.able_to? :manage_schedule
       can :print_check, Sale
       can :create, DeviceNote
       can :read, :all

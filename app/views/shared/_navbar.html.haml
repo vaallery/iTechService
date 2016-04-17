@@ -43,7 +43,7 @@
       = drop_down_divider
       = menu_item t('users.link', default: 'Users'), users_path if can? :manage, User
       = menu_item t('users.rating'), rating_users_path
-      = menu_item t('users.schedule'), schedule_users_path if can? :manage, User
+      = menu_item t('users.schedule'), schedule_users_path if can? :manage, ScheduleDay
       = menu_item t('users.timesheet'), timesheet_days_path if can? :manage, TimesheetDay
       = drop_down_divider
       = menu_item t('supply_requests.index.title'), supply_requests_path if can? :read, SupplyRequest

@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def auto_sign_in
     if Rails.env.development?
-      user = User.find_by(username: ENV['admin_username'])
+      user = User.find_by(username: 'vova')
       sign_in user if user.present?
     end
   end
