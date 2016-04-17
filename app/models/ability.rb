@@ -123,6 +123,7 @@ class Ability
       can %i[duty_calendar staff_duty_schedule schedule create_duty_day destroy_duty_day], User if user.able_to? :manage_schedule
       can :print_check, Sale
       can :create, DeviceNote
+      can :manage, FavoriteLink, owner_id: user.id
       can :read, :all
       unless user.driver?
         cannot :read, SupplyReport

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160311090326) do
+ActiveRecord::Schema.define(version: 20160417092231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -319,6 +319,16 @@ ActiveRecord::Schema.define(version: 20160311090326) do
   add_index "duty_days", ["day"], name: "index_duty_days_on_day", using: :btree
   add_index "duty_days", ["kind"], name: "index_duty_days_on_kind", using: :btree
   add_index "duty_days", ["user_id"], name: "index_duty_days_on_user_id", using: :btree
+
+  create_table "favorite_links", force: :cascade do |t|
+    t.integer  "owner_id",   null: false
+    t.string   "name"
+    t.string   "url",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "favorite_links", ["owner_id"], name: "index_favorite_links_on_owner_id", using: :btree
 
   create_table "feature_types", force: :cascade do |t|
     t.string   "name",       limit: 255

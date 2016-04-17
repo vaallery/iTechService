@@ -59,6 +59,7 @@ ru:
       data_migration: 'Миграция данных'
       directory: 'Каталог'
       employees: 'Сотрудники'
+      favorite: 'Избранное'
       misc: 'Прочее'
       quick_order: 'Быстрый заказ'
       rating: 'Рейтинг'

@@ -1,0 +1,18 @@
+.page-header
+  %h1= t '.title'
+  = link_to_new FavoriteLink
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th= FavoriteLink.human_attribute_name(:name)
+      %th= FavoriteLink.human_attribute_name(:url)
+      %th
+  %tbody
+    - @favorite_links.each do |favorite_link|
+      %tr
+        %td= favorite_link.name
+        %td= favorite_link.url
+        %td.btn-group
+          = link_to_edit_small favorite_link
+          = link_to_destroy_small favorite_link

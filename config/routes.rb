@@ -41,6 +41,7 @@ Rails.application.routes.draw do
 
   get 'profile', to: 'users#profile'
   match 'users/:id/update_wish' => 'users#update_wish', as: 'update_wish_user', via: %i[post patch]
+  resources :favorite_links, except: :show
 
   resources :clients do
     get :check_phone_number, on: :collection
