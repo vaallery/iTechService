@@ -3,7 +3,7 @@ class HistoryObserver < ActiveRecord::Observer
 
   observe :service_job, :device_task, :order, :user, :gift_certificate, :client, :quick_order
 
-  def after_save model
+  def after_save(model)
     if model.is_a? ServiceJob
       tracked_attributes = %w[client_id device_task_ids comment location_id notify_client client_notified]
     elsif model.is_a? DeviceTask
