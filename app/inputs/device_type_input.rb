@@ -1,6 +1,6 @@
 class DeviceTypeInput < SimpleForm::Inputs::Base
 
-  def input
+  def input(wrapper_options = nil)
     template.content_tag(:span, id: 'device_type_selector') do
       @builder.hidden_field("#{attribute_name}_id") +
       template.content_tag(:div, class: 'input-append input-prepend') do

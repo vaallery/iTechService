@@ -1,6 +1,6 @@
 class SupplyCategoryInput < SimpleForm::Inputs::Base
 
-  def input
+  def input(wrapper_options = nil)
     template.content_tag(:span, class: 'supply_category_selector') do
       @builder.hidden_field(attribute_name.to_s+'_id') +
       template.content_tag(:div, class: 'btn-group') do

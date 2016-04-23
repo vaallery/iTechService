@@ -1,6 +1,6 @@
 class ObjectKindInput < SimpleForm::Inputs::Base
 
-  def input
+  def input(wrapper_options = nil)
     (@builder.hidden_field(:object_kind) +
     template.content_tag(:span, class: 'btn-group') do
       template.content_tag(:button, id: 'object_kind_select_button', class: 'btn dropdown-toggle',

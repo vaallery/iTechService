@@ -1,6 +1,6 @@
 class ContactPhoneInput < SimpleForm::Inputs::StringInput
 
-  def input
+  def input(wrapper_options = nil)
     template.content_tag(:div, class: 'input-append') do
       @builder.input_field(attribute_name, class: 'input-large') +
       template.link_to(template.glyph(:copy), '#', id: 'service_job_contact_phone_copy', class: 'btn btn-info', title: I18n.t('service_jobs.edit.copy_client_phone')) +

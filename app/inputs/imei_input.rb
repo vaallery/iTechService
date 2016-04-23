@@ -1,6 +1,6 @@
 class ImeiInput < SimpleForm::Inputs::StringInput
 
-  def input
+  def input(wrapper_options = nil)
     t = template
     t.content_tag(:div, class: 'input-append') do
       @builder.input_field(attribute_name, class: 'input-large', autocomplete: 'off') +

@@ -1,6 +1,6 @@
 class DatetimeQuickSelectInput < SimpleForm::Inputs::Base
 
-  def input
+  def input(wrapper_options = nil)
     template.content_tag(:div, class: 'datetimepicker datetime_quick_select input-append') do
       @builder.input_field(attribute_name, as: :string) +
       template.content_tag(:span, template.content_tag(:i, nil, {data: {time_icon: 'icon-time', date_icon: 'icon-calendar'}}), class: 'add-on') +

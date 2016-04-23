@@ -1,6 +1,6 @@
 class ClientInput < SimpleForm::Inputs::StringInput
 
-  def input
+  def input(wrapper_options = nil)
     (
     template.content_tag(:div, id: 'client_input', class: 'input-prepend input-append') do
       client = @builder.object.try(:client)

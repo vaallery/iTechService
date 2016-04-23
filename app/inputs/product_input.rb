@@ -1,6 +1,6 @@
 class ProductInput < SimpleForm::Inputs::Base
 
-  def input
+  def input(wrapper_options = nil)
     template.content_tag(:div, class: "product_selector #{options[:form]}") do
       @builder.hidden_field("#{attribute_name}_id", class: "#{attribute_name}_id") +
       template.content_tag(:div, class: 'btn-group') do
