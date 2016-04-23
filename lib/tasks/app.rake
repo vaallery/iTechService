@@ -47,7 +47,7 @@ namespace :app do
   desc "Set default value for device's 'is_tray_present'"
   task set_tray_presence: :environment do
     ServiceJob.find_each do |service_job|
-      service_job.update_column(:is_tray_present, false) if service_job.is_tray_present.nil?
+      service_job.update_column(:is_tray_present, true) if service_job.is_tray_present.nil?
     end
   end
 
