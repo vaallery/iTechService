@@ -321,7 +321,7 @@ class User < ActiveRecord::Base
   end
 
   def work_hours_in(date)
-    timesheet_days.in_period(date).work.sum do |day|
+    timesheet_days.in_period(date).work.to_a.sum do |day|
       day.actual_work_hours
     end
   end
