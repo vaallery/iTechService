@@ -39,7 +39,8 @@ class Product < ActiveRecord::Base
 
   delegate :feature_accounting, :feature_types, :is_service, :is_equipment, :is_spare_part, :request_price, to: :product_category, allow_nil: true
   delegate :name, to: :product_category, prefix: :category, allow_nil: true
-  delegate :available_options, :warranty_term, to: :product_group, allow_nil: true
+  delegate :available_options, to: :product_group, allow_nil: true
+  delegate :warranty_term, to: :product_group, prefix: :default, allow_nil: true
   delegate :full_name, to: :device_type, prefix: true, allow_nil: true
   delegate :color, to: :top_salable, allow_nil: true
   delegate :cost, to: :task, prefix: true, allow_nil: true
@@ -115,10 +116,6 @@ class Product < ActiveRecord::Base
 
   def item
     feature_accounting ? nil : items.first_or_create
-  end
-
-  def default_warranty_term
-    product_group.try(:warranty_term)
   end
 
   def discount_for(client)
