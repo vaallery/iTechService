@@ -1,4 +1,4 @@
-= simple_form_for @device, url: device_path(@device), remote: true, html: {class: 'form-horizontal device_form item_form'} do |f|
+= simple_form_for @device, url: (@device.persisted? ? device_path(@device) : devices_path), remote: true, html: {class: 'form-horizontal device_form item_form'} do |f|
   .form-header
     = secondary_form_close_button :small
     %h3= t("devices.#{@device.new_record? ? 'new' : 'edit'}.title")
