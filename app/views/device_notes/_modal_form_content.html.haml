@@ -4,7 +4,4 @@
 
 .modal-body= render @device_notes
 
-.modal-footer
-  = simple_form_for [@service_job, @device_note], html: {id: 'device_note_form', class: 'form-verticall', remote: true} do |f|
-    = f.input :content, input_html: {rows: 3}, label: false
-    = f.submit t('.submit'), class: 'btn btn-primary'
+.modal-footer= render 'form'

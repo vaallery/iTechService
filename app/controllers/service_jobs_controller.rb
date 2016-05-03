@@ -37,7 +37,8 @@ class ServiceJobsController < ApplicationController
         end
       end
     else
-      @service_job = ServiceJob.find(params[:id])
+      @service_job = ServiceJob.includes(:device_notes).find(params[:id])
+      @device_note = @service_job.device_notes.build user_id: current_user.id
       respond_to do |format|
         format.html
         format.json { render json: @service_job }
@@ -71,7 +72,8 @@ class ServiceJobsController < ApplicationController
   end
 
   def edit
-    @service_job = ServiceJob.find(params[:id])
+    @service_job = ServiceJob.includes(:device_notes).find(params[:id])
+    @device_note = @service_job.device_notes.build user_id: current_user.id
 
     respond_to do |format|
       format.html { render 'form' }
