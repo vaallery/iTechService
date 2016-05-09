@@ -26,7 +26,8 @@ class DeviceNotesController < ApplicationController
       if @device_note.save
         format.js
       else
-        format.js { render 'shared/show_modal_form' }
+        # format.js { render 'show_form' }
+        format.js { render nothing: true }
       end
     end
   end

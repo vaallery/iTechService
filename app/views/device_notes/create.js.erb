@@ -1,3 +1,10 @@
-hideModal();
-$service_job_row = $(".service_job_row[data-service_job-id=<%= @service_job.id %>]", '#actual_tasks_table');
-$service_job_row.find('.device_notes-button').replaceWith('<%= j link_to(glyph('file-text-alt'), service_job_device_notes_path(@service_job), class: 'device_notes-button btn btn-small', remote: true) %>');
+$notes = $('#device_notes');
+if ($notes.length > 0) {
+  $notes.append('<%= j render(@device_note) %>');
+  $notes.scrollTop($notes[0].scrollHeight);
+  $('#device_note_content').val('');
+} else {
+  hideModal();
+  $service_job_row = $(".service_job_row[data-service_job-id=<%= @service_job.id %>]", '#actual_tasks_table');
+  $service_job_row.find('.device_notes-button').replaceWith('<%= j link_to(glyph('file-text-alt'), service_job_device_notes_path(@service_job), class: 'device_notes-button btn btn-small', remote: true) %>');
+}

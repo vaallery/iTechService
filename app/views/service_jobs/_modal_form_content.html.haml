@@ -1,12 +1,12 @@
-= simple_form_for @service_job, html: { class: 'form-horizontal', remote: true } do |f|
-  .modal-header
-    = button_to_close_modal
-    %h3
-      = @service_job.type_name
+.modal-header
+  = button_to_close_modal
+  %h3
+    = @service_job.type_name
 
-  .modal-body
-    .row-fluid
-      .span6
+.modal-body
+  .row-fluid
+    .span6
+      = simple_form_for @service_job, html: { class: 'form-horizontal', remote: true } do |f|
         - if @service_job.errors.any?
           .alert.alert-error= @service_job.errors.full_messages.join('. ')
 
@@ -74,12 +74,12 @@
         = link_to_add_fields t('service_jobs.add_task'), '#device_tasks_small tbody', f, :device_tasks unless @service_job.at_done? or @service_job.in_archive?
         = f.error :base, class: 'text-error'
 
-      #device_notes.span6= render 'device_notes'
+        %hr
+        = link_to_archive_device @service_job, remote: true if @service_job.at_done?
+        = link_to glyph(:money) + t('sales.payment').html_safe, create_sale_service_job_path(@service_job), method: :post, class: 'btn btn-success', target: '_blank' if @service_job.at_done?
+        = submit_button f
 
-  .modal-footer
-    = link_to_archive_device @service_job, remote: true if @service_job.at_done?
-    = link_to glyph(:money) + t('sales.payment').html_safe, create_sale_service_job_path(@service_job), method: :post, class: 'btn btn-success', target: '_blank' if @service_job.at_done?
-    = submit_button f
+    #device_notes_container.span6= render 'device_notes'
 
 :javascript
   $('#modal_form').addClass('large');

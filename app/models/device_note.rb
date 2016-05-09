@@ -1,5 +1,6 @@
 class DeviceNote < ActiveRecord::Base
   scope :newest_first, ->{order('device_notes.created_at desc')}
+  scope :oldest_first, ->{order('device_notes.created_at asc')}
   belongs_to :service_job, required: true
   belongs_to :user, required: true
   attr_accessible :content, :service_job_id, :user_id
