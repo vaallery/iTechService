@@ -26,6 +26,8 @@ ru:
       title: Новые клиенты
     device_types:
       title: Принятые девайсы по типам
+    device_groups:
+      title: 'Принятые девайсы по группам'
     devices_archived:
       title: 'Девайсы, переведённые в архив'
       archived: "Переведено в архив"
