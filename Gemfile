@@ -65,6 +65,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'bootstrap-colorpicker-rails', '~> 0.3.1', require: 'bootstrap-colorpicker-rails'#, :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
 # gem 'turbo-sprockets-rails3', '~> 0.3.14'
 
+# gem 'nokogiri', github: 'sparklemotion/nokogiri'
+gem 'nokogiri', '~> 1.6', '>= 1.6.7.2'
+
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   # gem 'spring'
@@ -80,6 +83,11 @@ group :development do
   # gem 'capistrano-rbenv'
   gem 'capistrano-bundler', '~> 1.1'
   gem 'capistrano-passenger'
+  gem 'capistrano-rails-collection'
+  gem 'capistrano-faster-assets'
+  # gem 'capistrano-rbenv-install'
+  # gem 'capistrano-postgresql'
+  gem 'capistrano-ssh-doctor'
   gem 'airbrussh', require: false
   gem 'quiet_assets'
   gem 'better_errors'

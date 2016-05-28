@@ -1,7 +1,7 @@
 # set :filter, hosts: %w[192.168.0.1 192.168.4.200]
 # set :filter, hosts: %w[192.168.4.200]
 application = 'itechservice2'
-ruby = '2.3.1'
+ruby_v = '2.3.1'
 user = fetch :user
 set :application, application
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
@@ -23,12 +23,17 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle pu
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
 
+set :conditionally_migrate, true
+
+# set :rbenv_type, :user
+# set :rbenv_ruby, ruby_v
+
 set :rvm_type, :user
-set :rvm_ruby_version, "#{ruby}@#{application}"
+set :rvm_ruby_version, "#{ruby_v}@#{application}"
 
 set :bundle_flags, '--deployment'
 set :bundle_env_variables, {
-    path: "/Users/#{user}/.rvm/gems/#{fetch(:rvm_ruby_version)}/bin:/Users/#{user}/.rvm/gems/ruby-#{ruby}@global/bin:/Users/#{user}/.rvm/rubies/ruby-#{ruby}/bin:/Users/#{user}/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/Cellar/imagemagick/6.8.9-7/bin",
+    path: "/Users/#{user}/.rvm/gems/#{fetch(:rvm_ruby_version)}/bin:/Users/#{user}/.rvm/gems/ruby-#{ruby_v}@global/bin:/Users/#{user}/.rvm/rubies/ruby-#{ruby_v}/bin:/Users/#{user}/.rvm/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/Cellar/imagemagick/6.8.9-7/bin",
     magick_home: '/usr/local/Cellar/imagemagick/6.8.9-7',
     pkg_config_path: '/usr/local/bin'
 }
