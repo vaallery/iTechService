@@ -29,7 +29,8 @@ set :conditionally_migrate, true
 # set :rbenv_ruby, ruby_v
 
 set :rvm_type, :user
-set :rvm_ruby_version, "#{ruby_v}@#{application}"
+# set :rvm_ruby_version, "#{ruby_v}@#{application}"
+set :rvm_ruby_version, ruby_v
 
 set :bundle_flags, '--deployment'
 set :bundle_env_variables, {

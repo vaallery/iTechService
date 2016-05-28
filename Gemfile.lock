@@ -514,7 +514,7 @@ DEPENDENCIES
   mini_magick
   minitest-rails
   minitest-reporters
-  nokogiri (~> 1.6, >= 1.6.7.2)
+  nokogiri (>= 1.6.7.2)
   paperclip
   passenger
   pg

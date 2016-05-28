@@ -66,7 +66,7 @@ gem 'bootstrap-colorpicker-rails', '~> 0.3.1', require: 'bootstrap-colorpicker-r
 # gem 'turbo-sprockets-rails3', '~> 0.3.14'
 
 # gem 'nokogiri', github: 'sparklemotion/nokogiri'
-gem 'nokogiri', '~> 1.6', '>= 1.6.7.2'
+gem 'nokogiri', '>= 1.6.7.2'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
