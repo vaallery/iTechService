@@ -42,7 +42,7 @@ set :bundle_env_variables, {
 set :sockets_path, shared_path.join('tmp/sockets')
 set :pids_path, shared_path.join('tmp/pids')
 
-set :passenger_restart_command, "touch #{current_path}/tmp/restart.txt"
+# set :passenger_restart_command, "touch #{current_path}/tmp/restart.txt"
 set :passenger_restart_options, -> { "#{current_path} --ignore-app-not-running" }
 
 set :whenever_identifier, application
