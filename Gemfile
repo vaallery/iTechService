@@ -56,6 +56,7 @@ gem 'figaro'
 gem 'puma'
 gem 'draper'
 gem 'seedbank'
+gem 'daemons'
 
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes

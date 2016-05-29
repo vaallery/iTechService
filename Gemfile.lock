@@ -489,6 +489,7 @@ DEPENDENCIES
   carrierwave
   ckeditor
   coffee-rails (~> 4.1.0)
+  daemons
   database_cleaner
   delayed_job_active_record
   delayed_job_web
