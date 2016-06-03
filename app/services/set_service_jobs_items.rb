@@ -127,9 +127,9 @@ class SetServiceJobsItems
 
   def find_product_by_group_and_options(product_group_id, option_ids=nil)
     if product_group_id.present? && option_ids.present?
-      where(id: includes(:options).where(product_group_id: product_group_id, product_options: {option_value_id: option_ids}).group('product_options.product_id').having('count(product_options.product_id) = ?', option_ids.length).count('products.id').keys.first).first
+      Product.where(id: Product.includes(:options).where(product_group_id: product_group_id, product_options: {option_value_id: option_ids}).group('product_options.product_id').having('count(product_options.product_id) = ?', option_ids.length).count('products.id').keys.first).first
     elsif product_group_id.present? && option_ids.blank? && ProductGroup.find(product_group_id).option_values.none?
-      (products = where(product_group_id: product_group_id)).many? ? nil : products.first
+      (products = Product.where(product_group_id: product_group_id)).many? ? nil : products.first
     else
       nil
     end
