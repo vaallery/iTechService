@@ -28,6 +28,7 @@ class SetServiceJobsItems
   end
 
   def find_item(serial_number)
+    return nil if serial_number.length < 3
     feature = Feature.serial_number.where('LOWER(value) = :q', q: serial_number.mb_chars.downcase.to_s).first
     if feature.present?
       feature.item
