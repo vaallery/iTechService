@@ -43,7 +43,9 @@ class Ability
         can :create_sale, ServiceJob
         can [:issue, :activate, :scan, :find], GiftCertificate
         can [:modify, :read, :reprint_check, :print_warranty], Sale
-        can [:choose, :select], Product
+        can %i[select], ProductGroup
+        can [:find, :choose, :select], Product
+        can :create, Item
         can [:post, :edit, :attach_gift_certificate, :return_check], Sale, status: 0
         can :create, CashOperation
         can :create, QuickOrder
@@ -53,7 +55,7 @@ class Ability
         can :modify, [ServiceJob, Order, QuickOrder, MediaOrder]
         can :create, Client
         can :set_done, QuickOrder
-        can [:choose, :select], Product
+        can [:find, :choose, :select], Product
       end
       if user.marketing?
         can :modify, Info
@@ -63,7 +65,7 @@ class Ability
         can :modify, Client
         can :modify, Sale
         can :modify, SalesImport
-        can :modify, Product
+        can [:find, :choose, :select, :modify], Product
         cannot :modify, ServiceJob
       end
       if user.supervisor?
