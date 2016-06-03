@@ -65,7 +65,7 @@ class SetServiceJobsItems
       if product_group.present?
         if product_group.option_values.any?
           options = find_options device_type, product_group
-          Product.find_by_group_and_options product_group.id, options.map(&:id)
+          find_product_by_group_and_options product_group.id, options.map(&:id)
         else
           find_product_by_device_type product_group, device_type
         end
@@ -78,7 +78,7 @@ class SetServiceJobsItems
 
   def find_product_group(device_type_name)
     ProductGroup.devices.find_each do |product_group|
-      return product_group if device_type_name.include? product_group.name
+      return product_group if device_type_name == product_group.name || device_type_name.include?("#{product_group.name} ")
     end
     nil
   end
@@ -123,5 +123,15 @@ class SetServiceJobsItems
       return product if product_name.blank?
     end
     nil
+  end
+
+  def find_product_by_group_and_options(product_group_id, option_ids=nil)
+    if product_group_id.present? && option_ids.present?
+      where(id: includes(:options).where(product_group_id: product_group_id, product_options: {option_value_id: option_ids}).group('product_options.product_id').having('count(product_options.product_id) = ?', option_ids.length).count('products.id').keys.first).first
+    elsif product_group_id.present? && option_ids.blank? && ProductGroup.find(product_group_id).option_values.none?
+      (products = where(product_group_id: product_group_id)).many? ? nil : products.first
+    else
+      nil
+    end
   end
 end

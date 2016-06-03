@@ -19,7 +19,7 @@
     #attributes.tab-pane.active
 
       = f.hidden_field :product_group_id
-      -#= f.input :device_type, as: :device_type if @product.is_equipment
+      = f.input :device_type, as: :device_type if @product.is_equipment
       = f.association :product_category
       #product_options= render 'options_fields', available_options: @product.available_options
       = f.input :name
