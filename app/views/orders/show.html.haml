@@ -29,7 +29,7 @@
   %dd= @order.object
 
   %dt= model_class.human_attribute_name :object_url
-  %dd= @order.object_url.present? ? link_to(@order.object_url) : '-'
+  %dd= @order.object_url.present? ? link_to(@order.object_url, @order.object_url) : '-'
 
   %dt= model_class.human_attribute_name :approximate_price
   %dd= @order.approximate_price.presence || '-'
