@@ -1,8 +1,7 @@
 - model_class = Order
-= hidden_field_tag :direction, params[:direction]
-= hidden_field_tag :sort, params[:sort]
 
 - if @orders.any?
+  = sort_fields
 
   %table#orders-table.table
     %thead

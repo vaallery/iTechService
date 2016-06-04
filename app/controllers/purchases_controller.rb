@@ -1,8 +1,18 @@
 class PurchasesController < ApplicationController
   authorize_resource
+  helper_method :sort_column, :sort_direction
 
   def index
     @purchases = Purchase.search(params).page(params[:page])
+
+    if params.has_key?(:sort) && params.has_key?(:direction)
+      @purchases = @purchases.order("purchases.#{sort_column} #{sort_direction}")
+    else
+      @purchases = @purchases.order(date: :desc)
+    end
+
+    @purchases = @purchases.page(params[:page])
+
     respond_to do |format|
       format.html
       format.js { render 'shared/index' }
@@ -127,4 +137,13 @@ class PurchasesController < ApplicationController
     end
   end
 
+  private
+
+  def sort_column
+    Purchase.column_names.include?(params[:sort]) ? params[:sort] : ''
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
+  end
 end

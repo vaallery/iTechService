@@ -24,6 +24,7 @@ module ApplicationHelper
   end
 
   def sortable(column, title = nil)
+    column = column.to_s
     title ||= column.titleize
 
     if column == sort_column
@@ -37,6 +38,11 @@ module ApplicationHelper
     end
     title = "#{title} #{icon_tag(icon_name)}".html_safe
     link_to title, params.merge(sort: column, direction: direction, page: nil), {class: css_class, remote: false}
+  end
+
+  def sort_fields
+    hidden_field_tag(:direction, params[:direction]) +
+    hidden_field_tag(:sort, params[:sort])
   end
 
   def search_button

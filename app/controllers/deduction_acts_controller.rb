@@ -1,8 +1,17 @@
 class DeductionActsController < ApplicationController
   authorize_resource
+  helper_method :sort_column, :sort_direction
 
   def index
-    @deduction_acts = DeductionAct.search(params).page(params[:page])
+    @deduction_acts = DeductionAct.search(params)
+
+    if params.has_key?(:sort) && params.has_key?(:direction)
+      @deduction_acts = @deduction_acts.order("deduction_acts.#{sort_column} #{sort_direction}")
+    else
+      @deduction_acts = @deduction_acts.order(date: :desc)
+    end
+
+    @deduction_acts = @deduction_acts.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -90,4 +99,13 @@ class DeductionActsController < ApplicationController
     end
   end
 
+  private
+
+  def sort_column
+    DeductionAct.column_names.include?(params[:sort]) ? params[:sort] : ''
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
+  end
 end

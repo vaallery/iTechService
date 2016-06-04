@@ -1,12 +1,14 @@
 - if @movement_acts.any?
   - model_class = MovementAct
+  = sort_fields
+
   %table.table.table-striped
     %thead
       %tr
-        %th= model_class.human_attribute_name :id
-        %th= model_class.human_attribute_name :date
-        %th= model_class.human_attribute_name :store
-        %th= model_class.human_attribute_name :dst_store
+        %th= sortable :id, model_class.human_attribute_name(:id)
+        %th= sortable :date, model_class.human_attribute_name(:date)
+        %th= model_class.human_attribute_name(:store)
+        %th= model_class.human_attribute_name(:dst_store)
         %th.actions
     %tbody
       - @movement_acts.each do |movement_act|
