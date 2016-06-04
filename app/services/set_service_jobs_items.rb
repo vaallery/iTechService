@@ -62,18 +62,20 @@ class SetServiceJobsItems
     if device_type.product.present?
       device_type.product
     else
-      product_group = find_product_group device_type.full_name
-      if product_group.present?
-        if product_group.option_values.any?
-          options = find_options device_type, product_group
-          find_product_by_group_and_options product_group.id, options.map(&:id)
-        else
-          find_product_by_device_type product_group, device_type
-        end
-      else
-        log.warn "ProductGroup not found. DeviceType: #{device_type.full_name} [#{device_type.id}]."
-        nil
-      end
+      log.warn "Product not found. DeviceType: #{device_type.full_name} [#{device_type.id}]."
+      nil
+      # product_group = find_product_group device_type.full_name
+      # if product_group.present?
+      #   if product_group.option_values.any?
+      #     options = find_options device_type, product_group
+      #     find_product_by_group_and_options product_group.id, options.map(&:id)
+      #   else
+      #     find_product_by_device_type product_group, device_type
+      #   end
+      # else
+      #   log.warn "ProductGroup not found. DeviceType: #{device_type.full_name} [#{device_type.id}]."
+      #   nil
+      # end
     end
   end
 
