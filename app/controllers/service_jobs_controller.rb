@@ -73,7 +73,7 @@ class ServiceJobsController < ApplicationController
 
   def edit
     @service_job = ServiceJob.includes(:device_notes).find(params[:id])
-    @device_note = @service_job.device_notes.build user_id: current_user.id
+    @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
 
     respond_to do |format|
       format.html { render 'form' }
@@ -97,6 +97,7 @@ class ServiceJobsController < ApplicationController
 
   def update
     @service_job = ServiceJob.find(params[:id])
+    @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
 
     respond_to do |format|
       if @service_job.update_attributes(params[:service_job])
