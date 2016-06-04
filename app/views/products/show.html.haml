@@ -1,7 +1,7 @@
 - model_class = Product
 .page-header
   %h1
-    = link_back_to_index
+    = link_back_to_index group: @product.product_group_id
     %small= @product.product_group.name
     -#= link_to glyph('chevron-left'), products_path(group: @product.product_group.id), class: 'link_back'
     = @product.name
