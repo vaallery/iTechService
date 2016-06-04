@@ -40,7 +40,8 @@ class ServiceJob < ActiveRecord::Base
   validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :department
   validates_presence_of :contact_phone, on: :create
   validates_presence_of :device_type, if: 'item.nil?'
-  validates_presence_of :app_store_pass, :item, if: :new_record?
+  validates_presence_of :item, if: 'device_type.nil?'
+  validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
   validates_inclusion_of :is_tray_present, in: [true, false], if: :has_imei?
   validate :presence_of_payment
