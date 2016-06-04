@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   authorize_resource
 
   def index
-    @product_groups = ProductGroup.roots.ordered
+    @product_groups = ProductGroup.roots
     if params[:group].blank?
       @opened_product_groups = []
       @products = Product.search(params)

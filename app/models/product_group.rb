@@ -1,7 +1,8 @@
 class ProductGroup < ActiveRecord::Base
   include Tree
 
-  scope :ordered, ->{order('id asc')}
+  default_scope ->{ ordered }
+  scope :ordered, ->{ order :position }
   scope :name_asc, ->{order('name asc')}
   scope :services, ->{joins(:product_category).where(product_categories: {kind: 'service'})}
   scope :devices, -> { joins(:product_category).where(product_categories: {kind: 'equipment'}) }
