@@ -206,15 +206,15 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def moved_at
-    if (rec = history_records.movements.order('updated_at desc').first).present?
-      rec.updated_at
+    if (rec = history_records.movements.order_by_newest.first).present?
+      rec.created_at
     else
       nil
     end
   end
 
   def moved_by
-    if (rec = history_records.movements.order('updated_at desc').first).present?
+    if (rec = history_records.movements.order_by_newest.first).present?
       rec.user
     else
       nil
