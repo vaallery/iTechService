@@ -6,8 +6,7 @@
         = text_field_tag :q, params[:q], id: 'search_deduction_act_input', class: 'search-query input-small', placeholder: DeductionAct.human_attribute_name(:id)
         %span.add-on.btn.clear_search_input
           %i.icon-remove
-      = text_field_tag :start_date, params[:start_date].try(:strftime, '%d.%m.%Y'), class: 'datepicker input-small', data: {date: {laguage: 'ru', format: 'dd.mm.yyyy', weekstart: 1}}
-      = text_field_tag :end_date, params[:end_date].try(:strftime, '%d.%m.%Y'), class: 'datepicker input-small', data: {date: {laguage: 'ru', format: 'dd.mm.yyyy', weekstart: 1}}
+      = date_filter_fields
       = select_tag 'store_id', options_from_collection_for_select(Store.all, 'id', 'name', params[:store_id]), prompt: DeductionAct.human_attribute_name(:store)
       %button.filter_button.btn.btn-info.btn-small= glyph('filter')
 

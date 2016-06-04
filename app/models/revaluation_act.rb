@@ -26,11 +26,11 @@ class RevaluationAct < ActiveRecord::Base
     end
 
     unless (start_date = params[:start_date]).blank?
-      revaluation_acts = revaluation_acts.where('created_at >= ?', start_date)
+      revaluation_acts = revaluation_acts.where('created_at >= ?', start_date.to_date)
     end
 
     unless (end_date = params[:end_date]).blank?
-      revaluation_acts = revaluation_acts.where('created_at <= ?', end_date)
+      revaluation_acts = revaluation_acts.where('created_at <= ?', end_date.to_date)
     end
 
     unless (price_type_id = params[:price_type_id]).blank?

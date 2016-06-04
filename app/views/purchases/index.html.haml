@@ -9,10 +9,7 @@
         %span.add-on.btn.clear_search_input
           %i.icon-remove
 
-      = text_field_tag :start_date, params[:start_date].try(:strftime, '%d.%m.%Y'), class: 'datepicker input-small', data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
-      = '_'
-      = text_field_tag :end_date, params[:end_date].try(:strftime, '%d.%m.%Y'), class: 'datepicker input-small', data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1}
-
+      = date_filter_fields
       = select_tag 'contractor_id', options_from_collection_for_select(Contractor.all, 'id', 'name', params[:contractor_id]), prompt: Purchase.human_attribute_name(:contractor)
 
       = select_tag 'store_id', options_from_collection_for_select(Store.all, 'id', 'name', params[:store_id]), prompt: Purchase.human_attribute_name(:store)

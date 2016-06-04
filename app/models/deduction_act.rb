@@ -21,11 +21,11 @@ class DeductionAct < ActiveRecord::Base
     deduction_acts = DeductionAct.all
 
     unless (start_date = params[:start_date]).blank?
-      deduction_acts = deduction_acts.where('date >= ?', start_date)
+      deduction_acts = deduction_acts.where('date >= ?', start_date.to_date)
     end
 
     unless (end_date = params[:end_date]).blank?
-      deduction_acts = deduction_acts.where('date <= ?', end_date)
+      deduction_acts = deduction_acts.where('date <= ?', end_date.to_date)
     end
 
     unless (store_id = params[:store_id]).blank?

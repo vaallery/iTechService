@@ -30,11 +30,11 @@ class Purchase < ActiveRecord::Base
     end
 
     unless (start_date = params[:start_date]).blank?
-      purchases = purchases.where('created_at >= ?', start_date)
+      purchases = purchases.where('created_at >= ?', start_date.to_date)
     end
 
     unless (end_date = params[:end_date]).blank?
-      purchases = purchases.where('created_at <= ?', end_date)
+      purchases = purchases.where('created_at <= ?', end_date.to_date)
     end
 
     unless (contractor_id = params[:contractor_id]).blank?
