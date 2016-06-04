@@ -20,6 +20,6 @@
 
 .row-fluid
   .span4
-    #product_groups= product_groups_trees_tag @product_groups, @opened_product_groups, @current_product_group.id
+    #product_groups= product_groups_trees_tag @product_groups, @opened_product_groups, @current_product_group&.id
 
   #resource_table.span8= render 'table'
