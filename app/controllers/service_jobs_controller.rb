@@ -32,16 +32,23 @@ class ServiceJobsController < ApplicationController
       @service_job = ServiceJob.find_by_ticket_number(params[:id])
       respond_to do |format|
         format.js do
-          flash.now[:error] = t('service_jobs.not_found_by_ticket', ticket: params[:id]) if @service_job.nil?
-          render 'ticket_scan'
+          if @service_job.present?
+            log_service_job_show
+            render 'ticket_scan'
+          else
+            flash.now[:error] = t('service_jobs.not_found_by_ticket', ticket: params[:id])
+          end
         end
       end
     else
       @service_job = ServiceJob.includes(:device_notes).find(params[:id])
       @device_note = @service_job.device_notes.build user_id: current_user.id
       respond_to do |format|
-        format.html
-        format.json { render json: @service_job }
+        format.html { log_service_job_show }
+        format.json do
+          log_service_job_show
+          render json: @service_job
+        end
         format.pdf do
           if can? :print_receipt, @service_job
             filename = "ticket_#{@service_job.ticket_number}.pdf"
@@ -74,7 +81,7 @@ class ServiceJobsController < ApplicationController
   def edit
     @service_job = ServiceJob.includes(:device_notes).find(params[:id])
     @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
-
+    log_service_job_show
     respond_to do |format|
       format.html { render 'form' }
       format.js { render 'shared/show_modal_form' }
@@ -223,4 +230,7 @@ class ServiceJobsController < ApplicationController
     out.to_pdf document: pdf
   end
 
+  def log_service_job_show
+    LogServiceJobShowJob.perform_later @service_job.id, current_user.id, Time.current.to_s
+  end
 end
