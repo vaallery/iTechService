@@ -28,7 +28,9 @@ class Client < ActiveRecord::Base
 
   delegate :client_category, to: :client_characteristic, allow_nil: true
 
-  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :category, :client_characteristic_attributes
+  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number,
+                  :phone_number_checked, :card_number, :admin_info, :comments_attributes, :comment,
+                  :contact_phone, :category, :client_characteristic_attributes
 
   validates_presence_of :name, :surname, :phone_number, :full_phone_number, :category
   validates_uniqueness_of :full_phone_number
@@ -37,6 +39,7 @@ class Client < ActiveRecord::Base
   validates_associated :comments
   validates_associated :client_characteristic
   validate :restricted_attributes, unless: Proc.new { User.current.any_admin? or User.current.able_to?(:edit_clients) }
+  validates_acceptance_of :phone_number_checked
   before_destroy :send_mail
 
   after_initialize do

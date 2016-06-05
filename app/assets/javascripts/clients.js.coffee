@@ -19,6 +19,7 @@ jQuery ->
       $('#check_phone_number').removeClass('disabled').addClass('btn-warning')
     else
       $('#check_phone_number').addClass('disabled').removeClass('btn-warning')
+    $('#client_phone_number_checked').val('0');
 
   $(document).on 'keyup', '#client_card_number', ->
     if $(this).val() isnt ''
