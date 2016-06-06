@@ -23,13 +23,13 @@
             = text_field_tag 'contact_phone', human_phone(@service_job.client.contact_phone), class: 'input-medium', disabled: true
 
       - if can? :update, @service_job
-        -#- if @service_job.new_record? || @service_job.item.present?
-        -#  = f.input :item, as: :device
-        -#- else
-        = f.input :device_type, as: :device_type
-        = f.input :serial_number, as: :serial_number, input_html: {autocomplete: 'off'}, required: true
-        = f.input :imei, as: :imei, wrapper_html: {class: @service_job.has_imei? ? 'imei_input' : 'imei_input hidden'}
-        = f.hidden_field :item_id
+        - if @service_job.new_record? || @service_job.item.present?
+          = f.input :item, as: :device
+        - else
+          = f.input :device_type, as: :device_type
+          = f.input :serial_number, as: :serial_number, input_html: {autocomplete: 'off'}, required: true
+          = f.input :imei, as: :imei, wrapper_html: {class: @service_job.has_imei? ? 'imei_input' : 'imei_input hidden'}
+          = f.hidden_field :item_id
       - else
         - if @service_job.item.present?
           = service_job.device
