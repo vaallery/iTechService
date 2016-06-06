@@ -86,7 +86,7 @@ module DashboardHelper
   end
 
   def device_task_row_tag(device_task)
-    content_tag(:tr, class: "device_task_row #{device_task.done_s} #{'actual' if is_actual_task?(device_task)}", data: {device_task_id: device_task.id, service_jobs_id: device_task.service_job.id, task_id: device_task.task.id}) do
+    content_tag(:tr, class: "device_task_row #{device_task.done_s} #{'actual' if is_actual_task?(device_task)}", data: {device_task_id: device_task.id, service_job_id: device_task.service_job.id, task_id: device_task.task.id}) do
       content_tag(:td, nil) +
       content_tag(:td, device_task.task_name) +
       content_tag(:td) do

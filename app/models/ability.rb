@@ -45,7 +45,7 @@ class Ability
         can [:modify, :read, :reprint_check, :print_warranty], Sale
         can %i[select], ProductGroup
         can [:find, :choose, :select], Product
-        can :create, Item
+        can %i[modify autocomplete remains_in_store], Item
         can [:post, :edit, :attach_gift_certificate, :return_check], Sale, status: 0
         can :create, CashOperation
         can :create, QuickOrder

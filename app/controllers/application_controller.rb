@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   protect_from_forgery with: :exception
-  before_action :auto_sign_in
+  # before_action :auto_sign_in
   before_filter :authenticate_user!
   before_filter :set_current_user
   before_filter :store_location, except: [:create, :update, :destroy]

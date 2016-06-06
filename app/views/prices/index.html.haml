@@ -7,13 +7,15 @@
       %th= model_class.human_attribute_name(:id)
       %th= model_class.human_attribute_name(:file)
       %th= model_class.human_attribute_name(:created_at)
-      %th
+      - if can? :manage, Price
+        %th
   %tbody
     - @prices.each do |price|
       %tr
         %td= link_to price.id, price_path(price)
         %td= link_to_price price
         %td= l price.created_at, format: :long_d
-        %td.btn-group
-          = link_to_edit_small price
-          = link_to_destroy_small price
+        - if can? :manage, Price
+          %td.btn-group
+            = link_to_edit_small price
+            = link_to_destroy_small price
