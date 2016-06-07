@@ -84,7 +84,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def type_name
-    device_type.try(:full_name) || '-'
+    item.present? ? item.name : (device_type.try(:full_name) || '-')
   end
 
   def client_phone
@@ -108,7 +108,8 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def presentation
-    serial_number.blank? ? type_name : [type_name, serial_number].join(' / ')
+    sn = item.present? ? item.serial_number : serial_number
+    sn.blank? ? type_name : [type_name, sn].join(' / ')
   end
   
   def done?
