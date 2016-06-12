@@ -164,6 +164,12 @@ $(document).on 'keyup', 'input.capitalize', (event)->
   input.value = str
   input.setSelectionRange(start, end);
 
+$(document).on 'keydown', 'input.upcase', (event)->
+  $this = $(this)
+  if (event.keyCode in [65..90]) and (event.metaKey is false) and (event.ctrlKey is false) and (event.altKey is false)
+    $this.val($this.val()+String.fromCharCode(event.keyCode))
+    event.preventDefault()
+
 $(document).on 'click', '.datetime_quick_select .time_link', (event)->
   $(this).closest('.datetime_quick_select').find('input').val($(this).data('value'))
   event.preventDefault()

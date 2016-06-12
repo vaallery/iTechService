@@ -50,12 +50,6 @@ jQuery ->
       $('#service_job_contact_phone').val client_phone
       event.preventDefault()
 
-  $('#service_job_serial_number').keydown (event)->
-    $this = $(this)
-    if (event.keyCode in [65..90]) and (event.metaKey is false) and (event.ctrlKey is false) and (event.altKey is false)
-      $this.val($this.val()+String.fromCharCode(event.keyCode))
-      event.preventDefault()
-
 #  $('#service_job_imei').blur ()->
 #    $.getJSON '/service_jobs/check_imei?imei_q='+$(this).val(), (data)->
 #      if data.present
