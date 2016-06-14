@@ -22,6 +22,8 @@ class ServiceJobDecorator < ApplicationDecorator
       object.data_storages.map do |storage_num|
         h.content_tag(:span, storage_num, class: 'data_storage_label')
       end.join(' ').html_safe
+    else
+      '-'
     end
   end
 end
