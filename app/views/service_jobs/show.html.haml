@@ -58,6 +58,10 @@
         %td= @service_job.carrier.try(:name)
 
       %tr
+        %td= ServiceJob.human_attribute_name :data_storages
+        %td= service_job.data_storages
+
+      %tr
         %td= ServiceJob.human_attribute_name :comment
         %td.service_job_comment= @service_job.comment
 

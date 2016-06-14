@@ -272,7 +272,9 @@ tr.fields {
     .controls {
       padding-left: 20px;
       &>.radio, &>.checkbox {
-        padding: 0;
+        &:not(.inline) {
+          padding: 0;
+        }
       }
     }
   }

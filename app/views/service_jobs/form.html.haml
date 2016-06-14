@@ -57,6 +57,8 @@
 
       = f.association :case_color, as: :radio_buttons, collection: CaseColor.ordered_by_name, label_method: lambda{|c|case_color_presentation(c)}
 
+      = f.input :data_storages, as: :check_boxes, collection: data_storages_collection, value_method: :first, label_method: :last, item_wrapper_class: 'inline'
+
       = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @service_job)
 
       = f.input :tech_notice, input_html: {rows: 5} if can? :write_tech_notice, @service_job

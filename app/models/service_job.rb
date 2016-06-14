@@ -36,7 +36,7 @@ class ServiceJob < ActiveRecord::Base
   delegate :name, to: :department, prefix: true
   delegate :name, to: :location, prefix: true, allow_nil: true
 
-  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id
+  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages
   validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :department
   validates_presence_of :contact_phone, on: :create
   validates_presence_of :device_type, if: 'item.nil?'
@@ -280,6 +280,14 @@ class ServiceJob < ActiveRecord::Base
     contact_phone.blank? or contact_phone == '-'
   end
 
+  def data_storages
+    self[:data_storages]&.split(',')&.map(&:to_i)
+  end
+
+  def data_storages=(new_value)
+    self[:data_storages] = new_value.join(',')
+  end
+
   private
 
   def generate_ticket_number
@@ -392,5 +400,4 @@ class ServiceJob < ActiveRecord::Base
       end
     end
   end
-
 end

@@ -146,4 +146,16 @@ module ServiceJobsHelper
       button_tag(glyph('user'), class: button_class, title: hint)
     end
   end
+
+  def data_storages_collection
+    qty = Setting.data_storage_qty
+    if qty.present?
+      1.upto(Setting.data_storage_qty).map do |storage_num|
+        name = content_tag(:span, storage_num, class: 'data_storage_label')
+        [storage_num, name]
+      end
+    else
+      []
+    end
+  end
 end

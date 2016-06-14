@@ -405,6 +405,7 @@ ru:
         client_notified: 'Клиент уведомлён'
         comment: 'Комментарий'
         contact_phone: 'Контактный номер'
+        data_storages: 'Данные на компьютерах'
         department: :activerecord.models.department
         device_tasks: 'Список задач'
         done_at: 'Время завершения'

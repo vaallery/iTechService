@@ -14,3 +14,4 @@ ru:
     contact_phone: 'Контактный телефон'
     ticket_prefix: 'Префикс талона'
     schedule: 'График работы'
+    data_storage_qty: 'Количество хранилищ данных'
