@@ -373,6 +373,7 @@ class ServiceJob < ActiveRecord::Base
       alert_times.push self.return_at.advance minutes: -30 if duration < 300
       alert_times.push self.return_at.advance hours: -1 if duration >= 300
       alert_times.push self.return_at.advance days: -1 if duration > 1440
+      # TODO: переделать
       # alert_times.each { |alert_time| self.delay(run_at: alert_time).returning_alert }
     end
   end
