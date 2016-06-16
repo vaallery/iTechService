@@ -25,6 +25,7 @@ class ServiceJob < ActiveRecord::Base
   belongs_to :case_color
   belongs_to :carrier
   belongs_to :keeper, class_name: 'User'
+  has_many :features, through: :item
   has_many :device_tasks, dependent: :destroy
   has_many :tasks, through: :device_tasks
   has_many :repair_tasks, through: :device_tasks
@@ -136,7 +137,7 @@ class ServiceJob < ActiveRecord::Base
     end
 
     unless (service_job_q = (params[:service_job] || params[:service_job_q])).blank?
-      service_jobs = service_jobs.where 'LOWER(service_jobs.serial_number) LIKE :q OR LOWER(service_jobs.imei) LIKE :q', q: "%#{service_job_q.mb_chars.downcase.to_s}%"
+      service_jobs = service_jobs.includes(:features).where('LOWER(features.value) LIKE :q OR LOWER(service_jobs.serial_number) LIKE :q OR LOWER(service_jobs.imei) LIKE :q', q: "%#{service_job_q.mb_chars.downcase.to_s}%").references(:features)
     end
 
     unless (client_q = params[:client]).blank?
