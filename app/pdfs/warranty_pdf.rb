@@ -101,7 +101,7 @@ class WarrantyPdf < Prawn::Document
     move_down 25
 
     # Signs
-    group do
+    # group do
       y_pos = cursor
       span 290, position: :left do
         text 'М.П.'
@@ -115,7 +115,7 @@ class WarrantyPdf < Prawn::Document
         move_down 30
         text 'Подпись покупателя _________________________________'#, align: :right
       end
-    end
+    # end
 
     encrypt_document permissions: { modify_contents: false }
   end
