@@ -35,20 +35,23 @@ jQuery ->
   $client_input = $('#client_input')
   if $client_input.length > 0
 
+    clientSearchTimeout = null;
+
     $(document).on 'click', (event)->
       if $(this).parents('#clients_autocomplete_list').length is 0
         $('#clients_autocomplete_list').hide()
 
     $(document).on 'keydown', '#client_search', (event)->
-      setTimeout (->
-        $input = $('#client_search')
-        if $input.val() is ''
-          $('#service_job_client_id').val("");
-          $('#order_customer_id').val("");
-          $('#edit_client_link').attr('href', "#");
-        else
+      clearTimeout(clientSearchTimeout) if clientSearchTimeout
+      $input = $('#client_search')
+      if $input.val() is ''
+        $('#service_job_client_id').val("");
+        $('#order_customer_id').val("");
+        $('#edit_client_link').attr('href', "#");
+      else
+        clientSearchTimeout = setTimeout (->
           $.getScript '/clients/autocomplete.js?client_q='+$input.val()
-        ), 200
+        ), 500
 
     if $('#clients_autocomplete_list').length
       $('#clients_autocomplete_list').css
