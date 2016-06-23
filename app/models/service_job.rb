@@ -286,7 +286,11 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def data_storages=(new_value)
-    self[:data_storages] = new_value.join(',')
+    if new_value.respond_to? :join
+      super new_value.join(',')
+    else
+      super
+    end
   end
 
   private
