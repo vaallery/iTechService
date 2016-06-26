@@ -6,7 +6,6 @@ $input.find('.item_search').val("<%= device.presentation %>");
 $input.find('.edit_item_btn').attr('href', "<%= edit_device_path(@device) %>").attr('data-remote', true);
 $input.find('.show_item_btn').attr('href', "<%= device_path(@device) %>").attr('data-remote', true);
 
-$('#service_job_security_code').val("<%= device.security_code %>");
 $('#service_job_app_store_pass').val("<%= device.app_store_pass %>");
 
 $imei_inputs = $('.imei_input, .tray_input, .carrier_input');
