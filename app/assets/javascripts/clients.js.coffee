@@ -47,7 +47,7 @@ jQuery ->
       if $(this).parents('#clients_autocomplete_list').length is 0
         $('#clients_autocomplete_list').hide()
 
-    $(document).on 'keydown', '#client_search', (event)->
+    $(document).on 'keyup', '#client_search', (event)->
       clearTimeout(clientSearchTimeout) if clientSearchTimeout
       $input = $('#client_search')
       if $input.val() is ''
