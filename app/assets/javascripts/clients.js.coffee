@@ -12,14 +12,20 @@ jQuery ->
     event.preventDefault()
 
   $(document).on 'keyup', '#client_full_phone_number', (event) ->
-    $('#check_phone_number').removeClass('btn-success').removeClass('btn-warning')
-    count = $('#client_full_phone_number').val().length
-    $('#phone_length').text(count)
-    if count in [6,7,10,11]
-      $('#check_phone_number').removeClass('disabled').addClass('btn-warning')
-    else
-      $('#check_phone_number').addClass('disabled').removeClass('btn-warning')
-    $('#client_phone_number_checked').val('0');
+    number = $('#client_full_phone_number').val()
+    checkedNumber = $('#client_phone_number_checked').data('checked_number')
+    isNumberChanged = number != checkedNumber
+    numberLengh = number.length
+    isNumberChecked = $('#client_phone_number_checked').val() == '1'
+
+    $('#phone_length').text(numberLengh)
+    if (isNumberChecked and isNumberChanged) or !isNumberChecked
+      $('#client_phone_number_checked').val('0')
+      if numberLengh in [6,7,10,11]
+        $('#check_phone_number').removeClass('disabled').addClass('btn-warning')
+      else
+        $('#check_phone_number').addClass('disabled').removeClass('btn-warning')
+    $('#check_phone_number').removeClass('btn-success') if isNumberChecked and isNumberChanged
 
   $(document).on 'keyup', '#client_card_number', ->
     if $(this).val() isnt ''
