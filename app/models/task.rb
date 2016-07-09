@@ -7,7 +7,7 @@ class Task < ActiveRecord::Base
 
   belongs_to :product, inverse_of: :task
   belongs_to :location
-  has_many :device_tasks, dependent: :destroy
+  has_many :device_tasks, dependent: :restrict_with_error
   has_many :service_jobs, through: :device_tasks
   delegate :item, :is_repair?, to: :product, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true

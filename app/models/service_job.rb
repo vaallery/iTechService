@@ -32,7 +32,7 @@ class ServiceJob < ActiveRecord::Base
   has_many :repair_parts, through: :repair_tasks
   has_many :history_records, as: :object, dependent: :destroy
   has_many :device_notes, dependent: :destroy
-  accepts_nested_attributes_for :device_tasks
+  accepts_nested_attributes_for :device_tasks, allow_destroy: true
   delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :department, prefix: true
   delegate :name, to: :location, prefix: true, allow_nil: true
