@@ -16,11 +16,12 @@
         %td= user[:qty_done]
         %td= user[:qty_archived]
       - user[:service_jobs].each do |service_job|
+        - service_job = service_job.decorate
         %tr.details
           %td
-            = link_to service_job.presentation, service_job_path(service_job)
+            = service_job.presentation_link
             %br
-            = link_to service_job.client_presentation, client_path(service_job.client)
+            = service_job.client_presentation_link
           %td= l service_job.created_at, format: :long_d
           %td= icon_tag(:ok) if service_job.at_done?
           %td= icon_tag(:ok) if service_job.in_archive?

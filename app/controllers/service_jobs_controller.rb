@@ -121,7 +121,7 @@ class ServiceJobsController < ApplicationController
 
   def destroy
     @service_job = ServiceJob.find(params[:id])
-    DeletionMailer.delay.notice({presentation: @service_job.presentation, tasks: @service_job.tasks.map(&:name).join(', ')}, current_user.presentation, DateTime.current)
+    DeletionMailer.delay.notice({presentation: @service_job.decorate.presentation, tasks: @service_job.tasks.map(&:name).join(', ')}, current_user.presentation, DateTime.current)
     @service_job.destroy
 
     respond_to do |format|

@@ -1,5 +1,6 @@
 class ApplicationDecorator < Draper::Decorator
   delegate :current_page, :total_pages, :limit_value
+  delegate :link_to, to: :helpers
 
   def created_at
     human_datetime object.created_at

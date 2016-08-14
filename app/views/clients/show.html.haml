@@ -49,9 +49,10 @@
         %th= ServiceJob.human_attribute_name :location
     %tbody
       - @client.service_jobs.find_each do |service_job|
+        - service_job = service_job.decorate
         %tr
-          %td= l service_job.created_at, format: :long_d
-          %td= link_to service_job.presentation, service_job_path(service_job)
+          %td= service_job.creation_date
+          %td= service_job.presentation_link
           %td
             %ul.unstyled
               - service_job.device_tasks.find_each do |device_task|

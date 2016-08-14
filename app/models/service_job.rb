@@ -109,10 +109,16 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def presentation
-    sn = item.present? ? item.serial_number : serial_number
-    sn.blank? ? type_name : [type_name, sn].join(' / ')
+    if item.present?
+      sn = item.serial_number
+      imei = item.imei
+    else
+      sn = self.serial_number.presence || '?'
+      imei = self.imei.presence || '?'
+    end
+    [type_name, sn, imei].join(' / ')
   end
-  
+
   def done?
     pending_tasks.empty?
   end

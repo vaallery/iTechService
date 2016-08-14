@@ -2,7 +2,7 @@ class ItemDecorator < ApplicationDecorator
   delegate_all
 
   def presentation
-    [name, serial_number].compact.join(' / ')
+    [name, serial_number, imei].join(' / ')
   end
 
   def features
@@ -13,4 +13,11 @@ class ItemDecorator < ApplicationDecorator
     link_to_associated :product
   end
 
+  def serial_number
+    object.serial_number || '?'
+  end
+
+  def imei
+    object.imei || '?'
+  end
 end

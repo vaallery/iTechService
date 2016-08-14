@@ -1,26 +1,27 @@
+- service_job = @service_job.decorate
 !!!
 %html{style: "font-family:'Helvetica-Neue', 'Helvetica', sans-serif;"}
   %head
     %meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
 
   %body
-    %h4= @service_job.presentation
+    %h4= service_job.presentation
 
     %p
       %strong= t 'service_jobs.received'
-      = l @service_job.created_at, format: :long_d
+      = service_job.creation_date
 
     %p
       %strong= ServiceJob.human_attribute_name :ticket_number
-      = @service_job.ticket_number
+      = service_job.ticket_number
 
     %p
       %strong= ServiceJob.human_attribute_name :client
-      = @service_job.client.presentation
+      = service_job.client_presentation
 
     %p
       %strong= ServiceJob.human_attribute_name :comment
-      = @service_job.comment
+      = service_job.comment
 
     %table
       %caption
@@ -34,7 +35,7 @@
           %th= DeviceTask.human_attribute_name :done_at
           %th= DeviceTask.human_attribute_name :created_at
       %tbody
-        - @service_job.device_tasks.ordered.each do |device_task|
+        - service_job.device_tasks.ordered.each do |device_task|
           %tr
             %td= device_task.task_name
             %td= h device_task.comment
@@ -46,5 +47,5 @@
       %tfoot
         %tr
           %td{colspan: 3}= t 'total'
-          %td= @service_job.tasks_cost
+          %td= service_job.tasks_cost
           %td{colspan: 4}
