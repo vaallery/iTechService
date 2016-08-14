@@ -1,0 +1,9 @@
+$item_product_id = $('#item_product_id');
+$item_features = $('#item_features');
+<% if @product.present? %>
+$item_product_id.val("<%= @product.id %>");
+$item_features.html("<%= j(@item.features.map.with_index{|feature, i|simple_fields_for('item[features_attributes]', feature, index: i){|f|render('items/feature_fields', f: f)}}.join.html_safe) %>");
+<% else %>
+$item_product_id.val('');
+$item_features.html('');
+<% end %>

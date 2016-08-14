@@ -1,7 +1,9 @@
 set :stage, :staging
 set :deploy_to, "/var/www/#{fetch(:application)}"
-set :branch, 'master'
+set :branch, 'version2'
 # set :branch, 'staging'
+# set :rails_env, 'production'
+set :default_env, fetch(:default_env, {}).merge(rails_env: :production)
 
 # Simple Role Syntax
 # ==================
@@ -18,7 +20,8 @@ set :branch, 'master'
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server '192.168.6.67', user: 'v', roles: %w{web app db}
+
+server 'ise.vl', user: 'itech', roles: %w[web app db]
 # server '192.168.6.68', user: 'v', roles: %w{web app db}
 # server '192.168.6.24', user: 'deployer', roles: %w{web app db}
 
@@ -26,11 +29,12 @@ server '192.168.6.67', user: 'v', roles: %w{web app db}
 # it's possible to pass any option but you need to keep in mind that net/ssh understand limited list of options
 # you can see them in [net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start)
 # set it globally
-#  set :ssh_options, {
-#    keys: %w(/home/rlisowski/.ssh/id_rsa),
-#    forward_agent: false,
-#    auth_methods: %w(password)
-#  }
+set :ssh_options, {
+  keys: %w[/Users/vova/.ssh/id_rsa],
+  forward_agent: true,
+  auth_methods: %w[publickey]
+}
+
 # and/or per server
 # server 'example.com',
 #   user: 'user_name',
@@ -43,5 +47,3 @@ server '192.168.6.67', user: 'v', roles: %w{web app db}
 #     # password: 'please use keys'
 #   }
 # setting per server overrides global ssh_options
-
-fetch(:default_env).merge!(rails_env: :production)

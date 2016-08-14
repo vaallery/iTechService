@@ -3,6 +3,7 @@
   %thead
     %tr
       %th= "#{t('activerecord.models.task')} / #{t('activerecord.models.device')}"
+      -#%th= t '.task_service_job'
       %th= t 'reports.duration'
   %tbody
     - @report.result[:tasks_durations].each do |task|
@@ -12,9 +13,9 @@
       - task[:device_tasks].each do |device_task|
         %tr.device_task_row.details
           %td.task
-            = link_to device_task[:device], device_path(device_task[:device_id])
+            = link_to device_task[:service_job], service_job_path(device_task[:service_job_id])
             %br
-            %small= "#{Device.human_attribute_name(:location)}: #{device_task[:device_location]}"
+            %small= "#{ServiceJob.human_attribute_name(:location)}: #{device_task[:device_location]}"
           %td.duration
             = humanize_duration device_task[:duration]
             %br

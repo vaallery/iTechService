@@ -1,0 +1,8 @@
+- if available_options.present?
+  - available_options.each do |option_type, option_values|
+    .control-group.select.required.product_option_ids
+      %label.select.required.control-label(for='product_option_ids')
+        %abbr{title: t('simple_form.required.text')}= t('simple_form.required.mark')
+        = " #{option_type}"
+      .controls= select_tag 'product[option_ids][]', options_from_collection_for_select(option_values, :id, :name, @product.present? ? @product.option_ids&option_values.map(&:id) : nil), class: 'product_option select required input-xlarge', prompt: '-'
+      

@@ -117,7 +117,7 @@ $(document).on 'keydown', 'textarea', ->
 
 $(document).on 'keydown', '#quick_search', (e)->
   $input = $('#quick_search')
-  $form = $('#devices_quick_search_form')
+  $form = $('#service_jobs_quick_search_form')
   $result_list = $('#quick_search_result')
   switch e.which
     when 13
@@ -163,6 +163,12 @@ $(document).on 'keyup', 'input.capitalize', (event)->
     letter.toUpperCase();
   input.value = str
   input.setSelectionRange(start, end);
+
+$(document).on 'keydown', 'input.upcase', (event)->
+  $this = $(this)
+  if (event.keyCode in [65..90]) and (event.metaKey is false) and (event.ctrlKey is false) and (event.altKey is false)
+    $this.val($this.val()+String.fromCharCode(event.keyCode))
+    event.preventDefault()
 
 $(document).on 'click', '.datetime_quick_select .time_link', (event)->
   $(this).closest('.datetime_quick_select').find('input').val($(this).data('value'))
@@ -217,7 +223,7 @@ scanTicket = ->
         ticket_number = scaned_code.replace(/^0+/, '')
         ticket_number = ticket_number[0..-2]
         $('#barcode_reader').removeClass('in').fadeOut()
-        $.get '/devices/' + ticket_number + '.js?find=ticket'
+        $.get '/service_jobs/' + ticket_number + '.js?find=ticket'
       else
         if event.keyCode in [48..57]
           scaned_code = scaned_code[1..-1] if scaned_code.length is 12

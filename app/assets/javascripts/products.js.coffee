@@ -1,6 +1,6 @@
 $(document).on 'click', '.close_product_form', ->
-  $('#product_form').html('')
-  $('#product_form').slideUp()
+  $('#product_form.remote').html('')
+  $('#product_form.remote').slideUp()
 
 $(document).on 'click', '.product_selector .product_select_button', ->
   $(this).addClass('active')
@@ -49,6 +49,11 @@ $(document).on 'click', '#product_choose_form #add_product_item', ->
 $(document).on 'keydown', '#product_choose_form #new_item_fields input, #product_choose_form #product_search_field, #product_choose_form #item_search_field', ->
   if event.keyCode is 13
     event.preventDefault()
+
+$(document).on 'change', '#product_form .product_option', ->
+  text = $('#product_group_name, .product_option>option:selected').map(->
+    $(this).text().trim()).get().join(' ')
+  $('#product_name').val(text)
 
 validation_timeout = null
 $(document).on 'keyup', '#product_choose_form #new_item_fields input', ->

@@ -1,36 +1,41 @@
 class ProductGroup < ActiveRecord::Base
+  include Tree
 
-  scope :ordered, order('id asc')
-  scope :name_asc, order('name asc')
-  scope :services, joins(:product_category).where(product_categories: {kind: 'service'})
-  scope :goods, joins(:product_category).where(product_categories: {kind: %w[equipment accessory]})
-  scope :except_spare_parts, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector service]})
-  scope :except_spare_parts_and_services, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector]})
-  scope :except_services, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector spare_part]})
-  scope :spare_parts, joins(:product_category).where(product_categories: {kind: 'spare_part'})
-  scope :for_purchase, joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector spare_part]})
+  default_scope ->{ ordered }
+  scope :ordered, ->{ order :position }
+  scope :name_asc, ->{order('name asc')}
+  scope :services, ->{joins(:product_category).where(product_categories: {kind: 'service'})}
+  scope :devices, -> { joins(:product_category).where(product_categories: {kind: 'equipment'}) }
+  scope :goods, ->{joins(:product_category).where(product_categories: {kind: %w[equipment accessory]})}
+  scope :except_spare_parts, ->{joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector service]})}
+  scope :except_spare_parts_and_services, ->{joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector]})}
+  scope :except_services, ->{joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector spare_part]})}
+  scope :spare_parts, ->{joins(:product_category).where(product_categories: {kind: 'spare_part'})}
+  scope :for_purchase, ->{joins(:product_category).where(product_categories: {kind: %w[equipment accessory protector spare_part]})}
 
-  belongs_to :product_category
-  has_many :products, inverse_of: :product_group
+  belongs_to :product_category, required: true
+  has_many :products, dependent: :nullify, inverse_of: :product_group
   has_many :product_relations, as: :parent, dependent: :destroy
   has_many :related_products, through: :product_relations, source: :relatable, source_type: 'Product'
   has_many :related_product_groups, through: :product_relations, source: :relatable, source_type: 'ProductGroup'
-  has_ancestry orphan_strategy: :restrict, cache_depth: true
+  has_and_belongs_to_many :option_values, join_table: 'product_groups_option_values', uniq: true
+  has_many :option_types, -> { distinct }, through: :option_values
 
   delegate :feature_accounting, :feature_types, :warranty_term, :is_service, :is_equipment, :is_accessory, :is_spare_part, :request_price, to: :product_category, allow_nil: true
   delegate :kind, to: :product_category, prefix: :category, allow_nil: true
-  attr_accessible :code, :name, :ancestry, :parent_id, :product_category_id, :related_product_ids, :related_product_group_ids
-  validates_presence_of :name, :product_category
 
-  after_initialize do |product_group|
-    product_group.parent_id = nil if product_group.parent_id.blank?
-    unless product_group.is_root?
-      product_group.product_category_id ||= product_group.parent.product_category_id
-    end
-  end
+  validates_presence_of :name
+  validates :code, uniqueness: {allow_blank: true, case_sensitive: false}
+
+  after_initialize :set_product_category
+
+  attr_accessible :code, :name, :ancestry, :parent_id, :product_category_id, :option_value_ids, :related_product_ids, :related_product_group_ids
+
+  has_ancestry orphan_strategy: :restrict, cache_depth: true
+  acts_as_list scope: [:ancestry]
 
   def self.search(params)
-    product_groups = ProductGroup.scoped
+    product_groups = ProductGroup.all
 
     if (form = params[:form]).present?
       case form
@@ -58,6 +63,19 @@ class ProductGroup < ActiveRecord::Base
     end
 
     product_groups
+  end
+
+  def available_options
+    option_values.ordered.group_by { |ov| ov.option_type.name }
+  end
+
+  private
+
+  def set_product_category
+    self.parent_id = nil if parent_id.blank?
+    unless is_root?
+      self.product_category_id ||= parent.product_category_id
+    end
   end
 
 end

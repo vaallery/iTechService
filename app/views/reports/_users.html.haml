@@ -2,7 +2,7 @@
   %caption= report_title @report
   %thead
     %tr
-      %th.center{rowspan: 2}= Device.human_attribute_name :user
+      %th.center{rowspan: 2}= ServiceJob.human_attribute_name :user
       %th.center{rowspan: 2}= t('reports.received')
       %th.center{colspan: 2}= t('reports.includes')
     %tr
@@ -15,18 +15,18 @@
         %td= user[:qty]
         %td= user[:qty_done]
         %td= user[:qty_archived]
-      - user[:devices].each do |device|
+      - user[:service_jobs].each do |service_job|
         %tr.details
           %td
-            = link_to device.presentation, device_path(device)
+            = link_to service_job.presentation, service_job_path(service_job)
             %br
-            = link_to device.client_presentation, client_path(device.client)
-          %td= l device.created_at, format: :long_d
-          %td= icon_tag(:ok) if device.at_done?
-          %td= icon_tag(:ok) if device.in_archive?
+            = link_to service_job.client_presentation, client_path(service_job.client)
+          %td= l service_job.created_at, format: :long_d
+          %td= icon_tag(:ok) if service_job.at_done?
+          %td= icon_tag(:ok) if service_job.in_archive?
   %tfoot
     %tr
       %td= t('reports.total')
-      %td= @report.result[:devices_received_count]
-      %td= @report.result[:devices_received_done_count]
-      %td= @report.result[:devices_received_archived_count]
+      %td= @report.result[:service_jobs_received_count]
+      %td= @report.result[:service_jobs_received_done_count]
+      %td= @report.result[:service_jobs_received_archived_count]

@@ -1,0 +1,3 @@
+:plain
+  $('#quick_search_result').html("#{j(render(collection: @service_jobs, partial: 'quick_search_item', as: :service_job))}");
+  $('#quick_search_result:hidden').slideDown(100);

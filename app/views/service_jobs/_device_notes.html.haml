@@ -1,0 +1,8 @@
+#device_notes= render @service_job.device_notes.oldest_first
+= render 'device_notes/form'
+
+:javascript
+  $(document).ready(function() {
+    $device_notes = $('#device_notes');
+    $device_notes.scrollTop($device_notes[0].scrollHeight);
+  });

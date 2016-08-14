@@ -28,8 +28,8 @@ ru:
       welcome: Добро пожаловать
     sessions:
       new:
-        by_card: По карте
-        by_password: По паролю
+        with_card: По карте
+        with_password: По паролю
         signin: Авторизоваться
         submit: Авторизоваться
         title: Авторизация

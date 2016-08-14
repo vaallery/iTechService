@@ -17,7 +17,7 @@ class ClientsController < ApplicationController
   end
 
   def show
-    @client = Client.includes(:sale_items, :orders, devices: :device_tasks).find(params[:id])
+    @client = Client.includes(:sale_items, :orders, service_jobs: :device_tasks).find(params[:id])
     respond_to do |format|
       format.html
       format.json { render json: @client }
@@ -98,7 +98,8 @@ class ClientsController < ApplicationController
   end
 
   def select
-    @client = Client.find params[:id]
+    @client = Client.includes(:devices).find(params[:id])
+    # @devices = @client.devices
     respond_to do |format|
       format.js
     end

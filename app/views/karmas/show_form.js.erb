@@ -1,0 +1,18 @@
+<% if @karma.new_record? %>
+ownerSelector = "#new_<%= @karma.good ? 'good' : 'bad' %>_karma_for_<%= @karma.user_id %>";
+<% else %>
+ownerSelector = "#karma_<%= @karma.id %>";
+<% end %>
+$owner = $(ownerSelector);
+title = "<%= "#{@karma.user_presentation}#{@karma.new_record? ? '' : " [#{l @karma.created_at, format: :date_short}]"}" %>";
+
+closeKarmaPopovers();
+$owner.popover({
+  html: true,
+  placement: 'top',
+  title: "<a href='#' class='close_karma_popover_button close_popover_button' data-owner=" + ownerSelector + ">&times;<\/a>" + title,
+  content: "<%= j render('form') %>",
+  container: '#karma_popover_container'
+});
+$owner.popover('show');
+$('#karma_comment').focus();

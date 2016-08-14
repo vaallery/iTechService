@@ -1,7 +1,7 @@
 class CashShift < ActiveRecord::Base
 
-  scope :closed, where(is_closed: true)
-  scope :opened, where(is_closed: false)
+  scope :closed, ->{where(is_closed: true)}
+  scope :opened, ->{where(is_closed: false)}
 
   belongs_to :cash_drawer, inverse_of: :cash_shifts
   belongs_to :user

@@ -1,0 +1,12 @@
+ru:
+  cash_drawers:
+    created: 'Касса создана'
+    updated: 'Касса изменена'
+    link: :cash_drawers.index.title
+    index:
+      title: 'Кассы'
+    new:
+      title: 'Новая Касса'
+    edit:
+      title: 'Редактирование Кассы'
+    x_report: "Х-Отчёт"

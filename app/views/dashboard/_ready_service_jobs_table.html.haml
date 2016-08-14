@@ -1,0 +1,13 @@
+%table#ready_service_jobs_table.table.table-hover.table-bordered
+  %thead
+    %tr
+      %th= t 'dashboard.moved_title'
+      %th= DeviceTask.human_attribute_name(:service_job)
+      %th= ServiceJob.human_attribute_name(:client)
+      %th= ServiceJob.human_attribute_name(:done_at)
+      %th
+  %tbody
+    - @service_jobs.each do |service_job|
+      = ready_service_job_row_tag service_job
+
+= paginate @service_jobs, remote: true

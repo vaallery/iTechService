@@ -22,9 +22,9 @@ module SalariesHelper
   def header_link_to_salaries
     users = User.oncoming_salary
     notify_class = users.any? ? 'notify' : ''
-    content_tag(:li, id: 'salary_announce', class: notify_class) do
-      link_to glyph(:money), '#', rel: 'popover', id: 'salary_announce_link', data: {html: true, placement: 'bottom', title: t('salaries.popover_title'), content: oncoming_salaries_list(users).gsub('\n', '')}
-    end
+    # content_tag(:span, id: 'salary_announce', class: notify_class) do
+      link_to glyph(:money), '#', rel: 'popover', class: notify_class, id: 'salary_announce', data: {html: true, placement: 'bottom', title: t('salaries.popover_title'), content: oncoming_salaries_list(users).gsub('\n', '')}
+    # end
   end
 
 end

@@ -12,13 +12,20 @@ jQuery ->
     event.preventDefault()
 
   $(document).on 'keyup', '#client_full_phone_number', (event) ->
-    $('#check_phone_number').removeClass('btn-success').removeClass('btn-warning')
-    count = $('#client_full_phone_number').val().length
-    $('#phone_length').text(count)
-    if count in [6,7,10,11]
-      $('#check_phone_number').removeClass('disabled').addClass('btn-warning')
-    else
-      $('#check_phone_number').addClass('disabled').removeClass('btn-warning')
+    number = $('#client_full_phone_number').val()
+    checkedNumber = $('#client_phone_number_checked').data('checked_number')
+    isNumberChanged = number != checkedNumber
+    numberLengh = number.length
+    isNumberChecked = $('#client_phone_number_checked').val() == '1'
+
+    $('#phone_length').text(numberLengh)
+    if (isNumberChecked and isNumberChanged) or !isNumberChecked
+      $('#client_phone_number_checked').val('0')
+      if numberLengh in [6,7,10,11]
+        $('#check_phone_number').removeClass('disabled').addClass('btn-warning')
+      else
+        $('#check_phone_number').addClass('disabled').removeClass('btn-warning')
+    $('#check_phone_number').removeClass('btn-success') if isNumberChecked and isNumberChanged
 
   $(document).on 'keyup', '#client_card_number', ->
     if $(this).val() isnt ''
@@ -34,20 +41,23 @@ jQuery ->
   $client_input = $('#client_input')
   if $client_input.length > 0
 
+    clientSearchTimeout = null;
+
     $(document).on 'click', (event)->
       if $(this).parents('#clients_autocomplete_list').length is 0
         $('#clients_autocomplete_list').hide()
 
-    $(document).on 'keydown', '#client_search', (event)->
-      setTimeout (->
-        $input = $('#client_search')
-        if $input.val() is ''
-          $('#device_client_id').val("");
-          $('#order_customer_id').val("");
-          $('#edit_client_link').attr('href', "#");
-        else
+    $(document).on 'keyup', '#client_search', (event)->
+      clearTimeout(clientSearchTimeout) if clientSearchTimeout
+      $input = $('#client_search')
+      if $input.val() is ''
+        $('#service_job_client_id').val("");
+        $('#order_customer_id').val("");
+        $('#edit_client_link').attr('href', "#");
+      else
+        clientSearchTimeout = setTimeout (->
           $.getScript '/clients/autocomplete.js?client_q='+$input.val()
-        ), 200
+        ), 500
 
     if $('#clients_autocomplete_list').length
       $('#clients_autocomplete_list').css
@@ -55,14 +65,9 @@ jQuery ->
         top: $('#client_input').offset().top + $('#client_input').outerHeight()
 
     $('#client_devices_resize_button').click ->
-      $('.client_devices_list').slideToggle(100)
+      $('.client_devices_list,#device_tasks_list').slideToggle(100)
 
     placeClientDevices()
-
-  $(document).on 'click', '#close_client_form_button', (event)->
-    event.preventDefault()
-    $('#client_form_place').fadeOut()
-    $('#client_form').remove()
 
 placeClientDevices = ()->
   $devices = $('#client_devices')

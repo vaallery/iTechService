@@ -1,9 +1,9 @@
 class FeatureType < ActiveRecord::Base
 
-  KINDS = %w[imei serial_number other]
+  KINDS = %w[imei serial_number]
 
-  default_scope order('feature_types.kind asc')
-  scope :ordered, order('feature_types.kind asc')
+  default_scope {order('feature_types.kind asc')}
+  scope :ordered, ->{order('feature_types.kind asc')}
 
   has_and_belongs_to_many :product_categories
   attr_accessible :name, :kind, :product_category_ids
@@ -19,12 +19,16 @@ class FeatureType < ActiveRecord::Base
     kind == 'other'
   end
 
+  def self.kinds
+    KINDS
+  end
+
   def self.imei
-    FeatureType.find_or_create_by_kind kind: 'imei', name: 'IMEI'
+    FeatureType.where(kind: 'imei').first
   end
 
   def self.serial_number
-    FeatureType.find_or_create_by_kind kind: 'serial_number', name: 'Serial Number'
+    FeatureType.where(kind: 'serial_number').first
   end
 
 end

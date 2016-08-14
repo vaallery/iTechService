@@ -2,13 +2,13 @@ class Task < ActiveRecord::Base
 
   IMPORTANCE_BOUND = 5
 
-  scope :important, where('priority > ?', IMPORTANCE_BOUND)
-  scope :tasks_for, lambda { |user| where(task: {role: user.role}) }
+  scope :important, ->{where('priority > ?', IMPORTANCE_BOUND)}
+  scope :tasks_for, ->(user) { where(task: {role: user.role}) }
 
   belongs_to :product, inverse_of: :task
   belongs_to :location
-  has_many :device_tasks, dependent: :destroy
-  has_many :devices, through: :device_tasks
+  has_many :device_tasks, dependent: :restrict_with_error
+  has_many :service_jobs, through: :device_tasks
   delegate :item, :is_repair?, to: :product, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
   attr_accessible :cost, :duration, :name, :priority, :role, :location_id, :product_id

@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @devices = @user.devices.unarchived
+    @service_jobs = @user.service_jobs.unarchived
 
     respond_to do |format|
       format.html
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = current_user
-    @devices = @user.devices.unarchived
+    @service_jobs = @user.service_jobs.unarchived
 
     respond_to do |format|
       format.html { render 'show' }
@@ -181,7 +181,8 @@ class UsersController < ApplicationController
   private
 
   def load_infos
-    @infos = Info.actual.available_for(current_user).grouped_by_date.limit 20
+    # @infos = Info.actual.available_for(current_user).grouped_by_date.limit 20
+    @infos = Info.actual.available_for(current_user).newest.limit 20
   end
 
 end

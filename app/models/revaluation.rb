@@ -9,7 +9,7 @@ class Revaluation < ActiveRecord::Base
   validates_presence_of :revaluation_act, :product, :price
 
   after_initialize do
-    self.price ||= self.retail_price
+    self.price ||= (self.retail_price || 0)
   end
 
 end

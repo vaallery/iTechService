@@ -1,0 +1,52 @@
+ru:
+  users:
+    abilities:
+      edit_clients: 'Редактировать клиентов'
+      manage_salary: 'Редактировать зарплату'
+      manage_wiki: 'Редактировать Wiki'
+      print_receipt: "Печатать чеки"
+      manage_schedule: "Редактировать график"
+      manage_timesheet: "Редактировать табель"
+    index:
+      title: 'Пользователи'
+    edit:
+      title: 'Редактирование пользователя'
+    new:
+      title: 'Новый пользователь'
+    roles:
+      admin: 'Админ'
+      driver: 'Водитель'
+      manager: 'Менеджер'
+      marketing: 'Маркетолог'
+      media: 'Медийщик'
+      developer: 'Разработчик'
+      engraver: 'Гравировщик'
+      software: 'Софтер'
+      superadmin: 'Супер админ'
+      supervisor: 'Супервайзер'
+      technician: 'Технарь'
+      universal: 'Универсальный солдат'
+    errors:
+      not_found: 'Пользователь не найден.'
+    account: 'Учётка'
+    add_karma: 'Карма'
+    all: 'Все'
+    author: 'Автор'
+    comment: 'Комментарий'
+    created: 'Пользователь создан'
+    date: 'Дата'
+    duty_info: 'Сегодня дежурный день!'
+    duty_schedule: 'График дежурств'
+    group_karma: 'Сгруппировать'
+    info: 'Информация'
+    job_schedule: 'График работы'
+    link: 'Пользователи'
+    rating: 'Рейтинг'
+    schedule: 'График'
+    timesheet: "Табель"
+    updated: 'Пользователь изменён'
+    version: 'Версия'
+    serviced_devices: "Обслуживаемые девайсы"
+    purchased_devices: "Купленные девайсы"
+    department_blank_error: '!!! Необходимо указать подразделение !!!'
+    actual_orders: "Актуальные заказы"

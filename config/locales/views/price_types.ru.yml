@@ -1,0 +1,14 @@
+ru:
+  price_types:
+    created: "Тип Цен создан"
+    updated: "Тип Цен изменён"
+    edit:
+      title: "Редактирование Типа Цен"
+    index:
+      title: "Типы Цен"
+    new:
+      title: "Новый Тип Цен"
+    kinds:
+      retail: 'Розница'
+      purchase: 'Закуп'
+      other: 'Другой'

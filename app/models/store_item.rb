@@ -1,8 +1,8 @@
 class StoreItem < ActiveRecord::Base
 
-  scope :in_store, lambda { |store| where(store_id: store.is_a?(Store) ? store.id : store) }
-  scope :available, where('quantity > ?', 0)
-  scope :for_product, lambda { |product| includes(:item).where(items: {product_id: (product.is_a?(Product) ? product.id : product)}) }
+  scope :in_store, ->(store) { where(store_id: store.is_a?(Store) ? store.id : store) }
+  scope :available, ->{where('quantity > ?', 0)}
+  scope :for_product, ->(product) { includes(:item).where(items: {product_id: (product.is_a?(Product) ? product.id : product)}) }
 
   belongs_to :item, inverse_of: :store_items
   belongs_to :store, inverse_of: :store_items
@@ -19,7 +19,7 @@ class StoreItem < ActiveRecord::Base
   before_destroy :warn_of_low_remnants
 
   def self.search(params)
-    store_items = self.scoped
+    store_items = self.all
 
     if (product_group_id = params[:product_group_id]).present?
       store_items = store_items.includes(item: :product).where(products: {product_group_id: product_group_id})
@@ -62,7 +62,7 @@ class StoreItem < ActiveRecord::Base
   def warn_of_low_remnants
     if product.present? and (warning_quantity = product.warning_quantity_for_store(store)).present?
       if product.quantity_in_store(store).pred <= warning_quantity
-        RemnantsMailer.delay.warning(product, store)
+        RemnantsMailer.delay.warning(product.id, store.id)
       end
     end
   end

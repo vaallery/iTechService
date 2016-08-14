@@ -1,0 +1,6 @@
+ru:
+  imported_sales:
+    index:
+      title: "Продажи 1С"
+      import_link: "Загрузить"
+      device_search_placeholder: "Серийный номер или IMEI"

@@ -1,8 +1,8 @@
 # encoding: utf-8
 class Location < ActiveRecord::Base
   #default_scope order('position asc')
-  scope :sorted, order('position asc')
-  scope :for_schedule, where(schedule: true)
+  scope :sorted, ->{order('position asc')}
+  scope :for_schedule, ->{where(schedule: true)}
   belongs_to :department, inverse_of: :locations
   has_many :users
   has_many :tasks
@@ -43,9 +43,9 @@ class Location < ActiveRecord::Base
     Location.where(code: 'repair_notebooks').first_or_create(name: 'Ремонт ноутбуков')
   end
 
-  def self.allowed_for(user, device)
+  def self.allowed_for(user, service_job)
     #if user.admin?
-    #  scoped
+    #  all
     #elsif user.location.nil?
     #  []
     #else
@@ -63,7 +63,7 @@ class Location < ActiveRecord::Base
       #locations
     #end
     if user.admin?
-      scoped
+      all
     else
       if user.present? && user.department.present?
         Location.where(department_id: user.department.id)

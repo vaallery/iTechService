@@ -9,8 +9,8 @@ class RevaluationAct < ActiveRecord::Base
   validates_presence_of :price_type, :date, :status
   validates_inclusion_of :status, in: Document::STATUSES.keys
 
-  scope :posted, self.where(status: 1)
-  scope :deleted, self.where(status: 2)
+  scope :posted, ->{where(status: 1)}
+  scope :deleted, ->{where(status: 2)}
 
   after_initialize do
     self.status = 'new' if self.status.blank?
@@ -19,18 +19,18 @@ class RevaluationAct < ActiveRecord::Base
   end
 
   def self.search(params)
-    revaluation_acts = RevaluationAct.scoped
+    revaluation_acts = RevaluationAct.all
 
     unless (q = params[:q]).blank?
       revaluation_acts = revaluation_acts.where('id LIKE ?', "%#{q}%")
     end
 
     unless (start_date = params[:start_date]).blank?
-      revaluation_acts = revaluation_acts.where('created_at >= ?', start_date)
+      revaluation_acts = revaluation_acts.where('created_at >= ?', start_date.to_date)
     end
 
     unless (end_date = params[:end_date]).blank?
-      revaluation_acts = revaluation_acts.where('created_at <= ?', end_date)
+      revaluation_acts = revaluation_acts.where('created_at <= ?', end_date.to_date)
     end
 
     unless (price_type_id = params[:price_type_id]).blank?

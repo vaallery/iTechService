@@ -2,8 +2,8 @@ class SupplyRequest < ActiveRecord::Base
 
   STATUSES = %w[new done]
 
-  scope :created_desc, order('created_at desc')
-  scope :actual, where(status: 'new')
+  scope :created_desc, ->{order('created_at desc')}
+  scope :actual, ->{where(status: 'new')}
 
   belongs_to :department
   belongs_to :user
@@ -19,7 +19,7 @@ class SupplyRequest < ActiveRecord::Base
   end
 
   def self.search(params)
-    supply_requests = SupplyRequest.scoped
+    supply_requests = SupplyRequest.all
 
     if (number_q = params[:number]).present?
       supply_requests = supply_requests.where id: number_q

@@ -1,99 +1,11 @@
-jQuery ->
+$(document).on 'change', '.product_group_select', ->
+  id = $(this).val()
+  $('#product_options,#item_features').html('')
+  unless id is ''
+    $.getScript "/product_groups/#{id}/select?scope=items"
 
-  $device_form = $('form.device_form')
-
-  $('.device_comment_tooltip').tooltip()
-
-  $('.device_progress').tooltip
-    placement: 'left'
-    html: true
-
-  if $device_form.length > 0
-
-    $(document).on 'change', '.device_task_task', () ->
-      task_id = $(this).val()
-      task_cost = $(this).parents('.device_task').find('.device_task_cost')
-      $.getJSON '/tasks/'+task_id+'.json', (data) ->
-        task_cost.val data.cost
-
-    $('a', '#locations_list').click (event) ->
-      $('#location_value').text $(this).text()
-      $('#device_location_id').val $(this).attr('location_id')
-      event.preventDefault()
-
-    $('#device_security_code_none').click (event)->
-      $('#device_security_code').val '-'
-      event.preventDefault()
-
-    $('#device_contact_phone_none').click (event)->
-      $('#device_contact_phone').val '-'
-      event.preventDefault()
-
-    $('#device_contact_phone_copy').click (event)->
-      client_phone = $('#client_search').val().split('/')[1].match(/[0-9]/g).join('')
-      $('#device_contact_phone').val client_phone
-      event.preventDefault()
-
-  $('#device_serial_number').keydown (event)->
-    $this = $(this)
-    if (event.keyCode in [65..90]) and (event.metaKey is false) and (event.ctrlKey is false) and (event.altKey is false)
-      $this.val($this.val()+String.fromCharCode(event.keyCode))
-      event.preventDefault()
-
-#  $('#device_imei').blur ()->
-#    $.getJSON '/devices/check_imei?imei_q='+$(this).val(), (data)->
-#      if data.present
-#        $('#device_imei').parents('.control-group').addClass 'warning'
-#        if $('#device_imei').siblings('.help-inline').length
-#          $('#device_imei').siblings('.help-inline').html data.msg
-#        else
-#          $('#device_imei').parents('.controls').append "<span class='help-inline'>"+data.msg+"</span>"
-#      else
-#        $('#device_imei').parents('.control-group').removeClass 'warning'
-#        $('#device_imei').siblings('.help-inline').remove()
-
-  $('#device_imei_search, #device_serial_number_search').click ()->
-    $this = $(this)
-    val = $this.prev('input').val()
-    if val isnt ''
-      $.getJSON '/imported_sales?search='+val, (res)->
-        info_tag = "<span class='help-inline imported_sales_info'>"
-        if res.length > 0
-          for r in res
-            d = new Date(r.sold_at)
-            info_tag += '[' + d.toLocaleDateString() + ': ' + r.quantity + '] '
-        else
-          info_tag += res.message
-        info_tag += "</span>"
-        $this.parent().siblings('.imported_sales_info').remove()
-        $this.parent().after info_tag
-      $.getJSON '/items?saleinfo=1&q=' + val, (res)->
-        $this.parent().siblings('.sales_info').remove()
-        if res.id
-          if res.sale_info
-            info_s = res.sale_info
-          else
-            info_s = '-'
-        else
-          info_s = res.message
-        $this.parent().after "<span class='help-inline sales_info'>#{info_s}</span>"
-
-  $('#new_device_popup').mouseleave ->
-    setTimeout (->
-      $('#new_device_popup').fadeOut()
-    ), 1000
-
-  $('#check_imei_link').click ->
-    imei = $(this).parent().find('input').val()
-    this.setAttribute('href', "http://iunlocker.net/check_imei.php?imei=#{imei}")
-
-$(document).on 'click', '.returning_device_tooltip', ->
-  $(this).tooltip()
-  $(this).tooltip('toggle')
-
-PrivatePub.subscribe '/devices/new', (data, channel)->
-  if data.device.location_id == $('#profile_link').data('location')
-    $('#new_device_popup').fadeIn()
-
-PrivatePub.subscribe '/devices/returning_alert', (data, channel)->
-  $.getScript '/announcements/'+data.announcement_id
+$(document).on 'change', '.item_form .product_option, .item_form  .product_group_select', ->
+  product_group_id = $('.product_group_select').val()
+  option_ids = $('#product_options select').serialize()
+  unless product_group_id is ''
+    $.getScript "/products/find.js?product_group_id=#{product_group_id}&#{option_ids}"

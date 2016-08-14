@@ -1,0 +1,11 @@
+ru:
+  stolen_phones:
+    created: 'Телефон создан'
+    updated: 'Телефон изменён'
+    edit:
+      title: 'Редактирование телефона'
+    index:
+      title: 'Чёрный список'
+    new:
+      title: 'Новый телефон'
+    link: 'Чёрный список'

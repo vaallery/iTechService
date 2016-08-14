@@ -2,7 +2,7 @@
   .modal-header
     %a.close{'data-dismiss' => 'modal', href: '#'}
       %i.icon-remove-sign
-    %h3= @device_task.device.type_name
+    %h3= @device_task.service_job.type_name
 
   .modal-body
     = @device_task.errors.full_messages
@@ -15,9 +15,9 @@
       %dd= @device_task.user_comment || '-'
       %dt= DeviceTask.human_attribute_name :cost
       %dd= human_currency @device_task.cost
-      - if can? :write_tech_notice, @device_task.device || Device
-        %dt= Device.human_attribute_name :tech_notice
-        %dd= @device_task.device.tech_notice
+      - if can? :write_tech_notice, @device_task.service_job || ServiceJob
+        %dt= ServiceJob.human_attribute_name :tech_notice
+        %dd= @device_task.service_job.tech_notice
 
     - if @device_task.is_repair?
       %h4
@@ -47,7 +47,7 @@
       %a.close{'data-dismiss' => 'modal', href: '#'}
         %i.icon-remove-sign
       %h3
-        = @device_task.device.type_name
+        = @device_task.service_job.type_name
 
     .modal-body
       .alert.alert-info
@@ -58,11 +58,11 @@
       = f.input :cost
       = f.input :done, as: :done_status, disabled: @device_task.done
 
-      - if can? :write_tech_notice, @device_task.device || Device
-        = f.simple_fields_for :device do |ff|
+      - if can? :write_tech_notice, @device_task.service_job || ServiceJob
+        = f.simple_fields_for :service_job do |ff|
           = ff.input :tech_notice, input_html: {rows: 3}
 
-      - if can? :repair, @device_task.device || Device and @device_task.is_repair?
+      - if can? :repair, @device_task.service_job || ServiceJob and @device_task.is_repair?
         %h4
           = DeviceTask.human_attribute_name :repair_tasks
           = link_to glyph(:plus) + t('device_tasks.add_repair_task').html_safe, choose_repair_services_path, remote: true, id: 'choose_repair_service_link', class: 'btn btn-success btn-small'

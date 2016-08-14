@@ -1,4 +1,6 @@
-ItechService::Application.routes.draw do
+Rails.application.routes.draw do
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes".
 
   root to: 'dashboard#index'
   get 'dashboard', to: 'dashboard#index'
@@ -7,11 +9,9 @@ ItechService::Application.routes.draw do
   get 'actual_orders', to: 'dashboard#actual_orders'
   get 'actual_tasks', to: 'dashboard#actual_tasks'
   get 'actual_supply_requests', to: 'dashboard#actual_supply_requests'
-  get 'ready_devices', to: 'dashboard#ready_devices'
+  get 'ready_service_jobs', to: 'dashboard#ready_service_jobs'
   get 'check_session_status', to: 'dashboard#check_session_status'
   get 'print_tags', to: 'dashboard#print_tags'
-
-  mount Ckeditor::Engine => '/ckeditor'
 
   devise_for :users
 
@@ -40,7 +40,8 @@ ItechService::Application.routes.draw do
   resources :karma_groups, except: [:new]
 
   get 'profile', to: 'users#profile'
-  match 'users/:id/update_wish' => 'users#update_wish', via: [:post, :put], as: 'update_wish_user'
+  match 'users/:id/update_wish' => 'users#update_wish', as: 'update_wish_user', via: %i[post patch]
+  resources :favorite_links, except: :show
 
   resources :clients do
     get :check_phone_number, on: :collection
@@ -59,7 +60,7 @@ ItechService::Application.routes.draw do
   resources :tasks
   resources :locations, except: :show
 
-  resources :devices do
+  resources :service_jobs do
     get :history, on: :member, defaults: { format: 'js' }
     get :device_type_select, on: :collection, defaults: { format: 'js' }
     get :device_select, on: :collection
@@ -67,13 +68,18 @@ ItechService::Application.routes.draw do
     get :movement_history, on: :member
     get :quick_search, on: :collection
     post :create_sale, on: :member
-    put :set_keeper, on: :member, defaults: { format: 'js' }
+    patch :set_keeper, on: :member, defaults: { format: 'js' }
     resources :device_notes, only: %i[index new create]
   end
 
-  match 'check_device_status' => 'devices#check_status', via: :get
-  match 'check_order_status' => 'orders#check_status', via: :get
-  match 'devices/:device_id/device_tasks/:id/history' => 'devices#task_history', via: :get, as: :history_device_task, defaults: { format: 'js' }
+  resources :devices do
+    get :autocomplete, on: :collection
+    get :select, on: :member
+  end
+
+  get 'check_device_status' => 'service_jobs#check_status'
+  get 'check_order_status' => 'orders#check_status'
+  get 'service_jobs/:service_job_id/device_tasks/:id/history' => 'service_jobs#task_history', as: :history_device_task, defaults: { format: 'js' }
 
   resources :device_tasks, only: [:edit, :update]
 
@@ -90,23 +96,22 @@ ItechService::Application.routes.draw do
     post :close, on: :member
     post :close_all, on: :collection
   end
-  match 'make_announce' => 'announcements#make_announce', via: :post
-  match 'cancel_announce' => 'announcements#cancel_announce', via: :post
-  #match 'close_all' => 'announcements#close_all', via: :post
+  post 'make_announce' => 'announcements#make_announce'
+  post 'cancel_announce' => 'announcements#cancel_announce'
 
   resources :comments
   resources :messages, path: 'chat', except: [:new, :edit, :update]
 
   resources :purchases do
-    put :post, on: :member
-    put :unpost, on: :member
-    put :print_barcodes, on: :member, defaults: {format: :pdf}
-    put :move_items, on: :member
-    put :revaluate_products, on: :member
+    patch :post, on: :member
+    patch :unpost, on: :member
+    patch :print_barcodes, on: :member, defaults: {format: :pdf}
+    patch :move_items, on: :member
+    patch :revaluate_products, on: :member
   end
 
   resources :sales do
-    put :post, on: :member
+    patch :post, on: :member
     post :cancel, on: :member
     get :return_check, on: :member
     get :print_check, on: :member, defaults: {format: 'js'}
@@ -161,14 +166,26 @@ ItechService::Application.routes.draw do
     get :remains_in_store, on: :member, defaults: {format: :json}
     get :related, on: :member, defaults: {format: :js}
     post :select, on: :collection, defaults: {format: :js}
+    get :find, on: :collection
     resources :items, except: [:show]
   end
 
   resources :items do
     get :remains_in_store, on: :member, defaults: {format: :json}
+    get :autocomplete, on: :collection
   end
 
-  resources :product_groups
+  resources :product_groups do
+    get :select, on: :member
+  end
+
+  resources :option_types, except: :show
+
+  resources :product_types do
+    get :select, on: :member
+    resources :option_values, only: [:index]
+  end
+
   resources :price_types, except: :show
   resources :payment_types
   resources :banks, except: :show
@@ -186,7 +203,7 @@ ItechService::Application.routes.draw do
   resources :contacts_extractions, only: [:new, :create]
 
   resources :quick_orders do
-    put :set_done, on: :member
+    patch :set_done, on: :member
     get :history, on: :member
   end
 
@@ -195,24 +212,24 @@ ItechService::Application.routes.draw do
   end
 
   resources :revaluation_acts do
-    put 'post', on: :member
-    put 'unpost', on: :member
+    patch 'post', on: :member
+    patch 'unpost', on: :member
   end
 
   resources :movement_acts do
-    put 'post', on: :member
-    put 'unpost', on: :member
+    patch 'post', on: :member
+    patch 'unpost', on: :member
     get 'make_defect_sp', on: :collection
   end
 
   resources :deduction_acts do
-    put 'post', on: :member
+    patch 'post', on: :member
   end
 
   resources :repair_services do
     get :choose, on: :collection, defaults: {format: :js}
     get :select, on: :member, defaults: {format: :js}
-    put :mass_update, on: :collection
+    patch :mass_update, on: :collection
   end
 
   resources :imported_sales, only: :index
@@ -224,25 +241,7 @@ ItechService::Application.routes.draw do
 
   wiki_root '/wiki'
 
-  match '/delayed_job' => DelayedJobWeb, anchor: false
-
+  match '/delayed_job' => DelayedJobWeb, anchor: false, via: %i[get post]
   mount API => '/'
-
-  #namespace :api, defaults: {format: 'json'} do
-  #  namespace :v1 do
-  #    match 'signin' => 'tokens#create', via: :post
-  #    match 'signout' => 'tokens#destroy', via: :delete
-  #    match 'scan/:barcode_num' => 'barcodes#scan'
-  #    match 'profile' => 'users#profile'
-  #    resources :products, only: [:index, :show] do
-  #      post :sync, on: :collection
-  #      get :remnants, on: :member
-  #    end
-  #    resources :items, only: [:index, :show]
-  #    resources :devices, only: [:show, :update]
-  #    resources :quick_orders, only: [:create]
-  #    resources :quick_tasks, only: [:index]
-  #  end
-  #end
-
+  mount Ckeditor::Engine => '/ckeditor'
 end

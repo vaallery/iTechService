@@ -1,0 +1,4 @@
+ru:
+  batches:
+    errors:
+      feature_exists: 'Характеристика уже существует'

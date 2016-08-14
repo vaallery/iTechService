@@ -8,7 +8,7 @@ class Batch < ActiveRecord::Base
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
   delegate :code, :name, :product, :features, :feature_accounting, :store_item, :prices, :purchase_price, :retail_price, :barcode_num, :is_equipment, :is_spare_part, to: :item, allow_nil: true
 
-  scope :newest, includes(:purchase).order('purchases.date desc')
+  scope :newest, ->{includes(:purchase).order('purchases.date desc')}
 
   after_initialize do
     self.price ||= purchase_price

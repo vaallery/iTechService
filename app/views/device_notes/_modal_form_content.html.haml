@@ -1,10 +1,7 @@
 .modal-header
   = button_to_close_modal
-  %h3= t('.title', device: @device.type_name)
+  %h3= t('.title', service_job: @service_job.type_name)
 
 .modal-body= render @device_notes
 
-.modal-footer
-  = simple_form_for [@device, @device_note], html: {id: 'device_note_form', class: 'form-verticall', remote: true} do |f|
-    = f.input :content, input_html: {rows: 3}, label: false
-    = f.submit t('.submit'), class: 'btn btn-primary'
+.modal-footer= render 'form'

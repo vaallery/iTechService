@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
       load_actual_orders
       @table_name = 'orders_table'
     else
-      load_actual_devices
+      load_actual_jobs
       @table_name = 'tasks_table'
     end
     respond_to do |format|
@@ -24,7 +24,7 @@ class DashboardController < ApplicationController
   end
 
   def actual_tasks
-    load_actual_devices
+    load_actual_jobs
     respond_to do |format|
       format.js
     end
@@ -38,8 +38,8 @@ class DashboardController < ApplicationController
     end
   end
 
-  def ready_devices
-    @devices = Device.at_done(current_user).search(params).page params[:page]
+  def ready_service_jobs
+    @service_jobs = ServiceJob.at_done(current_user).search(params).page params[:page]
     respond_to do |format|
       format.js
     end
@@ -77,24 +77,24 @@ class DashboardController < ApplicationController
 
   private
 
-  def load_actual_devices
+  def load_actual_jobs
     if current_user.any_admin?
       if params[:location].present?
         location = Location.find params[:location]
-        @devices = Device.located_at(location)
+        @service_jobs = ServiceJob.located_at(location)
         @location_name = location.name
       else
-        @devices = Device.pending
+        @service_jobs = ServiceJob.pending
       end
     elsif current_user.location.present?
-      @devices = Device.located_at(current_user.location)
+      @service_jobs = ServiceJob.located_at(current_user.location)
     else
-      @devices = Device.where location_id: nil
+      @service_jobs = ServiceJob.where location_id: nil
     end
     if current_user.able_to? :print_receipt
-      @devices = @devices.search(params).newest.page params[:page]
+      @service_jobs = @service_jobs.search(params).newest.page params[:page]
     else
-      @devices = @devices.search(params).oldest.page params[:page]
+      @service_jobs = @service_jobs.search(params).oldest.page params[:page]
     end
   end
 

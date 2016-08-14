@@ -1,6 +1,6 @@
 class ObjectInput < SimpleForm::Inputs::StringInput
 
-  def input
+  def input(wrapper_options = nil)
     t = template
     f = @builder
     t.content_tag(:span, id: 'object_selector') do

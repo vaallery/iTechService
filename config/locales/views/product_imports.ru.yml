@@ -1,0 +1,11 @@
+ru:
+  product_imports:
+    form:
+      do_import: "Импортировать"
+      importing: "Импортирую..."
+
+      title: "Импорт продуктов"
+      remnants_file: "Файл с остатками"
+      purchases_file: "Файл с закупами"
+      barcodes_file: "Файл со штрихкодами"
+      nomenclature_file: "Файл с номенклатурой"

@@ -1,0 +1,72 @@
+ru:
+  shared:
+    topbar:
+      banks: :banks.index.title
+      bonus_types: :bonus_types.index.title
+      case_colors: :case_colors.index.title
+      cash_drawers: :cash_drawers.index.title
+      cash_in: 'Внесение наличных'
+      cash_out: 'Выплата наличных'
+      catalog: 'Каталог'
+      clients: :clients.index.title
+      case_pictures: :case_pictures.index.title
+      cash_drawer: 'Касса'
+      contractors: :contractors.index.title
+      data_migration: :data_migration.title
+      data_synchronization: :data_synchronization.title
+      deduction_acts: :deduction_acts.index.title
+      departments: :departments.index.title
+      service_jobs: :service_jobs.index.title
+      device_types: :device_types.index.title
+      devices: :devices.index.title
+      documents: 'Документы'
+      feature_types: :feature_types.index.title
+      gift_certificates: :gift_certificates.index.title
+      infos: :infos.index.title
+      locations: :locations.index.title
+      media_orders: :media_orders.index.title
+      misc: 'Прочее'
+      movement_acts: :movement_acts.index.title
+      option_types: :option_types.index.title
+      orders: :orders.index.title
+      prices: :prices.index.title
+      product_categories: :product_categories.index.title
+      product_types: :product_types.index.title
+      products: :products.index.title
+      purchases: :purchases.index.title
+      quick_orders: :quick_orders.index.title
+      quick_tasks: :quick_tasks.index.title
+      rating: 'Рейтинг'
+      repair_groups: :repair_groups.index.title
+      repair_services: :repair_services.index.title
+      revaluation_acts: :revaluation_acts.index.title
+      sales: :sales.index.title
+      search: 'Глобальный поиск'
+      settings: :settings.index.title
+      stolen_phones: :stolen_phones.index.title
+      stores: :stores.index.title
+      tasks: :tasks.index.title
+      top_salables: :top_salables.index.title
+      users: :users.index.title
+      wiki: 'Wiki'
+
+    scanner:
+      title: 'Сканирование'
+
+    navbar:
+      cash_drawer: 'Касса'
+      chat: 'Чат'
+      data_migration: 'Миграция данных'
+      directory: 'Каталог'
+      employees: 'Сотрудники'
+      favorite: 'Избранное'
+      misc: 'Прочее'
+      quick_order: 'Быстрый заказ'
+      rating: 'Рейтинг'
+      reports: 'Отчёты'
+      salaries: 'Зарплата'
+      sale: 'Продажа'
+      service: 'Сервис'
+      service_job: 'Приёмка'
+      staff: 'Персонал'
+      trade: 'Торговля'

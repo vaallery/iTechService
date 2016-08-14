@@ -1,8 +1,8 @@
 class MovementAct < ActiveRecord::Base
   include Document
 
-  scope :posted, self.where(status: 1)
-  scope :deleted, self.where(status: 2)
+  scope :posted, ->{ where(status: 1) }
+  scope :deleted, ->{ where(status: 2) }
 
   belongs_to :user
   belongs_to :store
@@ -28,14 +28,14 @@ class MovementAct < ActiveRecord::Base
   end
 
   def self.search(params)
-    movement_acts = MovementAct.scoped
+    movement_acts = MovementAct.all
 
     unless (start_date = params[:start_date]).blank?
-      movement_acts = movement_acts.where('date >= ?', start_date)
+      movement_acts = movement_acts.where('date >= ?', start_date.to_date)
     end
 
     unless (end_date = params[:end_date]).blank?
-      movement_acts = movement_acts.where('date <= ?', end_date)
+      movement_acts = movement_acts.where('date <= ?', end_date.to_date)
     end
 
     unless (store_id = params[:store_id]).blank?
@@ -46,7 +46,7 @@ class MovementAct < ActiveRecord::Base
       movement_acts = movement_acts.where dst_store_id: dst_store_id
     end
 
-    if (q = params[:q]).present?
+    unless (q = params[:q]).blank?
       movement_acts = movement_acts.where id: q
     end
 

@@ -22,7 +22,7 @@
   &>thead>tr>th{
     border-right: 1px solid #dddddd;
   }
-  &>tbody>.device_row{
+  &>tbody>.service_job_row{
     .device_tasks_toggle{
       cursor: pointer;
       float: right;
@@ -131,76 +131,5 @@
   }
   .order_actions_column{
     width: 30px;
-  }
-}
-
-#reports_filter{
-  margin-top: 20px;
-  span{
-    margin-bottom: 0;
-  }
-  button{
-    margin: 0;
-  }
-}
-
-#reports_tables{
-  th{
-    text-align: center;
-  }
-
-  tfoot{
-    font-weight: bold;
-  }
-
-  .detailable{
-    font-weight: bold;
-    cursor: pointer;
-  }
-  .details{
-    display: none;
-  }
-
-  #users_report{
-    .user, .device{
-      width: 70%;
-    }
-    .movement{
-      width: 30%;
-    }
-  }
-
-  #tasks_durations_report{
-    .task{
-      width: 70%;
-    }
-    .duration{
-      width: 30%;
-    }
-  }
-  tbody>tr:hover{
-    td.warning{
-      background-color: #faf2cc;
-    }
-    td.error{
-      background-color: #ebcccc;
-    }
-  }
-  td.warning{
-    background-color: #fcf8e3;
-  }
-  td.error{
-    background-color: #f2dede;
-  }
-  #repair_jobs_report{
-    .name{
-      width: 40%;
-    }
-    .job_price, .price {
-      width: 30%;
-    }
-    .job_price small{
-      display: block;
-    }
   }
 }

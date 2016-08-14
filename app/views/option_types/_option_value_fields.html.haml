@@ -1,0 +1,7 @@
+%tr.option_value.fields
+  %td
+    = f.hidden_field :id
+    = f.input :name, label: false, input_html: {class: 'input-sm'}
+  %td= f.input :code, label: false, input_html: {class: 'input-sm'}
+  %td= f.input :position, label: false, input_html: {class: 'input-sm'}
+  %td= link_to_remove_fields f

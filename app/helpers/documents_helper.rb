@@ -13,11 +13,11 @@ module DocumentsHelper
   end
 
   def button_to_post(document)
-    link_to "#{glyph('check')} #{t('post')}".html_safe, {controller: document.class.to_s.tableize, action: 'post', id: document.id}, method: 'put', data: {confirm: t('confirmation')}, class: 'btn btn-primary'
+    link_to "#{glyph('check')} #{t('post')}".html_safe, {controller: document.class.to_s.tableize, action: 'post', id: document.id}, method: :patch, data: {confirm: t('confirmation')}, class: 'btn btn-primary'
   end
 
   def button_to_unpost(document)
-    link_to "#{glyph('check-empty')} #{t('unpost')}".html_safe, {controller: document.class.to_s.tableize, action: 'unpost', id: document.id}, method: 'put', data: {confirm: t('confirmation')}, class: 'btn btn-primary'
+    link_to "#{glyph('check-empty')} #{t('unpost')}".html_safe, {controller: document.class.to_s.tableize, action: 'unpost', id: document.id}, method: :patch, data: {confirm: t('confirmation')}, class: 'btn btn-primary'
   end
 
   def document_row_class(document)

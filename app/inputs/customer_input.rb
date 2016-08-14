@@ -1,6 +1,6 @@
 class CustomerInput < SimpleForm::Inputs::StringInput
 
-  def input
+  def input(wrapper_options = nil)
 
   end
 

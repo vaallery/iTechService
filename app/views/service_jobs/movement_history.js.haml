@@ -1,0 +1,13 @@
+:plain
+  $link = $(".history_link[href='#{movement_history_service_job_path(@service_job)}']");
+  if($link.next('.popover').length > 0){
+    $link.popover('hide');
+  }else{
+    $link.popover({
+      html: true,
+      title: "#{t('.title', default: 'Movement history')}",
+      content: "#{j device_movement_history(@service_job)}",
+      trigger: 'manual'
+    });
+    $link.popover('show');
+  }

@@ -14,7 +14,7 @@
       - value[:jobs].each do |job|
         %tr.details
           %td.name= job[:name]
-          %td= link_to job[:device_presentation], device_path(job[:device_id]), target: '_blank'
+          %td= link_to job[:service_job_presentation], service_job_path(job[:device_id]), target: '_blank'
           %td.number.job_price
             = human_currency job[:margin], false
             %small= "Job Price: #{human_currency(job[:price], false)}"

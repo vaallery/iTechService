@@ -9,9 +9,9 @@ class InstallmentPlan < ActiveRecord::Base
 
   validates_presence_of :user, :object, :cost, :issued_at
 
-  scope :issued_at, lambda { |period| where(issued_at: period) }
-  scope :closed, where(is_closed: true)
-  scope :not_closed, where(is_closed: [false, nil])
+  scope :issued_at, ->(period) { where(issued_at: period) }
+  scope :closed, ->{where(is_closed: true)}
+  scope :not_closed, ->{where(is_closed: [false, nil])}
 
   after_initialize do |rec|
     rec.issued_at ||= Date.current

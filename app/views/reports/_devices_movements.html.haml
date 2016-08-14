@@ -9,13 +9,13 @@
       %tr.detailable
         %td.user= user[:user]
         %td.movement= "#{humanize_duration user[:avarage_duration]} (#{user[:qty]})"
-      - user[:devices].each do |device|
+      - user[:service_jobs].each do |service_job|
         %tr.details
-          %td.device
-            = link_to device[:device_presentation], device_path(device[:device_id])
+          %td.service_job
+            = link_to service_job[:service_job_presentation], service_job_path(service_job[:device_id])
             %br
-            = link_to device[:client_presentation], client_path(device[:client_id])
+            = link_to service_job[:client_presentation], client_path(service_job[:client_id])
           %td.movement
-            = device[:new_location]
+            = service_job[:new_location]
             %br
-            = humanize_duration device[:duration]
+            = humanize_duration service_job[:duration]

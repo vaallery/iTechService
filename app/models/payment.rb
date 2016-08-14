@@ -2,12 +2,12 @@ class Payment < ActiveRecord::Base
 
   KINDS = %w[cash card credit certificate trade_in]
 
-  scope :cash, where(kind: 'cash')
-  scope :card, where(kind: 'card')
-  scope :credit, where(kind: 'credit')
-  scope :certificate, where(kind: 'certificate')
-  scope :gift_certificates, where(kind: 'certificate')
-  scope :trade_in, where(kind: 'trade_in')
+  scope :cash, ->{where(kind: 'cash')}
+  scope :card, ->{where(kind: 'card')}
+  scope :credit, ->{where(kind: 'credit')}
+  scope :certificate, ->{where(kind: 'certificate')}
+  scope :gift_certificates, ->{where(kind: 'certificate')}
+  scope :trade_in, ->{where(kind: 'trade_in')}
 
   belongs_to :sale, inverse_of: :payments
   belongs_to :bank

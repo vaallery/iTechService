@@ -10,11 +10,12 @@ class Client < ActiveRecord::Base
 
   RESTRICTED_ATTRIBUTES = %w[surname name patronymic birthday card_number phone_number full_phone_number client_characteristic_id category email contact_phone]
 
-  scope :id_asc, order('id asc')
+  scope :id_asc, ->{order('id asc')}
 
   belongs_to :department
   belongs_to :client_characteristic
-  has_many :devices, inverse_of: :client, dependent: :destroy
+  has_many :service_jobs, inverse_of: :client, dependent: :destroy
+  has_many :devices, -> { uniq }, through: :service_jobs, source: :item#, class_name: Item
   has_many :orders, as: :customer, dependent: :destroy
   has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
   has_many :history_records, as: :object
@@ -27,7 +28,9 @@ class Client < ActiveRecord::Base
 
   delegate :client_category, to: :client_characteristic, allow_nil: true
 
-  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number, :card_number, :admin_info, :comments_attributes, :comment, :contact_phone, :category, :client_characteristic_attributes
+  attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number,
+                  :phone_number_checked, :card_number, :admin_info, :comments_attributes, :comment,
+                  :contact_phone, :category, :client_characteristic_attributes
 
   validates_presence_of :name, :surname, :phone_number, :full_phone_number, :category
   validates_uniqueness_of :full_phone_number
@@ -36,6 +39,7 @@ class Client < ActiveRecord::Base
   validates_associated :comments
   validates_associated :client_characteristic
   validate :restricted_attributes, unless: Proc.new { User.current.any_admin? or User.current.able_to?(:edit_clients) }
+  validates_acceptance_of :phone_number_checked
   before_destroy :send_mail
 
   after_initialize do
@@ -45,7 +49,7 @@ class Client < ActiveRecord::Base
   end
 
   def self.search params
-    clients = Client.scoped
+    clients = Client.all
     unless (client_q = params[:client_q] || params[:client]).blank?
       client_q.chomp.split(/\s+/).each do |q|
         clients = clients.where ['LOWER(clients.surname) LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.patronymic) LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q', q: "%#{q.mb_chars.downcase.to_s}%"]
@@ -80,7 +84,7 @@ class Client < ActiveRecord::Base
   end
 
   def purchases_sum
-    sale_items.all.sum &:sum
+    sale_items.all.to_a.sum &:sum
   end
 
   def discount_value

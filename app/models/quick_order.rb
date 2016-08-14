@@ -2,15 +2,15 @@ class QuickOrder < ActiveRecord::Base
 
   DEVICE_KINDS = %w[iPhone iPad iPod]
 
-  scope :id_asc, order('quick_orders.id asc')
-  scope :created_desc, order('quick_orders.created_at desc')
-  scope :in_month, where('quick_orders.created_at > ?', 1.month.ago)
-  scope :done, where(is_done: true)
-  scope :undone, where(is_done: false)
+  scope :id_asc, ->{order('quick_orders.id asc')}
+  scope :created_desc, ->{order('quick_orders.created_at desc')}
+  scope :in_month, ->{where('quick_orders.created_at > ?', 1.month.ago)}
+  scope :done, ->{where(is_done: true)}
+  scope :undone, ->{where(is_done: false)}
 
   belongs_to :department
   belongs_to :user
-  has_and_belongs_to_many :quick_tasks
+  has_and_belongs_to_many :quick_tasks, join_table: 'quick_orders_quick_tasks'
   has_many :history_records, as: :object, dependent: :destroy
   delegate :short_name, to: :user, prefix: true, allow_nil: true
   attr_accessible :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code, :department_id, :device_kind
@@ -24,7 +24,7 @@ class QuickOrder < ActiveRecord::Base
   end
 
   def self.search(params)
-    quick_orders = QuickOrder.scoped
+    quick_orders = QuickOrder.all
 
     if (is_done = params[:done]).present?
       quick_orders = quick_orders.where is_done: is_done

@@ -17,7 +17,7 @@
         %td= human_datetime quick_order.created_at.localtime
         %td.btn-group
           = link_to_show_small quick_order
-          = link_to glyph(:check), set_done_quick_order_path(quick_order), method: :put, remote: true, class: 'btn btn-small btn-primary' unless quick_order.is_done
+          = link_to glyph(:check), set_done_quick_order_path(quick_order), method: :patch, remote: true, class: 'btn btn-small btn-primary' unless quick_order.is_done
           -#= button_to glyph(:check), [:set_done, quick_order], remote: true, class: 'btn btn-small btn-primary' unless quick_order.is_done
 
 = paginate @quick_orders, remote: true

@@ -18,7 +18,7 @@
               %td.quantity.number= service_value[:jobs_qty]
             - service_value[:jobs].each do |job|
               %tr
-                %td= link_to job[:device_presentation], device_path(job[:device_id]), target: '_blank'
+                %td= link_to job[:service_job_presentation], service_job_path(job[:device_id]), target: '_blank'
                 %td.number.job_price
                   %span.has-tooltip{'data-title' => "Job Price: #{human_currency(job[:price], false)}. Parts Cost: #{human_currency(job[:parts_cost], false)}"}= human_currency job[:margin], false
                   -#%small= "Job Price: #{human_currency(job[:price], false)}"

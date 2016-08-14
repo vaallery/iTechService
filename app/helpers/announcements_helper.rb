@@ -15,11 +15,11 @@ module AnnouncementsHelper
       when 'order_status' then text = announcement.content
       when 'order_done' then text = announcement.content
       when 'device_return'
-        if (device = announcement.device).present?
-          time = l(device.return_at, format: device.return_at.today? ? :time : :short_r)
-          dist = (device.return_at - Time.current) / 60
+        if (service_job = announcement.service_job).present?
+          time = l(service_job.return_at, format: service_job.return_at.today? ? :time : :short_r)
+          dist = (service_job.return_at - Time.current) / 60
           term = dist > 0 ? humanize_duration(dist) : humanize_duration(0)
-          text = t('announcements.device_return', time: time, device: device.type_name, ticket: device.ticket_number, term: term)
+          text = t('announcements.device_return', time: time, service_job: service_job.type_name, ticket: service_job.ticket_number, term: term)
         else
           text = ''
         end
@@ -43,9 +43,9 @@ module AnnouncementsHelper
       state_class = ''
       link_path = make_announce_path(kind: kind)
     end
-    content_tag(:li, id: 'announce_button', class: state_class) do
+    # content_tag(:li, id: 'announce_button', class: state_class) do
       link_to glyph(icon), link_path, method: :post, remote: true, id: 'announce_link', class: state_class
-    end.html_safe
+    # end.html_safe
   end
 
   def header_link_for_coffee
@@ -61,9 +61,9 @@ module AnnouncementsHelper
                 class: 'btn btn-small')
       end.gsub('\n', '')
 
-      content_tag(:li, id: 'coffee_order_button') do
+      # content_tag(:li, id: 'coffee_order_button') do
         link_to glyph('coffee'), '#', rel: 'popover', id: 'coffer_order_link', data: {html: true, placement: 'bottom', title: t('announcements.coffee_order_popover_title'), content: coffee_order_form}
-      end
+      # end
     else
       nil
     end

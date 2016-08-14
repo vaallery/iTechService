@@ -1,0 +1,12 @@
+ru:
+  discounts:
+    edit:
+      title: "Редактирование скидки"
+    index:
+      title: "Скидки"
+      new: "Новая скидка"
+    new:
+      title: "Новая скидка"
+    link: "Скидки"
+    created: "Скидка создана"
+    updated: "Скидка изменена"

@@ -1,23 +1,22 @@
-%h2
-  = t '.title', default: 'Sign in'
-%ul.nav.nav-pills
-  %li.active= link_to t('.by_card'), '#card_tab', 'data-toggle' => 'tab'
-  %li= link_to t('.by_password'), '#password_tab', 'data-toggle' => 'tab'
+.row
+  .span8.offset2.text-center
+    %h2= t '.title', default: 'Sign in'
 
-= simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-inline' }) do |f|
+    %hr
 
-  .tab-content
-    #card_tab.tab-pane.active
-      = link_to icon_tag('credit-card') + t('.signin', default: 'Sign in'), '#', id: 'sign_in_by_card', class: 'btn btn-large', remote: false
+    = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-inline' }) do |f|
 
-    #password_tab.tab-pane
       = f.input_field :username, required: false, label: false, autofocus: true, placeholder: resource.class.human_attribute_name(:username), class: 'input-medium'
 
       = f.input_field :password, required: false, label: false, placeholder: resource.class.human_attribute_name(:password), class: 'input-medium'
 
       = f.button :submit, t('.signin', default: 'Sign in')
 
-  - if devise_mapping.rememberable?
-    = f.label :remember_me do
-      = f.input_field :remember_me, as: :boolean
-      = resource.class.human_attribute_name(:remember_me)
+      - if devise_mapping.rememberable?
+        = f.label :remember_me do
+          = f.input_field :remember_me, as: :boolean
+          = resource.class.human_attribute_name(:remember_me)
+
+    %hr
+
+    = link_to icon_tag('credit-card') + t('.with_card', default: 'With Card'), '#', id: 'sign_in_by_card', class: 'btn btn-large', remote: false

@@ -1,0 +1,41 @@
+= hidden_field_tag :direction, params[:direction]
+= hidden_field_tag :sort, params[:sort]
+- if @service_jobs.any?
+
+  %table.table.table-hover
+    %thead
+      %tr
+        %th= sortable 'id', ServiceJob.human_attribute_name(:id)
+        %th= sortable 'ticket_number', ServiceJob.human_attribute_name(:ticket_number)
+        %th= ServiceJob.human_attribute_name(:service_job)
+        %th= ServiceJob.human_attribute_name(:client)
+        %th= ServiceJob.human_attribute_name(:location)
+        %th= sortable 'created_at', ServiceJob.human_attribute_name(:created_at)
+        %th= sortable 'done_at', ServiceJob.human_attribute_name(:done_at)
+        %th
+    %tbody
+      - @service_jobs.each do |service_job|
+        %tr{class: row_class_for_service_job(service_job)}
+          %td= link_to service_job.id, service_job_path(service_job)
+          %td= link_to service_job.ticket_number, service_job_path(service_job)
+          %td= link_to service_job.presentation, service_job_path(service_job)
+          %td= client_presentation service_job.client
+          %td= service_job.location_name || '-'
+          %td= human_datetime service_job.created_at
+          %td
+            - if service_job.done? and service_job.done_at.present?
+              = human_datetime service_job.done_at
+            -#- else
+            -#  %span.device_progress.badge{class: progress_badge_class_for_device(service_job),
+            -#      'data-title' => task_list_for(service_job)}
+            -#    = service_job.progress
+          %td
+            .btn-group
+              = link_to_show_small service_job
+              = link_to_edit_small service_job# if can? :update, service_job
+              = link_to_destroy_small service_job if can? :destroy, service_job
+
+  = paginate @service_jobs
+  
+- else
+  = render 'shared/empty'

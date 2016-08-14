@@ -177,7 +177,7 @@ class GiftCertificatesController < ApplicationController
   private
 
   def sort_column
-    Device.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
+    GiftCertificate.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
   end
 
   def sort_direction

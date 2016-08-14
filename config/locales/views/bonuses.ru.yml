@@ -1,0 +1,11 @@
+ru:
+  bonuses:
+
+    edit:
+      title: 'Редактирование Бонуса'
+    new:
+      title: 'Новый Бонус'
+    index:
+      title: 'Бонусы'
+    created: 'Бонус создан'
+    updated: 'Бонус изменён'

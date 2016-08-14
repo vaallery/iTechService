@@ -1,6 +1,6 @@
 class SupplyReport < ActiveRecord::Base
 
-  scope :date_desc, order('date desc')
+  scope :date_desc, ->{order('date desc')}
 
   belongs_to :department
   has_many :supplies, dependent: :destroy

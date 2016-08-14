@@ -1,0 +1,16 @@
+ru:
+  product_categories:
+    created: 'Категория создана'
+    updated: 'Категория изменена'
+    edit:
+      title: "Редактирование Категории продуктов"
+    index:
+      title: "Категории продуктов"
+    new:
+      title: "Новая Категория продуктов"
+    kinds:
+      equipment: 'Техника'
+      accessory: 'Аксессуар'
+      service: 'Услуга'
+      protector: 'Плёнка'
+      spare_part: 'Запчасть'

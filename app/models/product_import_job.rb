@@ -14,7 +14,7 @@ class ProductImportJob < Struct.new(:params)
       load_barcodes if barcodes_file.present?
     else
       import_log << ['error', 'Store is not defined!!!']
-      ImportMailer.product_import_log(import_log, Time.current, :remnants).deliver
+      ImportMailer.product_import_log(import_log, Time.current, :remnants).deliver_later
     end
   end
 
@@ -56,7 +56,7 @@ class ProductImportJob < Struct.new(:params)
           name = row[0][/(?<=\|\s).+(?=,)/]
           if row[10].blank?
             parent_id = product_group.id if product_group.present? and product_group.is_root?
-            product_group = ProductGroup.find_or_create_by_code(code: code, name: name, parent_id: parent_id)
+            product_group = ProductGroup.create_with(name: name, parent_id: parent_id).find_or_create_by(code: code)
           elsif product_group.present? and name.present?
             if (product = Product.find_by_code(code)).present?
               import_log << ['info', "Existing product: [#{product.code}] #{product.name}"]
@@ -160,7 +160,7 @@ class ProductImportJob < Struct.new(:params)
       import_log << ['error', '!!! Unable to load file ' + file.inspect]
     end
     import_log << ['info', "Import finished at [#{Time.current.strftime(TIME_FORMAT)}]"]
-    ImportMailer.product_import_log(import_log, import_time, :remnants).deliver
+    ImportMailer.product_import_log(import_log, import_time, :remnants).deliver_later
   end
 
   def load_prices
@@ -194,7 +194,7 @@ class ProductImportJob < Struct.new(:params)
       import_log << ['error', '!!! Unable to load file ' + prices_file.inspect]
     end
     import_log << ['info', "Import finished at [#{Time.current.strftime(TIME_FORMAT)}]"]
-    ImportMailer.product_import_log(import_log, import_time, :prices).deliver
+    ImportMailer.product_import_log(import_log, import_time, :prices).deliver_later
   end
 
   def load_barcodes
@@ -228,7 +228,7 @@ class ProductImportJob < Struct.new(:params)
       import_log << ['error', '!!! Unable to load file ' + barcodes_file.inspect]
     end
     import_log << ['info', "Import finished at [#{Time.current.strftime(TIME_FORMAT)}]"]
-    ImportMailer.product_import_log(import_log, import_time, :barcodes).deliver
+    ImportMailer.product_import_log(import_log, import_time, :barcodes).deliver_later
   end
 
   def load_nomenclature
@@ -264,7 +264,7 @@ class ProductImportJob < Struct.new(:params)
       import_log << ['error', '!!! Unable to load file ' + nomenclature_file.inspect]
     end
     import_log << ['info', "Import finished at [#{Time.current.strftime(TIME_FORMAT)}]"]
-    ImportMailer.product_import_log(import_log, import_time, :nomenclature).deliver
+    ImportMailer.product_import_log(import_log, import_time, :nomenclature).deliver_later
   end
 
 end

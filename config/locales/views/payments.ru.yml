@@ -1,0 +1,16 @@
+ru:
+  payments:
+    add: 'Добавить'
+    addl_attributes: 'Доп. атрибуты'
+    calculate: 'Расчитать'
+    index:
+      title: 'Платежи'
+    kinds:
+      cash: 'Наличные'
+      card: 'Картой'
+      credit: 'Кредит'
+      certificate: 'Подарочный сертификат'
+      trade_in: 'Трейд-ин'
+      mixed: 'Смешанный'
+    errors:
+      no_gift_certificate: "Подарочный сертификат не указан"

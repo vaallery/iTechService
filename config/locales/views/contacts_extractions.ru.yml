@@ -1,0 +1,7 @@
+ru:
+  contacts_extractions:
+    new:
+      title: 'Выгрузка контактов'
+      contacts_file: 'Файл базы данных с контактами'
+      submit: 'Выгрузить'
+      extracting: 'Выгружаю...'

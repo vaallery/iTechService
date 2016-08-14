@@ -1,0 +1,49 @@
+.page-header
+  %h1
+    = t '.title', default: ServiceJob.model_name.plural
+    %small= link_to t('.archive'), service_jobs_path(location: Location.archive.id)
+  = link_to_new ServiceJob if can? :create, ServiceJob
+  
+.table_filter.navbar.container
+  .navbar-inner
+
+    = form_tag service_jobs_path, method: 'get', id: 'search_form', class: 'navbar-search form-search', remote: false do
+
+      = hidden_field_tag :status, params[:status]
+      = hidden_field_tag :location, params[:location]
+
+      .input-append
+        = text_field_tag :ticket, params[:ticket], id: 'search_ticket_input', class: 'search-query input-small', placeholder: ServiceJob.human_attribute_name(:ticket_number)
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+      
+      .input-append
+        = text_field_tag :service_job, params[:service_job], id: 'search_service_job_input', class: 'search-query input-medium', placeholder: t('service_jobs.index.device_search_placeholder')
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+    
+      .input-append
+        = text_field_tag :client, params[:client], id: 'search_client_input', class: 'search-query input-large', placeholder: t('service_jobs.index.client_search_placeholder')
+        %span.add-on.btn.clear_search_input
+          %i.icon-remove
+
+    %ul.nav
+      %li.dropdown
+        = link_to '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown' do
+          = t (params[:status].present? ? params[:status] : t('service_jobs.status.all'))
+          %b.caret
+        %ul.dropdown-menu
+          %li= link_to t('service_jobs.status.all'), service_jobs_path(params.merge(status: nil))
+          %li= link_to t('service_jobs.status.done'), service_jobs_path(params.merge(status: 'done'))
+          %li= link_to t('service_jobs.status.pending'), service_jobs_path(params.merge(status: 'pending'))
+          %li= link_to t('service_jobs.status.important'), service_jobs_path(params.merge(status: 'important'))
+
+    %ul.nav
+      %li.dropdown
+        = link_to @location_name.html_safe + caret_tag, '#', class: 'dropdown-toggle', 'data-toggle' => 'dropdown'
+        %ul.dropdown-menu
+          %li= link_to t('everywhere'), service_jobs_path(params.merge(location: nil))
+          - @locations.each do |location|
+            %li= link_to location.name, service_jobs_path(params.merge(location: location.id))
+
+#resource_table= render 'table'

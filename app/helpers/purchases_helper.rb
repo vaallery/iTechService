@@ -13,7 +13,7 @@ module PurchasesHelper
   end
 
   def link_to_print_barcodes(purchase)
-    content = form_tag(print_barcodes_purchase_path(purchase), method: :put) do |f|
+    content = form_tag(print_barcodes_purchase_path(purchase), method: :patch) do |f|
       content_tag(:label, class: 'checkbox') do
         check_box_tag('with_price') +
         t('purchases.print_barcodes.with_price')

@@ -1,6 +1,6 @@
 :plain
   $('#client_search').val("#{@client.presentation}");
-  $('#device_client_id').val("#{@client.id}");
+  $('#service_job_client_id').val("#{@client.id}");
   $('#order_customer_id').val("#{@client.id}");
   $('#edit_client_link').attr('href', "#{edit_client_path(@client)}");
   $devices = $('#client_devices');
@@ -11,5 +11,5 @@
     else
       $devices.hide();
   }
-  $('#client_form_place').fadeOut();
-  $('#client_form').remove();
+  $('#secondary_form_container').fadeOut();
+  $('#secondary_form_container').html('');

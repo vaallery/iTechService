@@ -1,0 +1,161 @@
+# encoding: utf-8
+module ServiceJobsHelper
+  
+  def row_class_for_task task
+    if task.present?
+      task.done? ? 'success' : task.pending? ? (task.is_important? ? 'error' : 'warning') : ''
+    else
+      ''
+    end
+  end
+  
+  def row_class_for_service_job(service_job)
+    if service_job.at_done?
+      'success'
+    elsif service_job.in_archive?
+      'info'
+    end
+  end
+
+  def progress_badge_class_for_service_job(service_job)
+    badge_class = 'badge badge-'
+    badge_class << (service_job.processed_tasks.count == 0 ? 'important' : (service_job.pending? ? 'warning' : 'success'))
+  end
+
+  def device_moved_by(service_job)
+    (user = service_job.moved_by).present? ? user.username : '-'
+  end
+
+  def device_moved_at(service_job)
+    (time = service_job.moved_at).present? ? human_datetime(time) : '-'
+  end
+
+  def task_list_for(service_job)
+    content_tag(:ul, style: 'list-style:none; text-align:left; margin:0') do
+      service_job.device_tasks.collect do |task|
+        content_tag(:li, "#{icon_tag(task.done ? 'check' : 'check-empty')} #{task.task_name}")
+      end.join.html_safe
+    end.html_safe
+  end
+
+  def device_movement_history(service_job)
+    history = service_job.movement_history
+    content_tag(:table, class: 'movement_history ') do
+      history.map do |h|
+        time = h[0].present? ? l(h[0], format: :long_d) : '-'
+        location = h[1].present? ? Location.find(h[1]).try(:name) || '-' : '-'
+        user = h[2].present? ? User.find(h[2]).try(:full_name) || '-' : '-'
+        content_tag(:tr) do
+          content_tag(:td, time) + content_tag(:td, location) + content_tag(:td, user)
+        end
+      end.join.html_safe
+    end.html_safe
+  end
+
+  def device_movement_information_tag(service_job)
+    user, time = service_job.moved_by, service_job.moved_at
+    text = (user.present? and time.present?) ? t('moved', user: user.full_name, time:
+        distance_of_time_in_words_to_now(time)) : '-'
+    history_link_to(movement_history_service_job_path(service_job)) + content_tag(:span, text)
+  end
+
+  def itunes_string_for(service_job)
+    "#{l service_job.created_at, format: :date_short}  #{service_job.ticket_number}  #{service_job.client.name}"
+  end
+
+  def returning_devices_list(service_jobs)
+    if service_jobs.any?
+      now = DateTime.current.change(sec: 0)
+      content_tag(:table, id: 'returning_devices_list', class: 'table table-condensed table-hover') do
+        service_jobs.map do |service_job|
+          content_tag(:tr) do
+            time_text = "#{t('in_time') if service_job.return_at.future?} #{distance_of_time_in_words(now, service_job.return_at)} #{t('ago') if service_job.return_at.past?}"
+            content_tag(:td, time_text) +
+            content_tag(:td, link_to(service_job.presentation, service_job_path(service_job), target: '_blank')) +
+            content_tag(:td, link_to(glyph(:phone), '#', class: 'returning_device_tooltip', data: {html: true, placement: 'top', trigger: 'manual', title: content_tag(:span, service_job.client_full_name) + tag(:br) + content_tag(:strong, human_phone(service_job.contact_phone))}))
+          end
+        end.join.html_safe
+      end.html_safe
+    else
+      ''
+    end
+  end
+
+  def header_link_for_device_returning
+    service_jobs = ServiceJob.for_returning
+    notify_class = service_jobs.any? ? 'notify' : ''
+    content_tag(:li, id: 'device_returning', class: notify_class) do
+      link_to glyph('mobile-phone'), '#', rel: 'popover', id: 'device_returning_link', data: { html: true, placement: 'bottom', title: t('service_jobs.returning_popover_title'), content: returning_devices_list(service_jobs).gsub('\n', '') }
+    end
+  end
+
+  def contact_phones_for(service_job)
+    if service_job.client.present?
+      phones = []
+      phones << human_phone(service_job.client.contact_phone) unless service_job.client.contact_phone.blank?
+      phones << human_phone(service_job.client.full_phone_number) unless service_job.client.full_phone_number.blank?
+      phones << human_phone(service_job.client.phone_number) unless service_job.client.phone_number.blank?
+      phones.join ', '
+    end
+  end
+
+  def sales_info(service_job)
+    content = []
+    if (number = service_job.serial_number.present? ? service_job.serial_number : service_job.imei).present?
+      if (item = Item.search(q: number, saleinfo: true).first).present?
+        content << content_tag(:span, item.sale_info[:sale_info], class: 'sales_info')
+      end
+      if (imported_sales = ImportedSale.search(search: number)).any?
+        content << content_tag(:span, imported_sales.map { |sale| "[#{sale.sold_at.strftime('%d.%m.%y')}: #{sale.quantity}]" }.join(' '), class: 'imported_sales_info')
+      end
+      content.present? ? content.join(' ').html_safe : '-'
+    else
+      '?'
+    end
+  end
+
+  def link_to_archive_device(service_job, options={})
+    link_to glyph(:archive)+t('service_jobs.move_to_archive'), service_job_path(service_job, service_job: {location_id: current_user.archive_location.id}), method: :patch, class: 'btn btn-warning', remote: options[:remote]
+  end
+
+  def service_tasks_list(service_job)
+    content_tag(:ul, id: 'device_tasks_list') do
+      service_job.device_tasks.collect do |device_task|
+        content_tag :li do
+          content_tag(:div, device_task.name) +
+          content_tag(:div, device_task.comment, class: 'text-info') +
+          content_tag(:div, device_task.user_comment, class: 'text-error') +
+          content_tag(:div, "#{distance_of_time_in_words_to_now(device_task.created_at)} #{t(:ago)}", class: 'muted')
+        end
+      end.join.html_safe
+    end
+  end
+
+  def button_to_set_keeper_of_device(service_job)
+    button_class = 'service_job-keeper-button btn btn-small'
+    hint = "#{ServiceJob.human_attribute_name(:keeper)}: "
+    if service_job.keeper.present?
+      button_class += ' btn-info'
+      hint += service_job.keeper.short_name
+    else
+      button_class += ' btn-default'
+      hint += '-'
+    end
+    form_for [:set_keeper, service_job], remote: true, html: {class: 'button_to service_job-keeper-form'} do |f|
+      # hidden_field_tag('service_job[keeper_id]', current_user.id) +
+      button_tag(glyph('user'), class: button_class, title: hint)
+    end
+  end
+
+  def data_storages_collection
+    qty = Setting.data_storage_qty
+    if qty.present?
+      1.upto(Setting.data_storage_qty).map do |storage_num|
+        name = content_tag(:span, storage_num, class: 'data_storage_label')
+        [storage_num, name]
+      end
+    else
+      []
+    end
+  end
+end

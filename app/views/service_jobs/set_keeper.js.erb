@@ -1,0 +1,2 @@
+$service_job_row = $(".service_job_row[data-service_job-id=<%= @service_job.id %>]", '#actual_tasks_table');
+$service_job_row.find('.service_job-keeper-form').replaceWith('<%= j button_to_set_keeper_of_device(@service_job) %>');

@@ -1,0 +1,25 @@
+= auto_header_tag @option_type
+
+= simple_form_for @option_type, html: {class: 'form-horizontal'} do |f|
+  = f.error_notification message: error_messages_for(@option_type)
+  = f.input :name
+  = f.input :code
+  = f.input :position
+
+  %table.table.table-condensed.table-bordered.table-small
+    %caption= OptionType.human_attribute_name :option_values
+    %thead
+      %tr
+        %th= OptionValue.human_attribute_name :name
+        %th= OptionValue.human_attribute_name :code
+        %th= OptionValue.human_attribute_name :position
+        %th
+    %tbody#option_type_option_values
+      = f.simple_fields_for :option_values do |ff|
+        = render 'option_value_fields', f: ff
+    %tfoot
+      %tr
+        %td(colspan='4')= link_to_add_fields t('helpers.links.add'), '#option_type_option_values', f, :option_values
+
+  .form-actions
+    = submit_button f

@@ -1,12 +1,14 @@
 - if @deduction_acts.any?
   - model_class = DeductionAct
+  = sort_fields
+
   %table.table.table-striped
     %thead
       %tr
-        %th= model_class.human_attribute_name :id
-        %th= model_class.human_attribute_name :date
-        %th= model_class.human_attribute_name :store
-        %th= model_class.human_attribute_name :comment
+        %th= sortable :id, model_class.human_attribute_name(:id)
+        %th= sortable :date, model_class.human_attribute_name(:date)
+        %th= model_class.human_attribute_name(:store)
+        %th= model_class.human_attribute_name(:comment)
         %th.actions
     %tbody
       - @deduction_acts.each do |deduction_act|

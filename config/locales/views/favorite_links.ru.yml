@@ -1,0 +1,11 @@
+ru:
+  favorite_links:
+    index:
+      title: 'Избранное'
+    new:
+      title: 'Новое избранное'
+    edit:
+      title: 'Редактирование избранного'
+    created: 'Избранное создано'
+    updated: 'Избранное изменено'
+    destroyed: 'Избранное удалено'

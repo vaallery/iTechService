@@ -1,0 +1,90 @@
+.modal-header
+  = button_to_close_modal
+  %h3
+    = @service_job.type_name
+
+.modal-body
+  .row-fluid
+    .span6
+      = simple_form_for @service_job, html: { class: 'form-horizontal', remote: true } do |f|
+        - if @service_job.errors.any?
+          .alert.alert-error= @service_job.errors.full_messages.join('. ')
+
+        .control-group
+          %label.control-label= ServiceJob.human_attribute_name :ticket_number
+          .controls= @service_job.ticket_number
+
+        .control-group
+          %label.control-label= t 'service_jobs.itunes_string'
+          .controls
+            %span#itunes_string= itunes_string_for(@service_job)
+            = link_to icon_tag(:copy), '#', id: 'copy_itunes_string', data: {'clipboard-target' => 'itunes_string', 'clipboard-text' => 'iTunes string'}, :title => t('helpers.buttons.copy_to_clipboard')
+
+        .control-group
+          %label.control-label= ServiceJob.human_attribute_name :client
+          .controls
+            = link_to @service_job.client_name, client_path(@service_job.client_id), target: '_blank'
+            %br
+            = human_phone @service_job.contact_phone
+
+        = f.input :client_notified, as: :radio_buttons, collection: [[true, t('yep')], [false, t('not_accessible')]], required: true, value_method: :first, label_method: :last if @service_job.notify_client?
+
+        - if @service_job.persisted? and @service_job.client.contact_phone.present?
+          .control-group
+            = label_tag 'contact_phone', Client.human_attribute_name(:contact_phone), class: 'control-label'
+            .controls= text_field_tag 'contact_phone', human_phone(@service_job.client.contact_phone), class: 'input-medium', disabled: true
+
+        = f.association :location, collection: Location.allowed_for(current_user, @service_job), prompt: false
+
+        .control-group
+          %label.control-label= ServiceJob.human_attribute_name :keeper
+          .controls= @service_job.keeper.try(:short_name) || '-'
+
+        .control-group
+          %label.control-label= ServiceJob.human_attribute_name :case_color
+          .controls= case_color_presentation @service_job.case_color
+
+        = f.input :data_storages, as: :check_boxes, collection: data_storages_collection, value_method: :first, label_method: :last, item_wrapper_class: 'inline'
+
+        .control-group
+          %label.control-label= ServiceJob.human_attribute_name :comment
+          .controls= @service_job.comment.blank? ? '-' : @service_job.comment
+
+        %table#device_tasks_small.table.table-bordered.table-condensed.table-hover
+          %caption
+            %h4= ServiceJob.human_attribute_name :tasks
+          %thead
+            %tr
+              %th.task_name_column= DeviceTask.human_attribute_name :task
+              %th.task_cost_column= DeviceTask.human_attribute_name :cost
+              %th.task_comment_column= DeviceTask.human_attribute_name :comment
+          %tbody
+            - @service_job.device_tasks.each do |task|
+              %tr.device_task{class: row_class_for_task(task)}
+                %td.task_name_column= task.name
+                %td.task_cost_column= task.cost
+                %td.task_comment_column
+                  %span.client_comment= task.comment
+                  %br
+                  %strong.user_comment= task.user_comment
+          %tfoot
+            %tr
+              %td= t 'total'
+              %td.number= human_currency @service_job.tasks_cost
+              %td
+
+        = link_to_add_fields t('service_jobs.add_task'), '#device_tasks_small tbody', f, :device_tasks unless @service_job.at_done? or @service_job.in_archive?
+        = f.error :base, class: 'text-error'
+
+        %hr
+        = link_to_archive_device @service_job, remote: true if @service_job.at_done?
+        = link_to glyph(:money) + t('sales.payment').html_safe, create_sale_service_job_path(@service_job), method: :post, class: 'btn btn-success', target: '_blank' if @service_job.at_done?
+        = submit_button f
+
+    #device_notes_container.span6= render 'device_notes'
+
+:javascript
+  $('#modal_form').addClass('large');
+  $(document).ready(function() {
+    var clip = new ZeroClipboard($("#copy_itunes_string"))
+  });

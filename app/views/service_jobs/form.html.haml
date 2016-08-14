@@ -1,0 +1,92 @@
+- service_job = @service_job.decorate
+= auto_header_tag @service_job
+
+.row-fluid
+  .span6
+    = simple_form_for @service_job, html: { class: 'form-horizontal service_job_form' } do |f|
+
+      - if @service_job.errors.any?
+        .alert.alert-danger= @service_job.errors.full_messages.join '. '
+
+      = f.full_error :ticket_number
+
+      - if can? :update, @service_job
+        = f.input :client, as: :client, wrapper_html: {id: 'client_fields'}
+      - else
+        = f.input :client, as: :string, disabled: true, input_html: {class: 'input-xlarge'}
+
+      = f.input :contact_phone, as: :contact_phone
+      - if @service_job.persisted? and @service_job.client.contact_phone.present?
+        .control-group
+          = label_tag 'contact_phone', Client.human_attribute_name(:contact_phone), class: 'control-label'
+          .controls
+            = text_field_tag 'contact_phone', human_phone(@service_job.client.contact_phone), class: 'input-medium', disabled: true
+
+      - if can? :update, @service_job
+        - if @service_job.new_record? || @service_job.item.present?
+          = f.input :item, as: :device
+        - else
+          = f.input :device_type, as: :device_type
+          = f.input :serial_number, as: :serial_number, input_html: {autocomplete: 'off'}, required: true
+          = f.input :imei, as: :imei, wrapper_html: {class: @service_job.has_imei? ? 'imei_input' : 'imei_input hidden'}
+          = f.hidden_field :item_id
+      - else
+        - if @service_job.item.present?
+          = service_job.device
+        - else
+          .control-group
+            %label.control-label= ServiceJob.human_attribute_name(:device_type)
+            .controls= service_job.device_name
+
+          .control-group
+            %label.control-label= ServiceJob.human_attribute_name(:serial_number)
+            .controls= service_job.serial_number
+
+          .control-group
+            %label.control-label= ServiceJob.human_attribute_name(:imei)
+            .controls= service_job.imei
+
+      = f.input :security_code, as: :security_code
+
+      - if @service_job.new_record? or @service_job.user_id == current_user.id
+        = f.input :app_store_pass, required: @service_job.new_record?
+
+      = f.input :is_tray_present, as: :radio_buttons, wrapper_html: {class: @service_job.has_imei? ? 'tray_input' : 'tray_input hidden'}
+
+      = f.association :carrier, as: :radio_buttons, collection: Carrier.all, wrapper_html: {class: @service_job.has_imei? ? 'carrier_input' : 'carrier_input hidden'}
+
+      = f.association :case_color, as: :radio_buttons, collection: CaseColor.ordered_by_name, label_method: lambda{|c|case_color_presentation(c)}
+
+      = f.input :data_storages, as: :check_boxes, collection: data_storages_collection, value_method: :first, label_method: :last, item_wrapper_class: 'inline'
+
+      = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @service_job)
+
+      = f.input :tech_notice, input_html: {rows: 5} if can? :write_tech_notice, @service_job
+
+      = f.input :notify_client if @service_job.new_record? or current_user.any_admin?
+      = f.input :client_notified, as: :radio_buttons, collection: [[true, t('yep')], [false, t('not_accessible')]], required: true, value_method: :first, label_method: :last if @service_job.notify_client?
+
+      = f.input :replaced, as: :replaced, disabled: true
+
+      - if can? :update, @service_job
+        = f.input :location_id, as: :location, user: current_user
+      - else
+        = text_field_tag :location, @service_job.location.try(:name), disabled: true, class: 'input-xlarge'
+
+      = f.input :return_at, as: :datetime_quick_select
+
+      -if f.error(:device_tasks).present?
+        .control-group.required.error
+          .controls
+            %p= f.full_error :device_tasks, class: 'text-error'
+            %p
+              %span.help-inline.text-error= f.object.device_tasks.map{|dt|dt.errors.full_messages}.join ', '
+
+      = render @service_job.new_record? ? 'device_tasks_fields' : 'device_tasks', f: f
+
+      .form-actions
+        = submit_button f
+
+  .span6
+    = secondary_form_container
+    #device_notes_container= render 'device_notes' if @service_job.persisted?

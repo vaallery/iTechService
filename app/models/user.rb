@@ -3,34 +3,34 @@ class User < ActiveRecord::Base
   ROLES = %w[admin software media technician marketing developer supervisor manager superadmin driver api universal engraver]
   ROLES_FOR_ADMIN = %w[admin software media technician marketing supervisor manager driver universal engraver]
   HELPABLE = %w[software media technician]
-  ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet edit_clients]
+  ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet manage_schedule edit_clients]
 
   attr_accessor :login
   attr_accessor :auth_token
   cattr_accessor :current
 
-  scope :id_asc, order('id asc')
-  scope :ordered, order('position asc')
-  scope :any_admin, where(role: %w[admin superadmin])
-  scope :superadmins, where(role: 'superadmin')
-  scope :software, where(role: 'software')
-  scope :media, where(role: 'media')
-  scope :technician, where(role: 'technician')
-  scope :not_technician, where('role <> ?', 'technician')
-  scope :marketing, where(role: 'marketing')
-  scope :programmer, where(role: 'programmer')
-  scope :supervisor, where(role: 'supervisor')
-  scope :manager, where(role: 'manager')
-  scope :working_at, lambda { |day| joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
-  scope :with_active_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: true})
-  scope :with_inactive_birthdays, joins(:announcements).where(announcements: {kind: 'birthday', active: false})
-  scope :schedulable, where(schedule: true)
-  scope :staff, where('role <> ?', 'synchronizer')
-  scope :fired, where(is_fired: true)
-  scope :active, where(is_fired: [false, nil])
-  scope :for_changing, scoped
+  scope :id_asc, ->{order('id asc')}
+  scope :ordered, ->{order('position asc')}
+  scope :any_admin, ->{where(role: %w[admin superadmin])}
+  scope :superadmins, ->{where(role: 'superadmin')}
+  scope :software, ->{where(role: 'software')}
+  scope :media, ->{where(role: 'media')}
+  scope :technician, ->{where(role: 'technician')}
+  scope :not_technician, ->{where('role <> ?', 'technician')}
+  scope :marketing, ->{where(role: 'marketing')}
+  scope :programmer, ->{where(role: 'programmer')}
+  scope :supervisor, ->{where(role: 'supervisor')}
+  scope :manager, ->{where(role: 'manager')}
+  scope :working_at, ->(day) { joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
+  scope :with_active_birthdays, ->{joins(:announcements).where(announcements: {kind: 'birthday', active: true})}
+  scope :with_inactive_birthdays, ->{joins(:announcements).where(announcements: {kind: 'birthday', active: false})}
+  scope :schedulable, ->{where(schedule: true)}
+  scope :staff, ->{where('role <> ?', 'synchronizer')}
+  scope :fired, ->{where(is_fired: true)}
+  scope :active, ->{where(is_fired: [false, nil])}
+  scope :for_changing, -> { all }
   # scope :for_changing, where('users.username = ? OR users.username LIKE ?', 'vova', 'test_%')
-  scope :exclude, lambda { |user| where('id <> ?', user.is_a?(User) ? user.id : user) }
+  scope :exclude, ->(user) { where('id <> ?', user.is_a?(User) ? user.id : user) }
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
 
   belongs_to :location
@@ -41,10 +41,10 @@ class User < ActiveRecord::Base
   has_many :orders, as: :customer, dependent: :nullify
   has_many :announcements, inverse_of: :user, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :devices, inverse_of: :user
+  has_many :service_jobs, inverse_of: :user
   has_many :karmas, dependent: :destroy, inverse_of: :user
-  has_many :karma_groups, through: :karmas, uniq: true
-  has_many :bonuses, through: :karma_groups, uniq: true
+  has_many :karma_groups, through: :karmas
+  has_many :bonuses, through: :karma_groups
   has_many :messages, dependent: :destroy
   has_many :infos, inverse_of: :recipient, dependent: :destroy
   has_many :salaries, inverse_of: :user, dependent: :destroy
@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
   has_many :stores, through: :department
   has_many :locations, through: :department
   has_many :device_notes, dependent: :destroy
+  has_many :favorite_links, foreign_key: 'owner_id', dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
 
@@ -67,11 +68,6 @@ class User < ActiveRecord::Base
   delegate :name, to: :department, prefix: true, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
 
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :registerable, :rememberable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :token_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
-
   # Setup accessible (or protected) attributes for your model
   attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment, :department_id, :session_duration, :phone_number
 
@@ -81,7 +77,12 @@ class User < ActiveRecord::Base
   validates :role, inclusion: { in: ROLES }
   validates_numericality_of :session_duration, only_integer: true, greater_than: 0, allow_nil: true
   before_validation :validate_rights_changing
-  before_save :ensure_authentication_token
+  # before_save :ensure_authentication_token
+
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable, :registerable, :rememberable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
 
   acts_as_list
 
@@ -175,7 +176,7 @@ class User < ActiveRecord::Base
   end
 
   def self.search(params)
-    users = params[:all].present? ? User.scoped : User.active
+    users = params[:all].present? ? User.all : User.active
     unless (q_name = params[:name]).blank?
       users = users.where 'username LIKE :q or name LIKE :q or surname LIKE :q', q: "%#{q_name}%"
     end
@@ -268,7 +269,7 @@ class User < ActiveRecord::Base
   end
 
   def birthday_announcement
-    self.announcements.find_or_create_by_kind(kind: 'birthday', active: false, user: self)
+    self.announcements.create_with(active: false, user: self).find_or_create_by(kind: 'birthday')
   end
 
   def timeout_in
@@ -305,7 +306,7 @@ class User < ActiveRecord::Base
 
   def self.oncoming_salary
     today = Date.current
-    User.active.all.keep_if do |user|
+    User.active.to_a.keep_if do |user|
       if user.hiring_date.present?
         upcoming_salary_date = user.upcoming_salary_date
         upcoming_salary_date.between?(today, 2.days.from_now.end_of_day.to_datetime) and user.salaries.where(created_at: today..upcoming_salary_date, user_id: user.id).empty?
@@ -320,7 +321,7 @@ class User < ActiveRecord::Base
   end
 
   def work_hours_in(date)
-    timesheet_days.in_period(date).work.sum do |day|
+    timesheet_days.in_period(date).work.to_a.sum do |day|
       day.actual_work_hours
     end
   end

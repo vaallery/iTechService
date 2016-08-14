@@ -1,7 +1,7 @@
 class Message < ActiveRecord::Base
 
-  scope :newest, order("messages.created_at desc")
-  scope :today, lambda { where('created_at > ?', Time.current.beginning_of_day) }
+  scope :newest, ->{order("messages.created_at desc")}
+  scope :today, -> { where('created_at > ?', Time.current.beginning_of_day) }
 
   belongs_to :user
   belongs_to :recipient, polymorphic: true

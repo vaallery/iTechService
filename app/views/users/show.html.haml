@@ -9,7 +9,7 @@
       = @user.short_name
 
 %ul.nav.nav-tabs
-  %li.active= link_to User.human_attribute_name(:devices), "#devices_tab", 'data-toggle' => 'tab'
+  %li.active= link_to User.human_attribute_name(:service_jobs), "#service_jobs_tab", 'data-toggle' => 'tab'
   %li= link_to t("users.info"), "#info_tab", 'data-toggle' => 'tab'
   %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
   -#- if can? :manage, Salary
@@ -17,34 +17,34 @@
   %li= link_to t("users.account"), '#account_tab', 'data-toggle' => 'tab'
 
 .tab-content
-  #devices_tab.tab-pane.active
-    - if @devices.any?
+  #service_jobs_tab.tab-pane.active
+    - if @service_jobs.any?
       %table.table.table-condensed.table-hover
         %thead
           %tr
-            %th= t 'devices.received'
-            %th= Device.human_attribute_name(:ticket_number)
-            %th= t 'activerecord.models.device'
-            %th= Device.human_attribute_name(:client)
-            %th= Device.human_attribute_name(:location)
+            %th= t 'service_jobs.received'
+            %th= ServiceJob.human_attribute_name(:ticket_number)
+            %th= ServiceJob.model_name.human
+            %th= ServiceJob.human_attribute_name(:client)
+            %th= ServiceJob.human_attribute_name(:location)
             %th
         %tbody
-          - @devices.each do |device|
-            %tr{class: row_class_for_device(device)}
-              %td= t 'moved', user: '', time: distance_of_time_in_words_to_now(device.created_at)
-              %td= link_to device.ticket_number, device_path(device)
+          - @service_jobs.each do |service_job|
+            %tr{class: row_class_for_service_job(service_job)}
+              %td= t 'moved', user: '', time: distance_of_time_in_words_to_now(service_job.created_at)
+              %td= link_to service_job.ticket_number, service_job_path(service_job)
               %td
-                = link_to device.type_name, device_path(device)
-                %small= device.serial_number
-                %p.device_comment_tooltip{'data-title' => device.comment}
+                = link_to service_job.type_name, service_job_path(service_job)
+                %small= service_job.serial_number
+                %p.service_job_comment_tooltip{'data-title' => service_job.comment}
                   %i.icon-comment
-              %td= h device.client_presentation
-              %td= device.location.try :name
+              %td= h service_job.client_presentation
+              %td= service_job.location.try :name
               %td
                 .btn-group
-                  = link_to_show_small device
-                  = link_to_edit_small device# if can? :update, device
-                  = link_to_destroy_small device if can? :destroy, device
+                  = link_to_show_small service_job
+                  = link_to_edit_small service_job# if can? :update, service_job
+                  = link_to_destroy_small service_job if can? :destroy, service_job
 
   #info_tab.tab-pane
     %dl.dl-horizontal
@@ -102,7 +102,7 @@
       %dd
         #wish_view= @user.wish
         #wish_edit.hide
-          = form_tag update_wish_user_path(@user), remote: true, method: :put, id: 'update_user_wish_form' do
+          = form_tag update_wish_user_path(@user), remote: true, method: :patch, id: 'update_user_wish_form' do
             = text_area_tag 'user_wish', @user.wish, class: 'span7', rows: 5
             %br
             %a#save_user_wish.btn.btn-primary= 'Save'

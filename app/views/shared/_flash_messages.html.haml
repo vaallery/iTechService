@@ -1,0 +1,29 @@
+#flash_messages
+  - if notice.present?
+    .row
+      .span6.alert_place
+        .alert.alert-success
+          %a.close{'data-dismiss' => 'alert', onclick: "$(this).parents('.row:first').remove()"}
+            &times
+          %i.icon-info-sign
+          %span.text= notice
+
+  - if alert.present?
+    .row
+      .span6.alert_place
+        .alert.alert
+          %a.close{'data-dismiss' => 'alert', onclick: "$(this).parents('.row:first').remove()"}
+            &times
+          %i.icon-warning-sign
+          %span.text= alert
+
+  - if flash.present?
+    - flash.each do |name, msg|
+      .row
+        .span6.alert_place
+          - if name == 'error'
+            .alert.alert-error
+              %a.close{'data-dismiss' => 'alert', onclick: "$(this).parents('.row:first').remove()"}
+                &times
+              %i.icon-exclamation-sign
+              %span.text= msg

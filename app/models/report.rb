@@ -1,11 +1,9 @@
 class Report
-  extend ActiveModel::Naming
-  include ActiveModel::Conversion
-  include ActiveModel::Validations
+  include ActiveModel::Model
 
-  NAMES = %w[device_types users devices_archived done_tasks tasks_undone clients tasks_duration device_orders done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin quick_orders]
+  NAMES = %w[device_types device_groups users devices_archived done_tasks tasks_undone clients tasks_duration device_orders done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin quick_orders]
 
-  attr_accessor :name, :kind, :device_type, :store_id
+  attr_accessor :name, :kind, :device_type, :store_id, :device_group_id
 
   #alias_attribute :few_remnants_goods, :few_remnants
   #alias_attribute :few_remnants_spare_parts, :few_remnants
@@ -74,55 +72,84 @@ class Report
 
   def device_types
     result[:device_types] = []
-    result[:devices_received_count] = result[:devices_received_done_count] = result[:devices_received_archived_count] = 0
+    result[:service_jobs_received_count] = result[:service_jobs_received_done_count] = result[:service_jobs_received_archived_count] = 0
     result[:current_device_type] = DeviceType.find(device_type) if device_type.present?
     device_types = result[:current_device_type].present? ? result[:current_device_type].children : DeviceType.roots
     device_types.each do |device_type|
       device_ids = []
       if device_type.is_childless?
-        device_ids << device_type.devices.where(created_at: period).map { |d| d.id }
+        device_ids << device_type.service_jobs.where(created_at: period).map { |d| d.id }
       else
         device_type.descendants.each do |sub_device_type|
           if sub_device_type.is_childless?
-            device_ids << sub_device_type.devices.where(created_at: period).map { |d| d.id }
+            device_ids << sub_device_type.service_jobs.where(created_at: period).map { |d| d.id }
           end
         end
       end
-      received_devices = Device.where id: device_ids
-      qty_received = received_devices.count
-      qty_done = received_devices.at_done.count
-      qty_archived = received_devices.at_archive.count
+      received_service_jobs = ServiceJob.where id: device_ids
+      qty_received = received_service_jobs.count
+      qty_done = received_service_jobs.at_done.count
+      qty_archived = received_service_jobs.at_archive.count
       result[:device_types] << {device_type: device_type, qty: qty_received, qty_done: qty_done, qty_archived: qty_archived}
-      result[:devices_received_count] += qty_received
-      result[:devices_received_done_count] += qty_done
-      result[:devices_received_archived_count] += qty_archived
+      result[:service_jobs_received_count] += qty_received
+      result[:service_jobs_received_done_count] += qty_done
+      result[:service_jobs_received_archived_count] += qty_archived
     end
     result
   end
 
+  def device_groups
+    result[:rows] = []
+    result[:service_jobs_received_count] = result[:service_jobs_received_done_count] = result[:service_jobs_received_archived_count] = 0
+    result[:current_device_group] = ProductGroup.find(device_group_id) if device_group_id.present?
+    device_groups = result[:current_device_group].present? ? result[:current_device_group].children : ProductGroup.devices.at_depth(1)
+    device_groups.each do |device_group|
+      service_job_ids = []
+      if device_group.is_childless?
+        # service_job_ids << device_group.service_jobs.where(created_at: period).map { |d| d.id }
+        service_job_ids << ServiceJob.includes(item: :product).where(created_at: period, products: {product_group_id: device_group.id}).pluck(:id)
+      else
+        device_group.descendants.each do |sub_device_group|
+          if sub_device_group.is_childless?
+            # service_job_ids << sub_device_group.service_jobs.where(created_at: period).map { |d| d.id }
+            service_job_ids << ServiceJob.includes(item: :product).where(created_at: period, products: {product_group_id: sub_device_group.id}).pluck(:id)
+          end
+        end
+      end
+      received_service_jobs = ServiceJob.where id: service_job_ids
+      qty_received = received_service_jobs.count
+      qty_done = received_service_jobs.at_done.count
+      qty_archived = received_service_jobs.at_archive.count
+      result[:rows] << {device_group: device_group, qty: qty_received, qty_done: qty_done, qty_archived: qty_archived}
+      result[:service_jobs_received_count] += qty_received
+      result[:service_jobs_received_done_count] += qty_done
+      result[:service_jobs_received_archived_count] += qty_archived
+    end
+    result
+  end
+  
   def users
     result[:users] = []
-    if (received_devices = Device.where(created_at: period)).present?
-      received_devices.group('user_id').count('id').each_pair do |key, val|
+    if (received_service_jobs = ServiceJob.where(created_at: period)).present?
+      received_service_jobs.group('user_id').count('id').each_pair do |key, val|
         if key.present? and (user = User.find key).present?
-          devices = received_devices.where(user_id: key)
-          #user_devices = devices.map{|d|{id: d.id, presentation: d.presentation}}
-          result[:users] << {name: user.short_name, qty: val, qty_done: devices.at_done(user).count, qty_archived: devices.at_archive(user).count, devices: devices}
+          service_jobs = received_service_jobs.where(user_id: key)
+          result[:users] << {name: user.short_name, qty: val, qty_done: service_jobs.at_done(user).count, qty_archived: service_jobs.at_archive(user).count, service_jobs: service_jobs}
         end
       end
     end
-    result[:devices_received_count] = received_devices.count
-    result[:devices_received_done_count] = received_devices.at_done.count
-    result[:devices_received_archived_count] = received_devices.at_archive.count
+    result[:service_jobs_received_count] = received_service_jobs.count
+    result[:service_jobs_received_done_count] = received_service_jobs.at_done.count
+    result[:service_jobs_received_archived_count] = received_service_jobs.at_archive.count
     result
   end
 
   def done_tasks
     result[:tasks] = []
-    archived_devices_ids = HistoryRecord.devices.movements_to_archive.in_period(period).collect { |hr| hr.object_id }.uniq
+    archived_service_jobs_ids = HistoryRecord.service_jobs.movements_to_archive.in_period(period).collect { |hr| hr.object_id }.uniq
     result[:tasks_sum] = result[:tasks_qty] = result[:tasks_qty_free] = 0
-    if archived_devices_ids.any?
-      tasks = DeviceTask.where device_id: archived_devices_ids
+    if archived_service_jobs_ids.any?
+      tasks = DeviceTask.where device_id: archived_service_jobs_ids
       tasks.collect { |t| t.task_id }.uniq.each do |task_id|
         task = Task.find task_id
         task_name = task.name
@@ -131,10 +158,10 @@ class Report
         task_count = same_tasks.count
         task_paid_count = same_tasks.where('cost > 0').count
         task_free_count = same_tasks.where(cost: [0, nil]).count
-        devices = same_tasks.collect do |same_task|
-          {id: same_task.device_id, name: same_task.device.type_name, cost: same_task.cost}
+        service_jobs = same_tasks.collect do |same_task|
+          {id: same_task.service_job.id, name: same_task.service_job.type_name, cost: same_task.cost}
         end
-        result[:tasks] << {name: task_name, sum: task_sum, qty: task_count, qty_paid: task_paid_count, qty_free: task_free_count, devices: devices}
+        result[:tasks] << {name: task_name, sum: task_sum, qty: task_count, qty_paid: task_paid_count, qty_free: task_free_count, service_jobs: service_jobs}
       end
       result[:tasks_sum] = tasks.sum(:cost)
       result[:tasks_qty] = tasks.count
@@ -148,8 +175,8 @@ class Report
     result[:new_clients] = []
     new_clients = Client.where(created_at: period)
     new_clients.each do |client|
-      client_devices = client.devices.where(created_at: period).map{|device| {id: device.id, presentation: device.presentation}}
-      result[:new_clients] << {id: client.id, presentation: client.presentation, created_at: client.created_at, devices: client_devices}
+      client_devices = client.service_jobs.where(created_at: period).map{|service_job| {id: service_job.id, presentation: service_job.presentation}}
+      result[:new_clients] << {id: client.id, presentation: client.presentation, created_at: client.created_at, service_jobs: client_devices}
     end
     result[:clients_count] = Client.count
     result[:new_clients_count] = new_clients.count
@@ -161,14 +188,14 @@ class Report
     Task.find_each do |task|
       task_durations = []
       device_tasks = []
-      HistoryRecord.devices.movements_to(task.location_id).in_period(period).each do |hr|
+      HistoryRecord.service_jobs.movements_to(task.location_id).in_period(period).each do |hr|
         moved_at = hr.created_at
         durations = []
         hr.object.device_tasks.done.where(task_id: task.id).each do |dt|
           done_at = dt.done_at
           dt_duration = ((done_at - moved_at).to_i/60).round
           durations << dt_duration
-          device_tasks << {device: dt.device_presentation, device_id: dt.device_id, moved_at: moved_at, done_at: done_at, duration: dt_duration, moved_by: hr.user_name, done_by: dt.performer_name, device_location: dt.device.location_name}
+          device_tasks << {service_job: dt.service_job_presentation, service_job_id: dt.service_job.id, moved_at: moved_at, done_at: done_at, duration: dt_duration, moved_by: hr.user_name, done_by: dt.performer_name, device_location: dt.service_job.location_name}
         end
         unless durations.empty?
           task_durations << (durations.sum/durations.size).round
@@ -210,19 +237,19 @@ class Report
       movements.group('user_id').count('id').each_pair do |key, val|
         if key.present? and (user = User.find key).present?
           user_movements = movements.by_user(user)
-          devices = []
+          service_jobs = []
           user_durations = []
           user_movements.each do |movement|
-            if (device = Device.find(movement.object_id)).present?
+            if (service_job = ServiceJob.find(movement.object_id)).present?
               old_location = Location.find movement.old_value.to_i
               new_location = Location.find movement.new_value.to_i
-              duration = ((movement.created_at - device.created_at).to_i/60).round
+              duration = ((movement.created_at - service_job.created_at).to_i/60).round
               user_durations << duration
-              devices << {moved_at: movement.created_at, created_at: device.created_at, old_location: old_location.name, new_location: new_location.name, device_id: device.id, device_presentation: device.presentation, client_id: device.client_id, client_presentation: device.client_presentation, duration: duration}
+              service_jobs << {moved_at: movement.created_at, created_at: service_job.created_at, old_location: old_location.name, new_location: new_location.name, device_id: service_job.id, service_job_presentation: service_job.presentation, client_id: service_job.client_id, client_presentation: service_job.client_presentation, duration: duration}
             end
           end
           avarage_duration = (user_durations.sum / user_durations.size).round
-          result[:users_mv] << {user: user.short_name, avarage_duration: avarage_duration, qty: val, devices: devices}
+          result[:users_mv] << {user: user.short_name, avarage_duration: avarage_duration, qty: val, service_jobs: service_jobs}
         end
       end
     end
@@ -379,7 +406,7 @@ class Report
         repair_group_name = repair_task.repair_group.try(:name) || '-'
         repair_service_id = repair_task.repair_service_id || '-'
         repair_service_name = repair_task.name || '-'
-        job = {id: repair_task.id, price: repair_task.price, parts_cost: repair_task.parts_cost, margin: repair_task.margin, device_id: repair_task.device.id, device_presentation: repair_task.device.presentation}
+        job = {id: repair_task.id, price: repair_task.price, parts_cost: repair_task.parts_cost, margin: repair_task.margin, device_id: repair_task.service_job.id, service_job_presentation: repair_task.service_job.presentation}
         groups = [repair_task.repair_parts.count > 0 ? :with_parts : :without_parts]
         groups << :without_payment unless repair_task.price > 0
         groups.each do |group|
@@ -408,7 +435,7 @@ class Report
     tasks.each do |task|
       task_id = (task.task_id || '-').to_s
       task_name = task.name || '-'
-      task = {id: task.id, device_id: task.device_id, device: task.device_presentation, comment: task.comment, user_comment: task.user_comment}
+      task = {id: task.id, device_id: task.service_job.id, service_job: task.service_job_presentation, comment: task.comment, user_comment: task.user_comment}
       if result[task_id].present?
         result[task_id][:tasks_qty] = result[task_id][:tasks_qty] + 1
         result[task_id][:tasks] << task
@@ -424,7 +451,7 @@ class Report
     repair_tasks.each do |repair_task|
       user_id = repair_task.performer.try(:id).to_s
       user_name = repair_task.performer.try(:short_name)
-      job = {id: repair_task.id, name: repair_task.name, price: repair_task.price, parts_cost: repair_task.parts_cost, margin: repair_task.margin, device_id: repair_task.device.id, device_presentation: repair_task.device.presentation}
+      job = {id: repair_task.id, name: repair_task.name, price: repair_task.price, parts_cost: repair_task.parts_cost, margin: repair_task.margin, device_id: repair_task.service_job.id, service_job_presentation: repair_task.service_job.presentation}
       if result[user_id].present?
         result[user_id][:jobs_qty] = result[user_id][:jobs_qty] + 1
         result[user_id][:jobs_sum] = result[user_id][:jobs_sum] + repair_task.margin
@@ -486,7 +513,7 @@ class Report
         end
         # details = []
         # if sale_item.is_repair?
-        #   if (repair_parts = sale.try(:device).try(:repair_parts)).present?
+        #   if (repair_parts = sale.try(:service_job).try(:repair_parts)).present?
         #     repair_parts.each do |repair_part|
         #       details << repair_part.as_json(methods: [:id, :name, :price])
         #     end

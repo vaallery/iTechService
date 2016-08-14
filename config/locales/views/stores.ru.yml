@@ -1,0 +1,19 @@
+ru:
+  stores:
+    created: "Склад создан"
+    updated: 'Склад изменён'
+    kinds:
+      defect: 'Брак'
+      defect_sp: 'Брак запчастей'
+      purchase: 'Приход'
+      spare_parts: 'Запчасти'
+      retail: 'Розница'
+      repair: 'Ремонт'
+    index:
+      title: "Склады"
+      spare_parts_link: "Запчасти"
+      usual_link: "Обычные"
+    new:
+      title: 'Новый Склад'
+    edit:
+      title: 'Редактирование Склада'

@@ -1,12 +1,12 @@
 class Sale < ActiveRecord::Base
   include Document
 
-  scope :sold_at, lambda { |period| where(date: period) }
-  scope :posted, where(status: 1)
-  scope :deleted, where(status: 2)
-  scope :unposted, where('status <> ?', 1)
-  scope :returning, where(is_return: true)
-  scope :selling, where(is_return: false)
+  scope :sold_at, ->(period) { where(date: period) }
+  scope :posted, ->{where(status: 1)}
+  scope :deleted, ->{where(status: 2)}
+  scope :unposted, ->{where('status <> ?', 1)}
+  scope :returning, ->{where(is_return: true)}
+  scope :selling, ->{where(is_return: false)}
 
   belongs_to :user, inverse_of: :sales
   belongs_to :client, inverse_of: :sales
@@ -15,7 +15,7 @@ class Sale < ActiveRecord::Base
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
   has_many :payments, inverse_of: :sale, dependent: :destroy
-  has_one :device, inverse_of: :sale
+  has_one :service_job, inverse_of: :sale
   accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda{|a| a[:id].blank? and a[:item_id].blank?}
   accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: lambda{|a| a[:value].blank?}
 
@@ -24,7 +24,7 @@ class Sale < ActiveRecord::Base
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
   delegate :name, to: :store, prefix: true
-  delegate :device_tasks, :repair_parts, to: :device, allow_nil: true
+  delegate :device_tasks, :repair_parts, to: :service_job, allow_nil: true
 
   attr_accessible :date, :client_id, :user_id, :store_id, :sale_items_attributes, :is_return, :payment_ids, :payments_attributes, :total_discount
   validates_presence_of :user, :store, :date, :status, :cash_shift
@@ -41,7 +41,7 @@ class Sale < ActiveRecord::Base
   end
 
   def self.search(params)
-    sales = Sale.scoped
+    sales = Sale.all
 
     if (status_q = params[:status]).present?
       sales = sales.where(status: status_q)
@@ -52,11 +52,11 @@ class Sale < ActiveRecord::Base
     end
 
     unless (start_date = params[:start_date]).blank?
-      sales = sales.where('date >= ?', start_date)
+      sales = sales.where('date >= ?', start_date.to_date)
     end
 
     unless (end_date = params[:end_date]).blank?
-      sales = sales.where('date <= ?', end_date)
+      sales = sales.where('date <= ?', end_date.to_date)
     end
 
     if (search = params[:search]).present?
@@ -152,7 +152,7 @@ class Sale < ActiveRecord::Base
   end
 
   def calculation_amount(signed=false)
-    res = sale_items.all.sum &:sum
+    res = sale_items.to_a.sum &:sum
     (signed and is_return) ? -1*res : res
   end
 

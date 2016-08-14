@@ -2,7 +2,7 @@
   %h1
     = auto_title
     %small= link_to t('users.all'), users_path(all: true)
-    - if can? :manage, User
+    - if can? :manage, ScheduleDay
       %small= link_to t('users.schedule'), schedule_users_path
     - if can? :manage, TimesheetDay
       %small= link_to t('users.timesheet'), timesheet_days_path

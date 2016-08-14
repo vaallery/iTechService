@@ -9,10 +9,10 @@ class TimesheetDay < ActiveRecord::Base
   validates_presence_of :user_id, :date, :status
   validates_inclusion_of :status, in: STATUSES
 
-  scope :in_period, lambda { |date| period = date.is_a?(Range) ? date : date.beginning_of_month..date.end_of_month; where(date: period) }
-  scope :work, where('timesheet_days.status LIKE ? OR timesheet_days.status = ?', 'presence%', 'business_trip')
-  scope :sickness, where(status: 'sickness')
-  scope :lateness, where(status: 'presence_late')
+  scope :in_period, ->(date) { period = date.is_a?(Range) ? date : date.beginning_of_month..date.end_of_month; where(date: period) }
+  scope :work, ->{where('timesheet_days.status LIKE ? OR timesheet_days.status = ?', 'presence%', 'business_trip')}
+  scope :sickness, ->{where(status: 'sickness')}
+  scope :lateness, ->{where(status: 'presence_late')}
 
   def actual_work_mins
     if work_mins.present?

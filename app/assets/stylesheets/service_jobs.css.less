@@ -1,0 +1,217 @@
+.service_job_comment_tooltip{
+  display: inline;
+}
+
+.service_job_comment{
+  color: indianred;
+}
+
+form.service_job_form{
+
+  #locations_select_button {
+    width: 318px;
+    text-align: left;
+  }
+
+  #locations_list {
+    min-width: 318px;
+  }
+
+  #clients_autocomplete_list {
+    width: 319px;
+  }
+
+  #device_tasks {
+    .task_type {
+      width: 220px;
+    }
+    .task_cost {
+      width: 110px;
+    }
+    .task_comment {
+      width: 220px;
+    }
+    .task_actions {
+      width: 30px;
+    }
+    width: 625px;
+  }
+
+  #service_job_contact_phone{
+    width: 206px;
+  }
+
+  #service_job_security_code {
+    width: 246px;
+  }
+
+  #service_job_imei,
+  #service_job_serial_number {
+    width: 266px;
+  }
+
+  #service_job_comment,
+  #device_app_store_pass,
+  #service_job_service_duration,
+  #service_job_tech_notice{
+    width: 305px;
+  }
+
+  #service_job_return_at {
+    width: 202px;
+  }
+
+  .datetimepicker {
+    span {
+      cursor: pointer;
+      color: #0088cc;
+    }
+  }
+
+  .service_job_case_color .color_icon {
+    margin-bottom: -2px;
+  }
+}
+
+.sales_info {
+  color: #3a87ad;
+}
+
+.imported_sales_info {
+  color: #c09853;
+}
+
+#actual_tasks_table {
+  table.movement_history {
+    &>tbody{
+      &>tr{
+        &>td{
+          background-color: #ffffff;
+          border: none;
+          padding: 2px;
+        }
+      }
+    }
+  }
+}
+
+#new_service_job_popup{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1010;
+//  display: none;
+
+  .popup{
+    display: block;
+    width: 236px;
+    padding: 1px;
+    margin-top: 10px;
+    text-align: left;
+    white-space: normal;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    .arrow{
+      top: -11px;
+      left: 50%;
+      margin-left: -11px;
+      border-bottom-color: #999;
+      border-bottom-color: rgba(0, 0, 0, 0.25);
+      border-top-width: 0;
+      border-width: 11px;
+    }
+    .arrow, .arrow::after {
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      border-color: transparent;
+      border-style: solid;
+    }
+    .arrow::after {
+      top: 1px;
+      margin-left: -10px;
+      border-bottom-color: #ffffff;
+      border-top-width: 0;
+    }
+    .arrow::after {
+      border-width: 10px;
+      content: "";
+    }
+    .arrow, .arrow::after {
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      border-color: transparent;
+      border-style: solid;
+    }
+    .title{
+      padding: 8px 14px;
+      margin: 0;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 20px;
+      background-color: #f7f7f7;
+      border-bottom: 1px solid #ebebeb;
+      -webkit-border-radius: 5px 5px 0 0;
+      -moz-border-radius: 5px 5px 0 0;
+      border-radius: 5px 5px 0 0;
+      a{
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+#device_returning {
+  margin-left: 1px;
+  margin-right: 1px;
+  &.notify {
+    background-color: #ffc7c5;
+    &:hover {
+      background-color: #eeb6b4;
+    }
+  }
+  .popover {
+    max-width: 360px;
+    .popover-content {
+      width: 340px;
+    }
+  }
+}
+
+#returning_devices_list {
+  .returning_device_tooltip+.tooltip>.tooltip-inner {
+    font-size: 14px;
+    strong {
+      white-space: nowrap;
+    }
+  }
+}
+
+.data_storage_label {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 11.844px;
+  font-weight: bold;
+  line-height: 14px;
+  color: #ffffff;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #3a87ad;
+}

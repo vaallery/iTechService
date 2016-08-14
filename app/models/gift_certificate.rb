@@ -20,7 +20,7 @@ class GiftCertificate < ActiveRecord::Base
   end
 
   def self.search(params)
-    certificates = GiftCertificate.scoped
+    certificates = GiftCertificate.all
 
     if (q = params[:search_q]).present?
       certificates = certificates.where 'LOWER(number) = ? OR id = ?', q.mb_chars.downcase.to_s, q.to_i

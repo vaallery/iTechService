@@ -89,7 +89,7 @@ class WarrantyPdf < Prawn::Document
         table_data += [[index.next.to_s, sale_item.code, sale_item.name, sale_item.quantity, features, "#{sale_item.warranty_term} мес."]]
       end
     end
-    if @sale.device.present? and @sale.repair_parts.present?
+    if @sale.service_job.present? and @sale.repair_parts.present?
       @sale.repair_parts.each_with_index do |repair_part, index|
         table_data += [[index.next.to_s, repair_part.code, repair_part.name, repair_part.quantity, '', "#{repair_part.warranty_term} мес."]] if (repair_part.warranty_term || 0) > 0
       end
@@ -101,7 +101,7 @@ class WarrantyPdf < Prawn::Document
     move_down 25
 
     # Signs
-    group do
+    # group do
       y_pos = cursor
       span 290, position: :left do
         text 'М.П.'
@@ -115,7 +115,7 @@ class WarrantyPdf < Prawn::Document
         move_down 30
         text 'Подпись покупателя _________________________________'#, align: :right
       end
-    end
+    # end
 
     encrypt_document permissions: { modify_contents: false }
   end

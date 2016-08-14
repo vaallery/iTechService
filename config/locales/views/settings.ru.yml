@@ -1,0 +1,17 @@
+ru:
+  settings:
+    edit:
+      title: 'Редактирование параметра'
+    index:
+      title: 'Параметры'
+    new:
+      title: 'Новый параметр'
+    created: 'Параметр создан'
+    link: 'Параметры'
+    updated: 'Параметр изменён'
+    address: 'Адрес'
+    address_for_check: 'Адрес на чеке'
+    contact_phone: 'Контактный телефон'
+    ticket_prefix: 'Префикс талона'
+    schedule: 'График работы'
+    data_storage_qty: 'Количество хранилищ данных'

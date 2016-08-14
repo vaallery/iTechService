@@ -1,0 +1,66 @@
+ru:
+
+  items:
+    tag:
+      with_price: 'С ценой'
+      without_price: 'Без цены'
+
+  errors:
+    nothing_found: 'Ничего не найдено'
+    messages:
+      changing_denied: "изменение запрещено"
+
+  datetime_select:
+    x_minutes:
+      one: ! '%{count} минуту'
+      few: ! '%{count} минуты'
+      many: ! '%{count} минут'
+      other: ! '%{count} минут'
+    x_hours:
+      one: ! '%{count} час'
+      few: ! '%{count} часа'
+      many: ! '%{count} часов'
+      other: ! '%{count} часов'
+
+  add: "Добавить"
+  object: "Объект"
+  time: "Время"
+  user: "Пользователь"
+#  tasks: "Задачи"
+  in_time: 'через'
+  ago: 'назад'
+  app_name: 'Айс'
+  back: 'Назад'
+  black_list: "Чёрный список"
+  client_input_placeholder: 'Имя / телефон / карта'
+  close: "Закрыть"
+  confirmation: 'Вы уверены?'
+  create: 'Создать'
+  destroy: "Удалить"
+  document: "%{name} №%{num} от %{time}"
+  done: "Готово"
+  edit: 'Редактировать'
+  everywhere: "Везде"
+  file: 'Файл'
+  from_date: "от %{date}"
+  hour_min: "%{hour} ч %{min} мин."
+  in_time: 'через'
+  me: 'Я'
+  min: "%{min} мин."
+  moved: "%{user} %{time} назад"
+  moved_title: 'Переместил'
+  new: "Новый"
+  plan_for: 'План по '
+  post: 'Провести'
+  phone_placeholder: "6, 7, 10 или 11 цифр"
+  remove_photo: 'Удалить фото'
+  save: 'Сохранить'
+  search: 'Найти'
+  show: "Показать"
+  today: 'Сегодня'
+  total: 'Итого'
+  undone: "Не готово"
+  unpost: 'Сделать непроведённым'
+  update: 'Сохранить'
+  yep: "Да"
+  not_accessible: "Не доступен"

@@ -1,0 +1,11 @@
+ru:
+  banks:
+    index:
+      title: 'Банки'
+    edit:
+      title: 'Редактирование Банка'
+    new:
+      title: 'Новый Банк'
+
+    created: 'Банк создан'
+    updated: 'Банк изменён'

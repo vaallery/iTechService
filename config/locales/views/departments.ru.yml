@@ -1,0 +1,17 @@
+ru:
+  departments:
+    created: 'Подразделение создано'
+    updated: 'Подразделение изменено'
+    link: :departments.index.title
+    index:
+      title: 'Подразделения'
+    new:
+      title: 'Новое Подразделение'
+    edit:
+      title: 'Редактирование Подразделения'
+    roles:
+      main: 'Главное'
+      branch: 'Филиал'
+      remote: 'Удалённый'
+      store: 'Склад'
+    all: "Все"

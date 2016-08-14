@@ -58,7 +58,7 @@
   }
 
   #users_report{
-    .user, .device{
+    .user, .service_job{
       width: 70%;
     }
     .movement{
@@ -106,6 +106,77 @@
   #tasks_undone_report {
     td {
       width: 50%;
+    }
+  }
+}
+
+#reports_filter{
+  margin-top: 20px;
+  span{
+    margin-bottom: 0;
+  }
+  button{
+    margin: 0;
+  }
+}
+
+#reports_tables{
+  th{
+    text-align: center;
+  }
+
+  tfoot{
+    font-weight: bold;
+  }
+
+  .detailable{
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .details{
+    display: none;
+  }
+
+  #users_report{
+    .user, .service_job{
+      width: 70%;
+    }
+    .movement{
+      width: 30%;
+    }
+  }
+
+  #tasks_durations_report{
+    .task{
+      width: 70%;
+    }
+    .duration{
+      width: 30%;
+    }
+  }
+  tbody>tr:hover{
+    td.warning{
+      background-color: #faf2cc;
+    }
+    td.error{
+      background-color: #ebcccc;
+    }
+  }
+  td.warning{
+    background-color: #fcf8e3;
+  }
+  td.error{
+    background-color: #f2dede;
+  }
+  #repair_jobs_report{
+    .name{
+      width: 40%;
+    }
+    .job_price, .price {
+      width: 30%;
+    }
+    .job_price small{
+      display: block;
     }
   }
 }

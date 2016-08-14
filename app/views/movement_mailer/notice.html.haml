@@ -4,27 +4,27 @@
     %meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
 
   %body
-    %h4= @device.presentation
+    %h4= @service_job.presentation
 
     %p
-      %strong= t 'devices.received'
-      = l @device.created_at, format: :long_d
+      %strong= t 'service_jobs.received'
+      = l @service_job.created_at, format: :long_d
 
     %p
-      %strong= Device.human_attribute_name :ticket_number
-      = @device.ticket_number
+      %strong= ServiceJob.human_attribute_name :ticket_number
+      = @service_job.ticket_number
 
     %p
-      %strong= Device.human_attribute_name :client
-      = @device.client.presentation
+      %strong= ServiceJob.human_attribute_name :client
+      = @service_job.client.presentation
 
     %p
-      %strong= Device.human_attribute_name :comment
-      = @device.comment
+      %strong= ServiceJob.human_attribute_name :comment
+      = @service_job.comment
 
     %table
       %caption
-        %h4= Device.human_attribute_name :tasks
+        %h4= ServiceJob.human_attribute_name :tasks
       %thead
         %tr
           %th= Task.human_attribute_name :name
@@ -34,7 +34,7 @@
           %th= DeviceTask.human_attribute_name :done_at
           %th= DeviceTask.human_attribute_name :created_at
       %tbody
-        - @device.device_tasks.ordered.each do |device_task|
+        - @service_job.device_tasks.ordered.each do |device_task|
           %tr
             %td= device_task.task_name
             %td= h device_task.comment
@@ -46,5 +46,5 @@
       %tfoot
         %tr
           %td{colspan: 3}= t 'total'
-          %td= @device.tasks_cost
+          %td= @service_job.tasks_cost
           %td{colspan: 4}

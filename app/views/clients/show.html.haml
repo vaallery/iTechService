@@ -44,19 +44,19 @@
     %thead
       %tr
         %th= t '.date'
-        %th= Client.human_attribute_name :devices
-        %th= Device.human_attribute_name :tasks
-        %th= Device.human_attribute_name :location
+        %th= Client.human_attribute_name :service_jobs
+        %th= ServiceJob.human_attribute_name :tasks
+        %th= ServiceJob.human_attribute_name :location
     %tbody
-      - @client.devices.find_each do |device|
+      - @client.service_jobs.find_each do |service_job|
         %tr
-          %td= l device.created_at, format: :long_d
-          %td= link_to device.presentation, device_path(device)
+          %td= l service_job.created_at, format: :long_d
+          %td= link_to service_job.presentation, service_job_path(service_job)
           %td
             %ul.unstyled
-              - device.device_tasks.find_each do |device_task|
+              - service_job.device_tasks.find_each do |device_task|
                 %li= device_task.name
-          %td= device.location_name || '-'
+          %td= service_job.location_name || '-'
 
 #client_purchases
   %table.table.table-bordered.table-condensed.table-hover
@@ -65,7 +65,7 @@
     %thead
       %tr
         %th= t '.date'
-        %th= t 'activerecord.models.device'
+        %th= ServiceJob.model_name.human
         %th= SaleItem.human_attribute_name :price
         %th= SaleItem.human_attribute_name :quantity
         %th= SaleItem.human_attribute_name :sum
@@ -114,8 +114,8 @@
           %td= l order.desired_date, format: :long_d if order.desired_date.present?
 
 .form-actions
-  - if can? :create, Device
-    = link_to new_device_path(device: {client_id: @client.id}), class: 'btn' do
+  - if can? :create, ServiceJob
+    = link_to new_service_job_path(service_job: {client_id: @client.id}), class: 'btn' do
       = icon_tag('plus-sign') + t('.new_device')
   - if can? :create, Sale
     = link_to new_sale_path(sale: {client_id: @client.id}), class: 'btn' do

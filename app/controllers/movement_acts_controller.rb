@@ -1,8 +1,17 @@
 class MovementActsController < ApplicationController
   authorize_resource
+  helper_method :sort_column, :sort_direction
 
   def index
     @movement_acts = MovementAct.search(params).page(params[:page])
+
+    if params.has_key?(:sort) && params.has_key?(:direction)
+      @movement_acts = @movement_acts.order("movement_acts.#{sort_column} #{sort_direction}")
+    else
+      @movement_acts = @movement_acts.order(date: :desc)
+    end
+
+    @movement_acts = @movement_acts.page(params[:page])
 
     respond_to do |format|
       format.html
@@ -107,4 +116,13 @@ class MovementActsController < ApplicationController
     end
   end
 
+  private
+
+  def sort_column
+    MovementAct.column_names.include?(params[:sort]) ? params[:sort] : ''
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
+  end
 end

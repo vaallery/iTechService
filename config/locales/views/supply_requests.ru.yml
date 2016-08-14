@@ -1,0 +1,18 @@
+ru:
+  supply_requests:
+    created: 'Заявка создана'
+    updated: 'Заявка изменена'
+    index:
+      title: 'Заявки'
+    new:
+      title: 'Новая Заявка'
+    edit:
+      title: 'Редактирование Заявки'
+    statuses:
+      all: 'Все'
+      new: 'Новая'
+      done: 'Выполнена'
+    done_link: 'Выполненные'
+    search_number_placeholder: 'Номер заявки'
+    search_object_placeholder: 'Объект'
+    presentation: "Заявка №%{num} от %{date}"

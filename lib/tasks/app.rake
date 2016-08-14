@@ -1,6 +1,6 @@
 namespace :app do
 
-  desc 'Move repair parts of unarchived devices to repair store'
+  desc 'Move repair parts of unarchived service_jobs to repair store'
   task stash_repair_parts: :environment do
     log = Logger.new('log/app_stash_repair_parts.log')
     # log = Logger.new(STDOUT)
@@ -12,7 +12,7 @@ namespace :app do
     
     log.info "Task started at #{start_time}"
 
-    RepairTask.includes(device_task: :device).where('devices.location_id <> ?', archive_id).find_each do |repair_task|
+    RepairTask.includes(device_task: :service_job).where('service_jobs.location_id <> ?', archive_id).find_each do |repair_task|
       repair_task.repair_parts.each do |repair_part|
         log.info "RepairPart [#{repair_part.id}] #{'-' * 10}"
         if repair_part.item.present?
@@ -46,8 +46,35 @@ namespace :app do
 
   desc "Set default value for device's 'is_tray_present'"
   task set_tray_presence: :environment do
-    Device.find_each do |device|
-      device.update_column(:is_tray_present, false) if device.is_tray_present.nil?
+    ServiceJob.find_each do |service_job|
+      service_job.update_column(:is_tray_present, true) if service_job.is_tray_present.nil?
+    end
+  end
+
+  desc "Set ServiceJobs items"
+  task set_service_jobs_items: :environment do
+    SetServiceJobsItems.new.call
+  end
+
+  desc 'Resets Postgres auto-increment ID column sequences to fix duplicate ID errors'
+  task :reset_sequences => :environment do
+    Rails.application.eager_load!
+
+    ActiveRecord::Base.descendants.each do |model|
+      unless model.attribute_names.include?('id')
+        Rails.logger.debug "Not resetting #{model}, which lacks an ID column"
+        next
+      end
+
+      begin
+        max_id = model.maximum(:id).to_i + 1
+        result = ActiveRecord::Base.connection.execute(
+          "ALTER SEQUENCE #{model.table_name}_id_seq RESTART #{max_id};"
+        )
+        Rails.logger.info "Reset #{model} sequence to #{max_id}"
+      rescue => e
+        Rails.logger.error "Error resetting #{model} sequence: #{e.class.name}/#{e.message}"
+      end
     end
   end
 end

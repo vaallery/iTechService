@@ -7,14 +7,14 @@ class Department < ActiveRecord::Base
     3 => 'remote',
   }
 
-  default_scope order('departments.id asc')
-  scope :branches, where(role: 1)
+  default_scope {order('departments.id asc')}
+  scope :branches, ->{where(role: 1)}
 
   has_many :users, dependent: :nullify
   has_many :stores, dependent: :nullify
   has_many :cash_drawers, dependent: :nullify
   has_many :settings, dependent: :destroy
-  has_many :devices, inverse_of: :department
+  has_many :service_jobs, inverse_of: :department
   has_many :locations, inverse_of: :department
   # cattr_accessor :current
 

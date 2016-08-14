@@ -2,13 +2,13 @@ class ProductsController < ApplicationController
   authorize_resource
 
   def index
-    @product_groups = ProductGroup.roots.ordered
+    @product_groups = ProductGroup.roots
     if params[:group].blank?
       @opened_product_groups = []
       @products = Product.search(params)
     else
       @current_product_group = ProductGroup.find params[:group]
-      @opened_product_groups = @current_product_group.path_ids[1..-1].map { |g| "product_group_#{g}" }.join(', ')
+      @opened_product_groups = @current_product_group.path_ids[1..-1].map { |g| "product_group_#{g}" }#.join(', ')
       @products = @current_product_group.products.search(params)
     end
 
@@ -85,6 +85,14 @@ class ProductsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to products_url }
       format.json { head :no_content }
+    end
+  end
+
+  def find
+    @product = Product.find_by_group_and_options(params[:product_group_id], params[:option_ids])
+    if @product.present?
+      @item = @product.items.build
+      @item.features.build @product.feature_types.map{|ft|{feature_type_id: ft.id}}
     end
   end
 
@@ -166,5 +174,4 @@ class ProductsController < ApplicationController
       format.js
     end
   end
-
 end

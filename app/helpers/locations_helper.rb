@@ -2,7 +2,7 @@ module LocationsHelper
 
   def choose_location_for form
     name = form.object.is_a?(Location) ? 'parent_id' : 'location_id'
-    locations = Location.scoped
+    locations = Location.all
     content = ''
         #content_tag :label, class: 'radio' do
         #  form.radio_button(name, ) + 'none'

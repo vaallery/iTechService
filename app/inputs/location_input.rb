@@ -1,6 +1,6 @@
 class LocationInput < SimpleForm::Inputs::Base
 
-  def input
+  def input(wrapper_options = nil)
     user = options[:user]
     (@builder.hidden_field(attribute_name) +
     template.content_tag(:span, class: 'btn-group') do

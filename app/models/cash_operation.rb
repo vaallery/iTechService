@@ -1,6 +1,6 @@
 class CashOperation < ActiveRecord::Base
 
-  scope :created_desc, order('created_at desc')
+  scope :created_desc, ->{order('created_at desc')}
 
   belongs_to :cash_shift, inverse_of: :cash_operations
   belongs_to :user

@@ -1,0 +1,1 @@
+json.extract! @task, :id, :product_id, :location_id, :location_name, :cost, :is_repair?

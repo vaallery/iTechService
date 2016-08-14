@@ -14,7 +14,7 @@ class Fakeout
   # 1. first these are the model names we're going to fake out, note in this example, we don't create tags/taggings specifically
   # but they are defined here so they get wiped on the clean operation
   # e.g. this example fakes out, Users, Questions and Answers, and in doing so fakes some Tags/Taggings
-  MODELS = %w(Client Device)
+  MODELS = %w(Client ServiceJob)
 
   # 2. now define a build method for each model, returning a list of attributes for Model.create! calls
   # check out the very excellent faker gem rdoc for faking out anything from emails, to full addresses; http://faker.rubyforge.org/rdoc
@@ -93,9 +93,9 @@ class Fakeout
   
   # called after faking out, use this method for additional updates or additions
   def post_fake
-    Device.find_each do |device|
+    ServiceJob.find_each do |service_job|
       (rand(9)+1).times do
-        device.device_tasks.create(task: pick_random(Task), cost: rand(5)*1000, done: false,
+        service_job.device_tasks.create(task: pick_random(Task), cost: rand(5)*1000, done: false,
             comment: Faker::Lorem.paragraph(1).chop)
       end
     end

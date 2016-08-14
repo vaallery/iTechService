@@ -1,0 +1,26 @@
+ru:
+  dashboard:
+
+    tasks_table:
+      device_tasks: 'Девайс / Задачи'
+
+    actual_orders: 'Текущие заказы'
+    actual_requests: "Текущие запросы"
+    actual_tasks: "Текущие задачи"
+    goods_for_sale: "Техника для продажи"
+    ready_service_jobs: "Готовые работы"
+    misc: 'Прочее'
+    moved_title: 'Перемещен'
+    new_service_job: 'Приёмка девайса'
+    new_device_message: 'Новая работа!!!'
+    new_info: 'Создать новость'
+    new_order: 'Новый Заказ'
+    new_user: 'Новый пользователь'
+    params: 'Параметры'
+    new_sale: "Новая Продажа"
+    references: "Справочники"
+
+    print_tags:
+      title: "Печать штрихкодов"
+      print: "Печатать"
+      choose_product: "Выбрать продукт"

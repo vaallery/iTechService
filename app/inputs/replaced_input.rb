@@ -1,6 +1,6 @@
 class ReplacedInput < SimpleForm::Inputs::BooleanInput
 
-  def input
+  def input(wrapper_options = nil)
     (super +
     template.content_tag(:span, class: 'help-inline') do
       template.t('device_types.available_for_replacement').html_safe + ': ' +

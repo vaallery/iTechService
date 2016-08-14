@@ -19,7 +19,7 @@ module SalesHelper
     elsif sale.is_return? and sale.needs_gift_certificate?
       link_to t('sales.attach_gift_certificate'), '#', id: 'sale_close_check', class: 'btn btn-danger attach_gift_certificate'
     else
-      link_to name, post_sale_path(sale), method: 'put', id: 'sale_close_check', class: 'btn btn-danger', data: {confirm: t('confirmation')}
+      link_to name, post_sale_path(sale), method: :patch, id: 'sale_close_check', class: 'btn btn-danger', data: {confirm: t('confirmation')}
     end
   end
 

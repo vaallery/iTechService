@@ -51,8 +51,8 @@
     = link_to_edit @purchase if can? :edit, @purchase
     = button_to_post @purchase if can? :post, @purchase
     = link_to_print_barcodes @purchase if can? :print_barcodes, Purchase
-    = button_to t('purchases.new_revaluation_act'), revaluate_products_purchase_path(@purchase), method: :put, id: 'new_revaluation_act_link', class: 'btn btn-success', form: {id: 'new_revaluation_act_button'} if @purchase.is_posted?
-    = button_to t('purchases.new_movement_act'), move_items_purchase_path(@purchase), method: :put, id: 'new_movement_act_link', class: 'btn btn-success', form: {id: 'new_movement_act_button'} if @purchase.is_posted?
-    -#= link_to t('purchases.new_revaluation_act'), revaluate_products_purchase_path(@purchase), method: :put, id: 'new_revaluation_act_link', class: 'btn btn-success' if @purchase.is_posted?
-    -#= link_to t('purchases.new_movement_act'), move_items_purchase_path(@purchase), method: :put, id: 'new_movement_act_link', class: 'btn btn-success' if @purchase.is_posted?
+    = button_to t('purchases.new_revaluation_act'), revaluate_products_purchase_path(@purchase), method: :patch, id: 'new_revaluation_act_link', class: 'btn btn-success', form: {id: 'new_revaluation_act_button'} if @purchase.is_posted?
+    = button_to t('purchases.new_movement_act'), move_items_purchase_path(@purchase), method: :patch, id: 'new_movement_act_link', class: 'btn btn-success', form: {id: 'new_movement_act_button'} if @purchase.is_posted?
+    -#= link_to t('purchases.new_revaluation_act'), revaluate_products_purchase_path(@purchase), method: :patch, id: 'new_revaluation_act_link', class: 'btn btn-success' if @purchase.is_posted?
+    -#= link_to t('purchases.new_movement_act'), move_items_purchase_path(@purchase), method: :patch, id: 'new_movement_act_link', class: 'btn btn-success' if @purchase.is_posted?
     = link_to_destroy @purchase if can? :destroy, @purchase

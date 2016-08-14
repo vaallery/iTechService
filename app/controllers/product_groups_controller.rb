@@ -1,6 +1,7 @@
 class ProductGroupsController < ApplicationController
-  load_and_authorize_resource
-  skip_load_resource only: :new
+  before_action :set_product_group, only: %i[show select edit update destroy]
+  before_action :set_option_types, only: %i[new edit create update]
+  authorize_resource
 
   def index
     @product_groups = ProductGroup.roots.order('id asc')
@@ -16,7 +17,6 @@ class ProductGroupsController < ApplicationController
   end
 
   def show
-    @product_group = ProductGroup.find params[:id]
     @products = @product_group.products.search(params)
     if params[:form] == 'sale' and !@product_group.is_service
       @products = @products.available
@@ -25,6 +25,15 @@ class ProductGroupsController < ApplicationController
       params[:table_name] = 'products/small_table'
     end
     @products = @products.page(params[:page])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def select
+    if @product_group.is_childless?
+      @available_options = @product_group.option_values.ordered.group_by {|ov|ov.option_type.name}
+    end
     respond_to do |format|
       format.js
     end
@@ -47,6 +56,7 @@ class ProductGroupsController < ApplicationController
   end
 
   def create
+    @product_group = ProductGroup.new params[:product_group]
     respond_to do |format|
       if @product_group.save
         format.js
@@ -77,5 +87,15 @@ class ProductGroupsController < ApplicationController
       format.js { render nothing: true }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def set_product_group
+    @product_group = ProductGroup.find params[:id]
+  end
+
+  def set_option_types
+    @option_types = OptionType.includes(:option_values)
   end
 end

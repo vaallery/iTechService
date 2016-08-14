@@ -1,0 +1,9 @@
+.page-header
+  %h2= t 'dashboard.service_job_info', default: 'Service job information'
+.form-search
+  .input-append
+    = text_field_tag :ticket_number, '922943187', class: 'search-query',
+        placeholder: t('dashboard.enter_ticket_number', default: 'Enter ticket number')
+    %a.btn.btn-info#search_service_job_info{disable_with: icon_tag('search').html_safe}= t 'search', default: 'Search'
+
+#service_job_info

@@ -1,0 +1,27 @@
+ru:
+  clients:
+
+    categories:
+      usual: 'Простой'
+      regular: 'Постоянный'
+      super: 'Супер'
+      friend: 'Друг'
+    edit:
+      title: Редактирование Клиента
+    new:
+      title: Новый Клиент
+    index:
+      title: 'Клиенты'
+      search_placeholder: Телефон или имя
+    show:
+      date: "Дата"
+      new_device: "Новый девайс"
+      new_sale: "Новая продажа"
+    search:
+      title: 'Поиск клиента'
+    created: Клиент создан
+    link: Клиенты
+    questionnaire: Анкета
+    updated: Клиент изменён
+    available_discount: "Доступная скидка"
+    not_found: 'Клиент не найден'

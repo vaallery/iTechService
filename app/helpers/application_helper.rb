@@ -18,11 +18,13 @@ module ApplicationHelper
     end
   end
 
-  def link_back_to_index
-    link_to glyph('chevron-left'), url_for(action: 'index', controller: controller_name), class: 'link_back'
+  def link_back_to_index(options = {})
+    options.merge! action: 'index', controller: controller_name
+    link_to glyph('chevron-left'), url_for(options), class: 'link_back'
   end
 
   def sortable(column, title = nil)
+    column = column.to_s
     title ||= column.titleize
 
     if column == sort_column
@@ -36,6 +38,11 @@ module ApplicationHelper
     end
     title = "#{title} #{icon_tag(icon_name)}".html_safe
     link_to title, params.merge(sort: column, direction: direction, page: nil), {class: css_class, remote: false}
+  end
+
+  def sort_fields
+    hidden_field_tag(:direction, params[:direction]) +
+    hidden_field_tag(:sort, params[:sort])
   end
 
   def search_button
@@ -129,8 +136,8 @@ module ApplicationHelper
             val = Client.find(rec.new_value).try(:full_name)
           when 'location_id'
             val = Location.find(rec.new_value).try(:name)
-          when 'device_id'
-            val = Device.find(rec.new_value).try(:presentation)
+          when 'service_jobs_id'
+            val = ServiceJob.find(rec.new_value).try(:presentation)
           when 'task_id'
             val = Task.find(rec.new_value).try(:name)
           when 'nominal'
@@ -265,14 +272,14 @@ module ApplicationHelper
   end
 
   def header_link_to_scan_barcode
-    content_tag(:li) do
+    # content_tag(:li) do
       link_to glyph(:barcode), '#', remote: true, id: 'scan_barcode_button'
-    end.html_safe
+    # end.html_safe
   end
 
   def button_to_update(name, document, attributes)
     class_name = document.class.to_s.downcase
-    parameters = {controller: class_name.tableize, action: 'update', id: document.id, method: 'put', data: {confirm: t('confirmation')}}
+    parameters = {controller: class_name.tableize, action: 'update', id: document.id, method: :patch, data: {confirm: t('confirmation')}}
     parameters[class_name.to_sym] = attributes
     button_to name, parameters, {class: 'btn btn-primary'}
   end
@@ -308,4 +315,7 @@ module ApplicationHelper
     end
   end
 
+  def error_messages_for(record)
+    record.errors.full_messages.join('. ') if record.errors.present?
+  end
 end
