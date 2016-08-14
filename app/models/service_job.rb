@@ -151,7 +151,7 @@ class ServiceJob < ActiveRecord::Base
     service_jobs = ServiceJob.unarchived
 
     unless query.blank?
-      service_jobs = service_jobs.joins(:client).where 'service_jobs.ticket_number LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%"
+      service_jobs = service_jobs.joins(:client).where 'service_jobs.ticket_number LIKE :q OR service_jobs.contact_phone LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%"
     end
 
     service_jobs
