@@ -8,6 +8,7 @@ ru:
     actual_requests: "Текущие запросы"
     actual_tasks: "Текущие задачи"
     goods_for_sale: "Техника для продажи"
+    all_service_jobs: "Все работы"
     ready_service_jobs: "Готовые работы"
     misc: 'Прочее'
     moved_title: 'Перемещен'
