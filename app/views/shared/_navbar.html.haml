@@ -19,6 +19,8 @@
       = menu_item t('orders.link', default: 'Orders'), orders_path if can? :read, Order
       = drop_down_divider
       = menu_item t('clients.link', default: 'Clients'), clients_path
+      = drop_down_divider
+      = menu_item t('task_templates.index.title'), task_templates_path
 
     = drop_down t('.trade') do
       = menu_item t('sales.link'), sales_path if can? :manage, Sale

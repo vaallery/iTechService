@@ -1,0 +1,7 @@
+#task_templates_select_panel.row-fluid
+  .span.quick_select_back_button= link_to glyph('chevron-left'), task_templates_path, remote: true, id: 'quick_select_back_link'
+  .span.task_templates_group
+    - 2.times do |row|
+      .row-fluid.quick_select_row
+        - 10.times do |col|
+          .span.quick_select_cell= @task_templates.at col, row, editable: true

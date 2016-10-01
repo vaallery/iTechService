@@ -1,0 +1,13 @@
+= auto_header_tag @task_template
+
+= simple_form_for @task_template, html: {id: 'task_template_form', class: 'form-horizontal'} do |f|
+
+  .form-inputs
+    = f.hidden_field :position
+    = f.hidden_field :parent_id
+    = f.input :icon
+    = f.input :content
+
+  .form-actions
+    = link_to_destroy @task_template if @task_template.persisted?
+    = submit_button f
