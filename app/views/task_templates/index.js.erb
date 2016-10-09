@@ -1,1 +1,1 @@
-$('#taks_templates_panel').html("<%= j(render('task_templates/quick_select_panel')) %>");
+$('#task_templates_container').html("<%= j(render('task_templates/panel', task_templates: @task_templates, editable: false, parent: @task_template)) %>");

@@ -28,11 +28,11 @@ class TaskTemplatesController < ApplicationController
   end
 
   def show
-    @task_template = TaskTemplate.find params[:id]
+    @task_template = TaskTemplate.find(params[:id]).decorate
     @task_templates = TaskTemplatesDecorator.decorate @task_template.children.ordered
     respond_to do |format|
       format.html { render 'index' }
-      format.js { render 'index' }
+      format.js { render @task_template.has_children? ? 'index' : 'show' }
     end
   end
 
