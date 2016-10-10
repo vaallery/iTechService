@@ -75,6 +75,8 @@
 
       = f.input :return_at, as: :datetime_quick_select
 
+      = render 'task_templates'
+
       -if f.error(:device_tasks).present?
         .control-group.required.error
           .controls

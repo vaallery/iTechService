@@ -1,0 +1,5 @@
+#task_templates_panel.select.row-fluid
+  = task_templates.back_button parent, remote: !editable
+  %span#task_templates
+    - 9.times do |pos|
+      .task_template.button.span= task_templates.at pos, editable: editable, parent: parent
