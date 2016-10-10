@@ -1,0 +1,3 @@
+$task_comment = $('td.task_comment:last').find('textarea');
+old_value = $task_comment.val();
+$task_comment.val(old_value + ' ' + '<%= @task_template.content %>');

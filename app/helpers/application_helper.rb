@@ -62,8 +62,8 @@ module ApplicationHelper
 
   def link_to_new object_class, name = nil, options = {}
     options.merge! class: 'btn btn-success btn-large'
-    name ||= t("#{object_class.name.tableize}.new.title", default: t('new'))
-    link_to url_for(controller: object_class.name.tableize, action: 'new'), options do
+    name ||= t("#{object_class.model_name.collection}.new.title", default: t('new'))
+    link_to url_for(controller: object_class.model_name.route_key, action: 'new'), options do
       "#{glyph(:file)} #{name}".html_safe
     end
   end
@@ -71,7 +71,7 @@ module ApplicationHelper
   def link_to_show object, options = {}
     options.merge! class: 'btn'
     name = t 'show'
-    link_to url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options do
+    link_to url_for(controller: object.model_name.route_key, action: 'show', id: object.id), options do
       "#{glyph(:eye)} #{name}".html_safe
     end
   end
@@ -79,7 +79,7 @@ module ApplicationHelper
   def link_to_edit object, options = {}
     options.merge! class: 'btn'
     name = t 'edit'
-    link_to url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options do
+    link_to url_for(controller: object.model_name.route_key, action: 'edit', id: object.id), options do
       "#{glyph(:edit)} #{name}".html_safe
     end
   end
@@ -88,7 +88,7 @@ module ApplicationHelper
     options.merge! class: 'btn btn-danger', method: 'delete',
         data: {confirm: t('confirmation', default: 'Are you sure?')}
     name = t 'destroy'
-    link_to url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options do
+    link_to url_for(controller: object.model_name.route_key, action: 'destroy', id: object.id), options do
       "#{glyph(:trash)} #{name}".html_safe
     end
   end

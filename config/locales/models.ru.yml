@@ -459,6 +459,9 @@ ru:
         name: 'Название'
         role: 'Роль'
 
+      task_template:
+        icon: 'Значок'
+
       timesheet_day:
         date: "Дата"
         status: "Статус"

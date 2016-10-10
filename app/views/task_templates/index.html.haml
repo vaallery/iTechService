@@ -1,0 +1,24 @@
+.page-header
+  %h1= t '.title'
+
+- if @task_template.present?
+  %h6
+    = link_to_edit @task_template
+    = link_to_destroy @task_template
+
+= render 'task_templates/panel', task_templates: @task_templates, editable: true, parent: @task_template
+
+-#- if @task_template.present?
+-#  .row-fluid
+-#    %h4.span12
+-#      = link_back_to_index
+-#      = @task_template.decorate.icon
+-#      .btn-group
+-#        = link_to_edit_small @task_template
+-#        = link_to_destroy_small @task_template
+-#
+-##task_templates_panel
+-#  .back_button.span= link_to glyph('chevron-left'), task_templates_path, remote: true
+-#  #task_templates.row-fluid
+-#    - 10.times do |col|
+-#      .span.task_template= @task_templates.at col, editable: true, parent: @task_template

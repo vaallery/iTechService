@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614073417) do
+ActiveRecord::Schema.define(version: 20160828082137) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1062,6 +1062,17 @@ ActiveRecord::Schema.define(version: 20160614073417) do
   add_index "supply_requests", ["department_id"], name: "index_supply_requests_on_department_id", using: :btree
   add_index "supply_requests", ["status"], name: "index_supply_requests_on_status", using: :btree
   add_index "supply_requests", ["user_id"], name: "index_supply_requests_on_user_id", using: :btree
+
+  create_table "task_templates", force: :cascade do |t|
+    t.text     "content",    null: false
+    t.string   "icon"
+    t.string   "ancestry"
+    t.integer  "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "task_templates", ["ancestry"], name: "index_task_templates_on_ancestry", using: :btree
 
   create_table "tasks", force: :cascade do |t|
     t.string   "name",        limit: 255

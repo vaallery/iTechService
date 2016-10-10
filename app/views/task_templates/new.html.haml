@@ -1,0 +1,21 @@
+= auto_header_tag @task_template
+
+= simple_form_for @task_template, html: {id: 'task_templat_form', class: 'form-horizontal'} do |f|
+
+  .form-inputs
+    = f.hidden_field :position
+    = f.hidden_field :parent_id
+    = f.input :color, as: :color
+    = f.input :type, collection: [[t('.group'), 'Group'], [t('.product'), 'Product']], prompt: false
+
+    #product_select_field.control-group{class: @task_template.product.present? ? '' : 'hidden'}
+      = f.hidden_field :product_id
+      %label.control-label= t 'activerecord.models.product'
+      .controls= link_to @task_template.product_name || '...', choose_products_path(form: 'task_templat', is_product_only: true), remote: true, id: 'task_templat_product_select', class: 'btn'
+
+    #group_select_field.control-group{class: @task_template.product.present? ? 'hidden' : ''}
+      = f.input :name
+
+  .form-actions
+    = link_to_destroy @task_template
+    = submit_button f
