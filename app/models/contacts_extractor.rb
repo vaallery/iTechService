@@ -45,8 +45,15 @@ class ContactsExtractor
               name.family = family_name unless family_name.nil?
               name.given = given_name unless given_name.nil?
             end
-            db.execute("SELECT * FROM ZPHONENUMBERINDEX WHERE ZCONTACT = #{id}") do |phone_row|
-              phone = phone_row['ZPHONENUM']
+            if table_exists? db, 'ZABCONTACTNUMBER'
+              phones_table_name = 'ZABCONTACTNUMBER'
+              phone_column_name = 'ZPHONE'
+            else
+              phones_table_name = 'ZPHONENUMBERINDEX'
+              phone_column_name = 'ZPHONENUM'
+            end
+            db.execute("SELECT * FROM #{phones_table_name} WHERE ZCONTACT = #{id}") do |phone_row|
+              phone = phone_row[phone_column_name]
               puts "phone: #{phone}"
               maker.add_tel phone unless phone.nil?
             end
@@ -65,5 +72,4 @@ class ContactsExtractor
   def table_exists?(db, table_name)
     db.execute("SELECT name FROM sqlite_master WHERE name ='#{table_name}' and type='table'").length > 0
   end
-
 end
