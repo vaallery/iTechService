@@ -6,6 +6,10 @@
     = f.hidden_field :position
     = f.hidden_field :parent_id
     = f.input :icon
+    - if @task_template.icon.present?
+      .form-inputs
+        .controls
+          = image_tag(@task_template.icon_url)
     = f.input :content
 
   .form-actions
