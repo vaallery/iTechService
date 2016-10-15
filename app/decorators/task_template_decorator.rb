@@ -1,6 +1,6 @@
 class TaskTemplateDecorator < ApplicationDecorator
   delegate_all
-  delegate :task_templates_path, to: :helpers
+  delegate :task_templates_path, :task_template_path, to: :helpers
 
   def icon
     image_tag object.icon_url
@@ -11,6 +11,8 @@ class TaskTemplateDecorator < ApplicationDecorator
   end
 
   def back_link(remote: false)
-    link_to glyph('chevron-left'), task_templates_path, remote: remote
+    _parent = object.parent
+    _path = _parent.present? ? task_template_path(_parent) : task_templates_path
+    link_to glyph('chevron-left'), _path, remote: remote
   end
 end
