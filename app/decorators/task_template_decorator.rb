@@ -7,7 +7,7 @@ class TaskTemplateDecorator < ApplicationDecorator
   end
 
   def link(remote: false)
-    link_to icon, object, remote: remote
+    link_to icon, object, remote: remote, title: content
   end
 
   def back_link(remote: false)
