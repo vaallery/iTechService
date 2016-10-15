@@ -2,7 +2,7 @@ class TaskTemplatesController < ApplicationController
   authorize_resource
 
   def index
-    @task_templates = TaskTemplatesDecorator.decorate TaskTemplate.ordered
+    @task_templates = TaskTemplatesDecorator.decorate TaskTemplate.roots.ordered
 
     respond_to do |format|
       format.html
