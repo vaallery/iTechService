@@ -9,3 +9,6 @@ ru:
       spare_part: "Запчасть (кол-во)"
       warranty: "Гарантия"
       warranty_hint: "Замена по гарантии"
+
+    modal_form_content:
+      task_templates: 'Шаблоны'
