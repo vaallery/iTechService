@@ -54,6 +54,11 @@
         %strong= @device_task.task_name
         %br
         = @device_task.comment
+
+      .control-group
+        .controls= link_to t('.task_templates'), task_templates_path, remote: true, class: 'btn btn-link'
+        #task_templates_container
+
       = f.input :user_comment, input_html: {rows: 3}
       = f.input :cost
       = f.input :done, as: :done_status, disabled: @device_task.done
