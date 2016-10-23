@@ -12,5 +12,11 @@ App.initDeviceInput = ->
       $(this).siblings('.edit_item_btn').attr('href', "/devices/#{ui.item.value}/edit.js").attr('data-remote', true)
       false
 
+App.bindTextAreasEvents = ->
+  $(document).on 'focus', 'textarea', ->
+    $('textarea.focus').removeClass('focus')
+    $(this).addClass('focus')
+
 jQuery ->
   App.initDeviceInput()
+  App.bindTextAreasEvents()
