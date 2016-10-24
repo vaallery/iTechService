@@ -97,7 +97,7 @@ module ApplicationHelper
     options.merge! class: 'submit_button btn btn-primary ' + (options[:class] || ''), type: 'submit'
     model_name = form.object.class.model_name
     human_model_name = model_name.human
-    action = form.object.new_record? ? 'create' : 'update'
+    action = form.object.persisted? ? 'update' : 'create'
     if options[:name] == false
       name = nil
     else
@@ -193,7 +193,11 @@ module ApplicationHelper
   end
 
   def auto_title(object=nil)
-    object.present? ? (object.new_record? ? t("#{object.class.to_s.tableize}.new.title") : t("#{object.class.to_s.tableize}.edit.title")) : t('.title', default: controller_name.classify.constantize.model_name.human)
+    if object.present?
+      object.persisted? ? t("#{object.model_name.route_key}.edit.title") : t("#{object.model_name.route_key}.new.title")
+    else
+      t('.title', default: controller_name.classify.constantize.model_name.human)
+    end
   end
 
   def auto_header_tag(object=nil, title=nil, button_name=nil)

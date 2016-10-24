@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828082137) do
+ActiveRecord::Schema.define(version: 20161024101938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -319,6 +319,24 @@ ActiveRecord::Schema.define(version: 20160828082137) do
   add_index "duty_days", ["day"], name: "index_duty_days_on_day", using: :btree
   add_index "duty_days", ["kind"], name: "index_duty_days_on_kind", using: :btree
   add_index "duty_days", ["user_id"], name: "index_duty_days_on_user_id", using: :btree
+
+  create_table "fault_kinds", force: :cascade do |t|
+    t.string   "name"
+    t.string   "icon"
+    t.boolean  "is_permanent", default: false, null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+  end
+
+  create_table "faults", force: :cascade do |t|
+    t.integer  "kind_id",    null: false
+    t.date     "date"
+    t.text     "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "faults", ["kind_id"], name: "index_faults_on_kind_id", using: :btree
 
   create_table "favorite_links", force: :cascade do |t|
     t.integer  "owner_id",   null: false
@@ -1208,6 +1226,7 @@ ActiveRecord::Schema.define(version: 20160828082137) do
   add_index "wiki_pages", ["creator_id"], name: "index_wiki_pages_on_creator_id", using: :btree
   add_index "wiki_pages", ["path"], name: "index_wiki_pages_on_path", unique: true, using: :btree
 
+  add_foreign_key "faults", "fault_kinds", column: "kind_id"
   add_foreign_key "option_values", "option_types"
   add_foreign_key "product_groups_option_values", "option_values"
   add_foreign_key "product_groups_option_values", "product_groups"

@@ -51,6 +51,7 @@
       = menu_item t('salaries.index.title'), salaries_path if can? :manage, Salary
       = drop_down_divider
       = menu_item t('bonus_types.index.title'), bonus_types_path if can? :manage, BonusType
+      = menu_item t('fault_kinds.index.title'), fault_kinds_path if can? :manage, FaultKind
 
     = drop_down t('dashboard.references') do
       = menu_item t('products.index.title'), products_path if can? :read, Product

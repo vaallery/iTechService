@@ -17,6 +17,10 @@ gem 'simple_form'#, '~> 2.0'
 gem 'jbuilder', '~> 2.0'
 gem 'devise'#, '~> 2.2.1'
 gem 'devise_token_auth'
+
+gem 'trailblazer-rails'
+gem 'reform-rails'
+
 # gem 'cancan', '~> 1.6.8'
 gem 'cancancan', '~> 1.10'
 gem 'kaminari'#, '~> 0.14.1'
