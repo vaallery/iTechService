@@ -2,7 +2,8 @@ class FaultKindsController < ApplicationController
   authorize_resource
 
   def index
-    @fault_kinds = FaultKind.all
+    # authorize! :xindex, FaultKind
+    @fault_kinds = FaultKind.ordered
     respond_to do |format|
       format.html
     end
@@ -25,6 +26,7 @@ class FaultKindsController < ApplicationController
   end
 
   def edit
+    # authorize! :edit, FaultKind
     form FaultKind::Update
     respond_to do |format|
       format.html
@@ -49,6 +51,14 @@ class FaultKindsController < ApplicationController
   end
 
   private
+
+  # def authorize!(action, subject=nil)
+  #   subject ||= FaultKind.new
+  #   unless FaultKind::Policy.new(current_user, subject).send("#{action}?")
+  #     message = 'Access denied'
+  #     raise CanCan::AccessDenied.new(message, action, subject)
+  #   end
+  # end
 
   def redirect_to_index(response_status={})
     redirect_to fault_kinds_path, response_status

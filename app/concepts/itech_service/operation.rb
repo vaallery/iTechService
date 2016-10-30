@@ -1,6 +1,6 @@
 module ItechService
   class Operation < Trailblazer::Operation
-    include Trailblazer::Operation::Policy
+    # include Trailblazer::Operation::Policy
     include Model
 
     def process(params)

@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
   has_many :locations, through: :department
   has_many :device_notes, dependent: :destroy
   has_many :favorite_links, foreign_key: 'owner_id', dependent: :destroy
+  has_many :faults, foreign_key: :causer_id, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
 

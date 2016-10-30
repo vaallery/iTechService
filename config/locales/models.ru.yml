@@ -213,6 +213,9 @@ ru:
         user: 'Сотрудник'
         user_id: 'Сотрудник'
 
+      fault:
+        causer: 'Провинившийся'
+
       fault_kind:
         is_permanent: 'Постоянный?'
 

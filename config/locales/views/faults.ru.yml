@@ -1,0 +1,11 @@
+ru:
+  faults:
+    index:
+      title: 'Минусы'
+    new:
+      title: 'Новый Минус'
+    edit:
+      title: 'Редактирование Минуса'
+    created: 'Минус создан'
+    updated: 'Минус изменён'
+    destroyed: 'Минус удалён'

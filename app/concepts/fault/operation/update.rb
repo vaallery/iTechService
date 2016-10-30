@@ -1,6 +1,6 @@
-class FaultKind < ApplicationRecord
+class Fault < ApplicationRecord
   class Update < ItechService::Operation
-    model FaultKind, :update
+    model Fault, :update
     # policy Policy, :update?
     contract Form
   end

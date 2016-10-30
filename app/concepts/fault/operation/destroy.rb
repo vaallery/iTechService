@@ -1,6 +1,6 @@
-class FaultKind < ApplicationRecord
+class Fault < ApplicationRecord
   class Destroy < ItechService::Operation::Destroy
-    model FaultKind, :find
+    model Fault, :find
     # policy Policy, :destroy?
   end
 end

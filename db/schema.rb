@@ -329,6 +329,7 @@ ActiveRecord::Schema.define(version: 20161024101938) do
   end
 
   create_table "faults", force: :cascade do |t|
+    t.integer  "causer_id",  null: false
     t.integer  "kind_id",    null: false
     t.date     "date"
     t.text     "comment"
@@ -336,6 +337,7 @@ ActiveRecord::Schema.define(version: 20161024101938) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "faults", ["causer_id"], name: "index_faults_on_causer_id", using: :btree
   add_index "faults", ["kind_id"], name: "index_faults_on_kind_id", using: :btree
 
   create_table "favorite_links", force: :cascade do |t|
@@ -1227,6 +1229,7 @@ ActiveRecord::Schema.define(version: 20161024101938) do
   add_index "wiki_pages", ["path"], name: "index_wiki_pages_on_path", unique: true, using: :btree
 
   add_foreign_key "faults", "fault_kinds", column: "kind_id"
+  add_foreign_key "faults", "users", column: "causer_id"
   add_foreign_key "option_values", "option_types"
   add_foreign_key "product_groups_option_values", "option_values"
   add_foreign_key "product_groups_option_values", "product_groups"
