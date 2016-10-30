@@ -37,7 +37,27 @@
     &.empty {
       background-color: #ffc7c5;
     }
+
   }
+  tr:hover {
+    td.timesheet_day {
+      &.empty {
+        background-color: #ffa4a4;
+      }
+      &.accounting_month {
+        border-top: solid 3px #f00033;
+        border-bottom: solid 3px #f00033;
+      }
+      &.salary_day {
+        border-left: solid 3px #f00033;
+        border-right: solid 3px #f00033;
+      }
+    }
+  }
+}
+
+.fault_kind-icon {
+  width: 20px;
 }
 
 #timesheet_day_form {
