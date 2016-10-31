@@ -307,6 +307,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def salary_date_at(date)
+    if hiring_date.present?
+      if date.end_of_month.day < hiring_date.day
+        hiring_date.change(day: date.end_of_month.day, month: date.month, year: date.year)
+      else
+        hiring_date.change(month: date.month, year: date.year)
+      end
+    end
+  end
+  
   def self.oncoming_salary
     today = Date.current
     User.active.to_a.keep_if do |user|
@@ -400,8 +410,10 @@ class User < ActiveRecord::Base
     cash_drawer.current_shift
   end
 
-  def faults_by_kind
-    faults.group(:kind_id).count.map {|id, count| {FaultKind.select(:icon).find(id).icon_url => count}}
+  def faults_by_kind_on(date)
+    faults.where('faults.date <= ?', date).group(:kind_id).count.map do |id, count|
+      [FaultKind.find(id), count]
+    end.to_h
   end
 
   private
