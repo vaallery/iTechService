@@ -401,7 +401,7 @@ class User < ActiveRecord::Base
   end
 
   def faults_by_kind
-    faults.group(:kind_id).count.map {|id, count| [FaultKind.find(id), count]}.to_h
+    faults.group(:kind_id).count.map {|id, count| {FaultKind.select(:icon).find(id).icon_url => count}}
   end
 
   private

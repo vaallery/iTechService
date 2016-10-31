@@ -21,4 +21,5 @@
 
 every :day, at: '8:00' do
   runner 'User.check_birthdays'
+  rake 'app:delete_expired_faults'
 end
