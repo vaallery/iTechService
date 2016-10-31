@@ -19,6 +19,11 @@ $(document).on 'click', 'td.timesheet_day', ->
   else
     $.get '/timesheet/'+id+'/edit.js'
 
+#$(document).on 'moseenter', 'td.timesheet_day.salary_day', ->
+#  $cell = $(this)
+#  user = $cell.parents('.timesheet_row').data('user')
+#  $.get "/user/#{user}/faults.js"
+
 $(document).on 'click', '.submit_timesheet_day_form', (event)->
   $('#timesheet_day_form').submit()
   event.preventDefault()

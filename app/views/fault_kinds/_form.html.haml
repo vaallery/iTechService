@@ -1,0 +1,14 @@
+= auto_header_tag form
+
+= simple_form_for form, html: { class: 'form-horizontal' } do |f|
+  = f.error_notification
+
+  = f.input :name
+  = f.input :icon
+  - if form.model.icon.present?
+    .form-inputs
+      .controls= image_tag form.model.icon_url
+  = f.input :is_permanent, as: :boolean
+
+  .form-actions
+    = submit_button f

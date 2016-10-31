@@ -1,0 +1,19 @@
+%table.table.table-hover
+  %thead
+    %tr
+      %th= Fault.human_attribute_name(:date)
+      %th= Fault.human_attribute_name(:kind)
+      %th= Fault.human_attribute_name(:comment)
+      %th
+
+  %tbody
+    - faults.each do |fault|
+      %tr
+        %td= l fault.date
+        %td
+          = image_tag fault.icon_url, class: 'fault_kind-icon' if fault.icon.present?
+          = fault.name
+        %td= fault.comment
+        %td
+          .btn-group
+            = link_to_destroy_small fault if can? :destroy, fault

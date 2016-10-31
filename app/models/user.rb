@@ -57,6 +57,7 @@ class User < ActiveRecord::Base
   has_many :locations, through: :department
   has_many :device_notes, dependent: :destroy
   has_many :favorite_links, foreign_key: 'owner_id', dependent: :destroy
+  has_many :faults, foreign_key: :causer_id, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader
 
@@ -299,9 +300,11 @@ class User < ActiveRecord::Base
   end
 
   def upcoming_salary_date
-    today = Date.current
-    date = today.end_of_month.day < hiring_date.day ? hiring_date.change(day: today.end_of_month.day, month: today.month, year: today.year) : hiring_date.change(month: today.month, year: today.year)
-    date < today ? date.next_month : date
+    if hiring_date.present?
+      today = Date.current
+      date = today.end_of_month.day < hiring_date.day ? hiring_date.change(day: today.end_of_month.day, month: today.month, year: today.year) : hiring_date.change(month: today.month, year: today.year)
+      date < today ? date.next_month : date
+    end
   end
 
   def self.oncoming_salary
@@ -395,6 +398,10 @@ class User < ActiveRecord::Base
 
   def current_cash_shift
     cash_drawer.current_shift
+  end
+
+  def faults_by_kind
+    faults.group(:kind_id).count.map {|id, count| {FaultKind.select(:icon).find(id).icon_url => count}}
   end
 
   private

@@ -1,0 +1,16 @@
+= simple_form_for [@form.causer, @form], remote: true, html: {class: 'form-inline form-horizontal'} do |f|
+  .modal-header
+    = button_to_close_modal
+    %h3= auto_title @form.model
+
+  .modal-body
+    .control-group
+      %label.control-label= Fault.human_attribute_name(:causer)
+      .controls
+        %strong= @form.causer_name
+    = f.input :date, as: :my_date
+    -#= f.association :kind, collection: @form.kinds, as: :select
+    = f.input :kind_id, collection: @form.kinds, as: :select, label: Fault.human_attribute_name(:kind)
+    = f.input :comment, as: :text
+
+  .modal-footer= submit_button f

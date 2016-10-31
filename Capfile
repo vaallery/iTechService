@@ -26,7 +26,7 @@ require 'capistrano/rails/collection'
 require 'capistrano/passenger'
 require 'capistrano/console'
 # require 'capistrano/passenger'
-#require 'whenever/capistrano'
+require 'whenever/capistrano'
 require 'capistrano/ssh_doctor'
 require 'airbrussh/capistrano'
 

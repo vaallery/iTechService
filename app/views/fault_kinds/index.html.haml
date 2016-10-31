@@ -1,0 +1,16 @@
+= auto_header_tag
+%table.table.table-hover.table-striped
+  %thead
+    %tr
+      %th= FaultKind.human_attribute_name :name
+      %th= FaultKind.human_attribute_name :is_permanent
+      %th
+  %tbody
+    - @fault_kinds.each do |fault_kind|
+      %tr
+        %td= fault_kind.name
+        %td= fault_kind.is_permanent? ? icon_tag('ok') : icon_tag('minus')
+        %td
+          .btn-group
+            = link_to_edit_small fault_kind if can? :edit, fault_kind
+            = link_to_destroy_small fault_kind if can? :destroy, fault_kind

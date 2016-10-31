@@ -1,4 +1,9 @@
 ru:
+  activemodel:
+    attributes:
+     fault_kind:
+       is_permanent: :activerecord.attributes.fault_kind.is_permanent
+
   activerecord:
     models:
       announcement: 'Оповещение'
@@ -26,6 +31,7 @@ ru:
       device_type: 'Тип девайса'
       discount: 'Скидка'
       duty_day: 'Дежурство'
+      fault_kind: 'Вид минуса'
       feature: 'Характеристика'
       feature_type: 'Тип характеристики'
       gift_certificate: 'Подарочный сертификат'
@@ -206,6 +212,12 @@ ru:
         kind: 'Тип'
         user: 'Сотрудник'
         user_id: 'Сотрудник'
+
+      fault:
+        causer: 'Провинившийся'
+
+      fault_kind:
+        is_permanent: 'Постоянный?'
 
       feature:
         value: 'Значение'
@@ -459,9 +471,6 @@ ru:
         name: 'Название'
         role: 'Роль'
 
-      task_template:
-        icon: 'Значок'
-
       timesheet_day:
         date: "Дата"
         status: "Статус"
@@ -556,6 +565,7 @@ ru:
     device_type_id: :activerecord.models.device_type
     devices: 'Девайсы'
     fio: 'ФИО'
+    icon: 'Значок'
     id: '№'
     imei: 'IMEI'
     kind: 'Вид'

@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     get :actions, on: :member
     get :finance, on: :member
     get :bonuses, on: :member
+    resources :faults, shallow: true
     post :create_duty_day, on: :collection
     post :destroy_duty_day, on: :collection
   end
@@ -136,6 +137,7 @@ Rails.application.routes.draw do
   resources :salaries
   resources :discounts, except: :show
   resources :timesheet_days, path: 'timesheet', except: :show
+  resources :fault_kinds, except: :show
   resources :bonuses
   resources :bonus_types, except: :show
   resources :installments

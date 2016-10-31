@@ -1,5 +1,10 @@
 namespace :app do
 
+  desc 'Delete expired faults'
+  task delete_expired_faults: :environment do
+    DeleteExpiredFaults.()
+  end
+
   desc 'Move repair parts of unarchived service_jobs to repair store'
   task stash_repair_parts: :environment do
     log = Logger.new('log/app_stash_repair_parts.log')
