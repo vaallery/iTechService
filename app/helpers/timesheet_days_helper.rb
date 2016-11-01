@@ -37,32 +37,31 @@ module TimesheetDaysHelper
       end
     end
     title = ''
-    # if (salary_date = user.upcoming_salary_date).present?
     if (salary_date = user.salary_date_at(date)).present?
       cell_class << ' accounting_month' if date <= salary_date
       if date == salary_date
         cell_class << ' salary_day'
-        title = faults_tooltip user.faults_by_kind_on(date)
+        title = faults_tooltip Fault.employee_faults_count_by_kind_on(user, date)
       end
     end
-    good_karmas = user.karmas.good.created_at(date)
-    bad_karmas = user.karmas.bad.created_at(date)
+    # good_karmas = user.karmas.good.created_at(date)
+    # bad_karmas = user.karmas.bad.created_at(date)
     content_tag(:td, id: (id.present? ? "timesheet_day_#{id}" : ''), title: title, class: cell_class,
                 data: {placement: 'right', container: 'body', date: date.to_s, id: id, html: true}) do
       content = ''
       content << content_tag(:span, status_abbr, class: 'status_abbr')
-      content << content_tag(:abbr, "+#{good_karmas.count}", class: 'good_karmas has-tooltip', title: good_karmas.map{|k|k.comment}.join('<br/><br/>'), data: {html: true}) if good_karmas.count > 0
+      # content << content_tag(:abbr, "+#{good_karmas.count}", class: 'good_karmas has-tooltip', title: good_karmas.map{|k|k.comment}.join('<br/><br/>'), data: {html: true}) if good_karmas.count > 0
       content << tag(:br)
       content << content_tag(:span, value, class: 'value')
-      content << content_tag(:abbr, "-#{bad_karmas.count}", class: 'bad_karmas has-tooltip', title: bad_karmas.map { |k| k.comment }.join('<br/><br/>'), data: {html: true}) if bad_karmas.count > 0
+      # content << content_tag(:abbr, "-#{bad_karmas.count}", class: 'bad_karmas has-tooltip', title: bad_karmas.map { |k| k.comment }.join('<br/><br/>'), data: {html: true}) if bad_karmas.count > 0
       content.html_safe
     end
   end
 
   def faults_tooltip(faults)
-    faults.map do |fault_kind, count|
+    faults.map do |fault_kind, counts|
       presentation = fault_kind.icon.present? ? image_tag(fault_kind.icon, class: 'fault_kind-icon') : fault_kind.name
-      "#{presentation} - #{count}"
+      "#{presentation} - #{counts[:month]} (#{counts[:total]})"
     end.join('<br/><br/>')
   end
 end

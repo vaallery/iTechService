@@ -410,12 +410,6 @@ class User < ActiveRecord::Base
     cash_drawer.current_shift
   end
 
-  def faults_by_kind_on(date)
-    faults.where('faults.date <= ?', date).group(:kind_id).count.map do |id, count|
-      [FaultKind.find(id), count]
-    end.to_h
-  end
-
   private
 
   def validate_rights_changing
