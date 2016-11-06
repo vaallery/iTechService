@@ -80,7 +80,7 @@
       = menu_item t('contacts_extractions.new.title'), new_contacts_extraction_path if can? :manage, ContactsExtractor
       = drop_down_divider
       = menu_item t('dashboard.print_tags.title'), print_tags_path if current_user.any_admin?
-      = menu_item t('receipts.new.title'), receipts_new_path
+      = menu_item t('receipts.new.title'), new_receipt_path
       = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService
       = drop_down_divider
       -#= navbar_item t('.data_migration'), data_migration_path

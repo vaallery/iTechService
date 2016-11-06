@@ -235,7 +235,7 @@ Rails.application.routes.draw do
   resources :imported_sales, only: :index
   resources :sales_imports, only: [:new, :create]
 
-  get 'receipts/new'
+  get 'receipts/new', as: :new_receipt
   get 'receipts/add_product'
   post 'receipts/print'
 
