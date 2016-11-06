@@ -23,4 +23,5 @@ ru:
       sum_in_words: 'Сумма прописью'
       receipt: 'Чек'
       warranty: 'Гарантия'
+      sale_check: 'Кассовый чек'
       print: 'Напечатать'

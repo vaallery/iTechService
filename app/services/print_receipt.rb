@@ -12,9 +12,11 @@ class PrintReceipt
       sale.seller_post = params[:seller_post]
       sale.sum = params[:sum]
       sale.sum_in_words = params[:sum_in_words]
+      sale.payments = [OpenStruct.new(kind: 'cash', value: params[:sum])]
       sale.sale_items = params[:products].collect do |index, product|
         attributes = {
           warranty_term: product[:warranty_term].to_i,
+          feature_accounting: product[:serial_number].present?,
           features: [OpenStruct.new(value: product[:serial_number]), OpenStruct.new(value: product[:imei])],
           code: product[:article],
           name: product[:name],
@@ -45,13 +47,21 @@ class PrintReceipt
     @warranty ||= make_warranty
   end
 
+  def sale_check
+    @sale_check ||= make_sale_check
+  end
+
   private
 
   def make_receipt
-    ReceiptPdf.new(sale).render
+    ReceiptPdf.new(sale)
   end
 
   def make_warranty
-    WarrantyPdf.new(sale).render
+    WarrantyPdf.new(sale)
+  end
+
+  def make_sale_check
+    ManualSaleCheckPdf.new(sale)
   end
 end
