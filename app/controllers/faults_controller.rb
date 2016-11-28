@@ -2,7 +2,7 @@ class FaultsController < ApplicationController
   authorize_resource
 
   def index
-    @faults = Fault.where(causer_id: params[:user_id]).ordered
+    @faults = Fault.where(causer_id: params[:user_id]).ordered.page(params[:page])
     respond_to do |format|
       format.js
     end
