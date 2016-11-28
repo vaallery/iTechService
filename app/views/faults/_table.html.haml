@@ -17,3 +17,5 @@
         %td
           .btn-group
             = link_to_destroy_small fault if can? :destroy, fault
+
+= paginate faults, remote: true

@@ -135,6 +135,7 @@ class Ability
       cannot :manage, Report
     end
     can :set_keeper, ServiceJob
+    can :read, Fault, causer_id: user.id
     cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: [1, 2]
     cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: [0, 2]
     cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: 1
