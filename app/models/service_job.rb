@@ -299,6 +299,10 @@ class ServiceJob < ActiveRecord::Base
     end
   end
 
+  def note
+    device_notes.last&.content&.presence || comment
+  end
+
   private
 
   def generate_ticket_number

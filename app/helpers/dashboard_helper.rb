@@ -54,7 +54,7 @@ module DashboardHelper
         (service_job.client.present? ? link_to(service_job.client_short_name, client_path(service_job.client)) : '-').html_safe +
         " #{contact_phones_for(service_job)}".html_safe +
         tag(:br, false) +
-        service_job.comment
+        service_job.note
       end +
       content_tag(:td, class: 'device_task_action_column') do
         notes_icon_name = service_job.device_notes.exists? ? 'file-text-alt' : 'file-alt'
