@@ -22,6 +22,8 @@
           .controls
             = text_field_tag 'contact_phone', human_phone(@service_job.client.contact_phone), class: 'input-medium', disabled: true
 
+      = f.input :security_code, as: :security_code
+
       - if can? :update, @service_job
         - if @service_job.new_record? || @service_job.item.present?
           = f.input :item, as: :device
@@ -45,8 +47,6 @@
           .control-group
             %label.control-label= ServiceJob.human_attribute_name(:imei)
             .controls= service_job.imei
-
-      = f.input :security_code, as: :security_code
 
       - if @service_job.new_record? or @service_job.user_id == current_user.id
         = f.input :app_store_pass, required: @service_job.new_record?
