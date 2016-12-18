@@ -1,32 +1,35 @@
-= simple_form_for @order, html: { id: 'order_form', class: 'form-horizontal' } do |f|
+.row-fluid
+  .span6
+    = simple_form_for @order, html: { id: 'order_form', class: 'form-horizontal' } do |f|
 
-  - if @order.user.present?
-    .control-group.string.disabled.optional
-      %label.control-label.string.optional= Order.human_attribute_name :user
-      .controls= text_field_tag 'order_user', @order.user.short_name, class: 'input-xlarge', disabled: true
+      - if @order.user.present?
+        .control-group.string.disabled.optional
+          %label.control-label.string.optional= Order.human_attribute_name :user
+          .controls= text_field_tag 'order_user', @order.user.short_name, class: 'input-xlarge', disabled: true
 
-  = f.input :number, disabled: true, input_html: { class: 'input-xlarge' }
-  = f.association :department, prompt: false
-  - if @order.new_record?
-    = f.input :customer, as: :client, wrapper_html: {id: 'client_fields'}, no_devices: true
-  - else
-    .control-group.string.disabled.optional
-      %label.control-label.string.optional= Order.human_attribute_name :customer
-      .controls= text_field_tag :customer, @order.customer.presentation, class: 'input-xlarge', disabled: true
-  = f.input :object_kind, as: :object_kind
-  = f.input :object, as: :object
-  = f.input :object_url, input_html: {rows: 3, class: 'input-xlarge'}
-  = f.input :approximate_price, input_html: {class: 'input-xlarge'}
-  = f.input :quantity, input_html: {class: 'input-xlarge'}
-  = f.input :comment, input_html: {rows: 5, class: 'input-xlarge'}
-  = f.input :user_comment, input_html: {rows: 5, class: 'input-xlarge'} if current_user.marketing?
-  = f.input :desired_date, as: :my_date
-  - if f.object.new_record?
-    = f.hidden_field :status
-  - else
-    = f.input :status, as: :status
-  = f.input :priority, input_html: {class: 'input-xlarge'}
-  .form-actions
-    = submit_button f
+      = f.input :number, disabled: true, input_html: { class: 'input-xlarge' }
+      = f.association :department, prompt: false
+      - if @order.new_record?
+        = f.input :customer, as: :client, wrapper_html: {id: 'client_fields'}, no_devices: true
+      - else
+        .control-group.string.disabled.optional
+          %label.control-label.string.optional= Order.human_attribute_name :customer
+          .controls= text_field_tag :customer, @order.customer.presentation, class: 'input-xlarge', disabled: true
+      = f.input :object_kind, as: :object_kind
+      = f.input :object, as: :object
+      = f.input :object_url, input_html: {rows: 3, class: 'input-xlarge'}
+      = f.input :approximate_price, input_html: {class: 'input-xlarge'}
+      = f.input :quantity, input_html: {class: 'input-xlarge'}
+      = f.input :comment, input_html: {rows: 5, class: 'input-xlarge'}
+      = f.input :user_comment, input_html: {rows: 5, class: 'input-xlarge'} if current_user.marketing?
+      = f.input :desired_date, as: :my_date
+      - if f.object.new_record?
+        = f.hidden_field :status
+      - else
+        = f.input :status, as: :status
+      = f.input :priority, input_html: {class: 'input-xlarge'}
+      .form-actions
+        = submit_button f
 
-#secondary_form_container.well.well-small
+  .span6
+    = secondary_form_container
