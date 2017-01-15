@@ -112,4 +112,10 @@ class ClientsController < ApplicationController
     end
   end
 
+  def export
+    file = ExportClients.call
+    respond_to do |format|
+      format.vcf { send_file file, filename: 'clients.vcf', type: 'application/vcf', disposition: 'inline' }
+    end
+  end
 end

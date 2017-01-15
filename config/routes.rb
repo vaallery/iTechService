@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     get :autocomplete, on: :collection
     get :select, on: :member
     get :find, on: :member
+    get :export, on: :collection
   end
 
   resources :client_categories
