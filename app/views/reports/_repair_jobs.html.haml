@@ -1,14 +1,14 @@
 - %i[with_parts without_parts without_payment undone].each do |group|
   %table#repair_jobs_report.table.table-bordered.table-hover
-    %caption= "#{report_title(@report)} #{t 'reports.repair_jobs.' + group.to_s}"
+    %caption= "#{report_title(report)} #{t 'reports.repair_jobs.' + group.to_s}"
     %thead
       %tr
         %th.center= t '.group'
         %th.center= t '.service'
         %th.center= t '.quantity'
     %tbody
-      - if @report.result[group].present?
-        - @report.result[group].each_pair do |_, group_value|
+      - if report.result[group].present?
+        - report.result[group].each_pair do |_, group_value|
           %tr
             %td.group{rowspan: group_value[:jobs_qty]+group_value[:services_qty]+1}= group_value[:name]
             %td.hidden{colspan: 2}

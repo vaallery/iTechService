@@ -1,5 +1,5 @@
 %table#margin_report.table.table-bordered.table-hover
-  %caption= report_title @report
+  %caption= report_title report
   %thead
     %tr
       %th= t 'reports.margin.kind'
@@ -8,12 +8,12 @@
     - [:repair, :service, :sale].each do |kind|
       %tr.detailable
         %td= t "reports.margin.kinds.#{kind}"
-        %td= human_currency @report.result[kind][:sum], false
-      - @report.result[kind][:details].each do |d|
+        %td= human_currency report.result[kind][:sum], false
+      - report.result[kind][:details].each do |d|
         %tr.details
           %td= link_to "ID: #{d[:id]}, Name: #{d[:name]}, Quantity: #{d[:quantity]}, Price: #{human_currency d[:price]}, Discount: #{human_currency d[:discount]}, Purchase Price: #{human_currency d[:purchase_price]}", product_path(d[:product_id]), target: '_blank'
           %td= human_currency d[:margin]
   %tfoot
     %tr
       %td= t 'reports.total'
-      %td= human_currency @report.result[:sum], false
+      %td= human_currency report.result[:sum], false

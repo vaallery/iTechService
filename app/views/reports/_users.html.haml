@@ -1,5 +1,5 @@
 %table#users_report.table.table-bordered.table-hover
-  %caption= report_title @report
+  %caption= report_title report
   %thead
     %tr
       %th.center{rowspan: 2}= ServiceJob.human_attribute_name :user
@@ -9,7 +9,7 @@
       %th.center= t('reports.received_done')
       %th.center= t('reports.received_archived')
   %tbody
-    - @report.result[:users].each do |user|
+    - report.result[:users].each do |user|
       %tr.detailable
         %td= user[:name]
         %td= user[:qty]
@@ -28,6 +28,6 @@
   %tfoot
     %tr
       %td= t('reports.total')
-      %td= @report.result[:service_jobs_received_count]
-      %td= @report.result[:service_jobs_received_done_count]
-      %td= @report.result[:service_jobs_received_archived_count]
+      %td= report.result[:service_jobs_received_count]
+      %td= report.result[:service_jobs_received_done_count]
+      %td= report.result[:service_jobs_received_archived_count]

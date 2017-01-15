@@ -1,0 +1,11 @@
+- stores_collection = Store.all.map { |s| [s.name, s.id] }
+.page-header
+  #reports_filter.navbar.container
+    .navbar-inner
+      = form_for report, as: :report, html: {id: 'report_form', class: 'navbar-search form-search'} do |f|
+        = button_tag glyph(:filter), class: 'btn btn-info', type: 'submit'
+        = f.hidden_field :name
+        = f.text_field :start_date, class: 'bootstrap-datepicker input-small'
+        = '_'
+        = f.text_field :end_date, class: 'bootstrap-datepicker input-small'
+        = f.select :store_id, stores_collection, prompt: t('activerecord.models.store') if report.respond_to?(:store_id)
