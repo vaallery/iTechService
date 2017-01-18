@@ -19,7 +19,6 @@
       = menu_item t('orders.link', default: 'Orders'), orders_path if can? :read, Order
       = drop_down_divider
       = menu_item t('clients.link', default: 'Clients'), clients_path
-      = menu_item t('clients.link_vcard', default: 'Clients (vCard)'), export_clients_path(format: 'vcf')
       - if can? :manage, TaskTemplate
         = drop_down_divider
         = menu_item t('task_templates.index.title'), task_templates_path
