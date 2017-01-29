@@ -14,21 +14,25 @@ class ProductCategory < ActiveRecord::Base
     true
   end
 
-  def is_service
+  def is_service?
     kind == 'service'
   end
+  alias_method :is_service, :is_service?
 
-  def is_equipment
+  def is_equipment?
     kind == 'equipment'
   end
+  alias_method :is_equipment, :is_equipment?
 
-  def is_accessory
+  def is_accessory?
     kind == 'accessory'
   end
+  alias_method :is_accessory, :is_accessory?
 
-  def is_spare_part
+  def is_spare_part?
     kind == 'spare_part'
   end
+  alias_method :is_spare_part, :is_spare_part?
 
   def self.accessory_with_sn
     ProductCategory.where(kind: 'accessory').includes(:feature_types).where('feature_types.kind = ?', 'serial_number').first || ProductCategory.create(name: 'Accessory with SN', kind: 'accessory', feature_type_ids: [FeatureType.serial_number.id])

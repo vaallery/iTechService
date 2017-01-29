@@ -1,17 +1,18 @@
+# TODO: implement
 class MarginReport < BaseReport
 
   def call
     result.deep_merge!({repair: {sum: 0, details: []}, service: {sum: 0, details: []}, sale: {sum: 0, details: []}, sum: 0})
-    sales = Sale.posted.sold_at(period).order('date asc')
+    sales = Sale.posted.sold_at(period).date_asc
 
-    sales.selling.each do |sale|
-      sale.sale_items.each do |sale_item|
+    sales.selling.find_each do |sale|
+      sale.sale_items.find_each do |sale_item|
         if sale_item.is_repair?
           kind = :repair
           # if (repair_tasks = sale_item.device_task.try(:repair_tasks)).present?
 
           # end
-        elsif sale_item.is_service
+        elsif sale_item.is_service?
           kind = :service
         else
           kind = :sale

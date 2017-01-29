@@ -31,6 +31,10 @@ class Location < ActiveRecord::Base
     Location.where(code: 'archive').first_or_create(name: 'Архив')
   end
 
+  def self.archive_ids
+    where(code: 'archive').pluck(:id)
+  end
+
   def self.repair
     Location.where(code: 'repair').first_or_create(name: 'Ремонт')
   end

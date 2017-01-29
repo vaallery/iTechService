@@ -21,26 +21,26 @@ ru:
     sum: Сумма
     remnants: "Остатки"
     done_orders:
-      title: Выполненные заказы
+      title: 'Выполненные заказы'
     clients:
-      title: Новые клиенты
+      title: 'Новые клиенты'
     device_types:
-      title: Принятые девайсы по типам
+      title: 'Принятые девайсы по типам'
     device_groups:
       title: 'Принятые девайсы по группам'
     devices_archived:
       title: 'Девайсы, переведённые в архив'
       archived: "Переведено в архив"
     devices_movements:
-      title: Перемещения девайсов
+      title: 'Перемещения девайсов'
     salary:
-      title: Отчет по зарплате
+      title: 'Отчет по зарплате'
     tasks_duration:
-      title: Длительность выполнения задач
+      title: 'Длительность выполнения задач'
     done_tasks:
-      title: Выполненные задачи
+      title: 'Выполненные задачи'
     users:
-      title: Принятые девайсы по сотрудникам
+      title: 'Принятые девайсы по сотрудникам'
     sales:
       title: "Отчет по продажам"
       time: "Время"
@@ -95,3 +95,9 @@ ru:
         sale: 'Продажи'
     device_orders:
       title: "Отчёт по заказам на технику"
+
+    devices_not_archived:
+      title: 'Девайсы, не переведённые в архив'
+      received: 'Принято'
+      archived: 'Из них в архиве'
+      not_archived_devices: 'Девайсы не в архиве'

@@ -2,6 +2,7 @@ class Sale < ActiveRecord::Base
   include Document
 
   scope :sold_at, ->(period) { where(date: period) }
+  scope :date_asc, -> { order date: :asc }
   scope :posted, ->{where(status: 1)}
   scope :deleted, ->{where(status: 2)}
   scope :unposted, ->{where('status <> ?', 1)}

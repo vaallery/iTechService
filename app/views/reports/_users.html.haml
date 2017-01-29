@@ -1,5 +1,5 @@
 %table#users_report.table.table-bordered.table-hover
-  %caption= report_title report
+  %caption= t '.title'
   %thead
     %tr
       %th.center{rowspan: 2}= ServiceJob.human_attribute_name :user
@@ -22,7 +22,7 @@
             = service_job.presentation_link
             %br
             = service_job.client_presentation_link
-          %td= l service_job.created_at, format: :long_d
+          %td= l service_job.created_at.to_datetime, format: :long_d
           %td= icon_tag(:ok) if service_job.at_done?
           %td= icon_tag(:ok) if service_job.in_archive?
   %tfoot
