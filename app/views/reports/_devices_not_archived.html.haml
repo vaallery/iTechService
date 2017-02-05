@@ -1,0 +1,19 @@
+%table.table.table-bordered.table-hover
+  %caption= t '.title'
+  %thead
+    %tr
+      %th.center= t '.received'
+      %th.center= t '.archived'
+      %th.center= t '.not_archived_devices'
+  %tbody
+    %tr
+      %td.received= report.result[:received_qty]
+      %td.archived= report.result[:archived_qty]
+      %td.not_archived= report.result[:not_archived_qty]
+    - report.result[:not_archived_devices].each do |device|
+      %tr
+        %td
+        %td
+        %td
+          = l device[:received_at], format: :long_d
+          = link_to device[:ticket_number], service_job_path(device[:job_id]), target: '_blank'

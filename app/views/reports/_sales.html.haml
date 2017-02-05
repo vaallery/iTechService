@@ -1,5 +1,5 @@
 %table#sales_report.table.table-bordered.table-hover
-  %caption= report_title @report
+  %caption= report_title report
   %thead
     %tr
       %th.center= t '.time'
@@ -11,7 +11,7 @@
       %th.center= t '.client'
       %th.center= t '.user'
   %tbody
-    - @report.result[:sales].each do |sale|
+    - report.result[:sales].each do |sale|
       %tr
         %td.time= human_datetime sale[:time]
         %td.product
@@ -27,8 +27,8 @@
   %tfoot
     %tr
       %td{colspan: 2}= t 'total'
-      %td.number= @report.result[:sales_count]
+      %td.number= report.result[:sales_count]
       %td
-      %td.number= human_currency @report.result[:sales_sum], false
-      %td.number= human_currency @report.result[:discounts_sum], false
+      %td.number= human_currency report.result[:sales_sum], false
+      %td.number= human_currency report.result[:discounts_sum], false
       %td{colspan: 2}

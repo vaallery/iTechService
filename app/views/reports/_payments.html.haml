@@ -1,12 +1,12 @@
 %table#payments_report.table.table-bordered.table-hover
-  %caption= report_title @report
+  %caption= report_title report
   %thead
     %tr
       %th.center= Payment.human_attribute_name :kind
       %th.center= Payment.human_attribute_name :value
       %th.center= t('attributes.quantity')
   %tbody
-    - @report.result[:payment_kinds].each_pair do |kind, value|
+    - report.result[:payment_kinds].each_pair do |kind, value|
       %tr{class: kind == 'cash' ? '' : 'detailable'}
         %td= t "payments.kinds.#{kind}"
         %td.number= human_currency value[:sum], false
@@ -34,5 +34,5 @@
   %tfoot
     %tr
       %td= t 'total'
-      %td.number= human_currency @report.result[:payments_sum], false
-      %td= @report.result[:payments_qty]
+      %td.number= human_currency report.result[:payments_sum], false
+      %td= report.result[:payments_qty]

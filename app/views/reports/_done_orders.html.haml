@@ -1,10 +1,10 @@
 %table#orders_report.table.table-bordered.table-hover
-  %caption= report_title @report
+  %caption= report_title report
   %thead
     %tr
       %th
   %tbody
-    - @report.result[:orders].each do |order|
+    - report.result[:orders].each do |order|
       %tr.order_row
         %td
   %tfoot

@@ -1,6 +1,7 @@
 # encoding: utf-8
 class ServiceJob < ActiveRecord::Base
 
+  scope :received_at, ->(period) { where created_at: period }
   scope :newest, ->{order('service_jobs.created_at desc')}
   scope :oldest, ->{order('service_jobs.created_at asc')}
   scope :done, ->{where('service_jobs.done_at IS NOT NULL').order('service_jobs.done_at desc')}
@@ -11,6 +12,7 @@ class ServiceJob < ActiveRecord::Base
   scope :at_done, ->(user=nil) { where(location_id: user.present? ? user.done_location : Location.done.id) }
   scope :not_at_done, ->{where('service_jobs.location_id <> ?', Location.done.id)}
   scope :at_archive, ->(user=nil) { where(location_id: user.present? ? user.archive_location : Location.archive.id) }
+  scope :not_at_archive, ->(user=nil) { where.not(location_id: user.present? ? user.archive_location : Location.archive.id) }
   scope :unarchived, ->{where('service_jobs.location_id <> ?', Location.archive.id)}
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
@@ -36,6 +38,7 @@ class ServiceJob < ActiveRecord::Base
   delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :department, prefix: true
   delegate :name, to: :location, prefix: true, allow_nil: true
+  alias_attribute :received_at, :created_at
 
   attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages
   validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :department
