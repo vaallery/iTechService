@@ -45,8 +45,9 @@ class FaultKindsController < ApplicationController
   def destroy
     respond_to do |format|
       run FaultKind::Destroy do |_|
+        format.html { return redirect_to_index notice: t('fault_kinds.destroyed') }
       end
-      format.html { return redirect_to_index notice: t('fault_kinds.destroyed') }
+      format.html { return redirect_to_index notice: t('fault_kinds.not_destroyed') }
     end
   end
 
