@@ -13,7 +13,7 @@ class Item < ActiveRecord::Base
   has_many :sales, through: :sale_items
   accepts_nested_attributes_for :features, allow_destroy: true
 
-  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :actual_prices, :quantity_in_store, :product_category, :product_group, :product_group_id, :discount_for, :is_service, :is_equipment, :is_spare_part, :is_repair?, :request_price, :warranty_term, :quantity_threshold, :comment, :options, :option_ids, :available_options, to: :product, allow_nil: true
+  delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :actual_prices, :quantity_in_store, :product_category, :product_group, :product_group_id, :discount_for, :is_service, :is_equipment, :is_spare_part, :is_equipment?, :is_spare_part?, :is_service?, :is_repair?, :request_price, :warranty_term, :quantity_threshold, :comment, :options, :option_ids, :available_options, to: :product, allow_nil: true
 
   validates_presence_of :product
   validates_length_of :barcode_num, is: 13, allow_nil: true

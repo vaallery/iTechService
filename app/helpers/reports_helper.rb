@@ -1,12 +1,18 @@
 module ReportsHelper
 
-  def reports_collection_for_select
-    reports = can?(:manage, Salary) ? Report::NAMES : Report::NAMES - ['salary']
-    reports.collect { |report| [report_title(report), report] }
+  def report_title(report)
+    t("reports.#{report.is_a?(String) ? report : report.name}.title")
   end
 
-  def report_title(report)
-    t("reports.#{report.is_a?(Report) ? report.name : report}.title")
+  def report_names
+    %w[device_types device_groups users devices_archived devices_not_archived done_tasks tasks_undone clients tasks_duration device_orders done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin quick_orders]
+  end
+
+  def report_default_params(report_name)
+    {
+      few_remnants_goods: {name: 'few_remnants', kind: 'goods'},
+      few_remnants_spare_parts: {name: 'few_remnants', kind: 'spare_parts'}
+    }.fetch report_name.to_sym, {name: report_name}
   end
 
   def remnants_row(data)

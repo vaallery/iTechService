@@ -1,11 +1,11 @@
 %table#tasks_undone_report.table.table-bordered.table-hover
-  %caption= report_title @report
+  %caption= report_title report
   %thead
     %tr
       %th.center= t '.tasks_devices'
       %th.center= t '.quantity_comment'
   %tbody
-    - @report.result.each_pair do |task_id, task_value|
+    - report.result.each_pair do |task_id, task_value|
       %tr.detailable
         %td.task= task_value[:name]
         %td.quantity.number= task_value[:tasks_qty]

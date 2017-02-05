@@ -1,12 +1,12 @@
 %table#salaries_report.table.table-bordered.table-hover
-  %caption= report_title @report
+  %caption= report_title report
   %thead
     %tr
       %th= t 'activerecord.models.user'
       - 5.downto(0) do |n|
         %th= t('date.month_names_single')[n.months.ago.month]
   %tbody
-    - @report.result[:salary].each do |record|
+    - report.result[:salary].each do |record|
 
       %tr
         %td
