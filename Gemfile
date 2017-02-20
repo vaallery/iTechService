@@ -109,8 +109,6 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
-  gem 'shoulda'
-  gem 'shoulda-matchers'
   gem 'railroady'
   gem 'minitest-rails'
   gem 'faker'#, '~> 1.3'
@@ -118,17 +116,17 @@ group :development, :test do
 end
 
 group :test do
-  gem 'simplecov', require: false
+  gem 'simplecov', '~> 0.12.0', require: false
 
-  gem 'minitest-reporters'
-  # # gem 'minitest-rails-capybara'
+  gem 'minitest-reporters', '~> 1.0.0'
+  gem 'minitest-rails-capybara'
+  gem 'poltergeist'
+  gem 'shoulda', '~> 3.5.0'
+  gem 'shoulda-matchers'
+  gem 'mocha', '~> 1.1.0'
   # # gem 'capybara-webkit'#, '~> 2.3'
-  # gem 'poltergeist'
-  # gem 'shoulda'
   # # gem 'shoulda-matchers'
-  # gem 'mocha'
   # # gem 'selenium-webdriver'#, '~> 2.42'
-  # gem 'simplecov', require: false
   # gem 'database_cleaner'#, '~> 1.3'
   # gem 'launchy'#, '~> 2.4'
   # gem 'test_after_commit'

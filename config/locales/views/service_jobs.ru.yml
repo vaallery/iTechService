@@ -22,6 +22,7 @@ ru:
 
     form:
       check_imei: "Проверить IMEI"
+      email_hint: 'для отправки уведомления о готовности'
 
     new:
       title: 'Новая Работа'

@@ -87,6 +87,10 @@
           %td= ServiceJob.human_attribute_name :client_notified if @service_job.client_notified?
 
       %tr
+        %td= ServiceJob.human_attribute_name :email
+        %td= @service_job.email || '-'
+
+      %tr
         %td= t 'service_jobs.sales_info'
         %td= sales_info @service_job
 

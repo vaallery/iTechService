@@ -40,7 +40,7 @@ class ServiceJob < ActiveRecord::Base
   delegate :name, to: :location, prefix: true, allow_nil: true
   alias_attribute :received_at, :created_at
 
-  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages
+  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages, :email
   validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :department
   validates_presence_of :contact_phone, on: :create
   validates_presence_of :device_type, if: 'item.nil?'
@@ -378,7 +378,10 @@ class ServiceJob < ActiveRecord::Base
 
   def service_job_update_announce
     if changed_attributes['location_id'].present?
-      Announcement.find_by_kind_and_content('device_return', self.id.to_s).try(:destroy) if self.at_done?
+      if self.at_done?
+        Announcement.find_by_kind_and_content('device_return', self.id.to_s).try(:destroy)
+        ServiceJobsMailer.done_notice(self.id).deliver_later if email.present?
+      end
     end
     # PrivatePub.publish_to '/service_jobs/update', service_job: self if changed_attributes['location_id'].present? and Rails.env.production?
   end
