@@ -7,6 +7,12 @@ ru:
       warning_text: 'На складе %{store} осталось %{quantity} %{product}'
     deletion:
       subject: "Айс. Удаление объекта."
+    service_jobs:
+      done_notice:
+        subject: 'Ваше устройство готово'
+        greeting: 'Здравствуйте. Вас приветствует компания iTech.'
+        text: 'Ваше устройство готово. Ждём вас в гости :)'
+        sign: 'С уважением, iTech.'
     product_import_log:
       subject: "%{type} import log %{time}"
     document:
