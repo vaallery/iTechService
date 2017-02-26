@@ -72,6 +72,9 @@ Rails.application.routes.draw do
     post :create_sale, on: :member
     patch :set_keeper, on: :member, defaults: { format: 'js' }
     resources :device_notes, only: %i[index new create]
+    scope module: :service_jobs do
+      resource :subscription, only: %i[create destroy], format: :js
+    end
   end
 
   resources :devices do

@@ -60,6 +60,9 @@
       %dt= User.human_attribute_name :phone_number
       %dd= @user.phone_number.present? ? number_to_phone(@user.phone_number, area_code: true) : '-'
 
+      %dt= User.human_attribute_name :email
+      %dd= @user.email.presence || '-'
+
       %dt= User.human_attribute_name :birthday
       %dd= @user.birthday.present? ? human_date(@user.birthday) : '-'
 

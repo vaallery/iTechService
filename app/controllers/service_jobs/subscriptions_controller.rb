@@ -1,0 +1,26 @@
+module ServiceJobs
+  class SubscriptionsController < ApplicationController
+
+    def create
+      @service_job = find_service_job
+      @service_job.subscribers.push current_user
+      respond_to do |format|
+        format.js { render :refresh }
+      end
+    end
+
+    def destroy
+      @service_job = find_service_job
+      @service_job.subscribers.delete current_user
+      respond_to do |format|
+        format.js { render :refresh }
+      end
+    end
+
+    private
+
+    def find_service_job
+      ServiceJob.find params[:service_job_id]
+    end
+  end
+end

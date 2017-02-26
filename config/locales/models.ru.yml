@@ -424,7 +424,7 @@ ru:
         history_records: 'История изменений'
         imei: 'IMEI'
         is_tray_present: 'Есть ли лоток?'
-        item: 'Девайс'
+        item: 'Устройство'
         keeper: 'Хранитель'
         location: :activerecord.models.location
         location_id: :activerecord.models.location
