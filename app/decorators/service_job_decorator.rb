@@ -1,7 +1,6 @@
 class ServiceJobDecorator < ApplicationDecorator
   delegate_all
   delegate :service_job_path, :client_path, :service_job_subscription_path, to: :helpers
-  decorates_association :client
 
   def device
 

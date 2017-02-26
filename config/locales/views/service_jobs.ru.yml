@@ -46,7 +46,8 @@ ru:
     link: 'Работы'
     not_found: 'Работа не найдена'
     not_found_by_ticket: "Устройство с талоном № %{ticket} не найдено"
-    moved_at: 'Перемёщена в'
+    moved_at: 'Перемещена в'
+    moved_to: 'Перемещено в'
     moved_by: 'Переместил(а)'
     phone_stolen: 'этот телефон в чёрном списке!!!'
     received: 'Принят'
@@ -60,3 +61,12 @@ ru:
     sales_info: "Информация о продаже"
     move_to_archive: "В архив"
 
+  service_jobs_mailer:
+    staff_notice:
+      subject: 'Уведомление об устройстве %{device}'
+      task_done: "Задача выполнена"
+      task_undone: "Задача не выполнена"
+      task_cost: "Стоимость задачи"
+      task_comment: "Комментарий к задаче"
+      note_added: 'Добавлена заметка'
+      performer: "Исполнитель"

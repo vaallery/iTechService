@@ -25,6 +25,7 @@ class DeviceNotesController < ApplicationController
     respond_to do |format|
       if @device_note.save
         format.js
+        Service::DeviceSubscribersNotificationJob.perform_later @service_job.id, current_user.id, params
       else
         # format.js { render 'show_form' }
         format.js { render nothing: true }

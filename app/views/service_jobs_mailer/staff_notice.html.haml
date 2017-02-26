@@ -1,0 +1,42 @@
+!!!
+%html{style: "font-family:'Helvetica-Neue', 'Helvetica', sans-serif;"}
+  %head
+    %meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
+
+  %body
+    %p
+      %strong= "#{ServiceJob.human_attribute_name :client}: "
+      = @service_job.client_presentation
+
+    %p
+      %strong= "#{ServiceJob.human_attribute_name :ticket_number}: "
+      = @service_job.ticket_number
+
+    %p
+      %strong= "#{ServiceJob.human_attribute_name :item}: "
+      = @service_job.device_name
+
+    %p
+      %strong= "#{t '.performer'}: "
+      = @user.short_name
+
+    - if @details[:moved_to].present?
+      %p
+        %strong= "#{t 'service_jobs.moved_to'}: "
+        = @details[:moved_to]
+
+    - if @details[:task].present?
+      %p
+        %strong= "#{t ".task_#{@details[:task][:status]}", default: DeviceTask.model_name.human}: "
+        = @details[:task][:name]
+      %p
+        %strong= "#{t '.task_cost'}: "
+        = @details[:task][:cost]
+      %p
+        %strong= "#{t '.task_comment'}: "
+        = @details[:task][:comment]
+
+    - if @details[:note].present?
+      %p
+        %strong= "#{t '.note_added'}: "
+        = @details[:note]
