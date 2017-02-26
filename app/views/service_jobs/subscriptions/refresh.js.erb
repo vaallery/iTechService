@@ -1,0 +1,2 @@
+$service_job_row = $(".service_job_row[data-service-job-id=<%= @service_job.id %>]", '#actual_tasks_table');
+$service_job_row.find('.service_job-subscription-form').replaceWith('<%= j @service_job.decorate.subscription_button %>');

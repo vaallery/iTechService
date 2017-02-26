@@ -1,7 +1,6 @@
 class ServiceJobDecorator < ApplicationDecorator
   delegate_all
-  delegate :service_job_path, :client_path, to: :helpers
-  decorates_association :client
+  delegate :service_job_path, :client_path, :service_job_subscription_path, to: :helpers
 
   def device
 
@@ -47,5 +46,22 @@ class ServiceJobDecorator < ApplicationDecorator
 
   def client_presentation_link
     link_to service_job.client_presentation, client_path(service_job.client)
+  end
+
+  def subscription_button
+    button_class = 'service_job-subscription-button btn btn-small btn-default'
+    if object.subscribers.exists? current_user.id
+      icon_name = 'star'
+      form_method = :delete
+      hint = I18n.t 'service_jobs.unsubscribe'
+    else
+      icon_name = 'star-empty'
+      form_method = :post
+      hint = I18n.t 'service_jobs.subscribe'
+    end
+    form_for :subscription, url: service_job_subscription_path(object), method: form_method, remote: true,
+             html: {class: 'button_to service_job-subscription-form'} do |_|
+      button_tag glyph(icon_name), class: button_class, title: hint
+    end
   end
 end
