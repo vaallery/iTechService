@@ -54,6 +54,8 @@ ru:
     search_placeholder: 'Талон или серийный номер'
     seach_sales_btn: 'Искать продажи'
     service_duration_placeholder: "м | ч.м | д.ч.м"
+    subscribe: 'Подписаться'
+    unsubscribe: 'Отписаться'
     updated: 'Работа изменён'
     sales_info: "Информация о продаже"
     move_to_archive: "В архив"

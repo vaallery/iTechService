@@ -60,6 +60,7 @@ module DashboardHelper
         notes_icon_name = service_job.device_notes.exists? ? 'file-text-alt' : 'file-alt'
         link_to_edit_service_job(service_job) +
         link_to(glyph(notes_icon_name), service_job_device_notes_path(service_job), class: 'device_notes-button btn btn-small', remote: true) +
+        service_job.decorate.subscription_button +
         button_to_set_keeper_of_device(service_job)
       end
     end
