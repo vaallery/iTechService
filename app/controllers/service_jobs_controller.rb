@@ -108,7 +108,7 @@ class ServiceJobsController < ApplicationController
 
     respond_to do |format|
       if @service_job.update_attributes(params[:service_job])
-        Service::DeviceSubscribersNotificationJob.perform_later @service_job.id, current_user.id, params
+        DeviceSubscribersNotificationJob.perform_later @service_job.id, current_user.id, params
         format.html { redirect_to @service_job, notice: t('service_jobs.updated') }
         format.json { head :no_content }
         format.js { render 'update' }
