@@ -18,6 +18,7 @@ capybara-*.html
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /public/uploads
+/public/assets
 /coverage/
 /spec/tmp
 **.orig
