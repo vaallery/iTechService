@@ -10,6 +10,8 @@ class ServiceJobsMailer < ApplicationMailer
     @user = User.find(user_id)
     @details = details
     subcribers_emails = @service_job.subscribers.pluck(:email).compact
-    mail to: subcribers_emails, subject: I18n.t('service_jobs_mailer.staff_notice.subject', device: @service_job.device_name)
+    if subcribers_emails.any?
+      mail to: subcribers_emails, subject: I18n.t('service_jobs_mailer.staff_notice.subject', device: @service_job.device_name)
+    end
   end
 end
