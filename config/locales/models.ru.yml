@@ -467,6 +467,7 @@ ru:
       task:
         cost: 'Стоимость'
         duration: 'Длительность'
+        hidden: 'Скрытая'
         location: 'Локация'
         location_id: :activerecord.attributes.task.location
         name: 'Название'

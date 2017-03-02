@@ -3,5 +3,6 @@
   = f.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
   = f.input :location_id, collection: Location.all, value_method: :id, label_method: :name
   = f.input :cost
+  = f.input :hidden
   .form-actions
     = submit_button f
