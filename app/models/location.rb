@@ -3,12 +3,13 @@ class Location < ActiveRecord::Base
   #default_scope order('position asc')
   scope :sorted, ->{order('position asc')}
   scope :for_schedule, ->{where(schedule: true)}
+  scope :visible, -> { where hidden: [false, nil] }
   belongs_to :department, inverse_of: :locations
   has_many :users
   has_many :tasks
   delegate :name, to: :department, prefix: true, allow_nil: true
 
-  attr_accessible :name, :schedule, :position, :code, :department_id
+  attr_accessible :name, :schedule, :position, :code, :department_id, :hidden
   validates_presence_of :name
 
   def full_name
@@ -67,12 +68,12 @@ class Location < ActiveRecord::Base
       #locations
     #end
     if user.admin?
-      all
+      visible
     else
       if user.present? && user.department.present?
-        Location.where(department_id: user.department.id)
+        Location.visible.where(department_id: user.department.id)
       else
-        Location.where(department_id: Department.current.id)
+        Location.visible.where(department_id: Department.current.id)
       end
     end
   end

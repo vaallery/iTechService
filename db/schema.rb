@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170221042422) do
+ActiveRecord::Schema.define(version: 20170302110145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -492,12 +492,13 @@ ActiveRecord::Schema.define(version: 20170221042422) do
   create_table "locations", force: :cascade do |t|
     t.string   "name",          limit: 255
     t.string   "ancestry",      limit: 255
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.boolean  "schedule"
     t.integer  "position",                  default: 0
     t.string   "code",          limit: 255
     t.integer  "department_id"
+    t.boolean  "hidden",                    default: false
   end
 
   add_index "locations", ["ancestry"], name: "index_locations_on_ancestry", using: :btree
@@ -1108,12 +1109,13 @@ ActiveRecord::Schema.define(version: 20170221042422) do
     t.string   "name",        limit: 255
     t.integer  "duration"
     t.decimal  "cost"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.integer  "priority",                default: 0
     t.string   "role",        limit: 255
     t.integer  "location_id"
     t.integer  "product_id"
+    t.boolean  "hidden",                  default: false
   end
 
   add_index "tasks", ["location_id"], name: "index_tasks_on_location_id", using: :btree

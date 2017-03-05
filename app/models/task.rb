@@ -4,6 +4,7 @@ class Task < ActiveRecord::Base
 
   scope :important, ->{where('priority > ?', IMPORTANCE_BOUND)}
   scope :tasks_for, ->(user) { where(task: {role: user.role}) }
+  scope :visible, -> { where hidden: [false, nil] }
 
   belongs_to :product, inverse_of: :task
   belongs_to :location
@@ -11,7 +12,7 @@ class Task < ActiveRecord::Base
   has_many :service_jobs, through: :device_tasks
   delegate :item, :is_repair?, to: :product, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
-  attr_accessible :cost, :duration, :name, :priority, :role, :location_id, :product_id
+  attr_accessible :cost, :duration, :name, :priority, :role, :location_id, :product_id, :hidden
   after_initialize do
     if persisted? and product.nil?
       update_attribute :product_id, Product.services.where(code: "task#{id}").first_or_create(name: name, product_group_id: ProductGroup.services.first_or_create(name: 'Services', product_category_id: ProductCategory.where(kind: 'service').first_or_create(name: 'Service', kind: 'service').id).id).id
