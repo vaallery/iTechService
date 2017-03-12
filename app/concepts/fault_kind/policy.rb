@@ -1,5 +1,5 @@
 class FaultKind < ApplicationRecord
-  class Policy < ItechService::Policy
+  class Policy < BasePolicy
 
     def index?
       user.any_admin?

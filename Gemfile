@@ -20,7 +20,7 @@ gem 'devise_token_auth'
 
 gem 'trailblazer-rails'
 gem 'reform-rails'
-
+gem 'pundit'
 # gem 'cancan', '~> 1.6.8'
 gem 'cancancan', '~> 1.10'
 gem 'kaminari'#, '~> 0.14.1'

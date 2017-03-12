@@ -1,12 +1,12 @@
 class Fault < ApplicationRecord
-  class Policy < ItechService::Policy
+  class Policy < BasePolicy
 
     def index?
       user.any_admin?
     end
 
     def create?
-      user.any_admin?
+      user.any_admin? || (record.causer_id == user.id)
     end
 
     def update?
