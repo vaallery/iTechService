@@ -10,9 +10,9 @@ ru:
     service_jobs:
       done_notice:
         subject: 'Ваше устройство готово'
-        greeting: 'Здравствуйте. Вас приветствует компания iTech.'
-        text: 'Ваше устройство готово. Ждём вас в гости :)'
-        sign: 'С уважением, iTech.'
+        greeting: 'Здравствуйте.<br/> Вас приветствует компания iTech.'
+        text: 'Сообщаем вам о том, что вы можете забрать своё устройство.'
+        sign: 'С уважением, коллектив компании iTech.'
     product_import_log:
       subject: "%{type} import log %{time}"
     document:
