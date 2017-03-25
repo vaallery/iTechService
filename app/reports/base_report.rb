@@ -1,4 +1,5 @@
 class BaseReport
+  attr_reader :kind
 
   def self.call(attributes = {})
     new(attributes).call
