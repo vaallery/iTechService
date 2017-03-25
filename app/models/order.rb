@@ -139,7 +139,7 @@ class Order < ActiveRecord::Base
   private
 
   def generate_number
-    if self.number.blank?
+    if number.blank?
       begin num = UUIDTools::UUID.random_create.hash.to_s end while Order.exists? number: num
       self.number = num
     end
@@ -147,10 +147,15 @@ class Order < ActiveRecord::Base
 
   def make_announcement
     unless changed_attributes[:status].present?
-      if (announcement = Announcement.create(user_id: self.user_id, kind: (done? ? 'order_done' : 'order_status'), active: true, content: "#{I18n.t('orders.order_num', num: number)} #{I18n.t('orders.statuses.'+status)}")).present?
-        PrivatePub.publish_to '/announcements', "$.getScript('/announcements/#{announcement.id}');"
+      if (announcement = create_announcement).present?
+        AnnouncementRelayJob.perform_later announcement.id
       end
     end
   end
 
+  def create_announcement
+    kind = done? ? 'order_done' : 'order_status'
+    content = "#{I18n.t('orders.order_num', num: number)} #{I18n.t("orders.statuses.#{status}")}"
+    Announcement.create user_id: user_id, kind: kind, active: true, content: content
+  end
 end
