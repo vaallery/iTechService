@@ -5,8 +5,13 @@ class FewRemnantsReport < BaseReport
     "#{super}_#{kind}"
   end
 
+  def base_name
+    'few_remnants'
+  end
+
   def call
-    result[:products] = result[:stores] = {}
+    result[:stores] = {}
+    result[:products] = {}
     products = Product.send(kind)
     stores = Store.send(kind == :goods ? :retail : :spare_parts).order('id asc')
     stores.each { |store| result[:stores].store store.id.to_s, {code: store.code, name: store.name} }
