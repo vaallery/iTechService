@@ -39,10 +39,14 @@ module ProductsHelper
     partial_name = "#{form.tableize}/#{association.singularize}_fields"
     parent = form.classify.constantize.new
     reflection = parent.class.reflect_on_association(association.to_sym)
-    object_class = reflection.klass
-    attributes = {object.class.to_s.foreign_key => object.send(reflection.options[:primary_key] || :id)}
-    new_object = object_class.new attributes
-    form_for(parent) { |f| f.simple_fields_for(association, new_object, child_index: Time.new.to_i) { |ff| return render(partial_name, f: ff, options: options) } }
+    if reflection.present?
+      object_class = reflection.klass
+      attributes = {object.class.to_s.foreign_key => object.send(reflection.options[:primary_key] || :id)}
+      new_object = object_class.new attributes
+      form_for(parent) { |f| f.simple_fields_for(association, new_object, child_index: Time.new.to_i) { |ff| return render(partial_name, f: ff, options: options) } }
+    else
+      nil
+    end
   end
 
   def link_to_product_quick_select(product)
