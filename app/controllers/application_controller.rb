@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Trailblazer::Operation::Controller
   include ApplicationHelper
-  protect_from_forgery with: :exception
+  protect_from_forgery
   # before_action :auto_sign_in
   before_filter :authenticate_user!
   before_filter :set_current_user
