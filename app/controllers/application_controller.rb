@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Trailblazer::Operation::Controller
   include ApplicationHelper
-  protect_from_forgery with: :exception
+  protect_from_forgery
   # before_action :auto_sign_in
   before_filter :authenticate_user!
   before_filter :set_current_user
@@ -27,10 +27,11 @@ class ApplicationController < ActionController::Base
     params.merge current_user: current_user
   end
 
-  def not_authorized
-    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
-    flash[:error] = exception.message
-    redirect_to request.referrer || root_url, alert: exception.message
+  def not_authorized(exception)
+    Rails.logger.debug "Access denied on #{exception.try(:action)} #{exception.try(:subject).try(:inspect)}"
+    message = exception.try :message
+    flash[:error] = message
+    redirect_to request.referrer || root_url, alert: message
   end
 
   def setup_operation_instance_variables!(operation, options)

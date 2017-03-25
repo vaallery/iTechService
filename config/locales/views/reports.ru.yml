@@ -19,7 +19,6 @@ ru:
     received_done: готовы
     received_archived: выданы
     sum: Сумма
-    remnants: "Остатки"
     done_orders:
       title: 'Выполненные заказы'
     clients:

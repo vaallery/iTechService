@@ -3,7 +3,7 @@
   %thead
     %tr
       %th.center{rowspan: 2}= t 'activerecord.models.product'
-      %th{colspan: report.result[:stores].length}= t 'reports.remnants'
+      %th{colspan: report.result[:stores].length}= t('reports.remnants.quantity')
     %tr
       - report.result[:stores].each_value do |store|
         %th.center= store[:name]
