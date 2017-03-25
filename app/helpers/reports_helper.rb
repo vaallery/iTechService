@@ -10,9 +10,9 @@ module ReportsHelper
 
   def report_default_params(report_name)
     {
-      few_remnants_goods: {name: 'few_remnants', kind: 'goods'},
-      few_remnants_spare_parts: {name: 'few_remnants', kind: 'spare_parts'}
-    }.fetch report_name.to_sym, {name: report_name}
+      few_remnants_goods: {base_name: 'few_remnants', kind: 'goods'},
+      few_remnants_spare_parts: {base_name: 'few_remnants', kind: 'spare_parts'}
+    }.fetch report_name.to_sym, {base_name: report_name}
   end
 
   def remnants_row(data)

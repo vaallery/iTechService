@@ -7,6 +7,7 @@ class BaseReport
   def name
     @name ||= self.class.name.underscore.gsub('_report', '')
   end
+  alias_method :base_name, :name
 
   def initialize(attributes = {})
     attributes.each do |name, value|

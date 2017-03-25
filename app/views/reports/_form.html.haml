@@ -4,7 +4,8 @@
     .navbar-inner
       = form_for report, as: :report, html: {id: 'report_form', class: 'navbar-search form-search'} do |f|
         = button_tag glyph(:filter), class: 'btn btn-info', type: 'submit'
-        = f.hidden_field :name
+        = f.hidden_field :base_name
+        = f.hidden_field :kind
         = f.text_field :start_date, class: 'bootstrap-datepicker input-small'
         = '_'
         = f.text_field :end_date, class: 'bootstrap-datepicker input-small'
