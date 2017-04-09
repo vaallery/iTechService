@@ -76,6 +76,7 @@ Rails.application.routes.draw do
       resource :subscription, only: %i[create destroy], format: :js
     end
   end
+  resources :substitute_phones
 
   resources :devices do
     get :autocomplete, on: :collection

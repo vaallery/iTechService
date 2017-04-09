@@ -1,10 +1,5 @@
 ru:
-  activemodel:
-    attributes:
-     fault_kind:
-       is_permanent: :activerecord.attributes.fault_kind.is_permanent
-
-  activerecord:
+  activemodel: &activemodel
     models:
       announcement: 'Оповещение'
       bank: 'Банк'
@@ -69,6 +64,7 @@ ru:
       spare_part: 'Запчасть'
       stolen_phone: 'Краденый телефон'
       store: "Склад"
+      substitute_phone: 'Телефон на замену'
       supply_category: 'Категория снабжения'
       supply_request: 'Заявка'
       supply_report: 'Отчёт водителя'
@@ -457,6 +453,10 @@ ru:
       stolen_phone:
         client_comment: 'Обстоятельства кражи'
 
+      substitute_phone:
+        condition: 'Состояние телефона'
+        item: 'Устройство'
+
       supply:
         supply_category: :activerecord.models.supply_category
         supply_report: :activerecord.models.supply_report
@@ -594,3 +594,6 @@ ru:
     user: 'Пользователь'
     user_comment: 'Комментарий сотрудника'
     warranty_term: 'Гарантийный срок (мес.)'
+
+  activerecord:
+    <<: *activemodel

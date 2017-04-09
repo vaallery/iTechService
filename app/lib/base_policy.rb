@@ -7,15 +7,15 @@ class BasePolicy
   end
 
   def index?
-    false
+    any_admin?
   end
 
   def show?
-    false
+    any_admin?
   end
 
   def create?
-    false
+    any_admin?
   end
 
   def new?
@@ -23,7 +23,7 @@ class BasePolicy
   end
 
   def update?
-    false
+    any_admin?
   end
 
   def edit?
@@ -31,6 +31,33 @@ class BasePolicy
   end
 
   def destroy?
-    false
+    any_admin?
+  end
+
+  def manage?
+    any_admin?
+  end
+
+  def scope
+    Pundit.policy_scope!(user, record.class)
+  end
+
+  private
+
+  def any_admin?
+    user.any_admin?
+  end
+
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      scope
+    end
   end
 end

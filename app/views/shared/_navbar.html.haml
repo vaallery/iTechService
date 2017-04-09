@@ -22,6 +22,8 @@
       - if can? :manage, TaskTemplate
         = drop_down_divider
         = menu_item t('task_templates.index.title'), task_templates_path
+      = drop_down_divider
+      = menu_item t('substitue_phones.index.title'), substitute_phones_path
 
     = drop_down t('.trade') do
       = menu_item t('sales.link'), sales_path if can? :manage, Sale

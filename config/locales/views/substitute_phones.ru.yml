@@ -1,0 +1,16 @@
+ru:
+  substitute_phones:
+
+    index:
+      title: 'Телефоны на замену'
+      query_placeholder: "IMEI / Серийный номер"
+    new:
+      title: 'Новый Телефон на замену'
+    edit:
+      title: 'Редактирование Телефона на замену'
+    show:
+      title: :activemodel.models.substitute_phone
+
+    created: 'Телефон на замену создан'
+    updated: 'Телефон на замену изменён'
+    destroyed: 'Телефон на замену удалён'

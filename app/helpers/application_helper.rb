@@ -64,7 +64,7 @@ module ApplicationHelper
     options.merge! class: 'btn btn-success btn-large'
     name ||= t("#{object_class.model_name.collection}.new.title", default: t('new'))
     link_to url_for(controller: object_class.model_name.route_key, action: 'new'), options do
-      "#{glyph(:file)} #{name}".html_safe
+      "#{glyph(:plus)} #{name}".html_safe
     end
   end
 

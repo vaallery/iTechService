@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170302110145) do
+ActiveRecord::Schema.define(version: 20170312070803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1049,6 +1049,15 @@ ActiveRecord::Schema.define(version: 20170302110145) do
   add_index "stores", ["code"], name: "index_stores_on_code", using: :btree
   add_index "stores", ["department_id"], name: "index_stores_on_department_id", using: :btree
 
+  create_table "substitute_phones", force: :cascade do |t|
+    t.integer  "item_id"
+    t.text     "condition",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "substitute_phones", ["item_id"], name: "index_substitute_phones_on_item_id", using: :btree
+
   create_table "supplies", force: :cascade do |t|
     t.integer  "supply_report_id"
     t.integer  "supply_category_id"
@@ -1247,4 +1256,5 @@ ActiveRecord::Schema.define(version: 20170302110145) do
   add_foreign_key "product_groups_option_values", "product_groups"
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "products"
+  add_foreign_key "substitute_phones", "items"
 end
