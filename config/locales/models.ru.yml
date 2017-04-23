@@ -433,6 +433,7 @@ ru:
         serial_number: 'Серийный номер'
         service_duration: "Длительность обслуживания"
         status: 'Статус'
+        substitute_phone: 'Телефон на подменку'
         tasks: 'Список задач'
         tech_notice: 'Для истинных технарей'
         ticket_number: 'Номер талона'

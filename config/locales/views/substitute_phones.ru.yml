@@ -11,6 +11,10 @@ ru:
     show:
       title: :activemodel.models.substitute_phone
 
+    stock:
+      title: 'Доступные телефоны на замену'
+      select: 'Выбрать'
+
     created: 'Телефон на замену создан'
     updated: 'Телефон на замену изменён'
     destroyed: 'Телефон на замену удалён'

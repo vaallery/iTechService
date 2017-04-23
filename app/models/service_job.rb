@@ -34,6 +34,7 @@ class ServiceJob < ActiveRecord::Base
   has_many :repair_parts, through: :repair_tasks
   has_many :history_records, as: :object, dependent: :destroy
   has_many :device_notes, dependent: :destroy
+  has_one :substitute_phone, dependent: :nullify
 
   has_and_belongs_to_many :subscribers,
                           join_table: :service_job_subscriptions,
@@ -55,6 +56,7 @@ class ServiceJob < ActiveRecord::Base
   validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
   validates_inclusion_of :is_tray_present, in: [true, false], if: :has_imei?
+  validates_acceptance_of :substitute_phone_icloud_connected, unless: 'substitute_phone.nil?'
   validate :presence_of_payment
   before_validation :generate_ticket_number
   before_validation :validate_security_code
@@ -311,6 +313,15 @@ class ServiceJob < ActiveRecord::Base
 
   def note
     device_notes.last&.content&.presence || comment
+  end
+
+  def substitute_phone_id
+    substitute_phone&.id
+  end
+
+  def substitute_phone_id=(new_id)
+    new_substitute_phone = SubstitutePhone.find new_id
+    self.substitute_phone = new_substitute_phone
   end
 
   private

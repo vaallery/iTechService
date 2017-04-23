@@ -1051,12 +1051,14 @@ ActiveRecord::Schema.define(version: 20170312070803) do
 
   create_table "substitute_phones", force: :cascade do |t|
     t.integer  "item_id"
-    t.text     "condition",  null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "condition",      null: false
+    t.integer  "service_job_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
   add_index "substitute_phones", ["item_id"], name: "index_substitute_phones_on_item_id", using: :btree
+  add_index "substitute_phones", ["service_job_id"], name: "index_substitute_phones_on_service_job_id", unique: true, using: :btree
 
   create_table "supplies", force: :cascade do |t|
     t.integer  "supply_report_id"
@@ -1257,4 +1259,5 @@ ActiveRecord::Schema.define(version: 20170312070803) do
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "products"
   add_foreign_key "substitute_phones", "items"
+  add_foreign_key "substitute_phones", "service_jobs"
 end

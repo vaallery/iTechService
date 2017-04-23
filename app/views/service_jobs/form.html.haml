@@ -68,8 +68,6 @@
 
       = f.input :email, hint: t('.email_hint')
 
-      = f.input :replaced, as: :replaced, disabled: true
-
       - if can? :update, @service_job
         = f.input :location_id, as: :location, user: current_user
       - else
@@ -77,6 +75,7 @@
 
       = f.input :return_at, as: :datetime_quick_select
 
+      %hr
       = render 'task_templates'
 
       -if f.error(:device_tasks).present?
@@ -87,6 +86,9 @@
               %span.help-inline.text-error= f.object.device_tasks.map{|dt|dt.errors.full_messages}.join ', '
 
       = render @service_job.new_record? ? 'device_tasks_fields' : 'device_tasks', f: f
+      %hr
+
+      = f.input :substitute_phone, as: :substitute_phone
 
       .form-actions
         = submit_button f

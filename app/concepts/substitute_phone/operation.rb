@@ -4,7 +4,8 @@ class SubstitutePhone < ApplicationRecord
     policy!
 
     def model!(params)
-      SubstitutePhone.search(params[:query])
+      substitute_phones = params.has_key?(:available) ? SubstitutePhone.available : SubstitutePhone.all
+      substitute_phones.search(params[:query])
     end
   end
 

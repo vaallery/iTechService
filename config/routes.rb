@@ -76,6 +76,10 @@ Rails.application.routes.draw do
       resource :subscription, only: %i[create destroy], format: :js
     end
   end
+
+  namespace :substitute_phones do
+    get :stock, to: 'stock#index', format: :js
+  end
   resources :substitute_phones
 
   resources :devices do
