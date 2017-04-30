@@ -62,10 +62,11 @@ gem 'daemons'
 
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', platforms: :ruby
+gem 'therubyracer', :platforms => :ruby
 gem 'less-rails'#, '~> 2.4.2'
 gem 'uglifier', '>= 1.3.0'
-gem 'bootstrap-colorpicker-rails', '~> 0.3.1', require: 'bootstrap-colorpicker-rails'#, :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
+gem 'bootstrap-colorpicker-rails', '~> 0.3.1', :require => 'bootstrap-colorpicker-rails'
+#, :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
 # gem 'turbo-sprockets-rails3', '~> 0.3.14'
 
 # gem 'nokogiri', github: 'sparklemotion/nokogiri'
@@ -91,7 +92,7 @@ group :development do
   # gem 'capistrano-rbenv-install'
   # gem 'capistrano-postgresql'
   gem 'capistrano-ssh-doctor'
-  gem 'airbrussh', require: false
+  gem 'airbrussh', :require => false
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'stack_rescue'
@@ -114,7 +115,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'simplecov', '~> 0.12.0', require: false
+  gem 'simplecov', '~> 0.12.0', :require => false
 
   gem 'minitest-reporters', '~> 1.0.0'
   gem 'minitest-rails-capybara'
@@ -132,7 +133,5 @@ end
 
 group :production do
   # gem 'unicorn', '~> 4.6.2'
-  gem 'passenger', '>= 5.0.25', require: 'phusion_passenger/rack_handler'
+  gem 'passenger', '>= 5.0.25', :require => 'phusion_passenger/rack_handler'
 end
-
-gem 'sdoc', '~> 0.4.0',          group: :doc
