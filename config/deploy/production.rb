@@ -19,8 +19,8 @@ set :default_env, fetch(:default_env, {}).merge(rails_env: :production)
 # definition into the server list. The second argument
 # something that quacks like a hash can be used to set
 # extended properties on the server.
-server 'ise.vl', user: 'itech', roles: %w[web app db]
-# server 'ise.kh', user: 'itech', roles: %w[web app db]
+# server 'ise.vl', user: 'itech', roles: %w[web app db]
+server 'ise.kh', user: 'itech', roles: %w[web app db]
 # server 'ise.sah', user: 'deployer', roles: %w[web app db]
 
 # you can set custom ssh options

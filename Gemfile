@@ -48,7 +48,7 @@ gem 'barby'#, '~> 0.5.1'
 gem 'acts_as_list'#, '~> 0.2.0'
 gem 'delayed_job_active_record'#, '~> 0.4.4'
 gem 'delayed_job_web'#, '~> 1.2.0'
-gem 'whenever', '>= 0.8.4', require: false
+gem 'whenever', '>= 0.8.4', :require => false
 # gem 'foreman', '~> 0.63.0'
 gem 'grape', '~> 0.6.1'
 gem 'grape-entity', '~> 0.4.1'
@@ -134,7 +134,7 @@ end
 
 group :production do
   # gem 'unicorn', '~> 4.6.2'
-  gem 'passenger'
+  gem 'passenger', '>= 5.0.25', require: 'phusion_passenger/rack_handler'
 end
 
 gem 'sdoc', '~> 0.4.0',          group: :doc
