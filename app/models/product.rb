@@ -16,7 +16,7 @@ class Product < ActiveRecord::Base
   belongs_to :product_category, inverse_of: :products
   belongs_to :product_group, inverse_of: :products
   has_and_belongs_to_many :options, class_name: 'OptionValue', join_table: 'product_options'
-  has_many :option_types, -> { distinct }, through: :product_group
+  has_many :option_types, -> { ordered.distinct }, through: :product_group
   has_many :option_values, through: :product_group
   belongs_to :device_type, inverse_of: :product
   has_many :items, inverse_of: :product, dependent: :restrict_with_error
