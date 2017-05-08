@@ -75,6 +75,8 @@
 
       = f.input :return_at, as: :datetime_quick_select
 
+      = f.input :substitute_phone, as: :substitute_phone
+
       %hr
       = render 'task_templates'
 
@@ -86,9 +88,6 @@
               %span.help-inline.text-error= f.object.device_tasks.map{|dt|dt.errors.full_messages}.join ', '
 
       = render @service_job.new_record? ? 'device_tasks_fields' : 'device_tasks', f: f
-      %hr
-
-      = f.input :substitute_phone, as: :substitute_phone
 
       .form-actions
         = submit_button f

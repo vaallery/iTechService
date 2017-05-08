@@ -15,7 +15,8 @@ class SubstitutePhoneInput < SimpleForm::Inputs::Base
         check_box_tag('service_job[substitute_phone_icloud_connected]') +
         content_tag(:span, t('service_jobs.form.icloud_connected'))
       end
-    end
+    end +
+    @builder.error(:substitute_phone_icloud_connected)
   end
 
   private

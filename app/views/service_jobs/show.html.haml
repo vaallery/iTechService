@@ -90,6 +90,11 @@
         %td= ServiceJob.human_attribute_name :email
         %td= @service_job.email || '-'
 
+      - if @service_job.substitute_phone.present?
+        %tr
+          %td= ServiceJob.human_attribute_name :substitute_phone
+          %td= @service_job.substitute_phone.presentation
+
       %tr
         %td= t 'service_jobs.sales_info'
         %td= sales_info @service_job

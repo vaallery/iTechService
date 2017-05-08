@@ -48,7 +48,8 @@ class ServiceJob < ActiveRecord::Base
   delegate :name, to: :location, prefix: true, allow_nil: true
   alias_attribute :received_at, :created_at
 
-  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages, :email
+  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages, :email, :substitute_phone_id, :substitute_phone_icloud_connected
+
   validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :department
   validates_presence_of :contact_phone, on: :create
   validates_presence_of :device_type, if: 'item.nil?'
@@ -56,8 +57,10 @@ class ServiceJob < ActiveRecord::Base
   validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
   validates_inclusion_of :is_tray_present, in: [true, false], if: :has_imei?
-  validates_acceptance_of :substitute_phone_icloud_connected, unless: 'substitute_phone.nil?'
+  validates_acceptance_of :substitute_phone_icloud_connected#, on: :create, if: :substituted?
+  # validates :substitute_phone_icloud_connected, acceptance: true, if: :substituted?
   validate :presence_of_payment
+
   before_validation :generate_ticket_number
   before_validation :validate_security_code
   before_validation :set_user_and_location
@@ -320,11 +323,19 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def substitute_phone_id=(new_id)
-    new_substitute_phone = SubstitutePhone.find new_id
-    self.substitute_phone = new_substitute_phone
+    if new_id.present?
+      new_substitute_phone = SubstitutePhone.find new_id
+      self.substitute_phone = new_substitute_phone
+    else
+      self.substitute_phone = nil
+    end
   end
 
   private
+
+  def substituted?
+    substitute_phone.present?
+  end
 
   def generate_ticket_number
     if self.ticket_number.blank?

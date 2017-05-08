@@ -59,7 +59,7 @@ ru:
     service_duration_placeholder: "м | ч.м | д.ч.м"
     subscribe: 'Подписаться'
     unsubscribe: 'Отписаться'
-    updated: 'Работа изменён'
+    updated: 'Работа изменена'
     sales_info: "Информация о продаже"
     move_to_archive: "В архив"
 
