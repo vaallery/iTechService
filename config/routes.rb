@@ -80,7 +80,10 @@ Rails.application.routes.draw do
   namespace :substitute_phones do
     get :stock, to: 'stock#index', format: :js
   end
-  resources :substitute_phones
+
+  resources :substitute_phones, shallow: true do
+    resources :substitutions, module: :substitute_phones, only: %i[new create edit update]
+  end
 
   resources :devices do
     get :autocomplete, on: :collection

@@ -1,5 +1,6 @@
 class SubstitutePhone < ApplicationRecord
-  class Form < BaseForm
+  class Contract < BaseForm
+    model SubstitutePhone
     properties :item, :item_id, :condition
     validates :item_id, :condition, presence: true
   end

@@ -12,3 +12,11 @@ $(document).on 'click', '[data-behaviour~=select-substitute-phone]', (event)->
   $input.find('.substitute_phone_id').val(id)
   $input.find('input[type=text]').val("#{name} / #{serial_number}")
   App.closeModal()
+
+$(document).on 'click', '#phone_substitution_condition_match_0', (event)->
+  document.getElementById('phone_substitution_manager_informed').checked = false
+  $('.control-group.phone_substitution_manager_informed').removeClass('hidden')
+
+$(document).on 'click', '#phone_substitution_condition_match_1', (event)->
+  document.getElementById('phone_substitution_manager_informed').checked = false
+  $('.control-group.phone_substitution_manager_informed').addClass('hidden')

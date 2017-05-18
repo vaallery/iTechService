@@ -25,13 +25,13 @@ class SubstitutePhonesController < ApplicationController
 
   def update
     run SubstitutePhone::Update do
-      return redirect_to @substitute_phone, notice: t('substitue_phones.updated')
+      return redirect_to @substitute_phone, notice: t('substitute_phones.updated')
     end
     render :edit
   end
 
   def destroy
     run SubstitutePhone::Destroy
-    redirect_to substitute_phones_url, notice: t('substitue_phones.created')
+    redirect_to substitute_phones_url, notice: t('substitute_phones.created')
   end
 end

@@ -14,6 +14,10 @@ class SubstitutePhone < ApplicationRecord
           content_tag(:td, send(attr_name))
         end
       end
+
+      def substitutions
+        cell(Substitutions, model.substitutions).call
+      end
     end
   end
 end

@@ -10,20 +10,23 @@ class SubstitutePhone < ApplicationRecord
   end
 
   class Show < Operation::Base
-    model!
     policy!
+
+    def model!(params)
+      SubstitutePhone.includes(:substitutions).find(params[:id])
+    end
   end
 
   class Create < Operation::Persist
     model!
     policy!
-    contract!
+    contract Contract
   end
 
   class Update < Operation::Persist
     model!
     policy!
-    contract!
+    contract Contract
   end
 
   class Destroy < Operation::Destroy

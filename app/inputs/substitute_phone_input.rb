@@ -10,16 +10,21 @@ class SubstitutePhoneInput < SimpleForm::Inputs::Base
     end +
 
     content_tag(:p, t('service_jobs.form.substitution_note')) +
-    content_tag(:div, class: 'checkbox') do
+    content_tag(:div, class: check_box_html_class) do
       content_tag(:label) do
         check_box_tag('service_job[substitute_phone_icloud_connected]') +
         content_tag(:span, t('service_jobs.form.icloud_connected'))
       end
     end +
-    @builder.error(:substitute_phone_icloud_connected)
+    @builder.error(:substitute_phone_icloud_connected, class: 'text-error')
   end
 
   private
+
+  def check_box_html_class
+    res = 'checkbox'
+    res << ' text-error' if @builder.object.errors.key?(:substitute_phone_icloud_connected)
+  end
 
   def presentation
     @builder.object.substitute_phone&.presentation

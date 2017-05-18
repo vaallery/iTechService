@@ -5,7 +5,7 @@ class BaseCell < Trailblazer::Cell
   include ActionView::Helpers::TranslationHelper
   include Cell::Translation
 
-  delegate :controller_name, :current_user, :policy, to: :controller
+  delegate :view_context, :controller_name, :current_user, :policy, to: :controller
 
   alias_method :icon, :glyph
 

@@ -1,0 +1,23 @@
+.page-header
+  h1
+    = title
+
+= simple_form_for form_object, url: url, html: {class: 'form-horizontal'} do |f|
+
+  table.attributes_table
+    = attribute_presentation :name
+    = attribute_presentation :serial_number
+    = attribute_presentation :imei
+    = attribute_presentation :condition
+
+  .alert.alert-info = check_condition_note
+
+  = f.input :condition_match, as: :radio_buttons, collection: options_for_condition_match
+  = f.input :manager_informed, as: :boolean, wrapper_html: {class: "#{'hidden' unless condition_not_match?}"}
+
+  .alert.alert-info = check_icloud_note
+
+  = f.input :icloud_connected, as: :boolean
+
+  .form-actions
+    = f.submit submit_label, class: 'btn btn-primary'

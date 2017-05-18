@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170312070803) do
+ActiveRecord::Schema.define(version: 20170516140444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -634,6 +634,23 @@ ActiveRecord::Schema.define(version: 20170312070803) do
   add_index "payments", ["kind"], name: "index_payments_on_kind", using: :btree
   add_index "payments", ["sale_id"], name: "index_payments_on_sale_id", using: :btree
 
+  create_table "phone_substitutions", force: :cascade do |t|
+    t.integer  "substitute_phone_id", null: false
+    t.integer  "service_job_id",      null: false
+    t.integer  "issuer_id",           null: false
+    t.datetime "issued_at",           null: false
+    t.integer  "receiver_id"
+    t.boolean  "condition_match"
+    t.datetime "withdrawn_at"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+  end
+
+  add_index "phone_substitutions", ["issuer_id"], name: "index_phone_substitutions_on_issuer_id", using: :btree
+  add_index "phone_substitutions", ["receiver_id"], name: "index_phone_substitutions_on_receiver_id", using: :btree
+  add_index "phone_substitutions", ["service_job_id"], name: "index_phone_substitutions_on_service_job_id", using: :btree
+  add_index "phone_substitutions", ["substitute_phone_id"], name: "index_phone_substitutions_on_substitute_phone_id", using: :btree
+
   create_table "price_types", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "kind"
@@ -1254,6 +1271,10 @@ ActiveRecord::Schema.define(version: 20170312070803) do
   add_foreign_key "faults", "fault_kinds", column: "kind_id"
   add_foreign_key "faults", "users", column: "causer_id"
   add_foreign_key "option_values", "option_types"
+  add_foreign_key "phone_substitutions", "service_jobs"
+  add_foreign_key "phone_substitutions", "substitute_phones"
+  add_foreign_key "phone_substitutions", "users", column: "issuer_id"
+  add_foreign_key "phone_substitutions", "users", column: "receiver_id"
   add_foreign_key "product_groups_option_values", "option_values"
   add_foreign_key "product_groups_option_values", "product_groups"
   add_foreign_key "product_options", "option_values"

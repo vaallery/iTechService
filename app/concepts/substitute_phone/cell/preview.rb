@@ -7,6 +7,10 @@ class SubstitutePhone < ApplicationRecord
         policy(model).manage?
       end
 
+      def html_class
+        model.service_job.present? ? 'error' : 'success'
+      end
+
       private
 
       def item

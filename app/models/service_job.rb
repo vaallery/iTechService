@@ -46,6 +46,7 @@ class ServiceJob < ActiveRecord::Base
   delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :department, prefix: true
   delegate :name, to: :location, prefix: true, allow_nil: true
+  delegate :pending_substitution, to: :substitute_phone, allow_nil: true
   alias_attribute :received_at, :created_at
 
   attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages, :email, :substitute_phone_id, :substitute_phone_icloud_connected
@@ -57,9 +58,9 @@ class ServiceJob < ActiveRecord::Base
   validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
   validates_inclusion_of :is_tray_present, in: [true, false], if: :has_imei?
-  validates_acceptance_of :substitute_phone_icloud_connected#, on: :create, if: :substituted?
-  # validates :substitute_phone_icloud_connected, acceptance: true, if: :substituted?
+  validates :substitute_phone_icloud_connected, presence: true, acceptance: true, on: :create, if: :phone_substituted?
   validate :presence_of_payment
+  validate :substitute_phone_absence
 
   before_validation :generate_ticket_number
   before_validation :validate_security_code
@@ -257,6 +258,7 @@ class ServiceJob < ActiveRecord::Base
 
   def at_done?
     location.try(:is_done?)
+    # reload.location.try(:is_done?)
   end
 
   def in_archive?
@@ -331,11 +333,11 @@ class ServiceJob < ActiveRecord::Base
     end
   end
 
-  private
-
-  def substituted?
+  def phone_substituted?
     substitute_phone.present?
   end
+
+  private
 
   def generate_ticket_number
     if self.ticket_number.blank?
@@ -430,7 +432,7 @@ class ServiceJob < ActiveRecord::Base
 
   def presence_of_payment
     is_valid = true
-    if location_id_changed? and location.is_archive?
+    if location_id_changed? && location.is_archive?
       if tasks_cost > 0
         if sale.nil? or !sale.is_posted?
           errors.add :base, :not_paid
@@ -438,6 +440,14 @@ class ServiceJob < ActiveRecord::Base
       end
     end
     is_valid
+  end
+
+  def substitute_phone_absence
+    if location_id_changed? && location.is_archive?
+      if substitute_phone.present?
+        errors.add :base, :substitute_phone_not_received
+      end
+    end
   end
 
   def set_contact_phone

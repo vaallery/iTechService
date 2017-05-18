@@ -434,6 +434,7 @@ ru:
         service_duration: "Длительность обслуживания"
         status: 'Статус'
         substitute_phone: 'Телефон на подменку'
+        substitute_phone_icloud_connected: 'Телефон на подменку Данные iCloud введены'
         tasks: 'Список задач'
         tech_notice: 'Для истинных технарей'
         ticket_number: 'Номер талона'
@@ -457,6 +458,11 @@ ru:
       substitute_phone:
         condition: 'Состояние телефона'
         item: 'Устройство'
+
+      phone_substitution:
+        condition_match: 'Состояние соответствует?'
+        icloud_connected: 'iCloud connected'
+        manager_informed: 'Обратился к старшему'
 
       supply:
         supply_category: :activerecord.models.supply_category
@@ -536,6 +542,7 @@ ru:
               main_exists: 'Не может быть больше одного главного'
         service_job:
           not_paid: 'Не оплачена!'
+          substitute_phone_not_received: 'Небходимо вернуть телефон, выданный на замену'
         device_task:
           no_defect_store: 'Склад брака не найден'
           no_spare_parts_store: "Склад запчастей не найден"
