@@ -1,14 +1,14 @@
 # set :filter, hosts: %w[192.168.0.1 192.168.4.200]
 # set :filter, hosts: %w[192.168.4.200]
-application = 'itechservice2'
 ruby_v = '2.3.1'
 user = fetch :user
-set :application, application
+set :application, 'itechservice2'
+# set :application, 'itechservice'
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
 set :branch, 'master'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
-#set :deploy_to, "/usr/local/var/www/#{application}"
+#set :deploy_to, "/usr/local/var/www/#{fetch(:application)}"
 set :scm, :git
 
 # set :format, :pretty
@@ -29,7 +29,7 @@ set :conditionally_migrate, true
 # set :rbenv_ruby, ruby_v
 
 set :rvm_type, :user
-# set :rvm_ruby_version, "#{ruby_v}@#{application}"
+# set :rvm_ruby_version, "#{ruby_v}@#{fetch(:application)}"
 set :rvm_ruby_version, ruby_v
 
 set :bundle_flags, '--deployment'
@@ -47,7 +47,7 @@ set :passenger_restart_command, 'passenger-config restart-app'
 # set :passenger_restart_command, "touch #{current_path}/tmp/restart.txt"
 set :passenger_restart_options, -> { "#{current_path} --ignore-app-not-running" }
 
-set :whenever_identifier, application
+set :whenever_identifier, fetch(:application)
 
 namespace :server do
 
@@ -55,9 +55,9 @@ namespace :server do
   task :start do
     on roles(:app) do
       if fetch(:stage) == :staging
-        sudo "start #{application}"
+        sudo "start #{fetch(:application)}"
       else
-        sudo "launchctl load /Library/LaunchDaemons/#{application}-*"
+        sudo "launchctl load /Library/LaunchDaemons/#{fetch(:application)}-*"
       end
     end
   end
@@ -66,9 +66,9 @@ namespace :server do
   task :stop do
     on roles(:app) do
       if fetch(:stage) == :staging
-        sudo "stop #{application}"
+        sudo "stop #{fetch(:application)}"
       else
-        sudo "launchctl unload /Library/LaunchDaemons/#{application}-*"
+        sudo "launchctl unload /Library/LaunchDaemons/#{fetch(:application)}-*"
       end
     end
   end
@@ -77,10 +77,10 @@ namespace :server do
   task :restart do
     on roles(:app) do
       if fetch(:stage) == :staging
-        sudo "restart #{application}"
+        sudo "restart #{fetch(:application)}"
       else
-        sudo "launchctl unload /Library/LaunchDaemons/#{application}-*"
-        sudo "launchctl load /Library/LaunchDaemons/#{application}-*"
+        sudo "launchctl unload /Library/LaunchDaemons/#{fetch(:application)}-*"
+        sudo "launchctl load /Library/LaunchDaemons/#{fetch(:application)}-*"
       end
     end
   end
@@ -89,9 +89,9 @@ namespace :server do
   task :status do
     on roles(:app) do
       if fetch(:stage) == :staging
-        execute "initctl list | grep #{application}"
+        execute "initctl list | grep #{fetch(:application)}"
       else
-        sudo "launchctl list | grep #{application}"
+        sudo "launchctl list | grep #{fetch(:application)}"
       end
     end
   end
@@ -123,7 +123,7 @@ namespace :deploy do
       execute "ln -sf #{shared_path}/bin/private_pub_init.sh /usr/local/bin/ise_private_pub"
       upload! 'shared/nginx.conf', '/usr/local/etc/nginx/nginx.conf'
       upload! 'shared/nginx_app.conf', "#{shared_path}/nginx_app.conf"
-      execute "ln -sf #{shared_path}/nginx_app.conf /usr/local/etc/nginx/sites-enabled/#{application}.conf"
+      execute "ln -sf #{shared_path}/nginx_app.conf /usr/local/etc/nginx/sites-enabled/#{fetch(:application)}.conf"
       # sudo 'nginx -s reload'
       upload! 'shared/itechservice-web-1.plist', "#{shared_path}/itechservice-web-1.plist"
       upload! 'shared/itechservice-job-1.plist', "#{shared_path}/itechservice-job-1.plist"
@@ -148,7 +148,7 @@ namespace :deploy do
         execute "ln -s #{release_path} #{current_path}"
         within current_path do
           execute "cd #{current_path}"
-          execute :bundle, "exec foreman export upstart #{foreman_temp} -a #{application} -u deployer -l #{shared_path}/log -d #{current_path}"
+          execute :bundle, "exec foreman export upstart #{foreman_temp} -a #{fetch(:application)} -u deployer -l #{shared_path}/log -d #{current_path}"
         end
         sudo "mv #{foreman_temp}/* /etc/init/"
         sudo "rm -r #{foreman_temp}"
@@ -157,7 +157,7 @@ namespace :deploy do
         execute "ln -s #{release_path} #{current_path}"
         within current_path do
           execute "cd #{current_path}"
-          execute :bundle, "exec foreman export launchd #{foreman_temp} -a #{application} -u itech -l #{shared_path}/log -d #{current_path}"
+          execute :bundle, "exec foreman export launchd #{foreman_temp} -a #{fetch(:application)} -u itech -l #{shared_path}/log -d #{current_path}"
         end
         sudo "mv #{foreman_temp}/* /Library/LaunchDaemons/"
         sudo "rm -r #{foreman_temp}"
