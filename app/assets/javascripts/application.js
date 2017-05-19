@@ -17,8 +17,9 @@
 //= require association_filter
 //= require zeroclipboard
 //= require currency-in-words
-//= require app.init
+//= require app.js.coffee
 //= require app.inputs
+//= require app.substitute_phones
 //= require common
 //= require forms
 //= require announcements

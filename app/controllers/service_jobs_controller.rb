@@ -93,6 +93,7 @@ class ServiceJobsController < ApplicationController
 
     respond_to do |format|
       if @service_job.save
+        create_phone_substitution if @service_job.phone_substituted?
         format.html { redirect_to @service_job, notice: t('service_jobs.created') }
         format.json { render json: @service_job, status: :created, location: @service_job }
       else
@@ -233,5 +234,12 @@ class ServiceJobsController < ApplicationController
 
   def log_service_job_show
     LogServiceJobShowJob.perform_later @service_job.id, current_user.id, Time.current.to_s
+  end
+
+  def create_phone_substitution
+    PhoneSubstitution.create service_job_id: @service_job.id,
+                             substitute_phone_id: @service_job.substitute_phone_id,
+                             issuer_id: current_user.id,
+                             issued_at: @service_job.created_at
   end
 end

@@ -1,0 +1,21 @@
+.page-header
+  h1
+    = link_back_to_index
+    = title
+
+.row
+  .span6
+
+    table.attributes_table
+      = attribute_presentation :name
+      = attribute_presentation :serial_number
+      = attribute_presentation :imei
+      = attribute_presentation :condition
+
+    .form-actions
+      = link_to_edit if can_manage?
+
+  .span6
+
+    #substitute_phone-history
+      = substitutions

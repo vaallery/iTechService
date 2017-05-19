@@ -2,7 +2,7 @@
 
 %h1= wt 'edit_title'
 
-- if params[:preview]
+- if params[:'preview.slim']
   .wiki_content
     = wiki_content @page.content
 

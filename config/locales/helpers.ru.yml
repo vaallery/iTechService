@@ -8,6 +8,8 @@ ru:
       submit: 'Сохранить %{model}'
       update: 'Обновить %{model}'
       save: 'Сохранить'
+      cash_operation:
+        create: 'Провести Операцию'
       document:
         post: 'Провести'
         movement_act: 'Акт перемещения'
@@ -18,8 +20,6 @@ ru:
       product_category:
         create: 'Создать Категорию продукта'
         update: 'Обновить Категорию продукта'
-      cash_operation:
-        create: 'Провести Операцию'
     links:
       add: "Добавить"
       cancel: 'Отмена'

@@ -50,6 +50,10 @@ ru:
       discount: "Скидка"
       client: "Покупатель"
       user: "Продавец"
+    phone_substitutions:
+      title: 'Отчёт по подменкам'
+      substitute_phone: 'Телефон'
+      ticket_number: 'Номер талона'
     supply:
       title: 'Отчёт водителя'
     few_remnants_goods:
