@@ -34,6 +34,7 @@ class ServiceJob < ActiveRecord::Base
   has_many :repair_parts, through: :repair_tasks
   has_many :history_records, as: :object, dependent: :destroy
   has_many :device_notes, dependent: :destroy
+  has_one :substitute_phone, dependent: :nullify
 
   has_and_belongs_to_many :subscribers,
                           join_table: :service_job_subscriptions,
@@ -45,9 +46,11 @@ class ServiceJob < ActiveRecord::Base
   delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :department, prefix: true
   delegate :name, to: :location, prefix: true, allow_nil: true
+  delegate :pending_substitution, to: :substitute_phone, allow_nil: true
   alias_attribute :received_at, :created_at
 
-  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages, :email
+  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages, :email, :substitute_phone_id, :substitute_phone_icloud_connected
+
   validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :department
   validates_presence_of :contact_phone, on: :create
   validates_presence_of :device_type, if: 'item.nil?'
@@ -55,7 +58,10 @@ class ServiceJob < ActiveRecord::Base
   validates_presence_of :app_store_pass, if: :new_record?
   validates_uniqueness_of :ticket_number
   validates_inclusion_of :is_tray_present, in: [true, false], if: :has_imei?
+  validates :substitute_phone_icloud_connected, presence: true, acceptance: true, on: :create, if: :phone_substituted?
   validate :presence_of_payment
+  validate :substitute_phone_absence
+
   before_validation :generate_ticket_number
   before_validation :validate_security_code
   before_validation :set_user_and_location
@@ -252,6 +258,7 @@ class ServiceJob < ActiveRecord::Base
 
   def at_done?
     location.try(:is_done?)
+    # reload.location.try(:is_done?)
   end
 
   def in_archive?
@@ -311,6 +318,23 @@ class ServiceJob < ActiveRecord::Base
 
   def note
     device_notes.last&.content&.presence || comment
+  end
+
+  def substitute_phone_id
+    substitute_phone&.id
+  end
+
+  def substitute_phone_id=(new_id)
+    if new_id.present?
+      new_substitute_phone = SubstitutePhone.find new_id
+      self.substitute_phone = new_substitute_phone
+    else
+      self.substitute_phone = nil
+    end
+  end
+
+  def phone_substituted?
+    substitute_phone.present?
   end
 
   private
@@ -408,7 +432,7 @@ class ServiceJob < ActiveRecord::Base
 
   def presence_of_payment
     is_valid = true
-    if location_id_changed? and location.is_archive?
+    if location_id_changed? && location.is_archive?
       if tasks_cost > 0
         if sale.nil? or !sale.is_posted?
           errors.add :base, :not_paid
@@ -416,6 +440,14 @@ class ServiceJob < ActiveRecord::Base
       end
     end
     is_valid
+  end
+
+  def substitute_phone_absence
+    if location_id_changed? && location.is_archive?
+      if substitute_phone.present?
+        errors.add :base, :substitute_phone_not_received
+      end
+    end
   end
 
   def set_contact_phone

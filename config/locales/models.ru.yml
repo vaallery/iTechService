@@ -1,10 +1,5 @@
 ru:
-  activemodel:
-    attributes:
-     fault_kind:
-       is_permanent: :activerecord.attributes.fault_kind.is_permanent
-
-  activerecord:
+  activemodel: &activemodel
     models:
       announcement: 'Оповещение'
       bank: 'Банк'
@@ -69,6 +64,7 @@ ru:
       spare_part: 'Запчасть'
       stolen_phone: 'Краденый телефон'
       store: "Склад"
+      substitute_phone: 'Телефон на замену'
       supply_category: 'Категория снабжения'
       supply_request: 'Заявка'
       supply_report: 'Отчёт водителя'
@@ -437,6 +433,8 @@ ru:
         serial_number: 'Серийный номер'
         service_duration: "Длительность обслуживания"
         status: 'Статус'
+        substitute_phone: 'Телефон на подменку'
+        substitute_phone_icloud_connected: 'Телефон на подменку Данные iCloud введены'
         tasks: 'Список задач'
         tech_notice: 'Для истинных технарей'
         ticket_number: 'Номер талона'
@@ -456,6 +454,15 @@ ru:
 
       stolen_phone:
         client_comment: 'Обстоятельства кражи'
+
+      substitute_phone:
+        condition: 'Состояние телефона'
+        item: 'Устройство'
+
+      phone_substitution:
+        condition_match: 'Состояние соответствует?'
+        icloud_connected: 'iCloud connected'
+        manager_informed: 'Обратился к старшему'
 
       supply:
         supply_category: :activerecord.models.supply_category
@@ -535,6 +542,7 @@ ru:
               main_exists: 'Не может быть больше одного главного'
         service_job:
           not_paid: 'Не оплачена!'
+          substitute_phone_not_received: 'Небходимо вернуть телефон, выданный на замену'
         device_task:
           no_defect_store: 'Склад брака не найден'
           no_spare_parts_store: "Склад запчастей не найден"
@@ -594,3 +602,6 @@ ru:
     user: 'Пользователь'
     user_comment: 'Комментарий сотрудника'
     warranty_term: 'Гарантийный срок (мес.)'
+
+  activerecord:
+    <<: *activemodel

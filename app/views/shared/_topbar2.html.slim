@@ -1,7 +1,7 @@
 nav#topbar.navbar.navbar-default.navbar-fixed-top@navigation
   .container-fluid
     span.current_department = current_department.name
-    span.current_user = prac current_user, :icon_name_link
+    /span.current_user = prac current_user, :icon_name_link
     span.karma = link_to karma_tag(current_user), rating_users_path
     /span.duck_plan = duck_plan_tag
     /span.global_search_form

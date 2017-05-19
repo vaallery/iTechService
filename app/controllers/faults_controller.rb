@@ -24,4 +24,13 @@ class FaultsController < ApplicationController
       format.js { render 'shared/show_modal_form' }
     end
   end
+
+  def destroy
+    respond_to do |format|
+      run Fault::Destroy do
+        format.js
+      end
+      format.js { render js: '' }
+    end
+  end
 end

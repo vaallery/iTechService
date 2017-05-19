@@ -1,0 +1,35 @@
+ru:
+  substitute_phones:
+
+    index:
+      title: 'Телефоны на замену'
+      query_placeholder: "IMEI / Серийный номер"
+    new:
+      title: 'Новый Телефон на замену'
+    edit:
+      title: 'Редактирование Телефона на замену'
+    show:
+      title: :activemodel.models.substitute_phone
+      substitutions:
+        issued_at: 'Время выдачи'
+        issued_to: 'Кому выдан'
+        issued_by: 'Кем выдан'
+        condition_match: 'Соответствует внешнему виду?'
+
+    stock:
+      title: 'Доступные телефоны на замену'
+      select: 'Выбрать'
+
+    substitutions:
+      edit:
+        check_icloud_note: 'Проверь, что в настройках iCloud ведена запись компании iTech, она должна заканчиваться на "@itech.pw"'
+        check_condition_note: 'Осмотри внимательно телефон, и проверь что он сотвествует описанию его внешнего состояния'
+        condition_match: 'Состояние соответствует'
+        condition_not_match: 'Состояние не соответствует'
+        submit: 'Вернуть Телефон на замену'
+        title: 'Возврат Телефона на замену'
+
+    created: 'Телефон на замену создан'
+    destroyed: 'Телефон на замену удалён'
+    returned: 'Телефон на замену возвращён'
+    updated: 'Телефон на замену изменён'

@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     get :actions, on: :member
     get :finance, on: :member
     get :bonuses, on: :member
-    resources :faults, shallow: true
+    resources :faults, shallow: true, only: %i[index new create destroy]
     post :create_duty_day, on: :collection
     post :destroy_duty_day, on: :collection
   end
@@ -75,6 +75,14 @@ Rails.application.routes.draw do
     scope module: :service_jobs do
       resource :subscription, only: %i[create destroy], format: :js
     end
+  end
+
+  namespace :substitute_phones do
+    get :stock, to: 'stock#index', format: :js
+  end
+
+  resources :substitute_phones, shallow: true do
+    resources :substitutions, module: :substitute_phones, only: %i[new create edit update]
   end
 
   resources :devices do

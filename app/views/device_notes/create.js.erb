@@ -1,4 +1,4 @@
-$notes = $('#device_notes');
+$notes = $('#device_notes_<%= @service_job.id %>');
 if ($notes.length > 0) {
   $notes.append('<%= j render(@device_note) %>');
   $notes.scrollTop($notes[0].scrollHeight);

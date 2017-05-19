@@ -1,0 +1,14 @@
+.row-fluid
+  .span6
+    = simple_form_for form, html: {class: 'form-horizontal'} do |f|
+      - if form.errors.any?
+        .alert.alert-error= form.errors.full_messages.join('. ')
+
+      = f.input :item, as: :device, required: true
+
+      = f.input :condition
+
+      .form-actions
+        = submit_button f
+
+  .span6= secondary_form_container

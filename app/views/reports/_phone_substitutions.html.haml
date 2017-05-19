@@ -1,0 +1,11 @@
+%table.table.table-bordered.table-hover#phone_substitutions_report
+  %caption= report_title report
+  %thead
+    %tr
+      %th= t '.substitute_phone'
+      %th= t '.ticket_number'
+  %tbody
+    - report.result[:substitutions].each do |substitution|
+      %tr
+        %td= substitution[:substitute_phone]
+        %td= substitution[:ticket_number]
