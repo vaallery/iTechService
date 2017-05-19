@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     get :actions, on: :member
     get :finance, on: :member
     get :bonuses, on: :member
-    resources :faults, shallow: true
+    resources :faults, shallow: true, only: %i[index new create destroy]
     post :create_duty_day, on: :collection
     post :destroy_duty_day, on: :collection
   end
