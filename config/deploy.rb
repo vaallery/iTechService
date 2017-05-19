@@ -2,8 +2,8 @@
 # set :filter, hosts: %w[192.168.4.200]
 ruby_v = '2.3.1'
 user = fetch :user
-# set :application, 'itechservice2'
-set :application, 'itechservice'
+set :application, 'itechservice2'
+# set :application, 'itechservice'
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
 set :branch, 'master'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
