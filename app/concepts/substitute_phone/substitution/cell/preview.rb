@@ -16,6 +16,7 @@ class SubstitutePhone < ApplicationRecord
         end
 
         def condition_match
+          return if model.condition_match.nil?
           icon_name = model.condition_match ? 'plus' : 'minus'
           icon icon_name
         end

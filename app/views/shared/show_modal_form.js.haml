@@ -1,9 +1,0 @@
-:plain
-  if($('#modal_form').length == 0) {
-    $("body").append("#{j(render('shared/modal_form'))}");
-    $("#modal_form").modal('show');
-  } else {
-    $("#modal_form").html("#{j(render(params[:form_name] || 'modal_form_content'))}");
-  }
-  $("a[rel~=popover], .has-popover").popover();
-  $("a[rel~=tooltip], .has-tooltip").tooltip();
