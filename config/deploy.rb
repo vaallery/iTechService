@@ -1,6 +1,6 @@
 # set :filter, hosts: %w[192.168.0.1 192.168.4.200]
 # set :filter, hosts: %w[192.168.4.200]
-ruby_v = '2.3.1'
+ruby_v = '2.3.4'
 user = fetch :user
 set :application, 'itechservice2'
 # set :application, 'itechservice'

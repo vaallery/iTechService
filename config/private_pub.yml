@@ -1,14 +1,17 @@
+defaults: &defaults
+  server: http://<%= ENV['SERVER_HOST'] %>:9292/faye
+  secret_token: <%= ENV['PRIVATE_PUB_SECRET_TOKEN'] %>
+
 development:
-  server: "http://localhost:9292/faye"
-  secret_token: "secret"
+  <<: *defaults
+
 test:
-  server: "http://localhost:9292/faye"
-  secret_token: "secret"
+  <<: *defaults
+
 production:
-  server: "http://192.168.0.1:9292/faye"
-  secret_token: "5d3597de4c92b2fc42d1cfd443ced98953eb52f2b0ae77de7c09da504166f594"
+  <<: *defaults
   signature_expiration: 3600 # one hour
+
 sandbox:
-  server: "http://192.168.6.24:9292/faye"
-  secret_token: "5d3597de4c92b2fc42d1cfd443ced98953eb52f2b0ae77de7c09da504166f594"
+  <<: *defaults
   signature_expiration: 3600 # one hour

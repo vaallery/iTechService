@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  database: <%= ENV["ITECHSERVICE_DB"] %>
+  username: <%= ENV["ITECHSERVICE_DB_USERNAME"] %>
+  password: <%= ENV["ITECHSERVICE_DB_PASSWORD"] %>
+
+development:
+  <<: *default
+  reaping_frequency: 10
+
+test:
+  <<: *default
+
+staging:
+  <<: *default
+
+production:
+  <<: *default
+
+cucumber:
+  <<: *test

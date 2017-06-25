@@ -1,5 +1,4 @@
 source 'https://rubygems.org'
-#source 'http://gems.rubyforge.org'
 
 gem 'rails', '4.2.5.2'
 gem 'protected_attributes'
@@ -59,7 +58,6 @@ gem 'rmagick', '~> 2.15.4'
 gem 'zeroclipboard-rails'
 gem 'sqlite3'
 gem 'vpim'#, '~> 13.11.11'
-gem 'figaro'
 gem 'puma'
 gem 'draper', '~> 2.1.0'
 gem 'seedbank'
@@ -116,7 +114,7 @@ group :development, :test do
   gem 'railroady'
   gem 'minitest-rails'
   gem 'faker'#, '~> 1.3'
-  #gem 'ffaker'
+  gem 'dotenv-rails'
 end
 
 group :test do
