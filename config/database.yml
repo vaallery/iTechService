@@ -18,6 +18,3 @@ staging:
 
 production:
   <<: *default
-
-cucumber:
-  <<: *test
