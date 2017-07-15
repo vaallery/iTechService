@@ -109,6 +109,7 @@ class ServiceJobsController < ApplicationController
 
     respond_to do |format|
       if @service_job.update_attributes(params[:service_job])
+        create_phone_substitution if @service_job.phone_substituted?
         Service::DeviceSubscribersNotificationJob.perform_later @service_job.id, current_user.id, params
         format.html { redirect_to @service_job, notice: t('service_jobs.updated') }
         format.json { head :no_content }
@@ -237,9 +238,10 @@ class ServiceJobsController < ApplicationController
   end
 
   def create_phone_substitution
-    PhoneSubstitution.create service_job_id: @service_job.id,
-                             substitute_phone_id: @service_job.substitute_phone_id,
-                             issuer_id: current_user.id,
-                             issued_at: @service_job.created_at
+    PhoneSubstitution.create_with(issuer_id: current_user.id, issued_at: Time.current).find_or_create_by(service_job_id: @service_job.id, substitute_phone_id: @service_job.substitute_phone_id,)
+    # PhoneSubstitution.create service_job_id: @service_job.id,
+    #                          substitute_phone_id: @service_job.substitute_phone_id,
+    #                          issuer_id: current_user.id,
+    #                          issued_at: @service_job.created_at
   end
 end
