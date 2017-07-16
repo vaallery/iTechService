@@ -62,6 +62,7 @@ gem 'puma'
 gem 'draper', '~> 2.1.0'
 gem 'seedbank'
 gem 'daemons'
+gem 'dotenv-rails'
 
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
@@ -114,7 +115,6 @@ group :development, :test do
   gem 'railroady'
   gem 'minitest-rails'
   gem 'faker'#, '~> 1.3'
-  gem 'dotenv-rails'
 end
 
 group :test do
