@@ -1,7 +1,7 @@
 set :stage, :staging
-set :deploy_to, "/var/www/#{fetch(:application)}"
-set :branch, 'staging'
-set :default_env, fetch(:default_env, {}).merge(rails_env: :production)
+set :deploy_to, "/var/www/#{fetch(:application)}_staging"
+set :branch, 'production'
+set :default_env, fetch(:default_env, {}).merge(rails_env: :staging)
 
 # Simple Role Syntax
 # ==================
@@ -28,7 +28,7 @@ server 'ise.sah', user: 'deployer', roles: %w{web app db}
 # you can see them in [net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start)
 # set it globally
 set :ssh_options, {
-  keys: %w[/Users/vova/.ssh/id_rsa],
+  # keys: %w[/Users/vova/.ssh/id_rsa],
   forward_agent: true,
   auth_methods: %w[publickey]
 }

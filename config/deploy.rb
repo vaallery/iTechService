@@ -2,8 +2,8 @@
 # set :filter, hosts: %w[192.168.4.200]
 ruby_v = '2.3.4'
 user = fetch :user
-set :application, 'itechservice2'
-# set :application, 'itechservice'
+# set :application, 'itechservice2'
+set :application, 'itechservice'
 set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
 set :branch, 'master'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
@@ -17,7 +17,7 @@ set :pty, false
 
 set :conditionally_migrate, true
 
-set :linked_files, %w{config/database.yml config/secrets.yml config/private_pub.yml config/application.yml}
+set :linked_files, %w{.env config/database.yml config/private_pub.yml config/application.yml}
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system public/uploads}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

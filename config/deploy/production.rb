@@ -27,7 +27,7 @@ server 'ise.vl', user: 'itech', roles: %w[web app db]
 # you can see them in [net/ssh documentation](http://net-ssh.github.io/net-ssh/classes/Net/SSH.html#method-c-start)
 # set it globally
 set :ssh_options, {
-  keys: %w[/Users/vova/.ssh/id_rsa],
+  # keys: %w[/Users/vova/.ssh/id_rsa],
   forward_agent: true,
   auth_methods: %w[publickey]
 }
