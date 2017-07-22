@@ -1,6 +1,6 @@
 # set :filter, hosts: %w[192.168.0.1 192.168.4.200]
 # set :filter, hosts: %w[192.168.4.200]
-ruby_v = '2.3.4'
+ruby_v = '2.3.1'
 user = fetch :user
 # set :application, 'itechservice2'
 set :application, 'itechservice'
@@ -9,7 +9,6 @@ set :branch, 'master'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 #set :deploy_to, "/usr/local/var/www/#{fetch(:application)}"
-set :scm, :git
 
 # set :format, :pretty
 set :log_level, :info
