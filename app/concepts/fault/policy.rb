@@ -14,7 +14,7 @@ class Fault < ApplicationRecord
     end
 
     def destroy?
-      user.any_admin?
+      user.superadmin?
     end
   end
 end
