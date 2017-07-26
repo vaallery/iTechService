@@ -8,7 +8,8 @@ class Setting < ActiveRecord::Base
       duck_plan: 'string',
       duck_plan_url: 'string',
       address_for_check: 'string',
-      data_storage_qty: 'integer'
+      data_storage_qty: 'integer',
+      meda_menu_database: 'string'
   }
 
   VALUE_TYPES = %w[boolean integer string text]
@@ -42,6 +43,10 @@ class Setting < ActiveRecord::Base
 
     def data_storage_qty
       Setting.for_department(Department.current).find_by_name('data_storage_qty')&.value&.to_i
+    end
+
+    def meda_menu_database
+      Setting.for_department(Department.current).find_by(name: 'meda_menu_database')&.value
     end
   end
 end
