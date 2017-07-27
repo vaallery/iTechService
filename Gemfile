@@ -98,7 +98,7 @@ group :development do
   gem 'capistrano-ssh-doctor'
   gem 'airbrussh', :require => false
   gem 'quiet_assets'
-  gem 'better_errors'
+  # gem 'better_errors'
   gem 'stack_rescue'
   gem 'binding_of_caller'
   gem 'meta_request', '~> 0.2.8'

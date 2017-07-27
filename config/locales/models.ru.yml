@@ -409,13 +409,16 @@ ru:
         carrier: 'Оператор'
         case_color: 'Чехол'
         case_color_id: 'Чехол'
+        claimed_defect: 'Заявленный дефект'
         client: :activerecord.models.client
+        client_address: 'Адрес'
         client_id: :activerecord.models.client
         client_notified: 'Клиент уведомлён'
         comment: 'Комментарий'
         contact_phone: 'Контактный номер'
         data_storages: 'Данные на компьютерах'
         department: :activerecord.models.department
+        device_condition: 'Внешний вид/Состояние телефона'
         device_tasks: 'Список задач'
         done_at: 'Время завершения'
         history_records: 'История изменений'

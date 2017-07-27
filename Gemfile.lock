@@ -53,10 +53,6 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     barby (0.6.5)
     bcrypt (3.1.11)
-    better_errors (2.1.1)
-      coderay (>= 1.0.0)
-      erubis (>= 2.6.6)
-      rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap-colorpicker-rails (0.3.1)
@@ -120,7 +116,6 @@ GEM
     cliver (0.3.2)
     cocaine (0.5.8)
       climate_control (>= 0.0.3, < 1.0)
-    coderay (1.1.1)
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     coffee-rails (4.1.1)
@@ -551,7 +546,6 @@ DEPENDENCIES
   airbrussh
   ancestry (~> 2.1.0)
   barby (~> 0.6.4)
-  better_errors
   binding_of_caller
   bootstrap-colorpicker-rails (~> 0.3.1)
   byebug

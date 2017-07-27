@@ -69,6 +69,8 @@ Rails.application.routes.draw do
     get :check_imei, on: :collection
     get :movement_history, on: :member
     get :quick_search, on: :collection
+    get :work_order, on: :member
+    get :completion_act, on: :member
     post :create_sale, on: :member
     patch :set_keeper, on: :member, defaults: { format: 'js' }
     resources :device_notes, only: %i[index new create]

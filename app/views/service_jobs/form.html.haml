@@ -63,6 +63,11 @@
 
       = f.input :tech_notice, input_html: {rows: 5} if can? :write_tech_notice, @service_job
 
+      #additional-fields
+        = f.input :client_address, input_html: {class: 'input-xlarge'}
+        = f.input :claimed_defect, input_html: {class: 'input-xlarge'}
+        = f.input :device_condition, input_html: {class: 'input-xlarge'}
+
       = f.input :notify_client if @service_job.new_record? or current_user.any_admin?
       = f.input :client_notified, as: :radio_buttons, collection: [[true, t('yep')], [false, t('not_accessible')]], required: true, value_method: :first, label_method: :last if @service_job.notify_client?
 

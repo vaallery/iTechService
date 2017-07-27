@@ -133,6 +133,24 @@ class ServiceJobsController < ApplicationController
     end
   end
 
+  def work_order
+    respond_to do |format|
+      service_job = ServiceJob.find params[:id]
+      pdf = WorkOrderPdf.new service_job, view_context
+      filename = "work_order_#{service_job.ticket_number}.pdf"
+      format.pdf { send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline' }
+    end
+  end
+
+  def completion_act
+    respond_to do |format|
+      service_job = ServiceJob.find params[:id]
+      pdf = CompletionActPdf.new service_job, view_context
+      filename = "completion_act_#{service_job.ticket_number}.pdf"
+      format.pdf { send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline' }
+    end
+  end
+
   def history
     service_job = ServiceJob.find params[:id]
     @records = service_job.history_records

@@ -33,3 +33,6 @@ ru:
     destroyed: 'Телефон на замену удалён'
     returned: 'Телефон на замену возвращён'
     updated: 'Телефон на замену изменён'
+  service_jobs:
+    show:
+      completion_act: "Акт выполненных работ"
