@@ -2,6 +2,7 @@ class Setting < ActiveRecord::Base
 
   DEFAULT_SETTINGS = {
       ticket_prefix: 'string',
+      ogrn: 'string',
       address: 'string',
       contact_phone: 'string',
       schedule: 'string',
@@ -24,6 +25,10 @@ class Setting < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :department_id
 
   class << self
+    def ogrn
+      Setting.find_by(name: 'ogrn')&.value
+    end
+
     def ticket_prefix(department=nil)
       (setting = Setting.for_department(department).find_by_name('ticket_prefix')).present? ? setting.value : '25'
     end
@@ -42,6 +47,10 @@ class Setting < ActiveRecord::Base
 
     def data_storage_qty
       Setting.for_department(Department.current).find_by_name('data_storage_qty')&.value&.to_i
+    end
+
+    def schedule(department = nil)
+      Setting.for_department(department).find_by(name: 'schedule')&.value
     end
   end
 end

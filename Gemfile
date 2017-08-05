@@ -58,7 +58,6 @@ gem 'rmagick', '~> 2.15.4'
 gem 'zeroclipboard-rails'
 gem 'sqlite3'
 gem 'vpim'#, '~> 13.11.11'
-gem 'puma'
 gem 'draper', '~> 2.1.0'
 gem 'seedbank'
 gem 'daemons'
@@ -75,6 +74,7 @@ gem 'bootstrap-colorpicker-rails', '~> 0.3.1', :require => 'bootstrap-colorpicke
 
 # gem 'nokogiri', github: 'sparklemotion/nokogiri'
 gem 'nokogiri', '~> 1.6.7.2'
+gem 'ru_propisju'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -136,5 +136,6 @@ end
 
 group :production do
   # gem 'unicorn', '~> 4.6.2'
+  # gem 'puma'
   gem 'passenger', '>= 5.0.25', :require => 'phusion_passenger/rack_handler'
 end

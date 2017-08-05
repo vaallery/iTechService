@@ -17,7 +17,7 @@ class WorkOrderPdf < Prawn::Document
     font_size base_font_size
 
     # Logo
-    move_down 15
+    move_down font_size *
     stroke do
       line_width 2
       horizontal_line 0, 530
@@ -28,16 +28,17 @@ class WorkOrderPdf < Prawn::Document
     # TODO: Barcode
 
     # Organization info
-    move_down font_size * 2
-    text "Юр. Адрес ИП Колесник В. В., г. Владивосток, ул. Шилкинская д. 3-1", align: :right
-    text "Фактический адрес г. Владивосток, ул. Океанский пр-т д. 90", align: :right
+    move_down font_size
+    text "Юр. Адрес: ИП Колесник В. В., г. Владивосток, ул. Шилкинская д. 3-1", align: :right
+    text "ОГРН: #{Setting.ogrn}", align: :right
+    text "Фактический адрес: г. Владивосток, ул. Океанский пр-т, д. 90", align: :right
+    text "ул. Семёновская, д. 34", align: :right
 
     # Contact info
     move_down font_size * 2
     bounding_box [400, cursor], width: 130 do
       text 'График работы:', align: :right, style: :bold
-      text 'Пн-Пт 10:00 - 21:00', align: :right
-      text 'Сб, Вс 11:00 - 20:00', align: :right
+      text Setting.schedule, align: :right
       move_down font_size
       [
         'e-mail: info@itechstore.ru',

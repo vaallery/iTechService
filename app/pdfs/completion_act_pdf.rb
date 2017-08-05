@@ -29,16 +29,17 @@ class CompletionActPdf < Prawn::Document
     # TODO: Barcode
 
     # Organization info
-    move_down font_size * 2
-    text "Юр. Адрес ИП Колесник В. В., г. Владивосток, ул. Шилкинская д. 3-1", align: :right
-    text "Фактический адрес г. Владивосток, ул. Океанский пр-т д. 90", align: :right
+    move_down font_size
+    text "Юр. Адрес: ИП Колесник В. В., г. Владивосток, ул. Шилкинская д. 3-1", align: :right
+    text "ОГРН: #{Setting.ogrn}", align: :right
+    text "Фактический адрес: г. Владивосток, ул. Океанский пр-т, д. 90", align: :right
+    text "ул. Семёновская, д. 34", align: :right
 
     # Contact info
     move_down font_size * 2
     bounding_box [400, cursor], width: 130 do
       text 'График работы:', align: :right, style: :bold
-      text 'Пн-Пт 10:00 - 21:00', align: :right
-      text 'Сб, Вс 11:00 - 20:00', align: :right
+      text Setting.schedule, align: :right
       move_down font_size
       [
         'e-mail: info@itechstore.ru',
@@ -93,6 +94,11 @@ class CompletionActPdf < Prawn::Document
     duration = calculate_duration(service_job.received_at, service_job.done_at)
     return_date = service_job.archived_at.localtime.strftime('%d.%m.%Y')
     table [["Дата приёма: #{receipt_date}", "Дата завершения ремонта: #{done_date}", "Срок выполнения: #{duration}", "Дата выдачи устройства: #{return_date}"]], width: 530
+    move_down font_size
+
+    sum_in_words = RuPropisju.rublej(service_job.tasks_cost)
+    text "Стоимость услуг по договору составляет: #{sum_in_words}"
+
     move_down font_size
 
     # Text

@@ -366,7 +366,6 @@ GEM
     protected_attributes (1.1.4)
       activemodel (>= 4.0.1, < 5.0)
     public_suffix (2.0.5)
-    puma (3.8.2)
     pundit (1.1.0)
       activesupport (>= 3.0.0)
     quiet_assets (1.1.0)
@@ -437,6 +436,7 @@ GEM
     roo (2.4.0)
       nokogiri (~> 1)
       rubyzip (~> 1.1, < 2.0.0)
+    ru_propisju (2.5.0)
     ruby-graphviz (1.2.3)
     ruby-progressbar (1.8.1)
     rubyzip (1.2.1)
@@ -601,7 +601,6 @@ DEPENDENCIES
   prawn-table (~> 0.2.1)
   private_pub (~> 1.0.3)
   protected_attributes
-  puma
   pundit (~> 1.1.0)
   quiet_assets
   railroady
@@ -611,6 +610,7 @@ DEPENDENCIES
   reform-rails (~> 0.1)
   rmagick (~> 2.15.4)
   roo (~> 2.4.0)
+  ru_propisju
   seed_dumper (~> 0.1.3)
   seedbank
   shoulda (~> 3.5.0)
