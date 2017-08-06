@@ -18,7 +18,7 @@ class CompletionActPdf < Prawn::Document
     font_size base_font_size
 
     # Logo
-    move_down 15
+    move_down font_size * 2
     stroke do
       line_width 2
       horizontal_line 0, 530
