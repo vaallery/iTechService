@@ -17,3 +17,4 @@ ru:
     schedule3: 'Вс - выходной'
     site: 'www.itechstore.ru'
     user: 'Сотрудник: %{name}'
+    contact_phone: 'Конт. тел.: %{number}'

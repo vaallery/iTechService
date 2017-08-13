@@ -56,7 +56,7 @@ class ServiceJobsController < ApplicationController
               pdf = TicketPdf.new @service_job, view_context
               filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
               pdf.render_file filepath
-              PrinterTools.print_file filepath, :ticket
+              PrinterTools.print_file filepath, type: :ticket, printer: @service_job.department.printer
             else
               pdf = TicketPdf.new @service_job, view_context, params[:part]
             end
@@ -71,6 +71,7 @@ class ServiceJobsController < ApplicationController
 
   def new
     @service_job = ServiceJob.new params[:service_job]
+    @service_job.department_id = current_user.department_id
 
     respond_to do |format|
       format.html { render 'form' }

@@ -19,6 +19,8 @@
   %dd= human_phone @department.contact_phone
   %dt= model_class.human_attribute_name :schedule
   %dd= @department.schedule.blank? ? '-' : @department.schedule
+  %dt= model_class.human_attribute_name :printer
+  %dd= @department.printer.blank? ? '-' : @department.printer
 
 - if can? :manage, @department
   .form-actions

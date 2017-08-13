@@ -12,4 +12,7 @@ module DepartmentsHelper
     t "departments.roles.#{department.role_s}"
   end
 
+  def departments_for_select
+    Department.selectable
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170727140012) do
+ActiveRecord::Schema.define(version: 20170813081608) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,7 @@ ActiveRecord::Schema.define(version: 20170727140012) do
     t.text     "schedule"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.string   "printer"
   end
 
   add_index "departments", ["code"], name: "index_departments_on_code", using: :btree
