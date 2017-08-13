@@ -3,9 +3,12 @@ class TicketPdf < Prawn::Document
   require 'barby/barcode/ean_13'
   require 'barby/outputter/prawn_outputter'
 
+  attr_reader :service_job, :department, :view
+
   def initialize(service_job, view, part=nil)
     super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: [10, 22, 10, 10]
     @service_job = service_job
+    @department = service_job.department
     @view = view
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
@@ -20,25 +23,25 @@ class TicketPdf < Prawn::Document
 
   def client_part
     logo
-    vertical_line y-80, y-10, at: 60
+    vertical_line y-60, y-10, at: 60
     stroke
     font_size 10 do
       span 125, position: :right do
         text @view.t('tickets.site')
         text @view.t('tickets.email')
-        text Setting.get_value(:address_for_check)
-        text Setting.get_value(:schedule)
+        text department.schedule
       end
     end
-    move_cursor_to 160
+    move_cursor_to 180
     font_size 24 do
-      text "№ #{@service_job.ticket_number}", align: :center, inlign_format: true, style: :bold
+      text "№ #{service_job.ticket_number}", align: :center, inlign_format: true, style: :bold
     end
-    text @service_job.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
+    text service_job.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
+    text department.address, align: :center
     move_down 5
-    text @view.t('tickets.user', name: @service_job.user_short_name)
+    text view.t('tickets.user', name: service_job.user_short_name)
     move_down 5
-    text Setting.get_value(:contact_phone)
+    text I18n.t('tickets.contact_phone', number: department.contact_phone)
     move_down 5
     horizontal_line 0, 205
     stroke
@@ -52,12 +55,15 @@ class TicketPdf < Prawn::Document
 
   def receiver_part
     logo
-    move_down 26
-    font_size 22 do
-      text @service_job.ticket_number, align: :right, inlign_format: true, style: :bold
+    move_down 8
+    span 140, position: :right do
+      font_size 22 do
+        text @service_job.ticket_number, inlign_format: true, style: :bold
+      end
+      text @service_job.created_at.localtime.strftime('%H:%M %d.%m.%Y')
+      text department.address
     end
-    text @service_job.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
-    move_down 15
+    move_down 10
     text @service_job.client_short_name
     text @view.number_to_phone @service_job.client.full_phone_number || @service_job.client.phone_number, area_code: true
     text "#{@view.t('tickets.service_job_contact_phone', number: @view.number_to_phone(@service_job.contact_phone, area_code: true))}"
@@ -74,7 +80,7 @@ class TicketPdf < Prawn::Document
   private
 
   def logo
-    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 50, height: 50, at: [0, cursor-10]
+    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 50, height: 50, at: [0, cursor]
   end
 
   def barcode

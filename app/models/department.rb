@@ -9,6 +9,7 @@ class Department < ActiveRecord::Base
 
   default_scope {order('departments.id asc')}
   scope :branches, ->{where(role: 1)}
+  scope :selectable, -> { where(role: [0, 3]) }
 
   has_many :users, dependent: :nullify
   has_many :stores, dependent: :nullify
@@ -18,7 +19,7 @@ class Department < ActiveRecord::Base
   has_many :locations, inverse_of: :department
   # cattr_accessor :current
 
-  attr_accessible :name, :role, :code, :url, :city, :address, :contact_phone, :schedule
+  attr_accessible :name, :role, :code, :url, :city, :address, :contact_phone, :schedule, :printer
   validates_presence_of :name, :role, :code
   validates_presence_of :city, :address, :contact_phone, :schedule, unless: :is_store?
   validates :url, presence: true, if: :has_server?

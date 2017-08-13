@@ -1,6 +1,6 @@
 module PrinterTools
 
-  def self.print_file(filepath, type=nil, height=nil)
+  def self.print_file(filepath, type: nil, height: nil, printer: nil)
     if File.exists? filepath
       options = '-o PageCutType=1PartialCutPage'
       case type.to_sym
@@ -11,6 +11,7 @@ module PrinterTools
         # when :tags then options = " -d 'tags' -o media=Custom.29mmx20mm"
         else options << ' -o media=Custom.72x90mm'
       end
+      options << " -d #{printer}" if printer
       puts "#{options} #{filepath}"
       system "lp #{options} #{filepath}"
     else

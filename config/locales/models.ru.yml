@@ -143,6 +143,7 @@ ru:
         address: 'Адрес'
         city: 'Город'
         contact_phone: 'Контактный телефон'
+        printer: 'Принтер'
         schedule: 'График работы'
 
       device:
