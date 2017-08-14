@@ -15,6 +15,11 @@
           .controls= @service_job.ticket_number
 
         .control-group
+          %label.control-label= ServiceJob.human_attribute_name :department
+          .controls
+            %strong.text-warning= @service_job.department_name
+
+        .control-group
           %label.control-label= t 'service_jobs.itunes_string'
           .controls
             %span#itunes_string= itunes_string_for(@service_job)
