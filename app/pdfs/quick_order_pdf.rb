@@ -27,6 +27,8 @@ class QuickOrderPdf < Prawn::Document
     font_size 10 do
       text I18n.l(@quick_order.created_at.localtime, format: :long_d), align: :center, inline_format: true
     end
+    move_down 4
+    text @quick_order.department_name, align: :center
     move_down 30
     text I18n.t('tickets.user', name: @quick_order.user_short_name)
     move_down 5
@@ -44,6 +46,8 @@ class QuickOrderPdf < Prawn::Document
     font_size 10 do
       text I18n.l(@quick_order.created_at.localtime, format: :long_d), align: :center, inline_format: true
     end
+    move_down 4
+    text @quick_order.department_name, align: :center
     text @quick_order.client_name
     text @quick_order.contact_phone
     move_down 5
