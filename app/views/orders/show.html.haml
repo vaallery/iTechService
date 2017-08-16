@@ -11,6 +11,10 @@
 
 %dl.dl-horizontal
 
+  %dt= model_class.human_attribute_name :department
+  %dd
+    %strong.text-warning= @order.department_name
+
   - if @order.user.present?
     %dt= model_class.human_attribute_name :user
     %dd= @order.user.short_name
