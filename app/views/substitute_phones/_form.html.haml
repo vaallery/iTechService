@@ -4,8 +4,8 @@
       - if form.errors.any?
         .alert.alert-error= form.errors.full_messages.join('. ')
 
+      = f.association :department, as: :radio_buttons, collection: departments_for_select, item_wrapper_class: 'inline'
       = f.input :item, as: :device, required: true
-
       = f.input :condition
 
       .form-actions

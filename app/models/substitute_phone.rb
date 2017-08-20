@@ -2,8 +2,10 @@ class SubstitutePhone < ApplicationRecord
   include Authorizable
 
   scope :available, -> { where service_job_id: nil }
+  scope :in_department, ->(department) { where department: department }
 
   belongs_to :item
+  belongs_to :department
   belongs_to :service_job
   has_many :features, through: :item
   has_many :substitutions, class_name: 'PhoneSubstitution'
