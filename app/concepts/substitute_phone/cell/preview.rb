@@ -11,10 +11,11 @@ class SubstitutePhone < ApplicationRecord
         model.service_job.present? ? 'error' : 'success'
       end
 
-      private
+      def department
+        model.department.name unless model.department.nil?
+      end
 
       def item
-        # @item ||= presenter_for(model.item, ItemDecorator)
         @item ||= ItemDecorator.new(model.item)
       end
     end

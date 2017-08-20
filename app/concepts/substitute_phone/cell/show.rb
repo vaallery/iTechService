@@ -15,6 +15,10 @@ class SubstitutePhone < ApplicationRecord
         end
       end
 
+      def department
+        model.department.name unless model.department.nil?
+      end
+
       def substitutions
         cell(Substitutions, model.substitutions).call
       end

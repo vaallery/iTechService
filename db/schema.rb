@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170813081608) do
+ActiveRecord::Schema.define(version: 20170820113559) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1077,8 +1077,10 @@ ActiveRecord::Schema.define(version: 20170813081608) do
     t.integer  "service_job_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "department_id"
   end
 
+  add_index "substitute_phones", ["department_id"], name: "index_substitute_phones_on_department_id", using: :btree
   add_index "substitute_phones", ["item_id"], name: "index_substitute_phones_on_item_id", using: :btree
   add_index "substitute_phones", ["service_job_id"], name: "index_substitute_phones_on_service_job_id", unique: true, using: :btree
 
@@ -1284,6 +1286,7 @@ ActiveRecord::Schema.define(version: 20170813081608) do
   add_foreign_key "product_groups_option_values", "product_groups"
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "products"
+  add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"
   add_foreign_key "substitute_phones", "service_jobs"
 end
