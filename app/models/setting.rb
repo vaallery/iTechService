@@ -34,7 +34,7 @@ class Setting < ActiveRecord::Base
     end
 
     def get_value(name, department=nil)
-      (setting = Setting.for_department(department).find_by_name(name.to_s) || Setting.where(department_id: nil, name: name.to_s)).present? ? setting.value : ''
+      (setting = Setting.for_department(department).find_by_name(name.to_s) || Setting.find_by(department_id: nil, name: name.to_s)).present? ? setting.value : ''
     end
 
     def duck_plan(department)
@@ -50,6 +50,7 @@ class Setting < ActiveRecord::Base
     end
 
     def schedule(department = nil)
+      department ||= Department.current
       Setting.for_department(department).find_by(name: 'schedule')&.value
     end
   end

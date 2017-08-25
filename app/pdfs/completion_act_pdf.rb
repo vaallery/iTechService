@@ -7,6 +7,7 @@ class CompletionActPdf < Prawn::Document
   def initialize(service_job, view_context)
     super page_size: 'A4', page_layout: :portrait
     @view_context = view_context
+    department = service_job.department
     base_font_size = 7
 
     font_families.update 'DroidSans' => {
@@ -33,18 +34,17 @@ class CompletionActPdf < Prawn::Document
     text "Юр. Адрес: ИП Колесник В. В., г. Владивосток, ул. Шилкинская д. 3-1", align: :right
     text "ОГРН: #{Setting.ogrn}", align: :right
     text "Фактический адрес: г. Владивосток, ул. Океанский пр-т, д. 90", align: :right
-    text "ул. Семёновская, д. 34", align: :right
+    text "ул. Семёновская, д. 34; г. Хабаровск, ул. Дзержинского, д. 2", align: :right
 
     # Contact info
     move_down font_size * 2
     bounding_box [400, cursor], width: 130 do
       text 'График работы:', align: :right, style: :bold
-      text Setting.schedule, align: :right
+      text department.schedule, align: :right
       move_down font_size
       [
         'e-mail: info@itechstore.ru',
-        'тел.: +7 (423)2-672-673',
-        'тел.: +7 (423)2-673-672',
+        "#{Setting.get_value(:contact_phone, department)}",
         'сайт: http://itechstore.ru'
       ].each do |str|
         text str, align: :right

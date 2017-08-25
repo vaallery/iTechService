@@ -26,6 +26,8 @@ rerun.txt
 pickle-email-*.html
 
 .env.production
+.env.staging
+.env*.production
 .env*.staging
 .env*.local
 
