@@ -70,11 +70,9 @@ class Location < ActiveRecord::Base
     if user.admin?
       visible
     else
-      if user.present? && user.department.present?
-        Location.visible.where(department_id: user.department.id)
-      else
-        Location.visible.where(department_id: Department.current.id)
-      end
+      # department = (user.present? && user.department.present?) ? user.department : Department.current
+      department = (service_job.present? && service_job.department.present?) ? service_job.department : Department.current
+      visible.where(department_id: department.id)
     end
   end
 
