@@ -34,7 +34,7 @@ class Users::SessionsController < Devise::SessionsController
     user.department = new_department
     if user.location.present?
       new_location = Location.find_by(department: new_department, code: user.location.code)
-      user.location = new_location
+      user.location = new_location if new_location.present?
     end
     user.save
   end
