@@ -138,13 +138,14 @@ ru:
         user_id: :activerecord.models.user
 
       department:
-        role: 'Роль'
-        url: 'URL'
         address: 'Адрес'
         city: 'Город'
         contact_phone: 'Контактный телефон'
+        ip_network: 'IP сеть'
         printer: 'Принтер'
+        role: 'Роль'
         schedule: 'График работы'
+        url: 'URL'
 
       device:
         app_store_pass: 'Пароль на учетную запись в App Store'
@@ -505,6 +506,7 @@ ru:
         comments: 'Комментарии'
         current_sign_in_at: 'Время авторизации'
         current_sign_in_ip: 'IP авторизации'
+        department_autochangeable: 'Автосмена подразделения'
         duty_days: 'Дежурные дни'
         email: 'E-mail'
         encrypted_password: 'encrypted_password'  #g

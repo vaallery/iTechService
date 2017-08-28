@@ -19,7 +19,7 @@ class Department < ActiveRecord::Base
   has_many :locations, inverse_of: :department
   # cattr_accessor :current
 
-  attr_accessible :name, :role, :code, :url, :city, :address, :contact_phone, :schedule, :printer
+  attr_accessible :name, :role, :code, :url, :city, :address, :contact_phone, :schedule, :printer, :ip_network
   validates_presence_of :name, :role, :code
   validates_presence_of :city, :address, :contact_phone, :schedule, unless: :is_store?
   validates :url, presence: true, if: :has_server?
