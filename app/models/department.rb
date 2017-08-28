@@ -9,7 +9,7 @@ class Department < ActiveRecord::Base
 
   default_scope {order('departments.id asc')}
   scope :branches, ->{where(role: 1)}
-  scope :selectable, -> { where(role: [0, 3]) }
+  scope :selectable, -> { where(role: [0, 1, 3]) }
 
   has_many :users, dependent: :nullify
   has_many :stores, dependent: :nullify
