@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   get 'check_session_status', to: 'dashboard#check_session_status'
   get 'print_tags', to: 'dashboard#print_tags'
 
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
 
   resources :departments
   resources :reports, only: [:index, :new, :create]

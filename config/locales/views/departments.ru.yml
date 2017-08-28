@@ -9,6 +9,8 @@ ru:
       title: 'Новое Подразделение'
     edit:
       title: 'Редактирование Подразделения'
+    form:
+      ip_network_placeholder: '192.168.0.'
     roles:
       main: 'Главное'
       branch: 'Филиал'
