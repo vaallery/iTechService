@@ -84,7 +84,7 @@ module ApplicationHelper
     end
   end
 
-  def link_to_destroy object, options = {}
+  def link_to_destroy(object, options = {})
     options.merge! class: 'btn btn-danger', method: 'delete',
         data: {confirm: t('confirmation', default: 'Are you sure?')}
     name = t 'destroy'
