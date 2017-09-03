@@ -50,6 +50,7 @@ class Department < ActiveRecord::Base
   end
 
   def self.current
+    return User.current.department if User.current.present? && User.current.department.present?
     Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first
   end
 
