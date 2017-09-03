@@ -49,7 +49,7 @@ class ServiceJob < ActiveRecord::Base
   delegate :pending_substitution, to: :substitute_phone, allow_nil: true
   alias_attribute :received_at, :created_at
 
-  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages, :email, :substitute_phone_id, :substitute_phone_icloud_connected, :client_address, :claimed_defect, :device_condition
+  attr_accessible :department_id, :comment, :serial_number, :imei, :client_id, :device_type_id, :status, :location_id, :device_tasks_attributes, :user_id, :replaced, :security_code, :notify_client, :client_notified, :return_at, :service_duration, :app_store_pass, :tech_notice, :item_id, :case_color_id, :contact_phone, :is_tray_present, :carrier_id, :keeper_id, :data_storages, :email, :substitute_phone_id, :substitute_phone_icloud_connected, :client_address, :claimed_defect, :device_condition, :client_comment
 
   validates_presence_of :ticket_number, :user, :client, :location, :device_tasks, :return_at, :department
   validates_presence_of :contact_phone, on: :create
