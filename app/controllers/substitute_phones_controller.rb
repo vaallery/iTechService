@@ -1,37 +1,53 @@
 class SubstitutePhonesController < ApplicationController
+  respond_to :html
 
   def index
-    present SubstitutePhone::Index
+    respond_to :html, :js
+    run SubstitutePhone::Index do
+      return
+    end
+    failed
   end
 
   def show
-    present SubstitutePhone::Show
+    run SubstitutePhone::Show do
+      return render_cell SubstitutePhone::Cell::Show
+    end
+    failed
   end
 
   def new
-    form SubstitutePhone::Create
+    run SubstitutePhone::Create::Present do
+      return
+    end
+    failed
   end
 
   def create
     run SubstitutePhone::Create do
-      return redirect_to @substitute_phone, notice: t('substitue_phones.created')
+      return redirect_to operation_model, notice: operation_message
     end
-    render :new
+    render 'new'
   end
 
   def edit
-    form SubstitutePhone::Update
+    run SubstitutePhone::Update::Present do
+      return render 'edit'
+    end
+    failed
   end
 
   def update
     run SubstitutePhone::Update do
-      return redirect_to @substitute_phone, notice: t('substitute_phones.updated')
+      return redirect_to_index notice: operation_message
     end
-    render :edit
+    render 'edit'
   end
 
   def destroy
-    run SubstitutePhone::Destroy
-    redirect_to substitute_phones_url, notice: t('substitute_phones.created')
+    run SubstitutePhone::Destroy do
+      return redirect_to substitute_phones_url, notice: t('substitute_phones.destroyed')
+    end
+    failed
   end
 end

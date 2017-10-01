@@ -11,4 +11,4 @@
         %span.add-on.btn.clear_search_input
           %i.icon-remove
 
-#resource_table= render 'table', substitute_phones: @substitute_phones
+#resource_table= render partial: 'table', locals: {substitute_phones: @substitute_phones}

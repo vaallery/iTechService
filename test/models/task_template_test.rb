@@ -2,7 +2,7 @@ require 'test_helper'
 
 class TaskTemplateTest < ActiveSupport::TestCase
   def template
-    @template ||= Template.new
+    @template ||= TaskTemplate.new
   end
 
   def test_valid

@@ -18,6 +18,7 @@
 //= require zeroclipboard
 //= require currency-in-words
 //= require app.js.coffee
+//= require app.notification
 //= require app.inputs
 //= require app.substitute_phones
 //= require common

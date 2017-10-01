@@ -1,36 +1,31 @@
 class FaultsController < ApplicationController
-  authorize_resource
+  respond_to :js
 
   def index
-    @faults = Fault.where(causer_id: params[:user_id]).ordered.page(params[:page])
-    respond_to do |format|
-      format.js
+    run Fault::Index do
+      return render 'index', locals: {faults: operation_model}
     end
+    failed
   end
 
   def new
-    form Fault::Create
-    respond_to do |format|
-      format.js { render 'shared/show_modal_form' }
+    run Fault::Create::Present do
+      return render 'shared/show_modal_form'
     end
+    failed
   end
 
   def create
-    @user = User.find params[:user_id]
-    respond_to do |format|
-      run Fault::Create do |_|
-        format.js { render 'shared/close_modal_form' }
-      end
-      format.js { render 'shared/show_modal_form' }
+    run Fault::Create do
+      return render 'shared/close_modal_form'
     end
+    render 'shared/show_modal_form'
   end
 
   def destroy
-    respond_to do |format|
-      run Fault::Destroy do
-        format.js
-      end
-      format.js { render js: '' }
+    run Fault::Destroy do
+      return render 'destroy'
     end
+    failed
   end
 end
