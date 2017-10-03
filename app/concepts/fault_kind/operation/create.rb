@@ -7,7 +7,7 @@ class FaultKind::Create < BaseOperation
   end
 
   step Nested(Present)
-  step Contract::Validate(key: :fault)
+  step Contract::Validate(key: :fault_kind)
   failure :contract_invalid!
   step Contract::Persist()
   step ->(options, **) { options['result.message'] = I18n.t('fault_kinds.created') }

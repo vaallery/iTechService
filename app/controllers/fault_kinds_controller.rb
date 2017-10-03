@@ -23,7 +23,7 @@ class FaultKindsController < ApplicationController
   end
 
   def edit
-    run FaultKind::Update do
+    run FaultKind::Update::Present do
       return render 'edit'
     end
     failed
