@@ -1,16 +1,18 @@
 class BaseCell < Trailblazer::Cell
+  private
+
   include GlyphHelper
   # include FontAwesome::Sass::Rails::ViewHelpers
   # include Devise::Controllers::Helpers
   include ActionView::Helpers::TranslationHelper
   include Cell::Translation
+  include LinksHelper
 
-  delegate :view_context, :controller_name, :current_user, :policy, to: :controller
+  delegate :view_context, :controller_name, :action_name, :current_user, :policy, to: :controller
 
   alias_method :icon, :glyph
 
-  def link_back_to_index(options = {})
-    options.merge! action: 'index', controller: controller_name
-    link_to icon('chevron-left'), url_for(options), class: 'link_back'
+  def title
+    t '.title'
   end
 end

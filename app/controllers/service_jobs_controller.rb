@@ -56,7 +56,7 @@ class ServiceJobsController < ApplicationController
               pdf = TicketPdf.new @service_job, view_context
               filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
               pdf.render_file filepath
-              PrinterTools.print_file filepath, :ticket
+              PrinterTools.print_file filepath, type: :ticket, printer: @service_job.department.printer
             else
               pdf = TicketPdf.new @service_job, view_context, params[:part]
             end
@@ -71,6 +71,7 @@ class ServiceJobsController < ApplicationController
 
   def new
     @service_job = ServiceJob.new params[:service_job]
+    @service_job.department_id = current_user.department_id
 
     respond_to do |format|
       format.html { render 'form' }
@@ -130,6 +131,24 @@ class ServiceJobsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to service_jobs_url }
       format.json { head :no_content }
+    end
+  end
+
+  def work_order
+    respond_to do |format|
+      service_job = ServiceJob.find params[:id]
+      pdf = WorkOrderPdf.new service_job, view_context
+      filename = "work_order_#{service_job.ticket_number}.pdf"
+      format.pdf { send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline' }
+    end
+  end
+
+  def completion_act
+    respond_to do |format|
+      service_job = ServiceJob.find params[:id]
+      pdf = CompletionActPdf.new service_job, view_context
+      filename = "completion_act_#{service_job.ticket_number}.pdf"
+      format.pdf { send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline' }
     end
   end
 

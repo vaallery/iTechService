@@ -1,67 +1,51 @@
 class FaultKindsController < ApplicationController
-  authorize_resource
+  respond_to :html
 
   def index
-    # authorize! :xindex, FaultKind
-    @fault_kinds = FaultKind.ordered
-    respond_to do |format|
-      format.html
+    run FaultKind::Index do
+      return render 'index', locals: {fault_kinds: operation_model}
     end
+    failed
   end
 
   def new
-    form FaultKind::Create
-    respond_to do |format|
-      format.html
+    run FaultKind::Create::Present do
+      return render 'new'
     end
+    failed
   end
 
   def create
-    respond_to do |format|
-      run FaultKind::Create do |_|
-        format.html { return redirect_to_index notice: t('fault_kinds.created') }
-      end
-      format.html { render :new }
+    run FaultKind::Create do
+      return redirect_to_index notice: operation_message
     end
+    render 'new'
   end
 
   def edit
-    # authorize! :edit, FaultKind
-    form FaultKind::Update
-    respond_to do |format|
-      format.html
+    run FaultKind::Update::Present do
+      return render 'edit'
     end
+    failed
   end
 
   def update
-    respond_to do |format|
-      run FaultKind::Update do |_|
-        format.html { return redirect_to_index notice: t('fault_kinds.updated') }
-      end
-      format.html { render :edit }
+    run FaultKind::Update do
+      return redirect_to_index notice: operation_message
     end
+    render 'edit'
   end
 
   def destroy
-    respond_to do |format|
-      run FaultKind::Destroy do |_|
-        format.html { return redirect_to_index notice: t('fault_kinds.destroyed') }
-      end
-      format.html { return redirect_to_index notice: t('fault_kinds.not_destroyed') }
+    run FaultKind::Destroy do
+      return redirect_to_index notice: operation_message
     end
+    redirect_to_index alert: operation_message
   end
 
   private
 
-  # def authorize!(action, subject=nil)
-  #   subject ||= FaultKind.new
-  #   unless FaultKind::Policy.new(current_user, subject).send("#{action}?")
-  #     message = 'Access denied'
-  #     raise CanCan::AccessDenied.new(message, action, subject)
-  #   end
+  # def redirect_to_index(response_status={})
+  #   redirect_to fault_kinds_path, response_status
   # end
-
-  def redirect_to_index(response_status={})
-    redirect_to fault_kinds_path, response_status
-  end
 end

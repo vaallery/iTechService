@@ -138,12 +138,14 @@ ru:
         user_id: :activerecord.models.user
 
       department:
-        role: 'Роль'
-        url: 'URL'
         address: 'Адрес'
         city: 'Город'
         contact_phone: 'Контактный телефон'
+        ip_network: 'IP сеть'
+        printer: 'Принтер'
+        role: 'Роль'
         schedule: 'График работы'
+        url: 'URL'
 
       device:
         app_store_pass: 'Пароль на учетную запись в App Store'
@@ -409,13 +411,17 @@ ru:
         carrier: 'Оператор'
         case_color: 'Чехол'
         case_color_id: 'Чехол'
+        claimed_defect: 'Заявленный дефект'
         client: :activerecord.models.client
+        client_address: 'Адрес'
+        client_comment: 'Комментарии/Особые отметки'
         client_id: :activerecord.models.client
         client_notified: 'Клиент уведомлён'
         comment: 'Комментарий'
         contact_phone: 'Контактный номер'
         data_storages: 'Данные на компьютерах'
         department: :activerecord.models.department
+        device_condition: 'Внешний вид/Состояние телефона'
         device_tasks: 'Список задач'
         done_at: 'Время завершения'
         history_records: 'История изменений'
@@ -501,6 +507,7 @@ ru:
         comments: 'Комментарии'
         current_sign_in_at: 'Время авторизации'
         current_sign_in_ip: 'IP авторизации'
+        department_autochangeable: 'Автосмена подразделения'
         duty_days: 'Дежурные дни'
         email: 'E-mail'
         encrypted_password: 'encrypted_password'  #g

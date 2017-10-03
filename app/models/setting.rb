@@ -2,6 +2,7 @@ class Setting < ActiveRecord::Base
 
   DEFAULT_SETTINGS = {
       ticket_prefix: 'string',
+      ogrn: 'string',
       address: 'string',
       contact_phone: 'string',
       schedule: 'string',
@@ -25,12 +26,16 @@ class Setting < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :department_id
 
   class << self
+    def ogrn
+      Setting.find_by(name: 'ogrn')&.value
+    end
+
     def ticket_prefix(department=nil)
       (setting = Setting.for_department(department).find_by_name('ticket_prefix')).present? ? setting.value : '25'
     end
 
     def get_value(name, department=nil)
-      (setting = Setting.for_department(department).find_by_name(name.to_s) || Setting.where(department_id: nil, name: name.to_s)).present? ? setting.value : ''
+      (setting = Setting.for_department(department).find_by_name(name.to_s) || Setting.find_by(department_id: nil, name: name.to_s)).present? ? setting.value : ''
     end
 
     def duck_plan(department)
@@ -43,6 +48,11 @@ class Setting < ActiveRecord::Base
 
     def data_storage_qty
       Setting.for_department(Department.current).find_by_name('data_storage_qty')&.value&.to_i
+    end
+
+    def schedule(department = nil)
+      department ||= Department.current
+      Setting.for_department(department).find_by(name: 'schedule')&.value
     end
 
     def meda_menu_database

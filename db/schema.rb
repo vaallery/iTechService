@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516140444) do
+ActiveRecord::Schema.define(version: 20170828103704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,6 +246,8 @@ ActiveRecord::Schema.define(version: 20170516140444) do
     t.text     "schedule"
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.string   "printer"
+    t.string   "ip_network"
   end
 
   add_index "departments", ["code"], name: "index_departments_on_code", using: :btree
@@ -949,25 +951,25 @@ ActiveRecord::Schema.define(version: 20170516140444) do
 
   create_table "service_jobs", force: :cascade do |t|
     t.integer  "device_type_id"
-    t.string   "ticket_number",   limit: 255
+    t.string   "ticket_number",    limit: 255
     t.integer  "client_id"
     t.text     "comment"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
     t.datetime "done_at"
-    t.string   "serial_number",   limit: 255
+    t.string   "serial_number",    limit: 255
     t.integer  "location_id"
     t.integer  "user_id"
-    t.string   "security_code",   limit: 255
-    t.string   "status",          limit: 255
-    t.string   "imei",            limit: 255
-    t.boolean  "replaced",                    default: false
-    t.boolean  "notify_client",               default: false
+    t.string   "security_code",    limit: 255
+    t.string   "status",           limit: 255
+    t.string   "imei",             limit: 255
+    t.boolean  "replaced",                     default: false
+    t.boolean  "notify_client",                default: false
     t.boolean  "client_notified"
     t.datetime "return_at"
-    t.string   "app_store_pass",  limit: 255
+    t.string   "app_store_pass",   limit: 255
     t.text     "tech_notice"
-    t.string   "contact_phone",   limit: 255
+    t.string   "contact_phone",    limit: 255
     t.integer  "item_id"
     t.integer  "sale_id"
     t.integer  "case_color_id"
@@ -977,6 +979,10 @@ ActiveRecord::Schema.define(version: 20170516140444) do
     t.integer  "keeper_id"
     t.string   "data_storages"
     t.string   "email"
+    t.string   "client_address"
+    t.text     "claimed_defect"
+    t.text     "device_condition"
+    t.text     "client_comment"
   end
 
   add_index "service_jobs", ["carrier_id"], name: "index_service_jobs_on_carrier_id", using: :btree
@@ -1072,8 +1078,10 @@ ActiveRecord::Schema.define(version: 20170516140444) do
     t.integer  "service_job_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+    t.integer  "department_id"
   end
 
+  add_index "substitute_phones", ["department_id"], name: "index_substitute_phones_on_department_id", using: :btree
   add_index "substitute_phones", ["item_id"], name: "index_substitute_phones_on_item_id", using: :btree
   add_index "substitute_phones", ["service_job_id"], name: "index_substitute_phones_on_service_job_id", unique: true, using: :btree
 
@@ -1179,42 +1187,43 @@ ActiveRecord::Schema.define(version: 20170516140444) do
   add_index "top_salables", ["product_id"], name: "index_top_salables_on_product_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string   "username",               limit: 255
-    t.string   "role",                   limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "username",                  limit: 255
+    t.string   "role",                      limit: 255
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+    t.string   "encrypted_password",        limit: 255, default: "",   null: false
+    t.string   "reset_password_token",      limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0
+    t.integer  "sign_in_count",                         default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
-    t.string   "authentication_token",   limit: 255
-    t.string   "email",                  limit: 255, default: ""
+    t.string   "current_sign_in_ip",        limit: 255
+    t.string   "last_sign_in_ip",           limit: 255
+    t.string   "authentication_token",      limit: 255
+    t.string   "email",                     limit: 255, default: ""
     t.integer  "location_id"
-    t.string   "photo",                  limit: 255
-    t.string   "surname",                limit: 255
-    t.string   "name",                   limit: 255
-    t.string   "patronymic",             limit: 255
+    t.string   "photo",                     limit: 255
+    t.string   "surname",                   limit: 255
+    t.string   "name",                      limit: 255
+    t.string   "patronymic",                limit: 255
     t.date     "birthday"
     t.date     "hiring_date"
     t.date     "salary_date"
-    t.string   "prepayment",             limit: 255
+    t.string   "prepayment",                limit: 255
     t.text     "wish"
-    t.string   "card_number",            limit: 255
-    t.string   "color",                  limit: 255
+    t.string   "card_number",               limit: 255
+    t.string   "color",                     limit: 255
     t.integer  "abilities_mask"
     t.boolean  "schedule"
     t.integer  "position"
     t.boolean  "is_fired"
-    t.string   "job_title",              limit: 255
+    t.string   "job_title",                 limit: 255
     t.integer  "store_id"
     t.integer  "department_id"
     t.integer  "session_duration"
-    t.string   "phone_number",           limit: 255
+    t.string   "phone_number",              limit: 255
+    t.boolean  "department_autochangeable",             default: true, null: false
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
@@ -1279,6 +1288,7 @@ ActiveRecord::Schema.define(version: 20170516140444) do
   add_foreign_key "product_groups_option_values", "product_groups"
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "products"
+  add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"
   add_foreign_key "substitute_phones", "service_jobs"
 end

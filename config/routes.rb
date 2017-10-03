@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   get 'check_session_status', to: 'dashboard#check_session_status'
   get 'print_tags', to: 'dashboard#print_tags'
 
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: 'users/sessions'
+  }
 
   resources :departments
   resources :reports, only: [:index, :new, :create]
@@ -69,6 +71,8 @@ Rails.application.routes.draw do
     get :check_imei, on: :collection
     get :movement_history, on: :member
     get :quick_search, on: :collection
+    get :work_order, on: :member
+    get :completion_act, on: :member
     post :create_sale, on: :member
     patch :set_keeper, on: :member, defaults: { format: 'js' }
     resources :device_notes, only: %i[index new create]

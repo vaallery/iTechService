@@ -1,0 +1,10 @@
+table.table.table-striped.table-hover
+  thead
+    tr
+      th = t_attribute :department
+      th = t_attribute :name
+      th = t_attribute :serial_number
+      th = t_attribute :imei
+      - if policy(model_class).manage?
+        th
+  tbody = substitute_phones

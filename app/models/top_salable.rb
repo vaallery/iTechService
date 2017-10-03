@@ -1,6 +1,6 @@
 class TopSalable < ActiveRecord::Base
 
-  has_ancestry orphan_strategy: :restrict
+  has_ancestry orphan_strategy: :destroy
   scope :ordered, ->{order('position asc')}
   belongs_to :product
   delegate :name, to: :product, prefix: true, allow_nil: true

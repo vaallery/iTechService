@@ -29,6 +29,9 @@ ru:
     new:
       title: 'Новая Работа'
 
+    show:
+      work_job: 'Заказ-наряд'
+
     movement_history:
       title: 'История перемещений'
 

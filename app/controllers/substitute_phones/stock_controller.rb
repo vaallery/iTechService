@@ -1,7 +1,12 @@
 module SubstitutePhones
   class StockController < ApplicationController
+    respond_to :js
+
     def index
-      present SubstitutePhone::Index, params: {available: true}
+      run SubstitutePhone::Stock::Index do
+        return
+      end
+      failed
     end
   end
 end

@@ -17,14 +17,16 @@ gem 'jbuilder', '~> 2.0'
 gem 'devise', '~> 4.0.3'
 gem 'devise_token_auth', '~> 0.1.37'
 
-gem 'dry-validation', '~> 0.10.5'
-gem 'trailblazer', '~> 1.0'
-gem 'trailblazer-rails', '~> 0.4'
+gem 'dry-validation'#, '~> 0.10.5'
+gem 'trailblazer'#, '~> 1.0'
+gem 'trailblazer-rails'#, '~> 0.4'
 # gem 'trailblazer-rails', '~> 0.2.4'
-gem 'reform-rails', '~> 0.1'
+
 gem 'trailblazer-cells', '~> 0.0.3'
 gem 'cells-rails', '~> 0.0.7'
 gem 'cells-slim', '~> 0.0.5'
+gem 'reform-rails', '~> 0.1'
+
 gem 'pundit', '~> 1.1.0'
 # gem 'cancan', '~> 1.6.8'
 gem 'cancancan', '~> 1.10'
@@ -58,7 +60,6 @@ gem 'rmagick', '~> 2.15.4'
 gem 'zeroclipboard-rails'
 gem 'sqlite3'
 gem 'vpim'#, '~> 13.11.11'
-gem 'puma'
 gem 'draper', '~> 2.1.0'
 gem 'seedbank'
 gem 'daemons'
@@ -75,6 +76,7 @@ gem 'bootstrap-colorpicker-rails', '~> 0.3.1', :require => 'bootstrap-colorpicke
 
 # gem 'nokogiri', github: 'sparklemotion/nokogiri'
 gem 'nokogiri', '~> 1.6.7.2'
+gem 'ru_propisju'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -98,7 +100,7 @@ group :development do
   gem 'capistrano-ssh-doctor'
   gem 'airbrussh', :require => false
   gem 'quiet_assets'
-  gem 'better_errors'
+  # gem 'better_errors'
   gem 'stack_rescue'
   gem 'binding_of_caller'
   gem 'meta_request', '~> 0.2.8'
@@ -136,5 +138,6 @@ end
 
 group :production do
   # gem 'unicorn', '~> 4.6.2'
+  # gem 'puma'
   gem 'passenger', '>= 5.0.25', :require => 'phusion_passenger/rack_handler'
 end

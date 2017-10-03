@@ -17,5 +17,5 @@
       = f.input :name
 
   .form-actions
-    = link_to_destroy @top_salable
+    = link_to_destroy @top_salable if @top_salable.persisted?
     = submit_button f

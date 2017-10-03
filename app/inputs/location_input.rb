@@ -12,7 +12,8 @@ class LocationInput < SimpleForm::Inputs::Base
         template.content_tag(:span, nil, class: 'caret pull-right')
       end +
       template.content_tag(:ul, id: 'locations_list', class: 'dropdown-menu') do
-        Location.allowed_for(user, @builder.object).map do |location|
+        # Location.allowed_for(user, @builder.object).map do |location|
+        Location.visible.sorted.map do |location|
           template.content_tag(:li, template.link_to(location.name, '#', location_id: location.id)) if location.present?
         end.join.html_safe
       end

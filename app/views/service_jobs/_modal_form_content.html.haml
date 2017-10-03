@@ -15,6 +15,11 @@
           .controls= @service_job.ticket_number
 
         .control-group
+          %label.control-label= ServiceJob.human_attribute_name :department
+          .controls
+            %strong.text-warning= @service_job.department_name
+
+        .control-group
           %label.control-label= t 'service_jobs.itunes_string'
           .controls
             %span#itunes_string= itunes_string_for(@service_job)
@@ -34,7 +39,7 @@
             = label_tag 'contact_phone', Client.human_attribute_name(:contact_phone), class: 'control-label'
             .controls= text_field_tag 'contact_phone', human_phone(@service_job.client.contact_phone), class: 'input-medium', disabled: true
 
-        = f.association :location, collection: Location.allowed_for(current_user, @service_job), prompt: false
+        = f.association :location, collection: Location.visible.sorted, prompt: false
 
         .control-group
           %label.control-label= ServiceJob.human_attribute_name :keeper

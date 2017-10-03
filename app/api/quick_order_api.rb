@@ -18,7 +18,7 @@ class QuickOrderApi < Grape::API
       pdf = QuickOrderPdf.new quick_order
       filepath = "#{Rails.root.to_s}/tmp/pdf/quick_order_#{quick_order.number}.pdf"
       pdf.render_file filepath
-      PrinterTools.print_file filepath, :quick_order
+      PrinterTools.print_file filepath, type: :quick_order, printer: quick_order.department.printer
       present quick_order
     else
       error!({error: quick_order.errors.full_messages.join('. ')}, 422)

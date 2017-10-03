@@ -18,11 +18,6 @@ module ApplicationHelper
     end
   end
 
-  def link_back_to_index(options = {})
-    options.merge! action: 'index', controller: controller_name
-    link_to glyph('chevron-left'), url_for(options), class: 'link_back'
-  end
-
   def sortable(column, title = nil)
     column = column.to_s
     title ||= column.titleize
@@ -84,7 +79,7 @@ module ApplicationHelper
     end
   end
 
-  def link_to_destroy object, options = {}
+  def link_to_destroy(object, options = {})
     options.merge! class: 'btn btn-danger', method: 'delete',
         data: {confirm: t('confirmation', default: 'Are you sure?')}
     name = t 'destroy'

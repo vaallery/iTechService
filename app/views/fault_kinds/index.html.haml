@@ -6,7 +6,7 @@
       %th= FaultKind.human_attribute_name :is_permanent
       %th
   %tbody
-    - @fault_kinds.each do |fault_kind|
+    - fault_kinds.each do |fault_kind|
       %tr
         %td= fault_kind.name
         %td= fault_kind.is_permanent? ? icon_tag('ok') : icon_tag('minus')

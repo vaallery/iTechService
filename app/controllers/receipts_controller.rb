@@ -34,7 +34,7 @@ class ReceiptsController < ApplicationController
     sale_check = document.sale_check
     filepath = "#{Rails.root.to_s}/tmp/pdf/#{sale_check.filename}"
     sale_check.render_file filepath
-    PrinterTools.print_file filepath, :sale_check, sale_check.page_height_mm
+    PrinterTools.print_file filepath, type: :sale_check, height: sale_check.page_height_mm, printer: current_user.department.printer
     redirect_to new_receipt_path
   end
 

@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-  include Trailblazer::Operation::Controller
   include Pundit
   include ApplicationHelper
   protect_from_forgery
@@ -8,10 +7,48 @@ class ApplicationController < ActionController::Base
   before_filter :set_current_user
   before_filter :store_location, except: [:create, :update, :destroy]
   # layout 'staff'
-  rescue_from Trailblazer::NotAuthorizedError, with: :not_authorized
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized
   rescue_from CanCan::AccessDenied, with: :access_denied
   respond_to :html
+
+  protected
+
+  def run(operation, params=self.params, *dependencies)
+    result = operation.(
+      _run_params(params),
+        *_run_runtime_options(*dependencies)
+    )
+
+    @contract = result["contract.default"]
+    @form = result["contract.default"]
+    # @form  = Trailblazer::Rails::Form.new(@contract, result["model"].class)
+    @model = result["model"]
+    @_result = result
+
+    # TODO: get rid of it, use cells
+    unless @model.nil?
+      model_variable_name = action_name == 'index' ? @model.model_name.collection : @model.model_name.element
+      instance_variable_set "@#{model_variable_name}", @model
+    end
+
+    yield(result) if result.success? && block_given?
+
+    result
+  end
+
+  def render_cell(cell_class, model: nil, **options)
+    model ||= @model
+    # options[:layout] = Shared::Cell::Layout unless options.key? :layout
+    # options[:contract] = @form unless @form.nil?
+    options[:contract] = @contract unless @contract.nil?
+    content = cell(cell_class, model, options).call
+
+    if request.xhr?
+      render js: "document.getElementById('remote_container').innerHTML = '#{content}'"
+    else
+      render html: content, layout: true
+    end
+  end
 
   private
 
@@ -48,9 +85,46 @@ class ApplicationController < ActionController::Base
     redirect_to request.referrer || root_url, alert: exception.message
   end
 
-  def setup_operation_instance_variables!(operation, options)
-    @operation = operation
-    instance_variable_set "@#{operation.model_name}", operation.model
-    @form = operation.contract unless options[:skip_form]
+  def _run_options(options)
+    options.merge 'current_user' => current_user
+  end
+
+  def failed(message = nil)
+    message ||= operation_message
+    if request.xhr?
+      render_error message
+    else
+      flash.alert = message
+      redirect_to request.referrer || root_path
+    end
+  end
+
+  def operation_model
+    result['model']
+  end
+
+  def operation_message
+    result['result.message']
+  end
+
+  def operation_failed?
+    result.failure?
+  end
+
+  def redirect_to_index(response_status={})
+    redirect_to({action: :index}, response_status)
+  end
+
+  # def render_object_errors(object)
+  #   render_error object.errors.full_messages.to_sentence
+  # end
+
+  def render_error(text)
+    render_notification text, 'alert'
+  end
+
+  def render_notification(text, type='info')
+    render js: "alert('#{text}');"
+    # render js: "App.Notification.show('#{text}', '#{type}');"
   end
 end

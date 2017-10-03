@@ -1,4 +1,21 @@
-class ModelCell < BaseCell
+module ModelCell
+
+  def self.included(base)
+    base.class_eval do
+      property :model_name
+    end
+  end
+
+  private
+
+
+  def t_attribute(name)
+    model_class.human_attribute_name name
+  end
+
+  def model_class
+    model_name.name.constantize
+  end
 
   def link_to_show(options = {})
     options.merge! class: 'btn'
