@@ -7,7 +7,7 @@ class SubstitutePhone::Create < BaseOperation
   end
 
   step Nested(Present)
-  step Contract::Validate(key: :fault)
+  step Contract::Validate(key: :substitute_phone)
   failure :contract_invalid!
   step Contract::Persist()
   step ->(options, **) { options['result.message'] = I18n.t('substitute_phones.created') }

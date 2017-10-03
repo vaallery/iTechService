@@ -2,11 +2,13 @@ class SubstitutePhonesController < ApplicationController
   respond_to :html
 
   def index
-    respond_to :html, :js
-    run SubstitutePhone::Index do
-      return
+    respond_to do |format|
+      run SubstitutePhone::Index do
+        format.html { return render_cell SubstitutePhone::Cell::Index }
+        format.js { return }
+      end
+      format.any(:html, :js) { failed }
     end
-    failed
   end
 
   def show
@@ -18,7 +20,7 @@ class SubstitutePhonesController < ApplicationController
 
   def new
     run SubstitutePhone::Create::Present do
-      return
+      return render_form
     end
     failed
   end
@@ -27,12 +29,12 @@ class SubstitutePhonesController < ApplicationController
     run SubstitutePhone::Create do
       return redirect_to operation_model, notice: operation_message
     end
-    render 'new'
+    render_form
   end
 
   def edit
     run SubstitutePhone::Update::Present do
-      return render 'edit'
+      return render_form
     end
     failed
   end
@@ -41,7 +43,7 @@ class SubstitutePhonesController < ApplicationController
     run SubstitutePhone::Update do
       return redirect_to_index notice: operation_message
     end
-    render 'edit'
+    render_form
   end
 
   def destroy
@@ -49,5 +51,11 @@ class SubstitutePhonesController < ApplicationController
       return redirect_to substitute_phones_url, notice: t('substitute_phones.destroyed')
     end
     failed
+  end
+
+  private
+
+  def render_form
+    render_cell SubstitutePhone::Cell::Form
   end
 end

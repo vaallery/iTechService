@@ -4,4 +4,8 @@ class SubstitutePhone::Policy < BasePolicy
   def index?
     user.present?
   end
+
+  def view_stock?
+    index?
+  end
 end

@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
     @form = result["contract.default"]
     # @form  = Trailblazer::Rails::Form.new(@contract, result["model"].class)
     @model = result["model"]
+    @_result = result
 
     # TODO: get rid of it, use cells
     unless @model.nil?
@@ -32,7 +33,7 @@ class ApplicationController < ActionController::Base
 
     yield(result) if result.success? && block_given?
 
-    @_result = result
+    result
   end
 
   def render_cell(cell_class, model: nil, **options)

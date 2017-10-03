@@ -1,5 +1,9 @@
 module PhoneSubstitution::Cell
   class EditForm < BaseCell
+    self.translation_path = 'substitute_phones.substitutions.edit'
+
+    private
+
     include FormCell
     alias form_object model
     delegate :human_attribute_name, to: :SubstitutePhone
@@ -7,10 +11,6 @@ module PhoneSubstitution::Cell
 
     def url
       substitution_path(model)
-    end
-
-    def title
-      t 'substitute_phones.substitutions.edit.title'
     end
 
     def check_condition_note
