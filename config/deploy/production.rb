@@ -1,6 +1,5 @@
 set :stage, :production
 set :deploy_to, "/var/www/#{fetch(:application)}"
-set :branch, 'production'
 set :default_env, fetch(:default_env, {}).merge(rails_env: :production)
 
 # Simple Role Syntax
