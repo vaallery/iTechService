@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828103704) do
+ActiveRecord::Schema.define(version: 20171009103723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -951,25 +951,25 @@ ActiveRecord::Schema.define(version: 20170828103704) do
 
   create_table "service_jobs", force: :cascade do |t|
     t.integer  "device_type_id"
-    t.string   "ticket_number",    limit: 255
+    t.string   "ticket_number",            limit: 255
     t.integer  "client_id"
     t.text     "comment"
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
     t.datetime "done_at"
-    t.string   "serial_number",    limit: 255
+    t.string   "serial_number",            limit: 255
     t.integer  "location_id"
     t.integer  "user_id"
-    t.string   "security_code",    limit: 255
-    t.string   "status",           limit: 255
-    t.string   "imei",             limit: 255
-    t.boolean  "replaced",                     default: false
-    t.boolean  "notify_client",                default: false
+    t.string   "security_code",            limit: 255
+    t.string   "status",                   limit: 255
+    t.string   "imei",                     limit: 255
+    t.boolean  "replaced",                             default: false
+    t.boolean  "notify_client",                        default: false
     t.boolean  "client_notified"
     t.datetime "return_at"
-    t.string   "app_store_pass",   limit: 255
+    t.string   "app_store_pass",           limit: 255
     t.text     "tech_notice"
-    t.string   "contact_phone",    limit: 255
+    t.string   "contact_phone",            limit: 255
     t.integer  "item_id"
     t.integer  "sale_id"
     t.integer  "case_color_id"
@@ -983,6 +983,8 @@ ActiveRecord::Schema.define(version: 20170828103704) do
     t.text     "claimed_defect"
     t.text     "device_condition"
     t.text     "client_comment"
+    t.string   "estimated_cost_of_repair"
+    t.string   "type_of_work"
   end
 
   add_index "service_jobs", ["carrier_id"], name: "index_service_jobs_on_carrier_id", using: :btree
