@@ -17,7 +17,7 @@ class WorkOrderPdf < Prawn::Document
     font_size base_font_size
 
     # Logo
-    move_down font_size * 2
+    move_down 18
     stroke do
       line_width 2
       horizontal_line 0, 530
