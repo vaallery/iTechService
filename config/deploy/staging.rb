@@ -1,6 +1,6 @@
 set :stage, :staging
 set :deploy_to, "/var/www/#{fetch(:application)}_staging"
-set :branch, 'production'
+set :branch, 'master'
 set :default_env, fetch(:default_env, {}).merge(rails_env: :staging)
 
 # Simple Role Syntax
