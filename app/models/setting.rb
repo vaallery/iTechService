@@ -25,16 +25,16 @@ class Setting < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :department_id
 
   class << self
+    def get_value(name, department=nil)
+      (setting = Setting.for_department(department).find_by_name(name.to_s) || Setting.find_by(department_id: nil, name: name.to_s)).present? ? setting.value : ''
+    end
+
     def ogrn
       Setting.find_by(name: 'ogrn')&.value
     end
 
     def ticket_prefix(department=nil)
       (setting = Setting.for_department(department).find_by_name('ticket_prefix')).present? ? setting.value : '25'
-    end
-
-    def get_value(name, department=nil)
-      (setting = Setting.for_department(department).find_by_name(name.to_s) || Setting.find_by(department_id: nil, name: name.to_s)).present? ? setting.value : ''
     end
 
     def duck_plan(department)
@@ -52,6 +52,10 @@ class Setting < ActiveRecord::Base
     def schedule(department = nil)
       department ||= Department.current
       Setting.for_department(department).find_by(name: 'schedule')&.value
+    end
+
+    def emails_for_orders
+      Setting.get_value 'emails_for_orders'
     end
   end
 end
