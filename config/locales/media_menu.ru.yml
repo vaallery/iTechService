@@ -1,0 +1,14 @@
+ru:
+  media_menu:
+
+    view:
+      order: 'Отправить в заказ'
+      title: 'Медиа меню'
+      search: 'Поиск'
+      sorting: 'Сортировка:'
+
+    item:
+      view:
+        close: 'Закрыть'
+        select: 'Выбрать'
+        size: 'Размер: %{value}'

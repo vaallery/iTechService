@@ -281,6 +281,11 @@ ru:
         schedule: 'Отображать в календаре'
         users: 'Пользователи'
 
+      media_menu/item:
+        category: 'Категория'
+        genre: 'Жанр'
+        year: 'Год'
+
       media_order:
         content: 'Содержимое'
         name: 'Имя'

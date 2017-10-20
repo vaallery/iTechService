@@ -1,0 +1,17 @@
+#media_menu-item.modal.fade
+  .modal-dialog.modal-lg role='document'
+    .modal-content
+      .modal-body
+        .d-flex
+          .flex-column.mr-3 = image
+          .d-flex.flex-column.align-items-start
+            h5 = name
+            p
+              = year
+              span.ml-3 = genre
+              span.ml-3 = category
+            p = description
+
+            .mt-auto.align-self-end.float-right
+              button type='button' class='btn btn-secondary' data-dismiss='modal' = t('.close')
+              span.ml-2 = select_button class: 'btn btn-primary'

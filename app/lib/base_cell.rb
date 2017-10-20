@@ -8,7 +8,7 @@ class BaseCell < Trailblazer::Cell
   include Cell::Translation
   include LinksHelper
 
-  delegate :view_context, :controller_name, :action_name, :current_user, :policy, to: :controller
+  delegate :view_context, :controller_name, :action_name, :params, :current_user, :policy, to: :controller
 
   alias_method :icon, :glyph
 

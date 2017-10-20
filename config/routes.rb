@@ -258,6 +258,12 @@ Rails.application.routes.draw do
   get 'receipts/add_product'
   post 'receipts/print'
 
+  namespace 'media_menu' do
+    get '/', to: 'catalog#index'
+    get 'items', to: 'items#index'
+    get 'items/:id', to: 'items#show', as: 'item'
+  end
+
   wiki_root '/wiki'
 
   match '/delayed_job' => DelayedJobWeb, anchor: false, via: %i[get post]

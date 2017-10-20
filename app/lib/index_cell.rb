@@ -22,8 +22,4 @@ module IndexCell
   def nothing_found_message
     content_tag :h2, I18n.t('errors.nothing_found')
   end
-
-  def pagination
-    # view_context.will_paginate collection, class: 'digg_pagination'
-  end
 end
