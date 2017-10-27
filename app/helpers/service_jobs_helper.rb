@@ -148,11 +148,13 @@ module ServiceJobsHelper
   end
 
   def data_storages_collection
-    qty = Setting.data_storage_qty
+    department = current_user.department
+    qty = Setting.data_storage_qty department
     if qty.present?
-      1.upto(Setting.data_storage_qty).map do |storage_num|
-        name = content_tag(:span, storage_num, class: 'data_storage_label')
-        [storage_num, name]
+      1.upto(qty).map do |storage_num|
+        storage_name = "#{department.name} - #{storage_num}"
+        name = content_tag(:span, storage_name, class: 'data_storage_label')
+        [storage_name, name]
       end
     else
       []

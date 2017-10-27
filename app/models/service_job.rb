@@ -313,7 +313,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def data_storages
-    self[:data_storages]&.split(',')&.map(&:to_i)
+    self[:data_storages]&.split(',')&.map
   end
 
   def data_storages=(new_value)
