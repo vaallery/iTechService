@@ -28,8 +28,8 @@ class ServiceJobDecorator < ApplicationDecorator
 
   def data_storages
     if object.data_storages.present?
-      object.data_storages.map do |storage_num|
-        h.content_tag(:span, storage_num, class: 'data_storage_label')
+      object.data_storages.map do |storage_name|
+        h.content_tag(:span, storage_name, class: 'data_storage_label')
       end.join(' ').html_safe
     else
       '-'

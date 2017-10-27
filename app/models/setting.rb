@@ -45,8 +45,8 @@ class Setting < ActiveRecord::Base
       Setting.for_department(department).find_by_name('duck_plan_url').try :value
     end
 
-    def data_storage_qty
-      Setting.for_department(Department.current).find_by_name('data_storage_qty')&.value&.to_i
+    def data_storage_qty(department = nil)
+      Setting.get_value('data_storage_qty', department).to_i
     end
 
     def schedule(department = nil)
