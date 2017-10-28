@@ -10,5 +10,6 @@ ru:
     item:
       view:
         close: 'Закрыть'
+        remove: 'Убрать'
         select: 'Выбрать'
         size: 'Размер: %{value}'

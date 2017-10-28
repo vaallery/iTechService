@@ -1,0 +1,5 @@
+const card = document.getElementById("media_menu-item_<%= item.id %>");
+if (card !== null) {
+  const button_container = card.getElementsByClassName('selection_button_container')[0];
+  button_container.innerHTML = '<%= cell(MediaMenu::Item::Cell::Card, item).(:selection_button) %>';
+}

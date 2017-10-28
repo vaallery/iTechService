@@ -20,6 +20,10 @@ module MediaMenu
       def category
         "#{t_attribute(:category)}: #{model.category}"
       end
+
+      def selection_button_class
+        'btn btn-primary'.freeze
+      end
     end
   end
 end

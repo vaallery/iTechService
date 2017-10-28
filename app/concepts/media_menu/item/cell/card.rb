@@ -8,7 +8,7 @@ module MediaMenu
       include ModelCell
       include ActiveSupport::NumberHelper
 
-      property :name, :description, :image_file, :genre, :year
+      property :id, :name, :description, :image_file, :genre, :year
 
       private
 
@@ -28,8 +28,24 @@ module MediaMenu
         number_to_human_size model.size
       end
 
-      def select_button(options = {})
-        link_to t('.select'), '#', options
+      def selection_button(options = {})
+        cart_item = MediaMenu::CartItem.find_by(item_id: id)
+        if cart_item.nil?
+          name = t('.select')
+          url = media_menu_cart_items_path
+          options[:params] = {item_id: id}
+        else
+          name = t('.remove')
+          url = media_menu_cart_item_path(cart_item.id)
+          options[:method] = :delete
+        end
+        options[:class] = selection_button_class
+        options[:remote] = true
+        button_to name, url, options
+      end
+
+      def selection_button_class
+        'btn btn-outline-primary btn-block card-link'.freeze
       end
     end
   end

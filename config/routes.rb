@@ -262,6 +262,7 @@ Rails.application.routes.draw do
     get '/', to: 'catalog#index'
     get 'items', to: 'items#index'
     get 'items/:id', to: 'items#show', as: 'item'
+    resources 'cart_items', only: %i[create destroy]
   end
 
   wiki_root '/wiki'

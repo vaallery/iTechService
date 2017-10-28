@@ -1,8 +1,8 @@
-.card style='width: 176px'
+div.card id="media_menu-item_#{id}" style='width: 176px'
   = image_link
 
   .card-body.d-flex.flex-column.align-items-start
     span.mt-auto.w-100
       h6.card-title = name_link
       .card-subtitle.mb-2.text-muted = size
-      span.align-self-end = select_button class: 'btn btn-outline-primary btn-block card-link'
+      span.selection_button_container.align-self-end = selection_button
