@@ -6,8 +6,8 @@ module SubstitutePhones
     end
 
     def update
-      run SubstitutePhone::Substitution::Update do |op|
-        return redirect_to substitute_phone_path(op.model.substitute_phone_id), notice: t('substitute_phones.returned')
+      run SubstitutePhone::Substitution::Update do
+        return redirect_to substitute_phones_path, notice: t('substitute_phones.returned')
       end
       render :edit
     end

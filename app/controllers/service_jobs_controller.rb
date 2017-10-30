@@ -257,7 +257,7 @@ class ServiceJobsController < ApplicationController
   end
 
   def create_phone_substitution
-    PhoneSubstitution.create_with(issuer_id: current_user.id, issued_at: Time.current).find_or_create_by(service_job_id: @service_job.id, substitute_phone_id: @service_job.substitute_phone_id,)
+    PhoneSubstitution.create_with(issuer_id: current_user.id, issued_at: Time.current).find_or_create_by(service_job_id: @service_job.id, substitute_phone_id: @service_job.substitute_phone_id, withdrawn_at: nil)
     # PhoneSubstitution.create service_job_id: @service_job.id,
     #                          substitute_phone_id: @service_job.substitute_phone_id,
     #                          issuer_id: current_user.id,
