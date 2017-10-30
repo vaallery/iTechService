@@ -17,8 +17,9 @@ capybara-*.html
 .rspec
 /db/*.sqlite3
 /db/*.sqlite3-journal
-/public/uploads
 /public/assets
+/public/uploads
+/public/images
 /coverage/
 /spec/tmp
 **.orig

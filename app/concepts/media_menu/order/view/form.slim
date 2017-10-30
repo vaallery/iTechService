@@ -1,0 +1,17 @@
+.page-header
+  h1
+    = link_to icon('chevron-left'), media_menu_path
+    = t '.title'
+
+= simple_form_for contract, url: media_menu_order_path, html: {class: 'form-horizontal'} do |f|
+  = f.input :name
+  = f.input :phone
+
+  table.table
+    tbody
+      - cart_items do |cart_item|
+        tr
+          td = cart_item.name
+
+  .form-actions
+    = f.submit

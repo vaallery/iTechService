@@ -13,3 +13,7 @@ ru:
         remove: 'Убрать'
         select: 'Выбрать'
         size: 'Размер: %{value}'
+
+    order:
+      view:
+        title: 'Оформление заказа'
