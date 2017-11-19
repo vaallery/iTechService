@@ -8,7 +8,7 @@ module MediaMenu
       include ModelCell
       include ActiveSupport::NumberHelper
 
-      property :id, :name, :description, :image_file, :genre, :year
+      property :id, :name, :description, :image_file, :genre, :year, :cart_item
 
       private
 
@@ -29,7 +29,6 @@ module MediaMenu
       end
 
       def selection_button(options = {})
-        cart_item = MediaMenu::CartItem.find_by(item_id: id)
         if cart_item.nil?
           name = t('.select')
           url = media_menu_cart_items_path

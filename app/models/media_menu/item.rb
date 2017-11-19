@@ -1,9 +1,17 @@
 module MediaMenu
   class Item < BaseRecord
     self.table_name = 'ZMEDIAINFORMATION'
+    scope :movies, -> { where Z_ENT: 6 }
+    scope :in_category, ->(category) { includes(:tags).where(ZMEDIATAG: {ZLETTER: category}) }
+    scope :hit, -> { includes(:tags).where(ZMEDIATAG: {ZLETTER: 'h'}) }
+    scope :russian, -> { includes(:tags).where(ZMEDIATAG: {ZLETTER: 'r'}) }
+    scope :novelty, -> { includes(:tags).where(ZMEDIATAG: {ZLETTER: 'n'}) }
+    scope :children, -> { includes(:tags).where(ZMEDIATAG: {ZLETTER: 'c'}) }
+
     has_and_belongs_to_many :tags, join_table: 'Z_1TAGS',
                             foreign_key: 'Z_1TAGGEDMEDIAINFOS', association_foreign_key: 'Z_9TAGS'
-    scope :movies, -> { where Z_ENT: 6 }
+
+    has_one :cart_item, inverse_of: :item
 
     def self.search(term)
       items = all
@@ -20,7 +28,8 @@ module MediaMenu
       db_attr = {
         name: 'ZNAME',
         year: 'ZYEAR',
-        genre: 'ZGENRE'
+        genre: 'ZGENRE',
+        category: 'Z_ENT'
       }[attribute.to_sym]
       order(db_attr => direction)
     end
@@ -41,13 +50,14 @@ module MediaMenu
 
     def duration; self[:ZTOTALTIME1] end
 
-    def image_file
-      # File.join database_folder, 'images', "#{db_id}.png"
-      "#{db_id}.png"
-    end
+    def track_number; self[:ZTRACKNUMBER1] end
 
     def category
+      tags.first&.letter
+    end
 
+    def image_file
+      "#{db_id}.png"
     end
   end
 end

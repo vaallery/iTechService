@@ -3,7 +3,7 @@ module MediaMenu
     class Present < BaseOperation
       step Model(MediaOrder, :new)
       step :cart_items
-      step Contract::Build(constant: MediaMenu::Order::Contract::Base)
+      step Contract.Build(constant: MediaMenu::Order::Contract::Base)
 
       private
 
@@ -13,9 +13,24 @@ module MediaMenu
     end
 
     step Nested(Present)
-    step Contract::Validate(key: :order)
+    step Contract.Validate(key: :media_order)
     failure :contract_invalid!
-    step Contract::Persist()
+    step :set_content
+    step :set_time
+    step Contract.Persist
+    step ->(*, cart_items:, **) { cart_items.delete_all }
+
+    def set_content(*, model:, cart_items:, **)
+      content = ''
+      cart_items.each do |order_item|
+        content << "	•	#{order_item.track_number} - #{order_item.name}\n"
+      end
+      model.content = content
+    end
+
+    def set_time(*, model:, **)
+      model.time = Time.current
+    end
 
     # TYPES = {0 => 'Книги', 1 => 'Приложения', 2 => 'Музыка', 3 => 'Телешоу', 4 => 'Фильмы', 5 => 'Аудиокниги'}
     # orders = params[:orders]

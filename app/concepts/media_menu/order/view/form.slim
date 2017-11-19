@@ -1,17 +1,16 @@
-.page-header
-  h1
-    = link_to icon('chevron-left'), media_menu_path
-    = t '.title'
+.container.mt-2
+  .page-header
+    h1
+      = link_to icon('chevron-left'), media_menu_path
+      = t '.title'
 
-= simple_form_for contract, url: media_menu_order_path, html: {class: 'form-horizontal'} do |f|
-  = f.input :name
-  = f.input :phone
+  = simple_form_for contract, url: media_menu_order_path, wrapper: :vertical_form do |f|
+    = f.input :name, label: t_attribute(:name)
+    = f.input :phone, label: t_attribute(:phone)
 
-  table.table
-    tbody
-      - cart_items do |cart_item|
-        tr
-          td = cart_item.name
+    label for='cart_items' = t('.chosen')
+    table.table.table-hover
+      tbody#cart_items = cart_items
 
-  .form-actions
-    = f.submit
+    .form-actions
+      = f.submit t('.submit'), class: 'btn btn-primary'

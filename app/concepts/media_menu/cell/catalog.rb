@@ -10,6 +10,10 @@ module MediaMenu
       include IndexCell
       include Kaminari::Cells
 
+      def result
+        options[:result]
+      end
+
       def title
         t '.title', default: 'Media menu'
       end
@@ -37,6 +41,17 @@ module MediaMenu
 
       def sort_direction_icon(direction)
         direction == 'asc' ? '&uarr;' : '&darr;'
+      end
+
+      def category
+        category_name = t(".category/#{result['category'] ||'all'}")
+        "#{t('.category')}: #{category_name}"
+      end
+
+      def category_filter_links
+        %w[all h n r c].map do |category|
+          link_to t(".category/#{category}"), url_for(category: category), class: 'dropdown-item'
+        end.join
       end
 
       def year_links

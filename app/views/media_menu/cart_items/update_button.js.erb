@@ -1,5 +1,12 @@
-const card = document.getElementById("media_menu-item_<%= item.id %>");
+var card = document.getElementById("media_menu-item_<%= item_id %>");
 if (card !== null) {
-  const button_container = card.getElementsByClassName('selection_button_container')[0];
-  button_container.innerHTML = '<%= cell(MediaMenu::Item::Cell::Card, item).(:selection_button) %>';
+  var button_container = card.getElementsByClassName('selection_button_container')[0];
+  button_container.innerHTML = '<%= button_content %>';
 }
+
+var cart_item = document.getElementById("media_menu-cart_item_<%= params[:id] %>");
+if (cart_item !== null) {
+  cart_item.parentNode.removeChild(cart_item);
+}
+
+$('#media_menu-item').modal('hide')

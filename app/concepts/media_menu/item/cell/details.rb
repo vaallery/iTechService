@@ -18,7 +18,8 @@ module MediaMenu
       end
 
       def category
-        "#{t_attribute(:category)}: #{model.category}"
+        category_name = model.category ? t(".category/#{model.category}") : '-'
+        "#{t_attribute(:category)}: #{category_name}"
       end
 
       def selection_button_class

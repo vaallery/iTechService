@@ -11,7 +11,12 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.sticky-top.mb-2
     = link_to_sort_by 'name'
     = link_to_sort_by 'year'
     = link_to_sort_by 'genre'
-    = link_to_sort_by 'category'
+
+    li.nav-item.dropdown.ml-2
+      a.nav-link.dropdown-toggle href='#' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'
+        = category
+      .dropdown-menu
+        = category_filter_links
 
     /li.nav-item.dropdown
     /  a.nav-link.dropdown-toggle href='#' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'
