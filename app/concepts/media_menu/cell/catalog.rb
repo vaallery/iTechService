@@ -23,7 +23,7 @@ module MediaMenu
       end
 
       def pagination
-        paginate collection
+        paginate collection, theme: 'bootstrap-4'
       end
 
       def link_to_sort_by_name
