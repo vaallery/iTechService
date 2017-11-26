@@ -26,16 +26,16 @@ class Setting < ActiveRecord::Base
   validates_uniqueness_of :name, scope: :department_id
 
   class << self
+    def get_value(name, department=nil)
+      (setting = Setting.for_department(department).find_by_name(name.to_s) || Setting.find_by(department_id: nil, name: name.to_s)).present? ? setting.value : ''
+    end
+
     def ogrn
       Setting.find_by(name: 'ogrn')&.value
     end
 
     def ticket_prefix(department=nil)
       (setting = Setting.for_department(department).find_by_name('ticket_prefix')).present? ? setting.value : '25'
-    end
-
-    def get_value(name, department=nil)
-      (setting = Setting.for_department(department).find_by_name(name.to_s) || Setting.find_by(department_id: nil, name: name.to_s)).present? ? setting.value : ''
     end
 
     def duck_plan(department)
@@ -46,13 +46,17 @@ class Setting < ActiveRecord::Base
       Setting.for_department(department).find_by_name('duck_plan_url').try :value
     end
 
-    def data_storage_qty
-      Setting.for_department(Department.current).find_by_name('data_storage_qty')&.value&.to_i
+    def data_storage_qty(department = nil)
+      Setting.get_value('data_storage_qty', department).to_i
     end
 
     def schedule(department = nil)
       department ||= Department.current
       Setting.for_department(department).find_by(name: 'schedule')&.value
+    end
+
+    def emails_for_orders
+      Setting.get_value 'emails_for_orders'
     end
 
     def meda_menu_database

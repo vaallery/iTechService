@@ -429,6 +429,7 @@ ru:
         device_condition: 'Внешний вид/Состояние телефона'
         device_tasks: 'Список задач'
         done_at: 'Время завершения'
+        estimated_cost_of_repair: 'Ориентировочная стоимость ремонта'
         history_records: 'История изменений'
         imei: 'IMEI'
         is_tray_present: 'Есть ли лоток?'
@@ -449,6 +450,7 @@ ru:
         tasks: 'Список задач'
         tech_notice: 'Для истинных технарей'
         ticket_number: 'Номер талона'
+        type_of_work: 'Вид работы'
         user: :activerecord.models.user
         user_id: :activerecord.models.user
 

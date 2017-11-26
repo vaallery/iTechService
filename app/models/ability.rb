@@ -8,6 +8,7 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.superadmin?
       can :manage, :all
+      can :read_tech_notice, ServiceJob
       cannot :write_tech_notice, ServiceJob
       can :view_purchase_price, Product
     elsif user.admin?
@@ -17,6 +18,7 @@ class Ability
       cannot :manage_rights, User
       cannot :manage, [BonusType, Bonus]
       cannot [:edit, :destroy], Karma
+      can :read_tech_notice, ServiceJob
       cannot :write_tech_notice, ServiceJob
       cannot :read, CashShift
       cannot :close, CashShift

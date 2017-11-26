@@ -4,7 +4,7 @@ ruby_v = '2.3.1'
 user = fetch :user
 # set :application, 'itechservice2'
 set :application, 'itechservice'
-set :repo_url, 'git@bitbucket.org:itechdevs/itechservice.git'
+set :repo_url, 'git@gitlab.com:k4ir05/iTechService.git'
 set :branch, 'master'
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 

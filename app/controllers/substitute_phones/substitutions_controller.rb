@@ -12,6 +12,8 @@ module SubstitutePhones
     def update
       run PhoneSubstitution::Update do
         return redirect_to substitute_phone_path(operation_model.substitute_phone_id), notice: operation_message
+      # run SubstitutePhone::Substitution::Update do
+      #   return redirect_to substitute_phones_path, notice: t('substitute_phones.returned')
       end
       render_form
     end
