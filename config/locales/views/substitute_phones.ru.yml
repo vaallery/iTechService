@@ -1,6 +1,11 @@
 ru:
   substitute_phones:
 
+    form:
+      title:
+        new: 'Новый Телефон на замену'
+        edit: 'Редактирование Телефона на замену'
+
     index:
       title: 'Телефоны на замену'
       query_placeholder: "IMEI / Серийный номер"

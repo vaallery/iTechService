@@ -8,3 +8,10 @@ Kaminari.configure do |config|
   # config.page_method_name = :page
   # config.param_name = :page
 end
+
+Kaminari::Helpers::Paginator.class_eval do
+  def render(&block)
+    instance_eval(&block) if @options[:total_pages] > 1
+    # @output_buffer
+  end
+end

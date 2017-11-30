@@ -1,0 +1,38 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-light.sticky-top.mb-2
+  /= form_tag media_menu_items_path, method: :get, remote: true, class: 'form-inline' do
+  = form_tag media_menu_path, method: 'get', class: 'form-inline' do
+    .input-group
+      input.form-control name='search' type='text' placeholder=search_placeholder value=params[:search]
+      span.input-group-btn
+        button.btn.btn-outline-info.my-2.my-sm-0 type='submit' = t('search')
+
+  ul.navbar-nav.mr-auto
+    span.navbar-text.ml-2.mr-1 = t('.sorting')
+    = link_to_sort_by 'name'
+    = link_to_sort_by 'year'
+    = link_to_sort_by 'genre'
+
+    li.nav-item.dropdown.ml-2
+      a.nav-link.dropdown-toggle href='#' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'
+        = category
+      .dropdown-menu
+        = category_filter_links
+
+    /li.nav-item.dropdown
+    /  a.nav-link.dropdown-toggle href='#' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'
+    /    = t('.year', default: 'Year')
+    /  .dropdown-menu
+    /    a.dropdown-item href='#' 1990
+    /    a.dropdown-item href='#' 1991
+    /    a.dropdown-item href='#' 1992
+
+  ul.navbar-nav
+    li.nav-item = link_to t('.order'), new_media_menu_order_path, class: 'nav-link'
+
+.container-fluid
+  /#remote_container = content
+  = pagination
+  = content
+  = pagination
+
+#modal_container

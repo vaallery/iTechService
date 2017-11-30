@@ -1,0 +1,20 @@
+.modal-header
+  h3 = title
+
+.modal-body
+  #substitute_phones
+    - if empty?
+      = nothing_found_message
+
+    - else
+      table.table.table-striped.table-hover
+        thead
+          tr
+            th = t_attribute :name
+            th = t_attribute :serial_number
+            th = t_attribute :imei
+            th
+        tbody = substitute_phones
+
+.modal-footer
+  = link_to t('close'), '#', class: 'btn', 'data-dismiss': 'modal'

@@ -9,6 +9,8 @@ ru:
     nothing_found: 'Ничего не найдено'
     messages:
       changing_denied: "изменение запрещено"
+      contract_invalid: 'Форма заполнена неверно'
+      record_not_found: 'Запись не найдена'
 
   datetime_select:
     x_minutes:

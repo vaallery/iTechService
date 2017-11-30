@@ -1,0 +1,14 @@
+h1
+  = title
+  = new_link
+
+.table_filter.navbar.container
+  .navbar-inner
+    = form_tag substitute_phones_path, method: :get, id: 'search_form', class: 'navbar-search form-search', remote: true do
+
+      .input-append
+        = text_field_tag :search, params[:search], class: 'search-query input-xxlarge', placeholder: t('.query_placeholder')
+        span.add-on.btn.clear_search_input
+          i.icon-remove
+
+#resource_table = table

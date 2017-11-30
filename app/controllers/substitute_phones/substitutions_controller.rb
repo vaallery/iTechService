@@ -1,15 +1,25 @@
 module SubstitutePhones
   class SubstitutionsController < ApplicationController
+    respond_to :html
 
     def edit
-      form SubstitutePhone::Substitution::Update
+      run PhoneSubstitution::Update::Present do
+        return render_form
+      end
+      failed
     end
 
     def update
-      run SubstitutePhone::Substitution::Update do
-        return redirect_to substitute_phones_path, notice: t('substitute_phones.returned')
+      run PhoneSubstitution::Update do
+        return redirect_to substitute_phone_path(operation_model.substitute_phone_id), notice: operation_message
       end
-      render :edit
+      render_form
+    end
+
+    private
+
+    def render_form
+      render_cell PhoneSubstitution::Cell::EditForm
     end
   end
 end

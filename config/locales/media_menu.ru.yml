@@ -1,0 +1,32 @@
+ru:
+  media_menu:
+
+    view:
+      order: 'Отправить в заказ'
+      title: 'Медиа меню'
+      search: 'Поиск'
+      sorting: 'Сортировка:'
+      category: 'Китегория'
+      category/all: 'Все'
+      category/h: 'Хитяры'
+      category/r: 'Русские'
+      category/n: 'Новинки'
+      category/c: 'Детские'
+
+
+    item:
+      view:
+        close: 'Закрыть'
+        remove: 'Убрать'
+        select: 'Выбрать'
+        size: 'Размер: %{value}'
+        category/h: 'Хитяра'
+        category/r: 'Русский'
+        category/n: 'Новинка'
+        category/c: 'Детский'
+
+    order:
+      view:
+        title: 'Оформление заказа'
+        chosen: 'Выбрано'
+        submit: 'Сохранить заказ'

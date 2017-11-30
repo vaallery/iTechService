@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009103723) do
+ActiveRecord::Schema.define(version: 20171028082347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -508,6 +508,12 @@ ActiveRecord::Schema.define(version: 20171009103723) do
   add_index "locations", ["department_id"], name: "index_locations_on_department_id", using: :btree
   add_index "locations", ["name"], name: "index_locations_on_name", using: :btree
   add_index "locations", ["schedule"], name: "index_locations_on_schedule", using: :btree
+
+  create_table "media_menu_cart_items", force: :cascade do |t|
+    t.integer  "item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "media_orders", force: :cascade do |t|
     t.datetime "time"

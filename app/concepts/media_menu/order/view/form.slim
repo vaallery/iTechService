@@ -1,0 +1,16 @@
+.container.mt-2
+  .page-header
+    h1
+      = link_to icon('chevron-left'), media_menu_path
+      = t '.title'
+
+  = simple_form_for contract, url: media_menu_order_path, wrapper: :vertical_form do |f|
+    = f.input :name, label: t_attribute(:name)
+    = f.input :phone, label: t_attribute(:phone)
+
+    label for='cart_items' = t('.chosen')
+    table.table.table-hover
+      tbody#cart_items = cart_items
+
+    .form-actions
+      = f.submit t('.submit'), class: 'btn btn-primary'

@@ -1,0 +1,14 @@
+= header_tag
+
+.row-fluid
+  .span6
+    = form do |f|
+      = f.association :department, as: :radio_buttons, collection: departments_for_select, item_wrapper_class: 'inline'
+      / TODO: display error for item
+      = f.input :item, as: :device, required: true
+      = f.input :condition
+
+      .form-actions
+        = submit_button f
+
+  .span6= secondary_form_container
