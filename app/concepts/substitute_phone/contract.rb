@@ -1,5 +1,5 @@
 class SubstitutePhone < ApplicationRecord
-  class Contract < BaseForm
+  class Contract < BaseContract
     model SubstitutePhone
     properties :item, :department, writeable: false
     properties :item_id, :department_id, :condition

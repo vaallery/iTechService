@@ -23,8 +23,6 @@ module MediaMenu
       end
 
       def size
-        # value = number_to_human_size model.size
-        # t '.size', value: value
         number_to_human_size model.size
       end
 

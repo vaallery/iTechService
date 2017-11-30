@@ -57,7 +57,7 @@ module MediaMenu
     end
 
     def image_file
-      "#{db_id}.png"
+      "/media_menu/images/#{db_id}.png"
     end
   end
 end
