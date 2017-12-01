@@ -2,10 +2,17 @@ module MediaMenu
   class Order::Create < BaseOperation
     class Present < BaseOperation
       step Model(MediaOrder, :new)
+      success :check_cart_items
       step :cart_items
       step Contract.Build(constant: MediaMenu::Order::Contract::Base)
 
       private
+
+      def check_cart_items(*)
+        CartItem.find_each do |cart_item|
+          cart_item.delete if cart_item.item.nil?
+        end
+      end
 
       def cart_items(options, **)
         options['cart_items'] = CartItem.all
