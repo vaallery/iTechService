@@ -6,7 +6,9 @@ html lang='ru'
     meta name='viewport' content='width=device-width, initial-scale=1.0'
     title = title
     = csrf_meta_tags
+    = stylesheet_link_tag 'media_menu/framework', media: 'all', 'data-turbolinks-track': true
     = stylesheet_link_tag 'media_menu/application', media: 'all', 'data-turbolinks-track': true
+    = javascript_include_tag 'media_menu/framework', 'data-turbolinks-track': true
     = javascript_include_tag 'media_menu/application', 'data-turbolinks-track': true
     link href='images/apple-touch-icon-144x144.png' rel='apple-touch-icon-precomposed' sizes='144x144'
     link href='images/apple-touch-icon-114x114.png' rel='apple-touch-icon-precomposed' sizes='114x114'

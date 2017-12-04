@@ -5,9 +5,23 @@ module MediaMenu::Order::Cell
     private
 
     include FormCell
+    include ActiveSupport::NumberHelper
 
-    def cart_items
-      MediaMenu::CartItem::Cell::Row.(collection: options[:cart_items])
+    def total_count
+      t '.total_selected', count: order_items.count
+    end
+
+    def total_size
+      sum = order_items.map(&:size).sum
+      number_to_human_size sum
+    end
+
+    def order_item_rows
+      MediaMenu::Item::Cell::OrderRow.(collection: order_items)
+    end
+
+    def order_items
+      options[:order_items]
     end
 
     def icon(name)

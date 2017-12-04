@@ -1,8 +1,8 @@
-#media_menu-item.modal.fade
+#media_menu-item_modal.modal.fade
   .modal-dialog.modal-lg role='document'
     .modal-content
       .modal-body
-        .d-flex
+        .media_menu-item.d-flex
           .flex-column.mr-3 = image
           .d-flex.flex-column.align-items-start
             h5 = name
@@ -14,4 +14,4 @@
 
             .mt-auto.align-self-end.float-right
               button type='button' class='btn btn-secondary' data-dismiss='modal' = t('.close')
-              span.ml-2.float-right = selection_button
+              span.ml-2.float-right = selection_buttons

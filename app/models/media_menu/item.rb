@@ -11,8 +11,6 @@ module MediaMenu
     has_and_belongs_to_many :tags, join_table: 'Z_1TAGS',
                             foreign_key: 'Z_1TAGGEDMEDIAINFOS', association_foreign_key: 'Z_9TAGS'
 
-    has_one :cart_item, inverse_of: :item
-
     def self.search(term)
       items = all
       unless term.blank?

@@ -30,3 +30,4 @@ ru:
         title: 'Оформление заказа'
         chosen: 'Выбрано'
         submit: 'Сохранить заказ'
+        total_selected: 'Всего выбрано: %{count}'
