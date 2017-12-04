@@ -1,0 +1,22 @@
+.media_menu-item {
+  .selection_button {
+    cursor: pointer;
+  }
+
+  .selection_button.select {
+    display: block;
+  }
+  .selection_button.remove {
+    margin: 0;
+    display: none;
+  }
+
+  &.selected {
+    .selection_button.select {
+      display: none;
+    }
+    .selection_button.remove {
+      display: block;
+    }
+  }
+}

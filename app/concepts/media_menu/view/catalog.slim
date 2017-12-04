@@ -1,5 +1,4 @@
 nav.navbar.navbar-expand-lg.navbar-light.bg-light.sticky-top.mb-2
-  /= form_tag media_menu_items_path, method: :get, remote: true, class: 'form-inline' do
   = form_tag media_menu_path, method: 'get', class: 'form-inline' do
     .input-group
       input.form-control name='search' type='text' placeholder=search_placeholder value=params[:search]
@@ -18,19 +17,11 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.sticky-top.mb-2
       .dropdown-menu
         = category_filter_links
 
-    /li.nav-item.dropdown
-    /  a.nav-link.dropdown-toggle href='#' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'
-    /    = t('.year', default: 'Year')
-    /  .dropdown-menu
-    /    a.dropdown-item href='#' 1990
-    /    a.dropdown-item href='#' 1991
-    /    a.dropdown-item href='#' 1992
-
   ul.navbar-nav
-    li.nav-item = link_to t('.order'), new_media_menu_order_path, class: 'nav-link'
+    li.nav-item = link_to t('.order'), new_media_menu_order_path, class: 'nav-link',
+                          data: {behaviour: 'new-media_menu-order'}
 
 .container-fluid
-  /#remote_container = content
   = pagination
   = content
   = pagination

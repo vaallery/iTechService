@@ -17,7 +17,7 @@ module MediaMenu
     private
 
     def render_form
-      render_cell MediaMenu::Order::Cell::Form, cart_items: result['cart_items'], layout: Cell::Layout
+      render_cell MediaMenu::Order::Cell::Form, order_items: result['order_items'], layout: Cell::Layout
     end
   end
 end

@@ -1,0 +1,6 @@
+tr.media_menu-order_item id="media_menu-order_item_#{id}" data-id=id
+  td = name
+  td = size
+  td
+    = hidden_field_tag 'selected_items[]', id
+    = button_to_remove
