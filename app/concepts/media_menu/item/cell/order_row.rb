@@ -4,8 +4,7 @@ module MediaMenu
       private
 
       def button_to_remove
-        button_tag content_tag(:i, nil, class: 'fa fa-close'),
-                   type: 'button', class: 'btn btn-sm btn-outline-danger pull-right',
+        button_tag '&times;', type: 'button', class: 'btn btn-sm btn-outline-danger pull-right font-weight-bold',
                    data: {behaviour: 'remove-media_menu-order_item', id: id}
       end
     end
