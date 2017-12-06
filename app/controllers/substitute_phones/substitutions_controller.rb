@@ -19,7 +19,7 @@ module SubstitutePhones
     private
 
     def render_form
-      render_cell PhoneSubstitution::Cell::EditForm
+      render_cell PhoneSubstitution::Cell::EditForm, model: operation_contract
     end
   end
 end

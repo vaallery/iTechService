@@ -103,6 +103,10 @@ class ApplicationController < ActionController::Base
     result['model']
   end
 
+  def operation_contract
+    result['contract.default']
+  end
+
   def operation_message
     result['result.message']
   end
