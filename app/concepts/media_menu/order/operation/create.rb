@@ -26,8 +26,9 @@ module MediaMenu
     step :set_time
     step Contract.Persist
 
+    # TYPES = {0 => 'Книги', 1 => 'Приложения', 2 => 'Музыка', 3 => 'Телешоу', 4 => 'Фильмы', 5 => 'Аудиокниги'}
     def set_content(*, model:, order_items:, **)
-      content = ''
+      content = "Фильмы\n\n"
       order_items.each do |order_item|
         content << "	•	#{order_item.track_number} - #{order_item.name}\n"
       end
