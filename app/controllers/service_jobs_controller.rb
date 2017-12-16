@@ -74,7 +74,11 @@ class ServiceJobsController < ApplicationController
     @service_job.department_id = current_user.department_id
 
     respond_to do |format|
-      format.html { render 'form' }
+      format.html do
+        set_job_templates
+        render 'form'
+      end
+
       format.json { render json: @service_job }
     end
   end
@@ -84,7 +88,11 @@ class ServiceJobsController < ApplicationController
     @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
     log_service_job_show
     respond_to do |format|
-      format.html { render 'form' }
+      format.html do
+        set_job_templates
+        render 'form'
+      end
+
       format.js { render 'shared/show_modal_form' }
     end
   end
@@ -262,5 +270,9 @@ class ServiceJobsController < ApplicationController
     #                          substitute_phone_id: @service_job.substitute_phone_id,
     #                          issuer_id: current_user.id,
     #                          issued_at: @service_job.created_at
+  end
+
+  def set_job_templates
+    @job_templates = Service::JobTemplate.select(:field_name, :content).all.to_a.group_by(&:field_name)
   end
 end

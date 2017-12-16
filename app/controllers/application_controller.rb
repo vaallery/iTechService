@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
     # TODO: get rid of it, use cells
     unless @model.nil?
       model_variable_name = action_name == 'index' ? @model.model_name.collection : @model.model_name.element
+      model_variable_name.gsub!('/', '_')
       instance_variable_set "@#{model_variable_name}", @model
     end
 

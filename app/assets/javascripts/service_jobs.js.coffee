@@ -50,6 +50,21 @@ jQuery ->
       $('#service_job_contact_phone').val client_phone
       event.preventDefault()
 
+    $fields_with_templates = $service_job_form.find('.has-templates')
+
+    $fields_with_templates.focus ->
+      $(this).popover('show')
+
+    $fields_with_templates.blur ->
+      $(this).popover('hide')
+
+    $(document).on 'click', '.service-job_template', ->
+      content = this.innerText
+      $input = $(this).closest('.controls').find('.has-templates')
+      old_value = $input.val()
+      new_value = old_value + ' ' + content
+      $input.val(new_value.trim())
+
 #  $('#service_job_imei').blur ()->
 #    $.getJSON '/service_jobs/check_imei?imei_q='+$(this).val(), (data)->
 #      if data.present

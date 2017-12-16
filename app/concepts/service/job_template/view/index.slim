@@ -1,0 +1,11 @@
+.page-header: h2
+  = page_title
+  =< new_link
+
+table.table.table-hover
+  thead
+    tr
+      th = t_attribute :field_name
+      th = t_attribute :content
+      th
+  tbody = job_templates

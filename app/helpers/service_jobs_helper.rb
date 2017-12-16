@@ -160,4 +160,23 @@ module ServiceJobsHelper
       []
     end
   end
+
+  def service_job_template_field_data(field_name, templates)
+    field_templates = templates[field_name]
+    return {} unless field_templates.present?
+
+    list_items = field_templates.map do |field_template|
+      content_tag(:li, field_template.content, class: 'service-job_template')
+    end.join
+
+    templates_list = content_tag(:ul, list_items, class: 'service-job_templates-list')
+
+    {
+      html: true,
+      placement: 'right',
+      trigger: 'manual',
+      title: t('service_jobs.form.templates'),
+      content: templates_list.gsub('"', '').html_safe
+    }
+  end
 end

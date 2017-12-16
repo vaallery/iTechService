@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009103723) do
+ActiveRecord::Schema.define(version: 20171210003313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -948,6 +948,15 @@ ActiveRecord::Schema.define(version: 20171009103723) do
   add_index "service_job_subscriptions", ["service_job_id", "subscriber_id"], name: "index_service_job_subscriptions", unique: true, using: :btree
   add_index "service_job_subscriptions", ["service_job_id"], name: "index_service_job_subscriptions_on_service_job_id", using: :btree
   add_index "service_job_subscriptions", ["subscriber_id"], name: "index_service_job_subscriptions_on_subscriber_id", using: :btree
+
+  create_table "service_job_templates", force: :cascade do |t|
+    t.string   "field_name"
+    t.string   "content",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "service_job_templates", ["field_name"], name: "index_service_job_templates_on_field_name", using: :btree
 
   create_table "service_jobs", force: :cascade do |t|
     t.integer  "device_type_id"
