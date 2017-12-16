@@ -1,0 +1,7 @@
+= header_tag
+
+= form do |f|
+  = f.input :field_name, as: :select, collection: field_names_for_select
+  = f.input :content, as: :text, required: true
+
+  .form-actions = submit_button f

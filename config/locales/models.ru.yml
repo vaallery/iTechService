@@ -60,6 +60,8 @@ ru:
       sale: 'Продажа'
       schedule_day: 'Рабочий день'
       setting: 'Параметр'
+      service:
+        job_template: 'Шаблон для заказ-наряда'
       service_job: 'Работа'
       spare_part: 'Запчасть'
       stolen_phone: 'Краденый телефон'
@@ -410,6 +412,9 @@ ru:
       schedule_day:
         day: 'День'
         hours: 'Часы'
+
+      service/job_template:
+        field_name: 'Название поля'
 
       service_job:
         app_store_pass: 'Пароль на учетную запись в App Store'

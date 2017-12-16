@@ -1,0 +1,12 @@
+ru:
+  service/job_template:
+    index:
+      title: 'Шаблоны для заказ-нарядов'
+
+    form:
+      title:
+        new: 'Создание'
+        edit: 'Редактирование'
+
+    destroyed: 'Шаблоны для заказ-нарядов удалён'
+    not_destroyed: 'Шаблоны для заказ-нарядов не удалён'

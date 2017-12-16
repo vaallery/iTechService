@@ -17,6 +17,10 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
+  namespace :service do
+    resources :job_templates
+  end
+
   resources :departments
   resources :reports, only: [:index, :new, :create]
 
