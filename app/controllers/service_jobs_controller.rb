@@ -74,11 +74,7 @@ class ServiceJobsController < ApplicationController
     @service_job.department_id = current_user.department_id
 
     respond_to do |format|
-      format.html do
-        set_job_templates
-        render 'form'
-      end
-
+      format.html { render_form }
       format.json { render json: @service_job }
     end
   end
@@ -88,11 +84,7 @@ class ServiceJobsController < ApplicationController
     @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
     log_service_job_show
     respond_to do |format|
-      format.html do
-        set_job_templates
-        render 'form'
-      end
-
+      format.html { render_form }
       format.js { render 'shared/show_modal_form' }
     end
   end
@@ -106,7 +98,7 @@ class ServiceJobsController < ApplicationController
         format.html { redirect_to @service_job, notice: t('service_jobs.created') }
         format.json { render json: @service_job, status: :created, location: @service_job }
       else
-        format.html { render 'form' }
+        format.html { render_form }
         format.json { render json: @service_job.errors, status: :unprocessable_entity }
       end
     end
@@ -124,7 +116,7 @@ class ServiceJobsController < ApplicationController
         format.json { head :no_content }
         format.js { render 'update' }
       else
-        format.html { render 'form' }
+        format.html { render_form }
         format.json { render json: @service_job.errors, status: :unprocessable_entity }
         format.js { render 'shared/show_modal_form' }
       end
@@ -270,6 +262,11 @@ class ServiceJobsController < ApplicationController
     #                          substitute_phone_id: @service_job.substitute_phone_id,
     #                          issuer_id: current_user.id,
     #                          issued_at: @service_job.created_at
+  end
+
+  def render_form
+    set_job_templates
+    render 'form'
   end
 
   def set_job_templates
