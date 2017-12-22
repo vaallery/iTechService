@@ -47,8 +47,6 @@ module ItechService
 
     # config.assets.initialize_on_precompile = false
     
-    config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td', 'th', 'thead', 'hbody', 'tfoot'
-
     I18n.enforce_available_locales = true
 
     config.logger = Logger.new config.paths['log'].first, 5, 50*1024*1024
