@@ -1,0 +1,1 @@
+ActionView::Base.sanitized_allowed_tags += Set.new(%w[table tr td th thead tbody tfoot])
