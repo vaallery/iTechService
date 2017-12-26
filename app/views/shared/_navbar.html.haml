@@ -28,6 +28,8 @@
       = menu_item t('substitute_phones.index.title'), substitute_phones_path
 
     = drop_down t('.trade') do
+      = menu_item t('.trade_in'), (current_user.superadmin? ? trade_in_devices_path : new_trade_in_device_path)
+      = drop_down_divider
       = menu_item t('sales.link'), sales_path if can? :manage, Sale
       = menu_item t('purchases.link'), purchases_path if can? :manage, Purchase
       = menu_item t('revaluation_acts.index.title'), revaluation_acts_path if can? :manage, RevaluationAct

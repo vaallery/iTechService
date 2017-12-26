@@ -1,0 +1,27 @@
+.page-header: h2
+  = link_to_index
+  span.muted =< '/'
+  =< name
+
+.row
+  .span6
+
+    table.attributes_table
+      = attribute_presentation :received_at
+      = attribute_presentation :item
+      = attribute_presentation :appraised_value
+      = attribute_presentation :appraiser
+      = attribute_presentation :bought_device
+      = attribute_presentation :client_name
+      = attribute_presentation :client_phone
+      = attribute_presentation :check_icloud
+      = attribute_presentation :replacement_status
+      = attribute_presentation :archived
+      = attribute_presentation :archiving_comment
+
+    .form-actions
+      = link_to_print
+      = link_to_edit
+      = link_to_destroy
+
+  .span6 = secondary_form_container

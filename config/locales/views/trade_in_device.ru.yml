@@ -1,0 +1,32 @@
+ru:
+  trade_in_device:
+    index:
+      archive: 'Архив'
+      query_placeholder: "IMEI / Серийный номер"
+      title: 'Trade-in'
+
+    form:
+      title:
+        new: 'Новый девайс'
+        edit: 'Редактирование девайса'
+
+      labels:
+        appraised_value: 'Сумма, в которую оценили'
+        appraiser: 'Оценивал'
+        archived: 'Архивирован?'
+        archiving_comment: 'Комментарий архивации'
+        bought_device: 'Что покупают'
+        check_icloud: 'Проверил iCloud'
+        client_name: 'ФИО покупателя'
+        client_phone: 'Номер телефона покупателя'
+        item: 'Сдают'
+        received_at: 'Дата'
+        replacement_status: 'Заменён в сервисном центре?'
+        replacement_status/not_replaced: 'Да'
+        replacement_status/replaced: 'Нет'
+        replacement_status/in_service: 'В сервисе'
+
+    created: 'Trade-in девайс создан'
+    destroyed: 'Trade-in девайс удалён'
+    not_destroyed: 'Trade-in девайс не удалён'
+    updated: 'Trade-in девайс изменён'
