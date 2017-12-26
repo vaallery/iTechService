@@ -5,6 +5,8 @@ class ItemDecorator < ApplicationDecorator
     [name, serial_number, imei].join(' / ')
   end
 
+  alias to_s presentation
+
   def features
     object.features.map { |feature| "#{feature.name}: #{feature.value}" }.join(', ')
   end

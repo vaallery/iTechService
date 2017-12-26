@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171210003313) do
+ActiveRecord::Schema.define(version: 20171223080133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1197,6 +1197,27 @@ ActiveRecord::Schema.define(version: 20171210003313) do
   add_index "top_salables", ["ancestry"], name: "index_top_salables_on_ancestry", using: :btree
   add_index "top_salables", ["product_id"], name: "index_top_salables_on_product_id", using: :btree
 
+  create_table "trade_in_devices", force: :cascade do |t|
+    t.integer  "number",                             null: false
+    t.datetime "received_at",                        null: false
+    t.integer  "item_id",                            null: false
+    t.integer  "receiver_id"
+    t.integer  "appraised_value",                    null: false
+    t.string   "appraiser",                          null: false
+    t.string   "bought_device"
+    t.string   "client_name",                        null: false
+    t.string   "client_phone",                       null: false
+    t.string   "check_icloud",                       null: false
+    t.integer  "replacement_status"
+    t.boolean  "archived",           default: false, null: false
+    t.text     "archiving_comment"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+  end
+
+  add_index "trade_in_devices", ["item_id"], name: "index_trade_in_devices_on_item_id", using: :btree
+  add_index "trade_in_devices", ["receiver_id"], name: "index_trade_in_devices_on_receiver_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "username",                  limit: 255
     t.string   "role",                      limit: 255
@@ -1302,4 +1323,6 @@ ActiveRecord::Schema.define(version: 20171210003313) do
   add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"
   add_foreign_key "substitute_phones", "service_jobs"
+  add_foreign_key "trade_in_devices", "items"
+  add_foreign_key "trade_in_devices", "users", column: "receiver_id"
 end

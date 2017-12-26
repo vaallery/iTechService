@@ -1,0 +1,18 @@
+table.table.table-hover
+  thead
+    tr
+      th = t_attribute :number
+      th = t_attribute :item
+      th = t_attribute :appraised_value
+      th = t_attribute :received_at
+      th = t_attribute :receiver
+      th = t_attribute :replacement_status
+      th
+  tbody = trade_in_devices
+
+  tfoot
+    tr
+      td = t('reports.total')
+      td = total_count
+      td = total_value
+      td colspan=4

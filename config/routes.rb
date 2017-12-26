@@ -230,6 +230,10 @@ Rails.application.routes.draw do
     get :history, on: :member
   end
 
+  resources :trade_in_devices do
+    get :print, on: :member
+  end
+
   resources :cash_shifts, only: :show do
     post :close, on: :member
   end

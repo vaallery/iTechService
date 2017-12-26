@@ -26,14 +26,15 @@ ru:
       close: "Закрыть"
       confirm: 'Вы уверены?'
       destroy: 'Удалить'
+      done: "Готово"
       edit: 'Редактировать'
+      import: "Импортировать"
       new: 'Создать'
+      print: 'Печатать'
       reset: "Сбросить"
+      scan: "Сканировать"
       show: 'Просмотр'
       ticket: "Талон"
-      scan: "Сканировать"
-      import: "Импортировать"
-      done: "Готово"
     placeholders:
       client_input: 'Имя / телефон / карта'
       item: 'Серийный номер / IMEI'

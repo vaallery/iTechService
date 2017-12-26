@@ -510,6 +510,42 @@ ru:
         product_id: :activerecord.attributes.top_salable.product
         type: 'Тип'
 
+      trade_in_device:
+        appraised_value: 'Сумма, в которую оценили'
+        appraiser: 'Оценивал'
+        archived: 'Архивирован?'
+        archived/false: 'Нет'
+        archived/true: 'Да'
+        archiving_comment: 'Комментарий архивации'
+        bought_device: 'Что покупают'
+        check_icloud: 'Проверил iCloud'
+        client_name: 'ФИО покупателя'
+        client_phone: 'Номер телефона покупателя'
+        item: 'Сдают'
+        received_at: 'Дата'
+        receiver: 'Принимал'
+        replacement_status: 'Заменён в сервисном центре?'
+        replacement_status/not_replaced: 'Да'
+        replacement_status/replaced: 'Нет'
+        replacement_status/in_service: 'В сервисе'
+
+      trade_in_device_a:
+        appraised_value: 'Оценочная стоимость'
+        appraiser: 'Оценщик'
+        archived: 'Архивирован?'
+        archiving_comment: 'Комментарий архивации'
+        bought_device: 'Купленное устройство'
+        check_icloud: 'Проверил iCloud'
+        client_name: 'ФИО клиента'
+        client_phone: 'Номер телефона клиента'
+        item: 'Девайс'
+        received_at: 'Дата приёма'
+        receiver: 'Приёмщик'
+        replacement_status: 'Заменён в сервисном центре?'
+        replacement_status/not_replaced: 'Да'
+        replacement_status/replaced: 'Нет'
+        replacement_status/in_service: 'В сервисе'
+
       user:
         abilities: 'Возможности'
         announcements: 'Оповещение'
