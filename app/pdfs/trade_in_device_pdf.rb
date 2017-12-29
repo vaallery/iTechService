@@ -19,6 +19,7 @@ class TradeInDevicePdf < Prawn::Document
     font 'DroidSans'
 
     table_data = [
+      [t_attribute(:number), device.number],
       [t_attribute(:item), item],
       [t_attribute(:appraised_value), appraised_value],
       [t_attribute(:bought_device), device.bought_device],
