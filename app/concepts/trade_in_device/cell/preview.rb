@@ -8,6 +8,10 @@ module TradeInDevice::Cell
 
     property :id, :number
 
+    def item
+      decorated_item.name
+    end
+
     def decorated_item
       @item ||= ItemDecorator.new(model.item)
     end
