@@ -12,7 +12,7 @@ class TradeInDevice::Create < BaseOperation
   step Contract.Persist(method: :sync)
   step :assign_received_at
   step :assign_number
-  step :assign_receiver
+  success :assign_receiver
   step :save_model
   step :success_message
 

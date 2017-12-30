@@ -6,7 +6,7 @@ module TradeInDevice::Cell
     include ModelCell
     include ActiveSupport::NumberHelper
 
-    property :id, :number
+    property :id, :number, :check_icloud
 
     def item
       decorated_item.name
@@ -22,10 +22,6 @@ module TradeInDevice::Cell
 
     def received_at
       l model.received_at, format: :date
-    end
-
-    def receiver
-      link_to model.receiver.presentation, model.receiver
     end
 
     def replacement_status
