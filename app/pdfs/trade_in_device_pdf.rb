@@ -26,7 +26,6 @@ class TradeInDevicePdf < Prawn::Document
       [t_attribute(:client_name), device.client_name],
       [t_attribute(:client_phone), device.client_phone],
       [t_attribute(:check_icloud), device.check_icloud],
-      [t_attribute(:receiver), device.receiver.presentation],
       [t_attribute(:appraiser), device.appraiser],
       [t_attribute(:received_at), received_at],
     ]
