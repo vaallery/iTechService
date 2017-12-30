@@ -521,6 +521,8 @@ ru:
         check_icloud: 'Проверил iCloud'
         client_name: 'ФИО покупателя'
         client_phone: 'Номер телефона покупателя'
+        condition: 'Состояние'
+        equipment: 'Комплектация'
         item: 'Сдают'
         received_at: 'Дата'
         receiver: 'Принимал'

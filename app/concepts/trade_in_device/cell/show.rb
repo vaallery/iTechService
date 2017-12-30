@@ -4,7 +4,8 @@ module TradeInDevice::Cell
 
     include FormHelper
 
-    property :appraiser, :bought_device, :client_name, :client_phone, :check_icloud, :archiving_comment
+    property :appraiser, :bought_device, :client_name, :client_phone, :check_icloud, :archiving_comment, :condition,
+             :equipment
     delegate :human_attribute_name, to: :TradeInDevice
     delegate :name, to: :decorated_item
 

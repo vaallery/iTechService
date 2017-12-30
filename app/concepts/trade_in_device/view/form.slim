@@ -11,6 +11,8 @@
       = f.input :client_name
       = f.input :client_phone
       = f.input :check_icloud
+      = f.input :condition
+      = f.input :equipment
 
       - if superadmin?
         = f.input :replacement_status, as: :radio_buttons, collection: replacement_statuses
