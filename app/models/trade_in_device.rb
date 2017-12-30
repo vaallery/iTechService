@@ -10,7 +10,7 @@ class TradeInDevice < ActiveRecord::Base
 
   delegate :name, to: :item
 
-  validates_presence_of :number, :received_at, :item, :receiver, :appraised_value, :appraiser, :bought_device,
+  validates_presence_of :number, :received_at, :item, :appraised_value, :appraiser, :bought_device,
                         :client_name, :client_phone, :check_icloud
 
   def self.search(query, in_archive: false)
