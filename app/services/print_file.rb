@@ -15,6 +15,7 @@ class PrintFile
         when :sale_check then options << " -o media=Custom.72x#{height || 200}mm"
         when :ticket then options << ' -o media=Custom.72x90mm'
         when :quick_order then options << ' -o media=Custom.72x90mm'
+        when :trade_in then options << ' -o media=Custom.80x160mm'
         when :tags then options = ' -d tags'
         else options << ' -o media=Custom.72x90mm'
       end

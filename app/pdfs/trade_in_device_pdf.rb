@@ -9,7 +9,7 @@ class TradeInDevicePdf < Prawn::Document
     @device = device
     @filename = "trade_in_device_#{device.number}.pdf"
     @filepath = Rails.root.join('tmp', 'pdf', filename)
-    super page_size: [72.mm, 160.mm], page_layout: :portrait, margin: [10, 22, 10, 10]
+    super page_size: [80.mm, 160.mm], page_layout: :portrait, margin: [10, 22, 10, 10]
 
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",

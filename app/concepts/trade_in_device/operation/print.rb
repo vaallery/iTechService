@@ -12,7 +12,7 @@ class TradeInDevice::Print < BaseOperation
 
   def print!(options, pdf:, current_user:, **)
     pdf.render_file
-    message = PrintFile.(pdf.filepath, printer: current_user.department.printer)
+    message = PrintFile.(pdf.filepath, type: :trade_in, printer: current_user.department.printer)
     options['result.message'] = message
   end
 end
