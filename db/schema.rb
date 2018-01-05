@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171230045942) do
+ActiveRecord::Schema.define(version: 20180105123658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -845,6 +845,7 @@ ActiveRecord::Schema.define(version: 20171230045942) do
     t.datetime "updated_at",                                    null: false
     t.text     "client_info"
     t.boolean  "is_positive_price",             default: false
+    t.boolean  "difficult",                     default: false
   end
 
   add_index "repair_services", ["repair_group_id"], name: "index_repair_services_on_repair_group_id", using: :btree

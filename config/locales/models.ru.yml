@@ -383,8 +383,9 @@ ru:
 
       repair_service:
         client_info: 'Информация для клиента'
-        spare_parts: 'Запчасти'
+        difficult: 'Сложный'
         is_positive_price: 'Ненулевая стоимость'
+        spare_parts: 'Запчасти'
 
       repair_task:
         repair_parts: 'Запчасти'
