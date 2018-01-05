@@ -18,3 +18,5 @@ $imei_inputs.addClass('hidden');
 <% if device.last_service_job.present? %>
 $('.popover-content', '#client_devices').html("<%= j service_tasks_list(device.last_service_job) %>");
 <% end %>
+
+App.DeviceInput.check_imei();
