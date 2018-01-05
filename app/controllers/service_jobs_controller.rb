@@ -190,7 +190,8 @@ class ServiceJobsController < ApplicationController
   end
 
   def check_imei
-    stolen_phone = StolenPhone.find_by_imei params[:imei_q]
+    item = Item.find(params[:item_id])
+    stolen_phone = StolenPhone.find_by_imei(item.imei)
     msg = stolen_phone.present? ? t('service_jobs.phone_stolen') : ''
     render json: {present: stolen_phone.present?, msg: msg}
   end
