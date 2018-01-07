@@ -17,7 +17,7 @@ set :pty, false
 set :conditionally_migrate, true
 
 set :linked_files, %w{.env config/database.yml config/private_pub.yml config/application.yml}
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets tmp/pdf vendor/bundle public/system public/uploads}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets tmp/pdf public/system public/uploads}
 
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 set :keep_releases, 5
