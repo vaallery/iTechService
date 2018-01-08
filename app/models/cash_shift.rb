@@ -24,7 +24,7 @@ class CashShift < ActiveRecord::Base
   end
 
   def sales_total(is_return=false)
-    sales.posted.where(is_return: is_return).sum &:payments_sum
+    sales.posted.where(is_return: is_return).to_a.sum(&:payments_sum)
   end
 
   def sales_total_by_kind(is_return=false)
