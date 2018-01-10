@@ -1,6 +1,6 @@
 class TradeInDevice::Policy < BasePolicy
   def index?
-    user.superadmin?
+    user.present?
   end
 
   def show?
