@@ -6,7 +6,7 @@ module TradeInDevice::Cell
     include ModelCell
     include ActiveSupport::NumberHelper
 
-    property :id, :number, :check_icloud
+    property :id, :number, :condition
 
     def item
       decorated_item.name
@@ -30,15 +30,19 @@ module TradeInDevice::Cell
     end
 
     def link_to_show
-      link_to icon('eye-open'), trade_in_device_path(id), class: 'btn btn-small'
+      link_to icon('eye-open'), trade_in_device_path(id), class: 'btn btn-small' if policy.show?
     end
 
     def link_to_edit
-      link_to icon('edit'), edit_trade_in_device_path(id), class: 'btn btn-small'
+      link_to icon('edit'), edit_trade_in_device_path(id), class: 'btn btn-small' if policy.edit?
     end
 
     def link_to_destroy
-      link_to icon('trash'), trade_in_device_path(id), method: 'delete', data: {confirm: t('helpers.links.confirm', default: 'Are you sure?')}, class: 'btn btn-danger btn-small'
+      link_to icon('trash'), trade_in_device_path(id), method: 'delete', data: {confirm: t('helpers.links.confirm', default: 'Are you sure?')}, class: 'btn btn-danger btn-small' if policy.destroy?
+    end
+
+    def policy
+      context[:policy]
     end
   end
 end

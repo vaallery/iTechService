@@ -3,8 +3,8 @@ class TradeInDevicesController < ApplicationController
 
   def index
     respond_to do |format|
-      run TradeInDevice::Index do
-        format.html { return render_cell TradeInDevice::Cell::Index }
+      run TradeInDevice::Index do |result|
+        format.html { return render_cell TradeInDevice::Cell::Index, context: {policy: result['policy.default']} }
         format.js { return }
       end
       format.any(:html, :js) { failed }
@@ -18,6 +18,7 @@ class TradeInDevicesController < ApplicationController
     failed
   end
 
+  # TODO: make it via ajax
   def print
     run TradeInDevice::Print do |result|
       pdf = result['pdf']
