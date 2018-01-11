@@ -30,24 +30,25 @@ class CompletionActPdf < Prawn::Document
     # TODO: Barcode
 
     # Organization info
+    organization = Setting.get_value(:organization, department)
+
     move_down font_size * 2.5
-    text "Сервисный центр «iTech» ИП Колесник В. В.,", align: :right
-    text "Юр. Адрес: ИП Колесник В. В., г. Владивосток, ул. Шилкинская д. 3-1", align: :right
+    text "Сервисный центр «iTech» #{organization}", align: :right
+    text "Юр. Адрес: #{organization}, #{Setting.get_value(:legal_address, department)}", align: :right
     text "ОГРН: #{Setting.ogrn}", align: :right
     move_down font_size
-    text "Фактический адрес: г. Владивосток, ул. Океанский пр-т, д. 90", align: :right
-    text "ул. Семёновская, д. 34; г. Хабаровск, ул. Дзержинского, д. 2", align: :right
+    text "Фактический адрес: #{Setting.get_value(:address, department)}", align: :right
 
     # Contact info
     move_down font_size
     bounding_box [400, cursor], width: 130 do
       text 'График работы:', align: :right, style: :bold
-      text department.schedule, align: :right
+      text Setting.get_value(:schedule, department), align: :right
       move_down font_size
       [
-        'e-mail: info@itechstore.ru',
+        "e-mail: #{Setting.get_value(:email, department)}",
         "#{Setting.get_value(:contact_phone, department)}",
-        'сайт: http://itechstore.ru'
+        "сайт: #{Setting.get_value(:site, department)}"
       ].each do |str|
         text str, align: :right
       end
@@ -124,7 +125,7 @@ class CompletionActPdf < Prawn::Document
     text "Сервисный ценр предпримет все необходимые действия для устранения недостатков выполненной работы по требованию потребителя в срок до 60 рабочих дней (Ст.30 «Закон о защите прав потребителей»)."
     move_down font_size
 
-    text "Установленная гарантия не обеспечивает возмещение затрат, связанных с транспортировкой оборудования до местонахождения сервисного центра ИП Колесник В. В. «iTech»."
+    text "Установленная гарантия не обеспечивает возмещение затрат, связанных с транспортировкой оборудования до местонахождения сервисного центра #{organization} «iTech»."
     move_down font_size
 
     text "Сервисный центр не несёт ответственности за любой косвенный ущерб, вызванный проявлением недостатков или дефектов в устройстве, ущерб, причинённый другим устройствам или оборудованию, работающим в сопряжении с данным устройством."
