@@ -1,4 +1,4 @@
-class SupplyReport < BaseReport
+class DriverReport < BaseReport
 
   def call
     result[:supply_categories] = []

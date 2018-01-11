@@ -54,7 +54,7 @@ ru:
       title: 'Отчёт по подменкам'
       substitute_phone: 'Телефон'
       ticket_number: 'Номер талона'
-    supply:
+    driver:
       title: 'Отчёт водителя'
     few_remnants_goods:
       title: "Заканчивающийся товар"
