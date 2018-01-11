@@ -1,16 +1,21 @@
 class Setting < ActiveRecord::Base
 
   DEFAULT_SETTINGS = {
-      ticket_prefix: 'string',
-      ogrn: 'string',
       address: 'string',
+      address_for_check: 'string',
       contact_phone: 'string',
-      schedule: 'string',
+      data_storage_qty: 'integer',
       duck_plan: 'string',
       duck_plan_url: 'string',
-      address_for_check: 'string',
-      data_storage_qty: 'integer',
-      meda_menu_database: 'string'
+      email: 'string',
+      emails_for_orders: 'string',
+      legal_address: 'string',
+      meda_menu_database: 'string',
+      ogrn: 'string',
+      organization: 'string',
+      schedule: 'string',
+      site: 'string',
+      ticket_prefix: 'string'
   }
 
   VALUE_TYPES = %w[boolean integer string text]

@@ -1205,7 +1205,7 @@ ActiveRecord::Schema.define(version: 20180105123658) do
     t.integer  "receiver_id"
     t.integer  "appraised_value",                    null: false
     t.string   "appraiser",                          null: false
-    t.string   "bought_device"
+    t.string   "bought_device",                      null: false
     t.string   "client_name",                        null: false
     t.string   "client_phone",                       null: false
     t.string   "check_icloud",                       null: false
