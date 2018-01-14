@@ -103,7 +103,8 @@ group :development do
   # gem 'capistrano-rbenv-install'
   # gem 'capistrano-postgresql'
   gem 'capistrano-ssh-doctor'
-  gem 'airbrussh', :require => false
+  gem 'capistrano-db-tasks', require: false
+  gem 'airbrussh', require: false
   gem 'quiet_assets'
   # gem 'better_errors'
   gem 'stack_rescue'
