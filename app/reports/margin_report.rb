@@ -9,26 +9,22 @@ class MarginReport < BaseReport
       sale.sale_items.find_each do |sale_item|
         if sale_item.is_repair?
           kind = :repair
-          # if (repair_tasks = sale_item.device_task.try(:repair_tasks)).present?
-
-          # end
         elsif sale_item.is_service?
           kind = :service
         else
           kind = :sale
         end
-        # details = []
-        # if sale_item.is_repair?
-        #   if (repair_parts = sale.try(:service_job).try(:repair_parts)).present?
-        #     repair_parts.each do |repair_part|
-        #       details << repair_part.as_json(methods: [:id, :name, :price])
-        #     end
-        #   end
-        # else
-        #   details << sale_item.as_json(methods: [:id, :name, :price, :quantity, :discount, :purchase_price, :margin])
-        # end
-        # result[kind][:details] = result[kind][:details] + details
-        result[kind][:details] << sale_item.as_json(methods: [:id, :name, :price, :quantity, :discount, :purchase_price, :margin, :product_id])
+        details = []
+        if sale_item.is_repair?
+          if (repair_parts = sale.try(:service_job).try(:repair_parts)).present?
+            repair_parts.each do |repair_part|
+              details.push repair_part.as_json(only: [:id], methods: [:name, :purchase_price]).transform_keys(&:to_sym)
+            end
+          end
+        else
+          details.push sale_item.as_json(only: [:id], methods: [:name, :price, :quantity, :discount, :purchase_price, :margin]).transform_keys(&:to_sym)
+        end
+        result[kind][:details].concat details
         result[kind][:sum] = result[kind][:sum] + (sale_item.margin * sale_item.quantity)
         result[:sum] = result[:sum] + (sale_item.margin * sale_item.quantity)
       end
