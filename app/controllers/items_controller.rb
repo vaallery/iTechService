@@ -62,7 +62,7 @@ class ItemsController < ApplicationController
           pdf = ProductTagPdf.new @item, view_context, params
           filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
           pdf.render_file filepath
-          PrinterTools.print_file filepath, type: :tags, printer: current_user.department.printer
+          PrinterTools.print_file filepath, type: :tags
         else
           pdf = ProductTagPdf.new @item, view_context, params
         end
