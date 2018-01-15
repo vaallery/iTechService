@@ -57,7 +57,7 @@
 
       = f.association :carrier, as: :radio_buttons, collection: Carrier.all, wrapper_html: {class: @service_job.has_imei? ? 'carrier_input' : 'carrier_input hidden'}
 
-      = f.association :case_color, as: :radio_buttons, collection: CaseColor.ordered_by_name, label_method: lambda{|c|case_color_presentation(c)}
+      = f.association :case_color, as: :dropdown, collection: CaseColor.ordered_by_name, label_method: lambda{|c|case_color_presentation(c)}
 
       = f.input :data_storages, as: :check_boxes, collection: data_storages_collection, value_method: :first, label_method: :last, item_wrapper_class: 'inline'
 

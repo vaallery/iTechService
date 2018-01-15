@@ -35,6 +35,16 @@ App.bindTextAreasEvents = ->
     $('textarea.focus').removeClass('focus')
     $(this).addClass('focus')
 
+#=== Dropdown Input ===
+App.init_dropdown_input = ->
+  $(document).on 'click', 'a.dropdown-input-item', (event)->
+    $this = $(this)
+    $input = $this.closest('.dropdown-input')
+    $input.find('.input-presentation').html($this.html())
+    $input.find('.input-value').val($this.data('value'))
+    event.preventDefault()
+
 jQuery ->
   App.initDeviceInput()
   App.bindTextAreasEvents()
+  App.init_dropdown_input()
