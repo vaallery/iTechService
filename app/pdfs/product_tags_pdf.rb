@@ -42,13 +42,13 @@ class ProductTagsPdf < Prawn::Document
 
   def item_tag(title, barcode_num, price=nil)
     if price.nil?
-      font_size 7
+      font_size 6
       text title, align: :center
       draw_barcode barcode_num, margin: 8
       move_cursor_to 7
       text barcode_num, character_spacing: 2
     else
-      font_size 6
+      font_size 7
       text title, align: :center
       move_down 1
       stroke { horizontal_line 0, 3.cm }
