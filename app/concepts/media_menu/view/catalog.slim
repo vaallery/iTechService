@@ -18,6 +18,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.sticky-top.mb-2
         = category_filter_links
 
   ul.navbar-nav
+    li.nav-item = link_to t('.new_order'), media_menu_path, class: 'nav-link', data: {behaviour: 'clear-media_menu-order'}
     li.nav-item = link_to t('.order'), new_media_menu_order_path, class: 'nav-link',
                           data: {behaviour: 'new-media_menu-order'}
 

@@ -2,16 +2,17 @@ ru:
   media_menu:
 
     view:
-      order: 'Отправить в заказ'
-      title: 'Медиа меню'
-      search: 'Поиск'
-      sorting: 'Сортировка:'
       category: 'Китегория'
       category/all: 'Все'
       category/h: 'Хитяры'
       category/r: 'Русские'
       category/n: 'Новинки'
       category/c: 'Детские'
+      new_order: 'Новый заказ'
+      order: 'Отправить в заказ'
+      search: 'Поиск'
+      sorting: 'Сортировка:'
+      title: 'Медиа меню'
 
 
     item:
