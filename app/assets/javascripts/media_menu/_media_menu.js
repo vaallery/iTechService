@@ -29,6 +29,10 @@
     this.storage.setItem('selected_items', items);
   };
 
+  MediaMenu.remove_all_items = function() {
+    this.storage.clear();
+  };
+
   $(document).on('click', '[data-behaviour~=select-media_menu-item]', function() {
     var $item = $(this).closest('.media_menu-item');
     var id = $item.data('id');
@@ -50,6 +54,10 @@
     var new_location = window.location.href.split('?')[0];
     new_location += '?selected_items=' + MediaMenu.selected_items();
     window.location = new_location;
+  });
+
+  $(document).on('click', '[data-behaviour~=clear-media_menu-order]', function() {
+    MediaMenu.remove_all_items();
   });
 
   $(function () {
