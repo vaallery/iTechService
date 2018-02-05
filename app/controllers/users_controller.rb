@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @service_jobs = @user.service_jobs.unarchived
+    @service_jobs = @user.service_jobs.unarchived.newest
 
     respond_to do |format|
       format.html
@@ -85,7 +85,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = current_user
-    @service_jobs = @user.service_jobs.unarchived
+    @service_jobs = @user.service_jobs.unarchived.newest
 
     respond_to do |format|
       format.html { render 'show' }
