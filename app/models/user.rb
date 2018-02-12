@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
   scope :with_active_birthdays, ->{joins(:announcements).where(announcements: {kind: 'birthday', active: true})}
   scope :with_inactive_birthdays, ->{joins(:announcements).where(announcements: {kind: 'birthday', active: false})}
   scope :schedulable, ->{where(schedule: true)}
-  scope :staff, ->{where('role <> ?', 'synchronizer')}
+  scope :staff, ->{ where.not(role: 'api') }
   scope :fired, ->{where(is_fired: true)}
   scope :active, ->{where(is_fired: [false, nil])}
   scope :for_changing, -> { all }

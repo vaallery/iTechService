@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     post :destroy_duty_day, on: :collection
   end
 
+  resources :faults, only: %i[new create]
+
   resources :karmas do
     post :group, on: :collection, defaults: {format: 'js'}
     post :addtogroup, on: :collection, defaults: {format: 'js'}

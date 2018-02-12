@@ -4,13 +4,9 @@
     %h3= auto_title @form.model
 
   .modal-body
-    .control-group
-      %label.control-label= Fault.human_attribute_name(:causer)
-      .controls
-        %strong= @form.causer_name
+    = f.input :causer_id, collection: fault_causers_collection, label_method: :short_name, as: :select, label: Fault.human_attribute_name(:causer)
     = f.input :date, as: :my_date
-    -#= f.association :kind, collection: @form.kinds, as: :select
-    = f.input :kind_id, collection: @form.kinds, as: :select, label: Fault.human_attribute_name(:kind)
+    = f.input :kind_id, collection: fault_kinds_collection, as: :select, label: Fault.human_attribute_name(:kind)
     = f.input :comment, as: :text
 
   .modal-footer= submit_button f
