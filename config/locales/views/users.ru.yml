@@ -30,6 +30,7 @@ ru:
       not_found: 'Пользователь не найден.'
     account: 'Учётка'
     add_karma: 'Карма'
+    add_fault: 'Добавить минус'
     all: 'Все'
     author: 'Автор'
     comment: 'Комментарий'

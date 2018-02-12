@@ -1,0 +1,13 @@
+module FaultsHelper
+  def header_fault_button
+    link_to glyph('minus-sign'), new_fault_path, remote: true, id: 'header-fault-link'
+  end
+
+  def fault_causers_collection
+    User.active.staff.order(:name)
+  end
+
+  def fault_kinds_collection
+    FaultKind.select(:id, :name).ordered
+  end
+end
