@@ -82,6 +82,10 @@ class Item < ActiveRecord::Base
     features.imei.present?
   end
 
+  def product_group_name
+    product&.group_name
+  end
+
   def add_to_store(store, amount)
     if store.present? and store.is_a? Store
       if feature_accounting

@@ -41,6 +41,7 @@ class Product < ActiveRecord::Base
   delegate :name, to: :product_category, prefix: :category, allow_nil: true
   delegate :available_options, to: :product_group, allow_nil: true
   delegate :warranty_term, to: :product_group, prefix: :default, allow_nil: true
+  delegate :name, to: :product_group, prefix: 'group', allow_nil: true
   delegate :full_name, to: :device_type, prefix: true, allow_nil: true
   delegate :color, to: :top_salable, allow_nil: true
   delegate :cost, to: :task, prefix: true, allow_nil: true

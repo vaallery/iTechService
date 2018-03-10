@@ -130,8 +130,10 @@
 
 }
 
-#announce_link.active {
-  background-color: #f2dede;
+#announce_link, #feedback_notifications-link {
+  &.active {
+    background-color: #f2dede;
+  }
 }
 
 #coffee_order_form {
@@ -278,4 +280,8 @@ tr.fields {
       }
     }
   }
+}
+
+.bootstrap-datetimepicker-widget {
+  z-index: 1060;
 }

@@ -95,6 +95,7 @@ class ServiceJobsController < ApplicationController
     respond_to do |format|
       if @service_job.save
         create_phone_substitution if @service_job.phone_substituted?
+        Service::Feedback::Create.(service_job: @service_job)
         format.html { redirect_to @service_job, notice: t('service_jobs.created') }
         format.json { render json: @service_job, status: :created, location: @service_job }
       else

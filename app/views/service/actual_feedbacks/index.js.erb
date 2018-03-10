@@ -1,0 +1,7 @@
+var content = '<%= h(feedbacks_list) %>';
+
+if (content !== '') {
+  $link = $('#feedback_notifications-link');
+  $link.attr('data-content', content);
+  $link.addClass('active')
+}

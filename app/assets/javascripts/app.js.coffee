@@ -11,5 +11,8 @@ App.showModal = ->
 App.closeModal = ->
   $("#modal").modal('hide').html('');
 
+App.closeModalForm = ->
+  $("#modal_form").modal('hide').html('');
+
 jQuery ->
   App.init()

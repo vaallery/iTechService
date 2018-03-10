@@ -414,6 +414,9 @@ ru:
         day: 'День'
         hours: 'Часы'
 
+      service/feedback:
+        details: 'Комментарий'
+
       service/job_template:
         field_name: 'Название поля'
 
@@ -630,6 +633,7 @@ ru:
     department_id: :activerecord.models.department
     device_type: :activerecord.models.device_type
     device_type_id: :activerecord.models.device_type
+    device: 'Девайс'
     devices: 'Девайсы'
     fio: 'ФИО'
     icon: 'Значок'

@@ -1,0 +1,42 @@
+#feedback_notification-list {
+  list-style: none;
+  margin: 0 -14px;
+
+  .feedback_notification-item {
+    line-height: 20px;
+
+    a {
+      line-height: 20px;
+      display: block;
+      padding: 3px 20px;
+      clear: both;
+      font-weight: normal;
+      color: #333333;
+      //white-space: nowrap;
+      text-decoration: none;
+      text-shadow: none;
+
+      &:hover {
+        color: #ffffff;
+        background-color: #0081c2;
+        background-image: -moz-linear-gradient(top, #0088cc, #0077b3);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0077b3));
+        background-image: -webkit-linear-gradient(top, #0088cc, #0077b3);
+        background-image: -o-linear-gradient(top, #0088cc, #0077b3);
+        background-image: linear-gradient(to bottom, #0088cc, #0077b3);
+        background-repeat: repeat-x;
+      }
+    }
+  }
+}
+
+.feedback-form {
+  .previous-feedbacks {
+    max-height: 80px;
+    overflow-y: scroll;
+  }
+
+  .help-block {
+    font-size: 14px;
+  }
+}
