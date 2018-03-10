@@ -16,6 +16,7 @@
 
   %span.pull-right.bar-buttons
     = header_link_to_scan_barcode
+    = header_link_to_feedbacks
     = header_link_to_salaries if can? :manage, Salary
     = header_fault_button if can? :create, Fault
     -#-#= header_link_for_device_returning

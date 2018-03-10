@@ -1,0 +1,5 @@
+- if feedbacks.any?
+  ul#feedback_notification-list
+    - feedbacks.each do |feedback|
+      li.feedback_notification-item id="feedback_notification-item-#{feedback.id}"
+        = link_to feedback.presentation, edit_service_feedback_path(feedback), remote: true

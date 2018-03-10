@@ -87,6 +87,14 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace 'service' do
+    get 'actual_feedbacks', to: 'actual_feedbacks#index', format: 'js'
+
+    resources 'feedbacks' do
+      put 'postpone', on: :member
+    end
+  end
+
   namespace :substitute_phones do
     get :stock, to: 'stock#index', format: :js
   end

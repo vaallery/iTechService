@@ -6,4 +6,5 @@
  *= require bootstrap-datetimepicker.min
  *= require customicons
  *= require_directory .
+ *= require_directory ./service
  */

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180105123658) do
+ActiveRecord::Schema.define(version: 20180129132552) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -941,6 +941,17 @@ ActiveRecord::Schema.define(version: 20180105123658) do
   add_index "schedule_days", ["day"], name: "index_schedule_days_on_day", using: :btree
   add_index "schedule_days", ["user_id"], name: "index_schedule_days_on_user_id", using: :btree
 
+  create_table "service_feedbacks", force: :cascade do |t|
+    t.integer  "service_job_id",             null: false
+    t.datetime "scheduled_on"
+    t.integer  "postpone_count", default: 0, null: false
+    t.text     "details"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "service_feedbacks", ["service_job_id"], name: "index_service_feedbacks_on_service_job_id", using: :btree
+
   create_table "service_job_subscriptions", id: false, force: :cascade do |t|
     t.integer "service_job_id", null: false
     t.integer "subscriber_id",  null: false
@@ -1323,6 +1334,7 @@ ActiveRecord::Schema.define(version: 20180105123658) do
   add_foreign_key "product_groups_option_values", "product_groups"
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "products"
+  add_foreign_key "service_feedbacks", "service_jobs"
   add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"
   add_foreign_key "substitute_phones", "service_jobs"

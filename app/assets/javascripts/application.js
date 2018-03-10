@@ -55,3 +55,4 @@
 //= require top_salables
 //= require users
 //= require receipts
+//= require service

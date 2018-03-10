@@ -34,6 +34,8 @@ class ServiceJob < ActiveRecord::Base
   has_many :repair_parts, through: :repair_tasks
   has_many :history_records, as: :object, dependent: :destroy
   has_many :device_notes, dependent: :destroy
+  has_many :feedbacks, class_name: Service::Feedback.name, dependent: :destroy
+  has_many :inactive_feedbacks, -> { inactive }, class_name: Service::Feedback.name, dependent: :destroy
   has_one :substitute_phone, dependent: :nullify
 
   has_and_belongs_to_many :subscribers,
@@ -43,7 +45,7 @@ class ServiceJob < ActiveRecord::Base
                           dependent: :destroy
 
   accepts_nested_attributes_for :device_tasks, allow_destroy: true
-  delegate :name, :short_name, :full_name, to: :client, prefix: true, allow_nil: true
+  delegate :name, :short_name, :full_name, :surname, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :department, prefix: true
   delegate :name, to: :location, prefix: true, allow_nil: true
   delegate :pending_substitution, to: :substitute_phone, allow_nil: true
@@ -102,6 +104,10 @@ class ServiceJob < ActiveRecord::Base
 
   def type_name
     item.present? ? item.name : (device_type.try(:full_name) || '-')
+  end
+
+  def device_short_name
+    item&.product_group_name
   end
 
   def imei
