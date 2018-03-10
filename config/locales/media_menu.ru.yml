@@ -2,7 +2,7 @@ ru:
   media_menu:
 
     view:
-      category: 'Китегория'
+      category: 'Категория'
       category/all: 'Все'
       category/h: 'Хитяры'
       category/r: 'Русские'
