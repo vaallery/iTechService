@@ -13,4 +13,8 @@ ServiceJob.pending.located_at(location).newest.take(10).each do |job|
   puts "Created feedback #{feedback}"
 end
 
+job = ServiceJob.pending.where.not(location: location).newest.first
+feedback = Service::Feedback.create! service_job: job, scheduled_on: Time.current
+puts "Created feedback #{feedback}"
+
 puts "Created #{Service::Feedback.count} feedbacks"
