@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   ROLES = %w[admin software media technician marketing developer supervisor manager superadmin driver api universal engraver]
   ROLES_FOR_ADMIN = %w[admin software media technician marketing supervisor manager driver universal engraver]
   HELPABLE = %w[software media technician]
-  ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet manage_schedule edit_clients]
+  ABILITIES = %w[manage_wiki manage_salary print_receipt manage_timesheet manage_schedule edit_clients view_feedback_notifications]
 
   attr_accessor :login
   attr_accessor :auth_token
@@ -291,6 +291,10 @@ class User < ActiveRecord::Base
 
   def able_to?(ability)
     abilities.include? ability.to_s
+  end
+
+  def able_to_view_feedbacks?
+    able_to? 'view_feedback_notifications'
   end
 
   def rating
