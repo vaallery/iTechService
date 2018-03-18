@@ -7,10 +7,13 @@ module Service
     def model!(options, current_user:, **)
       feedbacks = Feedback.actual
 
-      unless current_user.able_to_view_feedbacks?
+      if current_user.able_to_view_feedbacks?
+        excluded_locations = [current_user.done_location, current_user.archive_location]
+        service_job_ids = ServiceJob.select(:id).where.not(location: excluded_locations).pluck(:id)
+      else
         service_job_ids = ServiceJob.select(:id).where(location_id: current_user.location_id).pluck(:id)
-        feedbacks = feedbacks.where(service_job_id: service_job_ids)
       end
+      feedbacks = feedbacks.where(service_job_id: service_job_ids)
 
       options['model'] = feedbacks
     end
