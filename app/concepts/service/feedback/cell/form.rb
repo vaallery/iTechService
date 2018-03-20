@@ -30,6 +30,10 @@ module Service
         end
       end
 
+      def scheduled_on
+        I18n.l model.scheduled_on, format: :long
+      end
+
       def schedule_start
         time = 1.day.from_now.change(hour: 10)
         time.strftime '%d.%m.%Y %H:%M'
@@ -56,14 +60,18 @@ module Service
         service_job.client_presentation
       end
 
+      def feedback_logs
+        return if model.log.blank? or previous_feedbacks.blank?
+        logs = [content_tag(:small, model.log), previous_feedbacks].compact.join('<br/>')
+        content_tag(:div, logs, class: 'feedback-logs well well-small')
+      end
+
       def previous_feedbacks
         return if service_job.inactive_feedbacks.empty?
 
-        content_tag(:div, class: 'previous-feedbacks well well-small') do
-          service_job.inactive_feedbacks.map do |feedback|
-            content_tag :p, feedback.details
-          end.join
-        end
+        service_job.inactive_feedbacks.map do |feedback|
+          content_tag(:small, feedback.log) + content_tag(:p, feedback.details)
+        end.join
       end
     end
   end

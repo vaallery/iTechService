@@ -416,6 +416,7 @@ ru:
 
       service/feedback:
         details: 'Комментарий'
+        scheduled_on: 'Запланировано на'
 
       service/job_template:
         field_name: 'Название поля'

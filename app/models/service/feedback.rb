@@ -28,5 +28,9 @@ module Service
     def device_presentation
       service_job&.presentation
     end
+
+    def add_log(new_log)
+      self.log = [log.presence, new_log].compact.join('<br/>')
+    end
   end
 end

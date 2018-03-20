@@ -5,3 +5,6 @@ ru:
         postpone: 'Не дозвонился'
         schedule_on: 'Следующее напоминание'
         schedule_on_help: 'Не позднее %{max_value}'
+
+      scheduled_on: 'Перенесено на %{time}'
+      postponed: 'Не дозвонились'
