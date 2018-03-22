@@ -17,6 +17,8 @@ module Service
         model.postpone_count = 0
       end
 
+      log = "[#{I18n.l(Time.current, format: :long)}] #{I18n.t('service.feedback.postponed')}"
+      model.add_log log
       model.save
     end
   end

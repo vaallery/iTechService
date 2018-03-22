@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180129132552) do
+ActiveRecord::Schema.define(version: 20180320094353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -948,6 +948,7 @@ ActiveRecord::Schema.define(version: 20180129132552) do
     t.text     "details"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.text     "log"
   end
 
   add_index "service_feedbacks", ["service_job_id"], name: "index_service_feedbacks_on_service_job_id", using: :btree

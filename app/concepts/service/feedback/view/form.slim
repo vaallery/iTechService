@@ -8,8 +8,9 @@
     table.attributes_table
       = attribute_presentation :device
       = attribute_presentation :client
+      = attribute_presentation :scheduled_on
 
-    = previous_feedbacks
+    = feedback_logs
 
     = f.input :details, input_html: {rows: 3, class: 'input-xlarge'}
 
