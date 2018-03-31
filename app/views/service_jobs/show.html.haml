@@ -131,7 +131,9 @@
           %td.align_right= @service_job.tasks_cost
           %td{colspan: 4}
 
-  #device_notes_container.span6= render 'device_notes'
+  .span6
+    #device_notes_container= render 'device_notes'
+    = cell(Service::Job::Cell::Feedbacks, @service_job)
 
 .form-actions
   = link_to_edit @service_job

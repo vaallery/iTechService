@@ -3,32 +3,56 @@ Service::Feedback.destroy_all
 location = User.find_by(username: 'test')&.location
 service_jobs = ServiceJob.located_at(location).newest
 
-service_jobs.take(10).each do |job|
-  # Service::Feedback::MAX_DELAY_HOURS.each do |delay|
-  #   created_at = delay.hours.ago
-  #   feedback = Service::Feedback.create! service_job: job, details: Faker::Lorem.paragraph, created_at: created_at
-  #   puts "Created feedback #{feedback}"
-  # end
+class << self
+  def create_feedback(job, time, scheduled: false, log: nil)
+    feedback = Service::Feedback.new service_job: job, created_at: time, log: log
+    if scheduled
+      feedback.scheduled_on = Time.current
+    else
+      feedback.details = Faker::Lorem.paragraph
+    end
+    feedback.save!
+    puts "Created feedback #{feedback}"
+  end
 
-  feedback = Service::Feedback.create! service_job: job, scheduled_on: Time.current
-  puts "Created feedback #{feedback}"
+  def schedule_log(time, scheduled_on = Time.current)
+    "[#{I18n.l(time, format: :long)}] Перенесено на #{I18n.l(scheduled_on, format: :long)}"
+  end
+
+  def postpone_log(time)
+    "[#{I18n.l(time, format: :long)}] #{I18n.t('service.feedback.postponed')}"
+  end
 end
 
-job = service_jobs.last
-log = "[#{I18n.l(job.created_at, format: :long)}] Перенесено на #{I18n.l(Time.current, format: :long)}"
-feedback = Service::Feedback.create! service_job: job, scheduled_on: Time.current, log: log
-puts "Created feedback #{feedback}"
+service_jobs.take(10).each do |job|
+  feedback_time = 15.days.ago
+  log = [
+    "[#{I18n.l(job.created_at, format: :long)}] Запланировано на #{I18n.l(feedback_time, format: :long)}",
+    postpone_log(feedback_time),
+    postpone_log(1.hours.since(feedback_time)),
+    schedule_log(2.hours.since(feedback_time), 12.days.ago)
+  ].join('<br/>')
+  create_feedback job, feedback_time, log: log
+
+  feedback_time = 12.days.ago
+  log = [
+    postpone_log(feedback_time),
+    schedule_log(1.hours.since(feedback_time), 7.days.ago)
+  ].join('<br/>')
+  create_feedback job, feedback_time, log: log
+
+  feedback_time = 7.days.ago
+  log = schedule_log(feedback_time)
+  create_feedback job, feedback_time, log: log, scheduled: true
+end
 
 job = ServiceJob.where.not(location: location).newest.first
-feedback = Service::Feedback.create! service_job: job, scheduled_on: Time.current
-puts "Created feedback #{feedback}"
+create_feedback job, scheduled: true
 
 job = ServiceJob.where(location: Location.archive).newest.first
-feedback = Service::Feedback.create! service_job: job, scheduled_on: Time.current
-puts "Created feedback #{feedback}"
+create_feedback job, scheduled: true
 
 job = ServiceJob.where(location: Location.done).newest.first
-feedback = Service::Feedback.create! service_job: job, scheduled_on: Time.current
-puts "Created feedback #{feedback}"
+create_feedback job, scheduled: true
 
 puts "Created #{Service::Feedback.count} feedbacks"
