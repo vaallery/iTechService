@@ -1,6 +1,6 @@
 class QuickOrder < ActiveRecord::Base
 
-  DEVICE_KINDS = %w[iPhone iPad iPod]
+  DEVICE_KINDS = %w[iPhone iPad iPod Storage]
 
   scope :id_asc, ->{order('quick_orders.id asc')}
   scope :created_desc, ->{order('quick_orders.created_at desc')}
