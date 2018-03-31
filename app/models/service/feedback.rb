@@ -6,6 +6,7 @@ module Service
 
     scope :inactive, -> { where scheduled_on: nil }
     scope :actual, -> { where('scheduled_on <= ?', Time.current) }
+    scope :old_first, -> { order 'created_at ASC' }
 
     belongs_to :service_job
     validates_presence_of :service_job_id
