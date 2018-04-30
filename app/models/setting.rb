@@ -91,7 +91,7 @@ class Setting < ActiveRecord::Base
   private
 
   def json_value_correct
-    return unless value_type == 'json'
+    return unless value_type == 'json' && !value.nil?
 
     begin
       JSON.parse value
