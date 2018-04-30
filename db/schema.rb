@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180320094353) do
+ActiveRecord::Schema.define(version: 20180429042800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1176,6 +1176,7 @@ ActiveRecord::Schema.define(version: 20180320094353) do
     t.integer  "location_id"
     t.integer  "product_id"
     t.boolean  "hidden",                  default: false
+    t.string   "code"
   end
 
   add_index "tasks", ["location_id"], name: "index_tasks_on_location_id", using: :btree

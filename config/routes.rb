@@ -67,7 +67,12 @@ Rails.application.routes.draw do
     post :reserve, on: :member
   end
 
-  resources :tasks
+  resources :tasks do
+    scope module: 'tasks' do
+      resource :device_validation, only: :show
+    end
+  end
+
   resources :locations, except: :show
 
   resources :service_jobs do
