@@ -42,5 +42,4 @@ class Task < ActiveRecord::Base
   def role_name
     role.blank? ? '-' : I18n.t("users.roles.#{role}")
   end
-
 end
