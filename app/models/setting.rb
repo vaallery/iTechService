@@ -15,10 +15,11 @@ class Setting < ActiveRecord::Base
       organization: 'string',
       schedule: 'string',
       site: 'string',
-      ticket_prefix: 'string'
+      ticket_prefix: 'string',
+      service_tasks_models: 'json'
   }
 
-  VALUE_TYPES = %w[boolean integer string text]
+  VALUE_TYPES = %w[boolean integer string text json]
 
   default_scope {order('settings.id asc')}
   scope :for_department, ->(department) { where(department_id: department.is_a?(Department) ? department.id : department) }
@@ -29,6 +30,7 @@ class Setting < ActiveRecord::Base
   attr_accessible :name, :presentation, :value, :value_type, :department_id
   validates :name, :value_type, presence: true
   validates_uniqueness_of :name, scope: :department_id
+  validate :json_value_correct
 
   class << self
     def get_value(name, department=nil)
@@ -66,6 +68,36 @@ class Setting < ActiveRecord::Base
 
     def meda_menu_database
       Setting.for_department(Department.current).find_by(name: 'meda_menu_database')&.value
+    end
+
+    def service_tasks_models
+      Setting.find_by(name: 'service_tasks_models')&.value
+      value = Setting.find_by(name: 'service_tasks_models')&.value
+      return unless value
+      JSON.parse value
+    end
+
+    private
+
+    def parse_value(value)
+      begin
+        JSON.parse value
+      rescue => error
+        return error
+      end
+    end
+  end
+
+  private
+
+  def json_value_correct
+    return unless value_type == 'json'
+
+    begin
+      JSON.parse value
+      return true
+    rescue => error
+      errors.add :value, error.message
     end
   end
 end

@@ -10,9 +10,9 @@ class Task < ActiveRecord::Base
   belongs_to :location
   has_many :device_tasks, dependent: :restrict_with_error
   has_many :service_jobs, through: :device_tasks
-  delegate :item, :is_repair?, to: :product, allow_nil: true
+  delegate :item, :is_repair?, :is_service?, to: :product, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
-  attr_accessible :cost, :duration, :name, :priority, :role, :location_id, :product_id, :hidden
+  attr_accessible :cost, :duration, :name, :code, :priority, :role, :location_id, :product_id, :hidden
   after_initialize do
     if persisted? and product.nil?
       update_attribute :product_id, Product.services.where(code: "task#{id}").first_or_create(name: name, product_group_id: ProductGroup.services.first_or_create(name: 'Services', product_category_id: ProductCategory.where(kind: 'service').first_or_create(name: 'Service', kind: 'service').id).id).id

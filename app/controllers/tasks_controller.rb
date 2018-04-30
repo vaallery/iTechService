@@ -2,7 +2,7 @@ class TasksController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @tasks = Task.all.page params[:page]
+    @tasks = Task.all.order(:id).page params[:page]
 
     respond_to do |format|
       format.html

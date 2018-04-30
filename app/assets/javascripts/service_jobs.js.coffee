@@ -15,13 +15,20 @@ jQuery ->
       $row = $(this).parents('.device_task')
       task_cost = $row.find('.device_task_cost')
       is_change_location = $row.is(':first-child')
+      item_id = $('#service_job_item_id').val()
+
       $.getJSON "/tasks/#{task_id}.json", (data)->
         task_cost.val data.cost
+
         if is_change_location
           $('#service_job_location_id').val(data.location_id)
           $('#location_value').text(data.location_name)
+
         if data['is_repair?']
           document.getElementById('service_job_notify_client').checked = true
+
+      $.getJSON "/tasks/#{task_id}/device_validation", {item_id: item_id}, (data)->
+        alert(data['message']) if data['message']
 
 #    $(document).on 'change', '.device_task:first-child .device_task_task', ->
 #      task_id = $(this).val()

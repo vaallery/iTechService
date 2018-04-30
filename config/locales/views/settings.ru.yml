@@ -19,5 +19,9 @@ ru:
     meda_menu_database: 'База Медиа меню'
     organization: 'Организация'
     schedule: 'График работы'
+    service_tasks_models: 'Модели девайсов для сервисных задач'
     site: 'Сайт'
     ticket_prefix: 'Префикс талона'
+
+    errors:
+      not_found: 'Параметр "%{name}" не найден!'
