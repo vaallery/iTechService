@@ -60,6 +60,9 @@ ru:
       directory: 'Каталог'
       employees: 'Сотрудники'
       favorite: 'Избранное'
+      free_jobs: :service.free_job.view.index
+      free_service: 'Бесплатный сервис'
+      free_tasks: :service.free_task.view.index
       misc: 'Прочее'
       quick_order: 'Быстрый заказ'
       rating: 'Рейтинг'

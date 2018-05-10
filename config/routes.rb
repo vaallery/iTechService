@@ -100,6 +100,11 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :service do
+    resources :free_tasks, only: %i[index new create edit update destroy]
+    resources :free_jobs
+  end
+
   namespace :substitute_phones do
     get :stock, to: 'stock#index', format: :js
   end

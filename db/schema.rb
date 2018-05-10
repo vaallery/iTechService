@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180429042800) do
+ActiveRecord::Schema.define(version: 20180506024319) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -953,6 +953,27 @@ ActiveRecord::Schema.define(version: 20180429042800) do
 
   add_index "service_feedbacks", ["service_job_id"], name: "index_service_feedbacks_on_service_job_id", using: :btree
 
+  create_table "service_free_jobs", force: :cascade do |t|
+    t.integer  "performer_id", null: false
+    t.integer  "client_id",    null: false
+    t.integer  "task_id",      null: false
+    t.text     "comment"
+    t.datetime "performed_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "service_free_jobs", ["client_id"], name: "index_service_free_jobs_on_client_id", using: :btree
+  add_index "service_free_jobs", ["performer_id"], name: "index_service_free_jobs_on_performer_id", using: :btree
+  add_index "service_free_jobs", ["task_id"], name: "index_service_free_jobs_on_task_id", using: :btree
+
+  create_table "service_free_tasks", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.string   "icon"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "service_job_subscriptions", id: false, force: :cascade do |t|
     t.integer "service_job_id", null: false
     t.integer "subscriber_id",  null: false
@@ -1337,6 +1358,9 @@ ActiveRecord::Schema.define(version: 20180429042800) do
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "products"
   add_foreign_key "service_feedbacks", "service_jobs"
+  add_foreign_key "service_free_jobs", "clients"
+  add_foreign_key "service_free_jobs", "service_free_tasks", column: "task_id"
+  add_foreign_key "service_free_jobs", "users", column: "performer_id"
   add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"
   add_foreign_key "substitute_phones", "service_jobs"
