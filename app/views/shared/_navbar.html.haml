@@ -1,18 +1,15 @@
 = nav_bar static: :top, brand: image_tag('logo.png'), responsive: true, fluid: true do
   = menu_group do
     = menu_item t('.service_job'), new_service_job_path if can? :create, ServiceJob
+    = menu_item t('.free_service'), new_service_free_job_path if can? :create, Service::FreeJob
     = menu_item t('.quick_order'), new_quick_order_path if can? :create, QuickOrder
-    = menu_item t('.sale'), new_sale_path if can? :create, Sale
-
-    = drop_down t('.cash_drawer') do
-      = menu_item t('cash_operations.cash_in'), new_cash_operation_path(cash_operation: {is_out: false}), remote: true if can? :create, CashOperation
-      = menu_item t('cash_operations.cash_out'), new_cash_operation_path(cash_operation: {is_out: true}), remote: true if can? :create, CashOperation
 
     = drop_down t('.service') do
       = menu_item t('service_jobs.link', default: 'Service jobs'), service_jobs_path if can? :read, ServiceJob
       = menu_item t('repair_services.index.title'), repair_services_path if can? :read, RepairService
       = menu_item t('movement_acts.defect_link'), make_defect_sp_movement_acts_path if can? :make_defect_sp, MovementAct
       = drop_down_divider
+      = menu_item t('.free_jobs'), service_free_jobs_path if can? :manage, Service::FreeJob
       = menu_item t('quick_orders.link'), quick_orders_path if can? :read, QuickOrder
       = menu_item t('media_orders.index.title'), media_orders_path
       = menu_item t('media_menu.view.title'), media_menu_path
@@ -42,6 +39,10 @@
       = menu_item t('top_salables.index.title'), top_salables_path if can? :manage, TopSalable
       = menu_item t('product_imports.form.title'), new_product_import_path if can? :modify, Product
       = menu_item t('imported_sales.index.title'), imported_sales_path if can? :modify, ImportedSale
+      = drop_down_divider
+      = menu_item t('.sale'), new_sale_path if can? :create, Sale
+      = menu_item t('cash_operations.cash_in'), new_cash_operation_path(cash_operation: {is_out: false}), remote: true if can? :create, CashOperation
+      = menu_item t('cash_operations.cash_out'), new_cash_operation_path(cash_operation: {is_out: true}), remote: true if can? :create, CashOperation
 
     = drop_down t('.staff') do
       = menu_item t('infos.link', default: 'Infos'), infos_path if can? :read, Info
@@ -68,6 +69,7 @@
       = drop_down_divider
       = menu_item t('tasks.link'), tasks_path if can? :manage, Task
       = menu_item t('quick_tasks.link'), quick_tasks_path if can? :manage, QuickTask
+      = menu_item t('.free_tasks'), service_free_tasks_path if can? :manage, Service::FreeTask
       = menu_item t('carriers.index.title'), carriers_path if can? :manage, Carrier
       = menu_item t('case_colors.link'), case_colors_path if can? :manage, CaseColor
       = menu_item t('client_categories.index.title'), client_categories_path if can? :manage, ClientCategory

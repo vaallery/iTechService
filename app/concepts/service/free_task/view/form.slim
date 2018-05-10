@@ -1,0 +1,9 @@
+= header_tag
+
+= form do |f|
+  = f.input :name, required: true
+  - if model.icon.present?
+    = image_tag(model.icon_url)
+  = f.input :icon
+
+  .form-actions = submit_button f

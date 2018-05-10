@@ -51,6 +51,7 @@ class Ability
         can [:post, :edit, :attach_gift_certificate, :return_check], Sale, status: 0
         can :create, CashOperation
         can :create, QuickOrder
+        can :create, Service::FreeJob
         can :create, Payment
       end
       if user.media?
