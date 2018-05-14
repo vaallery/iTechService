@@ -44,7 +44,20 @@ App.init_dropdown_input = ->
     $input.find('.input-value').val($this.data('value'))
     event.preventDefault()
 
+App.init_client_input = ->
+  $(document).on 'click', '#client_input #client_transfer_link', (event)->
+    $link = $(this)
+    client_search = $link.siblings('#client_search').val()
+    client_id = $link.siblings('.client_id').val()
+    base_href = $link.attr('href').split('?')[0]
+    param = if client_id.length > 0 then "service_job[client_id]=#{client_id}" else "client=#{client_search}"
+    $link.attr('href', "#{base_href}?#{param}")
+
+  $(document).on 'change', '#client_input #client_search', (event)->
+    $(this).siblings('.client_id').val('')
+
 jQuery ->
   App.initDeviceInput()
   App.bindTextAreasEvents()
   App.init_dropdown_input()
+  App.init_client_input()
