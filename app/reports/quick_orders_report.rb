@@ -5,7 +5,7 @@ class QuickOrdersReport < BaseReport
     if (orders = QuickOrder.includes(:user).done.where(created_at: period)).any?
       orders.group(:user_id).count('quick_orders.id').each_pair do |user_id, qty|
         user = User.find(user_id)
-        result[:users] << {name: user.name, qty: qty}
+        result[:users] << {name: user.short_name, qty: qty}
       end
       result[:total_qty] = orders.count
     else
