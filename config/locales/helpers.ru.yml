@@ -35,6 +35,7 @@ ru:
       scan: "Сканировать"
       show: 'Просмотр'
       ticket: "Талон"
+      to_reception: '&rArr; в приёмку'
     placeholders:
       client_input: 'Имя / телефон / карта'
       item: 'Серийный номер / IMEI'
