@@ -1,7 +1,7 @@
 = header_tag
 
 = form do |f|
-  = f.input :client, as: :client, required: true, transfer: true
+  = f.input :client, as: :client, required: true, transfer: true, no_devices: true
 
   .control-group.radio_buttons.required.service_free_job_task
     - tasks.each do |task|
