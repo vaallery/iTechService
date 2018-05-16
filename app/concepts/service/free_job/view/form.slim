@@ -1,14 +1,20 @@
 = header_tag
 
-= form do |f|
-  = f.input :client, as: :client, required: true, transfer: true, no_devices: true
+.row-flow
+  .span6
 
-  .control-group.radio_buttons.required.service_free_job_task
-    - tasks.each do |task|
-      label for="service_free_job_task_id_#{task.id}"
-        = f.radio_button :task_id, task.id
-        = image_tag task.icon, width: 150, height: 150, alt: task.name, title: task.name
+    = form do |f|
+      = f.input :client, as: :client, required: true, transfer: true, no_devices: true
 
-  = f.input :comment, input_html: {class: 'input-xlarge'}
+      .control-group.radio_buttons.required.service_free_job_task
+        - tasks.each do |task|
+          label for="service_free_job_task_id_#{task.id}"
+            = f.radio_button :task_id, task.id
+            = image_tag task.icon, width: 150, height: 150, alt: task.name, title: task.name
 
-  .form-actions = submit_button f
+      = f.input :comment, input_html: {class: 'input-xlarge'}
+
+      .form-actions = submit_button f
+
+  .span6
+    = secondary_form_container
