@@ -72,7 +72,6 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'therubyracer', :platforms => :ruby
 gem 'sass-rails'
 gem 'less-rails', '~> 2.7.1'
-gem 'sass-rails'
 gem 'rails-ujs'
 gem 'uglifier', '>= 1.3.0'
 gem 'bootstrap-colorpicker-rails', '~> 0.3.1', :require => 'bootstrap-colorpicker-rails'
