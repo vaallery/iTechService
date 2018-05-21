@@ -17,7 +17,9 @@ class ClientsController < ApplicationController
   end
 
   def show
-    @client = Client.includes(:sale_items, :orders, service_jobs: :device_tasks).find(params[:id])
+    @client = Client.includes(:sale_items, :orders, :free_jobs, :quick_orders, service_jobs: :device_tasks)
+                .find(params[:id])
+
     respond_to do |format|
       format.html
       format.json { render json: @client }

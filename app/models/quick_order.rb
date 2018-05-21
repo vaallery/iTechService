@@ -10,11 +10,12 @@ class QuickOrder < ActiveRecord::Base
 
   belongs_to :department
   belongs_to :user
+  belongs_to :client
   has_and_belongs_to_many :quick_tasks, join_table: 'quick_orders_quick_tasks'
   has_many :history_records, as: :object, dependent: :destroy
   delegate :short_name, to: :user, prefix: true, allow_nil: true
   delegate :name, to: :department, prefix: true, allow_nil: true
-  attr_accessible :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code, :department_id, :device_kind
+  attr_accessible :client_id, :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code, :department_id, :device_kind
   before_create :set_number
   validates_presence_of :security_code, :device_kind
 
@@ -36,12 +37,11 @@ class QuickOrder < ActiveRecord::Base
     end
 
     if (client_name = params[:client_name]).present?
-      quick_orders = quick_orders.where 'LOWER(quick_orders.client_name) LIKE ?',
-                                        "%#{client_name.mb_chars.downcase.to_s}%"
+      quick_orders = quick_orders.includes(:client).where('LOWER(quick_orders.client_name) LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q', q: "%#{client_name.mb_chars.downcase.to_s}%").references(:clients)
     end
 
     if (contact_phone = params[:contact_phone]).present?
-      quick_orders = quick_orders.where 'quick_orders.contact_phone LIKE ?', "%#{contact_phone}%"
+      quick_orders = quick_orders.includes(:client).where('quick_orders.contact_phone LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q', q: "%#{contact_phone}%").references(:clients)
     end
 
     if (task = params[:task]).present?
@@ -58,6 +58,14 @@ class QuickOrder < ActiveRecord::Base
 
   def number_s
     sprintf('%04d', number)
+  end
+
+  def client_presentation
+    if client_id.nil?
+      [client_name, contact_phone].compact.join(' / ')
+    else
+      client.presentation
+    end
   end
 
   private

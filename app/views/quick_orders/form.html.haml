@@ -2,13 +2,20 @@
   %h1
     = link_back_to_index
     = @quick_order.new_record? ? t('quick_orders.new.title') : t('quick_orders.title', num: @quick_order.number_s)
-= simple_form_for @quick_order, html: { class: 'form-horizontal' } do |f|
-  = f.association :department, as: :radio_buttons, collection: departments_for_select, item_wrapper_class: 'inline'
-  = f.input :device_kind, as: :radio_buttons, collection: QuickOrder::DEVICE_KINDS
-  = f.input :client_name
-  = f.input :contact_phone
-  = f.association :quick_tasks, as: :check_boxes
-  = f.input :comment, input_html: {rows: 5}
-  = f.input :security_code
-  .form-actions
-    = submit_button f
+
+.row-flow
+  .span6
+    = simple_form_for @quick_order, html: { class: 'form-horizontal' } do |f|
+      = f.association :department, as: :radio_buttons, collection: departments_for_select, item_wrapper_class: 'inline'
+      = f.input :device_kind, as: :radio_buttons, collection: QuickOrder::DEVICE_KINDS
+      = f.input :client, as: :client, required: true, no_devices: true
+      = f.input :client_name unless @quick_order.client_name.nil?
+      = f.input :contact_phone unless @quick_order.contact_phone.nil?
+      = f.association :quick_tasks, as: :check_boxes
+      = f.input :comment, input_html: {rows: 5}
+      = f.input :security_code
+      .form-actions
+        = submit_button f
+
+  .span6
+    = secondary_form_container

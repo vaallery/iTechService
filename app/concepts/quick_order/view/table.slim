@@ -1,0 +1,14 @@
+table.table.table-bordered.table-hover.table-condensed
+  caption
+    h4 = caption
+  thead
+    tr
+      th = t_attribute :created_at
+      th = t_attribute :number
+      th = t_attribute :comment
+  tbody
+    - quick_orders.each do |quick_order|
+      tr
+        td = l quick_order.created_at, format: :long_d
+        td = link_to quick_order.number, quick_order
+        td = quick_order.comment

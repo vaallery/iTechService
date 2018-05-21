@@ -2,8 +2,7 @@
   %thead
     %tr
       %th= QuickOrder.human_attribute_name(:number)
-      %th= QuickOrder.human_attribute_name(:client_name)
-      %th= QuickOrder.human_attribute_name(:contact_phone)
+      %th= QuickOrder.human_attribute_name(:client)
       %th= QuickOrder.human_attribute_name(:comment)
       %th= QuickOrder.human_attribute_name(:created_at)
       %th
@@ -11,8 +10,7 @@
     - @quick_orders.each do |quick_order|
       %tr{class: quick_order.is_done ? 'success' : ''}[quick_order]
         %td= link_to quick_order.number_s, quick_order_path(quick_order)
-        %td= quick_order.client_name
-        %td= quick_order.contact_phone
+        %td= link_to_if quick_order.client.present?, quick_order.client_presentation, quick_order.client
         %td= quick_order.comment
         %td= human_datetime quick_order.created_at.localtime
         %td.btn-group
