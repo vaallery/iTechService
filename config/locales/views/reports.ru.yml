@@ -32,6 +32,8 @@ ru:
       archived: "Переведено в архив"
     devices_movements:
       title: 'Перемещения девайсов'
+    free_jobs:
+      title: 'Бесплатный сервис'
     salary:
       title: 'Отчет по зарплате'
     tasks_duration:
