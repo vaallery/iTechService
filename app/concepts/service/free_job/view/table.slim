@@ -1,0 +1,14 @@
+table.table.table-bordered.table-hover.table-condensed
+  caption
+    h4 = caption
+  thead
+    tr
+      th = t_attribute :performed_at
+      th = t_attribute :task
+      th = t_attribute :performer
+  tbody
+    - free_jobs.each do |free_job|
+      tr
+        td = l free_job.performed_at, format: :long_d
+        td = free_job.task
+        td = free_job.performer_short_name

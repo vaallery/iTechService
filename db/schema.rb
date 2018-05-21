@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180506024319) do
+ActiveRecord::Schema.define(version: 20180520125438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -793,8 +793,10 @@ ActiveRecord::Schema.define(version: 20180506024319) do
     t.string   "security_code", limit: 255
     t.integer  "department_id"
     t.string   "device_kind",   limit: 255
+    t.integer  "client_id"
   end
 
+  add_index "quick_orders", ["client_id"], name: "index_quick_orders_on_client_id", using: :btree
   add_index "quick_orders", ["client_name"], name: "index_quick_orders_on_client_name", using: :btree
   add_index "quick_orders", ["contact_phone"], name: "index_quick_orders_on_contact_phone", using: :btree
   add_index "quick_orders", ["department_id"], name: "index_quick_orders_on_department_id", using: :btree
@@ -1357,6 +1359,7 @@ ActiveRecord::Schema.define(version: 20180506024319) do
   add_foreign_key "product_groups_option_values", "product_groups"
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "products"
+  add_foreign_key "quick_orders", "clients"
   add_foreign_key "service_feedbacks", "service_jobs"
   add_foreign_key "service_free_jobs", "clients"
   add_foreign_key "service_free_jobs", "service_free_tasks", column: "task_id"

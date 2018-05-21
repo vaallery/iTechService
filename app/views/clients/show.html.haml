@@ -59,6 +59,10 @@
                 %li= device_task.name
           %td= service_job.location_name || '-'
 
+#client_free_jobs= cell(Service::FreeJob::Cell::Table, @client.free_jobs).()
+
+#client_quick_orders= cell(QuickOrder::Cell::Table, @client.quick_orders).()
+
 #client_purchases
   %table.table.table-bordered.table-condensed.table-hover
     %caption

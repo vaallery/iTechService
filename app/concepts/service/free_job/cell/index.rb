@@ -1,8 +1,6 @@
 module Service
   module FreeJob::Cell
     class Index < BaseCell
-      # self.view_paths << ['app/views']
-
       private
 
       include IndexCell
