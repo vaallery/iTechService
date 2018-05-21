@@ -1,7 +1,7 @@
 class Report
   include ActiveModel::Model
 
-  NAMES = %w[device_types device_groups users devices_archived done_tasks tasks_undone clients tasks_duration device_orders done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin quick_orders]
+  NAMES = %w[device_types device_groups users devices_archived done_tasks tasks_undone clients tasks_duration device_orders done_orders devices_movements payments salary supply few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs remnants sales margin quick_orders free_jobs]
 
   attr_accessor :name, :kind, :device_type, :store_id, :device_group_id
 

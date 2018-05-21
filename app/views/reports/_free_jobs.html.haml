@@ -1,0 +1,19 @@
+%table#users_report.table.table-bordered.table-hover
+  %caption= t '.title'
+  %thead
+    %tr
+      %th.center= Service::FreeJob.human_attribute_name :user
+      %th.center= t 'reports.qty'
+  %tbody
+    - report.result[:users].each do |user|
+      %tr.detailable
+        %td= user[:name]
+        %td= user[:qty]
+      - user[:free_tasks].each do |task_name, qty|
+        %tr.details
+          %td= task_name
+          %td= qty
+  %tfoot
+    %tr
+      %td= t 'reports.total'
+      %td= report.result[:total]
