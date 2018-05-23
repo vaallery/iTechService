@@ -48,8 +48,8 @@ class QuickOrderPdf < Prawn::Document
     end
     move_down 4
     text @quick_order.department_name, align: :center
-    text @quick_order.client_name
-    text @quick_order.contact_phone
+    text @quick_order.client_short_name
+    text @quick_order.client_phone
     move_down 5
     text "#{QuickOrder.human_attribute_name(:security_code)}: #{@quick_order.security_code}"
     move_down 3
