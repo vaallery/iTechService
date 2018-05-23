@@ -68,6 +68,14 @@ class QuickOrder < ActiveRecord::Base
     end
   end
 
+  def client_short_name
+    client&.short_name || client_name
+  end
+
+  def client_phone
+    client&.human_phone_number || contact_phone
+  end
+
   private
 
   def set_number
