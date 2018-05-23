@@ -11,7 +11,7 @@ class ClientInput < SimpleForm::Inputs::StringInput
       else
         template.text_field_tag(:client_search, search_value, placeholder: template.t('client_input_placeholder').html_safe, autofocus: true, autocomplete: 'off')
       end +
-      @builder.hidden_field("#{attribute_name}_id", class: 'client_id') +
+      @builder.hidden_field("#{attribute_name}_id", id: 'client_id', class: 'client_id') +
       template.link_to(template.icon_tag(:plus), template.new_client_path, id: 'new_client_link', class: 'btn', remote: true) +
       template.link_to(template.icon_tag(:edit), @builder.object.client.present? ? template.edit_client_path(@builder.object.client) : '#', id: 'edit_client_link', class: 'btn', remote: @builder.object.client.present?) +
       transfer_link(options[:transfer])
