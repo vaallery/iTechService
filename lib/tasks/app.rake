@@ -82,4 +82,23 @@ namespace :app do
       end
     end
   end
+
+  desc 'Clear retail store'
+  task clear_retails_store: :environment do
+    log = Logger.new('log/task_clear_retails_store.log')
+
+    store = Store.retail.first
+
+    store.store_items.find_each do |store_item|
+      log.info "= Removing #{store_item.name} [#{store_item.code}] {#{store_item.features_s}} =="
+
+      if store_item.feature_accounting
+        log.info "==> #{store_item.destroy}"
+      else
+        log.info "==> #{store_item.update(quantity: 0)}"
+      end
+    end
+
+    log.info "=== Finished ==="
+  end
 end
