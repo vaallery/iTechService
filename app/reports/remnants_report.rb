@@ -16,10 +16,10 @@ class RemnantsReport < BaseReport
 
   def nested_product_groups_remnants(product_groups, store_items, store)
     product_groups.collect do |product_group, sub_product_groups|
-      group_store_items = store_items.where('product_groups.id = ?', product_group.id)
+      group_store_items = store_items.where('product_groups.id = ?', product_group.id).references(:product_groups)
       if (product_ids = group_store_items.collect{|si|si.product.id}).present?
         products = product_group.products.find(product_ids).collect do |product|
-          product_store_items = store_items.where('products.id = ?', product.id)
+          product_store_items = store_items.where('products.id = ?', product.id).references(:products)
           items = product_store_items.collect do |item|
             features = item.feature_accounting ? item.features_s : '---'
             {type: 'item', depth: product_group.depth+2, id: item.item_id, name: features, quantity: item.quantity, details: [], purchase_price: item.purchase_price.to_f, price: item.retail_price.to_f, sum: item.retail_price.to_f*item.quantity}
