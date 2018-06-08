@@ -15,6 +15,7 @@ module Tasks
     private
 
     def need_validation?(task)
+      return false unless tasks_models
       tasks_models.has_key? task.code
     end
 

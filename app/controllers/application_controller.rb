@@ -81,7 +81,6 @@ class ApplicationController < ActionController::Base
   end
 
   def access_denied
-    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
     flash[:error] = exception.message
     redirect_to request.referrer || root_url, alert: exception.message
   end
