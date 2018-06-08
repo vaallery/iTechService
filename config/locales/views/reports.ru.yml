@@ -50,6 +50,7 @@ ru:
       price: "Цена"
       sum: "Сумма"
       discount: "Скидка"
+      payment_type: :activemodel.attributes.sale.payment_type
       client: "Покупатель"
       user: "Продавец"
     phone_substitutions:
