@@ -8,6 +8,7 @@
       %th.center= t '.price'
       %th.center= t '.sum'
       %th.center= t '.discount'
+      %th.center= t '.payment_type'
       %th.center= t '.client'
       %th.center= t '.user'
   %tbody
@@ -22,6 +23,7 @@
         %td.price.number= human_currency sale[:price], false
         %td.sum.number= human_currency sale[:sum], false
         %td.discount.number= human_currency sale[:discount], false
+        %td.payment_type= sale[:payment_type]
         %td.client= sale[:client_id].present? ? link_to(sale[:client], client_path(sale[:client_id]), target: '_blank') : '-'
         %td.user= link_to sale[:user], user_path(sale[:user_id]), target: '_blank'
   %tfoot
@@ -31,4 +33,4 @@
       %td
       %td.number= human_currency report.result[:sales_sum], false
       %td.number= human_currency report.result[:discounts_sum], false
-      %td{colspan: 2}
+      %td{colspan: 3}
