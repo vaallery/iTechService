@@ -30,10 +30,10 @@ class SaleItem < ActiveRecord::Base
   end
 
   def discount=(new_discount)
-    if is_return
+    if is_return or is_repair?
       super
     else
-      if retail_price.present?
+      if retail_price.present? && retail_price > 0
         if User.current.try :any_admin?
           self.price = retail_price - new_discount.to_f
           super
