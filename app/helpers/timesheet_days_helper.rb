@@ -37,12 +37,10 @@ module TimesheetDaysHelper
       end
     end
     title = ''
-    if (salary_date = user.salary_date_at(date)).present?
-      cell_class << ' accounting_month' if date <= salary_date
-      if date == salary_date
-        cell_class << ' salary_day'
-        title = faults_tooltip Fault.employee_faults_count_by_kind_on(user, date)
-      end
+
+    if date.day == date.end_of_month.day
+      cell_class << ' salary_day'
+      title = faults_tooltip Fault.employee_faults_count_by_kind_on(user, date)
     end
     # good_karmas = user.karmas.good.created_at(date)
     # bad_karmas = user.karmas.bad.created_at(date)
