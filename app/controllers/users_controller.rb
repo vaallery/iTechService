@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    
+
     respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: t('users.created') }
@@ -58,6 +58,9 @@ class UsersController < ApplicationController
       params[:user].delete(:password)
       params[:user].delete(:password_confirmation)
     end
+
+    params[:user].delete :hiring_date
+
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to @user, notice: t('users.updated') }
