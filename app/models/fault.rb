@@ -10,7 +10,7 @@ class Fault < ApplicationRecord
 
   def self.employee_faults_count_by_kind_on(employee, date)
     total_counts = employee.faults.where('faults.date <= ?', date).group(:kind_id).count
-    start_date = employee.salary_date_at(date.prev_month).tomorrow
+    start_date = date.beginning_of_month
     month_counts = employee.faults.where(date: start_date..date).group(:kind_id).count
 
     result = {}
