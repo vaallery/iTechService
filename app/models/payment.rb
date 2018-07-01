@@ -8,6 +8,8 @@ class Payment < ActiveRecord::Base
   scope :certificate, ->{where(kind: 'certificate')}
   scope :gift_certificates, ->{where(kind: 'certificate')}
   scope :trade_in, ->{where(kind: 'trade_in')}
+  scope :sales, -> { joins(:sale).where(sales: {is_return: false}) }
+  scope :returns, -> { joins(:sale).where(sales: {is_return: true}) }
 
   belongs_to :sale, inverse_of: :payments
   belongs_to :bank
@@ -50,6 +52,7 @@ class Payment < ActiveRecord::Base
 
   def attributes_hash
     result = {}
+    result[:is_return] = is_return
     result[:value] = value
     result[:bank] = bank_name if is_by_bank?
     result[:gift_certificate] = gift_certificate_number if is_gift_certificate?
