@@ -26,7 +26,7 @@ class ReportsController < ApplicationController
   private
 
   def build_report
-    report_name = params[:report][:base_name]
+    report_name = params.dig(:report, :base_name)
     report_class_name = "#{report_name.camelize}Report"
     if defined? report_class_name
       klass = report_class_name.constantize
