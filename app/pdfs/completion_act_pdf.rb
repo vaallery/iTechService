@@ -95,7 +95,7 @@ class CompletionActPdf < Prawn::Document
     receipt_date = service_job.received_at.localtime.strftime('%d.%m.%Y')
     done_date = service_job.done_at.localtime.strftime('%d.%m.%Y')
     duration = calculate_duration(service_job.received_at, service_job.done_at)
-    return_date = service_job.archived_at.localtime.strftime('%d.%m.%Y')
+    return_date = service_job.archived_at&.localtime&.strftime('%d.%m.%Y')
     table [["Дата приёма: #{receipt_date}", "Дата завершения ремонта: #{done_date}", "Срок выполнения: #{duration}", "Дата выдачи устройства: #{return_date}"]], width: 530
     move_down font_size
 
