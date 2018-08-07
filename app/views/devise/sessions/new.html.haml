@@ -1,9 +1,7 @@
 #auth_page
-  %h2= t '.title', default: 'Sign in'
+  %h2.title= t '.title', default: 'Sign in'
 
-  %hr
-
-  = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-inline' }) do |f|
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-inline'}) do |f|
 
     = f.input_field :username, required: false, label: false, autofocus: true, placeholder: resource.class.human_attribute_name(:username), class: 'input-medium'
 
@@ -15,8 +13,6 @@
       = f.label :remember_me do
         = f.input_field :remember_me, as: :boolean
         = resource.class.human_attribute_name(:remember_me)
-
-  %hr
 
   = link_to icon_tag('credit-card') + t('.with_card', default: 'With Card'), '#', id: 'sign_in_by_card', class: 'btn btn-large', remote: false
 
