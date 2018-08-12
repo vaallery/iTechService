@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180520125438) do
+ActiveRecord::Schema.define(version: 20180723113518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1072,16 +1072,18 @@ ActiveRecord::Schema.define(version: 20180520125438) do
   add_index "spare_parts", ["repair_service_id"], name: "index_spare_parts_on_repair_service_id", using: :btree
 
   create_table "stolen_phones", force: :cascade do |t|
-    t.string   "imei",           limit: 255, null: false
+    t.string   "imei",           limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.string   "serial_number",  limit: 255
     t.integer  "client_id"
     t.text     "client_comment"
+    t.integer  "item_id"
   end
 
   add_index "stolen_phones", ["client_id"], name: "index_stolen_phones_on_client_id", using: :btree
   add_index "stolen_phones", ["imei"], name: "index_stolen_phones_on_imei", using: :btree
+  add_index "stolen_phones", ["item_id"], name: "index_stolen_phones_on_item_id", using: :btree
   add_index "stolen_phones", ["serial_number"], name: "index_stolen_phones_on_serial_number", using: :btree
 
   create_table "store_items", force: :cascade do |t|
@@ -1364,6 +1366,7 @@ ActiveRecord::Schema.define(version: 20180520125438) do
   add_foreign_key "service_free_jobs", "clients"
   add_foreign_key "service_free_jobs", "service_free_tasks", column: "task_id"
   add_foreign_key "service_free_jobs", "users", column: "performer_id"
+  add_foreign_key "stolen_phones", "items"
   add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"
   add_foreign_key "substitute_phones", "service_jobs"
