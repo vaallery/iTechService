@@ -33,8 +33,9 @@ class Setting < ActiveRecord::Base
   validate :json_value_correct
 
   class << self
-    def get_value(name, department=nil)
-      (setting = Setting.for_department(department).find_by_name(name.to_s) || Setting.find_by(department_id: nil, name: name.to_s)).present? ? setting.value : ''
+    def get_value(name, department = Department.current)
+      setting = Setting.for_department(department).find_by_name(name.to_s) || Setting.find_by(department_id: nil, name: name.to_s)
+      setting.present? ? setting.value : ''
     end
 
     def ogrn
