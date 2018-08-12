@@ -478,6 +478,7 @@ ru:
 
       stolen_phone:
         client_comment: 'Обстоятельства кражи'
+        item: 'Устройство'
 
       substitute_phone:
         condition: 'Состояние телефона'

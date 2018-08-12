@@ -2,6 +2,8 @@ class Feature < ActiveRecord::Base
 
   scope :imei, -> { includes(:feature_type).where(feature_types: {kind: 'imei'}) }
   scope :serial_number, -> { includes(:feature_type).where(feature_types: {kind: 'serial_number'}) }
+  # scope :search, ->(query) { where('LOWER(features.value) LIKE :q OR LOWER(service_jobs.serial_number) LIKE :q OR LOWER(service_jobs.imei) LIKE :q', q: "%#{service_job_q.mb_chars.downcase.to_s}%").references(:features) }
+  scope :search, ->(query) { where('LOWER(value) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%") }
 
   belongs_to :feature_type
   belongs_to :item, inverse_of: :features

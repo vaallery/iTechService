@@ -5,8 +5,9 @@
   %table.table.table-striped.table-hover
     %thead
       %tr
-        %th= model_class.human_attribute_name(:imei)
-        %th= model_class.human_attribute_name(:serial_number)
+        -#%th= model_class.human_attribute_name(:imei)
+        -#%th= model_class.human_attribute_name(:serial_number)
+        %th= model_class.human_attribute_name(:item)
         %th= model_class.human_attribute_name(:client)
         %th= model_class.human_attribute_name(:created_at)
         - if can? :manage, model_class
@@ -14,8 +15,9 @@
     %tbody
       - @stolen_phones.each do |stolen_phone|
         %tr
-          %td= link_to stolen_phone.imei, stolen_phone
-          %td= link_to stolen_phone.serial_number, stolen_phone if stolen_phone.serial_number.present?
+          -#%td= link_to stolen_phone.imei, stolen_phone
+          -#%td= link_to stolen_phone.serial_number, stolen_phone if stolen_phone.serial_number.present?
+          %td= link_to stolen_phone.item_presentation, stolen_phone
           %td= link_to stolen_phone.client_presentation, stolen_phone.client if stolen_phone.client.present?
           %td=l stolen_phone.created_at, format: :long_d
           - if can? :manage, model_class
