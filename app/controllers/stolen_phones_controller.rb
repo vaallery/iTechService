@@ -34,10 +34,13 @@ class StolenPhonesController < ApplicationController
   end
 
   def create
-    @stolen_phone = StolenPhone.new(params[:stolen_phone])
+    @stolen_phone = StolenPhone.new
+    comment = params[:stolen_phone].delete(:comment)
+    @stolen_phone.assign_attributes(params[:stolen_phone])
 
     respond_to do |format|
       if @stolen_phone.save
+        @stolen_phone.comments.create content: comment if comment.present?
         format.html { redirect_to stolen_phones_url, notice: t('stolen_phones.created') }
         format.json { render json: @stolen_phone, status: :created, location: @stolen_phone }
       else
