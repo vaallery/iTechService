@@ -475,7 +475,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def deduct_spare_parts
-    if location_id_changed? and location.is_archive?
+    if location_id_changed? and location.is_done?
       repair_parts.all? do |repair_part|
         repair_part.deduct_spare_parts
       end
