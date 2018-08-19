@@ -6,8 +6,8 @@ class ProductTagPdf < Prawn::Document
 
   def initialize(item, view, options={})
     # TODO: store size and margin in settings or settings .yml file
-    # super page_size: [30.mm, 20.mm], page_layout: :portrait, margin: [1.mm,2.mm,2.mm,2.mm]
-    super page_size: [41.mm, 20.mm], page_layout: :portrait, margin: [1.mm, 2.mm, 2.mm, 13.mm]
+    super page_size: [30.mm, 20.mm], page_layout: :portrait, margin: [1.mm,2.mm,2.mm,2.mm]
+    # super page_size: [41.mm, 20.mm], page_layout: :portrait, margin: [1.mm, 2.mm, 2.mm, 13.mm]
     @item = item
     @view = view
     font_families.update 'DroidSans' => {
