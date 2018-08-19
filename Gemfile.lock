@@ -188,6 +188,15 @@ GEM
       dry-container (~> 0.2, >= 0.2.6)
       dry-core (~> 0.2)
       dry-equalizer (~> 0.2)
+    dry-matcher (0.7.0)
+    dry-monads (0.4.0)
+      dry-core (~> 0.3, >= 0.3.3)
+      dry-equalizer
+    dry-transaction (0.10.2)
+      dry-container (>= 0.2.8)
+      dry-matcher (>= 0.5.0)
+      dry-monads (>= 0.0.1)
+      wisper (>= 1.6.0)
     dry-types (0.12.1)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 0.1)
@@ -569,6 +578,7 @@ GEM
     websocket-extensions (0.1.2)
     whenever (0.9.7)
       chronic (>= 0.6.3)
+    wisper (2.0.0)
     xpath (2.1.0)
       nokogiri (~> 1.3)
     zeroclipboard-rails (0.1.2)
@@ -609,7 +619,8 @@ DEPENDENCIES
   devise_token_auth (~> 0.1.37)
   dotenv-rails
   draper (~> 2.1.0)
-  dry-validation
+  dry-transaction (~> 0.10.2)
+  dry-validation (~> 0.11.1)
   exception_notification (~> 4.1.4)
   factory_girl_rails
   faker
@@ -675,4 +686,4 @@ DEPENDENCIES
   zeroclipboard-rails
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
