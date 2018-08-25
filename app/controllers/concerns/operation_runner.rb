@@ -1,13 +1,15 @@
 module OperationRunner
   protected
 
-  def run(operation, params = operation_params, &block)
+  def run(operation_class, steps: nil, step_args: nil, params: action_params, &block)
+    operation = operation_class.new
+    operation = operation.with_step_args(step_args) unless step_args.nil?
     operation.(params, &block)
   end
 
   private
 
-  def operation_params
-    params.to_unsafe_hash.merge(current_user: current_user)
+  def action_params
+    @action_params ||= params.to_unsafe_h.symbolize_keys.except(:controller, :action)
   end
 end

@@ -1,0 +1,25 @@
+.page-header
+  h2 = t '.title'
+
+.row-fluid
+  .span12 = form_tag new_service_repair_return_path, method: :get, class: 'form-search' do
+    .input-append
+      = text_field_tag :ticket_number, ticket_number, class: 'search-query'
+      = submit_tag :find_job, class: 'btn'
+
+- if service_job.present?
+  .row-fluid
+    .span12
+      dl.dl-horizontal
+        dt = t_attribute :client
+        dd = client
+
+        dt = t_attribute :device
+        dd = device
+
+        dt = t '.spare_parts'
+        dd
+          ol = spare_parts.each do |spare_part|
+            li = spare_part.name
+
+  = button_to_return
