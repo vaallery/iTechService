@@ -192,8 +192,11 @@ class ServiceJobsController < ApplicationController
 
   def check_imei
     item = Item.find(params[:item_id])
-    stolen_phone = StolenPhone.find_by_imei(item.imei)
-    msg = stolen_phone.present? ? t('service_jobs.phone_stolen') : ''
+    msg = ''
+    if item.imei.present?
+      stolen_phone = StolenPhone.find_by_imei(item.imei)
+      msg = t('service_jobs.phone_stolen') if stolen_phone.present?
+    end
     render json: {present: stolen_phone.present?, msg: msg}
   end
 
