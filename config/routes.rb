@@ -19,6 +19,16 @@ Rails.application.routes.draw do
 
   namespace :service do
     resources :job_templates
+
+    get :actual_feedbacks, to: 'actual_feedbacks#index', format: 'js'
+    resources :feedbacks do
+      put :postpone, on: :member
+    end
+
+    resources :free_tasks, only: %i[index new create edit update destroy]
+    resources :free_jobs
+
+    resources :repair_returns, only: %i[index new create]
   end
 
   resources :departments
@@ -90,19 +100,6 @@ Rails.application.routes.draw do
     scope module: :service_jobs do
       resource :subscription, only: %i[create destroy], format: :js
     end
-  end
-
-  namespace 'service' do
-    get 'actual_feedbacks', to: 'actual_feedbacks#index', format: 'js'
-
-    resources 'feedbacks' do
-      put 'postpone', on: :member
-    end
-  end
-
-  namespace :service do
-    resources :free_tasks, only: %i[index new create edit update destroy]
-    resources :free_jobs
   end
 
   namespace :substitute_phones do

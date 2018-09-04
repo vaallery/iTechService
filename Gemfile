@@ -17,7 +17,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'devise', '~> 4.0.3'
 gem 'devise_token_auth', '~> 0.1.37'
 
-gem 'dry-validation'#, '~> 0.10.5'
+gem 'dry-validation', '~> 0.12.0'
+gem 'dry-transaction', '~> 0.13.0'
 gem 'trailblazer'#, '~> 1.0'
 gem 'trailblazer-rails'#, '~> 0.4'
 # gem 'trailblazer-rails', '~> 0.2.4'
@@ -115,21 +116,25 @@ group :development do
 end
 
 group :development, :test do
-  gem 'test-unit'
-  gem 'capybara'
-  gem 'database_cleaner'
-  gem 'factory_girl_rails'
-  gem 'railroady'
-  gem 'minitest-rails'
-  gem 'faker'#, '~> 1.3'
 end
 
 group :test do
+  gem 'rspec-rails', '~> 3.8.0'
+  # gem 'test-unit'
+  gem 'capybara'
+  gem 'capybara-selenium'
+  gem 'chromedriver-helper'
+  gem 'poltergeist'#, '~> 1.10.0'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  # gem 'factory_bot_rails'#, '~> 4.8.2'
+  # gem 'minitest-rails'
+  gem 'faker'#, '~> 1.3'
   gem 'simplecov', '~> 0.12.0', :require => false
 
-  gem 'minitest-reporters', '~> 1.0.0'
-  gem 'minitest-rails-capybara'
-  gem 'poltergeist'
+  #gem 'minitest-reporters', '~> 1.0.0'
+  #gem 'minitest-rails-capybara'
+  #gem 'poltergeist'
   gem 'shoulda', '~> 3.5.0'
   gem 'shoulda-matchers'
   gem 'mocha', '~> 1.1.0'

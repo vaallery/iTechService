@@ -45,7 +45,8 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
-    ansi (1.5.0)
+    archive-zip (0.7.0)
+      io-like (~> 0.3.0)
     arel (6.0.4)
     axiom-types (0.1.1)
       descendants_tracker (~> 0.0.4)
@@ -92,6 +93,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-selenium (0.0.6)
+      capybara
+      selenium-webdriver
     carrierwave (0.11.2)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -109,7 +113,12 @@ GEM
     cells-slim (0.0.5)
       cells (>= 4.0.1, < 6.0.0)
       slim (~> 3.0)
+    childprocess (0.9.0)
+      ffi (~> 1.0, >= 1.0.11)
     choice (0.2.0)
+    chromedriver-helper (1.1.0)
+      archive-zip (~> 0.7.0)
+      nokogiri (~> 1.6)
     chronic (0.10.2)
     ckeditor (4.1.6)
       cocaine
@@ -181,28 +190,42 @@ GEM
     dry-container (0.6.0)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 0.1, >= 0.1.3)
-    dry-core (0.3.4)
+    dry-core (0.4.7)
       concurrent-ruby (~> 1.0)
-    dry-equalizer (0.2.0)
+    dry-equalizer (0.2.1)
+    dry-events (0.1.0)
+      concurrent-ruby (~> 1.0)
+      dry-core (~> 0.4)
+      dry-equalizer (~> 0.2)
+    dry-inflector (0.1.2)
     dry-logic (0.4.2)
       dry-container (~> 0.2, >= 0.2.6)
       dry-core (~> 0.2)
       dry-equalizer (~> 0.2)
-    dry-types (0.12.1)
+    dry-matcher (0.7.0)
+    dry-monads (1.0.1)
       concurrent-ruby (~> 1.0)
-      dry-configurable (~> 0.1)
+      dry-core (~> 0.4, >= 0.4.4)
+      dry-equalizer
+    dry-transaction (0.13.0)
+      dry-container (>= 0.2.8)
+      dry-events (>= 0.1.0)
+      dry-matcher (>= 0.7.0)
+      dry-monads (>= 0.4.0)
+    dry-types (0.13.2)
+      concurrent-ruby (~> 1.0)
       dry-container (~> 0.3)
-      dry-core (~> 0.2, >= 0.2.1)
+      dry-core (~> 0.4, >= 0.4.4)
       dry-equalizer (~> 0.2)
+      dry-inflector (~> 0.1, >= 0.1.2)
       dry-logic (~> 0.4, >= 0.4.2)
-      inflecto (~> 0.0.0, >= 0.0.2)
-    dry-validation (0.11.1)
+    dry-validation (0.12.1)
       concurrent-ruby (~> 1.0)
       dry-configurable (~> 0.1, >= 0.1.3)
       dry-core (~> 0.2, >= 0.2.1)
       dry-equalizer (~> 0.2)
       dry-logic (~> 0.4, >= 0.4.0)
-      dry-types (~> 0.12.0)
+      dry-types (~> 0.13.1)
     em-http-request (1.1.5)
       addressable (>= 2.3.4)
       cookiejar (!= 0.3.1)
@@ -262,11 +285,11 @@ GEM
     http_parser.rb (0.6.0)
     i18n (0.8.6)
     ice_nine (0.11.2)
-    inflecto (0.0.2)
     interactor (3.1.0)
     interactor-rails (2.0.2)
       interactor (~> 3.0)
       rails (>= 3, < 5.1)
+    io-like (0.3.0)
     irwi (0.5.0)
       actionpack (>= 4.0)
       activerecord (>= 4.0)
@@ -328,25 +351,6 @@ GEM
     mini_mime (0.1.4)
     mini_portile2 (2.0.0)
     minitest (5.10.3)
-    minitest-capybara (0.8.2)
-      capybara (~> 2.2)
-      minitest (~> 5.0)
-      rake
-    minitest-metadata (0.6.0)
-      minitest (>= 4.7, < 6.0)
-    minitest-rails (2.2.1)
-      minitest (~> 5.7)
-      railties (~> 4.1)
-    minitest-rails-capybara (2.1.2)
-      capybara (~> 2.7)
-      minitest-capybara (~> 0.8)
-      minitest-metadata (~> 0.6)
-      minitest-rails (~> 2.1)
-    minitest-reporters (1.0.20)
-      ansi
-      builder
-      minitest (>= 5.0)
-      ruby-progressbar
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     multi_json (1.12.2)
@@ -373,7 +377,6 @@ GEM
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
-    power_assert (1.1.0)
     prawn (2.1.0)
       pdf-core (~> 0.6.1)
       ttfunk (~> 1.4.0)
@@ -399,7 +402,6 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
-    railroady (1.5.3)
     rails (4.2.5.2)
       actionmailer (= 4.2.5.2)
       actionpack (= 4.2.5.2)
@@ -458,9 +460,25 @@ GEM
     roo (2.4.0)
       nokogiri (~> 1)
       rubyzip (~> 1.1, < 2.0.0)
+    rspec-core (3.8.0)
+      rspec-support (~> 3.8.0)
+    rspec-expectations (3.8.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.8.0)
+    rspec-mocks (3.8.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.8.0)
+    rspec-rails (3.8.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      railties (>= 3.0)
+      rspec-core (~> 3.8.0)
+      rspec-expectations (~> 3.8.0)
+      rspec-mocks (~> 3.8.0)
+      rspec-support (~> 3.8.0)
+    rspec-support (3.8.0)
     ru_propisju (2.5.0)
     ruby-graphviz (1.2.3)
-    ruby-progressbar (1.9.0)
     rubyzip (1.2.1)
     sass (3.5.2)
       sass-listen (~> 4.0.0)
@@ -476,6 +494,9 @@ GEM
     seed_dumper (0.1.3)
       rails
     seedbank (0.4.0)
+    selenium-webdriver (3.14.0)
+      childprocess (~> 0.5)
+      rubyzip (~> 1.2)
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
       shoulda-matchers (>= 1.4.1, < 3.0)
@@ -512,8 +533,6 @@ GEM
       colorize (~> 0.7.3)
       google-search (~> 1.0.3)
     temple (0.7.7)
-    test-unit (3.2.6)
-      power_assert
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -596,9 +615,11 @@ DEPENDENCIES
   capistrano-rvm
   capistrano-ssh-doctor
   capybara
+  capybara-selenium
   carrierwave (~> 0.11.2)
   cells-rails (~> 0.0.7)
   cells-slim (~> 0.0.5)
+  chromedriver-helper
   ckeditor (~> 4.1.6)
   coffee-rails (~> 4.1.0)
   daemons
@@ -609,7 +630,8 @@ DEPENDENCIES
   devise_token_auth (~> 0.1.37)
   dotenv-rails
   draper (~> 2.1.0)
-  dry-validation
+  dry-transaction (~> 0.13.0)
+  dry-validation (~> 0.12.0)
   exception_notification (~> 4.1.4)
   factory_girl_rails
   faker
@@ -627,9 +649,6 @@ DEPENDENCIES
   letter_opener
   meta_request (~> 0.2.8)
   mini_magick (~> 4.5.1)
-  minitest-rails
-  minitest-rails-capybara
-  minitest-reporters (~> 1.0.0)
   mocha (~> 1.1.0)
   nokogiri (~> 1.6.7.2)
   paperclip (~> 4.3.6)
@@ -642,7 +661,6 @@ DEPENDENCIES
   protected_attributes
   pundit (~> 1.1.0)
   quiet_assets
-  railroady
   rails (= 4.2.5.2)
   rails-erd
   rails-observers
@@ -650,6 +668,7 @@ DEPENDENCIES
   reform-rails (~> 0.1)
   rmagick (~> 2.15.4)
   roo (~> 2.4.0)
+  rspec-rails (~> 3.8.0)
   ru_propisju
   sass-rails
   seed_dumper (~> 0.1.3)
@@ -660,7 +679,6 @@ DEPENDENCIES
   simplecov (~> 0.12.0)
   sqlite3
   stack_rescue
-  test-unit
   therubyracer
   thin (~> 1.6.4)
   trailblazer
@@ -675,4 +693,4 @@ DEPENDENCIES
   zeroclipboard-rails
 
 BUNDLED WITH
-   1.16.1
+   1.16.2

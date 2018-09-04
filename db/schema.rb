@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180723113518) do
+ActiveRecord::Schema.define(version: 20180820070053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1046,6 +1046,15 @@ ActiveRecord::Schema.define(version: 20180723113518) do
   add_index "service_jobs", ["ticket_number"], name: "index_service_jobs_on_ticket_number", using: :btree
   add_index "service_jobs", ["user_id"], name: "index_service_jobs_on_user_id", using: :btree
 
+  create_table "service_repair_returns", force: :cascade do |t|
+    t.integer  "service_job_id", null: false
+    t.integer  "performer_id",   null: false
+    t.datetime "performed_at",   null: false
+  end
+
+  add_index "service_repair_returns", ["performer_id"], name: "index_service_repair_returns_on_performer_id", using: :btree
+  add_index "service_repair_returns", ["service_job_id"], name: "index_service_repair_returns_on_service_job_id", using: :btree
+
   create_table "settings", force: :cascade do |t|
     t.string   "name",          limit: 255
     t.string   "presentation",  limit: 255
@@ -1366,6 +1375,8 @@ ActiveRecord::Schema.define(version: 20180723113518) do
   add_foreign_key "service_free_jobs", "clients"
   add_foreign_key "service_free_jobs", "service_free_tasks", column: "task_id"
   add_foreign_key "service_free_jobs", "users", column: "performer_id"
+  add_foreign_key "service_repair_returns", "service_jobs"
+  add_foreign_key "service_repair_returns", "users", column: "performer_id"
   add_foreign_key "stolen_phones", "items"
   add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"

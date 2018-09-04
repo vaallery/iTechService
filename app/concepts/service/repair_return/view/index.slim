@@ -1,0 +1,25 @@
+.page-header: h2
+  = title
+
+.table_filter.navbar.container
+  .navbar-inner
+    = form_tag service_repair_returns_path, method: :get, id: 'search_form', class: 'navbar-search form-search', remote: true do
+      = text_field_tag :date, params[:date], class: 'bootstrap-datepicker input-small', id: 'date_filter', placeholder: date_placeholder, data: datepicker_data
+
+      = text_field_tag :performer, params[:performer], class: 'search-query input-xlarge', placeholder: performer_placeholder
+
+      button.search_button.btn.btn-info type='submit'
+        = icon('search')
+
+= pagination
+
+table.table.table-hover
+  thead
+    tr
+      th = t_attribute :performed_at
+      th = t_attribute :performer
+      th = t_attribute :device
+      th
+  tbody = repair_return_rows
+
+= pagination
