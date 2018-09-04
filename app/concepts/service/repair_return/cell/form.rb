@@ -5,19 +5,20 @@ module Service
 
       include FormCell
       include ClientsHelper
+      include ActiveSupport::NumberHelper
 
-      property :service_job
+      property :service_job, :service_job_id
 
       def client
-        client_presentation service_job.client if service_job.present?
+        link_to client_presentation(service_job.client), service_job.client if service_job.present?
       end
 
       def device
-        service_job&.presentation
+        link_to service_job.presentation, service_job if service_job.present?
       end
 
-      def spare_parts
-        model.spare_parts || []
+      def repair_parts
+        model.repair_parts || []
       end
 
       def ticket_number
@@ -25,7 +26,7 @@ module Service
       end
 
       def button_to_return
-        button_to :return, model
+        button_to t('.return'), model, params: {service_job_id: service_job_id}, class: 'btn btn-primary'
       end
     end
   end

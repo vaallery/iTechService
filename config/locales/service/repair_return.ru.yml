@@ -1,0 +1,13 @@
+ru:
+  service:
+    repair_return:
+      view:
+        title:
+          form: 'Возврат ремонта'
+          index: 'Возвраты ремонтов'
+        ticket_number: :activemodel.attributes.service_job.ticket_number
+        repair_parts: 'Запчасти'
+        find_job: 'Найти устройство'
+        return: 'Выполнить возврат'
+
+      created: 'Возврат ремонта проведён'

@@ -4,6 +4,14 @@ module Service
     respond_to :html
 
     def index
+      authorize RepairReturn
+      repair_returns = RepairReturn.query(action_params)
+
+      respond_to do |format|
+        content = cell(RepairReturn::Cell::Index, repair_returns).call
+        format.html { return render(html: content, layout: true) }
+        format.js { return render('index', locals: {content: content}) }
+      end
     end
 
     def new
@@ -14,6 +22,10 @@ module Service
     end
 
     def create
+      run RepairReturn::Create do |r|
+        r.success { |_repair_return| redirect_to root_path, notice: t('service.repair_return.created') }
+        r.failure { |errors| failed errors.join('. ') }
+      end
     end
   end
 end

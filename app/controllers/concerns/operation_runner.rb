@@ -10,6 +10,6 @@ module OperationRunner
   private
 
   def action_params
-    @action_params ||= params.to_unsafe_h.symbolize_keys.except(:controller, :action)
+    @action_params ||= params.to_unsafe_h.symbolize_keys.except(:controller, :action).merge(current_user: current_user)
   end
 end

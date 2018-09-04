@@ -67,6 +67,7 @@ ru:
       quick_order: 'Быстрый заказ'
       rating: 'Рейтинг'
       repair_return: 'Возврат ремонта'
+      repair_returns: :service.repair_return.view.title.index
       reports: 'Отчёты'
       salaries: 'Зарплата'
       sale: 'Продажа'

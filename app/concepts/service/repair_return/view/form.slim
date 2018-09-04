@@ -1,11 +1,11 @@
 .page-header
-  h2 = t '.title'
+  h2 = t '.title.form'
 
 .row-fluid
   .span12 = form_tag new_service_repair_return_path, method: :get, class: 'form-search' do
     .input-append
-      = text_field_tag :ticket_number, ticket_number, class: 'search-query'
-      = submit_tag :find_job, class: 'btn'
+      = text_field_tag :ticket_number, ticket_number, placeholder: t('.ticket_number'), class: 'search-query'
+      = submit_tag t('.find_job'), class: 'btn btn-info', id: 'find_job'
 
 - if service_job.present?
   .row-fluid
@@ -17,9 +17,13 @@
         dt = t_attribute :device
         dd = device
 
-        dt = t '.spare_parts'
+        dt = t '.repair_parts'
         dd
-          ol = spare_parts.each do |spare_part|
-            li = spare_part.name
+          ol
+            - repair_parts.each do |repair_part|
+              li
+                => link_to repair_part.name, repair_part.product
+                |&times;
+                =< repair_part.quantity
 
   = button_to_return
