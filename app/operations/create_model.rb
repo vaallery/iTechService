@@ -1,6 +1,4 @@
-class CreateModel
-  include ATransaction
-
+class CreateModel < ATransaction
   step :validate
   try :create, catch: ActiveRecord::RecordNotSaved
 

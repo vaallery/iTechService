@@ -1,6 +1,4 @@
-class DestroyModel
-  include ATransaction
-
+class DestroyModel < ATransaction
   try :destroy, catch: [ActiveRecord::RecordNotFound, ActiveRecord::RecordNotDestroyed]
 
   private

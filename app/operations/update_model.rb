@@ -1,6 +1,4 @@
-class UpdateModel
-  include ATransaction
-
+class UpdateModel < ATransaction
   step :validate
   try :update, catch: [ActiveRecord::RecordNotFound, ActiveRecord::RecordNotSaved]
 
