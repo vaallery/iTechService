@@ -100,6 +100,10 @@ class SalesController < ApplicationController
           pdf.render_file filepath
           PrinterTools.print_file filepath, type: :sale_check, height: pdf.page_height_mm, printer: current_user.department.printer
         # end
+        if @sale.service_job.present?
+          @sale.service_job.update location_id: current_user.archive_location.id
+        end
+
         format.html { redirect_to new_sale_path, notice: t('documents.posted') }
       else
         load_top_salables
