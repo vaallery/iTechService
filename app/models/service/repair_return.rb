@@ -10,7 +10,7 @@ module Service
       repair_returns = RepairReturn.includes(:performer)
 
       if date.present?
-        date = date.t
+        date = date.to_date
         repair_returns = repair_returns.where(performed_at: date.beginning_of_day..date.end_of_day)
       end
 
