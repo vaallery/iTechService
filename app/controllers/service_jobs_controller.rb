@@ -244,10 +244,12 @@ class ServiceJobsController < ApplicationController
 
   def params_for_update
     allowed_params = params[:service_job]
-    allowed_params[:device_tasks_attributes].each do |_key, device_task_attributes|
-      if device_task_attributes.key?(:id)
-        device_task = DeviceTask.find(device_task_attributes[:id])
-        device_task_attributes[:_destroy] = false if device_task.repair_parts.any?
+    if allowed_params.key?(:device_tasks_attributes)
+      allowed_params[:device_tasks_attributes].each do |_key, device_task_attributes|
+        if device_task_attributes.key?(:id)
+          device_task = DeviceTask.find(device_task_attributes[:id])
+          device_task_attributes[:_destroy] = false if device_task.repair_parts.any?
+        end
       end
     end
     allowed_params
