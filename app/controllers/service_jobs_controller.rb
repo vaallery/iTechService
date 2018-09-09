@@ -110,7 +110,7 @@ class ServiceJobsController < ApplicationController
     @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
 
     respond_to do |format|
-      if @service_job.update_attributes(params[:service_job])
+      if @service_job.update_attributes(params_for_update)
         create_phone_substitution if @service_job.phone_substituted?
         Service::DeviceSubscribersNotificationJob.perform_later @service_job.id, current_user.id, params
         format.html { redirect_to @service_job, notice: t('service_jobs.updated') }
@@ -125,12 +125,17 @@ class ServiceJobsController < ApplicationController
   end
 
   def destroy
-    @service_job = ServiceJob.find(params[:id])
-    DeletionMailer.delay.notice({presentation: @service_job.decorate.presentation, tasks: @service_job.tasks.map(&:name).join(', ')}, current_user.presentation, DateTime.current)
-    @service_job.destroy
+    service_job = ServiceJob.find(params[:id])
+
+    if service_job.repair_parts.any?
+      flash.alert = t('service_jobs.errors.cannot_be_destroyed')
+    else
+      DeletionMailer.delay.notice({presentation: service_job.decorate.presentation, tasks: service_job.tasks.map(&:name).join(', ')}, current_user.presentation, DateTime.current)
+      service_job.destroy
+    end
 
     respond_to do |format|
-      format.html { redirect_to service_jobs_url }
+      format.html { redirect_to(request.referrer || service_jobs_url) }
       format.json { head :no_content }
     end
   end
@@ -236,6 +241,17 @@ class ServiceJobsController < ApplicationController
   end
 
   private
+
+  def params_for_update
+    allowed_params = params[:service_job]
+    allowed_params[:device_tasks_attributes].each do |_key, device_task_attributes|
+      if device_task_attributes.key?(:id)
+        device_task = DeviceTask.find(device_task_attributes[:id])
+        device_task_attributes[:_destroy] = false if device_task.repair_parts.any?
+      end
+    end
+    allowed_params
+  end
 
   def sort_column
     ServiceJob.column_names.include?(params[:sort]) ? params[:sort] : ''
