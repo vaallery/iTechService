@@ -5,6 +5,8 @@ class ItemDecorator < ApplicationDecorator
     [name, serial_number, imei].join(' / ')
   end
 
+  alias to_s presentation
+
   def status
     statuses.join(' ')
   end
@@ -12,16 +14,14 @@ class ItemDecorator < ApplicationDecorator
   def statuses
     res = []
     res << 'in_blacklist' if stolen_phone.present?
-    res << 'substitute_phone' if item.substitute_phone.present?
-    res << 'sold' if item.sales.any? || imported_sale.present?
+    res << 'substitute_phone' if object.substitute_phone.present?
+    res << 'sold' if sale.present?
     res
   end
 
   def status_info
     statuses.collect { |status| I18n.t("item.status_info.#{status}") }.join(' ')
   end
-
-  alias to_s presentation
 
   def features
     object.features.map { |feature| "#{feature.name}: #{feature.value}" }.join(', ')
@@ -49,5 +49,10 @@ class ItemDecorator < ApplicationDecorator
   def imported_sale
     return @imported_sale if defined? @imported_sale
     @imported_sale = ImportedSale.search(search: object.serial_number).first
+  end
+
+  def sale
+    return @sale if defined? @sale
+    @sale = item.sales.first || imported_sale
   end
 end
