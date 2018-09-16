@@ -1,0 +1,6 @@
+ru:
+  item:
+    status_info:
+      in_blacklist: 'Устройство в чёрном списке!'
+      substitute_phone: 'Телефон на замену.'
+      sold: 'Продан.'

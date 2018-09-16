@@ -11,6 +11,8 @@ class Item < ActiveRecord::Base
   has_many :movement_items, inverse_of: :item, dependent: :destroy
   has_many :features, inverse_of: :item, dependent: :destroy
   has_many :sales, through: :sale_items
+  has_one :stolen_phone
+  has_one :substitute_phone
   accepts_nested_attributes_for :features, allow_destroy: true
 
   delegate :name, :code, :feature_accounting, :prices, :feature_types, :retail_price, :actual_prices, :quantity_in_store, :product_category, :product_group, :product_group_id, :discount_for, :is_service, :is_equipment, :is_spare_part, :is_equipment?, :is_spare_part?, :is_service?, :is_repair?, :request_price, :warranty_term, :quantity_threshold, :comment, :options, :option_ids, :available_options, to: :product, allow_nil: true
