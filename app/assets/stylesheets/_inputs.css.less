@@ -1,0 +1,16 @@
+.dropdown-input .btn-group,
+.dropdown-input .dropdown-toggle {
+  width: 100%;
+}
+
+.item_search {
+  &[data-status~="sold"] {
+    color: green;
+  }
+  &[data-status~="substitute_phone"] {
+    color: orange;
+  }
+  &[data-status~="in_blacklist"] {
+    color: red;
+  }
+}

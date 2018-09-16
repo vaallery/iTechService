@@ -60,7 +60,6 @@ ru:
     moved_at: 'Перемещена в'
     moved_to: 'Перемещено в'
     moved_by: 'Переместил(а)'
-    phone_stolen: 'этот телефон в чёрном списке!!!'
     returning_substitute_phone: 'Получить телефон на подменку'
     received: 'Принят'
     returning_popover_title: "Напоминание о возврате девайсов"

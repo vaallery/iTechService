@@ -4,16 +4,18 @@ App.DeviceInput =
     $input = $('.device_input')
     item_id = $input.find('.item_id').val()
 
-    $.getJSON '/service_jobs/check_imei?item_id='+item_id, (data)->
-      if data.present
-        $input.parents('.control-group').addClass 'warning'
-        if $input.siblings('.help-inline').length
-          $input.siblings('.help-inline').html data.msg
-        else
-          $input.parents('.controls').append "<span class='help-inline'>"+data.msg+"</span>"
+    $.getJSON "/items/#{item_id}/check_status", (data)->
+      $search_input = $input.find('.item_search')
+
+      if (data.status_info.length > 0)
+        $search_input.attr('data-status', data.status)
+        $search_input.tooltip('destroy')
+        $search_input.attr('title', data.status_info)
+        $search_input.tooltip()
       else
-        $input.parents('.control-group').removeClass 'warning'
-        $input.siblings('.help-inline').remove()
+        $search_input.attr('data-status', '')
+        $search_input.attr('title', '')
+        $search_input.tooltip('destroy')
 
 #== Item Input ==================================
 

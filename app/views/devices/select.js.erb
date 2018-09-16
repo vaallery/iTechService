@@ -3,10 +3,14 @@
 //$('#item_search').val("<%= device.presentation %>");
 $input = $('.device_input');
 $input.find('.item_id').val("<%= device.id %>");
-$input.find('.item_search').val("<%= device.presentation %>");
 $input.find('.edit_item_btn').attr('href', "<%= edit_device_path(@device) %>").attr('data-remote', true);
 $input.find('.show_item_btn').attr('href', "<%= device_path(@device) %>").attr('data-remote', true);
 
+$search_input = $input.find('.item_search');
+$search_input.val("<%= device.presentation %>");
+$search_input.attr('data-status', '<%= @device.status %>')
+$search_input.attr('title', '<%= @device.status_info %>');
+$search_input.tooltip('destroy').tooltip();
 //$('#available_for_replacement').text("#{@service_job.device_type.available_for_replacement}");
 //if(#{@service_job.device_type.available_for_replacement} > 0){
 //  $('#device_replaced').removeAttr('disabled');

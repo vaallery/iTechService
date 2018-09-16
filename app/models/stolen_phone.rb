@@ -1,4 +1,10 @@
 class StolenPhone < ActiveRecord::Base
+  scope :by_imei, ->(imei) { includes(item: {features: :feature_type}).where('stolen_phones.imei LIKE :q OR (feature_types.kind = :kind AND features.value LIKE :q)', q: "%#{imei}%", kind: 'imei').references(:feature_types) }
+
+  scope :by_serial_number, ->(serial_number) { includes(item: {features: :feature_type}).where('LOWER(stolen_phones.serial_number) LIKE :q OR (feature_types.kind = :kind AND LOWER(features.value) LIKE :q)', q: "%#{serial_number.mb_chars.downcase.to_s}%", kind: 'serial_number').references(:feature_types) }
+
+  scope :by_client, ->(client) { includes(:client).where('LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q', q: "%#{client.mb_chars.downcase.to_s}%").references(:clients) }
+
   belongs_to :client
   belongs_to :item
   has_many :comments, as: :commentable, dependent: :destroy
@@ -9,6 +15,14 @@ class StolenPhone < ActiveRecord::Base
   attr_accessible :imei, :serial_number, :item_id, :client_id, :client_comment, :comment, :comments_attributes
   validates :client, presence: true
   validates_associated :comments
+
+  def self.query(imei: nil, serial_number: nil, client: nil, **)
+    stolen_phones = StolenPhone.includes(:client).includes(item: {features: :feature_type})
+    stolen_phones = stolen_phones.by_imei(imei) if imei.present?
+    stolen_phones = stolen_phones.by_serial_number(serial_number) if serial_number.present?
+    stolen_phones = stolen_phones.by_client(client) if client.present?
+    stolen_phones
+  end
 
   def self.search(params)
     stolen_phones = StolenPhone.includes(:client).includes(item: {features: :feature_type})

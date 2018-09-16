@@ -199,7 +199,7 @@ class ServiceJobsController < ApplicationController
     item = Item.find(params[:item_id])
     msg = ''
     if item.imei.present?
-      stolen_phone = StolenPhone.find_by_imei(item.imei)
+      stolen_phone = StolenPhone.by_imei(item.imei).first
       msg = t('service_jobs.phone_stolen') if stolen_phone.present?
     end
     render json: {present: stolen_phone.present?, msg: msg}

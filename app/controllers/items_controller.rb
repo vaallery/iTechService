@@ -129,4 +129,8 @@ class ItemsController < ApplicationController
     end
   end
 
+  def check_status
+    item = Item.find(params[:id]).decorate
+    render json: {status: item.status, status_info: item.status_info}
+  end
 end
