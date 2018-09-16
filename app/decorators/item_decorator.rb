@@ -15,6 +15,7 @@ class ItemDecorator < ApplicationDecorator
     res = []
     res << 'in_blacklist' if stolen_phone.present?
     res << 'substitute_phone' if object.substitute_phone.present?
+    res << 'trade_in' if object.trade_in_device.present?
     res << 'sold' if sale.present?
     res
   end
