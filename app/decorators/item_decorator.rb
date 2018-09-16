@@ -53,6 +53,6 @@ class ItemDecorator < ApplicationDecorator
 
   def sale
     return @sale if defined? @sale
-    @sale = item.sales.first || imported_sale
+    @sale = object.sales.first || imported_sale
   end
 end
