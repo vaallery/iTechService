@@ -21,7 +21,13 @@ class ItemDecorator < ApplicationDecorator
   end
 
   def status_info
-    statuses.collect { |status| I18n.t("item.status_info.#{status}") }.join(' ')
+    statuses.collect do |status|
+      if status == 'sold'
+        I18n.t('item.status_info.sold', date: I18n.l(sale.date, format: :date))
+      else
+        I18n.t("item.status_info.#{status}")
+      end
+    end.join(' ')
   end
 
   def features
@@ -47,13 +53,13 @@ class ItemDecorator < ApplicationDecorator
     @stolen_phone = object.stolen_phone.presence || StolenPhone.query(imei: object.imei, serial_number: object.serial_number).first
   end
 
-  def imported_sale
-    return @imported_sale if defined? @imported_sale
-    @imported_sale = ImportedSale.search(search: object.serial_number).first
-  end
-
   def sale
     return @sale if defined? @sale
     @sale = object.sales.first || imported_sale
+  end
+
+  def imported_sale
+    return @imported_sale if defined? @imported_sale
+    @imported_sale = ImportedSale.search(search: object.serial_number).first
   end
 end

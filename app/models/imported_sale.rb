@@ -15,4 +15,5 @@ class ImportedSale < ActiveRecord::Base
     device_type.present? ? device_type.full_name : '-'
   end
 
+  alias_attribute :date, :sold_at
 end
