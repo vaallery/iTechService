@@ -29,6 +29,7 @@ App.initDeviceInput = ->
       $(this).val(ui.item.label)
       $(this).siblings('.item_id').val(ui.item.value)
       $(this).siblings('.edit_item_btn').attr('href', "/devices/#{ui.item.value}/edit.js").attr('data-remote', true)
+      $(this).siblings('.show_item_btn').attr('href', "/devices/#{ui.item.value}.js").attr('data-remote', true)
       App.DeviceInput.check_imei()
       false
 
