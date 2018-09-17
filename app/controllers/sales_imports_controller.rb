@@ -5,8 +5,8 @@ class SalesImportsController < ApplicationController
   end
 
   def create
-    Delayed::Job.enqueue SalesImportJob.new params_for_job
-    redirect_to new_sales_import_path, notice: 'Sales import performed...'
+    Delayed::Job.enqueue SalesImportJob.new(params_for_job)
+    redirect_to new_sales_import_path, notice: t('imports.enqueued')
   end
 
   private

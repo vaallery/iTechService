@@ -2,3 +2,4 @@ ru:
   imports:
     do_import: 'Импортировать'
     importing: 'Импортирую...'
+    enqueued: 'Импорт поставлен в очередь.'
