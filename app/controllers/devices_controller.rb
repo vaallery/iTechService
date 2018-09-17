@@ -22,6 +22,7 @@ class DevicesController < ApplicationController
   end
 
   def select
+    @device = DeviceDecorator.decorate(Item.find(params[:id]))
     respond_to do |format|
       format.js
     end
