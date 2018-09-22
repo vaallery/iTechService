@@ -74,6 +74,8 @@ class TicketPdf < Prawn::Document
     text @service_job.tasks.map{|t|t.name}.join(', ')
     move_down 5
     text @view.t('tickets.user', name: @service_job.user_short_name)
+    move_down 5
+    text @service_job.presentation
     barcode
   end
 
