@@ -8,8 +8,8 @@ module FileLoader
       original_filename = file.original_filename
     end
     case File.extname(original_filename)
-      when ".xls" then Roo::Excel.new(filename, nil, :ignore)
-      when ".xlsx" then Roo::Excelx.new(filename, nil, :ignore)
+      when ".xls" then Roo::Excel.new(filename)
+      when ".xlsx" then Roo::Excelx.new(filename)
       else raise "Unknown file type: #{original_filename}"
     end
   end
