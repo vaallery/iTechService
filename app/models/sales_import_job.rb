@@ -9,7 +9,7 @@ class SalesImportJob < Struct.new(:params)
     begin
       sheet = FileLoader.open_spreadsheet file
       import_logs << ['Info', "Import started at #{Time.current.strftime('%Y.%m.%d %H:%M:%S')}"]
-      code_1c = device_type_s = sn = imei = date = qty = ''
+      code_1c = device_type_s = sn = imei = date = qty = nil
       device_type = nil
       9.upto sheet.last_row-1 do |r|
         row = sheet.row r
@@ -25,6 +25,7 @@ class SalesImportJob < Struct.new(:params)
             end
           when :device_1
             sn = RGXP_SERIAL_NUMBER.match(row[0])[1]
+            imei = nil
             import_logs << ['info', row[0]]
           when :device_2
             sn = RGXP_SERIAL_NUMBER_IMEI.match(row[0])[1]
@@ -33,16 +34,19 @@ class SalesImportJob < Struct.new(:params)
           when :date
             date = RGXP_DATE.match(row[0])[1]
             qty = row[5].to_i
-            sale = ImportedSale.find_or_initialize_by serial_number: sn, imei: imei, sold_at: date.to_date, device_type_id: device_type.try(:id), quantity: qty
-            unless !sale.new_record? and sale.sold_at == date.to_date
+            sale = ImportedSale.find_or_initialize_by serial_number: sn,
+                                                      imei: imei,
+                                                      sold_at: date.to_date,
+                                                      device_type_id: device_type.try(:id),
+                                                      quantity: qty
+
+            if sale.new_record? && sale.sold_at.to_date != date.to_date
               if sale.save
                 import_logs << ['success', "#{sale.new_record? ? 'New' : 'Existing'} device #{device_type.try(:full_name)} [#{sale.serial_number}] sold_at: #{sale.sold_at}"]
               else
                 import_logs << ['error', "Unable to save #{sale.inspect}: #{sale.errors.full_messages.join('. ')}"]
               end
             end
-          else
-
         end
       end
       import_logs << ['inverse', '-'*160]
