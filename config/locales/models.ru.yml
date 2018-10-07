@@ -430,7 +430,7 @@ ru:
         claimed_defect: 'Заявленный дефект'
         client: :activerecord.models.client
         client_address: 'Адрес'
-        client_comment: 'Комментарии/Особые отметки'
+        client_comment: 'Ориентировочный срок ремонта / Комментарии / Особые отметки'
         client_id: :activerecord.models.client
         client_notified: 'Клиент уведомлён'
         comment: 'Комментарий'
