@@ -5,7 +5,10 @@ class TradeInDevicesController < ApplicationController
     respond_to do |format|
       run TradeInDevice::Index do |result|
         format.html { return render_cell TradeInDevice::Cell::Index, context: {policy: result['policy.default']} }
-        format.js { return }
+        format.js do
+          content = cell(TradeInDevice::Cell::Table, result['model'], context: {policy: result['policy.default']}).()
+          render 'index', locals: {content: content}
+        end
       end
       format.any(:html, :js) { failed }
     end

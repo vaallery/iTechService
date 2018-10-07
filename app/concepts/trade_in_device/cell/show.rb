@@ -7,7 +7,7 @@ module TradeInDevice::Cell
     property :appraiser, :bought_device, :client_name, :client_phone, :check_icloud, :archiving_comment, :condition,
              :equipment
     delegate :human_attribute_name, to: :TradeInDevice
-    delegate :name, to: :decorated_item
+    delegate :name, :presentation, to: :decorated_item
 
     def attribute_presentation(attr_name)
       content_tag :tr do
@@ -17,7 +17,7 @@ module TradeInDevice::Cell
     end
 
     def item
-      link_to name, device_path(model.item), remote: true
+      link_to presentation, device_path(model.item), remote: true
     end
 
     def archived
