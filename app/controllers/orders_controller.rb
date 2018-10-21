@@ -30,7 +30,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.find(params[:id])
+    @order = Order.includes(:notes).find(params[:id])
 
     respond_to do |format|
       format.html

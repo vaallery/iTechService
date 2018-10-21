@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180820070053) do
+ActiveRecord::Schema.define(version: 20180922040302) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -579,6 +579,17 @@ ActiveRecord::Schema.define(version: 20180820070053) do
   add_index "option_values", ["code"], name: "index_option_values_on_code", using: :btree
   add_index "option_values", ["name"], name: "index_option_values_on_name", using: :btree
   add_index "option_values", ["option_type_id"], name: "index_option_values_on_option_type_id", using: :btree
+
+  create_table "order_notes", force: :cascade do |t|
+    t.integer  "order_id",   null: false
+    t.integer  "author_id",  null: false
+    t.text     "content",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "order_notes", ["author_id"], name: "index_order_notes_on_author_id", using: :btree
+  add_index "order_notes", ["order_id"], name: "index_order_notes_on_order_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.string   "number",            limit: 255
@@ -1362,6 +1373,8 @@ ActiveRecord::Schema.define(version: 20180820070053) do
   add_foreign_key "faults", "fault_kinds", column: "kind_id"
   add_foreign_key "faults", "users", column: "causer_id"
   add_foreign_key "option_values", "option_types"
+  add_foreign_key "order_notes", "orders"
+  add_foreign_key "order_notes", "users", column: "author_id"
   add_foreign_key "phone_substitutions", "service_jobs"
   add_foreign_key "phone_substitutions", "substitute_phones"
   add_foreign_key "phone_substitutions", "users", column: "issuer_id"
