@@ -124,6 +124,7 @@ Rails.application.routes.draw do
   resources :orders do
     get :history, on: :member, defaults: { format: 'js' }
     get :device_type_select, on: :collection, defaults: {format: 'js'}
+    resources :order_notes, only: %i[create]
   end
 
   resources :infos

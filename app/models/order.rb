@@ -25,6 +25,7 @@ class Order < ActiveRecord::Base
   belongs_to :customer, polymorphic: true
   belongs_to :user
   has_many :history_records, as: :object
+  has_many :notes, class_name: 'OrderNote', dependent: :destroy
 
   delegate :name, to: :department, prefix: true, allow_nil: true
 
