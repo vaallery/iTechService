@@ -25,6 +25,10 @@ class Department < ActiveRecord::Base
   validates :url, presence: true, if: :has_server?
   validate :only_one_main
 
+  def self.find_by_network(network)
+    where('ip_network LIKE ?', "%#{network}%").first
+  end
+
   def role_s
     ROLES[role]
   end
