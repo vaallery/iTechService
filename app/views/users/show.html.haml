@@ -7,18 +7,19 @@
     %h2
       = link_back_to_index
       = @user.short_name
+      = link_to_edit(@user) if can?(:manage, @user)
 
 %ul.nav.nav-tabs
-  %li.active= link_to User.human_attribute_name(:service_jobs), "#service_jobs_tab", 'data-toggle' => 'tab'
+  %li= link_to User.human_attribute_name(:service_jobs), "#service_jobs_tab", 'data-toggle' => 'tab'
   %li= link_to t("users.info"), "#info_tab", 'data-toggle' => 'tab'
   %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
   %li.user-fautls= link_to t('faults.index.title'), '#faults_tab', class: 'user-faults-link', data: {toggle: 'tab', source: user_faults_path(@user)}
   -#- if can? :manage, Salary
   -#  %li= link_to t('salaries.index.title'), '#salary_tab', 'data-toggle' => 'tab'
-  %li= link_to t("users.account"), '#account_tab', 'data-toggle' => 'tab'
+  %li.active= link_to t("users.account"), '#account_tab', 'data-toggle' => 'tab'
 
 .tab-content
-  #service_jobs_tab.tab-pane.active
+  #service_jobs_tab.tab-pane
     - if @service_jobs.any?
       %table.table.table-condensed.table-hover
         %thead
@@ -131,7 +132,7 @@
 
   #faults_tab.tab-pane
 
-  #account_tab.tab-pane
+  #account_tab.tab-pane.active
     %dl.dl-horizontal
       %dt= User.human_attribute_name :username
       %dd= @user.username
@@ -156,7 +157,5 @@
 
 - if can? :manage, User
   .form-actions
-    - if can? :manage, @user
-      = link_to_edit @user
     - if can? :manage, Salary
       = link_to (icon_tag(:money) + ' ' + t('salaries.issue')), new_salary_path(user_id: @user.id), class: 'btn'
