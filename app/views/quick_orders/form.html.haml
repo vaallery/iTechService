@@ -1,6 +1,6 @@
 .page-header
   %h1
-    = link_back_to_index
+    %small= link_to "#{icon(:chevron_left)} #{t('quick_orders.index.title')}".html_safe, quick_orders_path, class: 'link_back'
     = @quick_order.new_record? ? t('quick_orders.new.title') : t('quick_orders.title', num: @quick_order.number_s)
 
 .row-flow
