@@ -13,6 +13,9 @@ ru:
       title: 'Новый Быстрый заказ'
     edit:
       title: 'Редактирование Быстрого заказа'
+    form:
+      all_orders: 'Все заказы'
+      done_orders: 'Выполненные заказы'
     device_kinds:
       iphone: 'iPhone'
       ipad: 'iPad'
