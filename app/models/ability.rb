@@ -50,7 +50,7 @@ class Ability
         can %i[modify autocomplete remains_in_store], Item
         can [:post, :edit, :attach_gift_certificate, :return_check], Sale, status: 0
         can :create, CashOperation
-        can :create, QuickOrder
+        can [:create, :set_done], QuickOrder
         can :create, Service::FreeJob
         can :create, Payment
       end
