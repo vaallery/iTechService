@@ -276,7 +276,7 @@ class ServiceJobsController < ApplicationController
   end
 
   def log_service_job_show
-    LogServiceJobShowJob.perform_later @service_job.id, current_user.id, Time.current.to_s
+    LogServiceJobShowJob.perform_later @service_job.id, current_user.id, Time.current.to_s, request.ip
   end
 
   def create_phone_substitution
