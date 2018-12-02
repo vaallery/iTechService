@@ -626,12 +626,9 @@ ru:
     created_at: 'Время создания'
     color: 'Цвет'
     code: 'Код'
-    color: 'Цвет'
     content: 'Содержание'
     date: 'Дата'
     description: 'Описание'
-    created_at: 'Время создания'
-    date: 'Дата'
     department: :activerecord.models.department
     department_id: :activerecord.models.department
     device_type: :activerecord.models.device_type
@@ -643,6 +640,7 @@ ru:
     id: '№'
     imei: 'IMEI'
     kind: 'Вид'
+    message: 'Сообщение'
     name: 'Название'
     number: 'Номер'
     object: 'Объект'
@@ -662,7 +660,6 @@ ru:
     sum: 'Сумма'
     store: 'Склад'
     store_items: 'Остатки'
-    sum: 'Сумма'
     task: 'Задача'
     updated_at: 'Время обновления'
     url: 'Ссылка'

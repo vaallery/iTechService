@@ -6,7 +6,7 @@
 .modal-body
   .row-fluid
     .span6
-      = simple_form_for @service_job, html: { class: 'form-horizontal', remote: true } do |f|
+      = simple_form_for @service_job, html: {id: 'service_job_form', class: 'form-horizontal', remote: true } do |f|
         - if @service_job.errors.any?
           .alert.alert-error= @service_job.errors.full_messages.join('. ')
 
@@ -33,6 +33,10 @@
             = human_phone @service_job.contact_phone
 
         = f.input :client_notified, as: :radio_buttons, collection: [[true, t('yep')], [false, t('not_accessible')]], required: true, value_method: :first, label_method: :last if @service_job.notify_client?
+
+        - if @service_job.at_done?
+          .control-group
+            .controls= new_sms_notification_link @service_job
 
         - if @service_job.persisted? and @service_job.client.contact_phone.present?
           .control-group
@@ -92,7 +96,9 @@
           = link_to_archive_device @service_job, remote: true
         = submit_button f
 
-    #device_notes_container.span6= render 'device_notes'
+    .span6
+      #sms_notification_form_container
+      #device_notes_container= render 'device_notes'
 
 :javascript
   $('#modal_form').addClass('large');

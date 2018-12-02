@@ -179,4 +179,9 @@ module ServiceJobsHelper
       content: templates_list.gsub('"', '').html_safe
     }
   end
+
+  def new_sms_notification_link(service_job)
+    link_to t('service_jobs.send_sms'), new_service_sms_notification_path(service_job_id: service_job.id), remote: true,
+            id: 'new_sms_notification_link', class: 'btn'
+  end
 end
