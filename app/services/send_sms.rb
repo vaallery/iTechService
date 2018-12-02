@@ -6,7 +6,7 @@ class SendSMS
   attr_accessor :result
   attr_reader :line, :sms_key, :number, :message
 
-  base_uri "http://192.168.0.150"
+  base_uri ENV['GOIP_URI']
 
   def initialize(line: 3, number:, message:)
     @line = line
