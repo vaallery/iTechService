@@ -119,6 +119,10 @@ jQuery ->
     imei = $(this).parent().find('input').val()
     this.setAttribute('href', "http://iunlocker.net/check_imei.php?imei=#{imei}")
 
+$(document).on 'click', '#service_job_client_notified_false',  (event)->
+  service_job_id = document.getElementById('service_job_form').action.match(/\d+$/)[0]
+  $.getScript("/service/sms_notifications/new?service_job_id=#{service_job_id}")
+
 $(document).on 'click', '.returning_device_tooltip', ->
   $(this).tooltip()
   $(this).tooltip('toggle')

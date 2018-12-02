@@ -2,7 +2,7 @@ module Service
   class RepairReturn::Create < ATransaction
     step :find_job
     step :validate
-    step :prepair
+    step :prepare
     step :process
 
     private
@@ -26,7 +26,7 @@ module Service
       errors.any? ? Failure(errors) : Success(params.merge(service_job: service_job))
     end
 
-    def prepair(service_job:, current_user:, **)
+    def prepare(service_job:, current_user:, **)
       repair_return = RepairReturn.new service_job: service_job, performer: current_user, performed_at: Time.current
       Success repair_return
     end

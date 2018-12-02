@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     resources :free_jobs
 
     resources :repair_returns, only: %i[index new create]
+
+    resources :sms_notifications, only: %i[new create]
   end
 
   resources :departments

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180922040302) do
+ActiveRecord::Schema.define(version: 20181117051629) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1066,6 +1066,17 @@ ActiveRecord::Schema.define(version: 20180922040302) do
   add_index "service_repair_returns", ["performer_id"], name: "index_service_repair_returns_on_performer_id", using: :btree
   add_index "service_repair_returns", ["service_job_id"], name: "index_service_repair_returns_on_service_job_id", using: :btree
 
+  create_table "service_sms_notifications", force: :cascade do |t|
+    t.integer  "sender_id",    null: false
+    t.datetime "sent_at",      null: false
+    t.text     "message",      null: false
+    t.string   "phone_number", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "service_sms_notifications", ["sender_id"], name: "index_service_sms_notifications_on_sender_id", using: :btree
+
   create_table "settings", force: :cascade do |t|
     t.string   "name",          limit: 255
     t.string   "presentation",  limit: 255
@@ -1390,6 +1401,7 @@ ActiveRecord::Schema.define(version: 20180922040302) do
   add_foreign_key "service_free_jobs", "users", column: "performer_id"
   add_foreign_key "service_repair_returns", "service_jobs"
   add_foreign_key "service_repair_returns", "users", column: "performer_id"
+  add_foreign_key "service_sms_notifications", "users", column: "sender_id"
   add_foreign_key "stolen_phones", "items"
   add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"

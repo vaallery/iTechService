@@ -1,0 +1,12 @@
+.modal-header
+  h4 = t '.title'
+
+= form remote: true do |f|
+  .modal-content
+    = errors
+    = hidden_field_tag :service_job_id, service_job_id
+    = f.input :message, input_html: {rows: 3, class: 'input-xlarge'}
+
+  .modal-footer
+    = button_to_close
+    = button_to_dispatch

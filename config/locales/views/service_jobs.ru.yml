@@ -57,6 +57,7 @@ ru:
     link: 'Работы'
     not_found: 'Работа не найдена'
     not_found_by_ticket: "Устройство с талоном № %{ticket} не найдено"
+    move_to_archive: "В архив"
     moved_at: 'Перемещена в'
     moved_to: 'Перемещено в'
     moved_by: 'Переместил(а)'
@@ -65,12 +66,12 @@ ru:
     returning_popover_title: "Напоминание о возврате девайсов"
     search_placeholder: 'Талон или серийный номер'
     seach_sales_btn: 'Искать продажи'
+    send_sms: 'Отправить СМС о готовности'
     service_duration_placeholder: "м | ч.м | д.ч.м"
     subscribe: 'Подписаться'
     unsubscribe: 'Отписаться'
     updated: 'Работа изменена'
     sales_info: "Информация о продаже"
-    move_to_archive: "В архив"
 
   service_jobs_mailer:
     staff_notice:

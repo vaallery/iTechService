@@ -1,0 +1,4 @@
+$('#sms_notification_form_container').html('<%=
+  content_tag(:div, @message, class: 'alert alert-error') +
+  button_tag(t('close'), type: :button, class: 'btn', onclick: 'App.Service.Jobs.close_sms_notification_form();')
+%>');

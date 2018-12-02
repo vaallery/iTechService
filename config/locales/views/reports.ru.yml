@@ -76,6 +76,10 @@ ru:
       with_parts: 'с использованием запчастей'
       without_parts: 'без использования запчастей'
       without_payment: 'без оплаты'
+    sms_notifications:
+      title: 'Отчёт о посланных сообщениях'
+      sender: 'Отправитель / Сообщение'
+      quantity: 'Количество сообщений / Время отправки'
     tasks_undone:
       title: 'Отчёт по невыполненным задачам'
       tasks_devices: "Задача / Девайс"
