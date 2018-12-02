@@ -5,7 +5,7 @@ class DoneTasksReport < BaseReport
     archived_service_jobs_ids = HistoryRecord.service_jobs.movements_to_archive.in_period(period).collect { |hr| hr.object_id }.uniq
     result[:tasks_sum] = result[:tasks_qty] = result[:tasks_qty_free] = 0
     if archived_service_jobs_ids.any?
-      tasks = DeviceTask.where device_id: archived_service_jobs_ids
+      tasks = DeviceTask.where service_job_id: archived_service_jobs_ids
       tasks.collect { |t| t.task_id }.uniq.each do |task_id|
         task = Task.find task_id
         task_name = task.name
