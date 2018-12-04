@@ -15,6 +15,8 @@
     = link_to icon_tag(:print) + t('tickets.link'), service_job_path(@service_job, format: 'pdf', print: true), class: 'btn btn-primary', target: '_blank', id: 'print_service_job_ticket'
     = link_to icon_tag('eye-open') + t('tickets.link'), service_job_path(@service_job, format: 'pdf'), class: 'btn btn-info pull-right', target: '_blank', id: 'show_service_job_ticket'
 
+  = new_sms_notification_link(@service_job) if @service_job.at_done?
+
 .row-fluid
   .span6
     %table.attributes_table
@@ -132,6 +134,7 @@
           %td{colspan: 4}
 
   .span6
+    #sms_notification_form_container
     #device_notes_container= render 'device_notes'
     = cell(Service::Job::Cell::Feedbacks, @service_job)
 
