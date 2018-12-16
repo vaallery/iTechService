@@ -51,6 +51,7 @@ class Ability
         can [:post, :edit, :attach_gift_certificate, :return_check], Sale, status: 0
         can :create, CashOperation
         can [:create, :set_done], QuickOrder
+        can :update, QuickOrder, {user_id: user.id}
         can :create, Service::FreeJob
         can :create, Payment
       end

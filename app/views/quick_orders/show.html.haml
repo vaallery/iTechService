@@ -36,6 +36,6 @@
     %td= @quick_order.user.try(:short_name)
 
 .form-actions
-  = link_to_edit @quick_order
+  = link_to_edit(@quick_order) if can?(:edit, @quick_order)
   = link_to t('quick_orders.set_done'), set_done_quick_order_path(@quick_order), method: :patch, class: 'btn btn-primary' unless @quick_order.is_done
   = link_to_destroy @quick_order

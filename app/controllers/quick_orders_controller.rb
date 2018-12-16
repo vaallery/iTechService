@@ -39,6 +39,8 @@ class QuickOrdersController < ApplicationController
 
   def edit
     @quick_order = QuickOrder.find(params[:id])
+    authorize! :edit, @quick_order
+
     respond_to do |format|
       format.html { render 'form' }
     end
@@ -61,6 +63,7 @@ class QuickOrdersController < ApplicationController
 
   def update
     @quick_order = QuickOrder.find(params[:id])
+    authorize! :update, @quick_order
 
     respond_to do |format|
       if @quick_order.update_attributes(params[:quick_order])

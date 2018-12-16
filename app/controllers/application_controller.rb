@@ -81,8 +81,8 @@ class ApplicationController < ActionController::Base
   end
 
   def access_denied
-    flash[:error] = exception.message
-    redirect_to request.referrer || root_url, alert: exception.message
+    flash[:error] = 'Access denied'
+    redirect_to request.referrer || root_url
   end
 
   def _run_options(options)
