@@ -27,6 +27,16 @@ window.product_groups_tree = (container)->
           name: data.rslt.new_name
   ).bind('select_node.jstree', (e, data)->
     $container.jstree('open_node', data.rslt.obj[0])
+  ).bind("move_node.jstree", (e, data)->
+    moved_group_id = data.rslt.o[0].dataset.productGroupId
+    target_group_id = data.rslt.r[0].dataset.productGroupId
+    $.ajax
+      type: "PUT"
+      url: "/product_groups/#{moved_group_id}"
+      data:
+        product_group:
+          parent_id: target_group_id
+
 #  ).bind('drag_finish.jstree', (e, data)->
 #    alert 'drag_finish'
 #  ).bind('drop_finish.jstree', (e, data)->
@@ -86,7 +96,7 @@ window.product_groups_tree = (container)->
                 @remove()
               else
                 @remove obj
-    plugins: ["themes", "html_data", "ui", "contextmenu", "crrm"]
+    plugins: ["themes", "html_data", "ui", "contextmenu", "crrm", "dnd"]
   ).show()
 
 window.product_groups_tree_readonly = (container)->
