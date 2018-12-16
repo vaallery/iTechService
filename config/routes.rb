@@ -204,6 +204,8 @@ Rails.application.routes.draw do
   resources :products do
     get :category_select, on: :collection, defaults: {format: :js}
     get :choose, on: :collection, defaults: {format: :js}
+    get :choose_group, on: :collection, defaults: {format: :js}
+    get :select_group, on: :collection, defaults: {format: :js}
     get :show_prices, on: :member, defaults: {format: :js}
     get :show_remains, on: :member, defaults: {format: :js}
     get :remains_in_store, on: :member, defaults: {format: :json}

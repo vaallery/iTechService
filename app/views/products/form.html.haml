@@ -5,66 +5,76 @@
     -#= link_to glyph('chevron-left'), products_path(group: @product.product_group.id), class: 'link_back'
     = @product.name
 
-= simple_form_for @product, html: { id: 'product_form', class: 'form-horizontal' } do |f|
-  = f.error_notification message: error_messages_for(@product)
+.row-fluid
+  .span8
+    = simple_form_for @product, html: { id: 'product_form', class: 'form-horizontal' } do |f|
+      = f.error_notification message: error_messages_for(@product)
 
-  %ul.nav.nav-tabs
-    %li.active= link_to t('.attributes'), '#attributes', 'data-toggle' => 'tab'
-    - if @product.feature_accounting
-      %li= link_to Product.human_attribute_name(:items), '#items', 'data-toggle' => 'tab'
-    -#%li= link_to Product.human_attribute_name(:related_products), '#related_products', 'data-toggle' => 'tab'
-    -#%li= link_to Product.human_attribute_name(:related_product_groups), '#related_product_groups', 'data-toggle' => 'tab'
+      %ul.nav.nav-tabs
+        %li.active= link_to t('.attributes'), '#attributes', 'data-toggle' => 'tab'
+        - if @product.feature_accounting
+          %li= link_to Product.human_attribute_name(:items), '#items', 'data-toggle' => 'tab'
+        -#%li= link_to Product.human_attribute_name(:related_products), '#related_products', 'data-toggle' => 'tab'
+        -#%li= link_to Product.human_attribute_name(:related_product_groups), '#related_product_groups', 'data-toggle' => 'tab'
 
-  .tab-content
-    #attributes.tab-pane.active
+      .tab-content
+        #attributes.tab-pane.active
 
-      = f.hidden_field :product_group_id
-      = f.input :device_type, as: :device_type if @product.is_equipment
-      = f.association :product_category
-      #product_options= render 'options_fields', available_options: @product.available_options
-      = f.input :name
-      = f.input :code
-      = f.input :warranty_term
-      = f.input :quantity_threshold
-      = f.input :comment, input_html: {rows: 3}
+          .control-group
+            %label.control-label= Product.human_attribute_name :product_group
+            .controls
+              = link_to @product.group_name, choose_group_products_path, remote: true, class: 'btn', id: 'product_group_button'
+              = f.hidden_field :product_group_id
 
-      - if @product.is_service
-        - @product.task || @product.build_task
-        = f.simple_fields_for :task do |ff|
-          -#= ff.input :name
-          = ff.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
-          = ff.association :location, label_method: :name
+          = f.input :device_type, as: :device_type if @product.is_equipment
+          = f.association :product_category
+          #product_options= render 'options_fields', available_options: @product.available_options
+          = f.input :name
+          = f.input :code
+          = f.input :warranty_term
+          = f.input :quantity_threshold
+          = f.input :comment, input_html: {rows: 3}
 
-      .control-group
-        %label.control-label= Product.human_attribute_name :warning_quantities
-        .controls
-          %table#store_products.form-inline
-            = f.simple_fields_for :store_products do |ff|
-              = render 'store_product_fields', f: ff
-          = link_to_add_fields t('.add_store'), '#store_products', f, :store_products
+          - if @product.is_service
+            - @product.task || @product.build_task
+            = f.simple_fields_for :task do |ff|
+              -#= ff.input :name
+              = ff.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
+              = ff.association :location, label_method: :name
 
-    - if @product.feature_accounting
-      #items.tab-pane
-        %table.table.table-condensed
-          %thead
-            %tr
-              %th= Item.human_attribute_name :barcode
-              - @product.feature_types.each do |feature_type|
-                %th= feature_type.name
-          %tbody
-            - @product.items.each do |item|
-              %tr
-                %td= item.barcode_num
-                - item.features.each do |feature|
-                  %td
-                    = hidden_field_tag "item[features_attributes][#{feature.id}][feature_type_id]", feature.feature_type_id
-                    = text_field_tag "item[features_attributes][#{feature.id}][value]", feature.value
+          .control-group
+            %label.control-label= Product.human_attribute_name :warning_quantities
+            .controls
+              %table#store_products.form-inline
+                = f.simple_fields_for :store_products do |ff|
+                  = render 'store_product_fields', f: ff
+              = link_to_add_fields t('.add_store'), '#store_products', f, :store_products
 
-    -##related_products.tab-pane
-    -#  = f.input :related_product_ids, as: :filterable_association, collection: Product.goods.name_asc, label: false
+        - if @product.feature_accounting
+          #items.tab-pane
+            %table.table.table-condensed
+              %thead
+                %tr
+                  %th= Item.human_attribute_name :barcode
+                  - @product.feature_types.each do |feature_type|
+                    %th= feature_type.name
+              %tbody
+                - @product.items.each do |item|
+                  %tr
+                    %td= item.barcode_num
+                    - item.features.each do |feature|
+                      %td
+                        = hidden_field_tag "item[features_attributes][#{feature.id}][feature_type_id]", feature.feature_type_id
+                        = text_field_tag "item[features_attributes][#{feature.id}][value]", feature.value
 
-    -##related_product_groups.tab-pane
-    -#  = f.input :related_product_group_ids, as: :filterable_association, collection: ProductGroup.except_spare_parts_and_services.name_asc, label: false
+        -##related_products.tab-pane
+        -#  = f.input :related_product_ids, as: :filterable_association, collection: Product.goods.name_asc, label: false
 
-  .form-actions
-    = submit_button f
+        -##related_product_groups.tab-pane
+        -#  = f.input :related_product_group_ids, as: :filterable_association, collection: ProductGroup.except_spare_parts_and_services.name_asc, label: false
+
+      .form-actions
+        = submit_button f
+
+  .span4
+    #product_groups

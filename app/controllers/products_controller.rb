@@ -135,6 +135,14 @@ class ProductsController < ApplicationController
     end
   end
 
+  def choose_group
+    @product_groups = ProductGroup.roots.order('id asc')
+  end
+
+  def select_group
+    @product_group = ProductGroup.find(params[:product_group_id])
+  end
+
   def category_select
     category = Category.find params[:category_id]
     @feature_types = category.feature_types
