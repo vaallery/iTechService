@@ -22,6 +22,7 @@ module ReportsHelper
     content = ''
     if data[:quantity] > 0
       content << content_tag(:tr, class: row_class, data: {depth: data[:depth], id: data[:id]}) do
+        content_tag(:td, data[:code], class: 'code') +
         content_tag(:td, data[:name], class: 'name') +
         content_tag(:td, data[:quantity], class: 'quantity number') +
         content_tag(:td, human_currency(data[:purchase_price], false), class: 'price number') +
