@@ -30,7 +30,7 @@ module GiftCertificatesHelper
   end
 
   def human_gift_certificate_nominal(gift_certificate)
-    gift_certificate.present? ? human_currency(gift_certificate.nominal) : nil
+    gift_certificate.present? ? number_to_currency(gift_certificate.nominal) : nil
   end
 
   def human_gift_certificate_balance(gift_certificate)

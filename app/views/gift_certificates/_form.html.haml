@@ -2,7 +2,7 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :nominal, collection: GiftCertificate::NOMINALS, value_method: lambda{|n| n[0..-1].to_i}, label_method: lambda{|n|t("gift_certificates.nominals.#{n}")}
+    = f.input :nominal, input_html: {min: 1_000, max: 100_000, step: 1_000}
     = f.input :number
 
     - unless @gift_certificate.new_record?
