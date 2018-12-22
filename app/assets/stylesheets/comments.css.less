@@ -25,3 +25,27 @@ form#new_comment{
   height: 400px;
   overflow-y: scroll;
 }
+
+.comments_list {
+  max-height: 300px;
+  overflow-y: scroll;
+  margin-bottom: 5px;
+
+  .comment {
+    margin: 8px 0;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid #eee;
+    }
+  }
+}
+
+#comment_form {
+  .control-group {
+    margin-bottom: 4px;
+  }
+  .controls > * {
+    width: 97%;
+    margin: 0;
+  }
+}

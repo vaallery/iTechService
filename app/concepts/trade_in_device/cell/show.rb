@@ -24,6 +24,14 @@ module TradeInDevice::Cell
       TradeInDevice.human_attribute_name("archived/#{model.archived}")
     end
 
+    def comments
+      cell Comment::Cell::Preview, collection: model.comments.oldest
+    end
+
+    def comment_form
+      cell Comment::Cell::Form, model.comments.build
+    end
+
     def link_to_index
       link_to t('.index.title'), trade_in_devices_path
     end

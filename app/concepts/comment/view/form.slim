@@ -1,0 +1,5 @@
+= simple_form_for comment, html: {id: 'comment_form', remote: true} do |f|
+  = f.hidden_field :commentable_type
+  = f.hidden_field :commentable_id
+  = f.input :content, input_html: {rows: 3}, label: false
+  = f.submit class: 'btn btn-primary'
