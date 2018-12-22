@@ -6,6 +6,7 @@ module TradeInDevice::Cell
 
     include FormCell
     include ActionView::Helpers::FormOptionsHelper
+    include ActionView::Helpers::DateHelper
 
     def header_tag
       content_tag :div, class: 'page-header' do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181117051629) do
+ActiveRecord::Schema.define(version: 20181222022501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1285,6 +1285,7 @@ ActiveRecord::Schema.define(version: 20181117051629) do
     t.datetime "updated_at",                         null: false
     t.text     "condition"
     t.text     "equipment"
+    t.date     "apple_guarantee"
   end
 
   add_index "trade_in_devices", ["item_id"], name: "index_trade_in_devices_on_item_id", using: :btree

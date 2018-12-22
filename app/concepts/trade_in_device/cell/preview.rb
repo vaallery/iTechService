@@ -29,6 +29,12 @@ module TradeInDevice::Cell
       TradeInDevice.human_attribute_name("replacement_status/#{model.replacement_status}")
     end
 
+    def apple_guarantee
+      return '-' if model.apple_guarantee.nil?
+
+      l model.apple_guarantee
+    end
+
     def link_to_show
       link_to icon('eye-open'), trade_in_device_path(id), class: 'btn btn-small' if policy.show?
     end

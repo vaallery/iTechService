@@ -518,6 +518,7 @@ ru:
         type: 'Тип'
 
       trade_in_device:
+        apple_guarantee: 'Гарантия Apple'
         appraised_value: 'Сумма, в которую оценили'
         appraiser: 'Оценивал'
         archived: 'Архивирован?'

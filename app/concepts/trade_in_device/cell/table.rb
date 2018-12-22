@@ -2,7 +2,7 @@ module TradeInDevice::Cell
   class Table < BaseCell
     private
 
-    include ModelCell
+    include IndexCell
     include ActiveSupport::NumberHelper
 
     def trade_in_devices

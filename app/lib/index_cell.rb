@@ -22,4 +22,28 @@ module IndexCell
   def nothing_found_message
     content_tag :h2, I18n.t('errors.nothing_found')
   end
+
+  def sortable_column(column)
+    title = t_attribute(column)
+
+    if column.to_s == sort_column
+      css_class = "current #{sort_direction} nav nav-pills"
+      direction = sort_direction == 'asc' ? 'desc' : 'asc'
+      icon_name = (sort_direction == 'asc') ? 'caret-up' : 'caret-down'
+    else
+      css_class = 'nav nav-pills'
+      icon_name = 'sort'
+      direction = 'asc'
+    end
+    title = "#{title} #{icon(icon_name)}".html_safe
+    link_to title, params.merge(sort_column: column, sort_direction: direction, page: nil), {class: css_class, remote: true}
+  end
+
+  def sort_column
+    params.fetch(:sort_column, '')
+  end
+
+  def sort_direction
+    params.fetch(:sort_direction, 'asc')
+  end
 end

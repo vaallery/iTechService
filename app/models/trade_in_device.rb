@@ -13,11 +13,16 @@ class TradeInDevice < ActiveRecord::Base
   validates_presence_of :number, :received_at, :item, :appraised_value, :appraiser, :bought_device,
                         :client_name, :client_phone, :check_icloud
 
-  def self.search(query, in_archive: false)
+  def self.search(query, in_archive: false, sort_column: nil, sort_direction: :asc)
     result = in_archive ? archived : not_archived
     unless query.blank?
-      result = result.includes(:features).where('LOWER(features.value) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%").references(:features)
+      result = result.includes(:features, :receiver, item: :products).where('LOWER(features.value) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%").references(:features)
     end
-    result.ordered
+
+    if sort_column
+      result.order(sort_column => sort_direction)
+    else
+      result.ordered
+    end
   end
 end
