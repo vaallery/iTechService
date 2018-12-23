@@ -4,6 +4,7 @@ ru:
       archive: 'Архив'
       query_placeholder: "IMEI / Серийный номер"
       title: 'Trade-in'
+      local: 'Местные'
 
     form:
       title:

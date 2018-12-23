@@ -4,8 +4,8 @@ class TradeInDevice::Contract < BaseContract
 
   properties :item_id, :appraised_value, :bought_device, :client_name, :client_phone, :check_icloud, :appraiser,
              :received_at, :replacement_status, :archived, :archiving_comment, :condition, :equipment,
-             :apple_guarantee
+             :apple_guarantee, :department, :department_id
 
   validates :received_at, :item_id, :appraised_value, :appraiser, :bought_device,
-            :client_name, :client_phone, :check_icloud, presence: true
+            :client_name, :client_phone, :check_icloud, :department_id, presence: true
 end

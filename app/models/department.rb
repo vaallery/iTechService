@@ -29,6 +29,15 @@ class Department < ActiveRecord::Base
     where('ip_network LIKE ?', "%#{network}%").first
   end
 
+  def self.current
+    return User.current.department if User.current.present? && User.current.department.present?
+    Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first
+  end
+
+  def self.current_with_remotes
+    where('code LIKE ?', "#{current.code}%")
+  end
+
   def role_s
     ROLES[role]
   end
@@ -51,11 +60,6 @@ class Department < ActiveRecord::Base
 
   def has_server?
     role.in? 0..1
-  end
-
-  def self.current
-    return User.current.department if User.current.present? && User.current.department.present?
-    Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first
   end
 
   def spare_parts_store

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181222022501) do
+ActiveRecord::Schema.define(version: 20181223010341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1286,8 +1286,10 @@ ActiveRecord::Schema.define(version: 20181222022501) do
     t.text     "condition"
     t.text     "equipment"
     t.date     "apple_guarantee"
+    t.integer  "department_id",                      null: false
   end
 
+  add_index "trade_in_devices", ["department_id"], name: "index_trade_in_devices_on_department_id", using: :btree
   add_index "trade_in_devices", ["item_id"], name: "index_trade_in_devices_on_item_id", using: :btree
   add_index "trade_in_devices", ["receiver_id"], name: "index_trade_in_devices_on_receiver_id", using: :btree
 
@@ -1407,6 +1409,7 @@ ActiveRecord::Schema.define(version: 20181222022501) do
   add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"
   add_foreign_key "substitute_phones", "service_jobs"
+  add_foreign_key "trade_in_devices", "departments"
   add_foreign_key "trade_in_devices", "items"
   add_foreign_key "trade_in_devices", "users", column: "receiver_id"
 end

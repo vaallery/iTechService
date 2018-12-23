@@ -12,4 +12,8 @@
         span.add-on.btn.clear_search_input
           i.icon-remove
 
+      = select_tag(:department_id, department_options, prompt: t('.local')) if superadmin?
+
+      = button_tag glyph(:search), class: 'btn btn-info', type: 'submit'
+
 #resource_table = table

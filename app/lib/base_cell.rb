@@ -15,4 +15,8 @@ class BaseCell < Trailblazer::Cell
   def title
     t '.title'
   end
+
+  def superadmin?
+    current_user.superadmin?
+  end
 end

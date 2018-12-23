@@ -16,10 +16,10 @@
 
       - if superadmin?
         = f.input :replacement_status, as: :radio_buttons, collection: replacement_statuses
+        = f.association :department, collection: departments
         = f.input :archived
         = f.input :archiving_comment
 
-      / = f.input :apple_guarantee, start_year: Date.today.year, include_blank: true, input_html: {class: 'input-small'} if persisted?
       = f.input :apple_guarantee, as: :string, input_html: {class: 'bootstrap-datepicker'} if persisted?
 
       .form-actions

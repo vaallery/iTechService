@@ -32,5 +32,9 @@ module TradeInDevice::Cell
         [TradeInDevice.human_attribute_name("replacement_status/#{name}"), name]
       end
     end
+
+    def departments
+      Department.select(:id, :name).selectable.map { |department| [department.name, department.id] }
+    end
   end
 end

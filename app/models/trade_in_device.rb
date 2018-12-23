@@ -1,10 +1,12 @@
-class TradeInDevice < ActiveRecord::Base
+class TradeInDevice < ApplicationRecord
   scope :ordered, -> { order :number }
   scope :archived, -> { where archived: true }
   scope :not_archived, -> { where archived: false }
+  scope :local, -> { where department_id: Department.current_with_remotes }
 
   belongs_to :item
   belongs_to :receiver, class_name: 'User'
+  belongs_to :department
   has_many :features, through: :item
   has_many :comments, as: :commentable
 
@@ -15,8 +17,15 @@ class TradeInDevice < ActiveRecord::Base
 
   enum replacement_status: {not_replaced: 0, replaced: 1, in_service: 2}
 
-  def self.search(query, in_archive: false, sort_column: nil, sort_direction: :asc)
+  def self.search(query, in_archive: false, department_id: nil, sort_column: nil, sort_direction: :asc)
     result = in_archive ? archived : not_archived
+
+    if department_id.blank?
+      result = result.local
+    else
+      result = result.where(department_id: department_id)
+    end
+
     unless query.blank?
       result = result.includes(:features, :receiver, item: :products)
                  .where('LOWER(features.value) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%").references(:features)
