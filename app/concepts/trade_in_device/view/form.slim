@@ -3,23 +3,16 @@
 .row-fluid
   .span6
     = form do |f|
-      = f.input :received_at, as: :string, input_html: {class: 'bootstrap-datepicker'}
-      = f.input :item, as: :device, required: true
-      = f.input :appraised_value
-      = f.input :appraiser
-      = f.input :bought_device
-      = f.input :client_name
-      = f.input :client_phone
-      = f.input :check_icloud
-      = f.input :condition
-      = f.input :equipment
-
-      - if superadmin?
-        = f.input :replacement_status, as: :radio_buttons, collection: replacement_statuses
-        = f.association :department, collection: departments
-        = f.input :archived
-        = f.input :archiving_comment
-
+      = f.input :received_at, as: :string, input_html: {class: 'bootstrap-datepicker'}, disabled: persisted?
+      = f.input :item, as: :device, required: true, disabled: persisted?
+      = f.input :appraised_value, disabled: persisted?
+      = f.input :appraiser, disabled: persisted?
+      = f.input :bought_device, disabled: persisted?
+      = f.input :client_name, disabled: persisted?
+      = f.input :client_phone, disabled: persisted?
+      = f.input :check_icloud, disabled: persisted?
+      = f.input :condition, disabled: persisted?
+      = f.input :equipment, disabled: persisted?
       = f.input :apple_guarantee, as: :string, input_html: {class: 'bootstrap-datepicker'} if persisted?
 
       .form-actions

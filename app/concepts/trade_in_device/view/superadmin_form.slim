@@ -1,0 +1,25 @@
+= header_tag
+
+.row-fluid
+  .span6
+    = form do |f|
+      = f.input :received_at, as: :string, input_html: {class: 'bootstrap-datepicker'}
+      = f.input :item, as: :device, required: true
+      = f.input :appraised_value
+      = f.input :appraiser
+      = f.input :bought_device
+      = f.input :client_name
+      = f.input :client_phone
+      = f.input :check_icloud
+      = f.input :condition
+      = f.input :equipment
+      = f.input :replacement_status, as: :radio_buttons, collection: replacement_statuses
+      = f.association :department, collection: departments
+      = f.input :archived
+      = f.input :archiving_comment
+      = f.input :apple_guarantee, as: :string, input_html: {class: 'bootstrap-datepicker'} if persisted?
+
+      .form-actions
+        = submit_button f
+
+  .span6= secondary_form_container

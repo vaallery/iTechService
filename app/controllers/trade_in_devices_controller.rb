@@ -55,7 +55,9 @@ class TradeInDevicesController < ApplicationController
   end
 
   def update
-    run TradeInDevice::Update do
+    permitted_params = current_user.superadmin? ? params : params.merge(trade_in_device: params[:trade_in_device].slice(:apple_guarantee))
+
+    run TradeInDevice::Update, permitted_params do
       return redirect_to_index notice: operation_message
     end
     render_form

@@ -1,14 +1,14 @@
 class DeviceInput < SimpleForm::Inputs::Base
 
   def input(wrapper_options=nil)
-    template.content_tag(:div, class: "device_input input-group input-append input-prepend") do
-      template.content_tag(:span, template.glyph(:search), class: 'input-group-addon add-on') +
-      @builder.hidden_field("#{attribute_name}_id", class: 'item_id') +
-      template.text_field_tag(:item_search, presentation, class: "item_search form-control has-tooltip", placeholder: I18n.t('helpers.placeholders.item'), autocomplete: 'off', title: status_info, data: {html: true, container: 'body', status: status}) +
-      template.link_to(template.glyph(:plus), template.new_device_path, class: 'new_item_btn btn btn-default', remote: true) +
-      template.link_to(template.glyph(:edit), device.present? ? template.edit_device_path(device) : '#', class: 'edit_item_btn btn btn-default', remote: device.present?) +
-      template.link_to(template.glyph('eye-open'), device.present? ? template.device_path(device) : '#', class: 'show_item_btn btn btn-default', remote: device.present?)
-    end
+    content = ''
+    content << template.content_tag(:span, template.glyph(:search), class: 'input-group-addon add-on')
+    content << @builder.hidden_field("#{attribute_name}_id", class: 'item_id') unless disabled?
+    content << template.text_field_tag(:item_search, presentation, class: "item_search form-control has-tooltip", placeholder: I18n.t('helpers.placeholders.item'), autocomplete: 'off', title: status_info, data: {html: true, container: 'body', status: status})
+    content << template.link_to(template.glyph(:plus), template.new_device_path, class: 'new_item_btn btn btn-default', remote: true) unless disabled?
+    content << template.link_to(template.glyph(:edit), device.present? ? template.edit_device_path(device) : '#', class: 'edit_item_btn btn btn-default', remote: device.present?) unless disabled?
+    content << template.link_to(template.glyph('eye-open'), device.present? ? template.device_path(device) : '#', class: 'show_item_btn btn btn-default', remote: device.present?)
+    template.content_tag(:div, content, class: "device_input input-group input-append input-prepend")
   end
 
   private
@@ -31,5 +31,9 @@ class DeviceInput < SimpleForm::Inputs::Base
 
   def presentation
     device_presenter&.presentation
+  end
+
+  def disabled?
+    options[:disabled] == true
   end
 end

@@ -4,7 +4,7 @@ class TradeInDevice::Policy < BasePolicy
   end
 
   def show?
-    user.superadmin?
+    user.any_admin?
   end
 
   def print?
@@ -16,7 +16,7 @@ class TradeInDevice::Policy < BasePolicy
   end
 
   def update?
-    user.superadmin?
+    user.any_admin?
   end
 
   def destroy?
