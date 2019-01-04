@@ -27,7 +27,7 @@ class TradeInDevice < ApplicationRecord
     end
 
     unless query.blank?
-      result = result.includes(:features, :receiver, item: :products)
+      result = result.includes(:features, :receiver, item: :product)
                  .where('LOWER(features.value) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%").references(:features)
     end
 
