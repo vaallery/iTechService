@@ -530,7 +530,7 @@ ru:
         client_name: 'ФИО покупателя'
         client_phone: 'Номер телефона покупателя'
         condition: 'Состояние'
-        confirmed: 'Подтвержденное устройство'
+        confirmed: 'Подтвержденное устройство?'
         equipment: 'Комплектация'
         item: 'Сдают'
         received_at: 'Дата'
