@@ -14,6 +14,16 @@ class TradeInDevicesController < ApplicationController
     end
   end
 
+  def purgatory
+    authorize TradeInDevice, :index_unconfirmed?
+    trade_in_devices = TradeInDevice.unconfirmed
+    the_policy = policy(TradeInDevice)
+
+    respond_to do |format|
+      format.html { render_cell(TradeInDevice::Cell::Purgatory, model: trade_in_devices, context: {policy: the_policy}) }
+    end
+  end
+
   def show
     run TradeInDevice::Show do
       return render_cell TradeInDevice::Cell::Show

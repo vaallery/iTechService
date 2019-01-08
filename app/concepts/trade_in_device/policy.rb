@@ -3,6 +3,10 @@ class TradeInDevice::Policy < BasePolicy
     user.present?
   end
 
+  def index_unconfirmed?
+    superadmin?
+  end
+
   def show?
     user.any_admin?
   end
