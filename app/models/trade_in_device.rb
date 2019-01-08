@@ -3,6 +3,8 @@ class TradeInDevice < ApplicationRecord
   scope :archived, -> { where archived: true }
   scope :not_archived, -> { where archived: false }
   scope :local, -> { where department_id: Department.current_with_remotes }
+  scope :confirmed, -> { where(confirmed: true) }
+  scope :unconfirmed, -> { where(confirmed: false) }
 
   belongs_to :item
   belongs_to :receiver, class_name: 'User'
@@ -18,7 +20,7 @@ class TradeInDevice < ApplicationRecord
   enum replacement_status: {not_replaced: 0, replaced: 1, in_service: 2}
 
   def self.search(query, in_archive: false, department_id: nil, sort_column: nil, sort_direction: :asc)
-    result = in_archive ? archived : not_archived
+    result = in_archive ? confirmed.archived : confirmed.not_archived
 
     if department_id.blank?
       result = result.local
@@ -36,5 +38,9 @@ class TradeInDevice < ApplicationRecord
     else
       result.ordered
     end
+  end
+
+  def self.policy_class
+    TradeInDevice::Policy
   end
 end

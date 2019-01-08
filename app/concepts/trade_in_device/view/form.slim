@@ -15,6 +15,7 @@
       = f.input :equipment
 
       - if superadmin?
+        = f.input :confirmed
         = f.input :replacement_status, as: :radio_buttons, collection: replacement_statuses
         = f.association :department, collection: departments
         = f.input :archived

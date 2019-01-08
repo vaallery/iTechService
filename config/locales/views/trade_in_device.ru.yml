@@ -30,4 +30,5 @@ ru:
     created: 'Trade-in девайс создан'
     destroyed: 'Trade-in девайс удалён'
     not_destroyed: 'Trade-in девайс не удалён'
+    purgatory: 'Чистилище Trade-in'
     updated: 'Trade-in девайс изменён'

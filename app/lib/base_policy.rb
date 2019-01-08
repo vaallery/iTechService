@@ -48,6 +48,10 @@ class BasePolicy
     user.any_admin?
   end
 
+  def superadmin?
+    user.superadmin?
+  end
+
   class Scope
     attr_reader :user, :scope
 

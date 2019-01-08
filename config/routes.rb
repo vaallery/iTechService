@@ -254,6 +254,7 @@ Rails.application.routes.draw do
   end
 
   resources :trade_in_devices do
+    get :purgatory, on: :collection
     get :print, on: :member
   end
 
