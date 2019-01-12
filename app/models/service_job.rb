@@ -341,7 +341,7 @@ class ServiceJob < ActiveRecord::Base
   def substitute_phone_id=(new_id)
     if new_id.present?
       new_substitute_phone = SubstitutePhone.find new_id
-      self.substitute_phone = new_substitute_phone
+      self.substitute_phone = new_substitute_phone if new_substitute_phone.service_job_id.nil?
     else
       self.substitute_phone = nil
     end
