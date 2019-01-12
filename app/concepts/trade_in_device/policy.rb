@@ -20,7 +20,7 @@ class TradeInDevice::Policy < BasePolicy
   end
 
   def update?
-    user.any_admin?
+    superadmin?
   end
 
   def destroy?
