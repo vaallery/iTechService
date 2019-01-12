@@ -13,7 +13,7 @@
       = f.input :check_icloud, disabled: persisted?
       = f.input :condition, disabled: persisted?
       = f.input :equipment, disabled: persisted?
-      = f.input :apple_guarantee, as: :string, input_html: {class: 'bootstrap-datepicker'} if persisted?
+      = f.input :apple_guarantee, as: :string, input_html: {class: 'bootstrap-datepicker'}
 
       .form-actions
         = submit_button f
