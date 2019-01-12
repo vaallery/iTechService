@@ -30,8 +30,29 @@ class RemnantsReport < BaseReport
       else
         products = []
       end
-      group_quantity = store_items.where(product_groups: {id: product_group.subtree_ids}).sum(:quantity)
-      {type: 'group', depth: product_group.depth, id: product_group.id, code: product_group.code, name: product_group.name, quantity: group_quantity, details: nested_product_groups_remnants(sub_product_groups, store_items, store) + products}
+      group_items = store_items.where(product_groups: {id: product_group.subtree_ids})
+
+      group_quantity = 0
+      group_purchase_price = 0
+      group_retail_price = 0
+
+      group_items.find_each do |item|
+        group_quantity += item.quantity
+        group_purchase_price += item.purchase_price unless item.purchase_price.nil?
+        group_retail_price += item.retail_price unless item.retail_price.nil?
+      end
+
+      {
+        type: 'group',
+        depth: product_group.depth,
+        id: product_group.id,
+        code: product_group.code,
+        name: product_group.name,
+        quantity: group_quantity,
+        purchase_price: group_purchase_price.to_f,
+        price: group_retail_price.to_f,
+        sum: group_retail_price.to_f * group_quantity,
+        details: nested_product_groups_remnants(sub_product_groups, store_items, store) + products}
     end
   end
 end
