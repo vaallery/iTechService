@@ -7,7 +7,7 @@ module PhoneSubstitution::Cell
     end
 
     def issued_to
-      model.client.short_name
+      link_to model.client.short_name, model.service_job
     end
 
     def issued_by

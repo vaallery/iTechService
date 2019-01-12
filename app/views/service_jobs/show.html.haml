@@ -97,7 +97,7 @@
       - if @service_job.substitute_phone.present?
         %tr
           %td= ServiceJob.human_attribute_name :substitute_phone
-          %td= @service_job.substitute_phone.presentation
+          %td= link_to @service_job.substitute_phone.presentation, @service_job.substitute_phone
 
       %tr
         %td= t 'service_jobs.sales_info'
