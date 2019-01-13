@@ -116,3 +116,12 @@ ru:
       received: 'Принято'
       archived: 'Из них в архиве'
       not_archived_devices: 'Девайсы не в архиве'
+
+    service_jobs_at_done:
+      case: 'Чехол'
+      client: 'ФИО клиента'
+      device: 'Устройство'
+      moved_at: 'Дата перемещения'
+      place: 'местонахождение'
+      ticket_number: 'Номер талона'
+      title: 'Устройства в "Готово"'

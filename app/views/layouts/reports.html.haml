@@ -1,0 +1,26 @@
+!!! 5
+%html(lang='ru')
+  %head
+    %meta(charset='utf-8')
+    %meta(http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1')
+    %meta(name='viewport' content='width=device-width, initial-scale=1.0')
+    %title= content_for?(:title) ? yield(:title) : 'iTech Service'
+    = stylesheet_link_tag 'application', :media => 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+    %link(href='images/apple-touch-icon-144x144.png' rel='apple-touch-icon-precomposed' sizes='144x144')
+    %link(href='images/apple-touch-icon-114x114.png' rel='apple-touch-icon-precomposed' sizes='114x114')
+    %link(href='images/apple-touch-icon-72x72.png' rel='apple-touch-icon-precomposed' sizes='72x72')
+    %link(href='images/apple-touch-icon.png' rel='apple-touch-icon-precomposed')
+    %link(href='images/favicon.ico' rel='shortcut icon')
+    = favicon_link_tag 'logo2.png'
+
+  %body
+    = render 'shared/flash_messages'
+    = spinner_tag
+
+    .container-fluid
+      #flash_place= bootstrap_flash
+      .row-fluid
+        .span12
+          #main_content= yield

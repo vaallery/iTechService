@@ -1,0 +1,19 @@
+%table#service_jobs_at_done_report.table.table-bordered.table-hover
+  %caption= report_title report
+  %thead
+    %tr
+      %th= t('.ticket_number')
+      %th= t('.client')
+      %th= t('.moved_at')
+      %th= t('.device')
+      %th= t('.case')
+      %th= t('.place')
+    %tbody
+      - report.result[:records].each do |record|
+        %tr
+          %td= record.ticket_number
+          %td= record.client
+          %td= I18n.l(record.done_at, format: :date) unless record.done_at.nil?
+          %td= record.device
+          %td= record.case
+          %td= record.place

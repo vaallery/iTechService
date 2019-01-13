@@ -16,7 +16,7 @@ class ReportsController < ApplicationController
 
   def create
     @report = build_report
-    @report.()
+    @report.call
     respond_to do |format|
       format.html { render 'result' }
       format.js { render 'result' }
