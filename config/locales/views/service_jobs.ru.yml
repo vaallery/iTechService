@@ -64,6 +64,7 @@ ru:
     returning_substitute_phone: 'Получить телефон на подменку'
     received: 'Принят'
     returning_popover_title: "Напоминание о возврате девайсов"
+    sales_info: "Информация о продаже"
     search_placeholder: 'Талон или серийный номер'
     seach_sales_btn: 'Искать продажи'
     send_sms: 'Отправить СМС о готовности'
@@ -71,7 +72,7 @@ ru:
     subscribe: 'Подписаться'
     unsubscribe: 'Отписаться'
     updated: 'Работа изменена'
-    sales_info: "Информация о продаже"
+    viewings: 'Просмотры'
 
   service_jobs_mailer:
     staff_notice:

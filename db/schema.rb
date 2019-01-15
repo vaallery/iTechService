@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190108072348) do
+ActiveRecord::Schema.define(version: 20190115114750) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1005,6 +1005,19 @@ ActiveRecord::Schema.define(version: 20190108072348) do
 
   add_index "service_job_templates", ["field_name"], name: "index_service_job_templates_on_field_name", using: :btree
 
+  create_table "service_job_viewings", force: :cascade do |t|
+    t.integer  "service_job_id", null: false
+    t.integer  "user_id",        null: false
+    t.datetime "time",           null: false
+    t.string   "ip",             null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "service_job_viewings", ["service_job_id"], name: "index_service_job_viewings_on_service_job_id", using: :btree
+  add_index "service_job_viewings", ["time"], name: "index_service_job_viewings_on_time", using: :btree
+  add_index "service_job_viewings", ["user_id"], name: "index_service_job_viewings_on_user_id", using: :btree
+
   create_table "service_jobs", force: :cascade do |t|
     t.integer  "device_type_id"
     t.string   "ticket_number",            limit: 255
@@ -1403,6 +1416,8 @@ ActiveRecord::Schema.define(version: 20190108072348) do
   add_foreign_key "service_free_jobs", "clients"
   add_foreign_key "service_free_jobs", "service_free_tasks", column: "task_id"
   add_foreign_key "service_free_jobs", "users", column: "performer_id"
+  add_foreign_key "service_job_viewings", "service_jobs"
+  add_foreign_key "service_job_viewings", "users"
   add_foreign_key "service_repair_returns", "service_jobs"
   add_foreign_key "service_repair_returns", "users", column: "performer_id"
   add_foreign_key "service_sms_notifications", "users", column: "sender_id"

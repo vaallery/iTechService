@@ -33,7 +33,7 @@ class ServiceJobsController < ApplicationController
       respond_to do |format|
         format.js do
           if @service_job.present?
-            log_service_job_show
+            log_viewing
             render 'ticket_scan'
           else
             flash.now[:error] = t('service_jobs.not_found_by_ticket', ticket: params[:id])
@@ -44,9 +44,9 @@ class ServiceJobsController < ApplicationController
       @service_job = ServiceJob.includes(:device_notes).find(params[:id])
       @device_note = @service_job.device_notes.build user_id: current_user.id
       respond_to do |format|
-        format.html { log_service_job_show }
+        format.html { log_viewing }
         format.json do
-          log_service_job_show
+          log_viewing
           render json: @service_job
         end
         format.pdf do
@@ -82,7 +82,7 @@ class ServiceJobsController < ApplicationController
   def edit
     @service_job = ServiceJob.includes(:device_notes).find(params[:id])
     @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
-    log_service_job_show
+    log_viewing
     respond_to do |format|
       format.html { render_form }
       format.js { render 'shared/show_modal_form' }
@@ -275,8 +275,8 @@ class ServiceJobsController < ApplicationController
     out.to_pdf document: pdf
   end
 
-  def log_service_job_show
-    LogServiceJobShowJob.perform_later @service_job.id, current_user.id, Time.current.to_s, request.ip
+  def log_viewing
+    ServiceJobViewing.create(service_job: @service_job, user:current_user, time: Time.current, ip: request.ip)
   end
 
   def create_phone_substitution

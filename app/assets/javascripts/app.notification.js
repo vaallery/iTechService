@@ -5,8 +5,9 @@ App.Notification = {
   },
 
   show: function(content) {
-    var container = App.Notification.getContainer();
-    $(container).append(content);
+    alert(content);
+    // var container = App.Notification.getContainer();
+    // $(container).append(content);
   },
 
   // appendFlash: function(content) {

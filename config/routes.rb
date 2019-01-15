@@ -101,6 +101,7 @@ Rails.application.routes.draw do
     resources :device_notes, only: %i[index new create]
     scope module: :service_jobs do
       resource :subscription, only: %i[create destroy], format: :js
+      resources :viewings, only: :index, format: :js
     end
   end
 
