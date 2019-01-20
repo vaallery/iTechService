@@ -108,5 +108,4 @@ class ManualSaleCheckPdf < Prawn::Document
     payments_count = @sale.payments.count
     210 + items_lines_count*line_height + payments_count*line_height
   end
-
 end
