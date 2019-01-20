@@ -16,7 +16,7 @@
       = f.input :apple_guarantee do
         = f.text_field :apple_guarantee, class: 'bootstrap-datepicker'
         = f.input :extended_guarantee, wrapper: :vertical_boolean, input_html: {id: 'trade_in_device_extended_guarantee'}
-        button#trade_in_device_no_guarantee.btn(type="button" data-toggle="button" onclick="App.TradeInDevices.toggle_guarantee();") Нет гарантии
+        button#trade_in_device_no_guarantee.btn(type="button" onclick="App.TradeInDevices.clear_guarantee();") Нет гарантии
 
       - if superadmin?
         = f.input :confirmed

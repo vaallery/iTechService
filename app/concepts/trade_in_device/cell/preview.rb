@@ -30,9 +30,10 @@ module TradeInDevice::Cell
     end
 
     def apple_guarantee
-      return '-' if model.apple_guarantee.nil?
+      return 'Нет' if model.apple_guarantee.nil?
 
-      l model.apple_guarantee
+      date = l(model.apple_guarantee)
+      model.extended_guarantee? ? "#{date} Расширенная" : date
     end
 
     def link_to_show
