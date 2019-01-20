@@ -2,14 +2,6 @@ module TradeInDevice::Cell
   class Form < BaseCell
     self.translation_path = 'trade_in_device'
 
-    def show
-      if superadmin?
-        render 'superadmin_form'
-      else
-        render 'form'
-      end
-    end
-
     private
 
     include FormCell

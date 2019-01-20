@@ -21,6 +21,7 @@
 //= require app.notification
 //= require app.inputs
 //= require app.substitute_phones
+//= require trade_in_devices
 //= require common
 //= require forms
 //= require announcements

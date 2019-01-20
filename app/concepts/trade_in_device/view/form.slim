@@ -13,7 +13,17 @@
       = f.input :check_icloud
       = f.input :condition
       = f.input :equipment
-      = f.input :apple_guarantee, as: :string, input_html: {class: 'bootstrap-datepicker'}
+      = f.input :apple_guarantee do
+        = f.text_field :apple_guarantee, class: 'bootstrap-datepicker'
+        = f.input :extended_guarantee, wrapper: :vertical_boolean, input_html: {id: 'trade_in_device_extended_guarantee'}
+        button#trade_in_device_no_guarantee.btn(type="button" data-toggle="button" onclick="App.TradeInDevices.toggle_guarantee();") Нет гарантии
+
+      - if superadmin?
+        = f.input :confirmed
+        = f.input :replacement_status, as: :radio_buttons, collection: replacement_statuses
+        = f.association :department, collection: departments
+        = f.input :archived
+        = f.input :archiving_comment
 
       .form-actions
         = submit_button f

@@ -532,6 +532,7 @@ ru:
         condition: 'Состояние'
         confirmed: 'Подтвержденное устройство?'
         equipment: 'Комплектация'
+        extended_guarantee: 'Расширенная гарантия'
         item: 'Сдают'
         received_at: 'Дата'
         replacement_status: 'Заменён в сервисном центре?'
