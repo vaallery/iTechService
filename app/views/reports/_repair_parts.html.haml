@@ -1,0 +1,25 @@
+%table#repair_parts_report.table.table-bordered.table-hover
+  %caption= report_title(report)
+  %thead
+    %tr
+      %th.center= 'Вид устройства'
+      %th.center= 'Вид работы'
+      %th.center= 'Количество / Стоимость запчастей'
+  %tbody
+    - report.result[:data].each_pair do |_, group_value|
+      %tr
+        %td.group{rowspan: group_value[:jobs_qty]+group_value[:services_qty]+1}= group_value[:name]
+        %td.hidden{colspan: 2}
+      - group_value[:services].each_pair do |_, service_value|
+        %tr
+          %td.service= service_value[:name]
+          %td.quantity.number= service_value[:jobs_qty]
+        - service_value[:jobs].each do |job|
+          %tr
+            %td= link_to job[:service_job_presentation], service_job_path(job[:device_id]), target: '_blank'
+            %td.number.parts_cost= human_currency(job[:parts_cost], false)
+
+  %tfoot
+    %tr
+      %td{colspan: 2} Итого
+      %td.number= human_currency(report.result[:total_parts_cost], false)

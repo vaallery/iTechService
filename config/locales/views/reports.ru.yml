@@ -76,6 +76,8 @@ ru:
       with_parts: 'с использованием запчастей'
       without_parts: 'без использования запчастей'
       without_payment: 'без оплаты'
+    repair_parts:
+      title: 'Отчёт по запчастям'
     sms_notifications:
       title: 'Отчёт о посланных сообщениях'
       sender: 'Отправитель / Сообщение'
