@@ -9,7 +9,7 @@ class Ability
     if user.superadmin?
       can :manage, :all
       can :read_tech_notice, ServiceJob
-      cannot :write_tech_notice, ServiceJob
+      can :write_tech_notice, ServiceJob
       can :view_purchase_price, Product
     elsif user.admin?
       can :manage, :all
@@ -19,7 +19,7 @@ class Ability
       cannot :manage, [BonusType, Bonus]
       cannot [:edit, :destroy], Karma
       can :read_tech_notice, ServiceJob
-      cannot :write_tech_notice, ServiceJob
+      can :write_tech_notice, ServiceJob
       cannot :read, CashShift
       cannot :close, CashShift
     elsif user.developer?
