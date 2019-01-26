@@ -10,4 +10,4 @@
         = '_'
         = f.text_field :end_date, class: 'bootstrap-datepicker input-small'
         = f.select :store_id, stores_collection, prompt: t('activerecord.models.store') if report.respond_to?(:store_id)
-        = f.select :location_id, done_locations_collection, prompt: t('activerecord.models.location') if report.respond_to?(:location_id)
+        = f.select :location_id, locations_collection, prompt: t('activerecord.models.location') if report.respond_to?(:location_id)

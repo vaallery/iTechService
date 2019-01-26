@@ -36,7 +36,7 @@ module ReportsHelper
     content.html_safe
   end
 
-  def done_locations_collection
-    Location.where(code: 'done').map{|s|[s.name, s.id]}
+  def locations_collection
+    Location.all.map{|s|[s.name, s.id]}
   end
 end
