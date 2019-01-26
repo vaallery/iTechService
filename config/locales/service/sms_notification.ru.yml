@@ -1,7 +1,7 @@
 ru:
   service:
     sms_notification:
-      default_message: 'Здравствуйте. Девайс №-%{ticket_number} ждёт вас. Подробности 2672673'
+      default_message: 'Здравствуйте. Девайс №%{ticket_number} ждёт вас. Подробности %{contact_phone}'
       message_sent: 'Сообщение отправлено.'
       message_not_sent: 'Сообщение не отправлено!!! %{error}'
 

@@ -4,6 +4,7 @@ class Setting < ActiveRecord::Base
       address: 'string',
       address_for_check: 'string',
       contact_phone: 'string',
+      contact_phone_short: 'string',
       data_storage_qty: 'integer',
       duck_plan: 'string',
       duck_plan_url: 'string',
