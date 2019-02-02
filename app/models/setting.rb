@@ -9,6 +9,7 @@ class Setting < ActiveRecord::Base
       duck_plan: 'string',
       duck_plan_url: 'string',
       email: 'string',
+      emails_for_acts: 'string',
       emails_for_orders: 'string',
       legal_address: 'string',
       meda_menu_database: 'string',
