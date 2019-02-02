@@ -14,7 +14,6 @@ class RepairTask < ActiveRecord::Base
   # validates_numericality_of :price, greater_than_or_equal_to: :repair_service_price, if: :is_positive_price
   validates :repair_service_id, uniqueness: {scope: [:device_task_id]}
   validates_associated :repair_parts
-  after_create :move_spare_parts
   before_destroy :return_spare_parts
 
   after_initialize do
@@ -44,13 +43,6 @@ class RepairTask < ActiveRecord::Base
   end
 
   private
-
-  def move_spare_parts
-    repair_parts.all? do |repair_part|
-      repair_part.stash
-      repair_part.move_defected if repair_part.defect_qty > 0
-    end
-  end
 
   def return_spare_parts
     repair_parts.all? do |repair_part|
