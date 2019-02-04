@@ -17,8 +17,8 @@
         %tr{class: purchase_row_class(purchase)}
           %td= link_to purchase.id, purchase_path(purchase)
           %td= human_datetime purchase.created_at
-          %td= link_to_if purchase.contractor.present?, purchase.contractor_name, contractor_path(purchase.contractor)
-          %td= link_to_if purchase.store.present?, purchase.store_name, store_path(purchase.store)
+          %td= link_to purchase.contractor_name, contractor_path(purchase.contractor) if purchase.contractor.present?
+          %td= link_to purchase.store_name, store_path(purchase.store) if purchase.store.present?
           %td.number= human_currency purchase.total_sum
           %td= purchase.comment
           %td.actions.btn-group
