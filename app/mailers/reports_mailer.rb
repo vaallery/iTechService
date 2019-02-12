@@ -3,6 +3,7 @@ class ReportsMailer < ApplicationMailer
 
   def few_remnants(report)
     @report = report
-    mail to: 'mail@example.com', subject: I18n.t("reports.#{report.name}.title")
+    recipients = Setting.get_value('emails_for_acts')
+    mail to: recipients, subject: I18n.t("reports.#{report.name}.title")
   end
 end
