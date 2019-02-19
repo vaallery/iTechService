@@ -28,14 +28,14 @@ class StoreItem < ActiveRecord::Base
     store_items
   end
 
-  def add(amount)
+  def add(amount = 1)
     unless feature_accounting
       amount = amount.to_i
       update_attribute :quantity, (self.quantity || 0) + amount if amount.is_a? Integer
     end
   end
 
-  def dec(amount)
+  def dec(amount = 1)
     if feature_accounting
       false
     else

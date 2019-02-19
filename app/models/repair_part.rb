@@ -7,7 +7,7 @@ class RepairPart < ActiveRecord::Base
   validates_presence_of :item
   validates_numericality_of :warranty_term, only_integer: true, greater_than_or_equal_to: 0
   validate :remnants_presence
-  after_update :move_defected
+
   after_initialize do
     self.warranty_term ||= item.try(:warranty_term)
     self.defect_qty ||= 0

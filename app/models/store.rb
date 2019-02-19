@@ -42,6 +42,10 @@ class Store < ActiveRecord::Base
     Store.spare_parts.map(&:id)
   end
 
+  def self.current_defect_sp
+    defect_sp.where(department: Department.current).first
+  end
+
   def is_spare_parts?
     kind == 'spare_parts'
   end
