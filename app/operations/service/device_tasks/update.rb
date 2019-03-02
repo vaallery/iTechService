@@ -2,6 +2,7 @@ module Service
   module DeviceTasks
     class Update < ATransaction
       step :validate
+      check :check_remnants
       step :save
       tee :notify
 
@@ -11,6 +12,24 @@ module Service
         device_task.attributes = params
 
         device_task.valid? ? Success(device_task) : Failure(device_task)
+      end
+
+      def check_remnants(device_task)
+        store = Department.current.spare_parts_store
+
+        device_task.repair_tasks.each do |repare_task|
+          repare_task.repair_parts.each do |repair_part|
+            defect_qty_diff = repair_part.defect_qty - (repair_part.defect_qty_was || 0)
+            quantity_need = defect_qty_diff
+            quantity_need += repair_part.quantity if repare_task.new_record?
+
+            if repair_part.store_item(store).quantity < quantity_need
+              device_task.errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
+            end
+          end
+        end
+
+        device_task.errors.empty?
       end
 
       def save(device_task, warranty_item_ids)

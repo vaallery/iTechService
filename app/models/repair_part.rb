@@ -6,7 +6,6 @@ class RepairPart < ActiveRecord::Base
   attr_accessible :quantity, :warranty_term, :defect_qty, :repair_task_id, :item_id
   validates_presence_of :item
   validates_numericality_of :warranty_term, only_integer: true, greater_than_or_equal_to: 0
-  validate :remnants_presence
 
   after_initialize do
     self.warranty_term ||= item.try(:warranty_term)
@@ -47,16 +46,4 @@ class RepairPart < ActiveRecord::Base
     end
     !!result
   end
-
-  private
-
-  def remnants_presence
-    if store.present?
-      defect_qty_diff = defect_qty - (defect_qty_was || 0)
-      if store_item(store).quantity < (quantity + defect_qty_diff)
-        errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: name)
-      end
-    end
-  end
-
 end
