@@ -11,19 +11,14 @@ class TradeInDevice::Create < BaseOperation
   failure :contract_invalid!
   step Contract.Persist(method: :sync)
   step :assign_received_at
-  step :assign_number
   success :assign_receiver
   success :assign_department
   step :save_model
+  step :assign_number
   step :success_message
 
   def assign_received_at(model:, **)
     model.received_at = Time.current
-  end
-
-  def assign_number(model:, **)
-    number = TradeInDevice.maximum(:number) || 0
-    model.number = number.next
   end
 
   def assign_receiver(model:, current_user:, **)
@@ -36,6 +31,10 @@ class TradeInDevice::Create < BaseOperation
 
   def save_model(model:, **)
     model.save
+  end
+
+  def assign_number(model:, **)
+    model.update(number: model.id)
   end
 
   def success_message(options, **)

@@ -12,7 +12,7 @@ class TradeInDevice < ApplicationRecord
   has_many :features, through: :item
   has_many :comments, as: :commentable
 
-  validates_presence_of :number, :received_at, :item, :appraised_value, :appraiser, :bought_device,
+  validates_presence_of :received_at, :item, :appraised_value, :appraiser, :bought_device,
                         :client_name, :client_phone, :check_icloud
 
   delegate :name, :presentation, to: :item

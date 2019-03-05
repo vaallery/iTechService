@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190120040728) do
+ActiveRecord::Schema.define(version: 20190305102640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1281,7 +1281,7 @@ ActiveRecord::Schema.define(version: 20190120040728) do
   add_index "top_salables", ["product_id"], name: "index_top_salables_on_product_id", using: :btree
 
   create_table "trade_in_devices", force: :cascade do |t|
-    t.integer  "number",                             null: false
+    t.integer  "number"
     t.datetime "received_at",                        null: false
     t.integer  "item_id",                            null: false
     t.integer  "receiver_id"
