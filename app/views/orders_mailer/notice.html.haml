@@ -41,3 +41,15 @@
     %p
       %strong= Order.human_attribute_name :desired_date
       = @order.desired_date.present? ? l(@order.desired_date) : '-'
+
+    %p
+      %strong= Order.human_attribute_name(:model)
+      = @order.model || '-'
+
+    %p
+      %strong= Order.human_attribute_name(:prepayment)
+      = @order.prepayment.present? ? number_to_currency(@order.prepayment) : '-'
+
+    %p
+      %strong= Order.human_attribute_name(:payment_method)
+      = @order.payment_method.present? ? Order.human_attribute_name("payment_method.#{@order.payment_method}") : '-'

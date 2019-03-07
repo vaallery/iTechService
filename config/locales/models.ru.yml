@@ -311,13 +311,21 @@ ru:
         customer_type: 'Тип заказчика'
         desired_date: 'Желаемая дата'
         history_records: 'История'
+        model: 'Модель'
         number: 'Номер'
         object: 'Обьект'
         object_kind: 'Тип обьекта'
         object_url: 'Ссылка'
+        payment_method: 'Способ оплаты'
+        prepayment: 'Предоплата'
         status: 'Статус'
         user: :activerecord.models.user
         user_comment: 'Комментарий товароведа'
+      order/payment_method:
+        card: 'Карта'
+        cash: 'Наличные'
+        credit: 'Рассрочка/кредит'
+        gift_certificate: 'Подарочный сертификат'
 
       payment:
         kind: 'Вид'

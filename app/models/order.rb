@@ -27,9 +27,11 @@ class Order < ActiveRecord::Base
   has_many :history_records, as: :object
   has_many :notes, class_name: 'OrderNote', dependent: :destroy
 
+  enum payment_method: %i[card cash credit gift_certificate]
+
   delegate :name, to: :department, prefix: true, allow_nil: true
 
-  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id, :quantity, :approximate_price, :priority, :object_url
+  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id, :quantity, :approximate_price, :priority, :object_url, :model, :prepayment, :payment_method
   validates :customer, :department, :quantity, :object, :object_kind, presence: true
   validates :priority, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 10}
   after_initialize { self.department_id ||= Department.current.id }

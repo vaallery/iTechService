@@ -28,6 +28,10 @@
       - else
         = f.input :status, as: :status
       = f.input :priority, input_html: {class: 'input-xlarge'}
+      = f.input :model, input_html: {class: 'input-xlarge'}
+      = f.input :prepayment, input_html: {class: 'input-xlarge'}
+      = f.input :payment_method, collection: order_payment_method_options , input_html: {class: 'input-xlarge'}
+
       .form-actions
         = submit_button f
 

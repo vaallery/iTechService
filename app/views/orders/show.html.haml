@@ -1,4 +1,3 @@
-- model_class = Order
 .page-header
   %h1
     = link_back_to_index
@@ -11,51 +10,74 @@
 
 .row-fluid
   .span6
-    %dl.dl-horizontal
-
-      %dt= model_class.human_attribute_name :department
-      %dd
-        %strong.text-warning= @order.department_name
+    %table.attributes_table
+      %tr
+        %td= Order.human_attribute_name :department
+        %td
+          %strong.text-warning= @order.department_name
 
       - if @order.user.present?
-        %dt= model_class.human_attribute_name :user
-        %dd= @order.user.short_name
+        %tr
+          %td= Order.human_attribute_name :user
+          %td= @order.user.short_name
 
-      %dt= model_class.human_attribute_name :customer
-      %dd
-        - if @order.customer_type == 'Client'
-          = link_to @order.customer_presentation, client_path(@order.customer)
-        - else
-          = @order.customer_presentation
+      %tr
+        %td= Order.human_attribute_name :customer
+        %td
+          - if @order.customer_type == 'Client'
+            = link_to @order.customer_presentation, client_path(@order.customer)
+          - else
+            = @order.customer_presentation
 
-      %dt= model_class.human_attribute_name :object_kind
-      %dd= t("orders.object_kinds.#{@order.object_kind}")
+      %tr
+        %td= Order.human_attribute_name :object_kind
+        %td= t("orders.object_kinds.#{@order.object_kind}")
 
-      %dt= model_class.human_attribute_name :object
-      %dd= @order.object
+      %tr
+        %td= Order.human_attribute_name :object
+        %td= @order.object
 
-      %dt= model_class.human_attribute_name :object_url
-      %dd= @order.object_url.present? ? link_to(@order.object_url, @order.object_url) : '-'
+      %tr
+        %td= Order.human_attribute_name :object_url
+        %td= @order.object_url.present? ? link_to(@order.object_url, @order.object_url) : '-'
 
-      %dt= model_class.human_attribute_name :approximate_price
-      %dd= @order.approximate_price.presence || '-'
+      %tr
+        %td= Order.human_attribute_name :approximate_price
+        %td= @order.approximate_price.presence || '-'
 
-      %dt= model_class.human_attribute_name :quantity
-      %dd= @order.quantity
+      %tr
+        %td= Order.human_attribute_name :quantity
+        %td= @order.quantity
 
-      %dt= model_class.human_attribute_name :comment
-      %dd= @order.comment.present? ? @order.comment : '-'
+      %tr
+        %td= Order.human_attribute_name :comment
+        %td= @order.comment.present? ? @order.comment : '-'
 
-      %dt= model_class.human_attribute_name :desired_date
-      %dd= @order.desired_date.present? ? l(@order.desired_date) : '-'
+      %tr
+        %td= Order.human_attribute_name :desired_date
+        %td= @order.desired_date.present? ? l(@order.desired_date) : '-'
 
-      %dt= model_class.human_attribute_name :status
-      %dd= t("orders.statuses.#{@order.status}")
+      %tr
+        %td= Order.human_attribute_name :status
+        %td= t("orders.statuses.#{@order.status}")
 
-      %dt= model_class.human_attribute_name :user_comment
-      %dd= @order.user_comment.present? ? @order.user_comment : '-'
+      %tr
+        %td= Order.human_attribute_name :user_comment
+        %td= @order.user_comment.present? ? @order.user_comment : '-'
 
-    - if can? :manage, model_class
+      %tr
+        %td= Order.human_attribute_name(:model)
+        %td= @order.model || '-'
+
+      %tr
+        %td= Order.human_attribute_name(:prepayment)
+        %td= @order.prepayment.present? ? number_to_currency(@order.prepayment) : '-'
+
+      %tr
+        %td= Order.human_attribute_name(:payment_method)
+        %td= @order.payment_method.present? ? Order.human_attribute_name("payment_method.#{@order.payment_method}") : '-'
+
+    - if can? :manage, Order
       .form-actions
         = link_to_edit @order if can? :edit, @order
         = link_to_destroy @order if can? :destroy, @order

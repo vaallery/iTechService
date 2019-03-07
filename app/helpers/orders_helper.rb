@@ -85,4 +85,10 @@ module OrdersHelper
       nil
     end
   end
+
+  def order_payment_method_options
+    Order.payment_methods.map do |name, _|
+      [Order.human_attribute_name("payment_method.#{name}"), name]
+    end
+  end
 end
