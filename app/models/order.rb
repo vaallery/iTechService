@@ -29,9 +29,11 @@ class Order < ActiveRecord::Base
 
   enum payment_method: %i[card cash credit gift_certificate]
 
+  mount_uploader :picture, OrderPictureUploader
+
   delegate :name, to: :department, prefix: true, allow_nil: true
 
-  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id, :quantity, :approximate_price, :priority, :object_url, :model, :prepayment, :payment_method
+  attr_accessible :customer_id, :customer_type, :comment, :desired_date, :object, :object_kind, :status, :user_id, :user_comment, :department_id, :quantity, :approximate_price, :priority, :object_url, :model, :prepayment, :payment_method, :picture, :picture_cache, :remove_picture
   validates :customer, :department, :quantity, :object, :object_kind, presence: true
   validates :priority, numericality: {greater_than_or_equal_to: 0, less_than_or_equal_to: 10}
   after_initialize { self.department_id ||= Department.current.id }

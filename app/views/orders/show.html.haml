@@ -42,6 +42,10 @@
         %td= @order.object_url.present? ? link_to(@order.object_url, @order.object_url) : '-'
 
       %tr
+        %td= Order.human_attribute_name(:picture)
+        %td= image_tag(@order.picture.medium.url) if @order.picture?
+
+      %tr
         %td= Order.human_attribute_name :approximate_price
         %td= @order.approximate_price.presence || '-'
 

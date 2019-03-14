@@ -317,6 +317,7 @@ ru:
         object_kind: 'Тип обьекта'
         object_url: 'Ссылка'
         payment_method: 'Способ оплаты'
+        picture: 'Картинка'
         prepayment: 'Предоплата'
         status: 'Статус'
         user: :activerecord.models.user

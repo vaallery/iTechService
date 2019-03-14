@@ -39,3 +39,5 @@ ru:
     not_found: "Заказ не найден"
     spare_parts: "Запчасти"
     not_spare_parts: "Не запчасти"
+    form:
+      remove_picture: "Удалить картинку"

@@ -18,6 +18,17 @@
       = f.input :object_kind, as: :object_kind
       = f.input :object, as: :object
       = f.input :object_url, input_html: {rows: 3, class: 'input-xlarge'}
+
+      .control-group
+        %label.control-label= Order.human_attribute_name(:picture)
+        .controls
+          = image_tag(@order.picture.medium.url) if @order.picture?
+          = f.file_field(:picture)
+          = f.hidden_field(:picture_cache)
+          %label
+            = f.check_box(:remove_picture)
+            = t('.remove_picture')
+
       = f.input :approximate_price, input_html: {class: 'input-xlarge'}
       = f.input :quantity, input_html: {class: 'input-xlarge'}
       = f.input :comment, input_html: {rows: 5, class: 'input-xlarge'}
