@@ -15,7 +15,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json
+      format.json { @location = Location.find_by(department: params[:department_id], code: @task.location.code) }
     end
   end
 

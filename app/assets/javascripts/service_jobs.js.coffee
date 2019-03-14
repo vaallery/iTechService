@@ -16,8 +16,9 @@ jQuery ->
       task_cost = $row.find('.device_task_cost')
       is_change_location = $row.is(':first-child')
       item_id = $('#service_job_item_id').val()
+      department_id = $('[name="service_job[department_id]"]:checked').val()
 
-      $.getJSON "/tasks/#{task_id}.json", (data)->
+      $.getJSON "/tasks/#{task_id}.json", {department_id: department_id}, (data)->
         task_cost.val data.cost
 
         if is_change_location
