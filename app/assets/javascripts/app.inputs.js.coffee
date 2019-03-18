@@ -59,8 +59,22 @@ App.init_client_input = ->
   $(document).on 'change', '#client_input #client_search', (event)->
     $(this).siblings('.client_id').val('')
 
+App.init_data_storage_input = ->
+  $(document).on 'change', '.data_storage-checkbox', (event)->
+    $input = $(this).closest('.data_storage-input')
+
+    $checkboxes = $input.find('.data_storage-checkbox:checked')
+    checked_storages = $checkboxes.map (checkbox)->
+      $(this).siblings('.data_storage-label').text()
+
+    checked_storages = $.makeArray(checked_storages).join(', ')
+    $input.find('.input-presentation').html(checked_storages || '-')
+
+    $input.find('.dropdown-toggle').dropdown('toggle')
+
 jQuery ->
   App.initDeviceInput()
   App.bindTextAreasEvents()
   App.init_dropdown_input()
+  App.init_data_storage_input()
   App.init_client_input()

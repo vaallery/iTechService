@@ -147,20 +147,6 @@ module ServiceJobsHelper
     end
   end
 
-  def data_storages_collection
-    department = current_user.department
-    qty = Setting.data_storage_qty department
-    if qty.present?
-      1.upto(qty).map do |storage_num|
-        storage_name = "#{department.name} - #{storage_num}"
-        name = content_tag(:span, storage_name, class: 'data_storage_label')
-        [storage_name, name]
-      end
-    else
-      []
-    end
-  end
-
   def service_job_template_field_data(field_name, templates)
     field_templates = templates[field_name]
     return {} unless field_templates.present?

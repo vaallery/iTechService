@@ -53,7 +53,7 @@
           %label.control-label= ServiceJob.human_attribute_name :case_color
           .controls= case_color_presentation @service_job.case_color
 
-        = f.input :data_storages, as: :check_boxes, collection: data_storages_collection, value_method: :first, label_method: :last, item_wrapper_class: 'inline'
+        = f.input :data_storages, as: :data_storage
 
         .control-group
           %label.control-label= ServiceJob.human_attribute_name :comment
