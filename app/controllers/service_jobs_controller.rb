@@ -128,10 +128,16 @@ class ServiceJobsController < ApplicationController
     service_job = ServiceJob.find(params[:id])
 
     if service_job.repair_parts.any?
-      flash.alert = t('service_jobs.errors.cannot_be_destroyed')
+      flash.alert = "Работа не может быть удалена (привязаны запчасти)."
     else
-      DeletionMailer.delay.notice({presentation: service_job.decorate.presentation, tasks: service_job.tasks.map(&:name).join(', ')}, current_user.presentation, DateTime.current)
-      service_job.destroy
+      service_job_presentation = "[Талон: #{service_job.ticket_number}] #{service_job.decorate.presentation}"
+      DeletionMailer.delay.notice({presentation: service_job_presentation, tasks: service_job.tasks.map(&:name).join(', ')}, current_user.presentation, DateTime.current)
+
+      if service_job.destroy
+        flash.notice = 'Работа удалена!'
+      else
+        flash.alert = 'Работа не удалена!'
+      end
     end
 
     respond_to do |format|

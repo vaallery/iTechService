@@ -96,6 +96,8 @@ class DeviceTask < ActiveRecord::Base
   private
 
   def update_service_job_done_attribute
+    return if service_job.nil?
+
     done_time = self.service_job.done? ? self.service_job.device_tasks.maximum(:done_at).getlocal : nil
     self.service_job.update_attribute :done_at, done_time
   end
