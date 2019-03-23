@@ -18,7 +18,8 @@ class Setting < ActiveRecord::Base
       schedule: 'string',
       site: 'string',
       ticket_prefix: 'string',
-      service_tasks_models: 'json'
+      service_tasks_models: 'json',
+      sms_gateway_lines_qty: 'integer'
   }
 
   VALUE_TYPES = %w[boolean integer string text json]
@@ -78,6 +79,10 @@ class Setting < ActiveRecord::Base
       value = Setting.find_by(name: 'service_tasks_models')&.value
       return unless value
       JSON.parse value
+    end
+
+    def sms_gateway_lines_qty
+      Setting.find_by(name: 'sms_gateway_lines_qty')&.value || 1
     end
 
     private
