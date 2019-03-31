@@ -3,11 +3,10 @@ source 'https://rubygems.org'
 ruby '2.3.1'
 
 gem 'rails', '4.2.5.2'
-gem 'protected_attributes'
-gem 'rails-observers'
-# gem 'pg', '~> 0.14.1'
-gem 'pg'
-gem 'httparty'
+gem 'protected_attributes', '~> 1.1.4'
+gem 'rails-observers', '~> 0.1.5'
+gem 'pg', '~> 0.21.0'
+gem 'httparty', '~> 0.16.3'
 # gem 'haml-rails', '~> 0.3.5'
 gem 'hamlit', '~> 2.2.0'
 # gem 'hamlit-rails', '~> 0.1.0'
@@ -15,16 +14,14 @@ gem 'hamlit', '~> 2.2.0'
 gem 'jquery-rails', '~> 4.1.1'
 gem 'jquery-ui-rails', '~> 5.0.5'
 gem 'simple_form', '~> 3.2.1'
-# gem 'json_builder', '~> 3.1.7'
 gem 'jbuilder', '~> 2.0'
 gem 'devise', '~> 4.0.3'
 gem 'devise_token_auth', '~> 0.1.37'
 
 gem 'dry-validation', '~> 0.12.0'
 gem 'dry-transaction', '~> 0.13.0'
-gem 'trailblazer'#, '~> 1.0'
-gem 'trailblazer-rails'#, '~> 0.4'
-# gem 'trailblazer-rails', '~> 0.2.4'
+gem 'trailblazer', '~> 2.0.7'
+gem 'trailblazer-rails', '~> 1.0.4'
 
 gem 'trailblazer-cells', '~> 0.0.3'
 gem 'cells-rails', '~> 0.0.7'
@@ -32,9 +29,7 @@ gem 'cells-slim', '~> 0.0.5'
 gem 'reform-rails', '~> 0.1'
 
 gem 'pundit', '~> 1.1.0'
-# gem 'cancan', '~> 1.6.8'
 gem 'cancancan', '~> 1.10'
-# gem 'kaminari', '~> 0.16.3'
 gem 'kaminari', '~> 1.0.0'
 gem 'kaminari-cells', '~> 1.0.0'
 gem 'ancestry', '~> 2.1.0'
@@ -65,19 +60,19 @@ gem 'grape', '~> 0.6.1'
 gem 'grape-entity', '~> 0.4.1'
 gem 'rmagick', '~> 2.15.4'
 gem 'zeroclipboard-rails'
-gem 'sqlite3'
-gem 'vpim'#, '~> 13.11.11'
+gem 'sqlite3', '~> 1.3.13'
+gem 'vpim', '~> 13.11.11'
 gem 'draper', '~> 2.1.0'
-gem 'seedbank'
-gem 'daemons'
-gem 'dotenv-rails'
+gem 'seedbank', '~> 0.4.0'
+gem 'daemons', '~> 1.3.1'
+gem 'dotenv-rails', '~> 2.2.1'
 
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'therubyracer', :platforms => :ruby
-gem 'sass-rails'
+gem 'therubyracer', '~> 0.12.3', :platforms => :ruby
+gem 'sass-rails', '~> 5.0.6'
 gem 'less-rails', '~> 2.7.1'
-gem 'rails-ujs'
+gem 'rails-ujs', '~> 0.1.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'bootstrap-colorpicker-rails', '~> 0.3.1', :require => 'bootstrap-colorpicker-rails'
 #, :git => 'git://github.com/alessani/bootstrap-colorpicker-rails.git'
@@ -85,7 +80,7 @@ gem 'bootstrap-colorpicker-rails', '~> 0.3.1', :require => 'bootstrap-colorpicke
 
 # gem 'nokogiri', github: 'sparklemotion/nokogiri'
 gem 'nokogiri', '~> 1.6.7.2'
-gem 'ru_propisju'
+gem 'ru_propisju', '~> 2.5.0'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
@@ -97,25 +92,21 @@ group :development do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
 
-  gem 'capistrano-rails'
-  gem 'capistrano-rvm'
+  gem 'capistrano-rails', '~> 1.3.0'
+  gem 'capistrano-rvm', '~> 0.1.2'
   # gem 'capistrano-rbenv'
   gem 'capistrano-bundler', '~> 1.1'
-  gem 'capistrano-passenger'
-  gem 'capistrano-rails-collection'
-  gem 'capistrano-faster-assets'
-  # gem 'capistrano-rbenv-install'
-  # gem 'capistrano-postgresql'
-  gem 'capistrano-ssh-doctor'
-  gem 'capistrano-db-tasks', require: false
-  gem 'airbrussh', require: false
-  gem 'quiet_assets'
-  # gem 'better_errors'
-  gem 'binding_of_caller'
+  gem 'capistrano-passenger', '~> 0.2.0'
+  gem 'capistrano-rails-collection', '~> 0.1.0'
+  gem 'capistrano-faster-assets', '~> 1.0.2'
+  gem 'capistrano-ssh-doctor', '~> 1.0.0'
+  gem 'capistrano-db-tasks', '~> 0.6', require: false
+  gem 'airbrussh', '~> 1.3.0', require: false
+  gem 'quiet_assets', '~> 1.1.0'
+  gem 'binding_of_caller', '~> 0.7.2'
   gem 'meta_request', '~> 0.2.8'
-  # gem 'mailcatcher'
-  gem 'letter_opener'
-  gem 'rails-erd'
+  gem 'letter_opener', '~> 1.4.1'
+  gem 'rails-erd', '~> 1.5.2'
 end
 
 group :development, :test do
@@ -123,30 +114,18 @@ end
 
 group :test do
   gem 'rspec-rails', '~> 3.8.0'
-  # gem 'test-unit'
-  gem 'capybara'
-  gem 'capybara-selenium'
-  gem 'chromedriver-helper'
-  gem 'poltergeist'#, '~> 1.10.0'
-  gem 'database_cleaner'
-  gem 'factory_girl_rails'
-  # gem 'factory_bot_rails'#, '~> 4.8.2'
-  # gem 'minitest-rails'
-  gem 'faker'#, '~> 1.3'
+  gem 'capybara', '~> 2.15.4'
+  gem 'capybara-selenium', '~> 0.0.6'
+  gem 'chromedriver-helper', '~> 1.1.0'
+  gem 'poltergeist', '~> 1.16.0'
+  gem 'database_cleaner', '~> 1.6.1'
+  gem 'factory_girl_rails', '~> 4.8.0'
+  gem 'faker', '~> 1.8.4'
   gem 'simplecov', '~> 0.12.0', :require => false
 
-  #gem 'minitest-reporters', '~> 1.0.0'
-  #gem 'minitest-rails-capybara'
-  #gem 'poltergeist'
   gem 'shoulda', '~> 3.5.0'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', '~> 2.8.0'
   gem 'mocha', '~> 1.1.0'
-  # # gem 'capybara-webkit'#, '~> 2.3'
-  # # gem 'shoulda-matchers'
-  # # gem 'selenium-webdriver'#, '~> 2.42'
-  # gem 'database_cleaner'#, '~> 1.3'
-  # gem 'launchy'#, '~> 2.4'
-  # gem 'test_after_commit'
 end
 
 group :production do
