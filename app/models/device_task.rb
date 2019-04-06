@@ -12,7 +12,7 @@ class DeviceTask < ActiveRecord::Base
   belongs_to :task
   belongs_to :performer, class_name: 'User'
   has_many :history_records, as: :object
-  has_many :repair_tasks
+  has_many :repair_tasks, inverse_of: :device_task
   has_many :repair_parts, through: :repair_tasks
   has_one :sale_item, inverse_of: :device_task
   accepts_nested_attributes_for :service_job, reject_if: proc { |attr| attr['tech_notice'].blank? }

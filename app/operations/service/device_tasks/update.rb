@@ -38,20 +38,16 @@ module Service
             if device_task.is_repair?
               device_task.repair_tasks.each do |repare_task|
                 if repare_task.new_record?
+                  defect_sp_store = Store.current_defect_sp
+                  warranty_item_ids.map!(&:to_i)
+
                   repare_task.repair_parts.each do |repair_part|
                     repair_part.stash
                     repair_part.move_defected if repair_part.defect_qty > 0
+                    repair_part.store_item(defect_sp_store).add if warranty_item_ids.include?(repair_part.item_id)
                   end
                 else
                   repare_task.repair_parts.each(&:move_defected)
-                end
-              end
-
-              if warranty_item_ids.present?
-                defect_sp_store = Store.current_defect_sp
-
-                device_task.repair_parts.where(item_id: warranty_item_ids).each do |repare_part|
-                  repare_part.store_item(defect_sp_store).add
                 end
               end
             end

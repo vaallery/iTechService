@@ -23,7 +23,7 @@ class RepairPart < ActiveRecord::Base
   def move_defected
     if defect_qty_changed?
       result = false
-      if (store_src = self.store).present? and (store_dst = Department.current.defect_sp_store).present?
+      if (store_src = self.store).present? and (store_dst = Store.current_defect_sp).present?
         qty_to_move = defect_qty - (defect_qty_was || 0)
         result = self.store_item(store_src).move_to(store_dst, qty_to_move)
       end
