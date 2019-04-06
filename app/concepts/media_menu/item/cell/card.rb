@@ -29,7 +29,7 @@ module MediaMenu
       def selection_buttons
         %w[select remove].map do |action|
           button_tag t(".#{action}"), type: 'button', class: "selection_button #{action} #{selection_button_class}",
-                     'data-behaviour': "#{action}-media_menu-item"
+                     'data-behaviour': "#{action}-media_menu-item", onclick: "MediaMenu.#{action}_item(#{id})"
         end.join
       end
 

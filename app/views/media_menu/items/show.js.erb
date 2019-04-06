@@ -1,3 +1,4 @@
 container = document.getElementById('modal_container');
 container.innerHTML = '<%= j content %>';
-$('#media_menu-item_modal').modal('show')
+$('#media_menu-item_modal').modal('show');
+MediaMenu.mark_selected_items();
