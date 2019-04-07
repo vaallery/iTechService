@@ -39,7 +39,7 @@ module Service
               device_task.repair_tasks.each do |repare_task|
                 if repare_task.new_record?
                   defect_sp_store = Store.current_defect_sp
-                  warranty_item_ids.map!(&:to_i)
+                  warranty_item_ids = warranty_item_ids&.map(&:to_i) || []
 
                   repare_task.repair_parts.each do |repair_part|
                     repair_part.stash
