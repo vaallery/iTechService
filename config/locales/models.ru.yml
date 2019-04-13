@@ -436,7 +436,7 @@ ru:
         carrier: 'Оператор'
         case_color: 'Чехол'
         case_color_id: 'Чехол'
-        claimed_defect: 'Заявленный дефект'
+        claimed_defect: 'Заявленный клиентом дефект'
         client: :activerecord.models.client
         client_address: 'Адрес'
         client_comment: 'Ориентировочный срок ремонта / Комментарии / Особые отметки'
