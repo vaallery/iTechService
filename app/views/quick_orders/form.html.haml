@@ -11,7 +11,7 @@
       = f.input :device_kind, as: :radio_buttons, collection: QuickOrder::DEVICE_KINDS
       = f.input :client, as: :client, required: true, no_devices: true
       = f.input :client_name unless @quick_order.client_name.nil?
-      = f.input :contact_phone unless @quick_order.contact_phone.nil?
+      = f.input :contact_phone
       = f.association :quick_tasks, as: :check_boxes
       = f.input :comment, input_html: {rows: 5}
       = f.input :security_code

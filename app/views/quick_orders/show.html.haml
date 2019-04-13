@@ -22,6 +22,12 @@
   %tr
     %td= model_class.human_attribute_name(:client)
     %td= link_to_if @quick_order.client.present?, @quick_order.client_presentation, @quick_order.client
+
+  - if @quick_order.contact_phone.present?
+    %tr
+      %td= model_class.human_attribute_name(:contact_phone)
+      %td= @quick_order.contact_phone
+
   %tr
     %td= model_class.human_attribute_name(:quick_tasks)
     %td= @quick_order.quick_tasks.map(&:name).join(tag(:br)).html_safe
