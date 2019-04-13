@@ -1,7 +1,9 @@
 class GiftCertificate < ActiveRecord::Base
 
   STATUSES = %w[available issued used]
-  NOMINALS = 1.upto(100).map { |n| n * 1_000 }.freeze
+  NOMINAL_MIN = 1000
+  NOMINAL_MAX = 100_000
+  NOMINAL_STEP = 500
 
   belongs_to :department
   has_many :payments, dependent: :nullify
@@ -9,7 +11,8 @@ class GiftCertificate < ActiveRecord::Base
 
   attr_accessible :number, :nominal, :status, :consumed, :consume, :department_id
   validates :number, presence: true, uniqueness: {case_sensitive: false}
-  validates :nominal, inclusion: NOMINALS
+  validates :nominal, numericality: {only_integer: true, greater_than_or_equal_to: NOMINAL_MIN, less_than_or_equal_to: NOMINAL_MAX}
+  validate :nominal_must_be_multiple_of_step
   before_validation { |cert| cert.status ||= 0 }
   before_validation :validate_consumption
   before_validation :validate_status, on: :update
@@ -98,4 +101,9 @@ class GiftCertificate < ActiveRecord::Base
     end
   end
 
+  def nominal_must_be_multiple_of_step
+    if (nominal % NOMINAL_STEP) > 0
+      errors.add :nominal, :multiple_of, step: NOMINAL_STEP
+    end
+  end
 end

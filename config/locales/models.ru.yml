@@ -615,6 +615,10 @@ ru:
           attributes:
             role:
               main_exists: 'Не может быть больше одного главного'
+        gift_certificate:
+          attributes:
+            nominal:
+              multiple_of: 'должен быть кратным %{step}'
         service_job:
           not_paid: 'Не оплачена!'
           substitute_phone_not_received: 'Небходимо вернуть телефон, выданный на замену'

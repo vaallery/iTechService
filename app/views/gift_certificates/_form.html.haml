@@ -2,7 +2,7 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :nominal, input_html: {min: 1_000, max: 100_000, step: 1_000}
+    = f.input :nominal, input_html: {min: GiftCertificate::NOMINAL_MIN, max: GiftCertificate::NOMINAL_MAX, step: GiftCertificate::NOMINAL_STEP}
     = f.input :number
 
     - unless @gift_certificate.new_record?
