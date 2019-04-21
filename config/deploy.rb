@@ -184,7 +184,7 @@ namespace :deploy do
   #before :setup, 'deploy:starting'
   #before :setup, 'deploy:updating'
   #before :setup, 'bundler:install'
-  after :published, 'sidekiq:start'
+  # after :published, 'sidekiq:start'
 end
 
 #before 'deploy:updated', 'deploy:setup_config'
