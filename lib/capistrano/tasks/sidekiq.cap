@@ -2,10 +2,14 @@ namespace :sidekiq do
   desc 'Start Sidekiq'
   task :start do
     on roles(:app) do
-      # within "#{current_path}/bin" do
-        execute "#{current_path}/bin/sidekiq_init start"
-        # execute :sidekiq_init, :start
-      # end
+      execute "#{current_path}/bin/sidekiq_init start"
     end
   end
+
+  desc 'Reload Sidekiq'
+    task :reload do
+      on roles(:app) do
+        execute :sk_reload
+      end
+    end
 end
