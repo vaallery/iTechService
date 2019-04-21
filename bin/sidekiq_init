@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+cd $(dirname $0)/..
+app_root=$(pwd)
+sidekiq_pidfile="$app_root/tmp/pids/sidekiq.pid"
+sidekiq_logfile="$app_root/log/sidekiq.log"
+app_user=$(ls -l config.ru | awk '{print $3}')
+
+function stop {
+  bundle exec sidekiqctl stop $sidekiq_pidfile >> $sidekiq_logfile 2>&1
+}
+
+function killall {
+  pkill -u $app_user -f sidekiq
+}
+
+function restart {
+  if [ -f $sidekiq_pidfile ]; then
+    stop
+  fi
+  killall
+  start
+}
+
+function start {
+  bundle exec sidekiq -P $sidekiq_pidfile $@ >> $sidekiq_logfile 2>&1
+}
+
+case "$1" in
+  start)
+    restart
+    ;;
+  restart)
+    restart
+    ;;
+  stop)
+    stop
+    ;;
+  killall)
+    killall
+    ;;
+  *)
+    echo "Usage: $0 {start|restart|stop|killall}"
+esac
