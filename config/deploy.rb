@@ -184,11 +184,7 @@ namespace :deploy do
   #before :setup, 'deploy:starting'
   #before :setup, 'deploy:updating'
   #before :setup, 'bundler:install'
-  after :published, :start_sidekiq do
-    within "#{release_path}/bin" do
-      execute :sidekiq_init, :start
-    end
-  end
+  after :published, 'sidekiq:start'
 end
 
 #before 'deploy:updated', 'deploy:setup_config'
