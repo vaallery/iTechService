@@ -9,7 +9,7 @@ namespace :sidekiq do
   desc 'Reload Sidekiq'
     task :reload do
       on roles(:app) do
-        execute :sk_reload
+        execute :ise_sidekiq_reload
       end
     end
 end

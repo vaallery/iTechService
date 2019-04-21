@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+ise_sidekiq_unload && ise_sidekiq_load
+
