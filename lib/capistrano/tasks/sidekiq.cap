@@ -6,10 +6,17 @@ namespace :sidekiq do
     end
   end
 
-  desc 'Reload Sidekiq'
-    task :reload do
-      on roles(:app) do
-        execute :ise_sidekiq_reload
-      end
+  desc 'Restart Sidekiq'
+  task :restart do
+    on roles(:app) do
+      execute :ise_sidekiq_restart
     end
+  end
+
+  desc 'Reload Sidekiq'
+  task :reload do
+    on roles(:app) do
+      execute :ise_sidekiq_reload
+    end
+  end
 end
