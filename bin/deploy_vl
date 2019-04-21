@@ -1,0 +1,2 @@
+#!/bin/zsh
+cap --hosts=ise.vl production deploy
