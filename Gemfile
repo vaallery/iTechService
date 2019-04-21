@@ -52,10 +52,10 @@ gem 'roo-xls', '~> 1.2'
 gem 'paperclip', '~> 4.3.6'
 gem 'barby', '~> 0.6.4'
 gem 'acts_as_list', '~> 0.7.4'
-gem 'delayed_job_active_record', '~> 4.1.1'
-gem 'delayed_job_web', '~> 1.2.10'
-gem 'whenever', '>= 0.8.4', :require => false
-# gem 'foreman', '~> 0.63.0'
+gem 'sidekiq', '~> 5.2.6'
+gem 'sinatra', '~> 1.0', require: false
+gem 'sidekiq-cron', '~> 1.1'
+gem 'whenever', '>= 0.8.4', require: false
 gem 'grape', '~> 0.6.1'
 gem 'grape-entity', '~> 0.4.1'
 gem 'rmagick', '~> 2.15.4'
@@ -101,6 +101,7 @@ group :development do
   gem 'capistrano-faster-assets', '~> 1.0.2'
   gem 'capistrano-ssh-doctor', '~> 1.0.0'
   gem 'capistrano-db-tasks', '~> 0.6', require: false
+  gem 'capistrano-sidekiq', '~> 1.0.2'
   gem 'airbrussh', '~> 1.3.0', require: false
   gem 'quiet_assets', '~> 1.1.0'
   gem 'binding_of_caller', '~> 0.7.2'
@@ -131,5 +132,5 @@ end
 group :production do
   # gem 'unicorn', '~> 4.6.2'
   # gem 'puma'
-  gem 'passenger', '>= 5.0.25', :require => 'phusion_passenger/rack_handler'
+  gem 'passenger', '>= 5.0.25', require: 'phusion_passenger/rack_handler'
 end

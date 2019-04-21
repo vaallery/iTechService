@@ -93,6 +93,6 @@ Rails.application.configure do
 
   ActionMailer::Base.default from: 'iTechService <noreply@itechdevs.com>'
   config.action_mailer.perform_deliveries = true
-  config.active_job.queue_adapter = :delayed_job
+  config.active_job.queue_adapter = :sidekiq
   Paperclip.options[:command_path] = '/usr/local/bin'
 end

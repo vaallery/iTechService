@@ -1,0 +1,5 @@
+remnants_report:
+  cron: '0 9 * * * Asia/Vladivostok'
+  class: 'RemnantsReportMailingJob'
+  queue: 'reports'
+  active_job: true

@@ -1,3 +1,6 @@
+require 'sidekiq/web'
+require 'sidekiq/cron/web'
+
 Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -300,7 +303,10 @@ Rails.application.routes.draw do
 
   wiki_root '/wiki'
 
-  match '/delayed_job' => DelayedJobWeb, anchor: false, via: %i[get post]
+  authenticate :user do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   mount API => '/'
   mount Ckeditor::Engine => '/ckeditor'
 end
