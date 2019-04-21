@@ -185,7 +185,7 @@ namespace :deploy do
   #before :setup, 'deploy:updating'
   #before :setup, 'bundler:install'
   # after :published, 'sidekiq:start'
-  after :published, 'sidekiq:restart'
+  # TODO after :published, 'sidekiq:restart'
 end
 
 #before 'deploy:updated', 'deploy:setup_config'
