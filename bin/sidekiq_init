@@ -1,21 +1,21 @@
 #!/usr/bin/env bash
 
-cd $(dirname $0)/..
-app_root=$(pwd)
+app_root=/var/www/itechservice/current
+cd ${app_root}
 sidekiq_pidfile="$app_root/tmp/pids/sidekiq.pid"
 sidekiq_logfile="$app_root/log/sidekiq.log"
 app_user=$(ls -l config.ru | awk '{print $3}')
 
 function stop {
-  bundle exec sidekiqctl stop $sidekiq_pidfile >> $sidekiq_logfile 2>&1
+  bundle exec sidekiqctl stop ${sidekiq_pidfile} >> ${sidekiq_logfile} 2>&1
 }
 
 function killall {
-  pkill -u $app_user -f sidekiq
+  pkill -u ${app_user} -f sidekiq
 }
 
 function restart {
-  if [ -f $sidekiq_pidfile ]; then
+  if [[ -f ${sidekiq_pidfile} ]]; then
     stop
   fi
   killall
@@ -23,7 +23,7 @@ function restart {
 }
 
 function start {
-  bundle exec sidekiq -P $sidekiq_pidfile $@ >> $sidekiq_logfile 2>&1
+  bundle exec sidekiq -P ${sidekiq_pidfile} $@ >> ${sidekiq_logfile} 2>&1
 }
 
 case "$1" in
