@@ -122,7 +122,7 @@ class Client < ActiveRecord::Base
   end
 
   def send_mail
-    DeletionMailer.delay.notice({presentation: self.presentation}, User.current.presentation, DateTime.current)
+    DeletionMailer.notice({presentation: self.presentation}, User.current.presentation, DateTime.current).deliver_later
   end
 
 end

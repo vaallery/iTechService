@@ -90,7 +90,7 @@ class DeductionActsController < ApplicationController
 
     respond_to do |format|
       if @deduction_act.post
-        DocumentMailer.delay.deduction_notification(@deduction_act.id)
+        DocumentMailer.deduction_notification(@deduction_act.id).deliver_later
         format.html { redirect_to @deduction_act, notice: t('documents.posted') }
       else
         flash.alert = @deduction_act.errors.full_messages
