@@ -18,8 +18,18 @@ ExceptionNotification.configure do |config|
   # Email notifier sends notifications by email.
   config.add_notifier :email, {
     email_prefix: '[ERROR] ',
-    sender_address: "iTechService #{ENV['DEPARTMENT_NAME']} <noreply@itechdevs.com>",
-    exception_recipients: %w[kvn@itechdevs.com]
+    sender_address: %{"iTechService #{ENV['DEPARTMENT_NAME']}" <#{ENV['EN_SMTP_LOGIN']}>},
+    exception_recipients: ENV['EN_RECIPIENT'],
+    delivery_method: :smtp,
+    smtp_settings: {
+      domain: ENV['DOMAIN_NAME'],
+      address: ENV['EN_SMTP_SERVER'],
+      port: ENV['EN_SMTP_PORT'],
+      user_name: ENV['EN_SMTP_LOGIN'],
+      password: ENV['EN_SMTP_PASSWORD'],
+      authentication: ENV['EN_SMTP_AUTHENTICATION'],
+      enable_starttls_auto: true
+    }
   }
 
   # Campfire notifier sends notifications to your Campfire room. Requires 'tinder' gem.
