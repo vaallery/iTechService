@@ -29,7 +29,9 @@ Rails.application.routes.draw do
     end
 
     resources :free_tasks, only: %i[index new create edit update destroy]
-    resources :free_jobs
+    resources :free_jobs do
+      get :performer_options, on: :collection
+    end
 
     resources :repair_returns, only: %i[index new create]
 

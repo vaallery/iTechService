@@ -9,8 +9,10 @@
       .control-group.radio_buttons.required.service_free_job_task
         - tasks.each do |task|
           label for="service_free_job_task_id_#{task.id}"
-            = f.radio_button :task_id, task.id
+            = f.radio_button :task_id, task.id, class: 'service_free_job_task_id'
             = image_tag task.icon, width: 150, height: 150, alt: task.name, title: task.name
+
+      = f.association :performer, collection: performer_options, disabled: performer_disabled?, input_html: {class: 'input-xlarge'}
 
       = f.input :comment, input_html: {class: 'input-xlarge'}
 

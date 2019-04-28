@@ -57,6 +57,11 @@ module Service
       failed
     end
 
+    def performer_options
+      task = FreeTask.find(params[:task_id])
+      render partial: 'performer_options', locals: {performers: task.possible_performers}
+    end
+
     private
 
     def render_form

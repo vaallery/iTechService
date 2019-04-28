@@ -19,7 +19,11 @@ module Service
     private
 
     def assign_performer!(model:, current_user:, **)
-      model.performer_id = current_user.id
+      if model.performer_id.nil?
+        model.performer_id = current_user.id
+      else
+        model.receiver_id = current_user.id
+      end
     end
 
     def assign_performed_at!(model:, **)

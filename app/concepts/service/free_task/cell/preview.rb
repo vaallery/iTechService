@@ -4,7 +4,7 @@ module Service
       private
 
       include ModelCell
-      property :id, :name
+      property :id, :name, :code
 
       def link_to_edit
         link_to icon(:edit), edit_service_free_task_path(id), class: 'btn btn-small'

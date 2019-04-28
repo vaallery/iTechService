@@ -5,6 +5,9 @@ module Service
 
       include FormCell
       include ClientsHelper
+      include ActionView::Helpers::FormOptionsHelper
+
+      property :task
 
       def header_tag
         content_tag :div, class: 'page-header' do
@@ -23,6 +26,16 @@ module Service
 
       def tasks
         options[:tasks]
+      end
+
+      def performer_options
+        return [] if task.nil?
+
+        task.possible_performers.map { |p| [p.short_name, p.id] }
+      end
+
+      def performer_disabled?
+        performer_options.empty?
       end
     end
   end

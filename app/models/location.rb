@@ -4,6 +4,7 @@ class Location < ActiveRecord::Base
   scope :sorted, ->{order('position asc')}
   scope :for_schedule, ->{where(schedule: true)}
   scope :visible, -> { where hidden: [false, nil] }
+  scope :code_start_with, ->(code) { where('code LIKE ?', "#{code}%") }
   belongs_to :department, inverse_of: :locations
   has_many :users
   has_many :tasks

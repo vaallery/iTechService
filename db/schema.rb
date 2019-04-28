@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190314060731) do
+ActiveRecord::Schema.define(version: 20190428092332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -978,10 +978,12 @@ ActiveRecord::Schema.define(version: 20190314060731) do
     t.datetime "performed_at", null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "receiver_id"
   end
 
   add_index "service_free_jobs", ["client_id"], name: "index_service_free_jobs_on_client_id", using: :btree
   add_index "service_free_jobs", ["performer_id"], name: "index_service_free_jobs_on_performer_id", using: :btree
+  add_index "service_free_jobs", ["receiver_id"], name: "index_service_free_jobs_on_receiver_id", using: :btree
   add_index "service_free_jobs", ["task_id"], name: "index_service_free_jobs_on_task_id", using: :btree
 
   create_table "service_free_tasks", force: :cascade do |t|
@@ -989,6 +991,7 @@ ActiveRecord::Schema.define(version: 20190314060731) do
     t.string   "icon"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "code"
   end
 
   create_table "service_job_subscriptions", id: false, force: :cascade do |t|
@@ -1421,6 +1424,7 @@ ActiveRecord::Schema.define(version: 20190314060731) do
   add_foreign_key "service_free_jobs", "clients"
   add_foreign_key "service_free_jobs", "service_free_tasks", column: "task_id"
   add_foreign_key "service_free_jobs", "users", column: "performer_id"
+  add_foreign_key "service_free_jobs", "users", column: "receiver_id"
   add_foreign_key "service_job_viewings", "service_jobs"
   add_foreign_key "service_job_viewings", "users"
   add_foreign_key "service_repair_returns", "service_jobs"
