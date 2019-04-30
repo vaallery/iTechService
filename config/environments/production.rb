@@ -91,7 +91,7 @@ Rails.application.configure do
     enable_starttls_auto: true
   }
 
-  ActionMailer::Base.default from: 'iTechService <noreply@itechdevs.com>'
+  ActionMailer::Base.default from: %{"iTechService #{ENV['DEPARTMENT_NAME']}" <#{ENV['SMTP_LOGIN']}>}
   config.action_mailer.perform_deliveries = true
   config.active_job.queue_adapter = :sidekiq
   Paperclip.options[:command_path] = '/usr/local/bin'

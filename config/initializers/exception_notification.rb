@@ -22,7 +22,7 @@ ExceptionNotification.configure do |config|
     exception_recipients: ENV['EN_RECIPIENT'],
     delivery_method: :smtp,
     smtp_settings: {
-      domain: ENV['DOMAIN_NAME'],
+      # domain: ENV['DOMAIN_NAME'],
       address: ENV['EN_SMTP_SERVER'],
       port: ENV['EN_SMTP_PORT'],
       user_name: ENV['EN_SMTP_LOGIN'],
