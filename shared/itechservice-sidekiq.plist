@@ -4,6 +4,8 @@
 <dict>
 	<key>Label</key>
 	<string>itechservice-sidekiq</string>
+	<key>UserName</key>
+  <string>itech</string>
 	<key>EnvironmentVariables</key>
 	<dict>
 		<key>RAILS_ENV</key>
@@ -31,7 +33,13 @@
 	<key>StandardErrorPath</key>
 	<string>/var/www/log/itechservice-sidekiq.log</string>
 	<key>RunAtLoad</key>
-	<true/>
+	<dict>
+		<key>AfterInitialDemand</key>
+		<dict>
+      <key>homebrew.mxcl.redis</key>
+      <true/>
+	  </dict>
+	</dict>
 	<key>LaunchOnlyOnce</key>
 	<true/>
 	<key>KeepAlive</key>

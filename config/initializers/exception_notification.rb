@@ -22,13 +22,14 @@ ExceptionNotification.configure do |config|
     exception_recipients: ENV['EN_RECIPIENT'],
     delivery_method: :smtp,
     smtp_settings: {
-      domain: ENV['DOMAIN_NAME'],
+      domain: ENV['EN_SMTP_DOMAIN'],
       address: ENV['EN_SMTP_SERVER'],
       port: ENV['EN_SMTP_PORT'],
       user_name: ENV['EN_SMTP_LOGIN'],
       password: ENV['EN_SMTP_PASSWORD'],
       authentication: ENV['EN_SMTP_AUTHENTICATION'],
-      enable_starttls_auto: true
+      enable_starttls_auto: true,
+      tls: false
     }
   }
 

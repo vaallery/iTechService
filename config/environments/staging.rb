@@ -82,13 +82,14 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.smtp_settings = {
-    domain: ENV['DOMAIN_NAME'],
+    domain: ENV['SMTP_DOMAIN'],
     address: ENV['SMTP_SERVER'],
     port: ENV['SMTP_PORT'],
     user_name: ENV['SMTP_LOGIN'],
     password: ENV['SMTP_PASSWORD'],
     authentication: ENV['SMTP_AUTHENTICATION'],
-    enable_starttls_auto: true
+    enable_starttls_auto: true,
+    tls: true
   }
 
   ActionMailer::Base.default from: %{"iTechService #{ENV['DEPARTMENT_NAME']}" <#{ENV['SMTP_LOGIN']}>}
