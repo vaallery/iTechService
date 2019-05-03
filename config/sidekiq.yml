@@ -8,5 +8,6 @@ production:
   - critical
   - announcement
   - default
+  - mailers
   - reports
   - low
