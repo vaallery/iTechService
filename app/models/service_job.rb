@@ -90,11 +90,11 @@ class ServiceJob < ActiveRecord::Base
       comment: comment,
       at_done: at_done?,
       in_archive: in_archive?,
-      location: location.try(:name),
+      location: location&.name,
       client: {
         id: client_id,
-        name: client.short_name,
-        phone: client.phone_number
+        name: client&.short_name,
+        phone: client&.phone_number
       },
       contact_phone: contact_phone,
       tasks: device_tasks,
@@ -104,7 +104,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def type_name
-    item.present? ? item.name : (device_type.try(:full_name) || '-')
+    item.present? ? item.name : (device_type&.full_name || '-')
   end
 
   def device_short_name

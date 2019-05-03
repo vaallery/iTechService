@@ -6,6 +6,7 @@ TIMEOUT=${TIMEOUT-60}
 APP_ROOT=/var/www/itechservice/current
 PID=$APP_ROOT/tmp/pids/private_pub.pid
 CMD="cd $APP_ROOT; bundle exec rackup private_pub.ru -s thin -E production -D -P $PID"
+CMD="cd $APP_ROOT; bundle exec thin -C config/private_pub_thin.yml start"
 AS_USER=itech
 set -u
 

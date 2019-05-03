@@ -114,7 +114,7 @@ class Purchase < ActiveRecord::Base
   def build_movement_act(item_ids=[])
     movement_items_attributes = []
     dst_store_id = nil
-    item_ids.split(',').map do |item_id|
+    item_ids&.split(',').map do |item_id|
       if (batch = batches.where(item_id: item_id).first).present?
         movement_items_attributes << {item_id: item_id, quantity: batch.quantity}
         dst_store_id ||= batch.is_spare_part ? Store.spare_parts.first.try(:id) : Store.retail.first.try(:id)

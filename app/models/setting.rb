@@ -82,7 +82,7 @@ class Setting < ActiveRecord::Base
     end
 
     def sms_gateway_lines_qty
-      Setting.find_by(name: 'sms_gateway_lines_qty')&.value || 1
+      (Setting.find_by(name: 'sms_gateway_lines_qty')&.value || 1).to_i
     end
 
     private
