@@ -10,6 +10,7 @@ module Service
     belongs_to :task, class_name: 'FreeTask'
 
     delegate :presentation, :short_name, to: :client, prefix: true
+    delegate :short_name, to: :receiver, prefix: true
     delegate :short_name, to: :performer, prefix: true
     delegate :code, to: :task, prefix: true
   end

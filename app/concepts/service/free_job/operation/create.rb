@@ -11,22 +11,15 @@ module Service
     step Contract.Validate(key: :service_free_job)
     failure :contract_invalid!
     step Contract.Persist(method: :sync)
-    step :assign_performer!
-    step :assign_performed_at!
+    step :prepare!
     step :persist!
     failure :get_errors!
 
     private
 
-    def assign_performer!(model:, current_user:, **)
-      if model.performer_id.nil?
-        model.performer_id = current_user.id
-      else
-        model.receiver_id = current_user.id
-      end
-    end
-
-    def assign_performed_at!(model:, **)
+    def prepare!(model:, current_user:, **)
+      model.receiver_id = current_user.id
+      model.performer_id ||= current_user.id
       model.performed_at = Time.current
     end
 

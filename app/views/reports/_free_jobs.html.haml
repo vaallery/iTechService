@@ -2,7 +2,7 @@
   %caption= t '.title'
   %thead
     %tr
-      %th.center= Service::FreeJob.human_attribute_name :user
+      %th.center= Service::FreeJob.human_attribute_name(report.subject)
       %th.center= t 'reports.qty'
   %tbody
     - report.result[:users].each do |user|

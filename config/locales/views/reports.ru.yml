@@ -34,6 +34,9 @@ ru:
       title: 'Перемещения девайсов'
     free_jobs:
       title: 'Бесплатный сервис'
+      subject/receiver: 'По приёмщикам'
+      subject/performer: 'По исполнителям'
+
     salary:
       title: 'Отчет по зарплате'
     tasks_duration:

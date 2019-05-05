@@ -5,7 +5,7 @@ module Service
 
       include ModelCell
 
-      property :id, :client_short_name, :performer_short_name, :task
+      property :id, :client_short_name, :performer_short_name, :receiver_short_name, :task
 
       def performed_at
         I18n.l model.performed_at, format: :long_d
@@ -17,6 +17,10 @@ module Service
 
       def performer
         link_to performer_short_name, model.performer
+      end
+
+      def receiver
+        link_to receiver_short_name, model.receiver
       end
 
       def link_to_show

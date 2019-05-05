@@ -671,6 +671,7 @@ ru:
     product: 'Продукт'
     product_category: 'Категория продуктов'
     quantity: 'Количество'
+    receiver: 'Приёмщик'
     serial_number: 'Серийный номер'
     status: 'Статус'
     sum: 'Сумма'
