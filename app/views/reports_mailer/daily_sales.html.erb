@@ -1,0 +1,24 @@
+<table id="daily_sales_report" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Название задачи</th>
+      <th>Количество</th>
+      <th>Итоговая сумма</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @result[:tasks].values.each do |task| %>
+      <tr>
+        <td><%= task[:name] %></td>
+        <td class="align_right"><%= task[:qty] %></td>
+        <td class="align_right"><%= task[:sum].to_i %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">Итого:</td>
+      <td class="align_right"><%= @result[:total_sum].to_i %></td>
+    </tr>
+  </tfoot>
+</table>

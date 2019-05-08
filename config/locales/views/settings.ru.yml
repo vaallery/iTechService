@@ -15,6 +15,7 @@ ru:
     data_storage_qty: 'Количество хранилищ данных'
     email: 'E-mail'
     emails_for_orders: 'Адреса для заказов'
+    emails_for_sales_report: 'Отчёты по продажам'
     legal_address: 'Юридический адрес'
     meda_menu_database: 'База Медиа меню'
     organization: 'Организация'
