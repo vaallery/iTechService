@@ -3,3 +3,9 @@ remnants_report:
   class: 'RemnantsReportMailingJob'
   queue: 'reports'
   active_job: true
+
+sales_report:
+  cron: '45 9 * * * Asia/Vladivostok'
+  class: 'DailySalesReportMailingJob'
+  queue: 'reports'
+  active_job: true

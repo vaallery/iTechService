@@ -23,7 +23,3 @@ every :day, at: '8:00' do
   runner 'User.check_birthdays'
   rake 'app:delete_expired_faults'
 end
-
-every :day, at: '9:00' do
-  runner 'RemnantsReportMailingJob.perform_later'
-end
