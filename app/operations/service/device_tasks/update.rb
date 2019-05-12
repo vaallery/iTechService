@@ -32,10 +32,12 @@ module Service
         device_task.errors.empty?
       end
 
-      def save(device_task, warranty_item_ids)
+      def save(device_task, warranty_item_ids, user)
         ActiveRecord::Base.transaction do
           begin
             if device_task.is_repair?
+              defected_items = []
+
               device_task.repair_tasks.each do |repare_task|
                 if repare_task.new_record?
                   defect_sp_store = Store.current_defect_sp
@@ -43,13 +45,22 @@ module Service
 
                   repare_task.repair_parts.each do |repair_part|
                     repair_part.stash
-                    repair_part.move_defected if repair_part.defect_qty > 0
+                    if repair_part.defect_qty > 0
+                      defected_items << {id: repair_part.item_id, qty: repair_part.defect_qty}
+                    end
                     repair_part.store_item(defect_sp_store).add if warranty_item_ids.include?(repair_part.item_id)
                   end
                 else
-                  repare_task.repair_parts.each(&:move_defected)
+                  repare_task.repair_parts.each do |repair_part|
+                    if repair_part.defect_qty > 0
+                      qty = repair_part.defect_qty - (repair_part.defect_qty_was || 0)
+                      defected_items << {id: repair_part.item_id, qty: qty}
+                    end
+                  end
                 end
               end
+
+              move_defected(defected_items, device_task, user) if defected_items.any?
             end
 
             device_task.save!
@@ -63,6 +74,20 @@ module Service
 
       def notify(device_task, user, params)
         Service::DeviceSubscribersNotificationJob.perform_later(device_task.service_job_id, user.id, params)
+      end
+
+      def move_defected(items, device_task, user)
+        movement_act = MovementAct.create(store_id: device_task.department.spare_parts_store.id,
+                                          dst_store_id: device_task.department.defect_sp_store.id,
+                                          user_id: user.id,
+                                          comment: "Списание брака при ремонте.",
+                                          date: DateTime.current)
+
+        items.each do |item|
+          movement_act.movement_items.create(item_id: item[:id], quantity: item[:qty])
+        end
+
+        movement_act.post
       end
     end
   end
