@@ -1,0 +1,14 @@
+%table#defected_spare_parts_report.table.table-bordered.table-hover
+  %thead
+    %tr
+      %th.center Запчасть
+      %th.center Количество
+  %tbody
+    - report.result[:data].each do |spare_part, quantity|
+      %tr
+        %td= spare_part
+        %td.number= quantity
+  %tfoot
+    %tr
+      %td Итого
+      %td.number= report.result[:total_qty]

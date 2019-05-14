@@ -9,6 +9,7 @@
         = f.text_field :start_date, class: 'bootstrap-datepicker input-small'
         = '_'
         = f.text_field :end_date, class: 'bootstrap-datepicker input-small'
+        = f.select :department_id, departments_collection, prompt: Department.model_name.human if report.respond_to?(:department_id)
         = f.select :store_id, stores_collection, prompt: t('activerecord.models.store') if report.respond_to?(:store_id)
         = f.select :location_id, locations_collection, prompt: t('activerecord.models.location') if report.respond_to?(:location_id)
         = f.select :subject, report.subjects_collection if report.respond_to?(:subject)

@@ -5,7 +5,7 @@ module ReportsHelper
   end
 
   def report_names
-    %w[device_types device_groups users devices_archived devices_not_archived done_tasks tasks_undone clients tasks_duration device_orders done_orders devices_movements payments salary driver few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs technicians_difficult_jobs remnants sales margin quick_orders free_jobs phone_substitutions sms_notifications service_jobs_at_done repair_parts]
+    %w[device_types device_groups users devices_archived devices_not_archived done_tasks tasks_undone clients tasks_duration device_orders done_orders devices_movements payments salary driver few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs technicians_difficult_jobs remnants sales margin quick_orders free_jobs phone_substitutions sms_notifications service_jobs_at_done repair_parts defected_spare_parts]
   end
 
   def report_default_params(report_name)
@@ -34,6 +34,10 @@ module ReportsHelper
       remnants_row detail
     end.join
     content.html_safe
+  end
+
+  def departments_collection
+    Department.current_with_remotes.map { |d| [d.name, d.id] }
   end
 
   def locations_collection

@@ -19,10 +19,10 @@ ru:
     received_done: готовы
     received_archived: выданы
     sum: Сумма
-    done_orders:
-      title: 'Выполненные заказы'
     clients:
       title: 'Новые клиенты'
+    defected_spare_parts:
+      title: 'Брак запчастей'
     device_types:
       title: 'Принятые девайсы по типам'
     device_groups:
@@ -32,6 +32,8 @@ ru:
       archived: "Переведено в архив"
     devices_movements:
       title: 'Перемещения девайсов'
+    done_orders:
+      title: 'Выполненные заказы'
     free_jobs:
       title: 'Бесплатный сервис'
       subject/receiver: 'По приёмщикам'
