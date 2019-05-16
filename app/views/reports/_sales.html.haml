@@ -2,6 +2,12 @@
   %caption= report_title report
   %thead
     %tr
+      %th.center{colspan: 2} Категория
+      %th.center Количество
+      %th.center{colspan: 2} Сумма
+      %th.center Скидка
+      %th{colspan: 3}
+    %tr
       %th.center= t '.time'
       %th.center= t '.product'
       %th.center= t '.quantity'
@@ -12,25 +18,33 @@
       %th.center= t '.client'
       %th.center= t '.user'
   %tbody
-    - report.result[:sales].each do |sale|
-      %tr
-        %td.time= human_datetime sale[:time]
-        %td.product
-          = sale[:product]
-          %br
-          = sale[:features]
-        %td.quantity.number= sale[:quantity]
-        %td.price.number= human_currency sale[:price], false
-        %td.sum.number= human_currency sale[:sum], false
-        %td.discount.number= human_currency sale[:discount], false
-        %td.payment_type= sale[:payment_type]
-        %td.client= sale[:client_id].present? ? link_to(sale[:client], client_path(sale[:client_id]), target: '_blank') : '-'
-        %td.user= link_to sale[:user], user_path(sale[:user_id]), target: '_blank'
+    - report.result[:data].each_value do |data|
+      %tr.detailable
+        %td{colspan: 2}= data[:name]
+        %td.number= data[:count]
+        %td.number{colspan: 2}= human_currency(data[:sum], false)
+        %td.number= human_currency(data[:discount], false)
+        %td{colspan: 3}
+      - data[:details].each do |details|
+        %tr.details
+          %td.time= link_to(human_datetime(details[:time]),
+                            details[:job_id].present? ? service_job_path(details[:job_id]) : sale_path(details[:sale_id]),
+                            target: '_blank')
+          %td.product
+            = details[:product]
+            %br
+            = details[:features]
+          %td.quantity.number= details[:quantity]
+          %td.price.number= human_currency(details[:price], false)
+          %td.sum.number= human_currency(details[:sum], false)
+          %td.discount.number= human_currency(details[:discount], false)
+          %td.payment_type= details[:payment_type]
+          %td.client= details[:client_id].present? ? link_to(details[:client], client_path(details[:client_id]), target: '_blank') : '-'
+          %td.user= link_to(details[:user], user_path(details[:user_id]), target: '_blank')
   %tfoot
     %tr
       %td{colspan: 2}= t 'total'
-      %td.number= report.result[:sales_count]
-      %td
-      %td.number= human_currency report.result[:sales_sum], false
-      %td.number= human_currency report.result[:discounts_sum], false
+      %td.number= report.result[:total_sales_count]
+      %td.number{colspan: 2}= human_currency(report.result[:total_sales_sum], false)
+      %td.number= human_currency(report.result[:total_discounts_sum], false)
       %td{colspan: 3}
