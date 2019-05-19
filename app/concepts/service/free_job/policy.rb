@@ -1,7 +1,7 @@
 module Service
   class FreeJob::Policy < BasePolicy
     def show?
-      any_admin? || record.performer == user
+      any_admin? || record.receiver == user
     end
 
     def create?
