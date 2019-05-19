@@ -2,6 +2,7 @@ class SettingsController < ApplicationController
   load_and_authorize_resource
 
   def index
+    authorize! :manage, Setting
     respond_to do |format|
       format.html
       format.json { render json: @settings }

@@ -6,7 +6,7 @@
     = f.input :name
     = f.input :presentation
     = f.input :value_type, collection: Setting::VALUE_TYPES, prompt: false if f.object.new_record?
-    = f.input :value, input_html: {rows: 3}
+    = f.input :value, as: @setting.input_type
 
   .form-actions
     = submit_button f

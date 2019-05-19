@@ -18,7 +18,7 @@ class SalesController < ApplicationController
       format.html
       format.json { render json: @sale }
       format.pdf do
-        if can? :print_check, @sale
+        if Setting.print_sale_check? && can?(:print_check, @sale)
           pdf = SaleCheckPdf.new @sale, params[:copy].present?
           filename = "sale_check_#{@sale.id}.pdf"
           send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
@@ -93,13 +93,15 @@ class SalesController < ApplicationController
     @sale = Sale.find params[:id]
     respond_to do |format|
       if @sale.post
-        # if @sale.calculation_amount > 0
+
+        if Setting.print_sale_check?
           pdf = SaleCheckPdf.new @sale, params[:copy].present?
           filename = "sale_check_#{@sale.id}.pdf"
           filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
           pdf.render_file filepath
           PrinterTools.print_file filepath, type: :sale_check, height: pdf.page_height_mm, printer: current_user.department.printer
-        # end
+        end
+
         if @sale.service_job.present?
           @sale.service_job.update location_id: current_user.archive_location.id
         end
@@ -122,8 +124,8 @@ class SalesController < ApplicationController
   end
 
   def print_check
-    @sale = Sale.find params[:id]
-    # if @sale.calculation_amount > 0
+    if Setting.print_sale_check?
+      @sale = Sale.find params[:id]
       if can?(:reprint_check, @sale)
         pdf = SaleCheckPdf.new @sale, params[:copy].present?
       else
@@ -132,7 +134,8 @@ class SalesController < ApplicationController
       filepath = "#{Rails.root.to_s}/tmp/pdf/sale_check_#{@sale.id}.pdf"
       pdf.render_file filepath
       PrinterTools.print_file filepath, type: :sale_check, height: pdf.page_height_mm, printer: current_user.department.printer
-    # end
+    end
+
     respond_to do |format|
       format.html { redirect_to new_sale_path }
       format.js { render nothing: true }

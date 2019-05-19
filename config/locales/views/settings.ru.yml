@@ -19,6 +19,7 @@ ru:
     legal_address: 'Юридический адрес'
     meda_menu_database: 'База Медиа меню'
     organization: 'Организация'
+    print_sale_check: 'Печатать чеки продаж'
     schedule: 'График работы'
     service_tasks_models: 'Модели девайсов для сервисных задач'
     site: 'Сайт'

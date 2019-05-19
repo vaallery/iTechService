@@ -16,7 +16,7 @@ class Ability
       can :finance, User if user.able_to? :manage_salary
       cannot :manage, Salary unless user.able_to? :manage_salary
       cannot :manage_rights, User
-      cannot :manage, [BonusType, Bonus]
+      cannot :manage, [BonusType, Bonus, Setting]
       cannot [:edit, :destroy], Karma
       can :read_tech_notice, ServiceJob
       can :write_tech_notice, ServiceJob
@@ -127,7 +127,7 @@ class Ability
       can :manage, TimesheetDay if user.able_to? :manage_timesheet
       can :manage, [ScheduleDay, DutyDay] if user.able_to? :manage_schedule
       can %i[duty_calendar staff_duty_schedule schedule create_duty_day destroy_duty_day], User if user.able_to? :manage_schedule
-      can :print_check, Sale
+      can :print_check, Sale if Setting.print_sale_check?
       can :create, DeviceNote
       can :manage, FavoriteLink, owner_id: user.id
       can :read, :all

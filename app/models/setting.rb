@@ -16,6 +16,7 @@ class Setting < ActiveRecord::Base
       meda_menu_database: 'string',
       ogrn: 'string',
       organization: 'string',
+      print_sale_check: 'boolean',
       schedule: 'string',
       site: 'string',
       ticket_prefix: 'string',
@@ -86,6 +87,10 @@ class Setting < ActiveRecord::Base
       (Setting.find_by(name: 'sms_gateway_lines_qty')&.value || 1).to_i
     end
 
+    def print_sale_check?
+      Setting.get_value('print_sale_check') == '1'
+    end
+
     private
 
     def parse_value(value)
@@ -95,6 +100,10 @@ class Setting < ActiveRecord::Base
         return error
       end
     end
+  end
+
+  def input_type
+    value_type =~ /(json|string)/ ? 'text' : value_type
   end
 
   private
