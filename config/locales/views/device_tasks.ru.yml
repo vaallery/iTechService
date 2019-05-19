@@ -3,7 +3,7 @@ ru:
     add_repair_task: "Добавить"
     errors:
       already_done: "Задача уже выполнена"
-      insufficient_spare_parts: "На складе недостаточно запчастей (%{name})"
+      insufficient_spare_parts: 'На складе "%{store}" недостаточно запчастей "%{spare_part}"'
 
     repair_task_fields:
       spare_part: "Запчасть (кол-во)"

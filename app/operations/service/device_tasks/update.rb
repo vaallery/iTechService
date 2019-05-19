@@ -24,7 +24,8 @@ module Service
             quantity_need += repair_part.quantity if repare_task.new_record?
 
             if repair_part.store_item(store).quantity < quantity_need
-              device_task.errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts', name: repair_part.name)
+              device_task.errors[:base] << I18n.t('device_tasks.errors.insufficient_spare_parts',
+                                                  store: store.name, spare_part: repair_part.name)
             end
           end
         end
