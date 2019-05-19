@@ -6,6 +6,8 @@
   };
 
   $(function() {
-    App.Service.Feedback.fetch_actual();
+    if ($('#feedback_notifications-link').length > 0) {
+      App.Service.Feedback.fetch_actual();
+    }
   })
 }).call(this);

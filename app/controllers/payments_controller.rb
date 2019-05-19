@@ -40,7 +40,7 @@ class PaymentsController < ApplicationController
     @payment = @sale.add_payment params[:payment]
     respond_to do |format|
       if @payment.save
-        format.html { redirect_to @payment, notice: 'Payment was successfully created.' }
+        format.html { redirect_to @payment, notice: 'Оплата создана.' }
         format.js { render 'save' }
       else
         format.html { render 'form' }
