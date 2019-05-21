@@ -1,0 +1,14 @@
+%table#orders_statuses_report.table.table.table-bordered.table-hover
+  %thead
+    %tr
+      %th ФИО сотрудника
+      %th Всего
+      - Order::STATUSES.each do |status|
+        %th= t "orders.statuses.short.#{status}"
+  %tbody
+    - report.result.each do |user_name, orders|
+      %tr
+        %td= user_name
+        %td= orders[:total]
+        - Order::STATUSES.each do |status|
+          %td= orders[status]
