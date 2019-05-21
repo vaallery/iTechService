@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
 
   OBJECT_KINDS = %w[device accessory soft misc spare_part]
-  STATUSES = %w[new pending done canceled notified archive]
+  STATUSES = %w[new pending done canceled notified issued archive]
 
   scope :newest, ->{order('orders.created_at desc')}
   scope :oldest, ->{order('orders.created_at asc')}

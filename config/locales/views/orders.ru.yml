@@ -24,6 +24,7 @@ ru:
       done: 'Выполнен (отправлен в магазин)'
       canceled: 'Отменен'
       notified: 'Уведомлён (позвонили)'
+      issued: 'Забрал гость'
       archive: 'Архив'
       all_statuses: 'Все статусы'
       short:
@@ -32,6 +33,7 @@ ru:
         done: 'Выполнен'
         canceled: 'Отменен'
         notified: 'Уведомлён'
+        issued: 'Забрал гость'
         archive: 'Архив'
     created: 'Заказ создан'
     updated: 'Заказ изменён'
