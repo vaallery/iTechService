@@ -8,7 +8,7 @@ module Service
 
     private
 
-    def postpone!(model:, **)
+    def postpone!(model:, current_user:, **)
       if model.postpone_count < 5
         model.scheduled_on = 1.hour.from_now
         model.postpone_count += 1
@@ -17,7 +17,7 @@ module Service
         model.postpone_count = 0
       end
 
-      log = "[#{I18n.l(Time.current, format: :long)}] #{I18n.t('service.feedback.postponed')}"
+      log = "[#{I18n.l(Time.current, format: :long)}. #{current_user.short_name}] #{I18n.t('service.feedback.postponed')}"
       model.add_log log
       model.save
     end
