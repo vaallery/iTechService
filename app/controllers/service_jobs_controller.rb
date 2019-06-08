@@ -223,10 +223,18 @@ class ServiceJobsController < ApplicationController
   def create_sale
     service_job = ServiceJob.find params[:id]
     respond_to do |format|
-      if (sale = service_job.create_filled_sale).present?
-        format.html { redirect_to edit_sale_path(sale) }
+      if service_job.sale.present?
+        if service_job.sale.is_new?
+          format.html { redirect_to edit_sale_path(service_job.sale) }
+        else
+          format.html { redirect_to service_job.sale }
+        end
       else
-        format.html { render nothing: true }
+        if (sale = service_job.create_filled_sale).present?
+          format.html { redirect_to edit_sale_path(sale) }
+        else
+          format.html { render nothing: true }
+        end
       end
     end
   end

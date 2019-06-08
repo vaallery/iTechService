@@ -36,10 +36,13 @@ class PaymentsController < ApplicationController
   end
 
   def create
-    @sale = Sale.find params[:sale_id]
-    @payment = @sale.add_payment params[:payment]
+    @sale = Sale.find(params[:sale_id])
+    payment = Payment.new(params[:payment])
+    outcome = Sales::AddPayment.run(sale: @sale, payment: payment)
+    @payment = outcome.result
+
     respond_to do |format|
-      if @payment.save
+      if outcome.valid?
         format.html { redirect_to @payment, notice: 'Оплата создана.' }
         format.js { render 'save' }
       else

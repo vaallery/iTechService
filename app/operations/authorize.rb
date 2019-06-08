@@ -1,5 +1,5 @@
-class Authorize < AnOperation
-  def call(user:, model:, **params)
-
-  end
-end
+# class Authorize < AnOperation
+#   def call(user:, model:, **params)
+#
+#   end
+# end
