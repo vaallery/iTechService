@@ -161,6 +161,14 @@ class Sale < ActiveRecord::Base
     payments.sum :value
   end
 
+  def debt
+    calculation_amount - payments_sum
+  end
+
+  def paid?
+    debt == 0
+  end
+
   def add_payment(params)
     payments.create params
   end

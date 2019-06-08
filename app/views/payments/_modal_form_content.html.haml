@@ -3,6 +3,9 @@
     %h3= "#{t('activerecord.models.payment')} - #{human_payment_kind(@payment)}"
 
   .modal-body
+    - if @payment.errors[:base].present?
+      .alert.alert-danger= @payment.errors[:base].join(' ')
+
     = f.hidden_field :kind
     = f.input :value, readonly: true
     = f.association :bank if f.object.is_by_bank?

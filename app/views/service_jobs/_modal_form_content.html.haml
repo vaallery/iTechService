@@ -88,10 +88,12 @@
         %hr
         - if @service_job.at_done?
           - if @service_job.tasks_cost > 0
-            - if @service_job.sale&.is_new?
+            - if @service_job.sale.nil?
+              = link_to glyph(:money) + t('sales.payment').html_safe, create_sale_service_job_path(@service_job), method: :post, target: '_blank', class: 'btn btn-success'
+            - elsif @service_job.sale.is_new?
               = link_to glyph(:money) + t('sales.payment').html_safe, edit_sale_path(@service_job.sale_id), target: '_blank', class: 'btn btn-success'
             - else
-              = link_to glyph(:money) + t('sales.payment').html_safe, create_sale_service_job_path(@service_job), method: :post, target: '_blank', class: 'btn btn-success'
+              = link_to glyph(:money) + t('sales.payment').html_safe, sale_path(@service_job.sale_id), target: '_blank', class: 'btn btn-success'
           - if @service_job.phone_substituted?
             = link_to t('service_jobs.returning_substitute_phone'), edit_substitution_path(@service_job.pending_substitution), target: '_blank', class: 'btn btn-danger'
           = link_to_archive_device @service_job, remote: true
