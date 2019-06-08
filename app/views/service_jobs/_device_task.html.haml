@@ -4,6 +4,10 @@
     %td= f.select :task_id, Task.all.collect{|t|[t.name,t.id]}, {include_blank: true}, class: 'device_task_task'
     %td.align_right= f.number_field :cost, class: 'device_task_cost input-small'
     %td= f.text_area :comment, rows: 3
+
+    - if able_to? :edit_tasks_user_comment
+      %td= f.text_area :user_comment, rows: 3
+
     - if can? :remove_device_tasks, f.object.service_job
       %td= link_to_remove_fields f
   - else

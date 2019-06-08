@@ -7,6 +7,8 @@
       %th= DeviceTask.human_attribute_name :task
       %th= DeviceTask.human_attribute_name :cost
       %th= DeviceTask.human_attribute_name :comment
+      - if able_to? :edit_tasks_user_comment
+        %th= DeviceTask.human_attribute_name :user_comment
       - if can?(:remove_device_tasks, f.object)
         %th
   %tbody

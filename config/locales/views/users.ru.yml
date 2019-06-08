@@ -2,6 +2,7 @@ ru:
   users:
     abilities:
       edit_clients: 'Редактировать клиентов'
+      edit_tasks_user_comment: 'Редактировать комментарий сотрудника к задачам'
       manage_salary: 'Редактировать зарплату'
       manage_wiki: 'Редактировать Wiki'
       print_receipt: "Печатать чеки"
