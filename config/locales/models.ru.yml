@@ -451,6 +451,7 @@ ru:
         done_at: 'Время завершения'
         estimated_cost_of_repair: 'Ориентировочная стоимость ремонта'
         history_records: 'История изменений'
+        initial_department: 'Первоначальное подразделение'
         imei: 'IMEI'
         is_tray_present: 'Есть ли лоток?'
         item: 'Устройство'

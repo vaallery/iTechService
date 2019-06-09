@@ -17,6 +17,7 @@ class ServiceJob < ActiveRecord::Base
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
   belongs_to :department, inverse_of: :service_jobs
+  belongs_to :initial_department, class_name: 'Department'
   belongs_to :user, inverse_of: :service_jobs
   belongs_to :client, inverse_of: :service_jobs
   belongs_to :device_type

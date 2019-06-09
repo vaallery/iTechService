@@ -91,6 +91,7 @@ class ServiceJobsController < ApplicationController
 
   def create
     @service_job = ServiceJob.new(params[:service_job])
+    @service_job.initial_department = Department.local
 
     respond_to do |format|
       if @service_job.save

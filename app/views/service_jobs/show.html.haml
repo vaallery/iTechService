@@ -22,6 +22,9 @@
   .span6
     %table.attributes_table
       %tr
+        %td= ServiceJob.human_attribute_name :initial_department
+        %td= @service_job.initial_department&.name
+      %tr
         %td= ServiceJob.human_attribute_name :department
         %td= @service_job.department_name
       %tr

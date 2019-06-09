@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190428092332) do
+ActiveRecord::Schema.define(version: 20190609125156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1061,6 +1061,7 @@ ActiveRecord::Schema.define(version: 20190428092332) do
     t.text     "client_comment"
     t.string   "estimated_cost_of_repair"
     t.string   "type_of_work"
+    t.integer  "initial_department_id"
   end
 
   add_index "service_jobs", ["carrier_id"], name: "index_service_jobs_on_carrier_id", using: :btree
@@ -1070,6 +1071,7 @@ ActiveRecord::Schema.define(version: 20190428092332) do
   add_index "service_jobs", ["device_type_id"], name: "index_service_jobs_on_device_type_id", using: :btree
   add_index "service_jobs", ["done_at"], name: "index_service_jobs_on_done_at", using: :btree
   add_index "service_jobs", ["imei"], name: "index_service_jobs_on_imei", using: :btree
+  add_index "service_jobs", ["initial_department_id"], name: "index_service_jobs_on_initial_department_id", using: :btree
   add_index "service_jobs", ["item_id"], name: "index_service_jobs_on_item_id", using: :btree
   add_index "service_jobs", ["location_id"], name: "index_service_jobs_on_location_id", using: :btree
   add_index "service_jobs", ["sale_id"], name: "index_service_jobs_on_sale_id", using: :btree
@@ -1427,6 +1429,7 @@ ActiveRecord::Schema.define(version: 20190428092332) do
   add_foreign_key "service_free_jobs", "users", column: "receiver_id"
   add_foreign_key "service_job_viewings", "service_jobs"
   add_foreign_key "service_job_viewings", "users"
+  add_foreign_key "service_jobs", "departments", column: "initial_department_id"
   add_foreign_key "service_repair_returns", "service_jobs"
   add_foreign_key "service_repair_returns", "users", column: "performer_id"
   add_foreign_key "service_sms_notifications", "users", column: "sender_id"
