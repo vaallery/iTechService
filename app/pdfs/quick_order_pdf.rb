@@ -1,6 +1,7 @@
 # encoding: utf-8
 class QuickOrderPdf < Prawn::Document
   require 'prawn/measurement_extensions'
+  include ActiveSupport::NumberHelper
 
   def initialize(quick_order)
     super page_size: [80.mm, 90.mm], page_layout: :portrait, margin: [10, 24, 10, 10]
@@ -49,7 +50,7 @@ class QuickOrderPdf < Prawn::Document
     move_down 4
     text @quick_order.department_name, align: :center
     text @quick_order.client_short_name
-    text @quick_order.client_phone
+    text [@quick_order.client_phone, number_to_phone(@quick_order.contact_phone, area_code: true).presence].compact.join(', ')
     move_down 5
     text "#{QuickOrder.human_attribute_name(:security_code)}: #{@quick_order.security_code}"
     move_down 3
