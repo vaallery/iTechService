@@ -12,7 +12,7 @@
 
         .control-group
           %label.control-label= ServiceJob.human_attribute_name :ticket_number
-          .controls= @service_job.ticket_number
+          .controls= link_to @service_job.ticket_number, @service_job
 
         .control-group
           %label.control-label= ServiceJob.human_attribute_name :department
