@@ -196,7 +196,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def transferred?
-    department_id != initial_department_id
+    initial_department_id.present? && department_id != initial_department_id
   end
 
   def done_tasks
