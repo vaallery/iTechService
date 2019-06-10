@@ -34,10 +34,6 @@ class Department < ActiveRecord::Base
     Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first
   end
 
-  def self.local
-    Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first
-  end
-
   def self.current_with_remotes
     where('code LIKE ?', "#{current.code}%")
   end
