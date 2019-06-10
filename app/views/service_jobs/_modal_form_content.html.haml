@@ -14,6 +14,11 @@
           %label.control-label= ServiceJob.human_attribute_name :ticket_number
           .controls= link_to @service_job.ticket_number, @service_job
 
+        .control-group{class: ('text-error' if @service_job.transferred?)}
+          %label.control-label= ServiceJob.human_attribute_name :initial_department
+          .controls
+            %strong= @service_job.initial_department&.name
+
         .control-group
           %label.control-label= ServiceJob.human_attribute_name :department
           .controls

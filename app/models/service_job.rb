@@ -79,6 +79,42 @@ class ServiceJob < ActiveRecord::Base
   after_initialize :set_user_and_location
   after_initialize :set_contact_phone
 
+  def self.search(params)
+    service_jobs = ServiceJob.includes :device_tasks, :tasks
+
+    unless (status_q = params[:status]).blank?
+      service_jobs = service_jobs.send status_q if %w[done pending important].include? status_q
+    end
+
+    unless (location_q = params[:location]).blank?
+      service_jobs = service_jobs.where service_jobs: {location_id: location_q}
+    end
+
+    unless (ticket_q = params[:ticket]).blank?
+      service_jobs = service_jobs.where 'service_jobs.ticket_number LIKE ?', "%#{ticket_q}%"
+    end
+
+    unless (service_job_q = (params[:service_job] || params[:service_job_q])).blank?
+      service_jobs = service_jobs.includes(:features).where('LOWER(features.value) LIKE :q OR LOWER(service_jobs.serial_number) LIKE :q OR LOWER(service_jobs.imei) LIKE :q', q: "%#{service_job_q.mb_chars.downcase.to_s}%").references(:features)
+    end
+
+    unless (client_q = params[:client]).blank?
+      service_jobs = service_jobs.joins(:client).where 'LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q', q: "%#{client_q.mb_chars.downcase.to_s}%"
+    end
+
+    service_jobs
+  end
+
+  def self.quick_search(query)
+    service_jobs = ServiceJob.unarchived
+
+    unless query.blank?
+      service_jobs = service_jobs.joins(:client).where 'service_jobs.ticket_number LIKE :q OR service_jobs.contact_phone LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%"
+    end
+
+    service_jobs
+  end
+
   def as_json(options={})
     {
       id: id,
@@ -158,41 +194,9 @@ class ServiceJob < ActiveRecord::Base
   def pending?
     !done?
   end
-  
-  def self.search(params)
-    service_jobs = ServiceJob.includes :device_tasks, :tasks
-    
-    unless (status_q = params[:status]).blank?
-      service_jobs = service_jobs.send status_q if %w[done pending important].include? status_q
-    end
 
-    unless (location_q = params[:location]).blank?
-      service_jobs = service_jobs.where service_jobs: {location_id: location_q}
-    end
-    
-    unless (ticket_q = params[:ticket]).blank?
-      service_jobs = service_jobs.where 'service_jobs.ticket_number LIKE ?', "%#{ticket_q}%"
-    end
-
-    unless (service_job_q = (params[:service_job] || params[:service_job_q])).blank?
-      service_jobs = service_jobs.includes(:features).where('LOWER(features.value) LIKE :q OR LOWER(service_jobs.serial_number) LIKE :q OR LOWER(service_jobs.imei) LIKE :q', q: "%#{service_job_q.mb_chars.downcase.to_s}%").references(:features)
-    end
-
-    unless (client_q = params[:client]).blank?
-      service_jobs = service_jobs.joins(:client).where 'LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q OR clients.phone_number LIKE :q OR clients.full_phone_number LIKE :q OR LOWER(clients.card_number) LIKE :q', q: "%#{client_q.mb_chars.downcase.to_s}%"
-    end
-    
-    service_jobs
-  end
-
-  def self.quick_search(query)
-    service_jobs = ServiceJob.unarchived
-
-    unless query.blank?
-      service_jobs = service_jobs.joins(:client).where 'service_jobs.ticket_number LIKE :q OR service_jobs.contact_phone LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%"
-    end
-
-    service_jobs
+  def transferred?
+    department_id != initial_department_id
   end
 
   def done_tasks

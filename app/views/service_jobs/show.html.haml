@@ -21,7 +21,7 @@
 .row-fluid
   .span6
     %table.attributes_table
-      %tr
+      %tr{class: ('text-error' if @service_job.transferred?)}
         %td= ServiceJob.human_attribute_name :initial_department
         %td= @service_job.initial_department&.name
       %tr
