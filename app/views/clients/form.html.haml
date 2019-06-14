@@ -11,7 +11,6 @@
   = f.input :category, collection: client_categories_for_select if can? :change_category, @client
   = f.input :card_number
   #client_questionnaire_input{class: @client.card_number.blank? ? 'hidden' : ''}
-    = f.input :email
     .control-group
       %label.control-label= t 'clients.questionnaire'
       .controls= link_to icon_tag('print'), '#', class: 'btn', id: 'questionnaire_link', target: '_blank'
