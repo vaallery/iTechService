@@ -13,17 +13,21 @@ class QuickOrder < ActiveRecord::Base
   belongs_to :client
   has_and_belongs_to_many :quick_tasks, join_table: 'quick_orders_quick_tasks'
   has_many :history_records, as: :object, dependent: :destroy
+  has_many :comments, as: :commentable
+
+  attr_accessible :client_id, :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code, :department_id, :device_kind
+  validates_presence_of :security_code, :device_kind
+
   delegate :short_name, to: :user, prefix: true, allow_nil: true
   delegate :name, to: :department, prefix: true, allow_nil: true
-  attr_accessible :client_id, :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code, :department_id, :device_kind
-  before_create :set_number
-  validates_presence_of :security_code, :device_kind
 
   after_initialize do
     self.department_id ||= Department.current.id
     self.user_id ||= User.current.try(:id)
     self.is_done ||= false
   end
+
+  before_create :set_number
 
   def self.search(params)
     quick_orders = QuickOrder.all

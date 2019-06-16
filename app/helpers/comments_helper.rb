@@ -1,5 +1,13 @@
 module CommentsHelper
 
+  def comments_list_for(commentable)
+    cell(Comment::Cell::Preview, collection: commentable.comments.oldest).call
+  end
+
+  def comment_form_for(commentable)
+    cell(Comment::Cell::Form, commentable.comments.build).call
+  end
+
   def link_to_comments_for(commentable, options={})
     link_class = 'comments_link ' + (options[:class] || '')
     link_to icon_tag('comments-alt'), comments_path(commentable_type: commentable.class.to_s, commentable_id: commentable.id),

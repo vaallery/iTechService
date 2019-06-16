@@ -16,7 +16,7 @@ class QuickOrdersController < ApplicationController
   end
 
   def show
-    @quick_order = QuickOrder.find(params[:id])
+    @quick_order = QuickOrder.includes(comments: :user).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

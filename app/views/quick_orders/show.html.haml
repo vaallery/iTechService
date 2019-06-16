@@ -8,40 +8,46 @@
   = link_to glyph(:print) + t('tickets.link'), quick_order_path(@quick_order, format: 'pdf', print: true), class: 'btn btn-primary', target: '_blank'
   = link_to glyph('eye-open') + t('tickets.link'), quick_order_path(@quick_order, format: 'pdf'), class: 'btn btn-info', target: '_blank'
 
-%table.attributes_table
-  %tr
-    %td= model_class.human_attribute_name :department
-    %td
-      %strong.text-warning= @quick_order.department_name
-  %tr
-    %td= model_class.human_attribute_name(:device_kind)
-    %td= @quick_order.device_kind
-  %tr
-    %td= model_class.human_attribute_name(:number)
-    %td= @quick_order.number
-  %tr
-    %td= model_class.human_attribute_name(:client)
-    %td= link_to_if @quick_order.client.present?, @quick_order.client_presentation, @quick_order.client
+.row-fluid
+  .span6
+    %table.attributes_table
+      %tr
+        %td= model_class.human_attribute_name :department
+        %td
+          %strong.text-warning= @quick_order.department_name
+      %tr
+        %td= model_class.human_attribute_name(:device_kind)
+        %td= @quick_order.device_kind
+      %tr
+        %td= model_class.human_attribute_name(:number)
+        %td= @quick_order.number
+      %tr
+        %td= model_class.human_attribute_name(:client)
+        %td= link_to_if @quick_order.client.present?, @quick_order.client_presentation, @quick_order.client
 
-  - if @quick_order.contact_phone.present?
-    %tr
-      %td= model_class.human_attribute_name(:contact_phone)
-      %td= @quick_order.contact_phone
+      - if @quick_order.contact_phone.present?
+        %tr
+          %td= model_class.human_attribute_name(:contact_phone)
+          %td= @quick_order.contact_phone
 
-  %tr
-    %td= model_class.human_attribute_name(:quick_tasks)
-    %td= @quick_order.quick_tasks.map(&:name).join(tag(:br)).html_safe
-  %tr
-    %td= model_class.human_attribute_name(:comment)
-    %td= @quick_order.comment
-  %tr
-    %td= model_class.human_attribute_name(:security_code)
-    %td= @quick_order.security_code
-  %tr
-    %td= model_class.human_attribute_name(:user)
-    %td= @quick_order.user.try(:short_name)
+      %tr
+        %td= model_class.human_attribute_name(:quick_tasks)
+        %td= @quick_order.quick_tasks.map(&:name).join(tag(:br)).html_safe
+      %tr
+        %td= model_class.human_attribute_name(:comment)
+        %td= @quick_order.comment
+      %tr
+        %td= model_class.human_attribute_name(:security_code)
+        %td= @quick_order.security_code
+      %tr
+        %td= model_class.human_attribute_name(:user)
+        %td= @quick_order.user.try(:short_name)
 
-.form-actions
-  = link_to_edit(@quick_order) if can?(:edit, @quick_order)
-  = link_to t('quick_orders.set_done'), set_done_quick_order_path(@quick_order), method: :patch, class: 'btn btn-primary' unless @quick_order.is_done
-  = link_to_destroy @quick_order
+    .form-actions
+      = link_to_edit(@quick_order) if can?(:edit, @quick_order)
+      = link_to t('quick_orders.set_done'), set_done_quick_order_path(@quick_order), method: :patch, class: 'btn btn-primary' unless @quick_order.is_done
+      = link_to_destroy @quick_order
+
+  .span6
+    #comments.comments_list= comments_list_for @quick_order
+    = comment_form_for @quick_order
