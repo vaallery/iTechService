@@ -13,7 +13,7 @@ class QuickOrder < ActiveRecord::Base
   belongs_to :client
   has_and_belongs_to_many :quick_tasks, join_table: 'quick_orders_quick_tasks'
   has_many :history_records, as: :object, dependent: :destroy
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   attr_accessible :client_id, :client_name, :comment, :contact_phone, :number, :is_done, :quick_task_ids, :security_code, :department_id, :device_kind
   validates_presence_of :security_code, :device_kind

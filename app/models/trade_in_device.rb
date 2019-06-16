@@ -10,7 +10,7 @@ class TradeInDevice < ApplicationRecord
   belongs_to :receiver, class_name: 'User'
   belongs_to :department
   has_many :features, through: :item
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates_presence_of :received_at, :item, :appraised_value, :appraiser, :bought_device,
                         :client_name, :client_phone, :check_icloud
