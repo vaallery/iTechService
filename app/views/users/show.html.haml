@@ -163,6 +163,6 @@
           = link_to (icon_tag(:money) + ' ' + t('salaries.issue')), new_salary_path(user_id: @user.id), class: 'btn'
 
   .span6
-    - if able_to? :comment_users
+    - if current_user.superadmin? || able_to?(:comment_users)
       #comments.comments_list= comments_list_for @user
       = comment_form_for @user
