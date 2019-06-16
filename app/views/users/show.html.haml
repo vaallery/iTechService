@@ -9,153 +9,159 @@
       = @user.short_name
       = link_to_edit(@user) if can?(:manage, @user)
 
-%ul.nav.nav-tabs
-  %li= link_to User.human_attribute_name(:service_jobs), "#service_jobs_tab", 'data-toggle' => 'tab'
-  %li= link_to t("users.info"), "#info_tab", 'data-toggle' => 'tab'
-  %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
-  %li.user-fautls= link_to t('faults.index.title'), '#faults_tab', class: 'user-faults-link', data: {toggle: 'tab', source: user_faults_path(@user)}
-  -#- if can? :manage, Salary
-  -#  %li= link_to t('salaries.index.title'), '#salary_tab', 'data-toggle' => 'tab'
-  %li.active= link_to t("users.account"), '#account_tab', 'data-toggle' => 'tab'
+.row-fluid
+  .span6
+    %ul.nav.nav-tabs
+      %li= link_to User.human_attribute_name(:service_jobs), "#service_jobs_tab", 'data-toggle' => 'tab'
+      %li= link_to t("users.info"), "#info_tab", 'data-toggle' => 'tab'
+      %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
+      %li.user-fautls= link_to t('faults.index.title'), '#faults_tab', class: 'user-faults-link', data: {toggle: 'tab', source: user_faults_path(@user)}
+      -#- if can? :manage, Salary
+      -#  %li= link_to t('salaries.index.title'), '#salary_tab', 'data-toggle' => 'tab'
+      %li.active= link_to t("users.account"), '#account_tab', 'data-toggle' => 'tab'
 
-.tab-content
-  #service_jobs_tab.tab-pane
-    - if @service_jobs.any?
-      %table.table.table-condensed.table-hover
-        %thead
-          %tr
-            %th= t 'service_jobs.received'
-            %th= ServiceJob.human_attribute_name(:ticket_number)
-            %th= ServiceJob.model_name.human
-            %th= ServiceJob.human_attribute_name(:client)
-            %th= ServiceJob.human_attribute_name(:location)
-            %th
-        %tbody
-          - @service_jobs.each do |service_job|
-            %tr{class: row_class_for_service_job(service_job)}
-              %td= t 'moved', user: '', time: distance_of_time_in_words_to_now(service_job.created_at)
-              %td= link_to service_job.ticket_number, service_job_path(service_job)
-              %td
-                = link_to service_job.type_name, service_job_path(service_job)
-                %small= service_job.serial_number
-                %p.service_job_comment_tooltip{'data-title' => service_job.comment}
-                  %i.icon-comment
-              %td= h service_job.client_presentation
-              %td= service_job.location.try :name
-              %td
-                .btn-group
-                  = link_to_show_small service_job
-                  = link_to_edit_small service_job# if can? :update, service_job
-                  = link_to_destroy_small service_job if can? :destroy, service_job
+    .tab-content
+      #service_jobs_tab.tab-pane
+        - if @service_jobs.any?
+          %table.table.table-condensed.table-hover
+            %thead
+              %tr
+                %th= t 'service_jobs.received'
+                %th= ServiceJob.human_attribute_name(:ticket_number)
+                %th= ServiceJob.model_name.human
+                %th= ServiceJob.human_attribute_name(:client)
+                %th= ServiceJob.human_attribute_name(:location)
+                %th
+            %tbody
+              - @service_jobs.each do |service_job|
+                %tr{class: row_class_for_service_job(service_job)}
+                  %td= t 'moved', user: '', time: distance_of_time_in_words_to_now(service_job.created_at)
+                  %td= link_to service_job.ticket_number, service_job_path(service_job)
+                  %td
+                    = link_to service_job.type_name, service_job_path(service_job)
+                    %small= service_job.serial_number
+                    %p.service_job_comment_tooltip{'data-title' => service_job.comment}
+                      %i.icon-comment
+                  %td= h service_job.client_presentation
+                  %td= service_job.location.try :name
+                  %td
+                    .btn-group
+                      = link_to_show_small service_job
+                      = link_to_edit_small service_job# if can? :update, service_job
+                      = link_to_destroy_small service_job if can? :destroy, service_job
 
-  #info_tab.tab-pane
-    %dl.dl-horizontal
+      #info_tab.tab-pane
+        %dl.dl-horizontal
 
-      %dt
-      %dd= image_tag @user.photo.medium.url if @user.photo?
+          %dt
+          %dd= image_tag @user.photo.medium.url if @user.photo?
 
-      %dt= User.human_attribute_name :fio
-      %dd= @user.full_name
+          %dt= User.human_attribute_name :fio
+          %dd= @user.full_name
 
-      %dt= User.human_attribute_name :phone_number
-      %dd= @user.phone_number.present? ? number_to_phone(@user.phone_number, area_code: true) : '-'
+          %dt= User.human_attribute_name :phone_number
+          %dd= @user.phone_number.present? ? number_to_phone(@user.phone_number, area_code: true) : '-'
 
-      %dt= User.human_attribute_name :email
-      %dd= @user.email.presence || '-'
+          %dt= User.human_attribute_name :email
+          %dd= @user.email.presence || '-'
 
-      %dt= User.human_attribute_name :birthday
-      %dd= @user.birthday.present? ? human_date(@user.birthday) : '-'
+          %dt= User.human_attribute_name :birthday
+          %dd= @user.birthday.present? ? human_date(@user.birthday) : '-'
 
-      %dt= User.human_attribute_name :hiring_date
-      %dd= @user.hiring_date.present? ? human_date(@user.hiring_date) : '-'
+          %dt= User.human_attribute_name :hiring_date
+          %dd= @user.hiring_date.present? ? human_date(@user.hiring_date) : '-'
 
-      %dt= User.human_attribute_name :prepayment
-      %dd= @user.prepayment.present? ? @user.prepayment : '-'
+          %dt= User.human_attribute_name :prepayment
+          %dd= @user.prepayment.present? ? @user.prepayment : '-'
 
-      %dt= User.human_attribute_name :karmas
-      %dd
-        #user_karmas
-          - if can? :create, Karma
-            = link_to_add_karma @user, true, class: 'large'
-            = link_to_add_karma @user, false, class: 'large'
-          #karma_popover_container
-          #karma_group_popover_container
-          #good_karmas.good.well
-            = render @user.karma_groups.unused if @user.karma_groups.any?
-            = render @user.karmas.good.unused.ungrouped.created_asc
-          = link_to t('karmas.select'), '#', id: 'select_karmas_button', class: 'btn btn-info'
-          = form_for :karma_group, url: karma_groups_path, remote: true, html: {id: 'create_karma_group_form', class: 'form-inline'} do |f|
-            = f.hidden_field :karma_ids
-            .input-append.input-prepend
-              = link_to glyph(:remove), '#', class: 'btn', id: 'close_karma_group_form_link'
-              = number_field_tag :karma_qty, nil, id: 'karma_group_karma_qty', class: 'input-mini', min: 0
-              = f.submit t('karmas.group'), class: 'btn btn-primary'
-          #bad_karmas.bad.well= render @user.karmas.bad.created_asc
+          %dt= User.human_attribute_name :karmas
+          %dd
+            #user_karmas
+              - if can? :create, Karma
+                = link_to_add_karma @user, true, class: 'large'
+                = link_to_add_karma @user, false, class: 'large'
+              #karma_popover_container
+              #karma_group_popover_container
+              #good_karmas.good.well
+                = render @user.karma_groups.unused if @user.karma_groups.any?
+                = render @user.karmas.good.unused.ungrouped.created_asc
+              = link_to t('karmas.select'), '#', id: 'select_karmas_button', class: 'btn btn-info'
+              = form_for :karma_group, url: karma_groups_path, remote: true, html: {id: 'create_karma_group_form', class: 'form-inline'} do |f|
+                = f.hidden_field :karma_ids
+                .input-append.input-prepend
+                  = link_to glyph(:remove), '#', class: 'btn', id: 'close_karma_group_form_link'
+                  = number_field_tag :karma_qty, nil, id: 'karma_group_karma_qty', class: 'input-mini', min: 0
+                  = f.submit t('karmas.group'), class: 'btn btn-primary'
+              #bad_karmas.bad.well= render @user.karmas.bad.created_asc
 
-      %dt= link_to t('bonuses.index.title'), bonuses_user_path(@user), remote: true
-      %dd
-        #user_bonuses.well
+          %dt= link_to t('bonuses.index.title'), bonuses_user_path(@user), remote: true
+          %dd
+            #user_bonuses.well
 
-  #schedule_tab.tab-pane
+      #schedule_tab.tab-pane
 
-    %dl.dl-horizontal
-      %dt
-        = User.human_attribute_name :wish
-        - if can? :update_wish, @user
-          %a#edit_wish_link
-            %i.icon-edit
-      %dd
-        #wish_view= @user.wish
-        #wish_edit.hide
-          = form_tag update_wish_user_path(@user), remote: true, method: :patch, id: 'update_user_wish_form' do
-            = text_area_tag 'user_wish', @user.wish, class: 'span7', rows: 5
-            %br
-            %a#save_user_wish.btn.btn-primary= 'Save'
+        %dl.dl-horizontal
+          %dt
+            = User.human_attribute_name :wish
+            - if can? :update_wish, @user
+              %a#edit_wish_link
+                %i.icon-edit
+          %dd
+            #wish_view= @user.wish
+            #wish_edit.hide
+              = form_tag update_wish_user_path(@user), remote: true, method: :patch, id: 'update_user_wish_form' do
+                = text_area_tag 'user_wish', @user.wish, class: 'span7', rows: 5
+                %br
+                %a#save_user_wish.btn.btn-primary= 'Save'
 
-    %table#schedule_table.table.table-bordered.table-condensed
-      %thead
-        %tr
-          %th
-          - ('10'..'20').each do |h|
-            %th= h
-      %tbody
-        - (1..7).each do |day|
-          %tr{day: day}
-            %td
-              %strong= t('date.abbr_day_names')[day-1]
-            - (10..20).each do |hour|
-              %td{class: schedule_hour_class_for(@user, day, hour), day: day, hour: hour}
+        %table#schedule_table.table.table-bordered.table-condensed
+          %thead
+            %tr
+              %th
+              - ('10'..'20').each do |h|
+                %th= h
+          %tbody
+            - (1..7).each do |day|
+              %tr{day: day}
+                %td
+                  %strong= t('date.abbr_day_names')[day-1]
+                - (10..20).each do |hour|
+                  %td{class: schedule_hour_class_for(@user, day, hour), day: day, hour: hour}
 
-    #duty_days
-      - DutyDay::KINDS.each do |kind|
-        = duty_calendar(kind, Date.current.beginning_of_month, @user)
+        #duty_days
+          - DutyDay::KINDS.each do |kind|
+            = duty_calendar(kind, Date.current.beginning_of_month, @user)
 
-  #faults_tab.tab-pane
+      #faults_tab.tab-pane
 
-  #account_tab.tab-pane.active
-    %dl.dl-horizontal
-      %dt= User.human_attribute_name :username
-      %dd= @user.username
+      #account_tab.tab-pane.active
+        %dl.dl-horizontal
+          %dt= User.human_attribute_name :username
+          %dd= @user.username
 
-      %dt= User.human_attribute_name :role
-      %dd= t "users.roles.#{@user.role}"
+          %dt= User.human_attribute_name :role
+          %dd= t "users.roles.#{@user.role}"
 
-      %dt= User.human_attribute_name :department
-      %dd= @user.department_name || '-'
+          %dt= User.human_attribute_name :department
+          %dd= @user.department_name || '-'
 
-      %dt= User.human_attribute_name :location
-      %dd= @user.location.try(:name) || '-'
+          %dt= User.human_attribute_name :location
+          %dd= @user.location.try(:name) || '-'
 
-      - if current_user.any_admin?
-        %dt= t 'current_sign_in'
-        %dd= @user.current_sign_in_at.blank? ? '-' : "#{@user.current_sign_in_ip} at #{l(@user.current_sign_in_at, format: :long_d)}"
-        %dt= t 'last_sign_in'
-        %dd= @user.last_sign_in_at.blank? ? '-' : "#{@user.last_sign_in_ip} at #{l(@user.last_sign_in_at, format: :long_d)}"
-      - if current_user.superadmin?
-        %dt Auth Token
-        %dd= @user.authentication_token
+          - if current_user.any_admin?
+            %dt= t 'current_sign_in'
+            %dd= @user.current_sign_in_at.blank? ? '-' : "#{@user.current_sign_in_ip} at #{l(@user.current_sign_in_at, format: :long_d)}"
+            %dt= t 'last_sign_in'
+            %dd= @user.last_sign_in_at.blank? ? '-' : "#{@user.last_sign_in_ip} at #{l(@user.last_sign_in_at, format: :long_d)}"
+          - if current_user.superadmin?
+            %dt Auth Token
+            %dd= @user.authentication_token
 
-- if can? :manage, User
-  .form-actions
-    - if can? :manage, Salary
-      = link_to (icon_tag(:money) + ' ' + t('salaries.issue')), new_salary_path(user_id: @user.id), class: 'btn'
+    - if can? :manage, User
+      .form-actions
+        - if can? :manage, Salary
+          = link_to (icon_tag(:money) + ' ' + t('salaries.issue')), new_salary_path(user_id: @user.id), class: 'btn'
+
+  .span6
+    #comments.comments_list= comments_list_for @user
+    = comment_form_for @user

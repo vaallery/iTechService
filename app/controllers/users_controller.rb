@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.includes(comments: :user).find(params[:id])
     @service_jobs = @user.service_jobs.unarchived.newest
 
     respond_to do |format|
