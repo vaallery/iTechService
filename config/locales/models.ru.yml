@@ -460,6 +460,7 @@ ru:
         location_id: :activerecord.models.location
         notify_client: 'Позвонить клиенту по готовности'
         receiver: 'Приемщик'
+        repair_parts: 'Запчасти'
         replaced: 'Заменен'
         return_at: "Время возврата"
         security_code: 'Пароль'

@@ -52,6 +52,10 @@ class BasePolicy
     user.superadmin?
   end
 
+  def able_to?(ability)
+    user.able_to? ability
+  end
+
   class Scope
     attr_reader :user, :scope
 

@@ -137,6 +137,20 @@
           %td.align_right= @service_job.tasks_cost
           %td{colspan: 4}
 
+    - if policy(@service_job).view_repair_parts?
+      %table.table.table-bordered.table-condensed.table-hover
+        %caption
+          %h4= ServiceJob.human_attribute_name :repair_parts
+        %thead
+          %tr
+            %th= RepairPart.human_attribute_name :name
+            %th= RepairPart.human_attribute_name :quantity
+        %tbody
+          - @service_job.repair_parts.each do |repair_part|
+            %tr
+              %td= link_to repair_part.name, repair_part.product
+              %td= repair_part.quantity
+
   .span6
     #sms_notification_form_container
     #device_notes_container= render 'device_notes'

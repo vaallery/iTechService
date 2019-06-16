@@ -9,6 +9,7 @@ ru:
       manage_schedule: "Редактировать график"
       manage_timesheet: "Редактировать табель"
       view_feedback_notifications: 'Просматривать уведомления обратной связи'
+      view_repair_parts: 'Смотреть запчасти устройства'
     index:
       title: 'Пользователи'
     edit:
