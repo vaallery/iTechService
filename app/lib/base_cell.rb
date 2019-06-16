@@ -7,6 +7,7 @@ class BaseCell < Trailblazer::Cell
   include ActionView::Helpers::TranslationHelper
   include Cell::Translation
   include LinksHelper
+  include CommentsHelper
 
   delegate :view_context, :controller_name, :action_name, :params, :current_user, :policy, to: :controller
 
@@ -18,5 +19,13 @@ class BaseCell < Trailblazer::Cell
 
   def superadmin?
     current_user.superadmin?
+  end
+
+  def comments_list
+    comments_list_for model
+  end
+
+  def comment_form
+    comment_form_for model
   end
 end

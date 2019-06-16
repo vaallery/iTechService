@@ -1,26 +1,32 @@
 .page-header: h2 = title
 
-table.attributes_table
-  tr
-    td = t_attribute :performed_at
-    td = performed_at
+.row-fluid
+  .span6
+    table.attributes_table
+      tr
+        td = t_attribute :performed_at
+        td = performed_at
 
-  tr
-    td = t_attribute :performer
-    td = performer
+      tr
+        td = t_attribute :performer
+        td = performer
 
-  tr
-    td = t_attribute :receiver
-    td = receiver
+      tr
+        td = t_attribute :receiver
+        td = receiver
 
-  tr
-    td = t_attribute :client
-    td = client
-  
-  tr
-    td = t_attribute :task
-    td = task
+      tr
+        td = t_attribute :client
+        td = client
 
-  tr
-    td = t_attribute :comment
-    td = comment
+      tr
+        td = t_attribute :task
+        td = task
+
+      tr
+        td = t_attribute :comment
+        td = comment
+
+  .span6
+    #comments.comments_list= comments_list
+    = comment_form
