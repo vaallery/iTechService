@@ -1,6 +1,6 @@
 class DataStorageInput < SimpleForm::Inputs::CollectionInput
   delegate :content_tag, :link_to, :current_user, :check_box_tag, to: :template
-  delegate :department, :data_storages, to: :object
+  delegate :data_storages, to: :object
 
   def input(wrapper_options = nil)
     content_tag :div, class: 'dropdown-input data_storage-input' do
@@ -40,9 +40,15 @@ class DataStorageInput < SimpleForm::Inputs::CollectionInput
   end
 
   def available_data_storages
-    qty = Setting.data_storage_qty(department)
-    return [] if qty.nil?
+    storages = []
 
-    1.upto(qty).map { |storage_num| [storage_num, "#{department.name} - #{storage_num}"] }
+    Department.current_with_remotes.each do |department|
+      qty = Setting.data_storage_qty(department)
+      return [] if qty.nil?
+
+      storages += 1.upto(qty).map { |storage_num| [storage_num, "#{department.name} - #{storage_num}"] }
+    end
+
+    storages
   end
 end
