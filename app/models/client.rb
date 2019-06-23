@@ -66,9 +66,16 @@ class Client < ActiveRecord::Base
   end
 
   def short_name
-    [name, surname].join ' '
+    [name, surname.presence, questionnaire_icon].compact.join(' ').html_safe
   end
-  
+
+  def questionnaire_icon
+    '&#8854;' unless birthday?
+    # '&nabla;' unless birthday?
+    # '&there4;' unless birthday?
+    # '&#8757;' unless birthday?
+  end
+
   def name_phone
     "#{self.short_name} / #{self.human_phone_number}"
   end
