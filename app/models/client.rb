@@ -70,10 +70,7 @@ class Client < ActiveRecord::Base
   end
 
   def questionnaire_icon
-    '&#8854;' unless birthday?
-    # '&nabla;' unless birthday?
-    # '&there4;' unless birthday?
-    # '&#8757;' unless birthday?
+    '*' unless birthday?
   end
 
   def name_phone
