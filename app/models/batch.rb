@@ -8,11 +8,17 @@ class Batch < ActiveRecord::Base
   validates_numericality_of :quantity, only_integer: true, equal_to: 1, if: :feature_accounting
   delegate :code, :name, :product, :features, :feature_accounting, :store_item, :prices, :purchase_price, :retail_price, :barcode_num, :is_equipment, :is_spare_part, to: :item, allow_nil: true
 
-  scope :newest, ->{includes(:purchase).order('purchases.date desc')}
+  scope :newest, -> { includes(:purchase).order('purchases.date desc') }
+  # scope :posted, -> { joins(:purchase).where(Purchase.posted) }
+  scope :posted, -> { joins(:purchase).where(purchases: {status: 1}) }
 
   after_initialize do
     self.price ||= purchase_price
     self.quantity ||= 1
+  end
+
+  def self.last_posted
+    newest.posted.first
   end
 
   def sum

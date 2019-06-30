@@ -12,4 +12,7 @@ class DeductionItem < ActiveRecord::Base
     store.present? ? quantity_in_store(store) < quantity : false
   end
 
+  def last_purchase_price
+    item&.batches&.last_posted&.price
+  end
 end

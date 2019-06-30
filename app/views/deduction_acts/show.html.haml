@@ -22,6 +22,7 @@
       %th.product= t 'activerecord.models.product'
       %th.available_quantity= Product.human_attribute_name :quantity_in_store
       %th.quantity= DeductionItem.human_attribute_name :quantity
+      %th.price Последний закуп
   %tbody
     - @deduction_act.deduction_items.each_with_index do |deduction_item, index|
       %tr{class: (deduction_item.quantity_in_store(@deduction_act.store) < deduction_item.quantity) ? 'error' : ''}
@@ -32,6 +33,7 @@
           .features= features_presentation deduction_item if deduction_item
         %td.available_quantity= deduction_item.quantity_in_store @deduction_act.store
         %td.quantity= deduction_item.quantity
+        %td.number= number_to_currency(deduction_item.last_purchase_price, format: '%n')
 
 .form-actions
   = link_to_edit @deduction_act if can? :edit, @deduction_act
