@@ -6,7 +6,7 @@
       %th.center= t '.quantity'
       %th.center= t '.sum'
   %tbody
-    - report.result.each_pair do |key, value|
+    - report.result[:data].each_pair do |key, value|
       %tr.detailable
         %td.name= key.to_i.present? ? link_to(value[:name], user_path(key), target: '_blank') : '-'
         %td.number= value[:jobs_qty]
@@ -19,3 +19,7 @@
             = human_currency job[:margin], false
             %small= "Job Price: #{human_currency(job[:price], false)}"
             %small= "Parts Cost: #{human_currency(job[:parts_cost], false)}"
+  %tfoot
+    %tr
+      %td{colspan: 2} Итого
+      %td.number= human_currency(report.result[:total_sum], false)
