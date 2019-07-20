@@ -26,6 +26,7 @@ module ReportsHelper
         content_tag(:td, data[:name], class: 'name') +
         content_tag(:td, data[:quantity], class: 'quantity number') +
         content_tag(:td, human_currency(data[:purchase_price], false), class: 'price number') +
+        content_tag(:td, human_currency(data[:purchase_sum], false), class: 'price number') +
         content_tag(:td, human_currency(data[:price], false), class: 'price number') +
         content_tag(:td, human_currency(data[:sum], false), class: 'sum number')
       end.html_safe

@@ -108,6 +108,7 @@ ru:
       name: 'Номенклатура'
       quantity: 'Остаток'
       purchase_price: 'Закупочная цена'
+      purchase_sum: 'Сумма закупа'
       price: 'Цена'
       sum: 'Розн. сумма остатка'
     margin:
