@@ -27,6 +27,8 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 
+/config/*credentials.json
+
 .env.production
 .env.staging
 .env.production.*

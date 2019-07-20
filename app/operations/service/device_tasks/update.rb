@@ -53,8 +53,9 @@ module Service
                   end
                 else
                   repare_task.repair_parts.each do |repair_part|
-                    if repair_part.defect_qty > 0
-                      qty = repair_part.defect_qty - (repair_part.defect_qty_was || 0)
+                    # TODO Check
+                    qty = repair_part.defect_qty - (repair_part.defect_qty_was || 0)
+                    if qty > 0
                       defected_items << {id: repair_part.item_id, qty: qty}
                     end
                   end
