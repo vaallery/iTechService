@@ -1,5 +1,6 @@
 class RemnantsReportMailingJob < ActiveJob::Base
   queue_as :reports
+  sidekiq_options retry: 5
 
   def perform
     report = FewRemnantsReport.new(kind: :spare_parts)

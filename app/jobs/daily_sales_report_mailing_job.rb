@@ -1,5 +1,6 @@
 class DailySalesReportMailingJob < ActiveJob::Base
   queue_as :reports
+  sidekiq_options retry: 5
 
   def perform
     Department.where('code LIKE ?', "#{ENV['DEPARTMENT_CODE']}%").each do |department|
