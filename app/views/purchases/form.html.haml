@@ -1,11 +1,13 @@
 = auto_header_tag @purchase
 = simple_form_for @purchase, html: { class: 'form-horizontal', id: 'purchase_form' } do |f|
-  .alert.alert-error= @purchase.errors.full_messages.join('. ')
+  - if @purchase.errors.any?
+    .alert.alert-error= @purchase.errors.full_messages.join('. ')
 
   = f.input :date, as: :my_datetime
   = f.association :contractor, as: :select
-  = f.association :store, collection: Store.for_purchase.all
+  = f.association :store, collection: Store.purchase.all
   = f.input :comment, input_html: {rows: 5}
+  = f.input :skip_revaluation
 
   %table#batches.enumerable.table.table-condensed.table-hover
     %caption

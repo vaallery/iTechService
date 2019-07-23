@@ -10,7 +10,7 @@ class Purchase < ActiveRecord::Base
   has_many :items, through: :batches
   accepts_nested_attributes_for :batches, allow_destroy: true, reject_if: lambda { |a| a[:price].blank? or a[:quantity].blank? or a[:item_id].blank? }
 
-  attr_accessible :batches_attributes, :contractor_id, :store_id, :date, :comment
+  attr_accessible :batches_attributes, :contractor_id, :store_id, :date, :comment, :skip_revaluation
   validates_presence_of :contractor, :store, :status, :date
   validates_inclusion_of :status, in: Document::STATUSES.keys
   validates_associated :batches
@@ -63,22 +63,24 @@ class Purchase < ActiveRecord::Base
   def post
     if is_valid_for_posting?
       transaction do
-        price_type = PriceType.purchase
         cur_date = Date.current
 
         batches.each do |batch|
-          new_price = if batch.product.quantity_in_store > 0
-                        (batch.product.remnants_cost + batch.sum) / (batch.product.quantity_in_store + batch.quantity)
-                      else
-                        batch.price
-                      end
+          unless skip_revaluation?
+            price_type = PriceType.purchase
+            new_price = if batch.product.quantity_in_store > 0
+                          (batch.product.remnants_cost + batch.sum) / (batch.product.quantity_in_store + batch.quantity)
+                        else
+                          batch.price
+                        end
+            batch.prices.create price_type_id: price_type.id, date: cur_date, value: new_price
+          end
+
           if batch.feature_accounting
             batch.store_item.present? ? batch.store_item.update_attributes(store_id: store_id) : StoreItem.create(store_id: store_id, item_id: batch.item_id, quantity: 1)
           else
             batch.store_item(store).add batch.quantity
           end
-
-          batch.prices.create price_type_id: price_type.id, date: cur_date, value: new_price
         end
 
         update_attribute :status, 1

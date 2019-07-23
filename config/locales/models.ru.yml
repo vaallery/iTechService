@@ -374,6 +374,7 @@ ru:
       purchase:
         contractor: :activerecord.models.contractor
         store: :activerecord.models.store
+        skip_revaluation: 'Не переоценивать'
         total_sum: 'Сумма'
 
       quick_order:

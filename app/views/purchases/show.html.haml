@@ -11,8 +11,10 @@
     %dd= link_to @purchase.contractor_name, contractor_path(@purchase.contractor)
     %dt= Purchase.human_attribute_name :store
     %dd= link_to @purchase.store_name, store_path(@purchase.store)
-    %dt= DeductionAct.human_attribute_name :comment
+    %dt= Purchase.human_attribute_name :comment
     %dd= @purchase.comment.blank? ? '-' : @purchase.comment
+    %dt= Purchase.human_attribute_name :skip_revaluation
+    %dd= @purchase.skip_revaluation? ? icon_tag('check') : icon_tag('check-empty')
 
   %table#batches.table.table-condensed.table-hover
     %caption
