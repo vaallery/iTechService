@@ -145,11 +145,13 @@
           %tr
             %th= RepairPart.human_attribute_name :name
             %th= RepairPart.human_attribute_name :quantity
+            %th= RepairPart.human_attribute_name :defect_qty
         %tbody
           - @service_job.repair_parts.each do |repair_part|
             %tr
               %td= link_to repair_part.name, repair_part.product
               %td= repair_part.quantity
+              %td= repair_part.defect_qty
 
   .span6
     #sms_notification_form_container
