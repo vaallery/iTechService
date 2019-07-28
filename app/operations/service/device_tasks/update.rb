@@ -81,7 +81,9 @@ module Service
         movement_act = MovementAct.create(store_id: device_task.department.spare_parts_store.id,
                                           dst_store_id: device_task.department.defect_sp_store.id,
                                           user_id: user.id,
-                                          comment: "Списание брака при ремонте.",
+                                          comment: "Списание брака при ремонте. \
+                                                    Талон: #{device_task.ticket_number}. \
+                                                    Исполнитель: #{user.short_name}",
                                           date: DateTime.current)
 
         items.each do |item|

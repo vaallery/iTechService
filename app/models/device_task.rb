@@ -20,7 +20,7 @@ class DeviceTask < ActiveRecord::Base
 
   delegate :name, :role, :is_important?, :is_actual_for?, :is_repair?, :item, to: :task, allow_nil: true
   delegate :cost, to: :task, prefix: true, allow_nil: true
-  delegate :client_presentation, to: :service_job, allow_nil: true
+  delegate :client_presentation, :ticket_number, to: :service_job, allow_nil: true
   delegate :department, :user, to: :service_job
 
   attr_accessible :done, :done_at, :comment, :user_comment, :cost, :task, :service_job, :service_job_id, :task_id, :performer_id, :task, :service_job_attributes, :repair_tasks_attributes
