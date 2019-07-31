@@ -4,11 +4,17 @@
   = f.error_notification
 
   = f.input :name
+  = f.input :description
   = f.input :icon
   - if form.model.icon.present?
     .form-inputs
       .controls= image_tag form.model.icon_url
   = f.input :is_permanent, as: :boolean
+  = f.input :financial, as: :boolean
+
+  = f.input :penalties do
+    - FaultKind::PENALTIES_COUNT.times do |n|
+      = number_field_tag "fault_kind[penalties][]", form.penalties[n], id: "fault_kind_penalties_#{n}"
 
   .form-actions
     = submit_button f

@@ -40,7 +40,7 @@ module TimesheetDaysHelper
 
     if date.day == date.end_of_month.day
       cell_class << ' salary_day'
-      title = faults_tooltip Fault.employee_faults_count_by_kind_on(user, date)
+      title = faults_tooltip(user.faults_info(date))
     end
     # good_karmas = user.karmas.good.created_at(date)
     # bad_karmas = user.karmas.bad.created_at(date)
@@ -57,9 +57,9 @@ module TimesheetDaysHelper
   end
 
   def faults_tooltip(faults)
-    faults.map do |fault_kind, counts|
+    faults.map do |fault_kind, data|
       presentation = fault_kind.icon.present? ? image_tag(fault_kind.icon, class: 'fault_kind-icon') : fault_kind.name
-      "#{presentation} - #{counts[:month]} (#{counts[:total]})"
+      "#{presentation}: #{data[:month]} (#{data[:total]}), Штраф: #{data[:penalty_sum]}"
     end.join('<br/><br/>')
   end
 end

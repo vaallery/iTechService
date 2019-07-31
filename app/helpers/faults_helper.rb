@@ -10,4 +10,8 @@ module FaultsHelper
   def fault_kinds_collection
     FaultKind.select(:id, :name).ordered
   end
+
+  def fault_kinds_data
+    FaultKind.all.map { |kind| [kind.id, [[:is_financial, kind.financial?], [:description, kind.description]].to_h] }.to_h
+  end
 end

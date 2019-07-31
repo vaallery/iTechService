@@ -216,9 +216,12 @@ ru:
 
       fault:
         causer: 'Провинившийся'
+        penalty: 'Штраф'
 
       fault_kind:
         is_permanent: 'Постоянный?'
+        financial: 'Денежный'
+        penalties: 'Штрафные санкции'
 
       feature:
         value: 'Значение'

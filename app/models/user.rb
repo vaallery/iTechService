@@ -414,6 +414,25 @@ class User < ActiveRecord::Base
     cash_drawer.current_shift
   end
 
+  def faults_info(date)
+    faults_on_date = faults.where('date <= ?', date)
+    counts_on_date = faults_on_date.group(:kind_id).count
+    start_date = date.beginning_of_month
+    faults_in_month = faults.where(date: start_date..date)
+    counts_in_month = faults_in_month.group(:kind_id).count
+
+    result = {}
+
+    counts_on_date.each do |id, count|
+      month_count = counts_in_month.fetch(id, 0)
+      fault_kind = FaultKind.find(id)
+      penalty_sum = faults_on_date.where(kind: fault_kind).sum(:penalty)
+      result.store fault_kind, {month: month_count, total: count, penalty_sum: penalty_sum}
+    end
+
+    result
+  end
+
   private
 
   def validate_rights_changing
@@ -429,5 +448,4 @@ class User < ActiveRecord::Base
   def password_required?
     self.new_record?
   end
-  
 end

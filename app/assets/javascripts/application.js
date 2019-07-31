@@ -32,6 +32,7 @@
 //= require dashboard
 //= require device_tasks
 //= require device_types
+//= require faults
 // require devices
 //= require gift_certificates
 //= require karmas
