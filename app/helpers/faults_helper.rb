@@ -12,6 +12,8 @@ module FaultsHelper
   end
 
   def fault_kinds_data
-    FaultKind.all.map { |kind| [kind.id, [[:is_financial, kind.financial?], [:description, kind.description]].to_h] }.to_h
+    FaultKind.all.map { |kind|
+      [kind.id, [[:is_financial, kind.financial?], [:description, textile_to_html(kind.description)]].to_h]
+    }.to_h
   end
 end
