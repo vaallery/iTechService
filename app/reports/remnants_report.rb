@@ -57,12 +57,20 @@ class RemnantsReport < BaseReport
 
       group_quantity = 0
       group_purchase_price = 0
+      group_purchase_sum = 0
       group_retail_price = 0
+      group_retail_sum = 0
 
       group_items.find_each do |item|
         group_quantity += item.quantity
-        group_purchase_price += item.purchase_price unless item.purchase_price.nil?
-        group_retail_price += item.retail_price unless item.retail_price.nil?
+        unless item.purchase_price.nil?
+          group_purchase_price += item.purchase_price
+          group_purchase_sum += item.purchase_price * item.quantity
+        end
+        unless item.retail_price.nil?
+          group_retail_price += item.retail_price
+          group_retail_sum += item.retail_price * item.quantity
+        end
       end
 
       {
@@ -73,10 +81,11 @@ class RemnantsReport < BaseReport
         name: product_group.name,
         quantity: group_quantity,
         purchase_price: group_purchase_price.to_f,
-        purchase_sum: group_purchase_price.to_f * group_quantity,
+        purchase_sum: group_purchase_sum,
         price: group_retail_price.to_f,
-        sum: group_retail_price.to_f * group_quantity,
-        details: nested_product_groups_remnants(sub_product_groups, store_items, store) + products}
+        sum: group_retail_sum,
+        details: nested_product_groups_remnants(sub_product_groups, store_items, store) + products
+      }
     end
   end
 end
