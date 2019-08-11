@@ -31,9 +31,6 @@ ru:
     new:
       title: 'Новая Работа'
 
-    show:
-      work_job: 'Заказ-наряд'
-
     movement_history:
       title: 'История перемещений'
 
@@ -49,6 +46,7 @@ ru:
 
     add_task: 'Добавить задачу'
     client_devices: 'Девайсы клиента'
+    completion_act: "Акт выполненных работ"
     created: 'Работа создана'
     device_tasks_error: 'Слишком много однотипных задач'
     enter_ticket_number: 'Укажите номер талона'
@@ -73,6 +71,7 @@ ru:
     unsubscribe: 'Отписаться'
     updated: 'Работа изменена'
     viewings: 'Просмотры'
+    work_job: 'Заказ-наряд'
 
   service_jobs_mailer:
     staff_notice:

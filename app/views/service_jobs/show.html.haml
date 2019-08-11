@@ -10,8 +10,8 @@
 
   %span.help-block
     %small= timestamp_string_for @service_job
-  = link_to "#{icon_tag(:file)} #{t('.work_job')}".html_safe, work_order_service_job_path(@service_job, format: 'pdf'), class: 'btn btn-info', target: '_blank'
-  = link_to "#{icon_tag(:file)} #{t('.completion_act')}".html_safe, completion_act_service_job_path(@service_job, format: 'pdf'), class: 'btn btn-info', target: '_blank' if @service_job.at_done? || @service_job.in_archive?
+  = link_to "#{icon_tag(:file)} #{t('service_jobs.work_job')}".html_safe, work_order_service_job_path(@service_job, format: 'pdf'), class: 'btn btn-info', target: '_blank'
+  = link_to "#{icon_tag(:file)} #{t('service_jobs.completion_act')}".html_safe, completion_act_service_job_path(@service_job, format: 'pdf'), class: 'btn btn-info', target: '_blank' if @service_job.at_done? || @service_job.in_archive?
   -if can? :print_receipt, @service_job
     = link_to icon_tag(:print) + t('tickets.link'), service_job_path(@service_job, format: 'pdf', print: true), class: 'btn btn-primary', target: '_blank', id: 'print_service_job_ticket'
     = link_to icon_tag('eye-open') + t('tickets.link'), service_job_path(@service_job, format: 'pdf'), class: 'btn btn-info pull-right', target: '_blank', id: 'show_service_job_ticket'

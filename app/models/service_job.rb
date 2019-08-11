@@ -357,6 +357,10 @@ class ServiceJob < ActiveRecord::Base
     substitute_phone.present?
   end
 
+  def work_order_filled?
+    device_condition.present?
+  end
+
   # TODO: correct
   def archived_at
     return unless in_archive?

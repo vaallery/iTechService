@@ -128,6 +128,9 @@ $(document).on 'click', '.returning_device_tooltip', ->
   $(this).tooltip()
   $(this).tooltip('toggle')
 
+$(document).on 'click', '#completion_act_link', ->
+  $('#service_job_archive_button').removeClass('hidden')
+
 PrivatePub.subscribe '/service_jobs/new', (data, channel)->
   if data.service_jobs.location_id == $('#profile_link').data('location')
     $('#new_service_job_popup').fadeIn()

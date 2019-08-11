@@ -115,7 +115,7 @@ module ServiceJobsHelper
   end
 
   def link_to_archive_device(service_job, options={})
-    link_to glyph(:archive)+t('service_jobs.move_to_archive'), service_job_path(service_job, service_job: {location_id: current_user.archive_location.id}), method: :patch, class: 'btn btn-warning', remote: options[:remote]
+    link_to glyph(:archive)+t('service_jobs.move_to_archive'), service_job_path(service_job, service_job: {location_id: current_user.archive_location.id}), method: :patch, id: 'service_job_archive_button', class: "btn btn-warning#{' hidden' if options[:hidden]}", remote: options[:remote]
   end
 
   def service_tasks_list(service_job)
