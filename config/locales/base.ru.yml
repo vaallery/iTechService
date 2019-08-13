@@ -326,6 +326,7 @@ ru:
       short: ! '%d %b, %H:%M'
       short_r: ! '%H:%M, %d %b'
       time: ! '%H:%M'
+      time_date: ! '%H:%M %d.%m.%Y'
     pm: вечера
 
   confirmation: 'Вы уверены?'

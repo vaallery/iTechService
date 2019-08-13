@@ -85,6 +85,8 @@ ru:
       without_payment: 'без оплаты'
     repair_parts:
       title: 'Отчёт по запчастям'
+    service_job_viewings:
+      title: 'Просмотр устройств'
     sms_notifications:
       title: 'Отчёт о посланных сообщениях'
       sender: 'Отправитель / Сообщение'

@@ -7,8 +7,9 @@
         = f.hidden_field :base_name
         = f.hidden_field :kind
         = f.text_field :start_date, class: 'bootstrap-datepicker input-small'
-        = '_'
-        = f.text_field :end_date, class: 'bootstrap-datepicker input-small'
+        - unless report.only_day?
+          = '_'
+          = f.text_field :end_date, class: 'bootstrap-datepicker input-small'
         = f.select :department_id, departments_collection, include_blank: 'Все подразделения' if report.respond_to?(:department_id)
         = f.select :store_id, stores_collection, prompt: t('activerecord.models.store') if report.respond_to?(:store_id)
         = f.select :location_id, locations_collection, prompt: t('activerecord.models.location') if report.respond_to?(:location_id)

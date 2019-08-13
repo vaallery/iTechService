@@ -24,6 +24,10 @@ class BaseReport
     @result ||= {}
   end
 
+  def only_day?
+    false
+  end
+
   def start_date=(value)
     @start_date = (value.is_a?(String) ? value.to_time(:local) : value).strftime('%d.%m.%Y')
   end
