@@ -43,7 +43,7 @@ module SalariesHelper
   def header_link_to_salaries
     users = User.oncoming_salary
     notify_class = users.any? ? 'notify' : ''
-    link_to image_tag('exp-icon'), '#', rel: 'popover', class: notify_class, id: 'salary_announce',
+    link_to image_tag('exp-icon.png'), '#', rel: 'popover', class: notify_class, id: 'salary_announce',
             data: {html: true, placement: 'bottom', title: "Кто? И сколько работает в компании?",
                    content: oncoming_salaries_list(users).gsub('\n', '')}
   end
