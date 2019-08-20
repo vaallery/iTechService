@@ -1,10 +1,7 @@
-class SalesImportJob < Struct.new(:params)
+class SalesImportJob < ActiveJob::Base
+  queue_as :default
 
-  def name
-    "Sales import {#{params.inspect}}"
-  end
-
-  def perform
+  def perform(file)
     import_logs = []
     begin
       sheet = FileLoader.open_spreadsheet file
@@ -52,14 +49,6 @@ class SalesImportJob < Struct.new(:params)
       import_logs << ['inverse', '-'*160]
     end
     ImportMailer.sales_import_log(import_logs).deliver_later
-  end
-
-  def file
-    @file ||= params[:file]
-  end
-
-  def import_logs
-    @import_logs ||= []
   end
 
   private

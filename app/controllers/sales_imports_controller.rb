@@ -5,19 +5,12 @@ class SalesImportsController < ApplicationController
   end
 
   def create
-    Delayed::Job.enqueue SalesImportJob.new(params_for_job)
-    redirect_to new_sales_import_path, notice: t('imports.enqueued')
-  end
-
-  private
-
-  def params_for_job
-    if (import_params = params[:sales_import]).present?
-      import_params[:file] = FileLoader.rename_uploaded_file import_params[:file]
-      import_params
+    if params[:sales_import].present?
+      file = FileLoader.rename_uploaded_file(params[:sales_import][:file])
+      SalesImportJob.perform_later file
+      redirect_to new_sales_import_path, notice: t('imports.enqueued')
     else
-      {}
+      redirect_to new_sales_import_path, alert: 'Файл не найден!'
     end
   end
-
 end
