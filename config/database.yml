@@ -12,6 +12,7 @@ development:
 
 test:
   <<: *default
+  database: itechservice_test
 
 staging:
   <<: *default

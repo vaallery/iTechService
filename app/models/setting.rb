@@ -12,6 +12,7 @@ class Setting < ActiveRecord::Base
       emails_for_acts: 'string',
       emails_for_orders: 'string',
       emails_for_sales_report: 'string',
+      emails_for_sales_import: 'string',
       legal_address: 'string',
       meda_menu_database: 'string',
       ogrn: 'string',

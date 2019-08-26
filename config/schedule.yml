@@ -9,3 +9,9 @@ sales_report:
   class: 'DailySalesReportMailingJob'
   queue: 'reports'
   active_job: true
+
+sales_import:
+  cron: '0 22 * * * Asia/Vladivostok'
+  class: 'SalesImportJob'
+  queue: 'critical'
+  active_job: true

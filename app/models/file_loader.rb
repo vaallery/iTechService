@@ -16,8 +16,8 @@ module FileLoader
 
   def self.rename_uploaded_file(file)
     begin
-      new_file = File.join File.dirname(file.path), file.original_filename
-      File.rename file.path, new_file
+      new_file = File.join(File.dirname(file.path), file.original_filename)
+      File.rename(file.path, new_file)
     rescue SystemCallError => error
       return error.to_s
     end
