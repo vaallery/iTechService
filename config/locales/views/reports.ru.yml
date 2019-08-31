@@ -19,6 +19,8 @@ ru:
     received_done: готовы
     received_archived: выданы
     sum: Сумма
+    active_tasks:
+      title: 'Активные задачи'
     clients:
       title: 'Новые клиенты'
     defected_spare_parts:
