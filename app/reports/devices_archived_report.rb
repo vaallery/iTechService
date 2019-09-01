@@ -2,18 +2,20 @@ class DevicesArchivedReport < BaseReport
 
   def call
     result[:users_mv] = []
-    movements = HistoryRecord.in_period(period)
-    movements = movements.movements_from(Location.bar.id)
-    movements = movements.movements_to([Location.content.id, Location.repair.id])
+    movements = HistoryRecord.movements_to_archive.in_period(period)
     total_qty = 0
     if movements.any?
-      movements.group('user_id').count('id').each_pair do |key, val|
-        if key.present? and (user = User.find key).present?
-          result[:users_mv] << {user: user.short_name, qty: val}
-        else
-          result[:users_mv] << {user: '?', qty: val}
+      movements.group('user_id').count('id').each_pair do |user_id, qty|
+        user_name = (user = User.find_by(id: user_id)) ? user.short_name : '?'
+
+        jobs = []
+        movements.where(user_id: user_id).find_each do |movement|
+          job = movement.object
+          jobs << {id: job.id, ticket: job.ticket_number, device: job.type_name}
         end
-        total_qty += val
+
+        result[:users_mv] << {user: user_name, qty: qty, jobs: jobs}
+        total_qty += qty
       end
     end
     result[:total_qty] = total_qty

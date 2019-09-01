@@ -11,7 +11,7 @@ class HistoryRecord < ActiveRecord::Base
   scope :movements, ->{service_jobs.where(column_name: 'location_id')}
   scope :movements_from, ->(location) { service_jobs.where(column_name: 'location_id', old_value: (location.is_a?(Location) ? location.id.to_s : location.to_s)) }
   scope :movements_to, ->(location) { service_jobs.where(column_name: 'location_id', new_value: (location.is_a?(Array) ? location.map{|l|l.to_s} : location.to_s)) }
-  scope :movements_to_archive, ->{service_jobs.where(column_name: 'location_id', new_value: Location.archive.id.to_s)}
+  scope :movements_to_archive, -> { service_jobs.where(column_name: 'location_id', new_value: Location.archive_ids) }
   scope :in_period, ->(period) { where(created_at: period) }
   scope :by_user, ->(user) { where(user_id: (user.is_a?(User) ? user.id : user.to_i)) }
   scope :service_jobs_movements, ->{service_jobs.movements}

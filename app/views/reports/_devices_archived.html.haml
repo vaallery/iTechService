@@ -6,9 +6,13 @@
       %th.center= t '.archived'
   %tbody
     - report.result[:users_mv].each do |user|
-      %tr
+      %tr.detailable
         %td.user= user[:user]
         %td.movement= user[:qty]
+      - user[:jobs].each do |job|
+        %tr.details
+          %td= job[:device]
+          %td= link_to job[:ticket], service_job_path(job[:id]), target: '_blank'
   %tfoot
     %tr
       %td= t 'reports.total'
