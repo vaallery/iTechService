@@ -2,23 +2,33 @@
   %caption= t '.title'
   %thead
     %tr
-      %th= t 'reports.margin.kind'
+      %th{colspan: 5}= t 'reports.margin.kind'
       %th= t 'reports.sum'
+    %tr
+      %th Наименование
+      %th Количество
+      %th Цена
+      %th Скидка
+      %th Цена закупа
+      %th Наценка
   %tbody
     - [:repair, :service, :sale].each do |kind|
       %tr.detailable
-        %td= t "reports.margin.kinds.#{kind}"
-        %td= human_currency report.result[kind][:sum], false
+        %td{colspan: 5}= t "reports.margin.kinds.#{kind}"
+        %td.num= human_currency report.result[kind][:sum], false
       - report.result[kind][:details].each do |d|
         %tr.details
           %td
-            - text = "ID: #{d[:id]}, Name: #{d[:name]}, Quantity: #{d[:quantity]}, Price: #{human_currency d[:price]}, Discount: #{human_currency d[:discount]}, Purchase Price: #{human_currency d[:purchase_price]}"
-            - if  d[:product_id].present?
-              = link_to text, product_path(d[:product_id]), target: '_blank'
+            - if d[:product_id].present?
+              = link_to(d[:name], product_path(d[:product_id]), target: '_blank')
             - else
-              = text
-          %td= human_currency d[:margin]
+              = d[:name]
+          %td.num= d[:quantity]
+          %td.num= human_currency d[:price]
+          %td.num= human_currency d[:discount]
+          %td.num= human_currency d[:purchase_price]
+          %td.num= human_currency d[:margin]
   %tfoot
     %tr
-      %td= t 'reports.total'
-      %td= human_currency report.result[:sum], false
+      %td{colspan: 5}= t 'reports.total'
+      %td.num= human_currency report.result[:sum], false

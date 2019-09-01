@@ -3,11 +3,14 @@ class RepairTask < ActiveRecord::Base
   belongs_to :device_task
   belongs_to :store
   has_many :repair_parts, inverse_of: :repair_task
-  accepts_nested_attributes_for :repair_parts
+
   delegate :name, :repair_group, :is_positive_price, to: :repair_service, allow_nil: true
   delegate :price, to: :repair_service, prefix: true, allow_nil: true
   delegate :user, :service_job, :performer, :done, :done?, :pending?, :undone?, :department, to: :device_task, allow_nil: true
+
   attr_accessible :price, :repair_service_id, :device_task_id, :store_id, :repair_parts_attributes
+  accepts_nested_attributes_for :repair_parts
+
   validates :price, :repair_service, :store, presence: true
   validates :price, numericality: true
   validates_numericality_of :price, greater_than: 0, if: :is_positive_price
