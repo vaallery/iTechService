@@ -4,11 +4,13 @@
       %th= t 'attributes.date'
       %th= t 'attributes.price'
       %th= t 'attributes.price_type'
+      %th Цена закупа
   %tbody
     - @product_prices.each do |price|
       %tr{class: price.is_purchase? ? 'info' : (price.is_retail? ? 'success' : '')}
         %td= human_datetime price.date
         %td= human_currency price.value
         %td= price.price_type.name
+        %td= human_currency(@product.batch_price_on(price.date))
 
 = paginate @product_prices, remote: true

@@ -22,6 +22,7 @@ class Product < ActiveRecord::Base
   has_many :items, inverse_of: :product, dependent: :restrict_with_error
   has_many :prices, class_name: 'ProductPrice', inverse_of: :product, dependent: :destroy
   has_many :store_items, through: :items
+  has_many :batches, through: :items
   has_many :revaluations, inverse_of: :product, dependent: :destroy
   has_one :task, inverse_of: :product, dependent: :nullify
   has_many :product_relations, as: :parent, dependent: :destroy
@@ -101,6 +102,10 @@ class Product < ActiveRecord::Base
       purchase: purchase_price,
       retail: retail_price
     }
+  end
+
+  def batch_price_on(date)
+    batches.for_date(date).newest.last&.price
   end
 
   def quantity_in_store(store=nil)

@@ -11,6 +11,7 @@ class Batch < ActiveRecord::Base
   scope :newest, -> { includes(:purchase).order('purchases.date desc') }
   # scope :posted, -> { joins(:purchase).where(Purchase.posted) }
   scope :posted, -> { joins(:purchase).where(purchases: {status: 1}) }
+  scope :for_date, ->(date) { joins(:purchase).where(purchases: {date: date.beginning_of_day..date.end_of_day}) }
 
   after_initialize do
     self.price ||= purchase_price
