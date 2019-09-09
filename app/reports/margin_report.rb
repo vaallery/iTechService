@@ -15,6 +15,7 @@ class MarginReport < BaseReport
           kind = :sale
         end
         details = []
+        total_margin = 0
         if sale_item.is_repair?
           sale_item.device_task&.repair_tasks&.each do |repair_task|
             details << repair_task.as_json(only: [:id], methods: [:name, :price, :purchase_price, :margin])
@@ -22,14 +23,15 @@ class MarginReport < BaseReport
                          .merge(purchase_price: repair_task.parts_cost,
                                 quantity: repair_task.repair_parts.count,
                                 discount: '?')
-            result[kind][:sum] = result[kind][:sum] + repair_task.margin
+            total_margin += repair_task.margin
           end
         else
           details.push sale_item.as_json(only: [:id], methods: [:name, :price, :quantity, :discount, :purchase_price, :margin]).transform_keys(&:to_sym)
-          result[kind][:sum] = result[kind][:sum] + (sale_item.margin * sale_item.quantity)
+          total_margin = sale_item.margin * sale_item.quantity
         end
+        result[kind][:sum] = result[kind][:sum] + total_margin
         result[kind][:details] += details
-        result[:sum] = result[:sum] + result[kind][:sum]
+        result[:sum] = result[:sum] + total_margin
       end
     end
     result
