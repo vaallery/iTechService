@@ -46,4 +46,8 @@ class RepairPart < ActiveRecord::Base
     end
     !!result
   end
+
+  def last_batch_price
+    item.batches.last_posted&.price
+  end
 end

@@ -2,20 +2,24 @@
   %caption= t '.title'
   %thead
     %tr
-      %th{colspan: 5}= t 'reports.margin.kind'
-      %th= t 'reports.sum'
+      %th{colspan: 6}= t 'reports.margin.kind'
+      %th Сумма
+      %th Сумма *
     %tr
       %th Наименование
       %th Количество
       %th Цена
       %th Скидка
       %th Цена закупа
+      %th Цена закупа *
       %th Наценка
+      %th Наценка *
   %tbody
     - [:repair, :service, :sale].each do |kind|
       %tr.detailable
-        %td{colspan: 5}= t "reports.margin.kinds.#{kind}"
+        %td{colspan: 6}= t "reports.margin.kinds.#{kind}"
         %td.num= human_currency report.result[kind][:sum], false
+        %td.num= human_currency report.result[kind][:sum_last], false
       - report.result[kind][:details].each do |d|
         %tr.details
           %td
@@ -27,8 +31,13 @@
           %td.num= human_currency d[:price]
           %td.num= human_currency d[:discount]
           %td.num= human_currency d[:purchase_price]
+          %td.num= human_currency d[:purchase_price_last]
           %td.num= human_currency d[:margin]
+          %td.num= human_currency d[:margin_last]
   %tfoot
     %tr
-      %td{colspan: 5}= t 'reports.total'
+      %td{colspan: 6}= t 'reports.total'
       %td.num= human_currency report.result[:sum], false
+      %td.num= human_currency report.result[:sum_last], false
+
+.help-block * – Последний закуп
