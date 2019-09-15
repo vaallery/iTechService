@@ -1,8 +1,0 @@
-:plain
-  $("#modal_form").modal("hide");
-- if @repair_group.is_root?
-  :plain
-    element = $("#repair_groups").append("#{j(repair_groups_tree_tag(@repair_group))}");
-    repair_groups_tree(element);
--#- else
--#  :plain

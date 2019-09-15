@@ -1,0 +1,6 @@
+<% if @repair_group.is_root? %>
+  element = $("#repair_groups").append("<%= j(repair_groups_tree_tag(@repair_group)) %>");
+  repair_groups_tree(element);
+<% end %>
+
+hideModal();

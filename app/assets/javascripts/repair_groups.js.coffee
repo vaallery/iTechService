@@ -28,6 +28,15 @@ window.repair_groups_tree = (container)->
           name: data.rslt.new_name
   ).bind('select_node.jstree', (e, data)->
     $container.jstree('open_node', data.rslt.obj[0])
+  ).bind('move_node.jstree', (e, data)->
+    moved_group_id = data.rslt.o[0].dataset.repairGroupId
+    target_group_id = data.rslt.r[0].dataset.repairGroupId
+    $.ajax
+      type: 'PUT'
+      url: "/repair_groups/#{moved_group_id}"
+      data:
+        repair_group:
+          parent_id: target_group_id
   ).jstree(
     core:
       strings:
@@ -43,13 +52,13 @@ window.repair_groups_tree = (container)->
       icons: false
     ui:
       select_limit: 1
-    dnd:
-      drop_finish: ->
-        json_data:
-          ajax:
-            url: "/repair_groups/#{root_id}.json"
-            data: (n)->
-              id: (if n.attr then n.attr("id") else 0)
+#    dnd:
+#      drop_finish: ->
+#        json_data:
+#          ajax:
+#            url: "/repair_groups/#{root_id}.json"
+#            data: (n)->
+#              id: (if n.attr then n.attr("id") else 0)
     contextmenu:
       select_node: true
       items:
@@ -77,7 +86,7 @@ window.repair_groups_tree = (container)->
                 @remove()
               else
                 @remove obj
-    plugins: ["themes", "html_data", "ui", "contextmenu", "crrm"]
+    plugins: ["themes", "html_data", "ui", "contextmenu", "crrm", "dnd"]
   ).show()
 
 window.repair_groups_tree_readonly = (container)->
