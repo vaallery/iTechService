@@ -33,7 +33,7 @@ module Service
         device_task.errors.empty?
       end
 
-      def save(device_task, warranty_item_ids, user)
+      def save(device_task, user, contractor_id, warranty_item_ids)
         ActiveRecord::Base.transaction do
           begin
             if device_task.is_repair?
@@ -47,7 +47,7 @@ module Service
                   repare_task.repair_parts.each do |repair_part|
                     repair_part.stash
                     if repair_part.defect_qty > 0
-                      defected_items << {id: repair_part.item_id, qty: repair_part.defect_qty}
+                      defected_items << {id: repair_part.item_id, qty: repair_part.defect_qty, contractor_id: contractor_id}
                     end
                     repair_part.store_item(defect_sp_store).add if warranty_item_ids.include?(repair_part.item_id)
                   end
@@ -55,13 +55,16 @@ module Service
                   repare_task.repair_parts.each do |repair_part|
                     qty = repair_part.defect_qty - (repair_part.defect_qty_was || 0)
                     if qty > 0
-                      defected_items << {id: repair_part.item_id, qty: qty}
+                      defected_items << {id: repair_part.item_id, qty: qty, contractor_id: contractor_id}
                     end
                   end
                 end
               end
 
-              move_defected(defected_items, device_task, user) if defected_items.any?
+              if defected_items.any?
+                move_defected(defected_items, device_task, user)
+                create_spare_part_defects defected_items
+              end
             end
 
             device_task.save!
@@ -91,6 +94,14 @@ module Service
         end
 
         movement_act.post
+      end
+
+      def create_spare_part_defects(defected_items)
+        defected_items.each do |defected_item|
+          SparePartDefect.create item_id: defected_item[:id],
+                                 contractor_id: defected_item[:contractor_id],
+                                 qty: defected_item[:qty]
+        end
       end
     end
   end

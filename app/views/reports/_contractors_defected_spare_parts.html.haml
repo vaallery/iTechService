@@ -1,0 +1,17 @@
+%table#contractors_defected_spare_parts_report.table.table-bordered.table-hover
+  %thead
+    %tr
+      %th.center Запчасть
+      %th.center Поставщик
+      %th.center Количество
+  %tbody
+    - report.result[:data].each do |spare_part, contractors|
+      %tr
+        %td{rowspan: contractors.size}= spare_part
+        - contractor, qty = contractors.shift
+        %td= contractor
+        %td.number= qty
+      - contractors.each do |contractor, qty|
+        %tr
+          %td= contractor
+          %td.number= qty

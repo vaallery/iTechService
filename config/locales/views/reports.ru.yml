@@ -25,6 +25,8 @@ ru:
       title: 'Новые клиенты'
     defected_spare_parts:
       title: 'Брак запчастей'
+    contractors_defected_spare_parts:
+      title: 'Брак запчастей по поставщикам'
     device_types:
       title: 'Принятые девайсы по типам'
     device_groups:

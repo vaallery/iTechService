@@ -5,7 +5,7 @@ module ReportsHelper
   end
 
   def report_names
-    %w[device_types device_groups users devices_archived devices_not_archived active_tasks done_tasks clients tasks_duration device_orders orders_statuses devices_movements payments salary driver few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs technicians_difficult_jobs remnants sales margin quick_orders free_jobs phone_substitutions sms_notifications service_jobs_at_done repair_parts defected_spare_parts service_job_viewings]
+    %w[device_types device_groups users devices_archived devices_not_archived active_tasks done_tasks clients tasks_duration device_orders orders_statuses devices_movements payments salary driver few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs technicians_difficult_jobs remnants sales margin quick_orders free_jobs phone_substitutions sms_notifications service_jobs_at_done repair_parts defected_spare_parts service_job_viewings contractors_defected_spare_parts]
   end
 
   def report_default_params(report_name)
