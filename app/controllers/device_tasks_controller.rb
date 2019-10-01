@@ -11,7 +11,7 @@ class DeviceTasksController < ApplicationController
     @device_task = DeviceTask.find params[:id]
     operation = Service::DeviceTasks::Update.new.with_step_args(
       validate: [@device_task],
-      save: [current_user, params[:contractor_id], params[:warranty_item_ids]],
+      save: [current_user],
       notify: [current_user, params]
     )
 

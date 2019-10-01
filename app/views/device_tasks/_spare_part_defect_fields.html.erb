@@ -1,0 +1,12 @@
+<div class="fields">
+  <div class="row-fluid">
+    <div class="span3">
+      <%= f.input_field :qty, type: :number, placeholder: 'Кол-во', class: 'input-mini', min: 1 %>
+    </div>
+    <div class="span9">
+      <%= f.select :contractor_id, contractor_options, prompt: 'Поставщик' %>
+      <%= link_to_remove_fields f %>
+    </div>
+  </div>
+  <br>
+</div>

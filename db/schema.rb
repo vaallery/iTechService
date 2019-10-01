@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190915064232) do
+ActiveRecord::Schema.define(version: 20190923073417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1120,13 +1120,16 @@ ActiveRecord::Schema.define(version: 20190915064232) do
   create_table "spare_part_defects", force: :cascade do |t|
     t.integer  "item_id"
     t.integer  "contractor_id"
-    t.integer  "qty",           null: false
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.integer  "qty",                            null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "repair_part_id"
+    t.boolean  "is_warranty",    default: false, null: false
   end
 
   add_index "spare_part_defects", ["contractor_id"], name: "index_spare_part_defects_on_contractor_id", using: :btree
   add_index "spare_part_defects", ["item_id"], name: "index_spare_part_defects_on_item_id", using: :btree
+  add_index "spare_part_defects", ["repair_part_id"], name: "index_spare_part_defects_on_repair_part_id", using: :btree
 
   create_table "spare_parts", force: :cascade do |t|
     t.integer  "repair_service_id"
@@ -1451,6 +1454,7 @@ ActiveRecord::Schema.define(version: 20190915064232) do
   add_foreign_key "service_sms_notifications", "users", column: "sender_id"
   add_foreign_key "spare_part_defects", "contractors"
   add_foreign_key "spare_part_defects", "items"
+  add_foreign_key "spare_part_defects", "repair_parts"
   add_foreign_key "stolen_phones", "items"
   add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"

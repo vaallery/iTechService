@@ -3,7 +3,8 @@ module ApplicationHelper
   def link_to_add_fields(name, append_to_selector, f, association, options = {})
     new_object = f.object.class.reflect_on_association(association).klass.new
     fields = f.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
-      render(association.to_s.singularize + "_fields", f: builder, index: "new_#{association}", options: options)
+      partial = options.delete(:partial) || "#{association.to_s.singularize}_fields"
+      render(partial, f: builder, index: "new_#{association}", options: options)
     end
     link_to '#', class: 'add_fields btn-mini btn-success btn',
         data: { selector: append_to_selector, association: association, content: (fields.gsub('\n', '')) } do

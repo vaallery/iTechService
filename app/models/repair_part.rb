@@ -1,15 +1,26 @@
 class RepairPart < ActiveRecord::Base
+  attr_accessor :is_warranty, :contractor_id
+
   belongs_to :repair_task, inverse_of: :repair_parts
   belongs_to :item
+  has_many :spare_part_defects, inverse_of: :repair_part
+
   delegate :name, :store_item, :code, :purchase_price, :product, to: :item, allow_nil: true
   delegate :store, to: :repair_task, allow_nil: true
-  attr_accessible :quantity, :warranty_term, :defect_qty, :repair_task_id, :item_id
+
+  accepts_nested_attributes_for :spare_part_defects
+  attr_accessible :quantity, :warranty_term, :repair_task_id, :item_id, :spare_part_defects_attributes, :is_warranty, :contractor_id
   validates_presence_of :item
   validates_numericality_of :warranty_term, only_integer: true, greater_than_or_equal_to: 0
 
   after_initialize do
     self.warranty_term ||= item.try(:warranty_term)
-    self.defect_qty ||= 0
+  end
+
+  def defect_qty
+    return self['defect_qty'] if self['defect_qty'] > 0
+
+    spare_part_defects.sum(:qty)
   end
 
   def deduct_spare_parts
@@ -18,17 +29,6 @@ class RepairPart < ActiveRecord::Base
       result = self.store_item(store_src).dec(self.quantity)
     end
     !!result
-  end
-
-  def move_defected
-    if defect_qty_changed?
-      result = false
-      if (store_src = self.store).present? and (store_dst = Store.current_defect_sp).present?
-        qty_to_move = defect_qty - (defect_qty_was || 0)
-        result = self.store_item(store_src).move_to(store_dst, qty_to_move)
-      end
-      !!result
-    end
   end
 
   def stash

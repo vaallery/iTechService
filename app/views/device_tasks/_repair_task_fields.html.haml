@@ -8,28 +8,35 @@
   %strong= link_to f.object.name, f.object.repair_service
   %span.pull-right= link_to_remove_fields f
   = f.input :price, input_html: {class: 'input-small'}
-  %table.repair_parts.table.table-condensed
-    %thead
-      %tr
-        %th= t '.spare_part'
-        %th= RepairPart.human_attribute_name(:warranty_term)
-        %th= RepairPart.human_attribute_name(:defect_qty)
-        %th Поставщик
-        %th{title: t('.warranty_hint')}= t '.warranty'
-    %tbody
-      = f.simple_fields_for :repair_parts do |ff|
-        %tr
-          %td
-            = link_to ff.object.name + " (#{ff.object.quantity})", ff.object.product if ff.object.name.present?
-            = ff.hidden_field :item_id
-            = ff.full_error :item_id, class: 'text-error'
-            = ff.hidden_field :quantity
-            = ff.full_error :quantity, class: 'text-error'
-          %td
-            = ff.input_field :warranty_term, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:warranty_term)
-            = ff.error :warranty_term, class: 'text-error'
-          %td
-            = ff.input_field :defect_qty, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:defect_qty), placeholder: RepairPart.human_attribute_name(:defect_qty), disabled: !f.object.pending? && !ff.object.new_record?, min: ff.object.defect_qty
-            = ff.error :defect_qty, class: 'text-error'
-          %td= select_tag :contractor_id, contractor_options, include_blank: true
-          %td= check_box_tag 'warranty_item_ids[]', ff.object.item.id, false, title: t('.warranty_hint'), disabled: !ff.object.new_record?
+
+  #repair_parts
+    .row-fluid
+      %strong.span4 Запчасть (кол-во)
+      %strong.span3 Гарантийный срок (мес.)
+      %strong.span5 Брак
+    = f.simple_fields_for :repair_parts do |ff|
+      .row-fluid
+        .span4
+          = link_to ff.object.name + " (#{ff.object.quantity})", ff.object.product if ff.object.name.present?
+          = ff.hidden_field :item_id
+          = ff.full_error :item_id, class: 'text-error'
+          = ff.hidden_field :quantity
+          = ff.full_error :quantity, class: 'text-error'
+        .span3
+          = ff.input_field :warranty_term, type: 'number', class: 'input-small', title: RepairPart.human_attribute_name(:warranty_term)
+          = ff.error :warranty_term, class: 'text-error'
+        .span5
+          - if ff.object.new_record?
+            .row-fluid
+              .span3
+                %label.checkbox.inline
+                  = ff.input_field :is_warranty, as: :boolean, title: 'Замена по гарантии'
+                  Гарантия
+              .span9= ff.input :contractor_id, collection: Contractor.all, prompt: 'Поставщик', label: false, wrapper: :horizontal_form
+            %br
+
+          %span{id: "spare_part_defects-#{f.index}-#{ff.index}"}
+          .row-fluid
+            .span12
+              = link_to_add_fields 'Брак', "#spare_part_defects-#{f.index}-#{ff.index}", ff, :spare_part_defects,
+                                   partial: 'device_tasks/spare_part_defect_fields'

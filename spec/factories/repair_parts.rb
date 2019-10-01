@@ -5,6 +5,5 @@ FactoryGirl.define do
     repair_task
     item
     warranty_term 0
-    defect_qty 0
   end
 end
