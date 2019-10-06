@@ -18,7 +18,7 @@ class RepairPart < ActiveRecord::Base
   end
 
   def defect_qty
-    return self['defect_qty'] if self['defect_qty'] > 0
+    return self['defect_qty'] if self['defect_qty']
 
     spare_part_defects.sum(:qty)
   end
