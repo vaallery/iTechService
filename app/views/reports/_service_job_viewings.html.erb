@@ -6,6 +6,7 @@
     <th>Время и дата</th>
     <th>Номер устройства</th>
     <th>Кто просматривал</th>
+    <th>Сумма</th>
   </tr>
   </thead>
 
@@ -15,6 +16,7 @@
       <td><%= I18n.l(record.time, format: :time_date) %></td>
       <td><%= link_to(record.ticket_number, service_job_path(record.job_id), target: '_blank') %></td>
       <td><%= record.viewer %></td>
+      <td class="num"><%= number_to_currency record.sum, unit: '' %></td>
     </tr>
   <% end %>
   </tbody>
