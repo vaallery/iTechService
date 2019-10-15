@@ -40,7 +40,7 @@ module Service
                 repare_task.repair_parts.each do |repair_part|
                   repair_part.stash if repare_task.new_record?
 
-                  if repair_part.is_warranty
+                  if repair_part.is_warranty == '1'
                     repair_part.spare_part_defects.build item_id: repair_part.item_id,
                                                          qty: repair_part.quantity,
                                                          is_warranty: true,
