@@ -62,7 +62,7 @@ ru:
   today: 'Сегодня'
   total: 'Итого'
   undone: "Не готово"
-  unpost: 'Сделать непроведённым'
+  unpost: 'Отменить проводку'
   update: 'Сохранить'
   yep: "Да"
   not_accessible: "Не доступен"

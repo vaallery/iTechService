@@ -41,5 +41,5 @@
 .form-actions
   = link_to_edit @movement_act if can? :edit, @movement_act
   = button_to_post @movement_act if can? :post, @movement_act# and !@movement_act.is_insufficient?
-  -#= button_to_unpost @@movement_act if can? :unpost, @movement_act
+  = button_to_unpost(@movement_act) if can?(:unpost, @movement_act)
   = link_to_destroy @movement_act if can? :destroy, @movement_act

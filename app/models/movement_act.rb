@@ -72,7 +72,14 @@ class MovementAct < ActiveRecord::Base
   end
 
   def unpost
+    return false unless is_valid_for_unposting?
 
+    transaction do
+      movement_items.each do |movement_item|
+        movement_item.store_item(dst_store).move_to(store, movement_item.quantity)
+      end
+      update_attribute :status, 0
+    end
   end
 
   def is_from_spare_parts?
@@ -117,4 +124,21 @@ class MovementAct < ActiveRecord::Base
     is_valid
   end
 
+  def is_valid_for_unposting?
+    result = true
+
+    if is_posted?
+      movement_items.each do |movement_item|
+        if movement_item.quantity_in_store(dst_store) < movement_item.quantity
+          errors[:base] << I18n.t('movement_acts.errors.insufficient', product: movement_item.name)
+          result = false
+        end
+      end
+    else
+      errors[:base] << I18n.t('documents.errors.must_be_posted')
+      result = false
+    end
+
+    result
+  end
 end
