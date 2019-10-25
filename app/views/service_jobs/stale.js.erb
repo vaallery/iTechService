@@ -1,0 +1,8 @@
+<% @lists.each_with_index do |list, index| %>
+<% if list[:jobs].any? %>
+var content = '<%= j(render('service_jobs/stale_list', list: list)) %>';
+var $link = $("#stale_jobs-link-<%= index.next %>");
+$link.attr('data-content', content);
+$link.addClass('active');
+<% end %>
+<% end %>

@@ -285,6 +285,7 @@ ru:
         name: 'Название'
         position: 'Позиция'
         schedule: 'Отображать в календаре'
+        storage_term: 'Срок хранения'
         users: 'Пользователи'
 
       media_menu/item:

@@ -2,7 +2,7 @@ class LocationsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @locations = Location.all
+    @locations = Location.ordered
 
     respond_to do |format|
       format.html

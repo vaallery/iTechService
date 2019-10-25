@@ -1,16 +1,17 @@
 ru:
   users:
     abilities:
+      comment_users: 'Комментировать сотрудников'
       edit_clients: 'Редактировать клиентов'
       edit_tasks_user_comment: 'Редактировать комментарий сотрудника к задачам'
       manage_salary: 'Редактировать зарплату'
       manage_wiki: 'Редактировать Wiki'
-      print_receipt: "Печатать чеки"
       manage_schedule: "Редактировать график"
       manage_timesheet: "Редактировать табель"
+      print_receipt: "Печатать чеки"
+      see_stale_service_jobs: 'Видеть залежалые устройства'
       view_feedback_notifications: 'Просматривать уведомления обратной связи'
       view_repair_parts: 'Смотреть запчасти устройства'
-      comment_users: 'Комментировать сотрудников'
     index:
       title: 'Пользователи'
     edit:

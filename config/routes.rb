@@ -93,6 +93,7 @@ Rails.application.routes.draw do
   resources :locations, except: :show
 
   resources :service_jobs do
+    get :stale, on: :collection, format: 'js'
     get :history, on: :member, defaults: { format: 'js' }
     get :device_type_select, on: :collection, defaults: { format: 'js' }
     get :device_select, on: :collection

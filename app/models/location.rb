@@ -1,7 +1,7 @@
 # encoding: utf-8
 class Location < ActiveRecord::Base
   #default_scope order('position asc')
-  scope :sorted, ->{order('position asc')}
+  scope :ordered, ->{order('position asc')}
   scope :for_schedule, ->{where(schedule: true)}
   scope :visible, -> { where hidden: [false, nil] }
   scope :code_start_with, ->(code) { where('code LIKE ?', "#{code}%") }
@@ -10,7 +10,7 @@ class Location < ActiveRecord::Base
   has_many :tasks
   delegate :name, to: :department, prefix: true, allow_nil: true
 
-  attr_accessible :name, :schedule, :position, :code, :department_id, :hidden
+  attr_accessible :name, :schedule, :position, :code, :department_id, :hidden, :storage_term
   validates_presence_of :name
 
   def full_name
@@ -101,4 +101,7 @@ class Location < ActiveRecord::Base
     code.to_s.start_with?('repair')
   end
 
+  def is_special?
+    code == 'special'
+  end
 end

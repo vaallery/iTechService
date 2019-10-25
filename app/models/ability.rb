@@ -22,6 +22,7 @@ class Ability
       can :write_tech_notice, ServiceJob
       cannot :read, CashShift
       cannot :close, CashShift
+      cannot [:update, :destroy], Location
     elsif user.developer?
       can :manage, :all
       can :view_purchase_price, Product

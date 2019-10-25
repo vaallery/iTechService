@@ -115,6 +115,16 @@ class ServiceJob < ActiveRecord::Base
     service_jobs
   end
 
+  def self.stale_at_done_over(term)
+    locations = Location.where(code: 'done', storage_term: term)
+    min_term = Location.where(code: 'done').minimum(:storage_term)
+    done_location_ids = Location.where(code: 'done', storage_term: min_term).pluck(:id)
+
+    includes(:history_records)
+      .where(location: locations, history_records: {column_name: 'location_id', new_value: done_location_ids})
+      .where('history_records.created_at < ?', term.months.ago)
+  end
+
   def as_json(options={})
     {
       id: id,
@@ -408,21 +418,26 @@ class ServiceJob < ActiveRecord::Base
   def validate_location
     if self.location.present?
       old_location = changed_attributes['location_id'].present? ? Location.find(changed_attributes['location_id']) : nil
+
       if self.location.is_done? and self.pending?
         self.errors.add :location_id, I18n.t('service_jobs.errors.pending_tasks')
       end
+
       if self.location.is_done? and self.notify_client? and self.client_notified.nil?
         self.errors.add :client_notified, I18n.t('service_jobs.errors.client_notification')
       end
+
       if self.location.is_archive? and !old_location.try(:is_done?)
         self.errors.add :location_id, I18n.t('service_jobs.errors.not_done')
       end
-      if old_location.try(:is_archive?) and User.current.not_admin?
+
+      if (old_location.try(:is_archive?) && User.current.not_admin?) ||
+         (self.location.is_warranty? && !old_location.try(:is_repair?)) ||
+         (location.is_special? && User.current.not_admin?) ||
+         (old_location&.is_special? && !User.current.superadmin?)
         self.errors.add :location_id, I18n.t('service_jobs.errors.not_allowed')
       end
-      if self.location.is_warranty? and !old_location.try(:is_repair?)
-        self.errors.add :location_id, I18n.t('service_jobs.errors.not_allowed')
-      end
+
       if self.location.is_repair_notebooks? and old_location.present?
         MovementMailer.notice(self).deliver_later
       end

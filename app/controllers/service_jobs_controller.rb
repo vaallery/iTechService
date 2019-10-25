@@ -17,13 +17,30 @@ class ServiceJobsController < ApplicationController
       @service_jobs = @service_jobs.reorder 'service_jobs.'+sort_column + ' ' + sort_direction
     end
     @service_jobs = @service_jobs.newest.page params[:page]
-    @location_name = params[:location].present? ? Location.find(params[:location]).name : 'everywhere'# I18n.t('everywhere')
+    @location_name = params[:location].present? ? Location.find(params[:location]).name : 'everywhere'
     @locations = Location.all
 
     respond_to do |format|
       format.html
       format.json { render json: @service_jobs }
       format.js { render 'shared/index' }
+    end
+  end
+
+  def stale
+    @lists = [
+      {
+        title: 'В готово больше трёх месяцев',
+        jobs: ServiceJob.stale_at_done_over(3)
+      },
+      {
+        title: 'В готово больше года',
+        jobs: ServiceJob.stale_at_done_over(12)
+      }
+    ]
+
+    respond_to do |format|
+      format.js
     end
   end
 

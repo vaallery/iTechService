@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190923073417) do
+ActiveRecord::Schema.define(version: 20191021051808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -505,6 +505,7 @@ ActiveRecord::Schema.define(version: 20190923073417) do
     t.string   "code",          limit: 255
     t.integer  "department_id"
     t.boolean  "hidden",                    default: false
+    t.integer  "storage_term"
   end
 
   add_index "locations", ["ancestry"], name: "index_locations_on_ancestry", using: :btree

@@ -1,0 +1,8 @@
+<strong><%= list[:title] %></strong>
+<ul class="menu">
+  <% list[:jobs].each do |job| %>
+    <li class="menu-item">
+      <%= link_to job.ticket_number, edit_service_job_path(job), remote: true %>
+    </li>
+  <% end %>
+</ul>

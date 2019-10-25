@@ -7,6 +7,7 @@
   = f.input :code
   = f.input :position
   = f.input :hidden
+  = f.input :storage_term, as: :radio_buttons, collection: [['нет', nil], ['3 месяца', 3], ['год', 12]]
 
   .form-actions
     = submit_button f
