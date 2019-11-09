@@ -115,13 +115,15 @@ class ServiceJob < ActiveRecord::Base
     service_jobs
   end
 
-  def self.stale_at_done_over(term)
-    locations = Location.where(code: 'done', storage_term: term)
+  def self.stale_at_done_over(term, department_id: nil)
+    done_locations = Location.where(code: 'done')
+    done_locations = done_locations.where(department_id: department_id) unless department_id.nil?
+    storage_locations = done_locations.where(storage_term: term)
     min_term = Location.where(code: 'done').minimum(:storage_term)
     done_location_ids = Location.where(code: 'done', storage_term: min_term).pluck(:id)
 
     includes(:history_records)
-      .where(location: locations, history_records: {column_name: 'location_id', new_value: done_location_ids})
+      .where(location: storage_locations, history_records: {column_name: 'location_id', new_value: done_location_ids})
       .where('history_records.created_at < ?', term.months.ago)
   end
 
