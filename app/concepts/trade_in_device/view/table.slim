@@ -3,9 +3,12 @@ table.table.table-hover
     tr
       th = t_attribute :number
       th = t_attribute :item
+      th
+        div imei
+        div серийный номер
       th = t_attribute :appraised_value
-      th = t_attribute :received_at
       th = t_attribute :condition
+      th = t_attribute :equipment
       th = t_attribute :replacement_status
       th = sortable_column :apple_guarantee
       th

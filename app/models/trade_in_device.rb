@@ -15,7 +15,7 @@ class TradeInDevice < ApplicationRecord
   validates_presence_of :received_at, :item, :appraised_value, :appraiser, :bought_device,
                         :client_name, :client_phone, :check_icloud
 
-  delegate :name, :presentation, to: :item
+  delegate :name, :presentation, :imei, :serial_number, to: :item
 
   enum replacement_status: {not_replaced: 0, replaced: 1, in_service: 2}
 

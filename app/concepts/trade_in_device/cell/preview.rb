@@ -6,10 +6,18 @@ module TradeInDevice::Cell
     include ModelCell
     include ActiveSupport::NumberHelper
 
-    property :id, :number, :condition
+    property :id, :number, :condition, :equipment, :imei, :serial_number
 
     def item
       decorated_item.name
+    end
+
+    def clipped_condition
+      condition&.length > 20 ? "#{condition[0..20]}..." : condition
+    end
+
+    def clipped_equipment
+      equipment&.length > 20 ? "#{equipment[0..20]}..." : equipment
     end
 
     def decorated_item
@@ -18,10 +26,6 @@ module TradeInDevice::Cell
 
     def appraised_value
       number_to_currency model.appraised_value
-    end
-
-    def received_at
-      l model.received_at, format: :date
     end
 
     def replacement_status

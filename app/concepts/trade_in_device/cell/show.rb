@@ -5,7 +5,7 @@ module TradeInDevice::Cell
     include FormHelper
 
     property :appraiser, :bought_device, :client_name, :client_phone, :check_icloud, :archiving_comment, :condition,
-             :equipment, :number
+             :number
 
     delegate :human_attribute_name, to: :TradeInDevice
     delegate :name, :presentation, to: :decorated_item
@@ -19,6 +19,10 @@ module TradeInDevice::Cell
 
     def item
       link_to presentation, device_path(model.item), remote: true
+    end
+
+    def received_at
+      l model.received_at, format: :date
     end
 
     def archived

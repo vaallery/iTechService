@@ -1,9 +1,12 @@
 tr
   td = number
   td = item
+  td
+    div = imei
+    div = serial_number
   td = appraised_value
-  td = received_at
-  td = condition
+  td title="#{condition}" = clipped_condition
+  td title="#{equipment}" = clipped_equipment
   td = replacement_status
   td = apple_guarantee
   td: .btn-group

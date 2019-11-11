@@ -4,11 +4,11 @@ class TradeInDevice::Policy < BasePolicy
   end
 
   def index_unconfirmed?
-    superadmin?
+    superadmin? || able_to_manage?
   end
 
   def show?
-    user.any_admin?
+    any_admin? || able_to_manage?
   end
 
   def print?
@@ -20,10 +20,16 @@ class TradeInDevice::Policy < BasePolicy
   end
 
   def update?
-    superadmin?
+    superadmin? || able_to_manage?
   end
 
   def destroy?
-    user.superadmin?
+    superadmin? || able_to_manage?
+  end
+
+  private
+
+  def able_to_manage?
+    able_to? :manage_trade_in
   end
 end
