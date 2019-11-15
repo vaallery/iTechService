@@ -1,4 +1,8 @@
 = simple_form_for @task, html: { class: 'form-horizontal' } do |f|
+  - if @task.product.present?
+    .control-group
+      %label.control-label Продукт
+      .controls= link_to @task.product.name, @task.product, target: '_blank'
   = f.input :name
   = f.input :code
   = f.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
