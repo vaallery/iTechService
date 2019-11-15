@@ -4,6 +4,7 @@ class Location < ActiveRecord::Base
   scope :ordered, ->{order('position asc')}
   scope :for_schedule, ->{where(schedule: true)}
   scope :visible, -> { where hidden: [false, nil] }
+  scope :done, -> { where code: 'done' }
   scope :code_start_with, ->(code) { where('code LIKE ?', "#{code}%") }
   belongs_to :department, inverse_of: :locations
   has_many :users
@@ -25,9 +26,9 @@ class Location < ActiveRecord::Base
     Location.where(code: 'content').first_or_create(name: 'Обновление контента')
   end
 
-  def self.done
-    Location.where(code: 'done').first_or_create(name: 'Готово')
-  end
+  # def self.done
+  #   Location.where(code: 'done').first_or_create(name: 'Готово')
+  # end
 
   def self.archive
     Location.where(code: 'archive').first_or_create(name: 'Архив')

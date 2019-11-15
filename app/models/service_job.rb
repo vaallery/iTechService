@@ -8,9 +8,9 @@ class ServiceJob < ActiveRecord::Base
   scope :pending, ->{where(done_at: nil)}
   scope :important, ->{includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)}
   scope :replaced, ->{where(replaced: true)}
-  scope :located_at, ->(location) { where(location_id: location.id) }
-  scope :at_done, ->(user=nil) { where(location_id: user.present? ? user.done_location : Location.done.id) }
-  scope :not_at_done, ->{where('service_jobs.location_id <> ?', Location.done.id)}
+  scope :located_at, ->(location) { where(location: location) }
+  scope :at_done, ->(user=nil) { where(location: user.present? ? user.done_locations : Location.done) }
+  scope :not_at_done, -> { where.not(location: Location.done) }
   scope :at_archive, ->(user=nil) { where(location_id: user.present? ? user.archive_location : Location.archive.id) }
   scope :not_at_archive, ->(user=nil) { where.not(location_id: user.present? ? user.archive_location : Location.archive.id) }
   scope :unarchived, ->{where('service_jobs.location_id <> ?', Location.archive.id)}

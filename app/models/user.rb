@@ -374,8 +374,14 @@ class User < ActiveRecord::Base
     locations.where(code: 'archive').first_or_create(name: 'Архив', department_id: self.department_id)
   end
 
+  def done_locations
+    locations.where(code: 'done')
+  end
+
+
   def done_location
-    locations.where(code: 'done').first_or_create(name: 'Готово', department_id: self.department_id)
+    min_term = done_locations.minimum(:storage_term)
+    done_locations.where(storage_term: min_term).first
   end
 
   def retail_store
