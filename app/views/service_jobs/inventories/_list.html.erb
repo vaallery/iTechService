@@ -1,0 +1,35 @@
+<% if @service_jobs.any? %>
+  <%= form_tag service_jobs_inventory_path do |f| %>
+    <%= hidden_field_tag 'inventory[job_ids]', @service_jobs.pluck(:id) %>
+      <table class="table table-hover">
+        <thead>
+        <tr>
+          <th>Устройство найдено?</th>
+          <th>Номер талона</th>
+          <th>Устройство</th>
+          <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+          <% @service_jobs.each do |service_job| %>
+          <tr>
+            <td><%= check_box_tag 'inventory[found_job_ids][]', service_job.id %></td>
+            <td><%= service_job.ticket_number %></td>
+            <td><%= service_job.presentation %></td>
+            <td>
+              <div class="btn-group">
+                <%= link_to icon_tag(:print), service_job_path(service_job, format: 'pdf', print: true), class: 'btn btn-primary btn-small', target: '_blank' %>
+                <%= link_to icon('eye-open'), service_job_viewings_path(service_job), title: t('service_jobs.viewings'), class: 'btn btn-small', remote: true if policy(ServiceJobViewing).index? %>
+                <%= link_to icon('info-sign'), service_job, class: 'btn btn-small', target: '_blank' %>
+              </div>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <%= submit_tag 'Закончить инвентаризацию', class: 'btn btn-primary' %>
+  <% end %>
+<% else %>
+Не найдено
+<% end %>

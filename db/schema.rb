@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191021051808) do
+ActiveRecord::Schema.define(version: 20191118062609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -513,6 +513,14 @@ ActiveRecord::Schema.define(version: 20191021051808) do
   add_index "locations", ["department_id"], name: "index_locations_on_department_id", using: :btree
   add_index "locations", ["name"], name: "index_locations_on_name", using: :btree
   add_index "locations", ["schedule"], name: "index_locations_on_schedule", using: :btree
+
+  create_table "lost_devices", force: :cascade do |t|
+    t.integer  "service_job_id", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "lost_devices", ["service_job_id"], name: "index_lost_devices_on_service_job_id", unique: true, using: :btree
 
   create_table "media_orders", force: :cascade do |t|
     t.datetime "time"
@@ -1430,6 +1438,7 @@ ActiveRecord::Schema.define(version: 20191021051808) do
 
   add_foreign_key "faults", "fault_kinds", column: "kind_id"
   add_foreign_key "faults", "users", column: "causer_id"
+  add_foreign_key "lost_devices", "service_jobs"
   add_foreign_key "option_values", "option_types"
   add_foreign_key "order_notes", "orders"
   add_foreign_key "order_notes", "users", column: "author_id"

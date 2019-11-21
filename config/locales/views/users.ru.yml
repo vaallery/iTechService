@@ -4,6 +4,7 @@ ru:
       comment_users: 'Комментировать сотрудников'
       edit_clients: 'Редактировать клиентов'
       edit_tasks_user_comment: 'Редактировать комментарий сотрудника к задачам'
+      inventory: 'Проводить инвентаризацию'
       manage_salary: 'Редактировать зарплату'
       manage_wiki: 'Редактировать Wiki'
       manage_schedule: "Редактировать график"

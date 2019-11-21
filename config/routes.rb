@@ -92,9 +92,15 @@ Rails.application.routes.draw do
 
   resources :locations, except: :show
 
+  namespace :service_jobs do
+    resource :inventory, only: %i[new show create]
+  end
+
   resources :service_jobs do
     get :stale, on: :collection, format: 'js'
     get :history, on: :member, defaults: { format: 'js' }
+    # get :inventory, on: :collection
+    # post :inventory, on: :collection
     get :device_type_select, on: :collection, defaults: { format: 'js' }
     get :device_select, on: :collection
     get :check_imei, on: :collection
