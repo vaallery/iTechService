@@ -555,6 +555,7 @@ ru:
         replacement_status/not_replaced: 'Да'
         replacement_status/replaced: 'Нет'
         replacement_status/in_service: 'В сервисе'
+        sale_amount: 'Цена продажи'
 
       trade_in_device_a:
         appraised_value: 'Оценочная стоимость'

@@ -9,7 +9,7 @@
   - unless current_user.any_admin?
     %span= link_to karma_tag(current_user), rating_users_path
   = duck_plan_tag
-  - if current_user.superadmin? && TradeInDevice.unconfirmed.any?
+  - if (current_user.superadmin? || able_to?(:manage_trade_in)) && TradeInDevice.unconfirmed.any?
     = link_to(t('trade_in_device.purgatory'), purgatory_trade_in_devices_path)
   %span#quick_search_form
     = form_tag quick_search_service_jobs_path, method: :get, remote: true, id: 'service_jobs_quick_search_form', class: 'form-search' do

@@ -1339,6 +1339,7 @@ ActiveRecord::Schema.define(version: 20191118062609) do
     t.integer  "department_id",                      null: false
     t.boolean  "confirmed",          default: false, null: false
     t.boolean  "extended_guarantee"
+    t.integer  "sale_amount"
   end
 
   add_index "trade_in_devices", ["department_id"], name: "index_trade_in_devices_on_department_id", using: :btree

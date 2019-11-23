@@ -18,12 +18,12 @@
         = f.input :extended_guarantee, wrapper: :vertical_boolean, input_html: {id: 'trade_in_device_extended_guarantee'}
         button#trade_in_device_no_guarantee.btn(type="button" onclick="App.TradeInDevices.clear_guarantee();") Нет гарантии
 
-      - if superadmin?
-        = f.input :confirmed
-        = f.input :replacement_status, as: :radio_buttons, collection: replacement_statuses
-        = f.association :department, collection: departments
-        = f.input :archived
-        = f.input :archiving_comment
+      = f.input :confirmed if superadmin? || able_to_manage_trade_in?
+      = f.input :replacement_status, as: :radio_buttons, collection: replacement_statuses if superadmin?
+      = f.association :department, collection: departments if superadmin?
+      = f.input :archived if superadmin? || able_to_manage_trade_in?
+      = f.input :archiving_comment if superadmin? || able_to_manage_trade_in?
+      = f.input :sale_amount if superadmin? || able_to_manage_trade_in?
 
       .form-actions
         = submit_button f

@@ -23,8 +23,12 @@ module TradeInDevice::Cell
       link_to t('.index.title'), trade_in_devices_path
     end
 
-    def superadmin?
-      current_user.superadmin?
+    def able_to_manage_trade_in?
+      current_user.able_to?(:manage_trade_in)
+    end
+
+    def persisted?
+      model.persisted?
     end
 
     def replacement_statuses
