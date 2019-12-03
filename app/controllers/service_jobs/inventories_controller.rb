@@ -3,9 +3,7 @@ module ServiceJobs
     before_action :authorize
 
     def new
-      @department = params.key?(:department_id) ? Department.find(params[:department_id]) : Department.current
-      locations = @department.locations.done
-      @service_jobs = ServiceJob.includes(:location).where(location: locations)
+      @service_jobs = local_service_jobs
 
       respond_to do |format|
         format.html
@@ -13,7 +11,7 @@ module ServiceJobs
     end
 
     def show
-      @service_jobs = ServiceJob.where(id: LostDevice.pluck(:service_job_id))
+      @service_jobs = local_service_jobs.where(id: LostDevice.pluck(:service_job_id))
 
       respond_to do |format|
         format.html
@@ -41,6 +39,15 @@ module ServiceJobs
 
     def authorize
       super ServiceJob, :inventory?
+    end
+
+    def local_service_jobs
+      locations = department.locations.done
+      ServiceJob.includes(:location).where(location: locations)
+    end
+
+    def department
+      @department = params.key?(:department_id) ? Department.find(params[:department_id]) : Department.current
     end
   end
 end
