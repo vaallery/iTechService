@@ -3,7 +3,9 @@ module ServiceJobs
     before_action :authorize
 
     def new
-      @service_jobs = ServiceJob.includes(:location).where(location: Location.done)
+      @department = params.key?(:department_id) ? Department.find(params[:department_id]) : Department.current
+      locations = @department.locations.done
+      @service_jobs = ServiceJob.includes(:location).where(location: locations)
 
       respond_to do |format|
         format.html

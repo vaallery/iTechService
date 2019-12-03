@@ -1,3 +1,8 @@
 <%= link_to 'Не найденные девайсы', service_jobs_inventory_path, class: 'btn btn-link' %>
 
+<%= form_tag new_service_jobs_inventory_path, method: :get, class: 'form-inline' do %>
+  <%= select_tag :department_id, options_from_collection_for_select(Department.all, :id, :name, @department.id) %>
+  <%= submit_tag 'Найти', class: 'btn btn-primary' %>
+<% end %>
+
 <%= render 'list', service_jobs: @service_jobs %>
