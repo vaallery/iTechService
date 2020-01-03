@@ -14,6 +14,7 @@ ru:
       see_stale_service_jobs: 'Видеть залежалые устройства'
       view_feedback_notifications: 'Просматривать уведомления обратной связи'
       view_repair_parts: 'Смотреть запчасти устройства'
+      view_reports: 'Смотреть отчёты'
     index:
       title: 'Пользователи'
     edit:

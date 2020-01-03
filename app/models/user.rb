@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
     see_stale_service_jobs
     manage_trade_in
     inventory
+    view_reports
   ]
 
   attr_accessor :login
@@ -187,7 +188,7 @@ class User < ActiveRecord::Base
   end
 
   def can_view_reports?
-    has_role? %w[admin superadmin developer]
+    superadmin? || able_to?(:view_reports)
   end
 
   def self.search(params)

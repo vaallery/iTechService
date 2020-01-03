@@ -137,14 +137,16 @@ class Ability
       end
       cannot [:create, :update, :destroy], StolenPhone
       cannot :read, Salary
-      cannot :manage, Report
+      cannot(:manage, Report) unless user.can_view_reports?
     end
     can :set_keeper, ServiceJob
     can :read, Fault, causer_id: user.id
+    can(:manage, Report) if user.can_view_reports?
     cannot [:edit, :post], [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: [1, 2]
     cannot :unpost, [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: [0, 2]
     cannot :destroy, [Purchase, RevaluationAct, Sale, MovementAct, DeductionAct], status: 1
     cannot :destroy, Store
+    cannot(:manage, Report) unless user.can_view_reports?
     #
     # The first argument to `can` is the action you are giving the user permission to do.
     # If you pass :manage it will apply to every action. Other common actions here are
