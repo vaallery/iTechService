@@ -1,5 +1,5 @@
 <%= form_tag service_jobs_inventory_path, method: :get, class: 'form-inline' do %>
-  <%= select_tag :department_id, options_from_collection_for_select(Department.all, :id, :name, @department.id) %>
+  <%= select_tag :location_id, options_from_collection_for_select(Location.done, :id, :name, @location.id), class: 'input-xxlarge' %>
   <%= submit_tag 'Найти', class: 'btn btn-primary' %>
 <% end %>
 

@@ -1,6 +1,7 @@
 module ServiceJobs
   class InventoriesController < ApplicationController
     before_action :authorize
+    before_action :set_location
 
     def new
       @service_jobs = local_service_jobs
@@ -42,12 +43,15 @@ module ServiceJobs
     end
 
     def local_service_jobs
-      locations = department.locations.done
-      ServiceJob.includes(:location).where(location: locations)
+      ServiceJob.includes(:location).where(location: @location)
     end
 
-    def department
-      @department = params.key?(:department_id) ? Department.find(params[:department_id]) : Department.current
+    def set_location
+      @location = if params.key?(:location_id)
+                    Location.find(params[:location_id])
+                  else
+                    Location.done.find_by(department: Department.current)
+                  end
     end
   end
 end
