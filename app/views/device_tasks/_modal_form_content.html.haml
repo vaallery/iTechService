@@ -1,4 +1,4 @@
-- if @device_task.done? and @device_task.errors.empty?
+- if @device_task.done? && @device_task.errors.empty? && !current_user.superadmin?
   .modal-header
     %a.close{'data-dismiss' => 'modal', href: '#'}
       %i.icon-remove-sign
