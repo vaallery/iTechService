@@ -1,6 +1,7 @@
 # encoding: utf-8
 class ServiceJob < ActiveRecord::Base
 
+  scope :order_by_product_name, -> { includes(item: :product).order('products.name') }
   scope :received_at, ->(period) { where created_at: period }
   scope :newest, ->{order('service_jobs.created_at desc')}
   scope :oldest, ->{order('service_jobs.created_at asc')}

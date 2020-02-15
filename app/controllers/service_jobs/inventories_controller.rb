@@ -28,7 +28,7 @@ module ServiceJobs
       end
 
       LostDevice.where(service_job_id: found_job_ids).delete_all
-      @service_jobs = ServiceJob.where(id: lost_job_ids)
+      @service_jobs = ServiceJob.where(id: lost_job_ids).order_by_product_name
       render :new
     end
 
@@ -43,7 +43,7 @@ module ServiceJobs
     end
 
     def local_service_jobs
-      ServiceJob.includes(:location).where(location: @location)
+      ServiceJob.includes(:location).where(location: @location).order_by_product_name
     end
 
     def set_location
