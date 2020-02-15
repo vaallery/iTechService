@@ -8,7 +8,7 @@ module Service
       feedbacks = Feedback.actual
 
       if current_user.able_to_view_feedbacks?
-        excluded_locations = Location.where(code: %w[archive done])
+        excluded_locations = Location.where(code: %w[archive done special])
         service_job_ids = ServiceJob.select(:id).where.not(location: excluded_locations).pluck(:id)
       else
         service_job_ids = ServiceJob.select(:id).where(location_id: current_user.location_id).pluck(:id)
