@@ -27,7 +27,7 @@ module ServiceJobs
         LostDevice.find_or_create_by(service_job_id: job_id)
       end
 
-      LostDevice.where(id: found_job_ids).delete_all
+      LostDevice.where(service_job_id: found_job_ids).delete_all
       @service_jobs = ServiceJob.where(id: lost_job_ids)
       render :new
     end
