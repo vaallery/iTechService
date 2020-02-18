@@ -102,11 +102,14 @@ class SalesController < ApplicationController
           PrinterTools.print_file filepath, type: :sale_check, height: pdf.page_height_mm, printer: current_user.department.printer
         end
 
+        message = 'Продажа проведена.'
+
         if @sale.service_job.present?
           @sale.service_job.update location_id: current_user.archive_location.id
+          message += ' Устройство переведено в архив.'
         end
 
-        format.html { redirect_to new_sale_path, notice: t('documents.posted') }
+        format.html { redirect_to new_sale_path, notice: message }
       else
         load_top_salables
         flash.alert = @sale.errors.full_messages
