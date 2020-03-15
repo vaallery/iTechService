@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.1'
+ruby '2.5.5'
 
 gem 'rails', '4.2.5.2'
 gem 'protected_attributes', '~> 1.1.4'
@@ -92,26 +92,11 @@ group :development do
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
-
-  gem 'capistrano-rails', '~> 1.3.0'
-  gem 'capistrano-rvm', '~> 0.1.2'
-  # gem 'capistrano-rbenv'
-  gem 'capistrano-bundler', '~> 1.1'
-  gem 'capistrano-passenger', '~> 0.2.0'
-  gem 'capistrano-rails-collection', '~> 0.1.0'
-  gem 'capistrano-faster-assets', '~> 1.0.2'
-  gem 'capistrano-ssh-doctor', '~> 1.0.0'
-  gem 'capistrano-db-tasks', '~> 0.6', require: false
-  gem 'capistrano-sidekiq', '~> 1.0.2'
-  gem 'airbrussh', '~> 1.3.0', require: false
   gem 'quiet_assets', '~> 1.1.0'
   gem 'binding_of_caller', '~> 0.7.2'
   gem 'meta_request', '~> 0.2.8'
   gem 'letter_opener', '~> 1.4.1'
   gem 'rails-erd', '~> 1.5.2'
-end
-
-group :development, :test do
 end
 
 group :test do
@@ -130,8 +115,23 @@ group :test do
   gem 'mocha', '~> 1.1.0'
 end
 
-group :production do
-  # gem 'unicorn', '~> 4.6.2'
-  # gem 'puma'
-  gem 'passenger', '>= 5.0.25', require: 'phusion_passenger/rack_handler'
+# group :production do
+#   # gem 'unicorn', '~> 4.6.2'
+#   # gem 'puma'
+#   gem 'passenger', '>= 5.0.25', require: 'phusion_passenger/rack_handler'
+# end
+
+group :deploy, :development do
+  gem 'capistrano', '~> 3.12.1', require: false
+  gem 'capistrano-rails', '~> 1.4.0', require: false
+  # gem 'capistrano-rvm', '~> 0.1.2'
+  gem 'capistrano-rbenv', '~> 2.1.6'
+  gem 'capistrano-bundler', '~> 1.6.0'
+  gem 'capistrano-passenger', '~> 0.2.0'
+  gem 'capistrano-rails-collection', '~> 0.1.0'
+  gem 'capistrano-faster-assets', '~> 1.1.0'
+  gem 'capistrano-ssh-doctor', '~> 1.0.0'
+  gem 'capistrano-db-tasks', '~> 0.6', require: false
+  gem 'capistrano-sidekiq', '~> 1.0.3'
+  # gem 'airbrussh', '~> 1.3.0', require: false
 end
