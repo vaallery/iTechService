@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.5.5'
+ruby '2.4.6'
 
 gem 'rails', '4.2.5.2'
 gem 'protected_attributes', '~> 1.1.4'
@@ -134,4 +134,6 @@ group :deploy, :development do
   gem 'capistrano-db-tasks', '~> 0.6', require: false
   gem 'capistrano-sidekiq', '~> 1.0.3'
   # gem 'airbrussh', '~> 1.3.0', require: false
+  gem 'ed25519', '>= 1.2', '< 2.0'
+  gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 end

@@ -56,6 +56,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.1)
     barby (0.6.8)
     bcrypt (3.1.13)
+    bcrypt_pbkdf (1.0.1)
     binding_of_caller (0.7.3)
       debug_inspector (>= 0.0.1)
     bootstrap-colorpicker-rails (0.3.1)
@@ -223,6 +224,7 @@ GEM
       dry-equalizer (~> 0.2)
       dry-logic (~> 0.4.2)
       dry-types (~> 0.13.1)
+    ed25519 (1.2.4)
     em-http-request (1.1.5)
       addressable (>= 2.3.4)
       cookiejar (!= 0.3.1)
@@ -619,6 +621,7 @@ DEPENDENCIES
   acts_as_list (~> 0.7.4)
   ancestry (~> 2.1.0)
   barby (~> 0.6.4)
+  bcrypt_pbkdf (>= 1.0, < 2.0)
   binding_of_caller (~> 0.7.2)
   bootstrap-colorpicker-rails (~> 0.3.1)
   byebug
@@ -649,6 +652,7 @@ DEPENDENCIES
   draper (~> 2.1.0)
   dry-transaction (~> 0.13.0)
   dry-validation (~> 0.12.0)
+  ed25519 (>= 1.2, < 2.0)
   exception_notification (~> 4.1.4)
   factory_girl_rails (~> 4.8.0)
   faker (~> 1.8.4)
@@ -713,7 +717,7 @@ DEPENDENCIES
   zeroclipboard-rails
 
 RUBY VERSION
-   ruby 2.5.5p157
+   ruby 2.4.6p354
 
 BUNDLED WITH
    1.16.4
