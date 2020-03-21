@@ -60,7 +60,7 @@ module ServiceJobsHelper
   end
 
   def itunes_string_for(service_job)
-    "#{l service_job.created_at, format: :date_short}  #{service_job.ticket_number}  #{service_job.client.name}"
+    "#{service_job.created_at.strftime('%d.%m.%y')}  #{service_job.ticket_number}  #{service_job.client.name}"
   end
 
   def returning_devices_list(service_jobs)

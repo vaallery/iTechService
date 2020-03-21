@@ -1,5 +1,5 @@
 defaults: &defaults
-  server: http://<%= ENV['SERVER_HOST'] %>:9292/faye
+  server: https://<%= ENV['SERVER_HOST'] %>:9292/faye
   secret_token: <%= ENV['PRIVATE_PUB_SECRET_TOKEN'] %>
 
 development:
