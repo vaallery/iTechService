@@ -9,6 +9,6 @@ table.table.table-bordered.table-hover.table-condensed
   tbody
     - quick_orders.each do |quick_order|
       tr
-        td = l quick_order.created_at, format: :long_d
+        td = l quick_order.created_at, format: :date_time
         td = link_to quick_order.number, quick_order
         td = quick_order.comment

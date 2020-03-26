@@ -9,6 +9,6 @@ table.table.table-bordered.table-hover.table-condensed
   tbody
     - free_jobs.each do |free_job|
       tr
-        td = l free_job.performed_at, format: :long_d
+        td = l free_job.performed_at, format: :date_time
         td = free_job.task
         td = free_job.performer_short_name

@@ -4,7 +4,7 @@
     %meta(http-equiv="Content-Type" content="text/html;charset=utf-8")
 
   %body
-    %h1= t 'document', name: t("activerecord.models.#{@deduction_act.class.to_s.underscore}"), num: @deduction_act.id, time: l(@deduction_act.date, format: :long_d)
+    %h1= t 'document', name: t("activerecord.models.#{@deduction_act.class.to_s.underscore}"), num: @deduction_act.id, time: l(@deduction_act.date, format: :date_time)
     %p
       %strong= DeductionAct.human_attribute_name :store
       = @deduction_act.store_name

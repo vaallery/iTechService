@@ -20,7 +20,7 @@ module GiftCertificatesHelper
               value = rec.new_value
           end
           content_tag(:li) do
-            "[#{l(rec.created_at, format: :long_d)}] #{GiftCertificate.human_attribute_name(rec.column_name)}: #{value}"
+            "[#{l(rec.created_at, format: :date_time)}] #{GiftCertificate.human_attribute_name(rec.column_name)}: #{value}"
           end
         end.join.html_safe
       end.html_safe

@@ -2,11 +2,11 @@ class ImportMailer < ApplicationMailer
 
   def sales_import_log(import_logs)
     @import_logs = import_logs
-    mail to: recipients, subject: "Sales import log [#{l(Time.current, format: :long_d)}]"
+    mail to: recipients, subject: "Sales import log [#{l(Time.current, format: :date_time)}]"
   end
 
   def sales_import_error(error)
-    mail to: recipients, subject: "!!! Sales import error [#{l(Time.current, format: :long_d)}]", body: error
+    mail to: recipients, subject: "!!! Sales import error [#{l(Time.current, format: :date_time)}]", body: error
   end
 
   def product_import_log(import_log, time, type)

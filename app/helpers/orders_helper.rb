@@ -16,7 +16,7 @@ module OrdersHelper
         order.comment
       end +
       content_tag(:td, class: 'order_created_at_column') do
-        l(order.created_at, format: :long_d).html_safe +
+        l(order.created_at, format: :date_time).html_safe +
         (order.user.present? ? (tag(:br, false) + order.user.short_name) : '')
       end +
       content_tag(:td, class: 'order_actions_column') do

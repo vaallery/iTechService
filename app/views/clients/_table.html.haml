@@ -14,7 +14,7 @@
           %td= link_to client.id, client_path(client)
           %td= link_to client.short_name, client_path(client)
           %td= client.human_phone_number
-          %td=l client.created_at, format: :long_d
+          %td=l client.created_at, format: :date_time
           %td.btn-group
             - if can? :create, ServiceJob
               = link_to icon_tag('plus-sign'), new_service_job_path(service_job: {client_id: client.id}), class: 'btn btn-small'

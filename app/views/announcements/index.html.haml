@@ -20,7 +20,7 @@
         %td= announcement.kind
         %td= announcement.user_name
         %td= announcement.content
-        %td= l announcement.created_at, format: :long_d
+        %td= l announcement.created_at, format: :date_time
         %td
           .btn-group
             = link_to_edit_small announcement

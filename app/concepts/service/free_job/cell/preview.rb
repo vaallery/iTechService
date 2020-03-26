@@ -8,7 +8,7 @@ module Service
       property :id, :client_short_name, :performer_short_name, :receiver_short_name, :task
 
       def performed_at
-        I18n.l model.performed_at, format: :long_d
+        I18n.l model.performed_at, format: :date_time
       end
 
       def client

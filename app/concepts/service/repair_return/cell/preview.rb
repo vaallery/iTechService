@@ -6,7 +6,7 @@ module Service
       include ModelCell
 
       def performed_at
-        I18n.l model.performed_at, format: :long_d
+        I18n.l model.performed_at, format: :date_time
       end
 
       def performer

@@ -12,6 +12,6 @@
     %tbody
       - @service_job_viewings.each do |viewing|
         %tr
-          %td= l(viewing.time, format: :long_d)
+          %td= l(viewing.time, format: :date_time)
           %td= viewing.user_presentation
           %td= viewing.ip

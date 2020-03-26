@@ -7,8 +7,8 @@
   %td.nominal_col= human_gift_certificate_nominal gift_certificate
   %td.consumed_col= number_to_currency gift_certificate.consumed, precision: 0
   %td.status_col= gift_certificate.status_h
-  %td.updated_at_col= l gift_certificate.updated_at, format: :long_d
-  %td.created_at_col= l gift_certificate.created_at, format: :long_d
+  %td.updated_at_col= l gift_certificate.updated_at, format: :date_time
+  %td.created_at_col= l gift_certificate.created_at, format: :date_time
   - if can? :manage, GiftCertificate
     %td
       .btn-group

@@ -127,8 +127,8 @@
             %td
               %strong.user_comment= h device_task.user_comment
             %td.align_right= device_task.cost
-            %td= l device_task.done_at, format: :long_d unless device_task.done_at.blank?
-            %td= l device_task.created_at, format: :long_d
+            %td= l device_task.done_at, format: :date_time unless device_task.done_at.blank?
+            %td= l device_task.created_at, format: :date_time
             %td{style: "background:none;"}
               = history_link_to history_device_task_path(@service_job, device_task)
       %tfoot

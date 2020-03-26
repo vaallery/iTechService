@@ -48,8 +48,8 @@ module ApplicationHelper
   end
 
   def timestamp_string_for object
-    "[#{object.class.human_attribute_name(:created_at)}: #{l(object.created_at.localtime, format: :long_d)} | " +
-      "#{object.class.human_attribute_name(:updated_at)}: #{l(object.updated_at.localtime, format: :long_d)}]"
+    "[#{object.class.human_attribute_name(:created_at)}: #{l(object.created_at.localtime, format: :date_time)} | " +
+      "#{object.class.human_attribute_name(:updated_at)}: #{l(object.updated_at.localtime, format: :date_time)}]"
   end
 
   def nav_state_for controller
@@ -162,7 +162,7 @@ module ApplicationHelper
   end
 
   def human_datetime(date)
-    date.present? ? l(date.localtime, format: :long_d) : ''
+    date.present? ? l(date.localtime, format: :date_time) : ''
   end
 
   def date_field(form, attr)

@@ -17,7 +17,7 @@ module UsersHelper
       end +
       content_tag(:td, t("users.roles.#{user.role}")) +
       content_tag(:td, user.location_name || '-') +
-      content_tag(:td, l(user.created_at, format: :long_d)) +
+      content_tag(:td, l(user.created_at, format: :date_time)) +
       content_tag(:td) do
         content_tag(:div, class: 'btn-group') do
           content = link_to_show_small(user)

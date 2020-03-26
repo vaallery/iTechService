@@ -24,7 +24,7 @@
           -#%td= task.priority
           %td= task.cost
           -#%td= task.duration
-          %td=l task.created_at, format: :long_d
+          %td=l task.created_at, format: :date_time
           %td.btn-group
             = link_to_edit_small task
             = link_to_destroy_small task

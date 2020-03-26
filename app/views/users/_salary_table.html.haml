@@ -7,7 +7,7 @@
   %tbody
     - @salaries.each do |salary|
       %tr
-        %td= link_to l(salary.created_at, format: :long_d), salary_path(salary)
+        %td= link_to l(salary.created_at, format: :date_time), salary_path(salary)
         %td= salary.amount
         %td
           .btn-group

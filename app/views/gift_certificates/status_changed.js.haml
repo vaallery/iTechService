@@ -3,4 +3,4 @@
   $("#gift_certificate_#{@gift_certificate.id}").replaceWith("#{j(render(@gift_certificate))}");
 -#$row = $("#gift_certificate_#{@gift_certificate.id}");
 -#$('.status_col', $row).text("#{@gift_certificate.status_h}");
--#$('.updated_at_col', $row).text("#{l @gift_certificate.updated_at, format: :long_d}");
+-#$('.updated_at_col', $row).text("#{l @gift_certificate.updated_at, format: :date_time}");

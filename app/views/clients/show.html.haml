@@ -111,12 +111,12 @@
     %tbody
       - @client.orders.actual_orders.find_each do |order|
         %tr
-          %td= l order.created_at, format: :long_d
+          %td= l order.created_at, format: :date_time
           %td= link_to order.number, order
           %td= t("orders.statuses.#{order.status}")
           %td= order.object
           %td= order.quantity
-          %td= l order.desired_date, format: :long_d if order.desired_date.present?
+          %td= l order.desired_date, format: :date_time if order.desired_date.present?
 
 .form-actions
   - if can? :create, ServiceJob

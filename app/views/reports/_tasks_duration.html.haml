@@ -19,6 +19,6 @@
           %td.duration
             = humanize_duration device_task[:duration]
             %br
-            %small= "#{t('reports.moved_at')}: #{l device_task[:moved_at], format: :long_d} #{device_task[:moved_by]}"
+            %small= "#{t('reports.moved_at')}: #{l device_task[:moved_at], format: :date_time} #{device_task[:moved_by]}"
             %br
-            %small= "#{t('reports.done_at')}: #{l device_task[:done_at], format: :long_d} #{device_task[:done_by]}"
+            %small= "#{t('reports.done_at')}: #{l device_task[:done_at], format: :date_time} #{device_task[:done_by]}"

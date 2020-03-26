@@ -19,7 +19,7 @@
           -#%td= link_to stolen_phone.serial_number, stolen_phone if stolen_phone.serial_number.present?
           %td= link_to stolen_phone.item_presentation, stolen_phone
           %td= link_to stolen_phone.client_presentation, stolen_phone.client if stolen_phone.client.present?
-          %td=l stolen_phone.created_at, format: :long_d
+          %td=l stolen_phone.created_at, format: :date_time
           - if can? :manage, model_class
             %td.btn-group
               = link_to_show_small stolen_phone

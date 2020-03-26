@@ -90,7 +90,7 @@
                 %td
                   %strong.text-info= month_installments.sum(:value)
                   - month_installments.each do |installment|
-                    %span.text-warning{title: "#{l(installment.paid_at, format: :long_d)} - #{installment.installment_plan.presentation}"}= installment.value
+                    %span.text-warning{title: "#{l(installment.paid_at, format: :date_time)} - #{installment.installment_plan.presentation}"}= installment.value
 
       #installment_plan_tab.tab-pane
         = text_field_tag 'user[installment_plans_attributes][0][object]', nil, id: 'user_installment_plan_object', placeholder: InstallmentPlan.human_attribute_name(:object)

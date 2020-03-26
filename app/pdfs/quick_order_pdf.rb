@@ -26,7 +26,7 @@ class QuickOrderPdf < Prawn::Document
       text "№ #{@quick_order.number_s}", align: :center, inlign_format: true, style: :bold
     end
     font_size 10 do
-      text I18n.l(@quick_order.created_at.localtime, format: :long_d), align: :center, inline_format: true
+      text I18n.l(@quick_order.created_at.localtime, format: :date_time), align: :center, inline_format: true
     end
     move_down 4
     text @quick_order.department_name, align: :center
@@ -45,7 +45,7 @@ class QuickOrderPdf < Prawn::Document
       text "№ #{@quick_order.number_s}", align: :center, inlign_format: true, style: :bold
     end
     font_size 10 do
-      text I18n.l(@quick_order.created_at.localtime, format: :long_d), align: :center, inline_format: true
+      text I18n.l(@quick_order.created_at.localtime, format: :date_time), align: :center, inline_format: true
     end
     move_down 4
     text @quick_order.department_name, align: :center

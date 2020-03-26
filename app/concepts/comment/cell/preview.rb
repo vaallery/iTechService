@@ -5,7 +5,7 @@ module Comment::Cell
     property :user_color, :user_name, :content
 
     def timestamp
-      "[#{I18n.l(model.created_at, format: :long_d)}]"
+      "[#{I18n.l(model.created_at, format: :date_time)}]"
     end
   end
 end

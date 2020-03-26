@@ -25,7 +25,7 @@ module AnnouncementsHelper
         end
       else text = "#{user_name}: #{announcement.content}"
     end
-    content_tag(:div, l(announcement.created_at, format: :long_d), class: 'timestamp') +
+    content_tag(:div, l(announcement.created_at, format: :date_time), class: 'timestamp') +
     content_tag(:div, text)
   end
 

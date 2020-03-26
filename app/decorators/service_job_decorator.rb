@@ -37,7 +37,7 @@ class ServiceJobDecorator < ApplicationDecorator
   end
 
   def creation_date
-    I18n.l object.created_at, format: :long_d
+    I18n.l object.created_at, format: :date_time
   end
 
   def client_presentation

@@ -15,7 +15,7 @@
         %td
         %td
         %td
-          = l device[:received_at], format: :long_d
+          = l device[:received_at], format: :date_time
           = link_to device[:ticket_number], service_job_path(device[:job_id]), target: '_blank'
           %br
           = device[:receiver]

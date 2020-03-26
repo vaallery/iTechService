@@ -1,7 +1,7 @@
 %dl.dl-horizontal
 
   %dt= Salary.human_attribute_name :created_at
-  %dd= l @salary.created_at, format: :long_d
+  %dd= l @salary.created_at, format: :date_time
 
   %dt= Salary.human_attribute_name :user
   %dd= @salary.user.short_name

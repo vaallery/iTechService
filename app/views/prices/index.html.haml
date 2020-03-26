@@ -14,7 +14,7 @@
       %tr
         %td= link_to price.id, price_path(price)
         %td= link_to_price price
-        %td= l price.created_at, format: :long_d
+        %td= l price.created_at, format: :date_time
         - if can? :manage, Price
           %td.btn-group
             = link_to_edit_small price

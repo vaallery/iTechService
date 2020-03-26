@@ -81,7 +81,7 @@ module DashboardHelper
         tag(:br, false) +
         service_job.comment
       end +
-      content_tag(:td, service_job.done_at.present? ? l(service_job.done_at, format: :long_d) : '-') +
+      content_tag(:td, service_job.done_at.present? ? l(service_job.done_at, format: :date_time) : '-') +
       content_tag(:td, link_to_edit_service_job(service_job))
     end
   end
