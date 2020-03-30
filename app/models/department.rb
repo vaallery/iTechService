@@ -7,8 +7,8 @@ class Department < ActiveRecord::Base
     3 => 'remote',
   }
 
-  default_scope {order('departments.id asc')}
-  scope :branches, ->{where(role: 1)}
+  default_scope { order('departments.id asc') }
+  scope :branches, -> { where(role: 1) }
   scope :selectable, -> { where(role: [0, 1, 3]) }
 
   has_many :users, dependent: :nullify
@@ -31,7 +31,8 @@ class Department < ActiveRecord::Base
 
   def self.current
     return User.current.department if User.current.present? && User.current.department.present?
-    Department.find_by_code(ENV['DEPARTMENT_CODE'] || 'vl') || Department.first
+
+    Department.find_by_code('vl') || Department.first
   end
 
   def self.current_with_remotes
@@ -71,11 +72,11 @@ class Department < ActiveRecord::Base
   end
 
   def repair_store
-    stores.repair.first_or_create(name: I18n.t('stores.kinds.repair'))
+    stores.repair.first_or_create(name: 'Ремонт')
   end
 
   def default_cash_drawer
-    cash_drawers.first_or_create name: 'Cash drawer 1'
+    cash_drawers.first_or_create name: 'Касса'
   end
 
   def current_cash_shift
@@ -88,5 +89,4 @@ class Department < ActiveRecord::Base
     errors.add :role, :main_exists if role == 0 and Department.where('id <> ? AND role = ?', self.id, 0).count > 1
     false
   end
-
 end

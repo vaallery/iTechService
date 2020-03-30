@@ -1,17 +1,17 @@
 class Store < ActiveRecord::Base
   # TODO change kind type to integer
-  KINDS = %w[purchase retail spare_parts defect defect_sp repair]
+  KINDS = %w[purchase retail spare_parts defect defect_sp repair].freeze
 
-  default_scope {order('stores.name asc')}
-  scope :ordered, ->{order('id asc')}
-  scope :for_purchase, ->{joins(:price_types).where(price_types: {kind: 0})}
-  scope :for_retail, ->{joins(:price_types).where(price_types: {kind: 1})}
-  scope :defect, ->{where(kind: 'defect')}
-  scope :defect_sp, ->{where(kind: 'defect_sp')}
-  scope :purchase, ->{where(kind: 'purchase')}
-  scope :retail, ->{where(kind: 'retail')}
-  scope :repair, ->{where(kind: 'repair')}
-  scope :spare_parts, ->{where(kind: 'spare_parts')}
+  default_scope { order('stores.name asc') }
+  scope :ordered, -> { order('id asc') }
+  scope :for_purchase, -> { joins(:price_types).where(price_types: {kind: 0}) }
+  scope :for_retail, -> { joins(:price_types).where(price_types: {kind: 1}) }
+  scope :defect, -> { where(kind: 'defect') }
+  scope :defect_sp, -> { where(kind: 'defect_sp') }
+  scope :purchase, -> { where(kind: 'purchase') }
+  scope :retail, -> { where(kind: 'retail') }
+  scope :repair, -> { where(kind: 'repair') }
+  scope :spare_parts, -> { where(kind: 'spare_parts') }
 
   belongs_to :department
   has_many :purchases, inverse_of: :store
@@ -53,5 +53,4 @@ class Store < ActiveRecord::Base
   def is_defect?
     kind.in? %w[defect defect_sp]
   end
-
 end

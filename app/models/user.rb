@@ -1,8 +1,35 @@
 class User < ActiveRecord::Base
+  ROLES = %w[
+    admin
+    software
+    media
+    technician
+    marketing
+    developer
+    supervisor
+    manager
+    superadmin
+    driver
+    api
+    universal
+    engraver
+  ].freeze
 
-  ROLES = %w[admin software media technician marketing developer supervisor manager superadmin driver api universal engraver]
-  ROLES_FOR_ADMIN = %w[admin software media technician marketing supervisor manager driver universal engraver]
-  HELPABLE = %w[software media technician]
+  ROLES_FOR_ADMIN = %w[
+    admin
+    software
+    media
+    technician
+    marketing
+    supervisor
+    manager
+    driver
+    universal
+    engraver
+  ].freeze
+
+  HELPABLE = %w[software media technician].freeze
+
   ABILITIES = %w[
     manage_wiki
     manage_salary
@@ -18,31 +45,31 @@ class User < ActiveRecord::Base
     manage_trade_in
     inventory
     view_reports
-  ]
+  ].freeze
 
   attr_accessor :login
   attr_accessor :auth_token
   cattr_accessor :current
 
-  scope :id_asc, ->{order('id asc')}
-  scope :ordered, ->{order('position asc')}
-  scope :any_admin, ->{where(role: %w[admin superadmin])}
-  scope :superadmins, ->{where(role: 'superadmin')}
-  scope :software, ->{where(role: 'software')}
-  scope :media, ->{where(role: 'media')}
-  scope :technician, ->{where(role: 'technician')}
-  scope :not_technician, ->{where('role <> ?', 'technician')}
-  scope :marketing, ->{where(role: 'marketing')}
-  scope :programmer, ->{where(role: 'programmer')}
-  scope :supervisor, ->{where(role: 'supervisor')}
-  scope :manager, ->{where(role: 'manager')}
+  scope :id_asc, -> { order('id asc') }
+  scope :ordered, -> { order('position asc') }
+  scope :any_admin, -> { where(role: %w[admin superadmin]) }
+  scope :superadmins, -> { where(role: 'superadmin') }
+  scope :software, -> { where(role: 'software') }
+  scope :media, -> { where(role: 'media') }
+  scope :technician, -> { where(role: 'technician') }
+  scope :not_technician, -> { where('role <> ?', 'technician') }
+  scope :marketing, -> { where(role: 'marketing') }
+  scope :programmer, -> { where(role: 'programmer') }
+  scope :supervisor, -> { where(role: 'supervisor') }
+  scope :manager, -> { where(role: 'manager') }
   scope :working_at, ->(day) { joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
-  scope :with_active_birthdays, ->{joins(:announcements).where(announcements: {kind: 'birthday', active: true})}
-  scope :with_inactive_birthdays, ->{joins(:announcements).where(announcements: {kind: 'birthday', active: false})}
-  scope :schedulable, ->{where(schedule: true)}
-  scope :staff, ->{ where.not(role: 'api') }
-  scope :fired, ->{where(is_fired: true)}
-  scope :active, ->{where(is_fired: [false, nil])}
+  scope :with_active_birthdays, -> { joins(:announcements).where(announcements: {kind: 'birthday', active: true}) }
+  scope :with_inactive_birthdays, -> { joins(:announcements).where(announcements: {kind: 'birthday', active: false}) }
+  scope :schedulable, -> { where(schedule: true) }
+  scope :staff, -> { where.not(role: 'api') }
+  scope :fired, -> { where(is_fired: true) }
+  scope :active, -> { where(is_fired: [false, nil]) }
   scope :for_changing, -> { all }
   # scope :for_changing, where('users.username = ? OR users.username LIKE ?', 'vova', 'test_%')
   scope :exclude, ->(user) { where('id <> ?', user.is_a?(User) ? user.id : user) }
@@ -90,7 +117,7 @@ class User < ActiveRecord::Base
   validates_presence_of :username, :role, :department
   validates_uniqueness_of :username
   validates :password, presence: true, confirmation: true, if: :password_required?
-  validates :role, inclusion: { in: ROLES }
+  validates :role, inclusion: {in: ROLES}
   validates_numericality_of :session_duration, only_integer: true, greater_than: 0, allow_nil: true
   before_validation :validate_rights_changing
   # before_save :ensure_authentication_token
@@ -175,7 +202,7 @@ class User < ActiveRecord::Base
     role == 'universal'
   end
 
-  def has_role? role
+  def has_role?(role)
     if role.is_a? Array
       role.include? self.role
     else
@@ -245,7 +272,7 @@ class User < ActiveRecord::Base
 
   def is_shortened_day?(date)
     if is_work_day? date
-      hours = schedule_days.find_by_day(date.wday).hours.split(',').map{|h|h.to_i}.sort
+      hours = schedule_days.find_by_day(date.wday).hours.split(',').map { |h| h.to_i }.sort
       hours[-1] < 20
     else
       false
@@ -254,10 +281,14 @@ class User < ActiveRecord::Base
 
   def announced?
     case role
-      when 'software' then announcements.active_help.any?
-      when 'media' then announcements.active_coffee.any?
-      when 'technician' then announcements.active_protector.any?
-      else false
+    when 'software' then
+      announcements.active_help.any?
+    when 'media' then
+      announcements.active_coffee.any?
+    when 'technician' then
+      announcements.active_protector.any?
+    else
+      false
     end
   end
 
@@ -297,11 +328,11 @@ class User < ActiveRecord::Base
   end
 
   def abilities=(abilities)
-    self.abilities_mask = (abilities & ABILITIES).map { |a| 2**ABILITIES.index(a) }.inject(0, :+)
+    self.abilities_mask = (abilities & ABILITIES).map { |a| 2 ** ABILITIES.index(a) }.inject(0, :+)
   end
 
   def abilities
-    ABILITIES.reject { |a| ((abilities_mask || 0) & 2**ABILITIES.index(a)).zero? }
+    ABILITIES.reject { |a| ((abilities_mask || 0) & 2 ** ABILITIES.index(a)).zero? }
   end
 
   def able_to?(ability)
@@ -335,7 +366,7 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
+
   def self.oncoming_salary
     User.active.to_a.keep_if { |user| user.upcoming_salary_date&.today? }
   end
