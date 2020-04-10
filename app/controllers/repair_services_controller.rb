@@ -73,7 +73,7 @@ class RepairServicesController < ApplicationController
   end
 
   def choose
-    authorize RepairGroup
+    authorize RepairService
     @repair_groups = RepairGroup.roots.order('id asc')
     respond_to do |format|
       format.js
