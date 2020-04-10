@@ -1,6 +1,4 @@
 class StolenPhonesController < ApplicationController
-  skip_load_resource only: :index
-
   def index
     authorize StolenPhone
     @stolen_phones = policy_scope(StolenPhone).search(params)
