@@ -1,6 +1,4 @@
 class FavoriteLinksController < ApplicationController
-  authorize_resource
-
   def index
     @favorite_links = current_user.favorite_links
     respond_to do |format|
@@ -9,21 +7,21 @@ class FavoriteLinksController < ApplicationController
   end
 
   def new
-    @favorite_link = FavoriteLink.new
+    @favorite_link = authorize FavoriteLink.new
     respond_to do |format|
       format.html
     end
   end
 
   def edit
-    @favorite_link = FavoriteLink.find params[:id]
+    @favorite_link = find_record FavoriteLink
     respond_to do |format|
       format.html
     end
   end
 
   def create
-    @favorite_link = FavoriteLink.new favorite_link_params.merge(owner: current_user)
+    @favorite_link = authorize FavoriteLink.new(favorite_link_params.merge(owner: current_user))
     respond_to do |format|
       if @favorite_link.save
         format.html { redirect_to favorite_links_path, notice: t('favorite_links.created') }
@@ -34,7 +32,7 @@ class FavoriteLinksController < ApplicationController
   end
 
   def update
-    @favorite_link = FavoriteLink.find params[:id]
+    @favorite_link = find_record FavoriteLink
     respond_to do |format|
       if @favorite_link.update favorite_link_params
         format.html { redirect_to favorite_links_path, notice: t('favorite_links.updated') }
@@ -45,7 +43,7 @@ class FavoriteLinksController < ApplicationController
   end
 
   def destroy
-    @favorite_link = FavoriteLink.find params[:id]
+    @favorite_link = find_record FavoriteLink
     @favorite_link.destroy
 
     respond_to do |format|

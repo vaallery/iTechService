@@ -1,16 +1,16 @@
 class ServiceJobsController < ApplicationController
   include ServiceJobsHelper
   helper_method :sort_column, :sort_direction
-  load_and_authorize_resource only: [:index, :new, :edit, :create, :update, :destroy, :set_keeper]
-  skip_load_resource except: [:index, :new, :edit, :create, :update, :destroy, :set_keeper]
-  skip_authorize_resource only: :check_status
-  skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
+  skip_before_action :authenticate_user!, :set_current_user, only: :check_status
+  skip_after_action :verify_authorized, only: %i[check_status device_type_select quick_search]
 
   def index
+    authorize ServiceJob
+
     if params[:location].present?
-      @service_jobs = ServiceJob.search(params)
+      @service_jobs = policy_scope(ServiceJob).search(params)
     else
-      @service_jobs = ServiceJob.unarchived.search(params)
+      @service_jobs = policy_scope(ServiceJob).unarchived.search(params)
     end
 
     if params.has_key? :sort and params.has_key? :direction
@@ -28,6 +28,8 @@ class ServiceJobsController < ApplicationController
   end
 
   def stale
+    authorize ServiceJob
+
     @lists = [
       {
         title: 'В готово больше трёх месяцев',
@@ -46,7 +48,7 @@ class ServiceJobsController < ApplicationController
 
   def show
     if params[:find] == 'ticket'
-      @service_job = ServiceJob.find_by_ticket_number(params[:id])
+      @service_job = authorize ServiceJob.find_by_ticket_number(params[:id])
       respond_to do |format|
         format.js do
           if @service_job.present?
@@ -58,8 +60,8 @@ class ServiceJobsController < ApplicationController
         end
       end
     else
-      @service_job = ServiceJob.includes(:device_notes).find(params[:id])
-      @device_note = @service_job.device_notes.build user_id: current_user.id
+      @service_job = find_record ServiceJob.includes(:device_notes)
+      @device_note = @service_job.device_notes.build(user_id: current_user.id)
       respond_to do |format|
         format.html { log_viewing }
         format.json do
@@ -87,7 +89,7 @@ class ServiceJobsController < ApplicationController
   end
 
   def new
-    @service_job = ServiceJob.new params[:service_job]
+    @service_job = authorize ServiceJob.new(params[:service_job])
     @service_job.department_id = current_user.department_id
 
     respond_to do |format|
@@ -97,7 +99,7 @@ class ServiceJobsController < ApplicationController
   end
 
   def edit
-    @service_job = ServiceJob.includes(:device_notes).find(params[:id])
+    @service_job = find_record ServiceJob.includes(:device_notes)
     @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
     log_viewing
     respond_to do |format|
@@ -107,7 +109,7 @@ class ServiceJobsController < ApplicationController
   end
 
   def create
-    @service_job = ServiceJob.new(params[:service_job])
+    @service_job = authorize ServiceJob.new(params[:service_job])
     @service_job.initial_department = Department.current
 
     respond_to do |format|
@@ -124,7 +126,7 @@ class ServiceJobsController < ApplicationController
   end
 
   def update
-    @service_job = ServiceJob.find(params[:id])
+    @service_job = find_record ServiceJob
     @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
 
     respond_to do |format|
@@ -143,7 +145,7 @@ class ServiceJobsController < ApplicationController
   end
 
   def destroy
-    service_job = ServiceJob.find(params[:id])
+    service_job = find_record ServiceJob
 
     if service_job.repair_parts.any?
       flash.alert = "Работа не может быть удалена (привязаны запчасти)."
@@ -166,7 +168,7 @@ class ServiceJobsController < ApplicationController
 
   def work_order
     respond_to do |format|
-      service_job = ServiceJob.find params[:id]
+      service_job = find_record ServiceJob
       pdf = WorkOrderPdf.new service_job, view_context
       filename = "work_order_#{service_job.ticket_number}.pdf"
       format.pdf { send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline' }
@@ -175,7 +177,7 @@ class ServiceJobsController < ApplicationController
 
   def completion_act
     respond_to do |format|
-      service_job = ServiceJob.find params[:id]
+      service_job = find_record ServiceJob
       pdf = CompletionActPdf.new service_job, view_context
       filename = "completion_act_#{service_job.ticket_number}.pdf"
       format.pdf { send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline' }
@@ -183,14 +185,14 @@ class ServiceJobsController < ApplicationController
   end
 
   def history
-    service_job = ServiceJob.find params[:id]
+    service_job = find_record ServiceJob
     @records = service_job.history_records
     render 'shared/show_history'
   end
 
   def task_history
-    service_job = ServiceJob.find params[:service_job_id]
-    device_task = DeviceTask.find params[:id]
+    service_job = authorize ServiceJob.find(params[:service_job_id])
+    device_task = DeviceTask.find(params[:id])
     @records = device_task.history_records
     render 'shared/show_history'
   end
@@ -200,13 +202,13 @@ class ServiceJobsController < ApplicationController
     if params[:device_type_id].blank?
       render 'device_type_refresh'
     else
-      @device_type = DeviceType.find params[:device_type_id]
+      @device_type = DeviceType.find(params[:device_type_id])
       render 'device_type_select'
     end
   end
 
   def check_status
-    @service_job = ServiceJob.find_by_ticket_number params[:ticket_number]
+    @service_job = ServiceJob.find_by_ticket_number(params[:ticket_number])
 
     respond_to do |format|
       if @service_job.present?
@@ -237,11 +239,11 @@ class ServiceJobsController < ApplicationController
   end
 
   def movement_history
-    @service_job = ServiceJob.find params[:id]
+    @service_job = find_record ServiceJob
   end
 
   def create_sale
-    service_job = ServiceJob.find params[:id]
+    service_job = find_record ServiceJob
     respond_to do |format|
       if service_job.sale.present?
         if service_job.sale.is_new?
@@ -260,13 +262,14 @@ class ServiceJobsController < ApplicationController
   end
 
   def quick_search
-    @service_jobs = ServiceJob.quick_search params[:quick_search]
+    @service_jobs = policy_scope(ServiceJob).quick_search(params[:quick_search])
     respond_to do |format|
       format.js { render nothing: true if @service_jobs.count > 10 }
     end
   end
 
   def set_keeper
+    @service_job = find_record ServiceJob
     new_keeper_id = @service_job.keeper == current_user ? nil : current_user.id
     @service_job.update_attribute :keeper_id, new_keeper_id
     respond_to do |format|

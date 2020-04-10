@@ -1,7 +1,6 @@
 class TopSalablesController < ApplicationController
-  authorize_resource
-
   def index
+    authorize TopSalable
     @top_salables = TopSalable.roots.ordered
     respond_to do |format|
       format.html
@@ -10,7 +9,7 @@ class TopSalablesController < ApplicationController
   end
 
   def show
-    @top_salable = TopSalable.find params[:id]
+    @top_salable = find_record TopSalable
     @top_salables = @top_salable.children
     respond_to do |format|
       format.html { render 'index' }
@@ -19,21 +18,21 @@ class TopSalablesController < ApplicationController
   end
 
   def new
-    @top_salable = TopSalable.new params[:top_salable]
+    @top_salable = authorize TopSalable.new(params[:top_salable])
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def edit
-    @top_salable = TopSalable.find(params[:id])
+    @top_salable = find_record TopSalable
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def create
-    @top_salable = TopSalable.new(params[:top_salable])
+    @top_salable = authorize TopSalable.new(params[:top_salable])
     respond_to do |format|
       if @top_salable.save
         format.html { redirect_to (@top_salable.parent || top_salables_path), notice: t('top_salables.created') }
@@ -44,7 +43,7 @@ class TopSalablesController < ApplicationController
   end
 
   def update
-    @top_salable = TopSalable.find(params[:id])
+    @top_salable = find_record TopSalable
     respond_to do |format|
       if @top_salable.update_attributes(params[:top_salable])
         format.html { redirect_to (@top_salable.parent || top_salables_path), notice: t('top_salables.updated') }
@@ -55,7 +54,7 @@ class TopSalablesController < ApplicationController
   end
 
   def destroy
-    @top_salable = TopSalable.find(params[:id])
+    @top_salable = find_record TopSalable
     @top_salable.destroy
     respond_to do |format|
       format.html { redirect_to top_salables_url }

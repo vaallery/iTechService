@@ -1,9 +1,7 @@
 class MessagesController < ApplicationController
-  load_and_authorize_resource
-  skip_load_resource only: [:index]
-
   def index
-    @messages = Message.newest
+    authorize Message
+    @messages = policy_scope(Message).newest
     unless params[:range] == 'all'
       @messages = @messages.today
     end
@@ -15,13 +13,15 @@ class MessagesController < ApplicationController
   end
 
   def show
+    @message = find_record Message
     respond_to do |format|
       format.js
     end
   end
 
   def create
-    @message = Message.new(params[:message])
+    message_params = params[:message].merge(user_id: current_user.id, department_id: current_user.department_id)
+    @message = authorize Message.new(message_params)
 
     respond_to do |format|
       if @message.save
@@ -36,7 +36,7 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    @message = Message.find(params[:id])
+    @message = find_record Message
     @message.destroy
 
     respond_to do |format|

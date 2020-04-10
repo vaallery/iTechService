@@ -1,11 +1,10 @@
 class QuickOrdersController < ApplicationController
-  authorize_resource
-
   def index
+    authorize QuickOrder
     if params[:done].eql? 'true' #and current_user.any_admin?
-      @quick_orders = QuickOrder.done
+      @quick_orders = policy_scope(QuickOrder).done
     else
-      @quick_orders = QuickOrder.in_month.undone
+      @quick_orders = policy_scope(QuickOrder).in_month.undone
     end
     @quick_orders = @quick_orders.search(params).created_desc.page(params[:page])
 
@@ -16,7 +15,7 @@ class QuickOrdersController < ApplicationController
   end
 
   def show
-    @quick_order = QuickOrder.includes(comments: :user).find(params[:id])
+    @quick_order = find_record QuickOrder.includes(comments: :user)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -30,7 +29,7 @@ class QuickOrdersController < ApplicationController
   end
 
   def new
-    @quick_order = QuickOrder.new
+    @quick_order = authorize QuickOrder.new
 
     respond_to do |format|
       format.html { render 'form' }
@@ -38,8 +37,7 @@ class QuickOrdersController < ApplicationController
   end
 
   def edit
-    @quick_order = QuickOrder.find(params[:id])
-    authorize! :edit, @quick_order
+    @quick_order = find_record QuickOrder
 
     respond_to do |format|
       format.html { render 'form' }
@@ -47,7 +45,7 @@ class QuickOrdersController < ApplicationController
   end
 
   def create
-    @quick_order = QuickOrder.new(params[:quick_order])
+    @quick_order = authorize QuickOrder.new(params[:quick_order])
 
     respond_to do |format|
       if @quick_order.save
@@ -62,8 +60,7 @@ class QuickOrdersController < ApplicationController
   end
 
   def update
-    @quick_order = QuickOrder.find(params[:id])
-    authorize! :update, @quick_order
+    @quick_order = find_record QuickOrder
 
     respond_to do |format|
       if @quick_order.update_attributes(params[:quick_order])
@@ -75,7 +72,7 @@ class QuickOrdersController < ApplicationController
   end
 
   def set_done
-    @quick_order = QuickOrder.find(params[:id])
+    @quick_order = find_record QuickOrder
 
     respond_to do |format|
       if @quick_order.set_done
@@ -89,7 +86,7 @@ class QuickOrdersController < ApplicationController
   end
 
   def destroy
-    @quick_order = QuickOrder.find(params[:id])
+    @quick_order = find_record QuickOrder
     @quick_order.destroy
 
     respond_to do |format|
@@ -98,7 +95,7 @@ class QuickOrdersController < ApplicationController
   end
 
   def history
-    quick_order = QuickOrder.find params[:id]
+    quick_order = find_record QuickOrder
     @records = quick_order.history_records
     render 'shared/show_history'
   end
@@ -110,5 +107,4 @@ class QuickOrdersController < ApplicationController
     pdf.render_file filepath
     PrinterTools.print_file filepath, type: :quick_order, printer: @quick_order.department.printer
   end
-
 end

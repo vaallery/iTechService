@@ -1,5 +1,5 @@
 %h1= t 'reports.title'
 
 - report_names.each do |report_name|
-  - unless report_name == 'salary' && cannot?(:manage, Salary)
+  - unless report_name == 'salary' && !can?(:manage, Salary)
     %p= link_to t("reports.#{report_name}.title"), new_report_path(report: report_default_params(report_name))

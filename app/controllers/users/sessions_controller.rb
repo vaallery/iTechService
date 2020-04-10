@@ -1,4 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
+  skip_after_action :verify_authorized, only: %i[new create]
 # before_action :configure_sign_in_params, only: [:create]
 
   # GET /resource/sign_in
@@ -25,6 +26,7 @@ class Users::SessionsController < Devise::SessionsController
   #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
   # end
 
+  # TODO define department
   def change_department(user)
     return if Department.count < 2
     user_network = user.current_sign_in_ip.gsub(/\d+$/, '')

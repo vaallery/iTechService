@@ -1,0 +1,2 @@
+class CaseColorPolicy < CommonPolicy
+end

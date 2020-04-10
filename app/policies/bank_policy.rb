@@ -1,0 +1,2 @@
+class BankPolicy < CommonPolicy
+end

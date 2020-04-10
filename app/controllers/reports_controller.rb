@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  authorize_resource
+  before_action -> { authorize Report }
 
   def index
     respond_to do |format|

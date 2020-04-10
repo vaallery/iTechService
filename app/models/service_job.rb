@@ -1,6 +1,5 @@
 # encoding: utf-8
 class ServiceJob < ActiveRecord::Base
-
   scope :order_by_product_name, -> { includes(item: :product).order('products.name') }
   scope :received_at, ->(period) { where created_at: period }
   scope :newest, ->{order('service_jobs.created_at desc')}
@@ -17,7 +16,7 @@ class ServiceJob < ActiveRecord::Base
   scope :unarchived, ->{where('service_jobs.location_id <> ?', Location.archive.id)}
   scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
 
-  belongs_to :department, inverse_of: :service_jobs
+  belongs_to :department, required: true, inverse_of: :service_jobs
   belongs_to :initial_department, class_name: 'Department'
   belongs_to :user, inverse_of: :service_jobs
   belongs_to :client, inverse_of: :service_jobs
@@ -48,6 +47,7 @@ class ServiceJob < ActiveRecord::Base
                           dependent: :destroy
 
   accepts_nested_attributes_for :device_tasks, allow_destroy: true
+
   delegate :name, :short_name, :full_name, :surname, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :department, prefix: true
   delegate :name, to: :location, prefix: true, allow_nil: true

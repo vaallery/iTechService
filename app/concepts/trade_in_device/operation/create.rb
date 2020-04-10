@@ -1,6 +1,6 @@
 class TradeInDevice::Create < BaseOperation
   class Present < BaseOperation
-    step Policy.Pundit(TradeInDevice::Policy, :create?)
+    step Policy.Pundit(TradeInDevicePolicy, :create?)
     failure :not_authorized!
     step Model(TradeInDevice, :new)
     step Contract.Build(constant: TradeInDevice::Contract)

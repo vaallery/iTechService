@@ -1,8 +1,7 @@
 class StoresController < ApplicationController
-  authorize_resource
-
   def index
-    @stores = Store.search(params).ordered
+    authorize Store
+    @stores = policy_scope(Store).search(params).ordered
     respond_to do |format|
       format.html
       format.js { render 'shared/index' }
@@ -10,7 +9,7 @@ class StoresController < ApplicationController
   end
 
   def show
-    @store = Store.find params[:id]
+    @store = find_record Store
     @product_groups = ProductGroup.roots.search(params.merge(store_kind: @store.kind)).ordered
     @products = @store.products.search(params)
     respond_to do |format|
@@ -20,7 +19,7 @@ class StoresController < ApplicationController
   end
 
   def new
-    @store = Store.new
+    @store = authorize Store.new
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @store }
@@ -28,7 +27,7 @@ class StoresController < ApplicationController
   end
 
   def edit
-    @store = Store.find params[:id]
+    @store = find_record Store
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @store }
@@ -36,7 +35,7 @@ class StoresController < ApplicationController
   end
 
   def create
-    @store = Store.new params[:store]
+    @store = authorize Store.new(params[:store])
     respond_to do |format|
       if @store.save
         format.html { redirect_to stores_path, notice: t('stores.created') }
@@ -49,7 +48,7 @@ class StoresController < ApplicationController
   end
 
   def update
-    @store = Store.find params[:id]
+    @store = find_record Store
     respond_to do |format|
       if @store.update_attributes(params[:store])
         format.html { redirect_to stores_path, notice: t('stores.updated') }
@@ -62,7 +61,7 @@ class StoresController < ApplicationController
   end
 
   def destroy
-    @store = Store.find params[:id]
+    @store = find_record Store
     @store.destroy
 
     respond_to do |format|
@@ -72,7 +71,7 @@ class StoresController < ApplicationController
   end
 
   def product_details
-    store = Store.find params[:id]
+    store = find_record Store
     @product = Product.find params[:product_id]
     @store_items = @product.store_items.in_store store
     respond_to do |format|

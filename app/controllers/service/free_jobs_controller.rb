@@ -1,5 +1,6 @@
 module Service
   class FreeJobsController < ApplicationController
+    skip_after_action :verify_authorized
     respond_to :html
 
     def index

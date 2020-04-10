@@ -1,6 +1,7 @@
 class ScheduleDay < ActiveRecord::Base
-
   belongs_to :user
+
+  delegate :department, :department_id, to: :user
 
   attr_accessible :day, :hours, :user, :user_id
 

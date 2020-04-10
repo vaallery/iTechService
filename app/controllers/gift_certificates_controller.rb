@@ -1,9 +1,10 @@
 class GiftCertificatesController < ApplicationController
   helper_method :sort_column, :sort_direction
-  authorize_resource
 
   def index
-    @gift_certificates = GiftCertificate.search(params).order(sort_column + ' ' + sort_direction).page params[:page]
+    authorize GiftCertificate
+    @gift_certificates = policy_scope(GiftCertificate)
+                           .search(params).order("#{sort_column} #{sort_direction}").page(params[:page])
 
     respond_to do |format|
       format.html
@@ -13,7 +14,7 @@ class GiftCertificatesController < ApplicationController
   end
 
   def show
-    @gift_certificate = GiftCertificate.find params[:id]
+    @gift_certificate = find_record GiftCertificate
 
     respond_to do |format|
       format.html
@@ -21,7 +22,7 @@ class GiftCertificatesController < ApplicationController
   end
 
   def new
-    @gift_certificate = GiftCertificate.new
+    @gift_certificate = authorize GiftCertificate.new
 
     respond_to do |format|
       format.html
@@ -30,11 +31,11 @@ class GiftCertificatesController < ApplicationController
   end
 
   def edit
-    @gift_certificate = GiftCertificate.find(params[:id])
+    @gift_certificate = find_record GiftCertificate
   end
 
   def create
-    @gift_certificate = GiftCertificate.new(params[:gift_certificate])
+    @gift_certificate = authorize GiftCertificate.new(params[:gift_certificate])
 
     respond_to do |format|
       if @gift_certificate.save
@@ -53,7 +54,7 @@ class GiftCertificatesController < ApplicationController
   end
 
   def update
-    @gift_certificate = GiftCertificate.find(params[:id])
+    @gift_certificate = find_record GiftCertificate
 
     respond_to do |format|
       if @gift_certificate.update_attributes(params[:gift_certificate])
@@ -67,7 +68,7 @@ class GiftCertificatesController < ApplicationController
   end
 
   def destroy
-    @gift_certificate = GiftCertificate.find(params[:id])
+    @gift_certificate = find_record GiftCertificate
     @gift_certificate.destroy
 
     respond_to do |format|
@@ -77,7 +78,9 @@ class GiftCertificatesController < ApplicationController
   end
 
   def scan
-    if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
+    @gift_certificate = find_by_number
+
+    if @gift_certificate.present?
       @operation = params[:operation]
       if (@operation == 'issue') and !@gift_certificate.available?
         @error = t 'gift_certificates.errors.not_available'
@@ -95,15 +98,17 @@ class GiftCertificatesController < ApplicationController
   end
 
   def find
-    @gift_certificate = GiftCertificate.find_by_number(params[:id])
+    @gift_certificate = find_by_number params[:id]
     respond_to do |format|
       format.js
     end
   end
 
   def issue
+    @gift_certificate = find_by_number
+
     respond_to do |format|
-      if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
+      if @gift_certificate.present?
         if @gift_certificate.issue
           msg = flash.now[:notice] = I18n.t('gift_certificates.issued', nominal: @gift_certificate.nominal)
           format.html { redirect_to gift_certificates_path, notice: msg }
@@ -122,8 +127,10 @@ class GiftCertificatesController < ApplicationController
   end
 
   def activate
+    @gift_certificate = find_by_number
+
     respond_to do |format|
-      if (@gift_certificate = GiftCertificate.find_by_number params[:number]).present?
+      if @gift_certificate.present?
         if @gift_certificate.update_attributes consume: params[:consume].to_i
           msg = flash.now[:notice] = @gift_certificate.used? ?
                     I18n.t('gift_certificates.activated', nominal: @gift_certificate.nominal) :
@@ -153,7 +160,7 @@ class GiftCertificatesController < ApplicationController
   end
 
   def refresh
-    @gift_certificate = GiftCertificate.find params[:id]
+    @gift_certificate = find_record GiftCertificate
 
     respond_to do |format|
       if @gift_certificate.refresh
@@ -169,12 +176,16 @@ class GiftCertificatesController < ApplicationController
   end
 
   def history
-    gift_certificate = GiftCertificate.find params[:id]
+    gift_certificate = find_record GiftCertificate
     @records = gift_certificate.history_records
     render 'shared/show_history'
   end
 
   private
+
+  def find_by_number(number = params[:number])
+    policy_scope(GiftCertificate).find_by_number(number)
+  end
 
   def sort_column
     GiftCertificate.column_names.include?(params[:sort]) ? params[:sort] : 'created_at'
@@ -183,5 +194,4 @@ class GiftCertificatesController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : 'desc'
   end
-
 end

@@ -1,0 +1,2 @@
+class QuickTaskPolicy < CommonPolicy
+end

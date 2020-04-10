@@ -1,20 +1,23 @@
 class Salary < ActiveRecord::Base
+  default_scope { order('issued_at desc') }
 
-  attr_accessible :amount, :user, :user_id, :issued_at, :comment, :is_prepayment
+  scope :in_department, ->(department_id) do
+    includes(:user).where(users: {department_id: department_id})
+  end
+
+  scope :ordered, -> { order('issued_at desc') }
+  scope :issued_at, ->(period) { where(issued_at: period) }
+  scope :salary, -> { where(is_prepayment: [false, nil]) }
+  scope :prepayment, -> { where(is_prepayment: true) }
+
   belongs_to :user, inverse_of: :salaries
   has_many :comments, as: :commentable, dependent: :destroy
+
+  attr_accessible :amount, :user, :user_id, :issued_at, :comment, :is_prepayment
   validates_presence_of :user, :amount
   attr_accessor :comment
 
-  default_scope {order('issued_at desc')}
-  scope :ordered, ->{order('issued_at desc')}
-  scope :issued_at, ->(period) { where(issued_at: period) }
-  scope :salary, ->{where(is_prepayment: [false, nil])}
-  scope :prepayment, ->{where(is_prepayment: true)}
-
-  def comment=(content)
-    comments.build content: content unless content.blank?
-  end
+  delegate :department, :department_id, to: :user
 
   def self.search(params)
     salaries = Salary.ordered.includes :user
@@ -22,6 +25,10 @@ class Salary < ActiveRecord::Base
       salaries = salaries.where 'LOWER(users.name) LIKE :q OR LOWER(users.surname) LIKE :q', q: "%#{user_q.mb_chars.downcase.to_s}%"
     end
     salaries
+  end
+
+  def comment=(content)
+    comments.build content: content unless content.blank?
   end
 
   def prepayments

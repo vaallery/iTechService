@@ -1,8 +1,7 @@
 class CarriersController < ApplicationController
-  authorize_resource
-
   def index
-    @carriers = Carrier.all
+    authorize Carrier
+    @carriers = policy_scope(Carrier).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -10,10 +9,8 @@ class CarriersController < ApplicationController
     end
   end
 
-  # GET /carriers/new
-  # GET /carriers/new.json
   def new
-    @carrier = Carrier.new
+    @carrier = authorize Carrier.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -21,15 +18,12 @@ class CarriersController < ApplicationController
     end
   end
 
-  # GET /carriers/1/edit
   def edit
-    @carrier = Carrier.find(params[:id])
+    @carrier = find_record Carrier
   end
 
-  # POST /carriers
-  # POST /carriers.json
   def create
-    @carrier = Carrier.new(params[:carrier])
+    @carrier = authorize Carrier.new(params[:carrier])
 
     respond_to do |format|
       if @carrier.save
@@ -42,10 +36,8 @@ class CarriersController < ApplicationController
     end
   end
 
-  # PUT /carriers/1
-  # PUT /carriers/1.json
   def update
-    @carrier = Carrier.find(params[:id])
+    @carrier = find_record Carrier
 
     respond_to do |format|
       if @carrier.update_attributes(params[:carrier])
@@ -58,10 +50,8 @@ class CarriersController < ApplicationController
     end
   end
 
-  # DELETE /carriers/1
-  # DELETE /carriers/1.json
   def destroy
-    @carrier = Carrier.find(params[:id])
+    @carrier = find_record Carrier
     @carrier.destroy
 
     respond_to do |format|

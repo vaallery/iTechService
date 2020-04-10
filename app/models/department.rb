@@ -29,14 +29,16 @@ class Department < ActiveRecord::Base
     where('ip_network LIKE ?', "%#{network}%").first
   end
 
-  def self.current
-    return User.current.department if User.current.present? && User.current.department.present?
+  def self.default
+    Department.find_by(code: ENV.fetch('DEPARTMENT_CODE', 'vl')) || Department.first
+  end
 
-    Department.find_by_code('vl') || Department.first
+  def self.current
+    User.current&.department || Department.default
   end
 
   def self.current_with_remotes
-    where('code LIKE ?', "#{current.code}%")
+    where('code LIKE ?', "#{Department.current.code}%")
   end
 
   def role_s

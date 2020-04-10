@@ -1,6 +1,4 @@
 class SubstitutePhone < ApplicationRecord
-  include Authorizable
-
   scope :available, -> { where service_job_id: nil }
   scope :in_department, ->(department) { where department: department }
 

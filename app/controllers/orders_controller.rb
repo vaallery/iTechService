@@ -1,26 +1,25 @@
 class OrdersController < ApplicationController
   helper_method :sort_column, :sort_direction
-  load_and_authorize_resource
-  skip_load_resource only: [:index, :new, :history]
-  skip_authorize_resource only: [:check_status, :device_type_select]
-  skip_before_filter :authenticate_user!, :set_current_user, only: :check_status
+  skip_before_action :authenticate_user!, :set_current_user, only: :check_status
+  skip_after_action :verify_authorized, only: [:check_status, :device_type_select]
 
   def index
+    authorize Order
     if current_user.technician? or params[:kind] == 'spare_parts'
-      @orders = Order.technician_orders.search params
+      @orders = policy_scope(Order).technician_orders.search(params)
     elsif current_user.marketing? or params[:kind] == 'not_spare_parts'
-      @orders = Order.marketing_orders.search params
+      @orders = policy_scope(Order).marketing_orders.search(params)
     else
-      @orders = Order.search params
+      @orders = policy_scope(Order).search(params)
     end
 
-    if params.has_key? :sort and params.has_key? :direction
-      @orders = @orders.reorder 'orders.'+sort_column + ' ' + sort_direction
+    if params.has_key?(:sort) and params.has_key?(:direction)
+      @orders = @orders.reorder("orders.#{sort_column} #{sort_direction}")
     else
       @orders = @orders.newest.by_status
     end
 
-    @orders = @orders.page params[:page] if params[:status].present?
+    @orders = @orders.page(params[:page]) if params[:status].present?
 
     respond_to do |format|
       format.html
@@ -30,7 +29,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Order.includes(:notes).find(params[:id])
+    @order = find_record(Order.includes(:notes))
 
     respond_to do |format|
       format.html
@@ -47,7 +46,7 @@ class OrdersController < ApplicationController
   end
 
   def new
-    @order = Order.new(status: 'new')
+    @order = authorize Order.new(status: 'new')
 
     respond_to do |format|
       format.html
@@ -56,11 +55,11 @@ class OrdersController < ApplicationController
   end
 
   def edit
-    @order = Order.find(params[:id])
+    @order = find_record Order
   end
 
   def create
-    @order = Order.new(params[:order])
+    @order = authorize Order.new(params[:order])
 
     respond_to do |format|
       if @order.save
@@ -75,7 +74,7 @@ class OrdersController < ApplicationController
   end
 
   def update
-    @order = Order.find(params[:id])
+    @order = find_record Order
 
     respond_to do |format|
       if @order.update_attributes(params[:order])
@@ -89,7 +88,7 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-    @order = Order.find(params[:id])
+    @order = find_record Order
     @order.destroy
 
     respond_to do |format|
@@ -99,13 +98,13 @@ class OrdersController < ApplicationController
   end
 
   def history
-    order = Order.find params[:id]
+    order = find_record Order
     @records = order.history_records
     render 'shared/show_history'
   end
 
   def check_status
-    @order = Order.find_by_number params[:ticket_number]
+    @order = policy_scope(Order).find_by_number(params[:ticket_number])
 
     respond_to do |format|
       if @order.present?
@@ -122,7 +121,7 @@ class OrdersController < ApplicationController
     if params[:device_type_id].blank?
       render 'device_type_refresh'
     else
-      @device_type = DeviceType.find params[:device_type_id]
+      @device_type = DeviceType.find(params[:device_type_id])
       render 'device_type_select'
     end
   end
@@ -136,5 +135,4 @@ class OrdersController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
   end
-
 end

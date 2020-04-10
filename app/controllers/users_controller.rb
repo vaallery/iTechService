@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  load_and_authorize_resource
-  before_filter :load_infos, only: [:show, :profile]
+  before_action :load_infos, only: [:show, :profile]
 
   def index
-    @users = User.search(params).id_asc.page(params[:page]).per(50)
+    authorize User
+    @users = policy_scope(User).search(params).id_asc.page(params[:page]).per(50)
 
     respond_to do |format|
       format.html
@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.includes(comments: :user).find(params[:id])
+    @user = find_record User.includes(comments: :user)
     @service_jobs = @user.service_jobs.unarchived.newest
 
     respond_to do |format|
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    @user = authorize User.new
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @user }
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = find_record User
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @user }
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(params[:user])
+    @user = authorize User.new(params[:user])
 
     respond_to do |format|
       if @user.save
@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = find_record User
 
     if params[:user][:password].blank?
       params[:user].delete(:password)
@@ -77,7 +77,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @user = find_record User
     @user.destroy
 
     respond_to do |format|
@@ -87,7 +87,7 @@ class UsersController < ApplicationController
   end
 
   def profile
-    @user = current_user
+    @user = authorize current_user
     @service_jobs = @user.service_jobs.unarchived.newest
 
     respond_to do |format|
@@ -97,13 +97,14 @@ class UsersController < ApplicationController
   end
 
   def duty_calendar
-    @user = User.find params[:id]
+    @user = find_record User
     respond_to do |format|
       format.js
     end
   end
 
   def staff_duty_schedule
+    authorize User
     @calendar_month = params[:date].blank? ? Date.current : params[:date].to_date
     respond_to do |format|
       format.js
@@ -111,7 +112,7 @@ class UsersController < ApplicationController
   end
 
   def update_wish
-    @user = User.find params[:id]
+    @user = find_record User
 
     respond_to do |format|
       if @user.update_attributes(wish: params[:user_wish])
@@ -123,24 +124,26 @@ class UsersController < ApplicationController
   end
 
   def schedule
+    authorize User
     @users = User.active.schedulable.id_asc
     @locations = Location.for_schedule
   end
 
   def add_to_job_schedule
     @msg = ''
-    @user = User.find params[:id]
+    @user = find_record User
     @day = params[:day]
     @msg = 'User location not set' if (@location_id = @user.location.try(:id)).nil?
     @schedule_day = @user.schedule_days.find_by_day @day
   end
 
   def rating
+    authorize User
     @users = User.active.staff.id_asc
   end
 
   def create_duty_day
-    @duty_day = DutyDay.new params[:duty_day]
+    @duty_day = authorize DutyDay.new(params[:duty_day])
     @duty_day.save
     @day = @duty_day.day
     @kind = @duty_day.kind
@@ -148,7 +151,7 @@ class UsersController < ApplicationController
   end
 
   def destroy_duty_day
-    duty_day = DutyDay.find params[:duty_day_id]
+    duty_day = authorize DutyDay.find(params[:duty_day_id])
     @day = duty_day.day
     @kind = duty_day.kind
     duty_day.destroy
@@ -156,7 +159,7 @@ class UsersController < ApplicationController
   end
 
   def actions
-    @user = User.find params[:id]
+    @user = find_record User
 
     respond_to do |format|
       format.html
@@ -164,7 +167,7 @@ class UsersController < ApplicationController
   end
 
   def finance
-    @user = User.find params[:id]
+    @user = find_record User
     @salaries = @user.salaries
     @installments = @user.installments
 
@@ -174,7 +177,7 @@ class UsersController < ApplicationController
   end
 
   def bonuses
-    @user = User.find params[:id]
+    @user = find_record User
     @bonuses = @user.bonuses
     respond_to do |format|
       format.js
@@ -185,7 +188,6 @@ class UsersController < ApplicationController
 
   def load_infos
     # @infos = Info.actual.available_for(current_user).grouped_by_date.limit 20
-    @infos = Info.actual.available_for(current_user).newest.limit 20
+    @infos = policy_scope(Info).actual.available_for(current_user).newest.limit(20)
   end
-
 end

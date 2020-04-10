@@ -1,9 +1,9 @@
 class DeviceTypesController < ApplicationController
-  load_and_authorize_resource
-
   def index
-    @device_types = DeviceType.order('ancestry asc').page params[:page]
+    authorize DeviceType
+    @device_types = policy_scope(DeviceType).order('ancestry asc').page(params[:page])
     @device_type = DeviceType.new
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @device_types }
@@ -11,7 +11,7 @@ class DeviceTypesController < ApplicationController
   end
 
   def create
-    @device_type = DeviceType.new(params[:device_type])
+    @device_type = authorize DeviceType.new(params[:device_type])
 
     respond_to do |format|
       if @device_type.save
@@ -25,11 +25,11 @@ class DeviceTypesController < ApplicationController
   end
 
   def edit
-    @device_type = DeviceType.find params[:id]
+    @device_type = find_record DeviceType
   end
 
   def update
-    @device_type = DeviceType.find(params[:id])
+    @device_type = find_record DeviceType
 
     respond_to do |format|
       if @device_type.update_attributes(params[:device_type])
@@ -43,7 +43,7 @@ class DeviceTypesController < ApplicationController
   end
 
   def destroy
-    @device_type = DeviceType.find(params[:id])
+    @device_type = find_record DeviceType
     @device_type.destroy
 
     respond_to do |format|
@@ -52,11 +52,10 @@ class DeviceTypesController < ApplicationController
   end
 
   def reserve
-    @device_type = DeviceType.find params[:id]
+    @device_type = find_record DeviceType
     new_reserve = @device_type.qty_reserve || 0
     new_reserve = new_reserve.next if params[:direction] == '+'
     new_reserve = new_reserve.pred if params[:direction] == '-'
     @device_type.update_attribute :qty_reserve, new_reserve
   end
-
 end

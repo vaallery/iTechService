@@ -1,7 +1,8 @@
 module Service
   class SmsNotificationsController < ApplicationController
-    respond_to :js
     include OperationRunner
+    before_action { authorize SMSNotification }
+    respond_to :js
 
     def new
       run SMSNotification::Build do |r|

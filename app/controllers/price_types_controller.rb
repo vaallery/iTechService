@@ -1,7 +1,10 @@
 class PriceTypesController < ApplicationController
-  load_and_authorize_resource
+  before_action :set_price_type, only: %i[edit update destroy]
 
   def index
+    authorize PriceType
+    @price_types = policy_scope(PriceType).all
+
     respond_to do |format|
       format.html
       format.json { render json: @price_types }
@@ -9,6 +12,8 @@ class PriceTypesController < ApplicationController
   end
 
   def new
+    @price_type = PriceType.new
+
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @price_type }
@@ -23,6 +28,8 @@ class PriceTypesController < ApplicationController
   end
 
   def create
+    @price_type = authorize PriceType.new(params[:price_type])
+
     respond_to do |format|
       if @price_type.save
         format.html { redirect_to price_types_path, notice: 'Price type was successfully created.' }
@@ -53,5 +60,11 @@ class PriceTypesController < ApplicationController
       format.html { redirect_to price_types_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+
+  def set_price_type
+    @price_type = find_record PriceType
   end
 end

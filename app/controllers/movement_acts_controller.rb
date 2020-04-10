@@ -1,9 +1,9 @@
 class MovementActsController < ApplicationController
-  authorize_resource
   helper_method :sort_column, :sort_direction
 
   def index
-    @movement_acts = MovementAct.search(params).page(params[:page])
+    authorize MovementAct
+    @movement_acts = policy_scope(MovementAct).search(params).page(params[:page])
 
     if params.has_key?(:sort) && params.has_key?(:direction)
       @movement_acts = @movement_acts.order("movement_acts.#{sort_column} #{sort_direction}")
@@ -21,7 +21,7 @@ class MovementActsController < ApplicationController
   end
 
   def show
-    @movement_act = MovementAct.find(params[:id])
+    @movement_act = find_record MovementAct
 
     respond_to do |format|
       format.html
@@ -30,7 +30,7 @@ class MovementActsController < ApplicationController
   end
 
   def new
-    @movement_act = MovementAct.new params[:movement_act]
+    @movement_act = authorize MovementAct.new(params[:movement_act])
 
     respond_to do |format|
       format.html { render 'form' }
@@ -39,7 +39,7 @@ class MovementActsController < ApplicationController
   end
 
   def edit
-    @movement_act = MovementAct.find(params[:id])
+    @movement_act = find_record MovementAct
 
     respond_to do |format|
       format.html { render 'form' }
@@ -48,7 +48,7 @@ class MovementActsController < ApplicationController
   end
 
   def create
-    @movement_act = MovementAct.new(params[:movement_act])
+    @movement_act = authorize MovementAct.new(params[:movement_act])
 
     respond_to do |format|
       if @movement_act.save
@@ -62,7 +62,7 @@ class MovementActsController < ApplicationController
   end
 
   def update
-    @movement_act = MovementAct.find(params[:id])
+    @movement_act = find_record MovementAct
 
     respond_to do |format|
       if @movement_act.update_attributes(params[:movement_act])
@@ -76,7 +76,7 @@ class MovementActsController < ApplicationController
   end
 
   def destroy
-    @movement_act = MovementAct.find(params[:id])
+    @movement_act = find_record MovementAct
     @movement_act.set_deleted
 
     respond_to do |format|
@@ -86,7 +86,7 @@ class MovementActsController < ApplicationController
   end
 
   def post
-    @movement_act = MovementAct.find(params[:id])
+    @movement_act = find_record MovementAct
     respond_to do |format|
       if @movement_act.post
         format.html { redirect_to @movement_act, notice: t('documents.posted') }
@@ -98,7 +98,7 @@ class MovementActsController < ApplicationController
   end
 
   def unpost
-    @movement_act = MovementAct.find(params[:id])
+    @movement_act = find_record MovementAct
     respond_to do |format|
       if @movement_act.unpost
         format.html { redirect_to @movement_act, notice: t('documents.unposted') }
@@ -110,7 +110,9 @@ class MovementActsController < ApplicationController
   end
 
   def make_defect_sp
-    @movement_act = MovementAct.new store_id: current_user.spare_parts_store.id, dst_store_id: current_user.defect_sp_store.id
+    @movement_act = authorize MovementAct.new(store_id: current_user.spare_parts_store.id,
+                                              dst_store_id: current_user.defect_sp_store.id)
+
     respond_to do |format|
       format.html { render 'form' }
     end

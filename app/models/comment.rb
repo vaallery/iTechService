@@ -5,6 +5,8 @@ class Comment < ActiveRecord::Base
   belongs_to :user
   belongs_to :commentable, polymorphic: true
 
+  delegate :department, :department_id, to: :commentable
+
   attr_accessible :content, :commentable_id, :commentable_type
 
   validates :content, :user_id, :commentable_id, :commentable_type, presence: true

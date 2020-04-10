@@ -1,49 +1,56 @@
 class DevicesController < ApplicationController
-  before_action :set_device, only: %i[select edit update destroy]
   before_action :set_device_groups, only: %i[new edit create update]
 
   def index
+    authorize Item
     @devices = Item.filter(params)
   end
 
   def autocomplete
-    @devices = Item.filter(params).page(params[:page])
+    authorize Item
+    @devices = policy_scope(Item).filter(params).page(params[:page])
+
     respond_to do |format|
       format.json
     end
   end
 
   def show
-    @device = Item.includes(:sales).find params[:id]
+    @device = find_record(Item.includes(:sales))
     set_imported_sales
+
     respond_to do |format|
       format.js
     end
   end
 
   def select
-    @device = DeviceDecorator.decorate(Item.find(params[:id]))
+    @device = DeviceDecorator.decorate(find_record(Item))
+
     respond_to do |format|
       format.js
     end
   end
 
   def new
-    @device = Item.new
+    @device = authorize Item.new
+
     respond_to do |format|
       format.js { render 'shared/show_secondary_form' }
     end
   end
 
   def edit
-    @device = Item.find params[:id]
+    @device = find_record Item
+
     respond_to do |format|
       format.js { render 'shared/show_secondary_form' }
     end
   end
 
   def create
-    @device = Item.new device_params
+    @device = authorize Item.new(device_params)
+
     respond_to do |format|
       if @device.save
         format.js { render 'save' }
@@ -54,6 +61,8 @@ class DevicesController < ApplicationController
   end
 
   def update
+    @device = find_record Item
+
     respond_to do |format|
       if @device.update device_params
         format.js { render 'save' }
@@ -64,17 +73,15 @@ class DevicesController < ApplicationController
   end
 
   def destroy
+    @device = find_record Item
     @device.destroy
+
     respond_to do |format|
       format.js
     end
   end
 
   private
-
-  def set_device
-    @device = Item.find params[:id]
-  end
 
   def set_device_groups
     @device_groups = ProductGroup.devices.arrange_as_array({order: 'name'})

@@ -1,22 +1,21 @@
 class CashOperationsController < ApplicationController
-  authorize_resource
-
   def index
-    @cash_operations = CashOperation.created_desc.page(params[:page])
+    authorize CashOperation
+    @cash_operations = policy_scope(CashOperation).created_desc.page(params[:page])
     respond_to do |format|
       format.html
     end
   end
 
   def show
-    @cash_operation = CashOperation.find(params[:id])
+    @cash_operation = find_record CashOperation
     respond_to do |format|
       format.html
     end
   end
 
   def new
-    @cash_operation = CashOperation.new params[:cash_operation]
+    @cash_operation = authorize CashOperation.new(params[:cash_operation])
     respond_to do |format|
       format.html
       format.js { render 'shared/show_modal_form' }
@@ -24,11 +23,11 @@ class CashOperationsController < ApplicationController
   end
 
   def edit
-    @cash_operation = CashOperation.find(params[:id])
+    @cash_operation = find_record CashOperation
   end
 
   def create
-    @cash_operation = CashOperation.new(params[:cash_operation])
+    @cash_operation = authorize CashOperation.new(params[:cash_operation])
     respond_to do |format|
       if @cash_operation.save
         format.html { redirect_to @cash_operation, notice: 'Cash operation was successfully created.' }
@@ -41,7 +40,7 @@ class CashOperationsController < ApplicationController
   end
 
   def update
-    @cash_operation = CashOperation.find(params[:id])
+    @cash_operation = find_record CashOperation
     respond_to do |format|
       if @cash_operation.update_attributes(params[:cash_operation])
         format.html { redirect_to @cash_operation, notice: 'Cash operation was successfully updated.' }
@@ -52,7 +51,7 @@ class CashOperationsController < ApplicationController
   end
 
   def destroy
-    @cash_operation = CashOperation.find(params[:id])
+    @cash_operation = find_record CashOperation
     #@cash_operation.destroy
     respond_to do |format|
       format.html { redirect_to cash_operations_url }

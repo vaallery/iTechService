@@ -1,6 +1,6 @@
 module Service
   class JobTemplate::Index < BaseOperation
-    step Policy::Pundit(JobTemplate::Policy, :index?)
+    step Policy::Pundit(JobTemplatePolicy, :index?)
     failure :not_authorized!
 
     step ->(options, params:, **) {

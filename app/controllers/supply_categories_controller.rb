@@ -1,7 +1,6 @@
 class SupplyCategoriesController < ApplicationController
-  authorize_resource
-
   def index
+    authorize SupplyCategory
     @supply_categories = SupplyCategory.arrange(order: :name)
     respond_to do |format|
       format.html
@@ -10,7 +9,7 @@ class SupplyCategoriesController < ApplicationController
   end
 
   def show
-    @supply_category = SupplyCategory.find(params[:id])
+    @supply_category = find_record SupplyCategory
     @supply_categories = @supply_category.has_children? ? @supply_category.children : SupplyCategory.roots
     respond_to do |format|
       format.js
@@ -18,7 +17,7 @@ class SupplyCategoriesController < ApplicationController
   end
 
   def new
-    @supply_category = SupplyCategory.new
+    @supply_category = authorize SupplyCategory.new
     respond_to do |format|
       format.html { render 'form' }
       format.js { render 'shared/show_modal_form' }
@@ -26,14 +25,14 @@ class SupplyCategoriesController < ApplicationController
   end
 
   def edit
-    @supply_category = SupplyCategory.find(params[:id])
+    @supply_category = find_record SupplyCategory
     respond_to do |format|
       format.js
     end
   end
 
   def create
-    @supply_category = SupplyCategory.new(params[:supply_category])
+    @supply_category = authorize SupplyCategory.new(params[:supply_category])
     respond_to do |format|
       if @supply_category.save
         @supply_categories = SupplyCategory.arrange(order: :name)
@@ -48,7 +47,7 @@ class SupplyCategoriesController < ApplicationController
   end
 
   def update
-    @supply_category = SupplyCategory.find(params[:id])
+    @supply_category = find_record SupplyCategory
     respond_to do |format|
       if @supply_category.update_attributes(params[:supply_category])
         format.js
@@ -61,7 +60,7 @@ class SupplyCategoriesController < ApplicationController
   end
 
   def destroy
-    @supply_category = SupplyCategory.find(params[:id])
+    @supply_category = find_record SupplyCategory
     @supply_category.destroy
     respond_to do |format|
       #format.js { redirect_to supply_categories_url }

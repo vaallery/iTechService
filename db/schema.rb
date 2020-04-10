@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20191118062609) do
+ActiveRecord::Schema.define(version: 20200409084030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -524,12 +524,15 @@ ActiveRecord::Schema.define(version: 20191118062609) do
 
   create_table "media_orders", force: :cascade do |t|
     t.datetime "time"
-    t.string   "name",       limit: 255
-    t.string   "phone",      limit: 255
+    t.string   "name",          limit: 255
+    t.string   "phone",         limit: 255
     t.text     "content"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.integer  "department_id",             null: false
   end
+
+  add_index "media_orders", ["department_id"], name: "index_media_orders_on_department_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.integer  "user_id"
@@ -538,8 +541,10 @@ ActiveRecord::Schema.define(version: 20191118062609) do
     t.string   "recipient_type", limit: 255
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
+    t.integer  "department_id",              null: false
   end
 
+  add_index "messages", ["department_id"], name: "index_messages_on_department_id", using: :btree
   add_index "messages", ["recipient_id"], name: "index_messages_on_recipient_id", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
@@ -985,17 +990,19 @@ ActiveRecord::Schema.define(version: 20191118062609) do
   add_index "service_feedbacks", ["service_job_id"], name: "index_service_feedbacks_on_service_job_id", using: :btree
 
   create_table "service_free_jobs", force: :cascade do |t|
-    t.integer  "performer_id", null: false
-    t.integer  "client_id",    null: false
-    t.integer  "task_id",      null: false
+    t.integer  "performer_id",  null: false
+    t.integer  "client_id",     null: false
+    t.integer  "task_id",       null: false
     t.text     "comment"
-    t.datetime "performed_at", null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "performed_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.integer  "receiver_id"
+    t.integer  "department_id", null: false
   end
 
   add_index "service_free_jobs", ["client_id"], name: "index_service_free_jobs_on_client_id", using: :btree
+  add_index "service_free_jobs", ["department_id"], name: "index_service_free_jobs_on_department_id", using: :btree
   add_index "service_free_jobs", ["performer_id"], name: "index_service_free_jobs_on_performer_id", using: :btree
   add_index "service_free_jobs", ["receiver_id"], name: "index_service_free_jobs_on_receiver_id", using: :btree
   add_index "service_free_jobs", ["task_id"], name: "index_service_free_jobs_on_task_id", using: :btree
@@ -1440,6 +1447,8 @@ ActiveRecord::Schema.define(version: 20191118062609) do
   add_foreign_key "faults", "fault_kinds", column: "kind_id"
   add_foreign_key "faults", "users", column: "causer_id"
   add_foreign_key "lost_devices", "service_jobs"
+  add_foreign_key "media_orders", "departments"
+  add_foreign_key "messages", "departments"
   add_foreign_key "option_values", "option_types"
   add_foreign_key "order_notes", "orders"
   add_foreign_key "order_notes", "users", column: "author_id"
@@ -1454,6 +1463,7 @@ ActiveRecord::Schema.define(version: 20191118062609) do
   add_foreign_key "quick_orders", "clients"
   add_foreign_key "service_feedbacks", "service_jobs"
   add_foreign_key "service_free_jobs", "clients"
+  add_foreign_key "service_free_jobs", "departments"
   add_foreign_key "service_free_jobs", "service_free_tasks", column: "task_id"
   add_foreign_key "service_free_jobs", "users", column: "performer_id"
   add_foreign_key "service_free_jobs", "users", column: "receiver_id"

@@ -1,14 +1,13 @@
 class DeviceTasksController < ApplicationController
-  authorize_resource
   respond_to :js
 
   def edit
-    @device_task = DeviceTask.find params[:id]
+    @device_task = find_record DeviceTask
     render 'shared/show_modal_form'
   end
 
   def update
-    @device_task = DeviceTask.find params[:id]
+    @device_task = find_record DeviceTask
     operation = Service::DeviceTasks::Update.new.with_step_args(
       validate: [@device_task],
       save: [current_user],

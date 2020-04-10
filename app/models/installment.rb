@@ -1,6 +1,8 @@
 class Installment < ActiveRecord::Base
-
   belongs_to :installment_plan, inverse_of: :installments
+
+  delegate :department, :department_id, to: :installment_plan
+
   attr_accessible :paid_at, :value, :installment_plan, :installment_plan_id
 
   validates_presence_of :installment_plan, :value

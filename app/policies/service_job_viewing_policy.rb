@@ -1,5 +1,5 @@
-class ServiceJobViewingPolicy < BasePolicy
-  def index?
+class ServiceJobViewingPolicy < ApplicationPolicy
+  def read?
     superadmin?
   end
 end

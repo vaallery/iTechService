@@ -1,17 +1,6 @@
 class InstallmentsController < ApplicationController
-  load_and_authorize_resource
-
-  def index
-    @installments = Installment.all
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @installments }
-    end
-  end
-
   def show
-    @installment = Installment.find(params[:id])
+    @installment = find_record Installment
 
     respond_to do |format|
       format.html
@@ -20,7 +9,7 @@ class InstallmentsController < ApplicationController
   end
 
   def new
-    @installment = Installment.new
+    @installment = authorize Installment.new
 
     respond_to do |format|
       format.html
@@ -29,11 +18,11 @@ class InstallmentsController < ApplicationController
   end
 
   def edit
-    @installment = Installment.find(params[:id])
+    @installment = find_record Installment
   end
 
   def create
-    @installment = Installment.new(params[:installment])
+    @installment = authorize Installment.new(params[:installment])
 
     respond_to do |format|
       if @installment.save
@@ -49,7 +38,7 @@ class InstallmentsController < ApplicationController
   end
 
   def update
-    @installment = Installment.find(params[:id])
+    @installment = find_record Installment
 
     respond_to do |format|
       if @installment.update_attributes(params[:installment])
@@ -63,7 +52,7 @@ class InstallmentsController < ApplicationController
   end
 
   def destroy
-    @installment = Installment.find(params[:id])
+    @installment = find_record Installment
     @installment.destroy
 
     respond_to do |format|

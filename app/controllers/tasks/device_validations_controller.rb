@@ -1,5 +1,7 @@
 module Tasks
   class DeviceValidationsController < ApplicationController
+    skip_after_action :verify_authorized
+
     def show
       task = Task.find_by(id: params[:task_id])
       item = Item.find_by(id: params[:item_id])

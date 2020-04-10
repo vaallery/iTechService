@@ -1,16 +1,17 @@
 class OptionTypesController < ApplicationController
   before_action :set_option_type, only: %i[edit update destroy]
-  authorize_resource
 
   def index
+    authorize OptionType
     @option_types = OptionType.all
+
     respond_to do |format|
       format.html
     end
   end
 
   def new
-    @option_type = OptionType.new
+    @option_type = authorize OptionType.new
     respond_to do |format|
       format.html { render 'form' }
     end
@@ -23,7 +24,7 @@ class OptionTypesController < ApplicationController
   end
 
   def create
-    @option_type = OptionType.new(option_type_params)
+    @option_type = authorize OptionType.new(option_type_params)
     respond_to do |format|
       if @option_type.save
         format.html { redirect_to option_types_path, notice: t('option_types.created') }
@@ -53,7 +54,7 @@ class OptionTypesController < ApplicationController
   private
 
   def set_option_type
-    @option_type = OptionType.find(params[:id])
+    @option_type = find_record OptionType
   end
 
   def option_type_params

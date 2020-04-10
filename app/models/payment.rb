@@ -1,5 +1,4 @@
 class Payment < ActiveRecord::Base
-
   KINDS = %w[cash card credit certificate trade_in]
 
   scope :cash, ->{where(kind: 'cash')}
@@ -17,7 +16,7 @@ class Payment < ActiveRecord::Base
 
   delegate :balance, :nominal, :number, to: :gift_certificate, prefix: true, allow_nil: true
   delegate :name, to: :bank, prefix: true, allow_nil: true
-  delegate :is_return, to: :sale
+  delegate :is_return, :department, :department_id, to: :sale
 
   attr_accessible :value, :kind, :sale_id, :bank_id, :gift_certificate_id, :device_name, :device_number, :client_info, :appraiser, :device_logout
 

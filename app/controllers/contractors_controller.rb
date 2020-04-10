@@ -1,7 +1,8 @@
 class ContractorsController < ApplicationController
-  load_and_authorize_resource
-
   def index
+    authorize Contractor
+    @contractors = policy_scope(Contractor).all
+
     respond_to do |format|
       format.html
       format.json { render json: @contractors }
@@ -9,6 +10,8 @@ class ContractorsController < ApplicationController
   end
 
   def show
+    @contractor = find_record Contractor
+
     respond_to do |format|
       format.html
       format.json { render json: @contractor }
@@ -16,6 +19,8 @@ class ContractorsController < ApplicationController
   end
 
   def new
+    @contractor = authorize Contractor.new
+
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @contractor }
@@ -23,6 +28,8 @@ class ContractorsController < ApplicationController
   end
 
   def edit
+    @contractor = find_record Contractor
+
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @contractor }
@@ -30,6 +37,8 @@ class ContractorsController < ApplicationController
   end
 
   def create
+    @contractor = authorize Contractor.new(params[:contractor])
+
     respond_to do |format|
       if @contractor.save
         format.html { redirect_to contractors_path, notice: t('contractors.created') }
@@ -42,6 +51,8 @@ class ContractorsController < ApplicationController
   end
 
   def update
+    @contractor = find_record Contractor
+
     respond_to do |format|
       if @contractor.update_attributes(params[:contractor])
         format.html { redirect_to contractors_path, notice: t('contractors.updated') }
@@ -54,6 +65,7 @@ class ContractorsController < ApplicationController
   end
 
   def destroy
+    @contractor = find_record Contractor
     @contractor.destroy
 
     respond_to do |format|

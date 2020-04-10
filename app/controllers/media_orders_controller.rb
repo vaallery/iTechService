@@ -1,8 +1,7 @@
 class MediaOrdersController < ApplicationController
-  authorize_resource
-
   def index
-    @media_orders = MediaOrder.order('created_at desc').page(params[:page])
+    authorize MediaOrder
+    @media_orders = policy_scope(MediaOrder).order('created_at desc').page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,7 +11,7 @@ class MediaOrdersController < ApplicationController
   end
 
   def show
-    @media_order = MediaOrder.find(params[:id])
+    @media_order = find_record MediaOrder
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,7 +20,7 @@ class MediaOrdersController < ApplicationController
   end
 
   def new
-    @media_order = MediaOrder.new
+    @media_order = authorize MediaOrder.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -30,11 +29,12 @@ class MediaOrdersController < ApplicationController
   end
 
   def edit
-    @media_order = MediaOrder.find(params[:id])
+    @media_order = find_record MediaOrder
   end
 
   def create
-    @media_order = MediaOrder.new(params[:media_order])
+    media_order_params = params[:media_order].merge(department_id: current_user.department_id)
+    @media_order = authorize MediaOrder.new(media_order_params)
 
     respond_to do |format|
       if @media_order.save
@@ -48,7 +48,7 @@ class MediaOrdersController < ApplicationController
   end
 
   def update
-    @media_order = MediaOrder.find(params[:id])
+    @media_order = find_record MediaOrder
 
     respond_to do |format|
       if @media_order.update_attributes(params[:media_order])
@@ -62,7 +62,7 @@ class MediaOrdersController < ApplicationController
   end
 
   def destroy
-    @media_order = MediaOrder.find(params[:id])
+    @media_order = find_record MediaOrder
     @media_order.destroy
 
     respond_to do |format|

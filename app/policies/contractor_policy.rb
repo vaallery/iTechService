@@ -1,0 +1,2 @@
+class ContractorPolicy < CommonPolicy
+end

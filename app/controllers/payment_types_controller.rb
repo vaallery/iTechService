@@ -1,7 +1,7 @@
 class PaymentTypesController < ApplicationController
-  load_and_authorize_resource
-
   def index
+    authorize PaymentType
+    @payment_types = PaymentType.all
     respond_to do |format|
       format.html
       format.json { render json: @payment_types }
@@ -9,6 +9,7 @@ class PaymentTypesController < ApplicationController
   end
 
   def new
+    @payment_type = authorize PaymentType.new
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @payment_type }
@@ -16,6 +17,8 @@ class PaymentTypesController < ApplicationController
   end
 
   def edit
+    @payment_type = find_record PaymentType
+
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @payment_type }
@@ -23,6 +26,8 @@ class PaymentTypesController < ApplicationController
   end
 
   def create
+    @payment_type = authorize PaymentType.new(params[:payment_type])
+
     respond_to do |format|
       if @payment_type.save
         format.html { redirect_to payment_types_path, notice: t('payment_types.created') }
@@ -35,6 +40,8 @@ class PaymentTypesController < ApplicationController
   end
 
   def update
+    @payment_type = find_record PaymentType
+
     respond_to do |format|
       if @payment_type.update_attributes(params[:payment_type])
         format.html { redirect_to payment_types_path, notice: t('payment_types.updated') }
@@ -47,6 +54,7 @@ class PaymentTypesController < ApplicationController
   end
 
   def destroy
+    @payment_type = find_record PaymentType
     @payment_type.destroy
 
     respond_to do |format|

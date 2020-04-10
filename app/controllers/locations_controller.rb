@@ -1,8 +1,7 @@
 class LocationsController < ApplicationController
-  load_and_authorize_resource
-
   def index
-    @locations = Location.ordered
+    authorize Location
+    @locations = policy_scope(Location).ordered
 
     respond_to do |format|
       format.html
@@ -11,7 +10,7 @@ class LocationsController < ApplicationController
   end
 
   def new
-    @location = Location.new
+    @location = authorize Location.new
 
     respond_to do |format|
       format.html { render 'form'}
@@ -20,14 +19,14 @@ class LocationsController < ApplicationController
   end
 
   def edit
-    @location = Location.find(params[:id])
+    @location = find_record Location
     respond_to do |format|
       format.html { render 'form'}
     end
   end
 
   def create
-    @location = Location.new(params[:location])
+    @location = authorize Location.new(params[:location])
 
     respond_to do |format|
       if @location.save
@@ -41,7 +40,7 @@ class LocationsController < ApplicationController
   end
 
   def update
-    @location = Location.find(params[:id])
+    @location = find_record Location
 
     respond_to do |format|
       if @location.update_attributes(params[:location])
@@ -55,7 +54,7 @@ class LocationsController < ApplicationController
   end
 
   def destroy
-    @location = Location.find(params[:id])
+    @location = find_record Location
     @location.destroy
 
     respond_to do |format|

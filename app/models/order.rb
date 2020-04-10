@@ -1,5 +1,4 @@
 class Order < ActiveRecord::Base
-
   OBJECT_KINDS = %w[device accessory soft misc spare_part]
   STATUSES = %w[new pending done canceled notified issued archive]
 
@@ -21,7 +20,7 @@ class Order < ActiveRecord::Base
   scope :spare_part, ->{where(object_kind: 'spare_part')}
   scope :done_at, ->(period) { joins(:history_records).where(history_records: {column_name: 'status', new_value: 'done', created_at: period}) }
 
-  belongs_to :department
+  belongs_to :department, required: true
   belongs_to :customer, polymorphic: true
   belongs_to :user
   has_many :history_records, as: :object

@@ -1,0 +1,2 @@
+class ProductImportPolicy < CommonPolicy
+end

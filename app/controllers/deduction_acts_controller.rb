@@ -1,9 +1,9 @@
 class DeductionActsController < ApplicationController
-  authorize_resource
   helper_method :sort_column, :sort_direction
 
   def index
-    @deduction_acts = DeductionAct.search(params)
+    authorize DeductionAct
+    @deduction_acts = policy_scope(DeductionAct).search(params)
 
     if params.has_key?(:sort) && params.has_key?(:direction)
       @deduction_acts = @deduction_acts.order("deduction_acts.#{sort_column} #{sort_direction}")
@@ -21,7 +21,7 @@ class DeductionActsController < ApplicationController
   end
 
   def show
-    @deduction_act = DeductionAct.find(params[:id])
+    @deduction_act = find_record DeductionAct
 
     respond_to do |format|
       format.html # show.html.erb
@@ -30,7 +30,7 @@ class DeductionActsController < ApplicationController
   end
 
   def new
-    @deduction_act = DeductionAct.new
+    @deduction_act = authorize DeductionAct.new
 
     respond_to do |format|
       format.html { render 'form' }
@@ -39,7 +39,7 @@ class DeductionActsController < ApplicationController
   end
 
   def edit
-    @deduction_act = DeductionAct.find(params[:id])
+    @deduction_act = find_record DeductionAct
 
     respond_to do |format|
       format.html { render 'form' }
@@ -48,7 +48,7 @@ class DeductionActsController < ApplicationController
   end
 
   def create
-    @deduction_act = DeductionAct.new(params[:deduction_act])
+    @deduction_act = authorize DeductionAct.new(params[:deduction_act])
 
     respond_to do |format|
       if @deduction_act.save
@@ -62,7 +62,7 @@ class DeductionActsController < ApplicationController
   end
 
   def update
-    @deduction_act = DeductionAct.find(params[:id])
+    @deduction_act = find_record DeductionAct
 
     respond_to do |format|
       if @deduction_act.update_attributes(params[:deduction_act])
@@ -76,7 +76,7 @@ class DeductionActsController < ApplicationController
   end
 
   def destroy
-    @deduction_act = DeductionAct.find(params[:id])
+    @deduction_act = find_record DeductionAct
     @deduction_act.destroy
 
     respond_to do |format|
@@ -86,7 +86,7 @@ class DeductionActsController < ApplicationController
   end
 
   def post
-    @deduction_act = DeductionAct.find params[:id]
+    @deduction_act = find_record DeductionAct
 
     respond_to do |format|
       if @deduction_act.post

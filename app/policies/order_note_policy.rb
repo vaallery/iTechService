@@ -1,0 +1,2 @@
+class OrderNotePolicy < BasePolicy
+end

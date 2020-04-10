@@ -4,6 +4,7 @@ module Service
 
     scope :new_first, -> { order performed_at: :desc }
 
+    belongs_to :department, required: true
     belongs_to :receiver, class_name: 'User'
     belongs_to :performer, class_name: 'User'
     belongs_to :client

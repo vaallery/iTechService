@@ -1,0 +1,2 @@
+class OptionTypePolicy < CommonPolicy
+end

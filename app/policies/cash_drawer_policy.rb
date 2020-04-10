@@ -1,0 +1,2 @@
+class CashDrawerPolicy < BasePolicy
+end

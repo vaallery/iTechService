@@ -4,7 +4,7 @@ module Service
 
     belongs_to :service_job
     belongs_to :performer, class_name: 'User'
-    delegate :repair_parts, :sale, to: :service_job, allow_nil: true
+    delegate :repair_parts, :sale, :department, to: :service_job, allow_nil: true
 
     def self.query(page: nil, date: nil, performer: nil, **)
       repair_returns = RepairReturn.includes(:performer)

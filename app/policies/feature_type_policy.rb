@@ -1,0 +1,2 @@
+class FeatureTypePolicy < CommonPolicy
+end

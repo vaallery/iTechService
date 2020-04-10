@@ -2,7 +2,7 @@ class PhoneSubstitution::Update < BaseOperation
   class Present < BaseOperation
     step Model(PhoneSubstitution, :find_by)
     failure :record_not_found!
-    step Policy::Pundit(PhoneSubstitution::Policy, :update?)
+    step Policy::Pundit(PhoneSubstitutionPolicy, :update?)
     failure :not_authorized!
     step Contract::Build(constant: PhoneSubstitution::Contract::Base)
   end

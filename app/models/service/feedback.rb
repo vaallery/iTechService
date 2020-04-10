@@ -4,6 +4,10 @@ module Service
 
     MAX_DELAY_HOURS = [72, 120, 168]
 
+    scope :in_department, ->(department_id) do
+      includes(:service_job).where(service_jobs: {department_id: department_id})
+    end
+
     scope :inactive, -> { where scheduled_on: nil }
     scope :actual, -> { where('scheduled_on <= ?', Time.current) }
     scope :old_first, -> { order 'created_at ASC' }
@@ -11,7 +15,8 @@ module Service
     belongs_to :service_job
     validates_presence_of :service_job_id
 
-    delegate :ticket_number, :client_surname, :device_short_name, to: :service_job, allow_nil: true
+    delegate :ticket_number, :client_surname, :device_short_name, :department, :department_id,
+             to: :service_job, allow_nil: true
 
     def self.max_delay_hours_for_job(job)
       feedbacks_count = where(service_job_id: job.id).count

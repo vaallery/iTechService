@@ -1,7 +1,9 @@
 module Service
   class FeedbacksController < ApplicationController
+    skip_after_action :verify_authorized
+
     def edit
-      @model = Feedback.find(params[:id])
+      @model = find_record(Feedback)
       respond_to do |format|
         format.js
       end

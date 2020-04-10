@@ -1,5 +1,5 @@
 class TradeInDevice::Print < BaseOperation
-  step Policy.Pundit(TradeInDevice::Policy, :print?)
+  step Policy.Pundit(TradeInDevicePolicy, :print?)
   failure :not_authorized!
   step Model(TradeInDevice, :find_by)
   failure :record_not_found!

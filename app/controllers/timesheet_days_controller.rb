@@ -1,8 +1,7 @@
 class TimesheetDaysController < ApplicationController
-  authorize_resource
-
   def index
-    @users = User.active.schedulable.id_asc
+    authorize TimesheetDay
+    @users = policy_scope(User).active.schedulable.id_asc
     @timesheet_date = (params[:date].present? ? params[:date].to_date : Date.current).beginning_of_month
     respond_to do |format|
       format.html
@@ -11,7 +10,7 @@ class TimesheetDaysController < ApplicationController
   end
 
   def new
-    @timesheet_day = TimesheetDay.new params[:timesheet_day]
+    @timesheet_day = authorize TimesheetDay.new(params[:timesheet_day])
     respond_to do |format|
       format.js { render 'show_form' }
       format.json { render json: @timesheet_day }
@@ -19,14 +18,14 @@ class TimesheetDaysController < ApplicationController
   end
 
   def edit
-    @timesheet_day = TimesheetDay.find(params[:id])
+    @timesheet_day = find_record TimesheetDay
     respond_to do |format|
       format.js { render 'show_form' }
     end
   end
 
   def create
-    @timesheet_day = TimesheetDay.new params[:timesheet_day]
+    @timesheet_day = authorize TimesheetDay.new(params[:timesheet_day])
     @data = {user: @timesheet_day.user, date: @timesheet_day.date}
     respond_to do |format|
       if @timesheet_day.save
@@ -40,7 +39,7 @@ class TimesheetDaysController < ApplicationController
   end
 
   def update
-    @timesheet_day = TimesheetDay.find(params[:id])
+    @timesheet_day = find_record TimesheetDay
     @data = {user: @timesheet_day.user, date: @timesheet_day.date}
     respond_to do |format|
       if @timesheet_day.update_attributes(params[:timesheet_day])
@@ -54,7 +53,7 @@ class TimesheetDaysController < ApplicationController
   end
 
   def destroy
-    @timesheet_day = TimesheetDay.find(params[:id])
+    @timesheet_day = find_record TimesheetDay
     @data = { user: @timesheet_day.user, date: @timesheet_day.date }
     @timesheet_day.destroy
     respond_to do |format|
@@ -62,5 +61,4 @@ class TimesheetDaysController < ApplicationController
       format.json { head :no_content }
     end
   end
-
 end

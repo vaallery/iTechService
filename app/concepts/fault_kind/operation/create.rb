@@ -1,6 +1,6 @@
 class FaultKind::Create < BaseOperation
   class Present < BaseOperation
-    step Policy::Pundit(FaultKind::Policy, :create?)
+    step Policy::Pundit(FaultKindPolicy, :create?)
     failure :not_authorized!
     step Model(FaultKind, :new)
     step Contract::Build(constant: FaultKind::Contract::Base)

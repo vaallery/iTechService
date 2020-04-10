@@ -1,0 +1,2 @@
+class DeductionActPolicy < DocumentPolicy
+end

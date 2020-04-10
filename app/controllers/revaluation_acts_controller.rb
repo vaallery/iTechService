@@ -1,8 +1,7 @@
 class RevaluationActsController < ApplicationController
-  authorize_resource
-
   def index
-    @revaluation_acts = RevaluationAct.search(params).page(params[:page])
+    authorize RevaluationAct
+    @revaluation_acts = policy_scope(RevaluationAct).search(params).page(params[:page])
 
     respond_to do |format|
       format.html
@@ -12,7 +11,7 @@ class RevaluationActsController < ApplicationController
   end
 
   def show
-    @revaluation_act = RevaluationAct.find params[:id]
+    @revaluation_act = find_record RevaluationAct
     respond_to do |format|
       format.html
       format.json { render json: @revaluation_act }
@@ -20,7 +19,7 @@ class RevaluationActsController < ApplicationController
   end
 
   def new
-    @revaluation_act = RevaluationAct.new params[:revaluation_act]
+    @revaluation_act = authorize RevaluationAct.new(params[:revaluation_act])
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @revaluation_act }
@@ -28,7 +27,7 @@ class RevaluationActsController < ApplicationController
   end
 
   def edit
-    @revaluation_act = RevaluationAct.find params[:id]
+    @revaluation_act = find_record RevaluationAct
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @revaluation_act }
@@ -36,7 +35,7 @@ class RevaluationActsController < ApplicationController
   end
 
   def create
-    @revaluation_act = RevaluationAct.new params[:revaluation_act]
+    @revaluation_act = authorize RevaluationAct.new(params[:revaluation_act])
     respond_to do |format|
       if @revaluation_act.save
         format.html { redirect_to @revaluation_act, notice: t('revaluation_acts.created') }
@@ -49,7 +48,7 @@ class RevaluationActsController < ApplicationController
   end
 
   def update
-    @revaluation_act = RevaluationAct.find params[:id]
+    @revaluation_act = find_record RevaluationAct
     respond_to do |format|
       if @revaluation_act.update_attributes(params[:revaluation_act])
         format.html { redirect_to @revaluation_act, notice: t('revaluation_acts.updated') }
@@ -62,7 +61,7 @@ class RevaluationActsController < ApplicationController
   end
 
   def destroy
-    @revaluation_act = RevaluationAct.find params[:id]
+    @revaluation_act = find_record RevaluationAct
     @revaluation_act.destroy
     respond_to do |format|
       format.html { redirect_to revaluation_acts_url }
@@ -71,7 +70,7 @@ class RevaluationActsController < ApplicationController
   end
 
   def post
-    @revaluation_act = RevaluationAct.find params[:id]
+    @revaluation_act = find_record RevaluationAct
     respond_to do |format|
       if @revaluation_act.post
         format.html { redirect_to @revaluation_act, notice: t('documents.posted') }
@@ -83,7 +82,7 @@ class RevaluationActsController < ApplicationController
   end
 
   def unpost
-    @revaluation_act = RevaluationAct.find params[:id]
+    @revaluation_act = find_record RevaluationAct
     respond_to do |format|
       if @revaluation_act.unpost
         format.html { redirect_to @revaluation_act, notice: t('documents.unposted') }
@@ -93,5 +92,4 @@ class RevaluationActsController < ApplicationController
       end
     end
   end
-
 end

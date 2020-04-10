@@ -1,16 +1,6 @@
 class InstallmentPlansController < ApplicationController
-
-  def index
-    @installment_plans = InstallmentPlan.order('issued_at desc')
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @installment_plans }
-    end
-  end
-
   def show
-    @installment_plan = InstallmentPlan.find(params[:id])
+    @installment_plan = find_record InstallmentPlan
 
     respond_to do |format|
       format.html
@@ -19,7 +9,7 @@ class InstallmentPlansController < ApplicationController
   end
 
   def new
-    @installment_plan = InstallmentPlan.new
+    @installment_plan = authorize InstallmentPlan.new
 
     respond_to do |format|
       format.html
@@ -28,11 +18,11 @@ class InstallmentPlansController < ApplicationController
   end
 
   def edit
-    @installment_plan = InstallmentPlan.find(params[:id])
+    @installment_plan = find_record InstallmentPlan
   end
 
   def create
-    @installment_plan = InstallmentPlan.new(params[:installment_plan])
+    @installment_plan = authorize InstallmentPlan.new(params[:installment_plan])
 
     respond_to do |format|
       if @installment_plan.save
@@ -46,7 +36,7 @@ class InstallmentPlansController < ApplicationController
   end
 
   def update
-    @installment_plan = InstallmentPlan.find(params[:id])
+    @installment_plan = find_record InstallmentPlan
 
     respond_to do |format|
       if @installment_plan.update_attributes(params[:installment_plan])
@@ -60,7 +50,7 @@ class InstallmentPlansController < ApplicationController
   end
 
   def destroy
-    @installment_plan = InstallmentPlan.find(params[:id])
+    @installment_plan = find_record InstallmentPlan
     @installment_plan.destroy
 
     respond_to do |format|

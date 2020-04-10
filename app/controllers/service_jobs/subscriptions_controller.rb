@@ -3,7 +3,7 @@ module ServiceJobs
 
     def create
       @service_job = find_service_job
-      @service_job.subscribers.push current_user
+      @service_job.subscribers.push(current_user)
       respond_to do |format|
         format.js { render :refresh }
       end
@@ -11,7 +11,7 @@ module ServiceJobs
 
     def destroy
       @service_job = find_service_job
-      @service_job.subscribers.delete current_user
+      @service_job.subscribers.delete(current_user)
       respond_to do |format|
         format.js { render :refresh }
       end
@@ -20,7 +20,7 @@ module ServiceJobs
     private
 
     def find_service_job
-      ServiceJob.find params[:service_job_id]
+      policy_scope(ServiceJob).find(params[:service_job_id])
     end
   end
 end

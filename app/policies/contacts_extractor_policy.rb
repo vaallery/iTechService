@@ -1,0 +1,2 @@
+class ContactsExtractorPolicy < ApplicationPolicy
+end

@@ -1,0 +1,2 @@
+class KarmaGroupPolicy < CommonPolicy
+end

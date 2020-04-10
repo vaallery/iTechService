@@ -1,10 +1,14 @@
 class CashOperation < ActiveRecord::Base
+  scope :created_desc, -> { order('created_at desc') }
 
-  scope :created_desc, ->{order('created_at desc')}
+  scope :in_department, ->(department_id) do
+    includes(cash_shift: :cash_drawer).where(cash_drawers: {department_id: department_id})
+  end
 
   belongs_to :cash_shift, inverse_of: :cash_operations
   belongs_to :user
   delegate :short_name, to: :user, prefix: true, allow_nil: true
+  delegate :department, :department_id, to: :cash_shift
 
   attr_accessible :is_out, :value, :comment
   validates_presence_of :value, :user, :cash_shift
@@ -23,5 +27,4 @@ class CashOperation < ActiveRecord::Base
     self.user_id ||= User.current.try(:id)
     self.cash_shift_id ||= User.current.try(:current_cash_shift).try(:id)
   end
-
 end

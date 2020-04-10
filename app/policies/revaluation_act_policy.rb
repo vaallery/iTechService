@@ -1,0 +1,2 @@
+class RevaluationActPolicy < DocumentPolicy
+end

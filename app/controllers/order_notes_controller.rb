@@ -1,7 +1,8 @@
 class OrderNotesController < ApplicationController
   def create
-    order = Order.find params[:order_id]
-    order_note = order.notes.build params[:order_note]
+    authorize OrderNote
+    order = policy_scope(Order).find(params[:order_id])
+    order_note = order.notes.build(params[:order_note])
     order_note.author = current_user
 
     respond_to do |format|

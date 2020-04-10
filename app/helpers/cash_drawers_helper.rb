@@ -1,2 +1,0 @@
-module CashDrawersHelper
-end

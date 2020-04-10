@@ -1,8 +1,6 @@
 class QuickTasksController < ApplicationController
-  authorize_resource
-
   def index
-    @quick_tasks = QuickTask.name_asc
+    @quick_tasks = policy_scope(QuickTask).name_asc
 
     respond_to do |format|
       format.html # index.html.erb
@@ -11,7 +9,7 @@ class QuickTasksController < ApplicationController
   end
 
   def new
-    @quick_task = QuickTask.new
+    @quick_task = authorize QuickTask.new
 
     respond_to do |format|
       format.html { render 'form' }
@@ -20,7 +18,7 @@ class QuickTasksController < ApplicationController
   end
 
   def edit
-    @quick_task = QuickTask.find(params[:id])
+    @quick_task = find_record QuickTask
 
     respond_to do |format|
       format.html { render 'form' }
@@ -29,7 +27,7 @@ class QuickTasksController < ApplicationController
   end
 
   def create
-    @quick_task = QuickTask.new(params[:quick_task])
+    @quick_task = authorize QuickTask.new(params[:quick_task])
 
     respond_to do |format|
       if @quick_task.save
@@ -43,7 +41,7 @@ class QuickTasksController < ApplicationController
   end
 
   def update
-    @quick_task = QuickTask.find(params[:id])
+    @quick_task = find_record QuickTask
 
     respond_to do |format|
       if @quick_task.update_attributes(params[:quick_task])
@@ -57,7 +55,7 @@ class QuickTasksController < ApplicationController
   end
 
   def destroy
-    @quick_task = QuickTask.find(params[:id])
+    @quick_task = find_record QuickTask
     @quick_task.destroy
 
     respond_to do |format|

@@ -1,0 +1,2 @@
+class TaskTemplatePolicy < CommonPolicy
+end

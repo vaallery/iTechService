@@ -18,7 +18,7 @@
 
   %span.pull-right.bar-buttons
     = header_link_to_scan_barcode
-    = header_links_to_stale_jobs if superadmin? or able_to?(:see_stale_service_jobs)
+    = header_links_to_stale_jobs if policy(ServiceJob).stale?
     = header_link_to_feedbacks
     = header_link_to_salaries if can? :manage, Salary
     = header_fault_button if can? :create, Fault

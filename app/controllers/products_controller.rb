@@ -1,7 +1,8 @@
 class ProductsController < ApplicationController
-  authorize_resource
+  skip_after_action :verify_authorized, only: %i[show find related select select_group]
 
   def index
+    authorize Product
     @product_groups = ProductGroup.roots
     if params[:group].blank?
       @opened_product_groups = []
@@ -30,7 +31,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    @product = Product.find params[:id]
+    @product = find_record Product
     @items = @product.items.available
     respond_to do |format|
       format.html
@@ -39,7 +40,7 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new params[:product]
+    @product = authorize Product.new(params[:product])
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @product }
@@ -47,14 +48,14 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    @product = Product.find params[:id]
+    @product = find_record Product
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def create
-    @product = Product.new params[:product]
+    @product = authorize Product.new(params[:product])
     respond_to do |format|
       if @product.save
         format.html { redirect_to @product, notice: t('products.created') }
@@ -67,7 +68,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    @product = Product.find params[:id]
+    @product = find_record Product
     respond_to do |format|
       if @product.update_attributes(params[:product])
         format.html { redirect_to @product, notice: t('products.updated') }
@@ -80,7 +81,7 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find params[:id]
+    @product = find_record Product
     @product.destroy
     respond_to do |format|
       format.html { redirect_to products_url }
@@ -149,7 +150,7 @@ class ProductsController < ApplicationController
   end
 
   def show_prices
-    @product = Product.find params[:id]
+    @product = find_record Product
     @product_prices = @product.prices.page(params[:page])
     respond_to do |format|
       format.js
@@ -157,7 +158,7 @@ class ProductsController < ApplicationController
   end
 
   def show_remains
-    @product = Product.find params[:id]
+    @product = find_record Product
     @stores = Store.all
     #@store_items = @product.store_items.order('store_id asc')
     respond_to do |format|
@@ -166,7 +167,7 @@ class ProductsController < ApplicationController
   end
 
   def remains_in_store
-    product = Product.find params[:id]
+    product = find_record Product
     store = Store.find params[:store_id]
     quantity = product.quantity_in_store store
     respond_to do |format|
@@ -175,7 +176,7 @@ class ProductsController < ApplicationController
   end
 
   def related
-    @product = Product.find params[:id]
+    @product = find_record Product
     @related_products = @product.related_products.limit(5)
     @related_product_groups = @product.related_product_groups.limit(5)
     respond_to do |format|

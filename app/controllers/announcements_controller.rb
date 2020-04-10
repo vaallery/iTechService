@@ -1,21 +1,22 @@
 class AnnouncementsController < ApplicationController
-  authorize_resource
-
   def index
+    authorize Announcement
+
     if params[:actual].present?
-      #@announcements = Announcement.actual_for current_user
-      if (@announcements = current_user.addressed_announcements.active).present?
+      @announcements = policy_scope(current_user.addressed_announcements.active)
+
+      if @announcements.any?
         render @announcements, layout: false
       else
         render nothing: true
       end
     else
-      @announcements = Announcement.newest.page params[:page]
+      @announcements = policy_scope(Announcement).newest.page(params[:page])
     end
   end
 
   def show
-    @announcement = Announcement.find params[:id]
+    @announcement = find_record(Announcement)
 
     respond_to do |format|
       format.js
@@ -23,7 +24,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def new
-    @announcement = Announcement.new
+    @announcement = authorize(Announcement.new)
 
     respond_to do |format|
       format.html
@@ -32,11 +33,11 @@ class AnnouncementsController < ApplicationController
   end
 
   def edit
-    @announcement = Announcement.find(params[:id])
+    @announcement = find_record(Announcement)
   end
 
   def create
-    @announcement = Announcement.new(params[:announcement])
+    @announcement = authorize(Announcement.new(params[:announcement]))
 
     respond_to do |format|
       if @announcement.save
@@ -50,7 +51,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def update
-    @announcement = Announcement.find(params[:id])
+    @announcement = find_record(Announcement)
 
     respond_to do |format|
       if @announcement.update_attributes(params[:announcement])
@@ -66,7 +67,7 @@ class AnnouncementsController < ApplicationController
   end
 
   def destroy
-    @announcement = Announcement.find(params[:id])
+    @announcement = find_record(Announcement)
     @announcement.destroy
 
     respond_to do |format|
@@ -76,6 +77,8 @@ class AnnouncementsController < ApplicationController
   end
 
   def make_announce
+    authorize Announcement
+
     if params[:kind] == 'for_coffee'
       @announcement = current_user.announcements.create kind: params[:kind], content: params[:content], active: true
     else
@@ -84,6 +87,8 @@ class AnnouncementsController < ApplicationController
   end
 
   def cancel_announce
+    authorize Announcement
+
     if (@announcements = current_user.announcements.active.where(kind: params[:kind])).any?
       @announcements.find_each do |announcement|
         announcement.update_attributes active: false
@@ -92,16 +97,16 @@ class AnnouncementsController < ApplicationController
   end
 
   def close
-    @announcement = Announcement.find params[:id]
+    @announcement = find_record(Announcement)
     @announcement.exclude_recipient current_user
   end
 
   def close_all
-    user = current_user
-    user_announcements = user.addressed_announcements
+    authorize Announcement
+    user_announcements = current_user.addressed_announcements
     @announcement_ids = user_announcements.map &:id
     user_announcements.find_each do |announcement|
-      announcement.exclude_recipient(user)
+      announcement.exclude_recipient(current_user)
     end
   end
 

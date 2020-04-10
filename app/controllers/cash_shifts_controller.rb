@@ -1,8 +1,6 @@
 class CashShiftsController < ApplicationController
-  authorize_resource
-
   def show
-    @cash_shift = CashShift.find params[:id]
+    @cash_shift = find_record CashShift
     respond_to do |format|
       format.pdf do
         pdf = CashShiftPdf.new @cash_shift, view_context
@@ -13,12 +11,11 @@ class CashShiftsController < ApplicationController
   end
 
   def close
-    @cash_shift = CashShift.find params[:id]
+    @cash_shift = find_record CashShift
     if @cash_shift.close
       redirect_to cash_shift_path(@cash_shift, format: :pdf)
     else
       redirect_to cash_drawer_path(@cash_shift.cash_drawer)
     end
   end
-
 end

@@ -1,8 +1,7 @@
 class CaseColorsController < ApplicationController
-  authorize_resource
-
   def index
-    @case_colors = CaseColor.ordered_by_name
+    authorize CaseColor
+    @case_colors = policy_scope(CaseColor).ordered_by_name
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @case_colors }
@@ -10,7 +9,7 @@ class CaseColorsController < ApplicationController
   end
 
   def new
-    @case_color = CaseColor.new
+    @case_color = authorize CaseColor.new
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @case_color }
@@ -18,7 +17,7 @@ class CaseColorsController < ApplicationController
   end
 
   def edit
-    @case_color = CaseColor.find(params[:id])
+    @case_color = find_record CaseColor
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @case_color }
@@ -26,7 +25,7 @@ class CaseColorsController < ApplicationController
   end
 
   def create
-    @case_color = CaseColor.new(params[:case_color])
+    @case_color = authorize CaseColor.new(params[:case_color])
     respond_to do |format|
       if @case_color.save
         format.html { redirect_to case_colors_path, notice: t('case_colors.created') }
@@ -39,7 +38,7 @@ class CaseColorsController < ApplicationController
   end
 
   def update
-    @case_color = CaseColor.find(params[:id])
+    @case_color = find_record CaseColor
     respond_to do |format|
       if @case_color.update_attributes(params[:case_color])
         format.html { redirect_to case_colors_path, notice: t('case_colors.updated') }
@@ -51,7 +50,7 @@ class CaseColorsController < ApplicationController
   end
 
   def destroy
-    @case_color = CaseColor.find(params[:id])
+    @case_color = find_record CaseColor
     @case_color.destroy
     respond_to do |format|
       format.html { redirect_to case_colors_url }

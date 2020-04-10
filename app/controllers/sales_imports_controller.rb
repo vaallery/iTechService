@@ -1,10 +1,12 @@
 class SalesImportsController < ApplicationController
-
   def new
+    authorize SalesImport
     @sales_import = SalesImport.new
   end
 
   def create
+    authorize SalesImport
+
     if params[:sales_import].present?
       file = FileLoader.rename_uploaded_file(params[:sales_import][:file])
       SalesImportJob.perform_later file

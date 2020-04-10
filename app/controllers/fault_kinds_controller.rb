@@ -1,4 +1,5 @@
 class FaultKindsController < ApplicationController
+  skip_after_action :verify_authorized
   respond_to :html
 
   def index
@@ -42,10 +43,4 @@ class FaultKindsController < ApplicationController
     end
     redirect_to_index alert: operation_message
   end
-
-  private
-
-  # def redirect_to_index(response_status={})
-  #   redirect_to fault_kinds_path, response_status
-  # end
 end

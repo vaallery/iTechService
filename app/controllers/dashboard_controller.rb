@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
-
-  skip_before_filter :authenticate_user!, :set_current_user, only: [:sign_in_by_card, :check_session_status]
+  skip_before_action :authenticate_user!, :set_current_user, only: [:sign_in_by_card, :check_session_status]
+  skip_after_action :verify_authorized
 
   def index
     if current_user.marketing?
@@ -31,7 +31,8 @@ class DashboardController < ApplicationController
   end
 
   def actual_supply_requests
-    @supply_requests = SupplyRequest.actual.page params[:page]
+    authorize SupplyRequest, :read?
+    @supply_requests = policy_scope(SupplyRequest).actual.page params[:page]
     @table_name = 'requests_table'
     respond_to do |format|
       format.js
@@ -48,7 +49,7 @@ class DashboardController < ApplicationController
 
   def sign_in_by_card
     respond_to do |format|
-      if (user = User.find_by_card_number params[:card_number]).present?
+      if (user = User.find_by_card_number(params[:card_number])).present?
         if params[:current_user].to_i == user.id
           sign_in :user, user, bypass: true
         else
@@ -72,39 +73,36 @@ class DashboardController < ApplicationController
     render json: {timeout: !user_signed_in?}
   end
 
-  def print_tags
-
-  end
+  def print_tags; end
 
   private
 
   def load_actual_jobs
     if current_user.any_admin?
       if params[:location].present?
-        location = Location.find params[:location]
-        @service_jobs = ServiceJob.located_at(location)
+        location = Location.find(params[:location])
+        @service_jobs = policy_scope(ServiceJob).located_at(location)
         @location_name = location.name
       else
-        @service_jobs = ServiceJob.pending
+        @service_jobs = policy_scope(ServiceJob).pending
       end
     elsif current_user.location.present?
-      @service_jobs = ServiceJob.located_at(current_user.location)
+      @service_jobs = policy_scope(ServiceJob).located_at(current_user.location)
     else
-      @service_jobs = ServiceJob.where location_id: nil
+      @service_jobs = policy_scope(ServiceJob).where(location_id: nil)
     end
-    if current_user.able_to? :print_receipt
-      @service_jobs = @service_jobs.search(params).newest.page params[:page]
+    if current_user.able_to?(:print_receipt)
+      @service_jobs = @service_jobs.search(params).newest.page(params[:page])
     else
-      @service_jobs = @service_jobs.search(params).oldest.page params[:page]
+      @service_jobs = @service_jobs.search(params).oldest.page(params[:page])
     end
   end
 
   def load_actual_orders
     if current_user.technician?
-      @orders = Order.actual_orders.technician_orders.search(params).oldest.page params[:page]
+      @orders = policy_scope(Order).actual_orders.technician_orders.search(params).oldest.page(params[:page])
     else
-      @orders = Order.actual_orders.marketing_orders.search(params).oldest.page params[:page]
+      @orders = policy_scope(Order).actual_orders.marketing_orders.search(params).oldest.page(params[:page])
     end
   end
-
 end

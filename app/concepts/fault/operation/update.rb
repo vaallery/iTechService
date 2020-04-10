@@ -2,7 +2,7 @@ class Fault::Update < BaseOperation
   class Present < BaseOperation
     step Model(Fault, :find_by)
     failure :record_not_found!
-    step Policy::Pundit(Fault::Policy, :update?)
+    step Policy::Pundit(FaultPolicy, :update?)
     failure :not_authorized!
     step Contract::Build(constant: Fault::Contract::Base)
   end

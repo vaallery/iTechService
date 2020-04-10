@@ -2,16 +2,20 @@ class ApplicationController < ActionController::Base
   include Pundit
   include ApplicationHelper
   protect_from_forgery
-  # before_action :auto_sign_in
-  before_filter :authenticate_user!
-  before_filter :set_current_user
-  before_filter :store_location, except: [:create, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :set_current_user
+  before_action :store_location, except: [:create, :update, :destroy]
+  after_action :verify_authorized
   # layout 'staff'
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized
-  rescue_from CanCan::AccessDenied, with: :access_denied
   respond_to :html
+  helper_method :can?
 
   protected
+
+  def can?(action, object)
+    policy(object).public_send("#{action}?")
+  end
 
   def run(operation, params=self.params, *dependencies)
     result = operation.(
@@ -53,13 +57,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def auto_sign_in
-    if Rails.env.development?
-      user = User.find_by(username: 'vova')
-      sign_in user if user.present?
-    end
-  end
-
   def set_current_user
     User.current = current_user
   end
@@ -68,21 +65,18 @@ class ApplicationController < ActionController::Base
     params.merge current_user: current_user
   end
 
+  def find_record(klass)
+    authorize policy_scope(klass).find(params[:id])
+  end
+
   def not_authorized
-    # policy_name = exception.policy.class.to_s.underscore
-    # message = t "#{policy_name}.#{exception.query}", scope: 'pundit', default: :default
-    message = 'Access denied'
+    message = 'Доступ запрещён!'
     if request.xhr?
       render js: "App.Notification.show('#{message}', 'alert');"
     else
       flash[:alert] = message
       redirect_to request.referrer || root_path
     end
-  end
-
-  def access_denied
-    flash[:error] = 'Access denied'
-    redirect_to request.referrer || root_url
   end
 
   def _run_options(options)

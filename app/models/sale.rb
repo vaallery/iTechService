@@ -1,27 +1,32 @@
 class Sale < ActiveRecord::Base
   include Document
 
+  scope :in_department, ->(department_id) do
+    includes(cash_shift: :cash_drawer).where(cash_drawers: {department_id: department_id})
+  end
+
   scope :sold_at, ->(period) { where(date: period) }
   scope :date_asc, -> { order date: :asc }
-  scope :posted, ->{where(status: 1)}
-  scope :deleted, ->{where(status: 2)}
-  scope :unposted, ->{where('status <> ?', 1)}
-  scope :returning, ->{where(is_return: true)}
-  scope :selling, ->{where(is_return: false)}
+  scope :posted, -> { where(status: 1) }
+  scope :deleted, -> { where(status: 2) }
+  scope :unposted, -> { where('status <> ?', 1) }
+  scope :returning, -> { where(is_return: true) }
+  scope :selling, -> { where(is_return: false) }
 
   belongs_to :user, inverse_of: :sales
   belongs_to :client, inverse_of: :sales
-  belongs_to :store
-  belongs_to :cash_shift, inverse_of: :sales
+  belongs_to :store, required: true
+  belongs_to :cash_shift, required: true, inverse_of: :sales
   has_many :sale_items, inverse_of: :sale, dependent: :destroy
   has_many :items, through: :sale_items
   has_many :payments, inverse_of: :sale, dependent: :destroy
   has_one :service_job, inverse_of: :sale
-  accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda{|a| a[:id].blank? and a[:item_id].blank?}
-  accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: lambda{|a| a[:value].blank?}
+
+  accepts_nested_attributes_for :sale_items, allow_destroy: true, reject_if: lambda { |a| a[:id].blank? and a[:item_id].blank? }
+  accepts_nested_attributes_for :payments, allow_destroy: true, reject_if: lambda { |a| a[:value].blank? }
 
   delegate :name, :short_name, :full_name, :fio_short, to: :user, prefix: true, allow_nil: true
-  delegate :department, to: :cash_shift
+  delegate :department, :department_id, to: :cash_shift
   delegate :name, :short_name, :full_name, :category, :category_s, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :payment_type, prefix: true, allow_nil: true
   delegate :name, to: :store, prefix: true
@@ -78,7 +83,7 @@ class Sale < ActiveRecord::Base
   def total_discount=(new_value)
     if (new_value = new_value.to_f) > 0
       item_discount = new_value.fdiv(sale_items.count)
-      sale_items.each{|si| si.discount = item_discount}
+      sale_items.each { |si| si.discount = item_discount }
     end
   end
 
@@ -152,9 +157,9 @@ class Sale < ActiveRecord::Base
     calculation_amount + total_discount
   end
 
-  def calculation_amount(signed=false)
+  def calculation_amount(signed = false)
     res = sale_items.to_a.sum &:sum
-    (signed and is_return) ? -1*res : res
+    (signed and is_return) ? -1 * res : res
   end
 
   def payments_sum

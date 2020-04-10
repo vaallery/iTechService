@@ -1,0 +1,2 @@
+class TopSalablePolicy < CommonPolicy
+end

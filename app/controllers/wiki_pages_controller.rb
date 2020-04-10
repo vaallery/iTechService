@@ -5,15 +5,14 @@ class WikiPagesController < ApplicationController
   private
 
   def show_allowed?
-    can? :read, WikiPage
+    policy(WikiPage).read?
   end
 
   def history_allowed?
-    can? :manage, WikiPage
+    policy(WikiPage).manage?
   end
 
   def edit_allowed?
-    can? :manage, WikiPage
+    policy(WikiPage).manage?
   end
-
 end

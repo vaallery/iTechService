@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.4.6'
+ruby '2.4.10'
 
 gem 'rails', '4.2.11.1'
 gem 'protected_attributes', '~> 1.1.4'
@@ -29,8 +29,7 @@ gem 'cells-rails', '~> 0.0.7'
 gem 'cells-slim', '~> 0.0.5'
 gem 'reform-rails', '~> 0.1'
 
-gem 'pundit', '~> 1.1.0'
-gem 'cancancan', '~> 1.10'
+gem 'pundit', '~> 2.1.0'
 gem 'kaminari', '~> 1.0.0'
 gem 'kaminari-cells', '~> 1.0.0'
 gem 'ancestry', '~> 2.1.0'

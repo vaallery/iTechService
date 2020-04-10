@@ -3,7 +3,7 @@ module Service
     class Present < BaseOperation
       step Model(FreeTask, :find_by)
       failure :record_not_found!
-      step Policy.Pundit(FreeTask::Policy, :update?)
+      step Policy.Pundit(FreeTaskPolicy, :update?)
       failure :not_authorized!
       step Contract.Build(constant: FreeTask::Contract::Base)
     end

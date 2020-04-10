@@ -1,4 +1,5 @@
 class MediaOrder < ActiveRecord::Base
+  belongs_to :department, required: true
   attr_accessible :content, :name, :phone, :time
 
   def header

@@ -1,12 +1,12 @@
 # encoding: utf-8
 class Location < ActiveRecord::Base
-  #default_scope order('position asc')
-  scope :ordered, ->{order('position asc')}
-  scope :for_schedule, ->{where(schedule: true)}
+  scope :ordered, -> { order('position asc') }
+  scope :for_schedule, -> { where(schedule: true) }
   scope :visible, -> { where hidden: [false, nil] }
   scope :done, -> { where code: 'done' }
   scope :code_start_with, ->(code) { where('code LIKE ?', "#{code}%") }
-  belongs_to :department, inverse_of: :locations
+
+  belongs_to :department, required: true, inverse_of: :locations
   has_many :users
   has_many :tasks
   delegate :name, to: :department, prefix: true, allow_nil: true
@@ -15,7 +15,7 @@ class Location < ActiveRecord::Base
   validates_presence_of :name
 
   def full_name
-    path.all.map{|l|l.name}.join ' / '
+    path.all.map { |l| l.name }.join(' / ')
   end
 
   def self.bar

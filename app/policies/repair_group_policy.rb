@@ -1,0 +1,2 @@
+class RepairGroupPolicy < CommonPolicy
+end

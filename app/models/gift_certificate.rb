@@ -1,11 +1,10 @@
 class GiftCertificate < ActiveRecord::Base
-
   STATUSES = %w[available issued used]
   NOMINAL_MIN = 1000
   NOMINAL_MAX = 100_000
   NOMINAL_STEP = 500
 
-  belongs_to :department
+  belongs_to :department, required: true
   has_many :payments, dependent: :nullify
   has_many :history_records, as: :object, dependent: :destroy
 

@@ -63,7 +63,6 @@ GEM
     builder (3.2.4)
     byebug (11.1.1)
     callsite (0.0.11)
-    cancancan (1.17.0)
     capistrano (3.12.1)
       airbrussh (>= 1.0.0)
       i18n
@@ -388,7 +387,7 @@ GEM
     protected_attributes (1.1.4)
       activemodel (>= 4.0.1, < 5.0)
     public_suffix (4.0.3)
-    pundit (1.1.0)
+    pundit (2.1.0)
       activesupport (>= 3.0.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
@@ -582,7 +581,7 @@ GEM
       execjs
       rails (>= 3.1)
       railties (>= 3.1)
-    tzinfo (1.2.6)
+    tzinfo (1.2.7)
       thread_safe (~> 0.1)
     uber (0.1.0)
     uglifier (4.2.0)
@@ -624,7 +623,6 @@ DEPENDENCIES
   binding_of_caller (~> 0.7.2)
   bootstrap-colorpicker-rails (~> 0.3.1)
   byebug
-  cancancan (~> 1.10)
   capistrano (~> 3.12.1)
   capistrano-bundler (~> 1.6.0)
   capistrano-db-tasks (~> 0.6)
@@ -679,7 +677,7 @@ DEPENDENCIES
   prawn-table (~> 0.2.1)
   private_pub (~> 1.0.3)
   protected_attributes (~> 1.1.4)
-  pundit (~> 1.1.0)
+  pundit (~> 2.1.0)
   quiet_assets (~> 1.1.0)
   rails (= 4.2.11.1)
   rails-erd (~> 1.5.2)
@@ -716,7 +714,7 @@ DEPENDENCIES
   zeroclipboard-rails
 
 RUBY VERSION
-   ruby 2.4.6p354
+   ruby 2.4.10p364
 
 BUNDLED WITH
-   1.16.4
+   1.17.3

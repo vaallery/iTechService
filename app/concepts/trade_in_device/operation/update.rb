@@ -2,7 +2,7 @@ class TradeInDevice::Update < BaseOperation
   class Present < BaseOperation
     step Model(TradeInDevice, :find_by)
     failure :record_not_found!
-    step Policy.Pundit(TradeInDevice::Policy, :update?)
+    step Policy.Pundit(TradeInDevicePolicy, :update?)
     failure :not_authorized!
     step Contract.Build(constant: TradeInDevice::Contract)
   end

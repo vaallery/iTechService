@@ -1,10 +1,13 @@
 class InfosController < ApplicationController
   helper_method :sort_column, :sort_direction
-  authorize_resource
 
   def index
+    authorize Info
+
     if params[:important].present?
-      if (@info = Info.actual.important.first).present?
+      @info = policy_scope(Info).actual.important.first
+
+      if @info.present?
         render @info, layout: false
       else
         render nothing: true
@@ -16,11 +19,11 @@ class InfosController < ApplicationController
         render nothing: true
       end
     else
-      @infos = params[:archive].present? ? Info.archived.newest : Info.actual.newest
-      if can? :manage, Info
+      @infos = params[:archive].present? ? policy_scope(Info).archived.newest : policy_scope(Info).actual.newest
+      if policy(Info).manage?
         @infos = @infos.newest
         unless sort_column.blank? and sort_direction.blank?
-          @infos = @infos.reorder(sort_column + ' ' + sort_direction)
+          @infos = @infos.reorder("#{sort_column} #{sort_direction}")
         end
       else
         @infos = @infos.newest.available_for(current_user)
@@ -36,7 +39,7 @@ class InfosController < ApplicationController
   end
 
   def show
-    @info = Info.find(params[:id])
+    @info = find_record Info
 
     respond_to do |format|
       format.html
@@ -45,7 +48,7 @@ class InfosController < ApplicationController
   end
 
   def new
-    @info = Info.new
+    @info = authorize Info.new
 
     respond_to do |format|
       format.html
@@ -54,11 +57,11 @@ class InfosController < ApplicationController
   end
 
   def edit
-    @info = Info.find(params[:id])
+    @info = find_record Info
   end
 
   def create
-    @info = Info.new(params[:info])
+    @info = authorize Info.new(params[:info])
 
     respond_to do |format|
       if @info.save
@@ -72,7 +75,7 @@ class InfosController < ApplicationController
   end
 
   def update
-    @info = Info.find(params[:id])
+    @info = find_record Info
 
     respond_to do |format|
       if @info.update_attributes(params[:info])
@@ -86,7 +89,7 @@ class InfosController < ApplicationController
   end
 
   def destroy
-    @info = Info.find(params[:id])
+    @info = find_record Info
     @info.destroy
 
     respond_to do |format|
@@ -104,5 +107,4 @@ class InfosController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
   end
-
 end

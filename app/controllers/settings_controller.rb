@@ -1,8 +1,7 @@
 class SettingsController < ApplicationController
-  load_and_authorize_resource
 
   def index
-    authorize! :manage, Setting
+    authorize Setting
     respond_to do |format|
       format.html
       format.json { render json: @settings }
@@ -10,6 +9,7 @@ class SettingsController < ApplicationController
   end
 
   def new
+    @setting = authorize Setting.new
     respond_to do |format|
       format.html
       format.json { render json: @setting }
@@ -17,9 +17,12 @@ class SettingsController < ApplicationController
   end
 
   def edit
+    @setting = find_record Setting
   end
 
   def create
+    @setting = authorize Setting.new(params[:setting])
+
     respond_to do |format|
       if @setting.save
         format.html { redirect_to settings_path, notice: t('settings.created') }
@@ -32,6 +35,8 @@ class SettingsController < ApplicationController
   end
 
   def update
+    @setting = find_record Setting
+
     respond_to do |format|
       if @setting.update_attributes(params[:setting])
         format.html { redirect_to settings_path, notice: t('settings.updated') }
@@ -44,6 +49,7 @@ class SettingsController < ApplicationController
   end
 
   def destroy
+    @setting = find_record Setting
     @setting.destroy
 
     respond_to do |format|

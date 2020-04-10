@@ -1,0 +1,2 @@
+class PriceTypePolicy < CommonPolicy
+end

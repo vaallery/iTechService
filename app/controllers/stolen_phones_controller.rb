@@ -1,10 +1,10 @@
 class StolenPhonesController < ApplicationController
-  load_and_authorize_resource
   skip_load_resource only: :index
 
   def index
-    @stolen_phones = StolenPhone.search params
-    @stolen_phones = @stolen_phones.page params[:page]
+    authorize StolenPhone
+    @stolen_phones = policy_scope(StolenPhone).search(params)
+    @stolen_phones = @stolen_phones.page(params[:page])
 
     respond_to do |format|
       format.html
@@ -14,6 +14,7 @@ class StolenPhonesController < ApplicationController
   end
 
   def show
+    @stolen_phone = find_record StolenPhone
     @comments = @stolen_phone.comments
     respond_to do |format|
       format.html
@@ -21,7 +22,7 @@ class StolenPhonesController < ApplicationController
   end
 
   def new
-    @stolen_phone = StolenPhone.new
+    @stolen_phone = authorize StolenPhone.new
 
     respond_to do |format|
       format.html
@@ -30,11 +31,11 @@ class StolenPhonesController < ApplicationController
   end
 
   def edit
-    @stolen_phone = StolenPhone.find(params[:id])
+    @stolen_phone = find_record StolenPhone
   end
 
   def create
-    @stolen_phone = StolenPhone.new
+    @stolen_phone = authorize StolenPhone.new
     comment = params[:stolen_phone].delete(:comment)
     @stolen_phone.assign_attributes(params[:stolen_phone])
 
@@ -51,7 +52,7 @@ class StolenPhonesController < ApplicationController
   end
 
   def update
-    @stolen_phone = StolenPhone.find(params[:id])
+    @stolen_phone = find_record StolenPhone
 
     respond_to do |format|
       if @stolen_phone.update_attributes(params[:stolen_phone])
@@ -65,7 +66,7 @@ class StolenPhonesController < ApplicationController
   end
 
   def destroy
-    @stolen_phone = StolenPhone.find(params[:id])
+    @stolen_phone = find_record StolenPhone
     @stolen_phone.destroy
 
     respond_to do |format|

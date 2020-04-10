@@ -1,22 +1,23 @@
 class CommentsController < ApplicationController
   helper_method :sort_column, :sort_direction
-  load_and_authorize_resource
-  skip_load_resource only: [:index]
 
   def index
+    authorize Comment
+
+    # TODO refactor
     if (commentable_type = params[:commentable_type]).present? and
         (commentable_id = params[:commentable_id]).present?
-      if commentable_type.constantize.respond_to? :find
-        @commentable = commentable_type.constantize.find commentable_id
+      if commentable_type.constantize.respond_to?(:find)
+        @commentable = commentable_type.constantize.find(commentable_id)
         @comments = @commentable.comments
       end
     else
-      if params.has_key? :sort and params.has_key? :direction
-        @comments = Comment.order 'comments.'+sort_column + ' ' + sort_direction
+      if params.has_key?(:sort) and params.has_key?(:direction)
+        @comments = Comment.order("comments.+#{sort_column} #{sort_direction}")
       else
-        @comments = Comment.newest.page params[:page]
+        @comments = Comment.newest.page(params[:page])
       end
-      @comments = @comments.page params[:page]
+      @comments = @comments.page(params[:page])
     end
 
     respond_to do |format|
@@ -27,6 +28,8 @@ class CommentsController < ApplicationController
   end
 
   def show
+    @comment = find_record Comment
+
     respond_to do |format|
       format.html
       format.json { render json: @comment }
@@ -34,6 +37,8 @@ class CommentsController < ApplicationController
   end
 
   def new
+    @comment = authorize Comment.new
+
     respond_to do |format|
       format.html
       format.json { render json: @comment }
@@ -41,10 +46,11 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @comment = Comment.find(params[:id])
+    @comment = find_record Comment
   end
 
   def create
+    @comment = authorize Comment.new(params[:comment])
     @comment.user_id = current_user.id
 
     respond_to do |format|
@@ -60,6 +66,8 @@ class CommentsController < ApplicationController
   end
 
   def update
+    @comment = find_record Comment
+
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
         format.html { redirect_to @comment, notice: t('comments.updated') }
@@ -72,6 +80,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = find_record Comment
     @comment.destroy
 
     respond_to do |format|
@@ -89,5 +98,4 @@ class CommentsController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
   end
-
 end

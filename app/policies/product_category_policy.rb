@@ -1,0 +1,2 @@
+class ProductCategoryPolicy < CommonPolicy
+end

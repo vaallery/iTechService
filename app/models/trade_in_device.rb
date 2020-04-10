@@ -39,8 +39,4 @@ class TradeInDevice < ApplicationRecord
       result.ordered
     end
   end
-
-  def self.policy_class
-    TradeInDevice::Policy
-  end
 end

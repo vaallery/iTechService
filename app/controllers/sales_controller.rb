@@ -1,19 +1,19 @@
 class SalesController < ApplicationController
-  authorize_resource
   helper_method :sort_column, :sort_direction
 
   def index
-    @sales = Sale.search(params).reorder(sort_column + ' ' + sort_direction).page params[:page]
+    authorize Sale
+    @sales = policy_scope(Sale).search(params).reorder("#{sort_column} #{sort_direction}").page(params[:page])
 
     respond_to do |format|
       format.html
       format.json { render json: @sales }
-      format.js { render (params[:form_name].present? ? 'shared/show_modal_form' : 'shared/index') }
+      format.js { render(params[:form_name].present? ? 'shared/show_modal_form' : 'shared/index') }
     end
   end
 
   def show
-    @sale = Sale.find params[:id]
+    @sale = find_record Sale
     respond_to do |format|
       format.html
       format.json { render json: @sale }
@@ -30,7 +30,7 @@ class SalesController < ApplicationController
   end
 
   def new
-    @sale = Sale.new params[:sale]
+    @sale = authorize Sale.new(params[:sale])
     load_top_salables
     respond_to do |format|
       format.html { render 'form' }
@@ -38,7 +38,7 @@ class SalesController < ApplicationController
   end
 
   def edit
-    @sale = Sale.find params[:id]
+    @sale = find_record Sale
     load_top_salables
     if can? :edit, @sale
       respond_to do |format|
@@ -51,7 +51,7 @@ class SalesController < ApplicationController
   end
 
   def create
-    @sale = Sale.new params[:sale]
+    @sale = authorize Sale.new(params[:sale])
     respond_to do |format|
       if @sale.save
         format.html { redirect_back_or root_path, notice: t('sales.created') }
@@ -65,7 +65,7 @@ class SalesController < ApplicationController
   end
 
   def update
-    @sale = Sale.find params[:id]
+    @sale = find_record Sale
     respond_to do |format|
       if @sale.update_attributes params[:sale]
         format.html { redirect_back_or root_path, notice: t('sales.updated') }
@@ -82,7 +82,7 @@ class SalesController < ApplicationController
   end
 
   def destroy
-    @sale = Sale.find params[:id]
+    @sale = find_record Sale
     @sale.set_deleted
     respond_to do |format|
       format.html { redirect_to sales_url }
@@ -90,7 +90,7 @@ class SalesController < ApplicationController
   end
 
   def post
-    @sale = Sale.find params[:id]
+    @sale = find_record Sale
     respond_to do |format|
       if @sale.post
 
@@ -119,7 +119,7 @@ class SalesController < ApplicationController
   end
 
   def cancel
-    @sale = Sale.find params[:id]
+    @sale = find_record Sale
     @sale.cancel
     respond_to do |format|
       format.html { redirect_to new_sale_path }
@@ -128,7 +128,7 @@ class SalesController < ApplicationController
 
   def print_check
     if Setting.print_sale_check?
-      @sale = Sale.find params[:id]
+      @sale = find_record Sale
       if can?(:reprint_check, @sale)
         pdf = SaleCheckPdf.new @sale, params[:copy].present?
       else
@@ -146,7 +146,7 @@ class SalesController < ApplicationController
   end
 
   def print_warranty
-    @sale = Sale.find params[:id]
+    @sale = find_record Sale
     pdf = WarrantyPdf.new @sale
     filename = "sale_warranty_#{@sale.id}.pdf"
     respond_to do |format|
@@ -155,7 +155,7 @@ class SalesController < ApplicationController
   end
 
   def return_check
-    source_sale = Sale.find params[:id]
+    source_sale = find_record Sale
     @sale = source_sale.build_return
     @sale.save
     respond_to do |format|
@@ -164,7 +164,7 @@ class SalesController < ApplicationController
   end
 
   def attach_gift_certificate
-    @sale = Sale.find params[:id]
+    @sale = find_record Sale
     @sale.attach_gift_certificate(params[:number])
     render 'save'
   end
@@ -182,5 +182,4 @@ class SalesController < ApplicationController
   def load_top_salables
     @top_salables = TopSalable.roots.ordered
   end
-
 end

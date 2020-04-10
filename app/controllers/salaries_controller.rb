@@ -1,9 +1,7 @@
 class SalariesController < ApplicationController
-  load_and_authorize_resource
-  skip_load_resource only: [:index, :new]
-
   def index
-    @salaries = Salary.search(params).page params[:page]
+    authorize Salary
+    @salaries = policy_scope(Salary).search(params).page(params[:page])
 
     respond_to do |format|
       format.html
@@ -12,6 +10,7 @@ class SalariesController < ApplicationController
   end
 
   def show
+    @salary = find_record Salary
     respond_to do |format|
       format.html
       format.json { render json: @salary }
@@ -19,8 +18,8 @@ class SalariesController < ApplicationController
   end
 
   def new
-    @salary = Salary.new user_id: params[:user_id]
-    @user = User.find params[:user_id] if params[:user_id].present?
+    @salary = authorize Salary.new(user_id: params[:user_id])
+    @user = User.find(params[:user_id]) if params[:user_id].present?
 
     respond_to do |format|
       format.html
@@ -29,9 +28,12 @@ class SalariesController < ApplicationController
   end
 
   def edit
+    @salary = find_record Salary
   end
 
   def create
+    @salary = authorize Salary.new(params[:salary])
+
     respond_to do |format|
       if @salary.save
         format.html { redirect_back_or salaries_path, notice: t('salaries.created') }
@@ -44,6 +46,8 @@ class SalariesController < ApplicationController
   end
 
   def update
+    @salary = find_record Salary
+
     respond_to do |format|
       if @salary.update_attributes(params[:salary])
         format.html { redirect_back_or salaries_path, notice: t('salaries.updated') }
@@ -56,6 +60,7 @@ class SalariesController < ApplicationController
   end
 
   def destroy
+    @salary = find_record Salary
     @salary.destroy
 
     respond_to do |format|

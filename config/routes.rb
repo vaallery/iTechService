@@ -191,10 +191,10 @@ Rails.application.routes.draw do
   resources :discounts, except: :show
   resources :timesheet_days, path: 'timesheet', except: :show
   resources :fault_kinds, except: :show
-  resources :bonuses
+  resources :bonuses, except: :index
   resources :bonus_types, except: :show
-  resources :installments
-  resources :installment_plans
+  resources :installments, except: :index
+  resources :installment_plans, except: :index
   resources :client_categories
   resources :supply_categories
   resources :supply_reports

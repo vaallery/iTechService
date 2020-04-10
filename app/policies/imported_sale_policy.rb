@@ -1,0 +1,2 @@
+class ImportedSalePolicy < CommonPolicy
+end

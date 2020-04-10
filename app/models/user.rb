@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
 
   HELPABLE = %w[software media technician].freeze
 
+  # Keep order!
   ABILITIES = %w[
     manage_wiki
     manage_salary

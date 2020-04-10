@@ -1,0 +1,2 @@
+class PurchasePolicy < DocumentPolicy
+end

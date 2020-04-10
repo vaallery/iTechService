@@ -1,9 +1,9 @@
 class SupplyRequestsController < ApplicationController
   helper_method :sort_column, :sort_direction
-  authorize_resource
 
   def index
-    @supply_requests = SupplyRequest.search(params).created_desc.page(params[:page])
+    authorize SupplyRequest
+    @supply_requests = policy_scope(SupplyRequest).search(params).created_desc.page(params[:page])
 
     respond_to do |format|
       format.html
@@ -12,7 +12,7 @@ class SupplyRequestsController < ApplicationController
   end
 
   def show
-    @supply_request = SupplyRequest.find(params[:id])
+    @supply_request = find_record SupplyRequest
 
     respond_to do |format|
       format.html
@@ -20,7 +20,7 @@ class SupplyRequestsController < ApplicationController
   end
 
   def new
-    @supply_request = SupplyRequest.new
+    @supply_request = authorize SupplyRequest.new
 
     respond_to do |format|
       format.html { render 'form' }
@@ -28,7 +28,7 @@ class SupplyRequestsController < ApplicationController
   end
 
   def edit
-    @supply_request = SupplyRequest.find(params[:id])
+    @supply_request = find_record SupplyRequest
 
     respond_to do |format|
       format.html { render 'form' }
@@ -36,7 +36,7 @@ class SupplyRequestsController < ApplicationController
   end
 
   def create
-    @supply_request = SupplyRequest.new(params[:supply_request])
+    @supply_request = authorize SupplyRequest.new(params[:supply_request])
 
     respond_to do |format|
       if @supply_request.save
@@ -50,7 +50,7 @@ class SupplyRequestsController < ApplicationController
   end
 
   def update
-    @supply_request = SupplyRequest.find(params[:id])
+    @supply_request = find_record SupplyRequest
 
     respond_to do |format|
       if @supply_request.update_attributes(params[:supply_request])
@@ -62,7 +62,7 @@ class SupplyRequestsController < ApplicationController
   end
 
   def destroy
-    @supply_request = SupplyRequest.find(params[:id])
+    @supply_request = find_record SupplyRequest
     @supply_request.destroy
 
     respond_to do |format|
@@ -72,7 +72,7 @@ class SupplyRequestsController < ApplicationController
   end
 
   def make_done
-    @supply_request = SupplyRequest.find(params[:id])
+    @supply_request = find_record SupplyRequest
     respond_to do |format|
       if @supply_request.update_attributes(status: 'done')
         format.html { redirect_to supply_requests_path, notice: t('supply_requests.updated') }
@@ -83,7 +83,7 @@ class SupplyRequestsController < ApplicationController
   end
 
   def make_new
-    @supply_request = SupplyRequest.find(params[:id])
+    @supply_request = find_record SupplyRequest
     respond_to do |format|
       if @supply_request.update_attributes(status: 'new')
         format.html { redirect_to supply_requests_path, notice: t('supply_requests.updated') }
@@ -102,5 +102,4 @@ class SupplyRequestsController < ApplicationController
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
   end
-
 end

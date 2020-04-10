@@ -1,6 +1,6 @@
 class SubstitutePhone::Create < BaseOperation
   class Present < BaseOperation
-    step Policy::Pundit(SubstitutePhone::Policy, :create?)
+    step Policy::Pundit(SubstitutePhonePolicy, :create?)
     failure :not_authorized!
     step Model(SubstitutePhone, :new)
     step Contract::Build(constant: SubstitutePhone::Contract::Base)

@@ -1,9 +1,7 @@
 class PricesController < ApplicationController
-
-  load_and_authorize_resource
-
   def index
-    @prices = Price.all
+    authorize Price
+    @prices = policy_scope(Price).all
 
     respond_to do |format|
       format.html
@@ -12,7 +10,7 @@ class PricesController < ApplicationController
   end
 
   def show
-    @price = Price.find(params[:id])
+    @price = find_record Price
 
     respond_to do |format|
       format.html
@@ -21,7 +19,7 @@ class PricesController < ApplicationController
   end
 
   def new
-    @price = Price.new
+    @price = authorize Price.new
 
     respond_to do |format|
       format.html
@@ -30,11 +28,11 @@ class PricesController < ApplicationController
   end
 
   def edit
-    @price = Price.find(params[:id])
+    @price = find_record Price
   end
 
   def create
-    @price = Price.new(params[:price])
+    @price = authorize Price.new(params[:price])
 
     respond_to do |format|
       if @price.save
@@ -48,7 +46,7 @@ class PricesController < ApplicationController
   end
 
   def update
-    @price = Price.find(params[:id])
+    @price = find_record Price
 
     respond_to do |format|
       if @price.update_attributes(params[:price])
@@ -62,7 +60,7 @@ class PricesController < ApplicationController
   end
 
   def destroy
-    @price = Price.find(params[:id])
+    @price = find_record Price
     @price.destroy
 
     respond_to do |format|

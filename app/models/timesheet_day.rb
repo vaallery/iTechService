@@ -1,18 +1,20 @@
 class TimesheetDay < ActiveRecord::Base
-
   STATUSES = %w[presence presence_late presence_leave presence_sickness sickness free fired business_trip training]
 
+  scope :in_period, ->(date) { period = date.is_a?(Range) ? date : date.beginning_of_month..date.end_of_month; where(date: period) }
+  scope :work, -> { where('timesheet_days.status LIKE ? OR timesheet_days.status = ?', 'presence%', 'business_trip') }
+  scope :sickness, -> { where(status: 'sickness') }
+  scope :lateness, -> { where(status: 'presence_late') }
+
   belongs_to :user, inverse_of: :timesheet_days
+
+  delegate :department, :department_id, to: :user
+
   attr_accessible :time, :date, :status, :work_mins, :work_hours, :user, :user_id
   #attr_accessor :work_hours
 
   validates_presence_of :user_id, :date, :status
   validates_inclusion_of :status, in: STATUSES
-
-  scope :in_period, ->(date) { period = date.is_a?(Range) ? date : date.beginning_of_month..date.end_of_month; where(date: period) }
-  scope :work, ->{where('timesheet_days.status LIKE ? OR timesheet_days.status = ?', 'presence%', 'business_trip')}
-  scope :sickness, ->{where(status: 'sickness')}
-  scope :lateness, ->{where(status: 'presence_late')}
 
   def actual_work_mins
     if work_mins.present?

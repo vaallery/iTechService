@@ -90,6 +90,10 @@ class MovementAct < ActiveRecord::Base
     dst_store.is_defect?
   end
 
+  def is_spare_parts_to_defect?
+    store.is_spare_parts? && dst_store.is_defect?
+  end
+
   private
 
   def stores_must_be_different

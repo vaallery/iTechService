@@ -1,5 +1,4 @@
 class CashDrawer < ActiveRecord::Base
-
   belongs_to :department
   has_many :cash_shifts, inverse_of: :cash_drawer
   delegate :name, to: :department, prefix: true, allow_nil: true
@@ -9,5 +8,4 @@ class CashDrawer < ActiveRecord::Base
   def current_shift
     cash_shifts.opened.first_or_create(is_closed: false)
   end
-
 end

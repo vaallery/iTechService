@@ -29,5 +29,4 @@ module Document
       self.update_attribute :status, 2
     end
   end
-
 end

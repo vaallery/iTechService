@@ -61,7 +61,7 @@
 
       = f.input :data_storages, as: :data_storage
 
-      = f.input :comment, input_html: {rows: 5}, disabled: cannot?(:update, @service_job)
+      = f.input :comment, input_html: {rows: 5}, disabled: !can?(:update, @service_job)
 
       = f.input :tech_notice, input_html: {rows: 5} if can? :write_tech_notice, @service_job
 

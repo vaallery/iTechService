@@ -1,8 +1,6 @@
 class PaymentsController < ApplicationController
-  authorize_resource
-
   def index
-    @sale = Sale.find params[:sale_id]
+    @sale = find_sale
     @payments = @sale.payments
     params[:form_name] = 'payments/modal_index'
     respond_to do |format|
@@ -12,15 +10,15 @@ class PaymentsController < ApplicationController
   end
 
   def show
-    @payment = Payment.find(params[:id])
+    @payment = find_record Payment
     respond_to do |format|
       format.html
     end
   end
 
   def new
-    @sale = Sale.find params[:sale_id]
-    @payment = Payment.new params[:payment]
+    @sale = find_sale
+    @payment = authorize Payment.new(params[:payment])
     respond_to do |format|
       format.html { render 'form' }
       format.js { render 'shared/show_modal_form' }
@@ -28,16 +26,16 @@ class PaymentsController < ApplicationController
   end
 
   def edit
-    @sale = Sale.find params[:sale_id]
-    @payment = Payment.find(params[:id])
+    @sale = find_sale
+    @payment = find_record Payment
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def create
-    @sale = Sale.find(params[:sale_id])
-    payment = Payment.new(params[:payment])
+    @sale = find_sale
+    payment = authorize Payment.new(params[:payment])
     outcome = Sales::AddPayment.run(sale: @sale, payment: payment)
     @payment = outcome.result
 
@@ -53,8 +51,8 @@ class PaymentsController < ApplicationController
   end
 
   def update
-    @sale = Sale.find params[:sale_id]
-    @payment = Payment.find(params[:id])
+    @sale = find_sale
+    @payment = find_record Payment
     respond_to do |format|
       if @payment.update_attributes(params[:payment])
         format.html { redirect_to @payment, notice: 'Payment was successfully updated.' }
@@ -67,10 +65,16 @@ class PaymentsController < ApplicationController
   end
 
   def destroy
-    @payment = Payment.find(params[:id])
+    @payment = find_record Payment
     @payment.destroy
     respond_to do |format|
       format.html { redirect_to payments_url }
     end
+  end
+
+  private
+
+  def find_sale
+    policy_scope(Sale).find(params[:sale_id])
   end
 end

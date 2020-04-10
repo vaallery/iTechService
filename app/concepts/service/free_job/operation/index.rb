@@ -1,6 +1,6 @@
 module Service
   class FreeJob::Index < BaseOperation
-    step Policy::Pundit(FreeJob::Policy, :index?)
+    step Policy::Pundit(FreeJobPolicy, :index?)
     failure :not_authorized!
     step :model!
 

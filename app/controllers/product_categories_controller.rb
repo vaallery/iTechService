@@ -1,7 +1,8 @@
 class ProductCategoriesController < ApplicationController
-  load_and_authorize_resource
-
   def index
+    authorize ProductCategory
+    @product_categories = ProductCategory.all
+
     respond_to do |format|
       format.html
       format.json { render json: @product_categories }
@@ -9,6 +10,8 @@ class ProductCategoriesController < ApplicationController
   end
 
   def new
+    @product_category = authorize ProductCategory.new
+
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @product_category }
@@ -16,12 +19,16 @@ class ProductCategoriesController < ApplicationController
   end
 
   def edit
+    @product_category = find_record ProductCategory
+
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def create
+    @product_category = authorize ProductCategory.new(params[:product_category])
+
     respond_to do |format|
       if @product_category.save
         format.html { redirect_to product_categories_path, notice: t('product_categories.created') }
@@ -34,6 +41,8 @@ class ProductCategoriesController < ApplicationController
   end
 
   def update
+    @product_category = find_record ProductCategory
+
     respond_to do |format|
       if @product_category.update_attributes(params[:product_category])
         format.html { redirect_to product_categories_path, notice: t('product_categories.updated') }
@@ -46,6 +55,7 @@ class ProductCategoriesController < ApplicationController
   end
 
   def destroy
+    @product_category = find_record ProductCategory
     @product_category.destroy
 
     respond_to do |format|

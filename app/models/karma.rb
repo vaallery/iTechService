@@ -1,12 +1,6 @@
 class Karma < ActiveRecord::Base
-
   GROUP_SIZE = 50
 
-  belongs_to :user, inverse_of: :karmas
-  belongs_to :karma_group, inverse_of: :karmas
-  attr_accessible :comment, :user_id, :karma_group_id, :good
-  validates_presence_of :user, :comment
-  #default_scope order('created_at asc')
   scope :created_asc, ->{order('karmas.created_at asc')}
   scope :good, ->{where(good: true)}
   scope :bad, ->{where(good: false)}
@@ -14,6 +8,14 @@ class Karma < ActiveRecord::Base
   scope :unused, ->{includes(:karma_group).where(karma_groups: {bonus_id: nil})}
   scope :ungrouped, ->{where(karma_group_id: nil)}
   scope :created_at, ->(date) { where(created_at: date.beginning_of_day..date.end_of_day) }
+
+  belongs_to :user, inverse_of: :karmas
+  belongs_to :karma_group, inverse_of: :karmas
+
+  delegate :department, :department_id, to: :user
+
+  attr_accessible :comment, :user_id, :karma_group_id, :good
+  validates_presence_of :user, :comment
 
   def kind
     good ? 'good' : 'bad'

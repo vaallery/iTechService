@@ -1,7 +1,7 @@
 module Service
   class FreeTask::Create < BaseOperation
     class Present < BaseOperation
-      step Policy.Pundit(FreeTask::Policy, :create?)
+      step Policy.Pundit(FreeTaskPolicy, :create?)
       failure :not_authorized!
       step Model(FreeTask, :new)
       step Contract.Build(constant: FreeTask::Contract::Base)

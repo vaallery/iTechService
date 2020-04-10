@@ -1,6 +1,6 @@
 module Service
   class FreeTask::Index < BaseOperation
-    step Policy::Pundit(FreeTask::Policy, :index?)
+    step Policy::Pundit(FreeTaskPolicy, :index?)
     failure :not_authorized!
     step :model!
 

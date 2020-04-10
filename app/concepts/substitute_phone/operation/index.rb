@@ -1,5 +1,5 @@
 class SubstitutePhone::Index < BaseOperation
-  step Policy::Pundit(SubstitutePhone::Policy, :index?)
+  step Policy::Pundit(SubstitutePhonePolicy, :index?)
   failure :not_authorized!
 
   step ->(options, params:, **) {

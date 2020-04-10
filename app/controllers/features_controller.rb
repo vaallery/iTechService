@@ -1,7 +1,6 @@
 class FeaturesController < ApplicationController
-  # GET /features
-  # GET /features.json
   def index
+    authorize Feature
     @features = Feature.all
 
     respond_to do |format|
@@ -10,10 +9,8 @@ class FeaturesController < ApplicationController
     end
   end
 
-  # GET /features/1
-  # GET /features/1.json
   def show
-    @feature = Feature.find(params[:id])
+    @feature = find_record Feature
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,10 +18,8 @@ class FeaturesController < ApplicationController
     end
   end
 
-  # GET /features/new
-  # GET /features/new.json
   def new
-    @feature = Feature.new
+    @feature = authorize Feature.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -32,15 +27,12 @@ class FeaturesController < ApplicationController
     end
   end
 
-  # GET /features/1/edit
   def edit
-    @feature = Feature.find(params[:id])
+    @feature = find_record Feature
   end
 
-  # POST /features
-  # POST /features.json
   def create
-    @feature = Feature.new(params[:feature])
+    @feature = authorize Feature.new(params[:feature])
 
     respond_to do |format|
       if @feature.save
@@ -53,10 +45,8 @@ class FeaturesController < ApplicationController
     end
   end
 
-  # PUT /features/1
-  # PUT /features/1.json
   def update
-    @feature = Feature.find(params[:id])
+    @feature = find_record Feature
 
     respond_to do |format|
       if @feature.update_attributes(params[:feature])
@@ -69,10 +59,8 @@ class FeaturesController < ApplicationController
     end
   end
 
-  # DELETE /features/1
-  # DELETE /features/1.json
   def destroy
-    @feature = Feature.find(params[:id])
+    @feature = find_record Feature
     @feature.destroy
 
     respond_to do |format|

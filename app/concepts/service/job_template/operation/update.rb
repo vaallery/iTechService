@@ -3,7 +3,7 @@ module Service
     class Present < BaseOperation
       step Model(JobTemplate, :find_by)
       failure :record_not_found!
-      step Policy.Pundit(JobTemplate::Policy, :update?)
+      step Policy.Pundit(JobTemplatePolicy, :update?)
       failure :not_authorized!
       step Contract.Build(constant: JobTemplate::Contract::Base)
     end

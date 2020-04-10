@@ -1,7 +1,6 @@
 class RepairGroupsController < ApplicationController
-  authorize_resource
-
   def index
+    authorize RepairGroup
     @repair_groups = RepairGroup.roots.order('id asc')
     respond_to do |format|
       format.js
@@ -9,7 +8,7 @@ class RepairGroupsController < ApplicationController
   end
 
   def show
-    @repair_group = RepairGroup.find params[:id]
+    @repair_group = find_record RepairGroup
     @repair_services = @repair_group.repair_services
     if params[:choose] == 'true'
       params[:table_name] = 'repair_services/small_table'
@@ -20,21 +19,21 @@ class RepairGroupsController < ApplicationController
   end
 
   def new
-    @repair_group = RepairGroup.new params[:repair_group]
+    @repair_group = authorize RepairGroup.new(params[:repair_group])
     respond_to do |format|
       format.js { render 'shared/show_modal_form' }
     end
   end
 
   def edit
-    @repair_group = RepairGroup.find(params[:id])
+    @repair_group = find_record RepairGroup
     respond_to do |format|
       format.js { render 'shared/show_modal_form' }
     end
   end
 
   def create
-    @repair_group = RepairGroup.new(params[:repair_group])
+    @repair_group = authorize RepairGroup.new(params[:repair_group])
     @repair_groups = RepairGroup.roots.order('id asc')
     respond_to do |format|
       if @repair_group.save
@@ -46,7 +45,7 @@ class RepairGroupsController < ApplicationController
   end
 
   def update
-    @repair_group = RepairGroup.find(params[:id])
+    @repair_group = find_record RepairGroup
     @repair_groups = RepairGroup.roots.order('id asc')
     respond_to do |format|
       if @repair_group.update_attributes(params[:repair_group])
@@ -58,7 +57,7 @@ class RepairGroupsController < ApplicationController
   end
 
   def destroy
-    @repair_group = RepairGroup.find(params[:id])
+    @repair_group = find_record RepairGroup
     @repair_group.destroy
     respond_to do |format|
       format.js { render nothing: true }

@@ -1,15 +1,15 @@
 class ItemsController < ApplicationController
-  authorize_resource
-
   def index
+    authorize Item
+
     if params[:product_id].blank?
-      @items = Item.search(params)
+      @items = policy_scope(Item).search(params)
       @feature_types = []
-      @items.each {|item| @feature_types + item.feature_types.to_a}
+      @items.each { |item| @feature_types + item.feature_types.to_a }
       @feature_types.uniq!
     else
       @product = Product.find(params[:product_id]) unless params[:product_id].blank?
-      @items = @product.items.search(params)
+      @items = policy_scope(@product.items).search(params)
       @feature_types = @product.feature_types
     end
 
@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
     end
 
     if @items.many?
-      @products = Product.where(id: @items.map{|i|i.product_id})
+      @products = Product.where(id: @items.map { |i| i.product_id })
       @products.page(params[:page])
     end
 
@@ -47,14 +47,15 @@ class ItemsController < ApplicationController
   end
 
   def autocomplete
-    @items = Item.filter(params).page(params[:page])
+    @items = policy_scope(Item).filter(params).page(params[:page])
     respond_to do |format|
       format.json
     end
   end
 
   def show
-    @item = Item.find params[:id]
+    @item = find_record Item
+
     respond_to do |format|
       format.pdf do
         filename = "product_tag_#{@item.barcode_num}.pdf"
@@ -80,14 +81,14 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find params[:id]
+    @item = find_record Item
     respond_to do |format|
       format.js { render 'shared/show_modal_form' }
     end
   end
 
   def create
-    @item = Item.new params[:item]
+    @item = authorize Item.new(params[:item])
     respond_to do |format|
       if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
@@ -100,7 +101,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find params[:id]
+    @item = find_record Item
     respond_to do |format|
       if @item.update_attributes(params[:item])
         format.js { render 'update' }
@@ -111,7 +112,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item = Item.find params[:id]
+    @item = find_record Item
     @item.destroy
 
     respond_to do |format|
@@ -121,16 +122,16 @@ class ItemsController < ApplicationController
   end
 
   def remains_in_store
-    item = Item.find params[:id]
-    store = Store.find params[:store_id]
-    quantity = item.actual_quantity store
+    item = find_record Item
+    store = Store.find(params[:store_id])
+    quantity = item.actual_quantity(store)
     respond_to do |format|
       format.json { render json: {quantity: quantity} }
     end
   end
 
   def check_status
-    item = Item.find(params[:id]).decorate
+    item = find_record(Item).decorate
     render json: {status: item.status, status_info: item.status_info}
   end
 end

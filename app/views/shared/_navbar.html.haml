@@ -48,7 +48,7 @@
       = menu_item t('cash_operations.cash_out'), new_cash_operation_path(cash_operation: {is_out: true}), remote: true if can? :create, CashOperation
 
     = drop_down t('.staff') do
-      = menu_item t('infos.link', default: 'Infos'), infos_path if can? :read, Info
+      = menu_item t('infos.link', default: 'Infos'), infos_path if can? :index, Info
       = menu_item t('announcements.link'), announcements_path if current_user.any_admin?
       = drop_down_divider
       = menu_item t('users.link', default: 'Users'), users_path if can? :manage, User

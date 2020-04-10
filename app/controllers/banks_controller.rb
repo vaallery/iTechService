@@ -1,29 +1,28 @@
 class BanksController < ApplicationController
-  authorize_resource
-
   def index
-    @banks = Bank.all
+    authorize Bank
+    @banks = policy_scope(Bank).all
     respond_to do |format|
       format.html
     end
   end
 
   def new
-    @bank = Bank.new
+    @bank = authorize(Bank.new)
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def edit
-    @bank = Bank.find(params[:id])
+    @bank = find_record(Bank)
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def create
-    @bank = Bank.new(params[:bank])
+    @bank = authorize(Bank.new(params[:bank]))
     respond_to do |format|
       if @bank.save
         format.html { redirect_to banks_path, notice: t('banks.created') }
@@ -34,7 +33,7 @@ class BanksController < ApplicationController
   end
 
   def update
-    @bank = Bank.find(params[:id])
+    @bank = find_record(Bank)
     respond_to do |format|
       if @bank.update_attributes(params[:bank])
         format.html { redirect_to banks_path, notice: t('banks.updated') }
@@ -45,7 +44,7 @@ class BanksController < ApplicationController
   end
 
   def destroy
-    @bank = Bank.find(params[:id])
+    @bank = find_record(Bank)
     @bank.destroy
     respond_to do |format|
       format.html { redirect_to banks_url }

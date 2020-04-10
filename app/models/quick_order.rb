@@ -1,15 +1,14 @@
 class QuickOrder < ActiveRecord::Base
-
   DEVICE_KINDS = %w[iPhone iPad iPod Storage]
 
-  scope :id_asc, ->{order('quick_orders.id asc')}
-  scope :created_desc, ->{order('quick_orders.created_at desc')}
-  scope :in_month, ->{where('quick_orders.created_at > ?', 1.month.ago)}
-  scope :done, ->{where(is_done: true)}
-  scope :undone, ->{where(is_done: false)}
+  scope :id_asc, -> { order('quick_orders.id asc') }
+  scope :created_desc, -> { order('quick_orders.created_at desc') }
+  scope :in_month, -> { where('quick_orders.created_at > ?', 1.month.ago) }
+  scope :done, -> { where(is_done: true) }
+  scope :undone, -> { where(is_done: false) }
 
-  belongs_to :department
-  belongs_to :user
+  belongs_to :department, required: true
+  belongs_to :user, required: true
   belongs_to :client
   has_and_belongs_to_many :quick_tasks, join_table: 'quick_orders_quick_tasks'
   has_many :history_records, as: :object, dependent: :destroy
@@ -86,5 +85,4 @@ class QuickOrder < ActiveRecord::Base
     last_number = QuickOrder.created_desc.first.try(:number)
     self.number = (last_number.present? and last_number < 9999) ? last_number.next : 1
   end
-
 end

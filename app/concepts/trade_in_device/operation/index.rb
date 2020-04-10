@@ -1,5 +1,5 @@
 class TradeInDevice::Index < BaseOperation
-  step Policy.Pundit(TradeInDevice::Policy, :index?)
+  step Policy.Pundit(TradeInDevicePolicy, :index?)
   failure :not_authorized!
   step :model!
 

@@ -1,29 +1,28 @@
 class ClientCategoriesController < ApplicationController
-  authorize_resource
-
   def index
-    @client_categories = ClientCategory.all
+    authorize ClientCategory
+    @client_categories = policy_scope(ClientCategory).all
     respond_to do |format|
       format.html
     end
   end
 
   def new
-    @client_category = ClientCategory.new
+    @client_category = authorize ClientCategory.new
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def edit
-    @client_category = ClientCategory.find(params[:id])
+    @client_category = find_record ClientCategory
     respond_to do |format|
       format.html { render 'form' }
     end
   end
 
   def create
-    @client_category = ClientCategory.new(params[:client_category])
+    @client_category = authorize ClientCategory.new(params[:client_category])
     respond_to do |format|
       if @client_category.save
         format.html { redirect_to client_categories_path, notice: 'Client category was successfully created.' }
@@ -34,7 +33,7 @@ class ClientCategoriesController < ApplicationController
   end
 
   def update
-    @client_category = ClientCategory.find(params[:id])
+    @client_category = find_record ClientCategory
     respond_to do |format|
       if @client_category.update_attributes(params[:client_category])
         format.html { redirect_to client_categories_path, notice: 'Client category was successfully updated.' }
@@ -45,7 +44,7 @@ class ClientCategoriesController < ApplicationController
   end
 
   def destroy
-    @client_category = ClientCategory.find(params[:id])
+    @client_category = find_record ClientCategory
     @client_category.destroy
     respond_to do |format|
       format.html { redirect_to client_categories_url }

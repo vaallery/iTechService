@@ -1,8 +1,7 @@
 class TasksController < ApplicationController
-  load_and_authorize_resource
-
   def index
-    @tasks = Task.all.order(:id).page params[:page]
+    authorize Task
+    @tasks = Task.all.order(:id).page(params[:page])
 
     respond_to do |format|
       format.html
@@ -11,7 +10,7 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = find_record Task
 
     respond_to do |format|
       format.html
@@ -20,7 +19,7 @@ class TasksController < ApplicationController
   end
 
   def new
-    @task = Task.new
+    @task = authorize Task.new
 
     respond_to do |format|
       format.html
@@ -29,11 +28,11 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = find_record Task
   end
 
   def create
-    @task = Task.new(params[:task])
+    @task = authorize Task.new(params[:task])
 
     respond_to do |format|
       if @task.save
@@ -47,7 +46,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = find_record Task
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
@@ -61,7 +60,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = find_record Task
     @task.destroy
 
     respond_to do |format|

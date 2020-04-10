@@ -1,14 +1,17 @@
 class CashShift < ActiveRecord::Base
+  scope :in_department, ->(department_id) do
+    includes(:cash_drawer).where(cash_drawers: {department_id: department_id})
+  end
 
-  scope :closed, ->{where(is_closed: true)}
-  scope :opened, ->{where(is_closed: false)}
+  scope :closed, -> { where(is_closed: true) }
+  scope :opened, -> { where(is_closed: false) }
 
   belongs_to :cash_drawer, inverse_of: :cash_shifts
   belongs_to :user
   has_many :sales, inverse_of: :cash_shift
   has_many :cash_operations, inverse_of: :cash_shift
   delegate :short_name, to: :user, prefix: true, allow_nil: true
-  delegate :department, to: :cash_drawer
+  delegate :department, :department_id, to: :cash_drawer
   attr_accessible :is_closed, :cash_drawer_id, :user_id
   validates_presence_of :cash_drawer
 
@@ -23,11 +26,11 @@ class CashShift < ActiveRecord::Base
     end
   end
 
-  def sales_total(is_return=false)
+  def sales_total(is_return = false)
     sales.posted.where(is_return: is_return).to_a.sum(&:payments_sum)
   end
 
-  def sales_total_by_kind(is_return=false)
+  def sales_total_by_kind(is_return = false)
     res = []
     sale_ids = sales.posted.where(is_return: is_return).map(&:id)
     Payment::KINDS.each do |kind|
@@ -37,11 +40,11 @@ class CashShift < ActiveRecord::Base
     res
   end
 
-  def sales_count(is_return=false)
+  def sales_count(is_return = false)
     sales.posted.where(is_return: is_return).count
   end
 
-  def cash_operations_total(is_out=false)
+  def cash_operations_total(is_out = false)
     cash_operations.where(is_out: is_out).sum(:value)
   end
 

@@ -1,5 +1,4 @@
 class CasePicturesController < ApplicationController
-
   def index
     respond_to do |format|
       format.html
@@ -19,5 +18,4 @@ class CasePicturesController < ApplicationController
       render nothing: true
     end
   end
-
 end

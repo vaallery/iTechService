@@ -1,9 +1,9 @@
 class PurchasesController < ApplicationController
-  authorize_resource
   helper_method :sort_column, :sort_direction
 
   def index
-    @purchases = Purchase.search(params).page(params[:page])
+    authorize Purchase
+    @purchases = policy_scope(Purchase).search(params).page(params[:page])
 
     if params.has_key?(:sort) && params.has_key?(:direction)
       @purchases = @purchases.order("purchases.#{sort_column} #{sort_direction}")
@@ -21,7 +21,7 @@ class PurchasesController < ApplicationController
   end
 
   def show
-    @purchase = Purchase.find params[:id]
+    @purchase = find_record Purchase
     respond_to do |format|
       format.html
       format.json { render json: @purchase }
@@ -29,7 +29,7 @@ class PurchasesController < ApplicationController
   end
 
   def new
-    @purchase = Purchase.new
+    @purchase = authorize Purchase.new
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @purchase }
@@ -37,7 +37,7 @@ class PurchasesController < ApplicationController
   end
 
   def edit
-    @purchase = Purchase.find params[:id]
+    @purchase = find_record Purchase
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @purchase }
@@ -45,7 +45,7 @@ class PurchasesController < ApplicationController
   end
 
   def create
-    @purchase = Purchase.new params[:purchase]
+    @purchase = authorize Purchase.new(params[:purchase])
     respond_to do |format|
       if @purchase.save
         format.html { redirect_to @purchase, notice: t('purchases.created') }
@@ -58,7 +58,7 @@ class PurchasesController < ApplicationController
   end
 
   def update
-    @purchase = Purchase.find params[:id]
+    @purchase = find_record Purchase
     respond_to do |format|
       if @purchase.update_attributes(params[:purchase])
         format.html { redirect_to @purchase, notice: t('purchases.updated') }
@@ -71,7 +71,7 @@ class PurchasesController < ApplicationController
   end
 
   def destroy
-    @purchase = Purchase.find params[:id]
+    @purchase = find_record Purchase
     @purchase.set_deleted
     respond_to do |format|
       format.html { redirect_to purchases_url }
@@ -80,7 +80,7 @@ class PurchasesController < ApplicationController
   end
 
   def post
-    @purchase = Purchase.find params[:id]
+    @purchase = find_record Purchase
     respond_to do |format|
       if @purchase.post
         format.html { redirect_to @purchase, notice: t('purchases.posted') }
@@ -92,7 +92,7 @@ class PurchasesController < ApplicationController
   end
 
   def unpost
-    @purchase = Purchase.find params[:id]
+    @purchase = find_record Purchase
     respond_to do |format|
       if @purchase.unpost
         format.html { redirect_to @purchase, notice: t('purchases.unposted') }
@@ -104,7 +104,7 @@ class PurchasesController < ApplicationController
   end
 
   def print_barcodes
-    @purchase = Purchase.find params[:id]
+    @purchase = find_record Purchase
     respond_to do |format|
       format.pdf do
         pdf = ProductTagsPdf.new @purchase, view_context, params
@@ -114,7 +114,7 @@ class PurchasesController < ApplicationController
   end
 
   def revaluate_products
-    purchase = Purchase.find params[:id]
+    purchase = find_record Purchase
     revaluation_act = purchase.build_revaluation_act params[:product_ids]
     respond_to do |format|
       if revaluation_act.save
@@ -126,7 +126,7 @@ class PurchasesController < ApplicationController
   end
 
   def move_items
-    purchase = Purchase.find params[:id]
+    purchase = find_record Purchase
     movement_act = purchase.build_movement_act params[:item_ids]
     respond_to do |format|
       if movement_act.save

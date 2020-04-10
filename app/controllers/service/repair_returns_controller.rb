@@ -1,11 +1,11 @@
 module Service
   class RepairReturnsController < ApplicationController
     include OperationRunner
+    before_action { authorize RepairReturn }
     respond_to :html
 
     def index
-      authorize RepairReturn
-      repair_returns = RepairReturn.query(action_params)
+      repair_returns = policy_scope(RepairReturn).query(action_params)
 
       respond_to do |format|
         content = cell(RepairReturn::Cell::Index, repair_returns).call
