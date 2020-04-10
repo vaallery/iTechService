@@ -34,12 +34,12 @@ class API < Grape::API
       error!({error: 'Unauthorized'}, 401) unless current_user
     end
 
-    def authorize!(*args)
-      ::Ability.new(current_user).authorize!(*args)
+    def authorize!(action, object)
+      Pundit.policy!(current_user, object).public_send("#{action}?")
     end
   end
 
-  rescue_from CanCan::AccessDenied do |e|
+  rescue_from Pundit::NotAuthorizedError do |e|
     Rack::Response.new({error: e.message}.to_json, 403).finish
   end
 
