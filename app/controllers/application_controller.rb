@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_record(klass)
-    authorize policy_scope(klass).find(params[:id])
+    authorize klass.find(params[:id])
   end
 
   def not_authorized
