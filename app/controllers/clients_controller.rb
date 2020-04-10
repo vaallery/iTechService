@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  skip_authorize_resource only: [:check_phone_number, :questionnaire, :autocomplete, :select]
+  skip_after_action :verify_authorized, only: [:check_phone_number, :questionnaire, :autocomplete, :select]
 
   def index
     authorize Client

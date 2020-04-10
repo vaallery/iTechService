@@ -13,7 +13,11 @@ set :branch, 'global'
 
 # You can configure the Airbrussh format using :format_options.
 # These are the defaults.
-# set :format_options, command_output: true, log_file: "log/capistrano.log", color: :auto, truncate: :auto
+set :format_options,
+    command_output: true,
+    log_file: "log/capistrano.log",
+    color: :auto,
+    truncate: false
 
 # Default value for :pty is false
 # set :pty, true
@@ -40,7 +44,7 @@ set :default_env, secret_key_base: 'dummy-key', devise_secret_key: 'dummy-key'
 set :pg_user, fetch(:user)
 
 set :rbenv_type, :system
-set :rbenv_ruby, '2.4.6'
+set :rbenv_ruby, '2.4.10'
 
 set :conditionally_migrate, true
 set :whenever_identifier, fetch(:application)
