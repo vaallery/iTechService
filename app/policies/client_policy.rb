@@ -10,4 +10,12 @@ class ClientPolicy < BasePolicy
   def destroy?
     same_department? && any_admin?
   end
+
+  def select?; read?; end
+
+  def find?; read?; end
+
+  def export?
+    superadmin?
+  end
 end

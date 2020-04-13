@@ -114,6 +114,7 @@ class ClientsController < ApplicationController
   end
 
   def export
+    authorize Client
     respond_to do |format|
       format.vcf do
         file = ExportClients.call
