@@ -1,5 +1,7 @@
 module Service
   class ActualFeedbacksController < ApplicationController
+    skip_after_action :verify_authorized, only: :index
+
     def index
       respond_to do |format|
         run Feedback::IndexActual do

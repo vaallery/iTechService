@@ -1,13 +1,15 @@
 class ItemPolicy < CommonPolicy
   def autocomplete?; read?; end
 
+  def select?; read?; end
+
   def manage?; any_manager?; end
 
   def modify?
-    has_role?(*MANAGER_ROLES, :software)
+    any_manager?(:software)
   end
 
   def remains_in_store?
-    has_role?(*MANAGER_ROLES, :software)
+    any_manager?(:software)
   end
 end
