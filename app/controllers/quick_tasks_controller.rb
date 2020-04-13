@@ -1,5 +1,6 @@
 class QuickTasksController < ApplicationController
   def index
+    authorize QuickTask
     @quick_tasks = policy_scope(QuickTask).name_asc
 
     respond_to do |format|
