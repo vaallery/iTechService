@@ -29,10 +29,13 @@ class Users::SessionsController < Devise::SessionsController
   # TODO define department
   def change_department(user)
     return if Department.count < 2
+
     user_network = user.current_sign_in_ip.gsub(/\d+$/, '')
-    return if user.department.ip_network.include?(user_network)
+    return if user.department.ip_network.blank? || user.department.ip_network.include?(user_network)
+
     new_department = Department.find_by_network(user_network)
     return if new_department.nil?
+
     user.department = new_department
     if user.location.present?
       new_location = Location.find_by(department: new_department, code: user.location.code)
