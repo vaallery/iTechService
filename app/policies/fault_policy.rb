@@ -16,6 +16,6 @@ class FaultPolicy < ApplicationPolicy
   end
 
   def destroy?
-    same_department? && superadmin?
+    superadmin?
   end
 end

@@ -4,10 +4,10 @@ class PricePolicy < BasePolicy
   end
 
   def update?
-    same_department? && any_manager?(:marketing)
+    superadmin? || (same_department? && any_manager?(:marketing))
   end
 
   def destroy?
-    same_department? && any_manager?(:marketing)
+    superadmin? || (same_department? && any_manager?(:marketing))
   end
 end

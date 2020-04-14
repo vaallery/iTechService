@@ -51,14 +51,12 @@ class ApplicationPolicy
     manage?
   end
 
-  def scope
-    Pundit.policy_scope!(user, record.class)
-  end
-
   private
 
   def same_department?
-    user.department_id == record.department_id || record.new_record?
+    superadmin? ||
+      user.department_id == record.department_id ||
+      record.new_record?
   end
 
   def any_manager?(*additional_roles)
@@ -90,7 +88,7 @@ class ApplicationPolicy
     end
 
     def resolve
-      scope
+      scope.all
     end
   end
 end

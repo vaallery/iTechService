@@ -1,5 +1,5 @@
 class PaymentPolicy < BasePolicy
   def create?
-    has_role?(*MANAGER_ROLES, :software)
+    any_manager?(:software)
   end
 end

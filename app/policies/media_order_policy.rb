@@ -1,9 +1,9 @@
 class MediaOrderPolicy < BasePolicy
   def create?
-    has_role?(*MANAGER_ROLES, :media)
+    any_manager?(:media)
   end
 
   def update?
-    same_department? && has_role?(*MANAGER_ROLES, :media)
+    same_department? && any_manager?(:media)
   end
 end
