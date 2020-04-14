@@ -21,7 +21,7 @@ class BasePolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      return super if superadmin?
+      return super if user.superadmin?
 
       if scope.column_names.include?('department_id')
         scope.where(department_id: user.department_id)
