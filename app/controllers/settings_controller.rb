@@ -2,6 +2,8 @@ class SettingsController < ApplicationController
 
   def index
     authorize Setting
+    @settings = Setting.all
+
     respond_to do |format|
       format.html
       format.json { render json: @settings }

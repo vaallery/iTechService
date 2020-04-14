@@ -480,7 +480,7 @@ class ServiceJob < ActiveRecord::Base
 
   def presence_of_payment
     is_valid = true
-    if location_id_changed? && location.is_archive?
+    if location_id_changed? && location&.is_archive?
       if tasks_cost > 0
         if sale.nil? or !sale.is_posted?
           errors.add :base, :not_paid

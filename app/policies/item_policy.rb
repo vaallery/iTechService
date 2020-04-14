@@ -3,6 +3,8 @@ class ItemPolicy < CommonPolicy
 
   def select?; read?; end
 
+  def check_status?; read?; end
+
   def manage?; any_manager?; end
 
   def modify?
