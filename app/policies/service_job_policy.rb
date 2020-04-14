@@ -23,6 +23,10 @@ class ServiceJobPolicy < BasePolicy
     any_admin?(:technician)
   end
 
+  def remove_device_tasks?
+    update?
+  end
+
   def repair?
     has_role?(:superadmin, :technician)
   end

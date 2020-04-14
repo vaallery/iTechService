@@ -1,10 +1,10 @@
 class ClientPolicy < BasePolicy
   def create?
-    has_role?(:superadmin, :admin, :manager, :software, :media)
+    any_manager?(:software, :media)
   end
 
   def update?
-    same_department? && (has_role?(*MANAGER_ROLES, :marketing) || able_to?(:edit_clients))
+    same_department? && (any_manager?(:marketing) || able_to?(:edit_clients))
   end
 
   def destroy?
@@ -17,5 +17,9 @@ class ClientPolicy < BasePolicy
 
   def export?
     superadmin?
+  end
+
+  def change_category?
+    superadmin? || (same_department? && admin?)
   end
 end
