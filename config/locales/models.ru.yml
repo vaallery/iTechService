@@ -14,6 +14,7 @@ ru:
       cash_drawer: 'Касса'
       cash_shift: 'Кассовая смена'
       category: 'Категория'
+      city: 'Город'
       client: 'Клиент'
       client_category: 'Категория клиента'
       comment: 'Комментарий'

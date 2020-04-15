@@ -1,0 +1,30 @@
+<%= auto_header_tag %>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th><%= City.human_attribute_name(:id) %></th>
+    <th><%= City.human_attribute_name(:name) %></th>
+    <th><%= City.human_attribute_name(:color) %></th>
+    <% if can? :manage, City %>
+    <th></th>
+    <% end %>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @cities.each do |city| %>
+  <tr>
+    <td><%= city.id %></td>
+    <td><%= city.name %></td>
+    <td><span style="background-color: <%= city.color %>">__</span></td>
+    <% if can? :manage, City %>
+      <td class="btn-group">
+        <%= link_to_edit_small city %>
+        <%= link_to_destroy_small city %>
+      </td>
+    <% end %>
+  </tr>
+  <% end %>
+  </tbody>
+</table>

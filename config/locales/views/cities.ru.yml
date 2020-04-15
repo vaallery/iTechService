@@ -1,0 +1,8 @@
+ru:
+  cities:
+    index:
+      title: 'Города'
+    new:
+      title: 'Новый Город'
+    edit:
+      title: 'Редактирование Города'

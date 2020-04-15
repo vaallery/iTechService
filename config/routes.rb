@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     resources :sms_notifications, only: %i[new create]
   end
 
+  resources :cities, except: :show
   resources :departments
   resources :reports, only: [:index, :new, :create]
 

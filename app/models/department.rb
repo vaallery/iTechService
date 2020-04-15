@@ -11,13 +11,13 @@ class Department < ActiveRecord::Base
   scope :branches, -> { where(role: 1) }
   scope :selectable, -> { where(role: [0, 1, 3]) }
 
+  belongs_to :city, required: true
   has_many :users, dependent: :nullify
   has_many :stores, dependent: :nullify
   has_many :cash_drawers, dependent: :nullify
   has_many :settings, dependent: :destroy
   has_many :service_jobs, inverse_of: :department
   has_many :locations, inverse_of: :department
-  # cattr_accessor :current
 
   attr_accessible :name, :role, :code, :url, :city, :address, :contact_phone, :schedule, :printer, :ip_network
   validates_presence_of :name, :role, :code
