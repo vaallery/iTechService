@@ -71,6 +71,10 @@ class ApplicationPolicy
     user.superadmin?
   end
 
+  def admin?
+    user.admin?
+  end
+
   def has_role?(*roles)
     roles.any? { |role| user.role == role.to_s }
   end
