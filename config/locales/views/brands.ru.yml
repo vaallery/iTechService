@@ -1,0 +1,8 @@
+ru:
+  brands:
+    index:
+      title: 'Бренды'
+    new:
+      title: 'Новый Бренд'
+    edit:
+      title: 'Редактирование Бренда'

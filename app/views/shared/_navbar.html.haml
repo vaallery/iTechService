@@ -86,6 +86,7 @@
       = menu_item t('supply_categories.index.title'), supply_categories_path if can? :manage, SupplyCategory
       = menu_item t('departments.link'), departments_path if can? :manage, Department
       = menu_item 'Города', cities_path if can? :manage, City
+      = menu_item 'Бренды', brands_path if can? :manage, Brand
 
     = drop_down t('.misc') do
       = menu_item t('wiki.link'), wiki_all_path if can? :read, WikiPage

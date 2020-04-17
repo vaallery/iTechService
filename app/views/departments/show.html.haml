@@ -11,20 +11,23 @@
   %dt= model_class.human_attribute_name :role
   %dd= human_department_role @department
 
-  %dt= model_class.human_attribute_name :ip_network
-  %dd= @department.ip_network
-
-  %dt= model_class.human_attribute_name :url
-  %dd= @department.url.blank? ? '-' : @department.url
-
   %dt= model_class.human_attribute_name :city
-  %dd= @department.city.blank? ? '-' : @department.city
+  %dd= @department.city_name || '-'
+
+  %dt= model_class.human_attribute_name :brand
+  %dd= @department.brand_name || '-'
 
   %dt= model_class.human_attribute_name :address
   %dd= @department.address.blank? ? '-' : @department.address
 
   %dt= model_class.human_attribute_name :contact_phone
   %dd= human_phone @department.contact_phone
+
+  %dt= model_class.human_attribute_name :ip_network
+  %dd= @department.ip_network
+
+  %dt= model_class.human_attribute_name :url
+  %dd= @department.url.blank? ? '-' : @department.url
 
   %dt= model_class.human_attribute_name :schedule
   %dd= @department.schedule.blank? ? '-' : @department.schedule

@@ -40,6 +40,7 @@ Rails.application.routes.draw do
 
   resources :cities, except: :show
   resources :departments
+  resources :brands, except: :show
   resources :reports, only: [:index, :new, :create]
 
   resources :users do

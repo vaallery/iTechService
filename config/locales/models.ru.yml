@@ -9,6 +9,7 @@ ru:
       #ckeditor/attachment_file: ckeditor/attachment_file
       #ckeditor/picture: ckeditor/picture
       batch: 'Партия'
+      brand: 'Бренд'
       carrier: 'Оператор'
       case_color: 'Цвет чехла'
       cash_drawer: 'Касса'
@@ -143,9 +144,10 @@ ru:
 
       department:
         address: 'Адрес'
+        brand: :activerecord.models.brand
         city: 'Город'
         contact_phone: 'Контактный телефон'
-        ip_network: 'IP сеть'
+        ip_network: 'IP адрес'
         printer: 'Принтер'
         role: 'Роль'
         schedule: 'График работы'
@@ -665,6 +667,7 @@ ru:
     id: '№'
     imei: 'IMEI'
     kind: 'Вид'
+    logo: 'Логотип'
     message: 'Сообщение'
     name: 'Название'
     number: 'Номер'

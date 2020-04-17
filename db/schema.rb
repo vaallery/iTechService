@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200415104959) do
+ActiveRecord::Schema.define(version: 20200417100543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,13 @@ ActiveRecord::Schema.define(version: 20200415104959) do
   end
 
   add_index "bonuses", ["bonus_type_id"], name: "index_bonuses_on_bonus_type_id", using: :btree
+
+  create_table "brands", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.string   "logo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "carriers", force: :cascade do |t|
     t.string   "name",       limit: 255, null: false
@@ -255,8 +262,10 @@ ActiveRecord::Schema.define(version: 20200415104959) do
     t.string   "printer"
     t.string   "ip_network"
     t.integer  "city_id",                   null: false
+    t.integer  "brand_id"
   end
 
+  add_index "departments", ["brand_id"], name: "index_departments_on_brand_id", using: :btree
   add_index "departments", ["city_id"], name: "index_departments_on_city_id", using: :btree
   add_index "departments", ["code"], name: "index_departments_on_code", using: :btree
   add_index "departments", ["role"], name: "index_departments_on_role", using: :btree
@@ -1452,6 +1461,7 @@ ActiveRecord::Schema.define(version: 20200415104959) do
   add_index "wiki_pages", ["creator_id"], name: "index_wiki_pages_on_creator_id", using: :btree
   add_index "wiki_pages", ["path"], name: "index_wiki_pages_on_path", unique: true, using: :btree
 
+  add_foreign_key "departments", "brands"
   add_foreign_key "departments", "cities"
   add_foreign_key "faults", "fault_kinds", column: "kind_id"
   add_foreign_key "faults", "users", column: "causer_id"

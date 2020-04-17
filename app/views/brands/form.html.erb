@@ -1,0 +1,14 @@
+<%= auto_header_tag @brand %>
+
+<%= simple_form_for @brand, html: {class: 'form-horizontal'} do |f| %>
+  <%= f.input :name %>
+  <%= f.input :logo %>
+  <% if @brand.logo.present? %>
+    <div class="form-inputs">
+      <div class="controls">
+        <%= image_tag @brand.logo_url %>
+      </div>
+    </div>
+  <% end %>
+  <div class="form-actions"><%= submit_button f %></div>
+<% end %>

@@ -25,7 +25,7 @@ class CompletionActPdf < Prawn::Document
       horizontal_line 0, 530
     end
     move_up 40
-    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 80, at: [20, cursor]
+    image department.logo_path, width: 80, at: [20, cursor]
 
     # TODO: Barcode
 
@@ -33,7 +33,7 @@ class CompletionActPdf < Prawn::Document
     organization = Setting.get_value(:organization, department)
 
     move_down font_size * 2.5
-    text "Сервисный центр «iTech» #{organization}", align: :right
+    text "Сервисный центр «#{department.brand_name}» #{organization}", align: :right
     text "Юр. Адрес: #{organization}, #{Setting.get_value(:legal_address, department)}", align: :right
     text "ОГРН: #{Setting.ogrn}", align: :right
     move_down font_size
@@ -125,7 +125,7 @@ class CompletionActPdf < Prawn::Document
     text "Сервисный ценр предпримет все необходимые действия для устранения недостатков выполненной работы по требованию потребителя в срок до 60 рабочих дней (Ст.30 «Закон о защите прав потребителей»)."
     move_down font_size
 
-    text "Установленная гарантия не обеспечивает возмещение затрат, связанных с транспортировкой оборудования до местонахождения сервисного центра #{organization} «iTech»."
+    text "Установленная гарантия не обеспечивает возмещение затрат, связанных с транспортировкой оборудования до местонахождения сервисного центра #{organization} «#{department.brand_name}»."
     move_down font_size
 
     text "Сервисный центр не несёт ответственности за любой косвенный ущерб, вызванный проявлением недостатков или дефектов в устройстве, ущерб, причинённый другим устройствам или оборудованию, работающим в сопряжении с данным устройством."

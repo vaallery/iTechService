@@ -1,0 +1,28 @@
+<%= auto_header_tag %>
+
+<table class="table table-hover">
+  <thead>
+  <tr>
+    <th><%= Brand.human_attribute_name(:id) %></th>
+    <th><%= Brand.human_attribute_name(:name) %></th>
+    <% if can? :manage, Brand %>
+      <th></th>
+    <% end %>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @brands.each do |brand| %>
+    <tr>
+      <td><%= brand.id %></td>
+      <td><%= brand.name %></td>
+      <% if can? :manage, Brand %>
+        <td class="btn-group">
+          <%= link_to_edit_small brand %>
+          <%= link_to_destroy_small brand %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

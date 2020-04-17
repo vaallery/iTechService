@@ -1,5 +1,4 @@
-class Department < ActiveRecord::Base
-
+class Department < ApplicationRecord
   ROLES = {
     0 => 'main',
     1 => 'branch',
@@ -12,6 +11,7 @@ class Department < ActiveRecord::Base
   scope :selectable, -> { where(role: [0, 1, 3]) }
 
   belongs_to :city, required: true
+  belongs_to :brand, required: true
   has_many :users, dependent: :nullify
   has_many :stores, dependent: :nullify
   has_many :cash_drawers, dependent: :nullify
@@ -19,11 +19,16 @@ class Department < ActiveRecord::Base
   has_many :service_jobs, inverse_of: :department
   has_many :locations, inverse_of: :department
 
-  attr_accessible :name, :role, :code, :url, :city, :address, :contact_phone, :schedule, :printer, :ip_network
+  attr_accessible :name, :role, :code, :url, :city_id, :brand_id, :address, :contact_phone, :schedule, :printer, :ip_network
   validates_presence_of :name, :role, :code
   validates_presence_of :city, :address, :contact_phone, :schedule, unless: :is_store?
   validates :url, presence: true, if: :has_server?
   validate :only_one_main
+
+  delegate :name, to: :city, prefix: true
+  delegate :name, to: :brand, prefix: true
+  delegate :logo, to: :brand, allow_nil: true
+  delegate :path, :url, to: :logo, prefix: true, allow_nil: true
 
   def self.find_by_network(network)
     where('ip_network LIKE ?', "%#{network}%").first
