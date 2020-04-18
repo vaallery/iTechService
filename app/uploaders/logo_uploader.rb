@@ -1,0 +1,2 @@
+class LogoUploader < ApplicationUploader
+end
