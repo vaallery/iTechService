@@ -2,7 +2,7 @@
 
 <%= simple_form_for @brand, html: {class: 'form-horizontal'} do |f| %>
   <%= f.input :name %>
-  <%= f.input :logo %>
+  <%= f.input :logo, hint: 'JPG/JPEG' %>
   <% if @brand.logo.present? %>
     <div class="form-inputs">
       <div class="controls">
