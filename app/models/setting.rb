@@ -1,42 +1,46 @@
 class Setting < ActiveRecord::Base
-
-  DEFAULT_SETTINGS = {
-      address: 'string',
-      address_for_check: 'string',
-      contact_phone: 'string',
-      contact_phone_short: 'string',
-      data_storage_qty: 'integer',
-      duck_plan: 'string',
-      duck_plan_url: 'string',
-      email: 'string',
-      emails_for_acts: 'string',
-      emails_for_orders: 'string',
-      emails_for_sales_report: 'string',
-      emails_for_sales_import: 'string',
-      legal_address: 'string',
-      meda_menu_database: 'string',
-      ogrn: 'string',
-      organization: 'string',
-      print_sale_check: 'boolean',
-      schedule: 'string',
-      site: 'string',
-      ticket_prefix: 'string',
-      service_tasks_models: 'json',
-      sms_gateway_lines_qty: 'integer'
+  TYPES = {
+    address: 'string',
+    address_for_check: 'string',
+    contact_phone: 'string',
+    contact_phone_short: 'string',
+    data_storage_qty: 'integer',
+    duck_plan: 'string',
+    duck_plan_url: 'string',
+    email: 'string',
+    emails_for_acts: 'string',
+    emails_for_orders: 'string',
+    emails_for_sales_report: 'string',
+    emails_for_sales_import: 'string',
+    legal_address: 'string',
+    meda_menu_database: 'string',
+    ogrn_inn: 'string',
+    organization: 'string',
+    print_sale_check: 'boolean',
+    schedule: 'string',
+    site: 'string',
+    ticket_prefix: 'string',
+    service_tasks_models: 'json',
+    sms_gateway_lines_qty: 'integer'
   }
 
   VALUE_TYPES = %w[boolean integer string text json]
 
-  default_scope {order('settings.name asc')}
+  default_scope { order(:department_id, :presentation) }
   scope :for_department, ->(department) { where(department_id: department.is_a?(Department) ? department.id : department) }
 
   belongs_to :department
   delegate :name, to: :department, prefix: true, allow_nil: true
 
-  attr_accessible :name, :presentation, :value, :value_type, :department_id
-  validates :name, :value_type, presence: true
+  attr_accessible :name, :presentation, :value, :department_id
+  validates :name, presence: true
   validates_uniqueness_of :name, scope: :department_id
   validate :json_value_correct
+
+  before_validation do
+    self.value_type ||= TYPES[name.to_sym]
+    self.presentation = I18n.t("settings.#{name}", default: name.to_s.humanize) if presentation.blank?
+  end
 
   class << self
     def get_value(name, department = Department.current)
@@ -44,59 +48,31 @@ class Setting < ActiveRecord::Base
       setting.present? ? setting.value : ''
     end
 
-    def ogrn
-      Setting.find_by(name: 'ogrn')&.value
-    end
-
-    def ticket_prefix(department=nil)
-      (setting = Setting.for_department(department).find_by_name('ticket_prefix')).present? ? setting.value : '25'
-    end
-
-    def duck_plan(department)
-      Setting.for_department(department).find_by_name('duck_plan').try :value
-    end
-
-    def duck_plan_url(department)
-      Setting.for_department(department).find_by_name('duck_plan_url').try :value
-    end
-
-    def data_storage_qty(department = nil)
-      Setting.get_value('data_storage_qty', department).to_i
-    end
-
-    def schedule(department = nil)
-      department ||= Department.current
-      Setting.for_department(department).find_by(name: 'schedule')&.value
-    end
-
-    def emails_for_orders
-      Setting.get_value 'emails_for_orders'
-    end
-
-    def meda_menu_database
-      Setting.for_department(Department.current).find_by(name: 'meda_menu_database')&.value
-    end
-
-    def service_tasks_models
-      Setting.find_by(name: 'service_tasks_models')&.value
-      value = Setting.find_by(name: 'service_tasks_models')&.value
-      return unless value
-      JSON.parse value
-    end
-
-    def sms_gateway_lines_qty
-      (Setting.find_by(name: 'sms_gateway_lines_qty')&.value || 1).to_i
-    end
-
-    def print_sale_check?
-      Setting.get_value('print_sale_check') == '1'
-    end
-
     private
+
+    def method_missing(name, *arguments, &block)
+      the_name = name.to_s.gsub(/\?$/, '')
+      setting_type = TYPES[the_name.to_sym]
+      return super if setting_type.nil?
+
+      department = arguments.first
+      value = get_value(the_name, department)
+
+      case setting_type
+      when 'boolean'
+        value == '1'
+      when 'integer'
+        value.to_i
+      when 'json'
+        parse_value value
+      else
+        value
+      end
+    end
 
     def parse_value(value)
       begin
-        JSON.parse value
+        JSON.parse(value)
       rescue => error
         return error
       end

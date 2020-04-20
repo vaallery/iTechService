@@ -12,7 +12,7 @@
 
 # Settings
 puts 'Seeding DEFAULT SETTINGS'
-Setting::DEFAULT_SETTINGS.each_pair do |name, value_type|
+Setting::TYPES.each_pair do |name, value_type|
   Setting.where(name: name.to_s)
     .first_or_create!(value_type: value_type, presentation: I18n.t("settings.#{name}", default: name.to_s.humanize))
 end

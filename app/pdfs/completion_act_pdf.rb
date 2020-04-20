@@ -30,25 +30,25 @@ class CompletionActPdf < Prawn::Document
     # TODO: Barcode
 
     # Organization info
-    organization = Setting.get_value(:organization, department)
+    organization = Setting.organization(department)
 
     move_down font_size * 2.5
     text "Сервисный центр «#{department.brand_name}» #{organization}", align: :right
-    text "Юр. Адрес: #{organization}, #{Setting.get_value(:legal_address, department)}", align: :right
-    text "ОГРН: #{Setting.ogrn}", align: :right
+    text "Юр. Адрес: #{organization}, #{Setting.legal_address(department)}", align: :right
+    text "#{Setting.ogrn_inn(department)}", align: :right
     move_down font_size
-    text "Фактический адрес: #{Setting.get_value(:address, department)}", align: :right
+    text "Фактический адрес: #{Setting.address(department)}", align: :right
 
     # Contact info
     move_down font_size
     bounding_box [400, cursor], width: 130 do
       text 'График работы:', align: :right, style: :bold
-      text Setting.get_value(:schedule, department), align: :right
+      text Setting.schedule(department), align: :right
       move_down font_size
       [
-        "e-mail: #{Setting.get_value(:email, department)}",
-        "#{Setting.get_value(:contact_phone, department)}",
-        "сайт: #{Setting.get_value(:site, department)}"
+        "e-mail: #{Setting.email(department)}",
+        "Конт. тел.: #{Setting.contact_phone(department)}",
+        "сайт: #{Setting.site(department)}"
       ].each do |str|
         text str, align: :right
       end

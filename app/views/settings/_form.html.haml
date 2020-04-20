@@ -3,9 +3,8 @@
 
   .form-inputs
     = f.association :department
-    = f.input :name
+    = f.input :name, collection: settings_options_collection
     = f.input :presentation
-    = f.input :value_type, collection: Setting::VALUE_TYPES, prompt: false if f.object.new_record?
     = f.input :value, as: @setting.input_type
 
   .form-actions

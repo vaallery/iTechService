@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200417100543) do
+ActiveRecord::Schema.define(version: 20200420111736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1100,6 +1100,9 @@ ActiveRecord::Schema.define(version: 20200417100543) do
     t.string   "estimated_cost_of_repair"
     t.string   "type_of_work"
     t.integer  "initial_department_id"
+    t.string   "trademark"
+    t.string   "completeness"
+    t.string   "device_group"
   end
 
   add_index "service_jobs", ["carrier_id"], name: "index_service_jobs_on_carrier_id", using: :btree

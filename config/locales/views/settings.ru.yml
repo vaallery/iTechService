@@ -19,6 +19,7 @@ ru:
     emails_for_sales_import: 'Почта для логов импорта'
     legal_address: 'Юридический адрес'
     meda_menu_database: 'База Медиа меню'
+    ogrn_inn: 'ОГРН/ИНН'
     organization: 'Организация'
     print_sale_check: 'Печатать чеки продаж'
     schedule: 'График работы'

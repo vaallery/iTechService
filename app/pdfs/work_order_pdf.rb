@@ -29,25 +29,25 @@ class WorkOrderPdf < Prawn::Document
     # TODO: Barcode
 
     # Organization info
-    organization = Setting.get_value(:organization, department)
+    organization = Setting.organization(department)
 
     move_down font_size * 2.5
     text "Сервисный центр «#{department.brand_name}» #{organization}", align: :right
     text "Юр. Адрес: #{organization}, #{Setting.get_value(:legal_address, department)}", align: :right
-    text "ОГРН: #{Setting.get_value(:ogrn, department)}", align: :right
+    text "#{Setting.ogrn_inn(department)}", align: :right
     move_down font_size
-    text "Фактический адрес: #{Setting.get_value(:address, department)}", align: :right
+    text "Фактический адрес: #{Setting.address(department)}", align: :right
 
     # Contact info
     move_down font_size
     bounding_box [400, cursor], width: 145 do
       text 'График работы:', align: :right, style: :bold
-      text Setting.get_value(:schedule, department), align: :right
+      text Setting.schedule(department), align: :right
       move_down font_size
       [
-        "e-mail: #{Setting.get_value(:email, department)}",
-        "#{Setting.get_value(:contact_phone, department)}",
-        "сайт: #{Setting.get_value(:site, department)}"
+        "e-mail: #{Setting.email(department)}",
+        "Конт. тел.: #{Setting.contact_phone(department)}",
+        "сайт: #{Setting.site(department)}"
       ].each do |str|
         text str, align: :right
       end
@@ -65,11 +65,11 @@ class WorkOrderPdf < Prawn::Document
     move_down font_size
 
     # Table
-    device_group = /iPhone|iPad|MacBook|iMac|Mac mini/.match service_job.type_name
+    device_group = service_job.device_group.presence || /iPhone|iPad|MacBook|iMac|Mac mini/.match(service_job.type_name)
     table [
-      ["Торговая марка: Apple", "imei: #{service_job.imei}"],
+      ["Торговая марка: #{service_job.trademark}", "imei: #{service_job.imei}"],
       ["Группа изделий: #{device_group}", "Серийный номер: #{service_job.serial_number}"],
-      ["Модель: #{service_job.type_name}", "Комплектность: аппарат"],
+      ["Модель: #{service_job.type_name}", "Комплектность: #{service_job.completeness}"],
     ], width: page_width
 
     table [
@@ -94,8 +94,7 @@ class WorkOrderPdf < Prawn::Document
             ['4.', '', {content: "Продолжительность платного ремонта при необходимости заказа запасных частей, может составлять до 100 дней."}],
             ['5.', '', {content: "Сервисный центр предоставляет гарантию только на замененные детали в течение 90 дней с момента выдачи аппарата, за исключение работ по ремонту и восстановлению материнской платы. Сервисный центр уведомляет, а клиент принимает к сведению информацию о том, что гарантия на предоставлена исключительно на заменённые детали. Сервисный центр оставляет за собой право отказать в проведении гарантийного ремонта в случае, если в результате проверки аппарата будет установлено, что заявленная неисправность не связана с предыдущим ремонтом (ст 5 п 6 Закона «О защите прав потребителя»)."}],
             ['6.', '', {content: "Клиент обязан забрать изделие не позднее 30 (тридцати) календарных дней со дня уведомления об окончании работ (телефонограммой/заказным письмом), в противном случае клиенту начисляется плата за услуги хранения изделия в размере 5% от стоимости произведенного ремонта за каждый день хранения. При превышении стоимости хранения изделия в сервисном центре над средней рыночной стоимостью самого изделия, такое изделия зачисляется в плату услуг по хранению и возврату клиенту не подлежит."}],
-            ['7.', '', {content: "Клиент предупреждён и соглашается с тем, что в связи с техническим состоянием его устройства на момент обращения в сервисный центр, в процессе ремонта устройство может потерять частично или полностью основные функции, при этом клиент соглашается что сервисный центр ответственности за указанный результат не несет. В случае, если в процессе диагностики или гарантийного обслуживания товара, приобретенного у #{organization}, будет выявлено, что ремонт данного устройства не возможен, то Сервисный центр оставляет за собой право поменять устройство на новое. Диагностика, экспертиза и ремонт гарантийных устройств компании Apple осуществляется только в авторизованных сервисных центрах компании Apple, в том числе за пределами РФ (список авторизованных сервисных центров можете на сайте компании Apple https://support.apple.com/ru-ru)."}],
-            ['', '', {content: "В целях проверки наличия недостатков в ходе диагностики изделия Клиент (потребитель) предупреждён о том, что"}],
+            ['7.', '', {content: "В целях проверки наличия недостатков в ходе диагностики изделия Клиент (потребитель) предупреждён о том, что"}],
             ['-', '', "Настройки изделия будут приведены в состояние, установленное производителем (сброс на заводские установки)."],
             ['-', '', "Оборудование будет проверено на наличие вредоносных программ (так называемых «вирусов»), что может привести к утрате важной для клиента информации."],
             ['-', '', "В связи с требованиями производителей, при поступлении изделия в Сервисный центр обновление программного обеспечения производится как обязательная профилактическая процедура, выполняемая с целью улучшения потребительских свойств изделия и не классифицируется как ремонт."],

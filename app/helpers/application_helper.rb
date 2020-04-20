@@ -7,7 +7,7 @@ module ApplicationHelper
       render(partial, f: builder, index: "new_#{association}", options: options)
     end
     link_to '#', class: 'add_fields btn-mini btn-success btn',
-        data: { selector: append_to_selector, association: association, content: (fields.gsub('\n', '')) } do
+            data: {selector: append_to_selector, association: association, content: (fields.gsub('\n', ''))} do
       glyph(:plus) + ' ' + name
     end
   end
@@ -15,7 +15,7 @@ module ApplicationHelper
   def link_to_remove_fields(f)
     content_tag :span do
       f.hidden_field(:_destroy) +
-      link_to('#', class: 'remove_fields btn btn-mini btn-danger'){tag('i', class: 'icon-minus')}
+        link_to('#', class: 'remove_fields btn btn-mini btn-danger') { tag('i', class: 'icon-minus') }
     end
   end
 
@@ -38,7 +38,7 @@ module ApplicationHelper
 
   def sort_fields
     hidden_field_tag(:direction, params[:direction]) +
-    hidden_field_tag(:sort, params[:sort])
+      hidden_field_tag(:sort, params[:sort])
   end
 
   def search_button
@@ -47,16 +47,16 @@ module ApplicationHelper
     end
   end
 
-  def timestamp_string_for object
+  def timestamp_string_for(object)
     "[#{object.class.human_attribute_name(:created_at)}: #{l(object.created_at.localtime, format: :date_time)} | " +
       "#{object.class.human_attribute_name(:updated_at)}: #{l(object.updated_at.localtime, format: :date_time)}]"
   end
 
-  def nav_state_for controller
+  def nav_state_for(controller)
     controller_name == controller ? 'active' : ''
   end
 
-  def link_to_new object_class, name = nil, options = {}
+  def link_to_new(object_class, name = nil, options = {})
     options.merge! class: 'btn btn-success btn-large'
     name ||= t("#{object_class.model_name.collection}.new.title", default: t('new'))
     link_to url_for(controller: object_class.model_name.route_key, action: 'new'), options do
@@ -64,7 +64,7 @@ module ApplicationHelper
     end
   end
 
-  def link_to_show object, options = {}
+  def link_to_show(object, options = {})
     options.merge! class: 'btn'
     name = t 'show'
     link_to url_for(controller: object.model_name.route_key, action: 'show', id: object.id), options do
@@ -72,7 +72,7 @@ module ApplicationHelper
     end
   end
 
-  def link_to_edit object, options = {}
+  def link_to_edit(object, options = {})
     options.merge! class: 'btn'
     name = t 'edit'
     link_to url_for(controller: object.model_name.route_key, action: 'edit', id: object.id), options do
@@ -82,14 +82,14 @@ module ApplicationHelper
 
   def link_to_destroy(object, options = {})
     options.merge! class: 'btn btn-danger', method: 'delete',
-        data: {confirm: t('confirmation', default: 'Are you sure?')}
+                   data: {confirm: t('confirmation', default: 'Are you sure?')}
     name = t 'destroy'
     link_to url_for(controller: object.model_name.route_key, action: 'destroy', id: object.id), options do
       "#{glyph(:trash)} #{name}".html_safe
     end
   end
 
-  def submit_button form, options = {}
+  def submit_button(form, options = {})
     options.merge! class: 'submit_button btn btn-primary ' + (options[:class] || ''), type: 'submit'
     model_name = form.object.class.model_name
     human_model_name = model_name.human
@@ -104,23 +104,23 @@ module ApplicationHelper
     end
   end
 
-  def link_to_show_small object, options = {}
+  def link_to_show_small(object, options = {})
     options.merge! class: 'btn btn-small'
     link_to icon_tag('eye-open'), url_for(controller: object.class.name.tableize, action: 'show', id: object.id), options
   end
 
-  def link_to_edit_small object, options = {}
+  def link_to_edit_small(object, options = {})
     options.merge! class: 'btn btn-small'
     link_to icon_tag(:edit), url_for(controller: object.class.name.tableize, action: 'edit', id: object.id), options
   end
 
-  def link_to_destroy_small object, options = {}
+  def link_to_destroy_small(object, options = {})
     options.merge! class: 'btn btn-small btn-danger', method: 'delete',
-        data: {confirm: t('helpers.links.confirm', default: 'Are you sure?')}
+                   data: {confirm: t('helpers.links.confirm', default: 'Are you sure?')}
     link_to icon_tag(:trash), url_for(controller: object.class.name.tableize, action: 'destroy', id: object.id), options
   end
 
-  def human_history_value rec #value, type
+  def human_history_value(rec)
     if rec.new_value.present?
       case rec.column_type
       when 'boolean'
@@ -128,20 +128,20 @@ module ApplicationHelper
         val = icon_tag icon_class
       when 'integer'
         case rec.column_name
-          when 'client_id'
-            val = Client.find(rec.new_value).try(:full_name)
-          when 'location_id'
-            val = Location.find(rec.new_value).try(:name)
-          when 'service_jobs_id'
-            val = ServiceJob.find(rec.new_value).try(:presentation)
-          when 'task_id'
-            val = Task.find(rec.new_value).try(:name)
-          when 'nominal'
-            val = rec.object.is_a?(GiftCertificate) ? human_gift_certificate_nominal(rec.object) : rec.new_value
-          when 'status'
-            val = rec.object.is_a?(GiftCertificate) ? rec.object.status_h : rec.new_value
-          else
-            val = rec.new_value
+        when 'client_id'
+          val = Client.find(rec.new_value).try(:full_name)
+        when 'location_id'
+          val = Location.find(rec.new_value).try(:name)
+        when 'service_jobs_id'
+          val = ServiceJob.find(rec.new_value).try(:presentation)
+        when 'task_id'
+          val = Task.find(rec.new_value).try(:name)
+        when 'nominal'
+          val = rec.object.is_a?(GiftCertificate) ? human_gift_certificate_nominal(rec.object) : rec.new_value
+        when 'status'
+          val = rec.object.is_a?(GiftCertificate) ? rec.object.status_h : rec.new_value
+        else
+          val = rec.new_value
         end
       else
         val = rec.new_value
@@ -149,7 +149,6 @@ module ApplicationHelper
     else
       val = '-'
     end
-    #val.html_safe
     val
   end
 
@@ -168,7 +167,7 @@ module ApplicationHelper
   def date_field(form, attr)
     content_tag(:div, class: 'input-append') do
       form.text_field(attr, class: 'span5') +
-          link_to(glyph(:calendar), '#', class: 'btn datepicker')
+        link_to(glyph(:calendar), '#', class: 'btn datepicker')
     end
   end
 
@@ -179,16 +178,16 @@ module ApplicationHelper
 
   def title_for(model_class)
     case action_name
-      when 'index'
-        t '.title'
-      when 'show'
-        t '.title', default: model_class.model_name.human
-      else
-        t '.title', default: t("#{action_name.humanize} #{model_class.model_name.human}")
+    when 'index'
+      t '.title'
+    when 'show'
+      t '.title', default: model_class.model_name.human
+    else
+      t '.title', default: t("#{action_name.humanize} #{model_class.model_name.human}")
     end
   end
 
-  def auto_title(object=nil)
+  def auto_title(object = nil)
     if object.present?
       object.persisted? ? t("#{object.model_name.route_key}.edit.title") : t("#{object.model_name.route_key}.new.title")
     else
@@ -196,7 +195,7 @@ module ApplicationHelper
     end
   end
 
-  def auto_header_tag(object=nil, title=nil, button_name=nil)
+  def auto_header_tag(object = nil, title = nil, button_name = nil)
     model_class = object.present? ? object.class : controller_name.classify.constantize
     content_tag :div, class: 'page-header' do
       if action_name == 'index'
@@ -217,7 +216,7 @@ module ApplicationHelper
   end
 
   def store_location
-    session[:return_to] = request.fullpath.gsub(/.js/,'')
+    session[:return_to] = request.fullpath.gsub(/.js/, '')
   end
 
   def clear_return_to
@@ -229,7 +228,7 @@ module ApplicationHelper
     clear_return_to
   end
 
-  def button_to_close_popover(options={})
+  def button_to_close_popover(options = {})
     link_to "&times;".html_safe, '#', options.merge(class: 'close_popover_button')
   end
 
@@ -237,7 +236,7 @@ module ApplicationHelper
     content_tag(:a, glyph('remove-sign'), class: 'close close_modal_button', 'data-dismiss' => 'modal', href: '#')
   end
 
-  def modal_header_tag(title=nil)
+  def modal_header_tag(title = nil)
     content_tag(:div, class: 'modal-header') do
       content_tag(:h3) do
         button_to_close_modal + title
@@ -246,8 +245,8 @@ module ApplicationHelper
   end
 
   def humanize_duration(val)
-    h = (val/60).round
-    m = (val%60).round
+    h = (val / 60).round
+    m = (val % 60).round
     h > 0 ? t('hour_min', hour: h, min: m) : t('min', min: m)
   end
 
@@ -255,7 +254,7 @@ module ApplicationHelper
     value.nil? ? '-' : number_to_percentage(value, precision: 0)
   end
 
-  def human_currency(value, with_unit=false)
+  def human_currency(value, with_unit = false)
     value.nil? ? '-' : (with_unit ? number_to_currency(value, precision: 0, delimiter: ' ', separator: ',') : number_to_currency(value, precision: 2, delimiter: ' ', separator: ',', unit: ''))
   end
 
@@ -272,9 +271,7 @@ module ApplicationHelper
   end
 
   def header_link_to_scan_barcode
-    # content_tag(:li) do
-      link_to glyph(:barcode), '#', remote: true, id: 'scan_barcode_button'
-    # end.html_safe
+    link_to glyph(:barcode), '#', remote: true, id: 'scan_barcode_button'
   end
 
   def button_to_update(name, document, attributes)

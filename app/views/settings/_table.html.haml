@@ -1,6 +1,6 @@
 - if @settings.any?
 
-  %table.table.table-striped.table-hover
+  %table.table.table-hover
     %thead
       %tr
         %th= Setting.human_attribute_name :department
@@ -15,7 +15,9 @@
           %td= setting.presentation
           %td= setting.name
           %td= setting.value
-          %td= link_to_edit_small setting
+          %td.btn-group
+            = link_to_edit_small setting
+            = link_to_destroy_small setting
 
 
   -#- @settings.each do |setting|
