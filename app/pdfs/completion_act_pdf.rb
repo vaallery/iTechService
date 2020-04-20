@@ -67,11 +67,11 @@ class CompletionActPdf < Prawn::Document
     move_down font_size
 
     # Table
-    device_group = /iPhone|iPad|MacBook|iMac|Mac mini/.match service_job.type_name
+    device_group = service_job.device_group.presence || /iPhone|iPad|MacBook|iMac|Mac mini/.match(service_job.type_name)
     table [
-            ["Торговая марка: Apple", "imei: #{service_job.imei}"],
+            ["Торговая марка: #{service_job.trademark}", "imei: #{service_job.imei}"],
             ["Группа изделий: #{device_group}", "Серийный номер: #{service_job.serial_number}"],
-            ["Модель: #{service_job.type_name}", "Комплектность: аппарат"],
+            ["Модель: #{service_job.type_name}", "Комплектность: #{service_job.completeness}"],
           ], width: 530
 
     table [["Заявленный дефект клиентом", service_job.claimed_defect]], width: 530 do
