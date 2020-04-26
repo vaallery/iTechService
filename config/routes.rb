@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   root to: 'dashboard#index'
   get 'dashboard', to: 'dashboard#index'
   get 'become/:id', to: 'dashboard#become', as: 'become'
-  get 'sign_in_by_card', to: 'dashboard#sign_in_by_card'
   get 'actual_orders', to: 'dashboard#actual_orders'
   get 'actual_tasks', to: 'dashboard#actual_tasks'
   get 'actual_supply_requests', to: 'dashboard#actual_supply_requests'
@@ -19,6 +18,14 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     sessions: 'users/sessions'
   }
+
+
+  namespace :users, as: :user do
+    devise_scope :user do
+      post 'sign_in_by_card', to: 'sessions#sign_in_by_card'
+    end
+    resource :departments, only: %i[edit update]
+  end
 
   namespace :service do
     resources :job_templates

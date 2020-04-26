@@ -187,14 +187,16 @@ add_fields = (target, association, content) ->
 
 sign_in_by_card = (number)->
   current_user_id = $('#profile_link').data('id')
-  $.getJSON '/sign_in_by_card', {card_number: number, current_user: current_user_id}, (data)->
+  $.post '/users/sign_in_by_card.json', {card_number: number, current_user: current_user_id}, (data, status, resp)->
+    new_location = resp.getResponseHeader('location')
+
     if window.location.pathname is "/users/sign_in"
-      window.location.assign '/'
+      window.location.assign new_location
     else
       if data.id == current_user_id
         $('#card_sign_in').removeClass('in').hide()
       else
-        window.location.assign '/'
+        window.location.assign new_location
       window.auth_timeout = window.auth_count = Number($('#profile_link').data('timeout-in'))
 
 scanCard = ->

@@ -20,9 +20,9 @@
 //= require app.js.coffee
 //= require app.notification
 //= require inputs
+//= require common
 //= require app.substitute_phones
 //= require trade_in_devices
-//= require common
 //= require forms
 //= require announcements
 //= require bonuses

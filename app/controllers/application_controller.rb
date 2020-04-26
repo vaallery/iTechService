@@ -56,6 +56,15 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def change_user_department(user, new_department)
+    user.department = new_department
+    if user.location.present?
+      new_location = Location.find_by(department: new_department, code: user.location.code)
+      user.location = new_location if new_location.present?
+    end
+    user.save
+  end
+
   def set_current_user
     User.current = current_user
   end

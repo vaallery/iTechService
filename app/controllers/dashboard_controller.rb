@@ -47,21 +47,6 @@ class DashboardController < ApplicationController
     end
   end
 
-  def sign_in_by_card
-    respond_to do |format|
-      if (user = User.find_by_card_number(params[:card_number])).present?
-        if params[:current_user].to_i == user.id
-          sign_in :user, user, bypass: true
-        else
-          sign_in :user, user
-        end
-        format.json { render json: user }
-      else
-        format.json { redirect_to new_user_session_url }
-      end
-    end
-  end
-
   def become
     if Rails.env.development?
       sign_in :user, User.find(params[:id])
