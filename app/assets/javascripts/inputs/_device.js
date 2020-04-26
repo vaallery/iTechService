@@ -1,10 +1,10 @@
 (function(){
   App.Inputs.Device = {
     check_imei: function() {
-      const $input = $('.device_input')
-      const item_id = $input.find('.item_id').val()
+      var $input = $('.device_input')
+      var item_id = $input.find('.item_id').val()
       $.getJSON("/items/" + item_id + "/check_status", function(data) {
-        const $search_input = $input.find('.item_search')
+        var $search_input = $input.find('.item_search')
 
         if (data.status_info.length > 0) {
           $search_input.attr('data-status', data.status)
