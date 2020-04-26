@@ -188,20 +188,27 @@ module ApplicationHelper
   end
 
   def auto_title(object = nil)
-    if object.present?
-      object.persisted? ? t("#{object.model_name.route_key}.edit.title") : t("#{object.model_name.route_key}.new.title")
-    else
-      t('.title', default: controller_name.classify.constantize.model_name.human)
-    end
+    title = if object.present?
+              view_key = object.persisted? ? 'edit' : 'new'
+              t("#{object.model_name.route_key}.#{view_key}.title")
+            else
+              t('.title', default: controller_name.classify.constantize.model_name.human)
+            end
+
+    content_for(:title, title)
+    title.html_safe
   end
 
   def auto_header_tag(object = nil, title = nil, button_name = nil)
     model_class = object.present? ? object.class : controller_name.classify.constantize
-    content_tag :div, class: 'page-header' do
+    title ||= (action_name == 'index') ? auto_title : auto_title(object)
+
+    content_tag(:div, class: 'page-header') do
       if action_name == 'index'
-        content_tag(:h1, t('.title')) + ((can?(:create, model_class)) ? link_to_new(model_class, button_name) : '')
+        content = content_tag(:h1, title)
+        content << link_to_new(model_class, button_name) if can?(:create, model_class)
+        content
       else
-        title ||= auto_title object
         content_tag :h1, link_back_to_index + title
       end
     end

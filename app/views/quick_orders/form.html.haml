@@ -7,7 +7,7 @@
 .row-flow
   .span6
     = simple_form_for @quick_order, html: { class: 'form-horizontal' } do |f|
-      = f.association :department, as: :radio_buttons, collection: departments_for_select, item_wrapper_class: 'inline'
+      = f.association :department, as: :radio_buttons, collection: local_departments_collection, item_wrapper_class: 'inline'
       = f.input :device_kind, as: :radio_buttons, collection: QuickOrder::DEVICE_KINDS
       = f.input :client, as: :client, required: true, no_devices: true
       = f.input :client_name unless @quick_order.client_name.nil?

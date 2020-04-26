@@ -9,6 +9,7 @@ class Department < ApplicationRecord
   default_scope { order('departments.id asc') }
   scope :branches, -> { where(role: 1) }
   scope :selectable, -> { where(role: [0, 1, 3]) }
+  scope :in_city, ->(city) { where(city: city) }
 
   belongs_to :city, required: true
   belongs_to :brand, required: true
@@ -44,6 +45,10 @@ class Department < ApplicationRecord
 
   def self.current_with_remotes
     where('code LIKE ?', "#{Department.current.code}%")
+  end
+
+  def full_name
+    "#{city_name} > #{name}"
   end
 
   def role_s

@@ -1,0 +1,5 @@
+<li><a href="#" data-behavior="show_departments">Другие подразделения</a></li>
+<li class="divider"></li>
+<% locations.each do |location| %>
+  <li><a href="#" class="location-item" data-id="<%= location.id %>"><%= location.name %></a></li>
+<% end  %>

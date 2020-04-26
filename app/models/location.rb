@@ -1,10 +1,15 @@
 # encoding: utf-8
 class Location < ActiveRecord::Base
   scope :ordered, -> { order('position asc') }
+  scope :in_department, ->(department) { where department: department }
   scope :for_schedule, -> { where(schedule: true) }
   scope :visible, -> { where hidden: [false, nil] }
   scope :done, -> { where code: 'done' }
   scope :code_start_with, ->(code) { where('code LIKE ?', "#{code}%") }
+
+  scope :search, ->(params) do
+    where(department_id: params[:department_id]) if params.key?(:department_id)
+  end
 
   belongs_to :department, required: true, inverse_of: :locations
   has_many :users

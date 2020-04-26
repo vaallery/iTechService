@@ -1,10 +1,11 @@
 class LocationsController < ApplicationController
   def index
     authorize Location
-    @locations = policy_scope(Location).ordered
+    @locations = policy_scope(Location).search(params).ordered
 
     respond_to do |format|
       format.html
+      format.js
       format.json { render json: @locations }
     end
   end

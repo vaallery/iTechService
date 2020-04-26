@@ -83,8 +83,8 @@
                 = t("users.abilities.#{ability}")
             = hidden_field_tag 'user[abilities][]', ''
 
-      = f.association :department, prompt: false
-      = f.association :location, label_method: :name
+      = f.association :department, prompt: false, as: :grouped_select, collection: City.all, group_method: :selectable_departments
+      = f.association :location, as: :location
       = f.input :department_autochangeable
       = f.input :password
       = f.input :password_confirmation

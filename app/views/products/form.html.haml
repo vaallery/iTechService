@@ -38,8 +38,8 @@
           - if @product.is_service
             - @product.task || @product.build_task
             = f.simple_fields_for :task do |ff|
-              -#= ff.input :name
               = ff.input :role, collection: User::ROLES, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
+              -# TODO get rid
               = ff.association :location, label_method: :name
 
           .control-group

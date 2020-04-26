@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="x-ua-compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon-precomposed" href="images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="images/favicon.ico">
+  <%= favicon_link_tag 'logo2.png' %>
+
+  <title><%= content_for?(:title) ? "iTech Service | #{yield(:title)}" : 'iTech Service' %></title>
+
+  <%= stylesheet_link_tag 'application', :media => 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+  <div id="modal" class="modal large hide fade"></div>
+  <% if user_signed_in? %>
+    <%= render 'shared/topbar' %>
+    <%= render 'shared/navbar' %>
+    <%= render 'shared/flash_messages' %>
+    <%= spinner_tag %>
+    <%= render 'shared/notifications' %>
+
+    <div class="container-fluid">
+      <div id="flash_place">
+        <%= bootstrap_flash %>
+      </div>
+      <div class="row-fluid">
+        <div class="span12">
+          <div id="main_content">
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%= subscribe_to '/announcements' %>
+    <%= subscribe_to '/service_jobs/new' %>
+    <%= subscribe_to '/service_jobs/update' %>
+    <%= subscribe_to '/chat/new' %>
+  <% else %>
+    <%= yield %>
+  <% end %>
+  <%= render 'shared/scanner' %>
+</body>
+</html>

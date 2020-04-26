@@ -19,7 +19,7 @@
 //= require currency-in-words
 //= require app.js.coffee
 //= require app.notification
-//= require app.inputs
+//= require inputs
 //= require app.substitute_phones
 //= require trade_in_devices
 //= require common

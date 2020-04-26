@@ -22,7 +22,7 @@ jQuery ->
         task_cost.val data.cost
 
         if is_change_location
-          $('#service_job_location_id').val(data.location_id)
+          $('#location_id').val(data.location_id)
           $('#location_value').text(data.location_name)
 
         if data['is_repair?']
@@ -35,15 +35,10 @@ jQuery ->
 #      task_id = $(this).val()
 #      unless task_id is ''
 #        $.getJSON "/tasks/#{task_id}.json", (data)->
-#          $field = $('#service_job_location_id')
+#          $field = $('#location_id')
 #          if $field.find("[value='#{data.location_id}']").length == 0
 #            $field.append "<option value='#{data.location_id}'>#{data.location_name}</option>"
 #          $field.val(data.location_id)
-
-    $('a', '#locations_list').click (event) ->
-      $('#location_value').text $(this).text()
-      $('#service_job_location_id').val $(this).attr('location_id')
-      event.preventDefault()
 
     $('#service_job_security_code_none').click (event)->
       $('#service_job_security_code').val '-'

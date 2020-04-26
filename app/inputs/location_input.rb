@@ -1,24 +1,40 @@
 class LocationInput < SimpleForm::Inputs::Base
+  delegate :content_tag, :link_to, :icon_tag, :locations_path, :current_user, to: :template
 
   def input(wrapper_options = nil)
-    user = options[:user]
-    (@builder.hidden_field(attribute_name) +
-    template.content_tag(:span, class: 'btn-group') do
-      template.content_tag(:button, id: 'locations_select_button', class: 'btn dropdown-toggle',
-                           'data-toggle' => 'dropdown') do
-        template.content_tag(:span, id: 'location_value', class: 'pull-left') do
-          @builder.object.location.blank? ? '-' : @builder.object.location.name
+    content_tag(:div, id: 'location_input', class: 'dropdown-input') do
+      @builder.hidden_field(attribute_name, id: 'location_id') +
+      content_tag(:span, class: 'btn-group') do
+        # link_to(template.icon_tag(:refresh), locations_path, class: 'btn', remote: true) +
+        content_tag(:button, id: 'locations_select_button', class: 'btn dropdown-toggle', 'data-toggle' => 'dropdown') do
+          content_tag(:span, id: 'location_value', class: 'pull-left') do
+            @builder.object.location.blank? ? '-' : @builder.object.location.name
+          end +
+          content_tag(:span, nil, class: 'caret pull-right')
         end +
-        template.content_tag(:span, nil, class: 'caret pull-right')
-      end +
-      template.content_tag(:ul, id: 'locations_list', class: 'dropdown-menu') do
-        # Location.allowed_for(user, @builder.object).map do |location|
-        Location.visible.ordered.map do |location|
-          template.content_tag(:li, template.link_to(location.name, '#', location_id: location.id)) if location.present?
-        end.join.html_safe
+        content_tag(:ul, id: 'locations_list', class: 'dropdown-menu') do
+          template.render 'locations/list', locations: locations
+        end +
+        content_tag(:ul, id: 'departments_list', class: 'dropdown-menu hidden') do
+          departments.map do |department|
+            content_tag(:li, link_to(department.full_name, locations_path(department_id: department.id), remote: true))
+          end.join.html_safe
+        end
       end
-    end
-    ).html_safe
+    end.html_safe
   end
 
+  private
+
+  def user
+    options.fetch(:user, template.current_user)
+  end
+
+  def locations
+    Location.in_department(user.department).visible.ordered
+  end
+
+  def departments
+    Department.selectable
+  end
 end

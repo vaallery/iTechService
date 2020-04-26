@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   before_action :set_current_user
   before_action :store_location, except: [:create, :update, :destroy]
   after_action :verify_authorized
-  # layout 'staff'
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized
   respond_to :html
   helper_method :can?
