@@ -1,14 +1,14 @@
-class ClientPolicy < BasePolicy
+class ClientPolicy < CommonPolicy
   def create?
     any_manager?(:software, :media)
   end
 
   def update?
-    same_department? && (any_manager?(:marketing) || able_to?(:edit_clients))
+    any_manager?(:marketing) || able_to?(:edit_clients)
   end
 
   def destroy?
-    same_department? && any_admin?
+    any_admin?
   end
 
   def select?; read?; end
@@ -20,6 +20,6 @@ class ClientPolicy < BasePolicy
   end
 
   def change_category?
-    superadmin? || (same_department? && admin?)
+    any_admin?
   end
 end
