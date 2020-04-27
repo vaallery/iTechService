@@ -15,6 +15,7 @@ class Location < ActiveRecord::Base
   has_many :users
   has_many :tasks
   delegate :name, to: :department, prefix: true, allow_nil: true
+  delegate :city, to: :department, allow_nil: true
 
   attr_accessible :name, :schedule, :position, :code, :department_id, :hidden, :storage_term
   validates_presence_of :name

@@ -1,20 +1,11 @@
 module Service
   class ActualFeedbacksController < ApplicationController
     skip_after_action :verify_authorized, only: :index
+    respond_to :js
 
     def index
-      respond_to do |format|
-        run Feedback::IndexActual do
-          format.js { return render(locals: {feedbacks_list: feedbacks_list}) }
-        end
-        format.js { failed }
-      end
-    end
-
-    private
-
-    def feedbacks_list
-      cell(Feedback::Cell::List, @model).call
+      feedbacks = policy_scope(Feedback).actual
+      @feedbacks_list = cell(Feedback::Cell::List, feedbacks).call
     end
   end
 end

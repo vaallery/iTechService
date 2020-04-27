@@ -341,10 +341,6 @@ class User < ActiveRecord::Base
     abilities.include? ability.to_s
   end
 
-  def able_to_view_feedbacks?
-    able_to? 'view_feedback_notifications'
-  end
-
   def rating
     good_count = karmas.good.count
     bad_count = karmas.bad.count
