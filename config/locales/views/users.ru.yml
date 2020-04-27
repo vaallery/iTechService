@@ -13,6 +13,7 @@ ru:
       print_receipt: "Печатать чеки"
       see_stale_service_jobs: 'Видеть залежалые устройства'
       view_feedback_notifications: 'Просматривать уведомления обратной связи'
+      view_feedbacks_in_city: 'Просматривать уведомления обратной связи в городе'
       view_repair_parts: 'Смотреть запчасти устройства'
       view_reports: 'Смотреть отчёты'
     index:

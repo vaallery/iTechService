@@ -1,6 +1,7 @@
 # encoding: utf-8
 class Location < ActiveRecord::Base
   scope :ordered, -> { order('position asc') }
+  scope :in_city, ->(city) { where department: Department.in_city(city) }
   scope :in_department, ->(department) { where department: department }
   scope :for_schedule, -> { where(schedule: true) }
   scope :visible, -> { where hidden: [false, nil] }

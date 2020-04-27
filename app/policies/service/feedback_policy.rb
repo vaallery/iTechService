@@ -7,8 +7,11 @@ module Service
     class Scope < Scope
       def resolve
         if user.superadmin? || user.able_to?(:view_feedback_notifications)
-          excluded_location_ids = Location.select(:id).where(code: %w[archive done special]).pluck(:id)
-          service_job_ids = ServiceJob.select(:id).where.not(location_id: excluded_location_ids).pluck(:id)
+          location_ids = Location.select(:id).where.not(code: %w[archive done special]).pluck(:id)
+          service_job_ids = ServiceJob.select(:id).where(location_id: location_ids).pluck(:id)
+        elsif user.able_to?(:view_feedbacks_in_city)
+          location_ids = Location.select(:id).in_city(user.city).where.not(code: %w[archive done special]).pluck(:id)
+          service_job_ids = ServiceJob.select(:id).where(location_id: location_ids).pluck(:id)
         else
           service_job_ids = ServiceJob.select(:id).where(location_id: user.location_id).pluck(:id)
         end
