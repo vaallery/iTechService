@@ -6,7 +6,7 @@ class RepairPart < ActiveRecord::Base
   has_many :spare_part_defects, inverse_of: :repair_part
 
   delegate :name, :store_item, :code, :purchase_price, :product, to: :item, allow_nil: true
-  delegate :store, to: :repair_task, allow_nil: true
+  delegate :department, :store, to: :repair_task, allow_nil: true
 
   accepts_nested_attributes_for :spare_part_defects
   attr_accessible :quantity, :warranty_term, :repair_task_id, :item_id, :spare_part_defects_attributes, :is_warranty, :contractor_id
@@ -25,23 +25,31 @@ class RepairPart < ActiveRecord::Base
 
   def deduct_spare_parts
     result = false
-    if (store_src = Department.current.repair_store).present?
-      result = self.store_item(store_src).dec(self.quantity)
+    store_src = department.repair_store
+
+    if store_src.present?
+      result = store_item(store_src).dec(quantity)
     end
     !!result
   end
 
   def stash
     result = false
-    if (store_src = self.store).present? and (store_dst = Department.current.repair_store).present?
-      result = self.store_item(store_src).move_to(store_dst, self.quantity)
+    store_src = department.spare_parts_store
+    store_dst = department.repair_store
+
+    if store_src.present? && store_dst.present?
+      result = store_item(store_src).move_to(store_dst, quantity)
     end
     !!result
   end
 
   def unstash
     result = false
-    if (store_src = Department.current.repair_store).present? and (store_dst = self.store).present?
+    store_src = department.repair_store
+    store_dst = department.spare_parts_store
+
+    if store_src.present? && store_dst.present?
       result = self.store_item(store_src).move_to(store_dst, self.quantity)
     end
     !!result
