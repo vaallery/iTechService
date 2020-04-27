@@ -10,8 +10,6 @@
 
       = f.full_error :ticket_number
 
-      = f.association :department, as: :radio_buttons, collection: local_departments_collection, item_wrapper_class: 'inline'
-
       - if can? :update, @service_job
         = f.input :client, as: :client, wrapper_html: {id: 'client_fields'}
       - else

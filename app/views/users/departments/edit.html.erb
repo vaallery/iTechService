@@ -1,5 +1,5 @@
 <h1>Выберите подразделение</h1>
 <%= simple_form_for current_user, url: user_departments_path do |f| %>
-  <%= f.association :department, collection: @departments, as: :radio_buttons, label: false %>
+  <%= f.association :department, collection: @departments, as: :radio_buttons, label: false, item_wrapper_class: 'inline' %>
   <%= submit_button f %>
 <% end %>

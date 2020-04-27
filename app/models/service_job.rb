@@ -67,18 +67,19 @@ class ServiceJob < ActiveRecord::Base
   validate :presence_of_payment
   validate :substitute_phone_absence
 
+  after_initialize :set_user_and_location
+  after_initialize :set_contact_phone
   before_validation :generate_ticket_number
   before_validation :validate_security_code
   before_validation :set_user_and_location
   before_validation :validate_location
+  before_validation :set_department
   after_save :update_qty_replaced
   after_save :update_tasks_cost
-  after_update :service_job_update_announce
-  after_update :deduct_spare_parts
   after_create :new_service_job_announce
   after_create :create_alert
-  after_initialize :set_user_and_location
-  after_initialize :set_contact_phone
+  after_update :service_job_update_announce
+  after_update :deduct_spare_parts
 
   def self.search(params)
     service_jobs = ServiceJob.includes :device_tasks, :tasks
@@ -500,6 +501,10 @@ class ServiceJob < ActiveRecord::Base
 
   def set_contact_phone
     self.contact_phone = self.client.try(:contact_phone) || '-' if self.contact_phone.blank?
+  end
+
+  def set_department
+    self.department_id = location.department_id
   end
 
   def deduct_spare_parts
