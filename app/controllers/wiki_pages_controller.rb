@@ -1,5 +1,5 @@
 class WikiPagesController < ApplicationController
-
+  skip_after_action :verify_authorized
   acts_as_wiki_pages_controller
 
   private

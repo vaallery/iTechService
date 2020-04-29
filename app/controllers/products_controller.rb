@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  skip_after_action :verify_authorized, only: %i[show find related select select_group]
+  skip_after_action :verify_authorized, only: %i[show find related choose select select_group]
 
   def index
     authorize Product

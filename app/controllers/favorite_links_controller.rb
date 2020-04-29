@@ -1,4 +1,6 @@
 class FavoriteLinksController < ApplicationController
+  skip_after_action :verify_authorized
+
   def index
     @favorite_links = current_user.favorite_links
     respond_to do |format|
