@@ -1,5 +1,17 @@
 # encoding: utf-8
-class Location < ActiveRecord::Base
+
+class Location < ApplicationRecord
+  CODES = %w[
+    archive
+    bar
+    content
+    done
+    laser
+    repair
+    repairmac
+    special
+  ].freeze
+
   scope :ordered, -> { order('position asc') }
   scope :in_city, ->(city) { where department: Department.in_city(city) }
   scope :in_department, ->(department) { where department: department }
@@ -14,7 +26,6 @@ class Location < ActiveRecord::Base
 
   belongs_to :department, required: true, inverse_of: :locations
   has_many :users
-  has_many :tasks
   delegate :name, to: :department, prefix: true, allow_nil: true
   delegate :city, to: :department, allow_nil: true
 

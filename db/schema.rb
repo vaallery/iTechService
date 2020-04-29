@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200420111736) do
+ActiveRecord::Schema.define(version: 20200429080858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1299,20 +1299,19 @@ ActiveRecord::Schema.define(version: 20200420111736) do
   add_index "task_templates", ["ancestry"], name: "index_task_templates_on_ancestry", using: :btree
 
   create_table "tasks", force: :cascade do |t|
-    t.string   "name",        limit: 255
+    t.string   "name",          limit: 255
     t.integer  "duration"
     t.decimal  "cost"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.integer  "priority",                default: 0
-    t.string   "role",        limit: 255
-    t.integer  "location_id"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+    t.integer  "priority",                  default: 0
+    t.string   "role",          limit: 255
     t.integer  "product_id"
-    t.boolean  "hidden",                  default: false
+    t.boolean  "hidden",                    default: false
     t.string   "code"
+    t.string   "location_code"
   end
 
-  add_index "tasks", ["location_id"], name: "index_tasks_on_location_id", using: :btree
   add_index "tasks", ["name"], name: "index_tasks_on_name", using: :btree
   add_index "tasks", ["product_id"], name: "index_tasks_on_product_id", using: :btree
   add_index "tasks", ["role"], name: "index_tasks_on_role", using: :btree
