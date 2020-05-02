@@ -119,11 +119,11 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def self.stale_at_done_over(term, department_id: nil)
-    done_locations = Location.where(code: 'done')
-    done_locations = done_locations.where(department_id: department_id) unless department_id.nil?
+    done_locations = Location.done
+    done_locations = done_locations.in_department(department_id) unless department_id.nil?
     storage_locations = done_locations.where(storage_term: term)
-    min_term = Location.where(code: 'done').minimum(:storage_term)
-    done_location_ids = Location.where(code: 'done', storage_term: min_term).pluck(:id)
+    min_term = Location.done.minimum(:storage_term)
+    done_location_ids = Location.done.where(storage_term: min_term).pluck(:id)
 
     includes(:history_records)
       .where(location: storage_locations, history_records: {column_name: 'location_id', new_value: done_location_ids})

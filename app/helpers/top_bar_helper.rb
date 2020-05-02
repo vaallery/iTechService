@@ -10,4 +10,10 @@ module TopBarHelper
               data: {html: true, placement: 'bottom', content: ''})
     }.join(' ').html_safe
   end
+
+  def link_to_trade_in_purgatory
+    if can?(:manage, TradeInDevice) && TradeInDevice.unconfirmed.any?
+      link_to(t('trade_in_device.purgatory'), purgatory_trade_in_devices_path)
+    end
+  end
 end

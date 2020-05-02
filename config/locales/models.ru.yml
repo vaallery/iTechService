@@ -523,7 +523,7 @@ ru:
         duration: 'Длительность'
         hidden: 'Скрытая'
         location: 'Локация'
-        location_id: :activerecord.attributes.task.location
+        location_code: 'Код локации'
         name: 'Название'
         role: 'Роль'
 

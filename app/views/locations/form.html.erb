@@ -4,7 +4,7 @@
   <%= f.association :department %>
   <%= f.input :schedule %>
   <%= f.input :name, autofocus: true %>
-  <%= f.input :code %>
+  <%= f.input :code, collection: Location::CODES %>
   <%= f.input :position %>
   <%= f.input :hidden %>
   <%= f.input :storage_term, as: :radio_buttons, collection: [['нет', nil], ['3 месяца', 3], ['год', 12]] %>

@@ -16,6 +16,7 @@ class TradeInDevice < ApplicationRecord
                         :client_name, :client_phone, :check_icloud
 
   delegate :name, :presentation, :imei, :serial_number, to: :item
+  delegate :name, :color, to: :department, prefix: true, allow_nil: true
 
   enum replacement_status: {not_replaced: 0, replaced: 1, in_service: 2}
 

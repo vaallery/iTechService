@@ -6,7 +6,7 @@ module TradeInDevice::Cell
     include ModelCell
     include ActiveSupport::NumberHelper
 
-    property :id, :number, :condition, :equipment, :imei, :serial_number
+    property :id, :number, :condition, :equipment, :imei, :serial_number, :department_name, :department_color
 
     def item
       decorated_item.name
@@ -26,6 +26,10 @@ module TradeInDevice::Cell
 
     def appraised_value
       number_to_currency model.appraised_value
+    end
+
+    def received_at
+      l model.received_at, format: :date
     end
 
     def replacement_status

@@ -1,10 +1,10 @@
 class DocumentPolicy < BasePolicy
-  def index?
+  def read?
     any_manager?
   end
 
   def show?
-    same_department? && any_manager?
+    same_department? && read?
   end
 
   def create?; any_manager?; end

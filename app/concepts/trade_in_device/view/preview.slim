@@ -1,10 +1,14 @@
 tr
+  td
+    span style="background-color: #{department_color}; color: white; padding: 2px"
+      = department_name
   td = number
   td = item
   td
     div = imei
     div = serial_number
   td = appraised_value
+  td = received_at
   td title="#{condition}" = clipped_condition
   td title="#{equipment}" = clipped_equipment
   td = replacement_status
