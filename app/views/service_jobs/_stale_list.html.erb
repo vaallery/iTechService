@@ -2,7 +2,14 @@
 <ul class="menu">
   <% list[:jobs].each do |job| %>
     <li class="menu-item">
-      <%= link_to job.ticket_number, edit_service_job_path(job), remote: true %>
+      <%= link_to edit_service_job_path(job), remote: true do %>
+        <div class="department"
+             style="background-color: <%= job.city_color %>; color: white; padding: 2px; text-shadow: none; line-height: initial"
+        >
+          <%= job.department_name %>
+        </div>
+        <%= job.ticket_number %>
+      <% end %>
     </li>
   <% end %>
 </ul>

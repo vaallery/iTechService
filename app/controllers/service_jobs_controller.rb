@@ -33,11 +33,11 @@ class ServiceJobsController < ApplicationController
     @lists = [
       {
         title: 'В готово больше трёх месяцев',
-        jobs: ServiceJob.stale_at_done_over(3, department_id: current_user.department_id)
+        jobs: ServiceJob.stale_at_done_over(3)
       },
       {
         title: 'В готово больше года',
-        jobs: ServiceJob.stale_at_done_over(12, department_id: current_user.department_id)
+        jobs: ServiceJob.stale_at_done_over(12)
       }
     ]
 
