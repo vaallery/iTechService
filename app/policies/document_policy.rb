@@ -1,28 +1,28 @@
-class DocumentPolicy < BasePolicy
-  def read?
+class DocumentPolicy < ApplicationPolicy
+  def manage?
     any_manager?
   end
 
   def show?
-    same_department? && read?
+    read?
   end
 
   def create?; any_manager?; end
 
   def update?
-    editable? && same_department? && any_manager?
+    editable? && any_manager?
   end
 
   def destroy?
-    destroyable? && same_department? && any_manager?
+    destroyable? && any_manager?
   end
 
   def post?
-    postable? && same_department? && any_manager?
+    postable? && any_manager?
   end
 
   def unpost?
-    unpostable? && same_department? && any_manager?
+    unpostable? && any_manager?
   end
 
   private
