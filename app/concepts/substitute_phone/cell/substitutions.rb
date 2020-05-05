@@ -1,5 +1,5 @@
 module SubstitutePhone::Cell
-  class Substitutions < BaseCell
+  class Substitutions < Base
     private
 
     def issued_at

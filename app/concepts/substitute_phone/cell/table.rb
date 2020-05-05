@@ -1,5 +1,5 @@
 module SubstitutePhone::Cell
-  class Table < BaseCell
+  class Table < Base
     private
 
     include ModelCell

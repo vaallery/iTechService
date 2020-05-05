@@ -1,5 +1,5 @@
 module SubstitutePhone::Cell
-  class Form < BaseCell
+  class Form < Base
     self.translation_path = 'substitute_phones.form'
     private
 

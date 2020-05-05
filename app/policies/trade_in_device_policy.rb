@@ -5,9 +5,11 @@ class TradeInDevicePolicy < BasePolicy
 
   def create?; true; end
 
-  def read?
-    any_admin? || able_to?(:manage_trade_in)
-  end
+  def index?; true; end
+
+  def show?; true; end
+
+  def print?; true; end
 
   def index_unconfirmed?
     manage?

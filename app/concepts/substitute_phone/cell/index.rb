@@ -1,5 +1,5 @@
 module SubstitutePhone::Cell
-  class Index < BaseCell
+  class Index < Base
     self.translation_path = 'substitute_phones.index'
 
     private

@@ -28,7 +28,7 @@ class Department < ApplicationRecord
 
   delegate :name, to: :city, prefix: true
   delegate :color, to: :city, allow_nil: true
-  delegate :name, to: :brand, prefix: true
+  delegate :name, to: :brand, prefix: true, allow_nil: true
   delegate :logo, to: :brand, allow_nil: true
   delegate :path, :url, to: :logo, prefix: true, allow_nil: true
 

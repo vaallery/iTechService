@@ -53,7 +53,7 @@ module TradeInDevice::Cell
     end
 
     def link_to_show
-      link_to icon('eye-open'), trade_in_device_path(id), class: 'btn btn-small' if policy.show?
+      link_to icon('eye-open'), trade_in_device_path(id), class: 'btn btn-small'
     end
 
     def link_to_edit
@@ -65,7 +65,7 @@ module TradeInDevice::Cell
     end
 
     def policy
-      context[:policy]
+      @policy ||= TradeInDevicePolicy.new(current_user, model)
     end
   end
 end

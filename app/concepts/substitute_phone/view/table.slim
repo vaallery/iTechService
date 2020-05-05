@@ -5,6 +5,6 @@ table.table.table-striped.table-hover
       th = t_attribute :name
       th = t_attribute :serial_number
       th = t_attribute :imei
-      - if policy(model_class).manage?
+      - if policy.manage?
         th
   tbody = substitute_phones

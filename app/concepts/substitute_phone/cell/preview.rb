@@ -1,10 +1,10 @@
 module SubstitutePhone::Cell
-  class Preview < BaseCell
+  class Preview < Base
     include ModelCell
     delegate :presentation, :name, :serial_number, :imei, to: :item
 
     def can_manage?
-      policy(model).manage?
+      policy.manage?
     end
 
     def html_class
