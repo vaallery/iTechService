@@ -1,10 +1,7 @@
 <div id="topbar">
   <div id="current_user_name"><%= profile_link %></div>
   <% if current_user.department.present? %>
-    <div class="user_department"
-         style="background-color: <%= current_user.department.color %>">
-      <%= current_user.department.name %>
-    </div>
+    <%= department_tag current_user.department %>
   <% else %>
     <strong class="text-error"><%= t 'users.department_blank_error' %></strong>
   <% end %>

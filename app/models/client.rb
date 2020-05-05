@@ -50,7 +50,7 @@ class Client < ActiveRecord::Base
     self.department_id ||= Department.current.id
   end
 
-  def self.search params
+  def self.search(params)
     clients = Client.all
     unless (client_q = params[:client_q] || params[:client]).blank?
       client_q.chomp.split(/\s+/).each do |q|

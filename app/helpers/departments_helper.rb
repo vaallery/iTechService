@@ -14,4 +14,9 @@ module DepartmentsHelper
   def local_departments_collection
     Department.selectable.in_city(current_user.city)
   end
+
+  def department_tag(department)
+    content_tag :span, department.name, class: 'department_name',
+                style: "background-color: #{department.color}"
+  end
 end

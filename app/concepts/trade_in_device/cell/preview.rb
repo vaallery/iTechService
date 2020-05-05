@@ -5,11 +5,16 @@ module TradeInDevice::Cell
 
     include ModelCell
     include ActiveSupport::NumberHelper
+    include DepartmentsHelper
 
-    property :id, :number, :condition, :equipment, :imei, :serial_number, :department_name, :department_color
+    property :id, :number, :condition, :equipment, :imei, :serial_number, :department
 
     def item
       decorated_item.name
+    end
+
+    def department_name
+      department_tag department
     end
 
     def clipped_condition
