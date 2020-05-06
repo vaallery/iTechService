@@ -7,22 +7,22 @@ class DocumentPolicy < ApplicationPolicy
     read?
   end
 
-  def create?; any_manager?; end
+  def create?; manage?; end
 
   def update?
-    editable? && any_manager?
+    editable? && manage?
   end
 
   def destroy?
-    destroyable? && any_manager?
+    destroyable? && manage?
   end
 
   def post?
-    postable? && any_manager?
+    postable? && manage?
   end
 
   def unpost?
-    unpostable? && any_manager?
+    unpostable? && manage?
   end
 
   private

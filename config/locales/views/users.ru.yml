@@ -8,6 +8,7 @@ ru:
       manage_salary: 'Редактировать зарплату'
       manage_wiki: 'Редактировать Wiki'
       manage_schedule: "Редактировать график"
+      manage_stocks: 'Управление запасами'
       manage_timesheet: "Редактировать табель"
       manage_trade_in: 'Заниматься Trade-in'
       print_receipt: "Печатать чеки"

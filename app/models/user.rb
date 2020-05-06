@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
     inventory
     view_reports
     view_feedbacks_in_city
+    manage_stocks
   ].freeze
 
   attr_accessor :login

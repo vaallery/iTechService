@@ -1,10 +1,14 @@
 class MovementActPolicy < DocumentPolicy
+  def manage?
+    superadmin? || able_to?(:manage_stocks)
+  end
+
   def create?
-    any_manager? ||
+    manage? ||
       (has_role?(:technician) && record.is_new? && record.is_spare_parts_to_defect?)
   end
 
   def make_defect_sp?
-    has_role?(*MANAGER_ROLES, :technician)
+    manage? || has_role?(:technician)
   end
 end
