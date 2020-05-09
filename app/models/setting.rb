@@ -19,6 +19,7 @@ class Setting < ActiveRecord::Base
     print_sale_check: 'boolean',
     schedule: 'string',
     site: 'string',
+    sms_notification_template: 'text',
     ticket_prefix: 'string',
     service_tasks_models: 'json',
     sms_gateway_lines_qty: 'integer'

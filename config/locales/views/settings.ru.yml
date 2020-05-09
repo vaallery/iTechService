@@ -25,6 +25,7 @@ ru:
     schedule: 'График работы'
     service_tasks_models: 'Модели девайсов для сервисных задач'
     site: 'Сайт'
+    sms_notification_template: 'Шаблон СМС-уведомления'
     ticket_prefix: 'Префикс талона'
 
     errors:
