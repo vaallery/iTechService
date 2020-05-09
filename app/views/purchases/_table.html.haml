@@ -21,9 +21,10 @@
           %td= link_to purchase.store_name, store_path(purchase.store) if purchase.store.present?
           %td.number= human_currency purchase.total_sum
           %td= purchase.comment
-          %td.actions.btn-group
-            = link_to_show_small purchase
-            = link_to_edit_small purchase if can? :edit, purchase
-            = link_to_destroy_small purchase if can? :destroy, purchase
+          %td.actions
+            .btn-group
+              = link_to_show_small purchase
+              = link_to_edit_small purchase if can? :edit, purchase
+              = link_to_destroy_small purchase if can? :destroy, purchase
 
   = paginate @purchases

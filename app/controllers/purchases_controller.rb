@@ -127,7 +127,7 @@ class PurchasesController < ApplicationController
 
   def move_items
     purchase = find_record Purchase
-    movement_act = purchase.build_movement_act params[:item_ids]
+    movement_act = purchase.build_movement_act params[:item_ids]&.split(',')
     respond_to do |format|
       if movement_act.save
         format.html { redirect_to edit_movement_act_path(movement_act) }

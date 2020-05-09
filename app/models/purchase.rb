@@ -113,10 +113,10 @@ class Purchase < ActiveRecord::Base
     RevaluationAct.new product_ids: product_ids
   end
 
-  def build_movement_act(item_ids=[])
+  def build_movement_act(selected_item_ids = nil)
     movement_items_attributes = []
     dst_store_id = nil
-    item_ids&.split(',').map do |item_id|
+    (selected_item_ids || item_ids).map do |item_id|
       if (batch = batches.where(item_id: item_id).first).present?
         movement_items_attributes << {item_id: item_id, quantity: batch.quantity}
         dst_store_id ||= batch.is_spare_part ? Store.spare_parts.first.try(:id) : Store.retail.first.try(:id)

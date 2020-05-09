@@ -17,9 +17,10 @@
           %td= link_to human_datetime(movement_act.date), movement_act_path(movement_act)
           %td= link_to movement_act.store_name, store_path(movement_act.store)
           %td= link_to movement_act.dst_store_name, store_path(movement_act.dst_store)
-          %td.actions.btn-group
-            = link_to_show_small movement_act
-            = link_to_edit_small movement_act if can? :edit, movement_act
-            = link_to_destroy_small movement_act if can? :destroy, movement_act
+          %td.actions
+            .btn-group
+              = link_to_show_small movement_act
+              = link_to_edit_small movement_act if can? :edit, movement_act
+              = link_to_destroy_small movement_act if can? :destroy, movement_act
 
   = paginate @movement_acts, remote: true
