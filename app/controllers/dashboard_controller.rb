@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  skip_before_action :authenticate_user!, :set_current_user, only: [:sign_in_by_card, :check_session_status]
+  skip_before_action :authenticate_user!, :set_current_user, only: :check_session_status
   skip_after_action :verify_authorized
 
   def index

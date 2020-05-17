@@ -1,4 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
+  layout 'auth'
   respond_to :html, :json
   skip_after_action :verify_authorized
 # before_action :configure_sign_in_params, only: [:create]
