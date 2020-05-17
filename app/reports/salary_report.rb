@@ -1,8 +1,9 @@
 class SalaryReport < BaseReport
-
   def call
     result[:salary] = []
-    users = User.active
+    users = User.in_department(department).active
+    users = users.in_department(department) if department
+
     users.find_each do |user|
       user_salaries = []
       user_prepayments = []

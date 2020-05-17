@@ -1,20 +1,33 @@
 # encoding: utf-8
 class ServiceJob < ActiveRecord::Base
+  scope :in_department, ->(department) { located_at(Location.in_department(department)) }
   scope :order_by_product_name, -> { includes(item: :product).order('products.name') }
   scope :received_at, ->(period) { where created_at: period }
-  scope :newest, ->{order('service_jobs.created_at desc')}
-  scope :oldest, ->{order('service_jobs.created_at asc')}
-  scope :done, ->{where('service_jobs.done_at IS NOT NULL').order('service_jobs.done_at desc')}
-  scope :pending, ->{where(done_at: nil)}
-  scope :important, ->{includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND)}
-  scope :replaced, ->{where(replaced: true)}
-  scope :located_at, ->(location) { where(location: location) }
-  scope :at_done, ->(user=nil) { where(location: user.present? ? user.done_locations : Location.done) }
+  scope :newest, -> { order('service_jobs.created_at desc') }
+  scope :oldest, -> { order('service_jobs.created_at asc') }
+  scope :done, -> { where('service_jobs.done_at IS NOT NULL').order('service_jobs.done_at desc') }
+  scope :pending, -> { where(done_at: nil) }
+  scope :important, -> { includes(:tasks).where('tasks.priority > ?', Task::IMPORTANCE_BOUND) }
+  scope :replaced, -> { where(replaced: true) }
+  scope :located_at, ->(location) { where(location_id: location) }
+
+  scope :at_done, ->(department = nil) do
+    locations = department ? Location.in_department(department).done : Location.done
+    where(location_id: locations)
+  end
+
+  scope :at_archive, ->(department = nil) do
+    locations = department ? Location.in_department(department).archive : Location.archive
+    where(location_id: locations)
+  end
+
   scope :not_at_done, -> { where.not(location: Location.done) }
-  scope :at_archive, ->(user=nil) { where(location_id: user.present? ? user.archive_location : Location.archive.id) }
-  scope :not_at_archive, ->(user=nil) { where.not(location_id: user.present? ? user.archive_location : Location.archive.id) }
-  scope :unarchived, ->{where('service_jobs.location_id <> ?', Location.archive.id)}
-  scope :for_returning, -> { not_at_done.unarchived.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1)) }
+  scope :not_at_archive, -> { where.not(location_id: Location.archive) }
+
+
+  scope :for_returning, -> do
+    not_at_done.not_at_archive.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1))
+  end
 
   belongs_to :department, required: true, inverse_of: :service_jobs
   belongs_to :initial_department, class_name: 'Department'
@@ -110,7 +123,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def self.quick_search(query)
-    service_jobs = ServiceJob.unarchived
+    service_jobs = ServiceJob.not_at_archive
 
     unless query.blank?
       service_jobs = service_jobs.joins(:client).where 'service_jobs.ticket_number LIKE :q OR service_jobs.contact_phone LIKE :q OR LOWER(clients.name) LIKE :q OR LOWER(clients.surname) LIKE :q', q: "%#{query.mb_chars.downcase.to_s}%"
@@ -131,7 +144,7 @@ class ServiceJob < ActiveRecord::Base
       .where('history_records.created_at < ?', term.months.ago)
   end
 
-  def as_json(options={})
+  def as_json(options = {})
     {
       id: id,
       ticket_number: ticket_number,
@@ -206,7 +219,7 @@ class ServiceJob < ActiveRecord::Base
   def done?
     pending_tasks.empty?
   end
-  
+
   def pending?
     !done?
   end
@@ -230,15 +243,15 @@ class ServiceJob < ActiveRecord::Base
   def pending_tasks
     device_tasks.pending
   end
-  
+
   def is_important?
     tasks.important.any?
   end
-  
+
   def progress
     "#{processed_tasks.count} / #{device_tasks.count}"
   end
-  
+
   def progress_pct
     (processed_tasks.count * 100.0 / device_tasks.count).to_i
   end
@@ -282,7 +295,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def is_actual_for? user
-    device_tasks.any?{|t|t.is_actual_for? user}
+    device_tasks.any? { |t| t.is_actual_for? user }
   end
 
   def movement_history
@@ -302,7 +315,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def barcode_num
-    '0'*(12-ticket_number.length) + ticket_number
+    '0' * (12 - ticket_number.length) + ticket_number
   end
 
   def service_duration=(duration)
@@ -325,7 +338,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def create_filled_sale
-    sale_attributes = { client_id: client_id, store_id: User.current.retail_store.id, sale_items_attributes: {} }
+    sale_attributes = {client_id: client_id, store_id: User.current.retail_store.id, sale_items_attributes: {}}
     device_tasks.paid.each_with_index do |device_task, index|
       sale_item_attributes = {device_task_id: device_task.id, item_id: device_task.item.id, price: device_task.cost.to_f, quantity: 1}
       sale_attributes[:sale_items_attributes].store index.to_s, sale_item_attributes
@@ -387,7 +400,9 @@ class ServiceJob < ActiveRecord::Base
 
   def generate_ticket_number
     if self.ticket_number.blank?
-      begin number = UUIDTools::UUID.random_create.hash.to_s end while ServiceJob.exists? ticket_number: number
+      begin
+        number = UUIDTools::UUID.random_create.hash.to_s
+      end while ServiceJob.exists? ticket_number: number
       self.ticket_number = Setting.ticket_prefix + number
     end
   end
@@ -438,9 +453,9 @@ class ServiceJob < ActiveRecord::Base
       end
 
       if (old_location.try(:is_archive?) && User.current.not_admin?) ||
-         (self.location.is_warranty? && !old_location.try(:is_repair?)) ||
-         (location.is_special? && User.current.not_admin?) ||
-         (old_location&.is_special? && !User.current.superadmin?)
+        (self.location.is_warranty? && !old_location.try(:is_repair?)) ||
+        (location.is_special? && User.current.not_admin?) ||
+        (old_location&.is_special? && !User.current.superadmin?)
         self.errors.add :location_id, I18n.t('service_jobs.errors.not_allowed')
       end
 
@@ -470,7 +485,7 @@ class ServiceJob < ActiveRecord::Base
 
   def create_alert
     # service duration in minutes
-    duration = (self.return_at.to_i - self.created_at.to_i)/60
+    duration = (self.return_at.to_i - self.created_at.to_i) / 60
     if duration > 30
       alert_times = []
       alert_times.push self.return_at.advance minutes: -30 if duration < 300

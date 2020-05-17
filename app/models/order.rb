@@ -2,22 +2,23 @@ class Order < ActiveRecord::Base
   OBJECT_KINDS = %w[device accessory soft misc spare_part]
   STATUSES = %w[new pending done canceled notified issued archive]
 
-  scope :newest, ->{order('orders.created_at desc')}
-  scope :oldest, ->{order('orders.created_at asc')}
-  scope :new_orders, ->{where(status: 'new')}
-  scope :pending_orders, ->{where(status: 'pending')}
-  scope :done_orders, ->{where(status: 'done')}
-  scope :canceled_orders, ->{where(status: 'canceled')}
-  scope :notified_orders, ->{where(status: 'notified')}
-  scope :archive_orders, ->{where(status: 'archive')}
-  scope :actual_orders, ->{where(status: %w[new pending notified done])}
-  scope :technician_orders, ->{where(object_kind: 'spare_part')}
-  scope :marketing_orders, ->{where('object_kind <> ?', 'spare_part')}
-  scope :device, ->{where(object_kind: 'device')}
-  scope :accessory, ->{where(object_kind: 'accessory')}
-  scope :soft, ->{where(object_kind: 'soft')}
-  scope :misc, ->{where(object_kind: 'misc')}
-  scope :spare_part, ->{where(object_kind: 'spare_part')}
+  scope :in_department, ->(department) { where department_id: department }
+  scope :newest, -> { order('orders.created_at desc') }
+  scope :oldest, -> { order('orders.created_at asc') }
+  scope :new_orders, -> { where(status: 'new') }
+  scope :pending_orders, -> { where(status: 'pending') }
+  scope :done_orders, -> { where(status: 'done') }
+  scope :canceled_orders, -> { where(status: 'canceled') }
+  scope :notified_orders, -> { where(status: 'notified') }
+  scope :archive_orders, -> { where(status: 'archive') }
+  scope :actual_orders, -> { where(status: %w[new pending notified done]) }
+  scope :technician_orders, -> { where(object_kind: 'spare_part') }
+  scope :marketing_orders, -> { where('object_kind <> ?', 'spare_part') }
+  scope :device, -> { where(object_kind: 'device') }
+  scope :accessory, -> { where(object_kind: 'accessory') }
+  scope :soft, -> { where(object_kind: 'soft') }
+  scope :misc, -> { where(object_kind: 'misc') }
+  scope :spare_part, -> { where(object_kind: 'spare_part') }
   scope :done_at, ->(period) { joins(:history_records).where(history_records: {column_name: 'status', new_value: 'done', created_at: period}) }
 
   belongs_to :department, required: true
@@ -59,6 +60,7 @@ class Order < ActiveRecord::Base
     end
     ret << " END"
   end
+
   scope :by_status, -> { order order_by_status }
 
   def customer_full_name
@@ -144,7 +146,9 @@ class Order < ActiveRecord::Base
 
   def generate_number
     if number.blank?
-      begin num = UUIDTools::UUID.random_create.hash.to_s end while Order.exists? number: num
+      begin
+        num = UUIDTools::UUID.random_create.hash.to_s
+      end while Order.exists?(number: num)
       self.number = num
     end
   end

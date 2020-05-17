@@ -5,7 +5,39 @@ module ReportsHelper
   end
 
   def report_names
-    %w[device_types device_groups users devices_archived devices_not_archived active_tasks done_tasks clients tasks_duration device_orders orders_statuses devices_movements payments salary driver few_remnants_goods few_remnants_spare_parts repair_jobs technicians_jobs technicians_difficult_jobs remnants sales margin quick_orders free_jobs phone_substitutions sms_notifications service_jobs_at_done repair_parts defected_spare_parts service_job_viewings contractors_defected_spare_parts]
+    %w[
+      device_groups
+      users
+      devices_archived
+      devices_not_archived
+      active_tasks
+      done_tasks
+      clients
+      tasks_duration
+      device_orders
+      orders_statuses
+      devices_movements
+      payments
+      salary
+      driver
+      few_remnants_goods
+      few_remnants_spare_parts
+      repair_jobs
+      technicians_jobs
+      technicians_difficult_jobs
+      remnants
+      sales
+      margin
+      quick_orders
+      free_jobs
+      phone_substitutions
+      sms_notifications
+      service_jobs_at_done
+      repair_parts
+      defected_spare_parts
+      service_job_viewings
+      contractors_defected_spare_parts
+    ].freeze
   end
 
   def report_default_params(report_name)
@@ -37,11 +69,15 @@ module ReportsHelper
     content.html_safe
   end
 
-  def departments_collection
-    Department.current_with_remotes.map { |d| [d.name, d.id] }
+  def departments_collection(selected)
+    option_groups_from_collection_for_select City.all, :departments, :name, :id, :name, selected
   end
 
-  def locations_collection
-    Location.all.map{|s|[s.name, s.id]}
+  def stores_collection(selected)
+    option_groups_from_collection_for_select Department.all, :stores, :full_name, :id, :name, selected
+  end
+
+  def locations_collection(selected)
+    option_groups_from_collection_for_select Department.all, :locations, :full_name, :id, :name, selected
   end
 end

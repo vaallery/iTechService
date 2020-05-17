@@ -1,7 +1,7 @@
 class TechniciansDifficultJobsReport < BaseReport
-
   def call
     repair_tasks = RepairTask.includes(:device_task, :repair_service)
+                     .in_department(department)
                      .where(device_tasks: {done_at: period}, repair_services: {difficult: true})
     total_sum = 0
     result[:data] = {}

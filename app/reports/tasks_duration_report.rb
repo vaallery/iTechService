@@ -1,11 +1,10 @@
 class TasksDurationReport < BaseReport
-
   def call
     result[:tasks_durations] = []
     Task.find_each do |task|
       task_durations = []
       device_tasks = []
-      HistoryRecord.service_jobs.movements_to(task.location_id).in_period(period).each do |hr|
+      HistoryRecord.service_jobs.movements_to(task.location(department)).in_period(period).each do |hr|
         moved_at = hr.created_at
         durations = []
         hr.object.device_tasks.done.where(task_id: task.id).each do |dt|

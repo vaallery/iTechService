@@ -1,12 +1,10 @@
 class ServiceJobViewingsReport < BaseReport
   ReportRecord = Struct.new(:time, :job_id, :ticket_number, :viewer, :sum)
 
-  attr_accessor :department_id
-
   def call
-    location_id = Location.where(code: 'done', department_id: department_id).first.id
+    locations = Location.in_department(department).done
     viewings = ServiceJobViewing.includes(:service_job, :user)
-                 .where(time: period, service_jobs: {location_id: location_id})
+                 .where(time: period, service_jobs: {location_id: locations})
 
     result[:records] = viewings.map do |viewing|
       ReportRecord.new(

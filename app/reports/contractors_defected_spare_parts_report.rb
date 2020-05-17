@@ -1,6 +1,6 @@
 class ContractorsDefectedSparePartsReport < BaseReport
   def call
-    spare_part_defects = SparePartDefect.where(created_at: period)
+    spare_part_defects = SparePartDefect.where(created_at: period).in_department(department)
     spare_parts = spare_part_defects.includes(item: :product).distinct.pluck(:item_id, 'products.name')
     data = {}
 

@@ -1,8 +1,7 @@
 class DevicesArchivedReport < BaseReport
-
   def call
     result[:users_mv] = []
-    movements = HistoryRecord.movements_to_archive.in_period(period)
+    movements = HistoryRecord.movements_to_archive(department).in_period(period)
     total_qty = 0
     if movements.any?
       movements.group('user_id').count('id').each_pair do |user_id, qty|

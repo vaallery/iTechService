@@ -1,5 +1,5 @@
 class RepairPart < ActiveRecord::Base
-  attr_accessor :is_warranty, :contractor_id
+  scope :in_department, ->(department) { where(repair_task_id: RepairTask.in_department(department)) }
 
   belongs_to :repair_task, inverse_of: :repair_parts
   belongs_to :item
@@ -8,8 +8,10 @@ class RepairPart < ActiveRecord::Base
   delegate :name, :store_item, :code, :purchase_price, :product, to: :item, allow_nil: true
   delegate :department, :store, to: :repair_task, allow_nil: true
 
-  accepts_nested_attributes_for :spare_part_defects
+  attr_accessor :is_warranty, :contractor_id
   attr_accessible :quantity, :warranty_term, :repair_task_id, :item_id, :spare_part_defects_attributes, :is_warranty, :contractor_id
+  accepts_nested_attributes_for :spare_part_defects
+
   validates_presence_of :item
   validates_numericality_of :warranty_term, only_integer: true, greater_than_or_equal_to: 0
 

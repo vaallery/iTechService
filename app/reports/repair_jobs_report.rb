@@ -1,10 +1,13 @@
 class RepairJobsReport < BaseReport
-
   def call
-    repair_tasks = RepairTask.includes(:device_task).where(device_tasks: {done_at: period, done: 1})
+    repair_tasks = RepairTask.includes(:device_task)
+                     .in_department(department)
+                     .where(device_tasks: {done_at: period, done: 1})
+
     result.store :with_parts, {}
     result.store :without_parts, {}
     result.store :without_payment, {}
+
     repair_tasks.each do |repair_task|
       if repair_task.repair_service.present?
         repair_group_id = (repair_task.repair_group.try(:id) || '-').to_s

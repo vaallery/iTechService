@@ -1,8 +1,6 @@
 class DefectedSparePartsReport < BaseReport
-  attr_reader :department_id
-
   def call
-    stores = department_id.present? ? Store.defect_sp.where(department_id: department_id) : Store.defect_sp
+    stores = Store.defect_sp.in_department(department)
     movement_acts = MovementAct.posted.where(date: period, dst_store_id: stores)
     movement_items = MovementItem.where(movement_act_id: movement_acts)
 

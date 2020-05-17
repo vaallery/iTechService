@@ -1,5 +1,6 @@
 class BaseReport
   attr_reader :kind
+  attr_accessor :department_id
 
   def self.call(attributes = {})
     new(attributes).call
@@ -46,6 +47,12 @@ class BaseReport
 
   def period
     start_date.to_time(:local).beginning_of_day..end_date.to_time(:local).end_of_day
+  end
+
+  def department
+    return @department if defined? @department
+
+    @department = department_id ? Department.find(department_id) : nil
   end
 
   def model_name

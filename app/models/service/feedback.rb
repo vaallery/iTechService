@@ -4,10 +4,7 @@ module Service
 
     MAX_DELAY_HOURS = [72, 120, 168]
 
-    scope :in_department, ->(department_id) do
-      includes(:service_job).where(service_jobs: {department_id: department_id})
-    end
-
+    scope :in_department, ->(department) { where(service_job_id: ServiceJob.in_department(department)) }
     scope :inactive, -> { where scheduled_on: nil }
     scope :actual, -> { where('scheduled_on <= ?', Time.current) }
     scope :old_first, -> { order 'created_at ASC' }

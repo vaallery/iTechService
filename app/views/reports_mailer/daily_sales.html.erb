@@ -1,24 +1,27 @@
-<table id="daily_sales_report" class="table table-bordered table-hover">
-  <thead>
-    <tr>
-      <th>Название задачи</th>
-      <th>Количество</th>
-      <th>Итоговая сумма</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @result[:tasks].values.each do |task| %>
+<% @result.each do |department_name, data| %>
+  <table class="table table-bordered table-hover">
+    <caption><%= department_name %></caption>
+    <thead>
       <tr>
-        <td><%= task[:name] %></td>
-        <td class="align_right"><%= task[:qty] %></td>
-        <td class="align_right"><%= task[:sum].to_i %></td>
+        <th>Название задачи</th>
+        <th>Количество</th>
+        <th>Итоговая сумма</th>
       </tr>
-    <% end %>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="2">Итого:</td>
-      <td class="align_right"><%= @result[:total_sum].to_i %></td>
-    </tr>
-  </tfoot>
-</table>
+    </thead>
+    <tbody>
+      <% data[:tasks].values.each do |task| %>
+        <tr>
+          <td><%= task[:name] %></td>
+          <td class="align_right"><%= task[:qty] %></td>
+          <td class="align_right"><%= task[:sum].to_i %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="2">Итого:</td>
+        <td class="align_right"><%= data[:total_sum].to_i %></td>
+      </tr>
+    </tfoot>
+  </table>
+<% end %>

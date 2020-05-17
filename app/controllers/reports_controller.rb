@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action -> { authorize Report }
+  before_action -> { authorize :report, :manage? }
 
   def index
     respond_to do |format|

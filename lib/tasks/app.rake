@@ -5,19 +5,18 @@ namespace :app do
     DeleteExpiredFaults.()
   end
 
-  desc 'Move repair parts of unarchived service_jobs to repair store'
+  desc 'Move repair parts of not_at_archive service_jobs to repair store'
   task stash_repair_parts: :environment do
     log = Logger.new('log/app_stash_repair_parts.log')
     # log = Logger.new(STDOUT)
     start_time = Time.now
 
-    archive_id = Location.archive.id
     repair_store = Department.current.repair_store
     defect_sp_store = Department.current.defect_sp_store
     
     log.info "Task started at #{start_time}"
 
-    RepairTask.includes(device_task: :service_job).where('service_jobs.location_id <> ?', archive_id).find_each do |repair_task|
+    RepairTask.includes(device_task: :service_job).where('service_jobs.location_id <> ?', Location.archive).find_each do |repair_task|
       repair_task.repair_parts.each do |repair_part|
         log.info "RepairPart [#{repair_part.id}] #{'-' * 10}"
         if repair_part.item.present?

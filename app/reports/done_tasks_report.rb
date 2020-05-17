@@ -1,8 +1,9 @@
 class DoneTasksReport < BaseReport
-
   def call
     result[:tasks] = []
-    archived_service_jobs_ids = HistoryRecord.service_jobs.movements_to_archive.in_period(period).collect { |hr| hr.object_id }.uniq
+    archived_service_jobs_ids = HistoryRecord.movements_to_archive(department)
+                                  .in_period(period).pluck(:object_id).uniq
+
     result[:tasks_sum] = result[:tasks_qty] = result[:tasks_qty_free] = 0
     if archived_service_jobs_ids.any?
       tasks = DeviceTask.where service_job_id: archived_service_jobs_ids

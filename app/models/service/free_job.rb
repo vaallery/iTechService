@@ -2,6 +2,7 @@ module Service
   class FreeJob < ActiveRecord::Base
     self.table_name = 'service_free_jobs'
 
+    scope :in_department, ->(department) { where department_id: department }
     scope :new_first, -> { order performed_at: :desc }
 
     belongs_to :department, required: true

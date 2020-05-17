@@ -1,6 +1,6 @@
 class SubstitutePhone < ApplicationRecord
   scope :available, -> { where service_job_id: nil }
-  scope :in_department, ->(department) { where department: department }
+  scope :in_department, ->(department) { where department_id: department }
 
   belongs_to :item
   belongs_to :department

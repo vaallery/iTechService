@@ -9,13 +9,11 @@ class DeviceGroupsReport < BaseReport
     device_groups.each do |device_group|
       service_job_ids = []
       if device_group.is_childless?
-        # service_job_ids << device_group.service_jobs.where(created_at: period).map { |d| d.id }
-        service_job_ids << ServiceJob.includes(item: :product).where(created_at: period, products: {product_group_id: device_group.id}).pluck(:id)
+        service_job_ids << service_jobs.where(products: {product_group_id: device_group.id}).pluck(:id)
       else
         device_group.descendants.each do |sub_device_group|
           if sub_device_group.is_childless?
-            # service_job_ids << sub_device_group.service_jobs.where(created_at: period).map { |d| d.id }
-            service_job_ids << ServiceJob.includes(item: :product).where(created_at: period, products: {product_group_id: sub_device_group.id}).pluck(:id)
+            service_job_ids << service_jobs.where(products: {product_group_id: sub_device_group.id}).pluck(:id)
           end
         end
       end
@@ -29,5 +27,11 @@ class DeviceGroupsReport < BaseReport
       result[:service_jobs_received_archived_count] += qty_archived
     end
     result
+  end
+
+  private
+
+  def service_jobs
+    ServiceJob.includes(item: :product).received_at(period).in_department(department)
   end
 end

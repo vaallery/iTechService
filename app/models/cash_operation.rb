@@ -1,9 +1,6 @@
 class CashOperation < ActiveRecord::Base
+  scope :in_department, ->(department) { where(cash_shift_id: CashShift.in_department(department)) }
   scope :created_desc, -> { order('created_at desc') }
-
-  scope :in_department, ->(department_id) do
-    includes(cash_shift: :cash_drawer).where(cash_drawers: {department_id: department_id})
-  end
 
   belongs_to :cash_shift, inverse_of: :cash_operations
   belongs_to :user

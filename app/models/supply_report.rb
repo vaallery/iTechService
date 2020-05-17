@@ -1,6 +1,6 @@
 class SupplyReport < ActiveRecord::Base
-
-  scope :date_desc, ->{order('date desc')}
+  scope :in_department, ->(department) { where department_id: department }
+  scope :date_desc, -> { order('date desc') }
 
   belongs_to :department
   has_many :supplies, dependent: :destroy
@@ -16,7 +16,7 @@ class SupplyReport < ActiveRecord::Base
 
   def total_cost
     if supplies.any?
-      supplies.map { |s|s.sum }.sum
+      supplies.map { |s| s.sum }.sum
     else
       0
     end

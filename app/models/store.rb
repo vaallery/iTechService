@@ -3,6 +3,7 @@ class Store < ActiveRecord::Base
   KINDS = %w[purchase retail spare_parts defect defect_sp repair].freeze
 
   default_scope { order('stores.name asc') }
+  scope :in_department, ->(department) { where(department_id: department) }
   scope :ordered, -> { order('id asc') }
   scope :for_purchase, -> { joins(:price_types).where(price_types: {kind: 0}) }
   scope :for_retail, -> { joins(:price_types).where(price_types: {kind: 1}) }

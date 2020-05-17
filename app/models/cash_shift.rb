@@ -1,7 +1,5 @@
 class CashShift < ActiveRecord::Base
-  scope :in_department, ->(department_id) do
-    includes(:cash_drawer).where(cash_drawers: {department_id: department_id})
-  end
+  scope :in_department, ->(department) { where(cash_drawer_id: CashDrawer.in_department(department)) }
 
   scope :closed, -> { where(is_closed: true) }
   scope :opened, -> { where(is_closed: false) }

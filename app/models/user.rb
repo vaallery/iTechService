@@ -50,10 +50,7 @@ class User < ActiveRecord::Base
     manage_stocks
   ].freeze
 
-  attr_accessor :login
-  attr_accessor :auth_token
-  cattr_accessor :current
-
+  scope :in_department, ->(department) { where(department_id: department) }
   scope :id_asc, -> { order('id asc') }
   scope :ordered, -> { order('position asc') }
   scope :any_admin, -> { where(role: %w[admin superadmin]) }
@@ -104,7 +101,9 @@ class User < ActiveRecord::Base
   has_many :favorite_links, foreign_key: 'owner_id', dependent: :destroy
   has_many :faults, foreign_key: :causer_id, dependent: :destroy
 
-  mount_uploader :photo, PhotoUploader
+  attr_accessor :login
+  attr_accessor :auth_token
+  cattr_accessor :current
 
   accepts_nested_attributes_for :schedule_days, :duty_days, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :karmas, allow_destroy: true
@@ -130,6 +129,8 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable, :registerable, :rememberable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
+
+  mount_uploader :photo, PhotoUploader
 
   acts_as_list
 
@@ -216,10 +217,6 @@ class User < ActiveRecord::Base
 
   def any_admin?
     has_role? %w[admin superadmin]
-  end
-
-  def can_view_reports?
-    superadmin? || able_to?(:view_reports)
   end
 
   def self.search(params)

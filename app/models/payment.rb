@@ -1,6 +1,7 @@
 class Payment < ActiveRecord::Base
   KINDS = %w[cash card credit certificate trade_in]
 
+  scope :in_department, ->(department) { where sale_id: Sale.in_department(department) }
   scope :cash, ->{where(kind: 'cash')}
   scope :card, ->{where(kind: 'card')}
   scope :credit, ->{where(kind: 'credit')}

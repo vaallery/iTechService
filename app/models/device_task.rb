@@ -1,5 +1,5 @@
 class DeviceTask < ActiveRecord::Base
-
+  scope :in_department, ->(department) { where(service_job_id: ServiceJob.in_department(department)) }
   scope :ordered, ->{joins(:task).order('done asc, tasks.priority desc')}
   scope :pending, ->{where(done: 0)}
   scope :done, ->{where(done: 1)}
@@ -15,8 +15,6 @@ class DeviceTask < ActiveRecord::Base
   has_many :repair_tasks, inverse_of: :device_task
   has_many :repair_parts, through: :repair_tasks
   has_one :sale_item, inverse_of: :device_task
-  accepts_nested_attributes_for :service_job, reject_if: proc { |attr| attr['tech_notice'].blank? }
-  accepts_nested_attributes_for :repair_tasks, allow_destroy: true
 
   delegate :name, :role, :is_important?, :is_actual_for?, :is_repair?, :item, to: :task, allow_nil: true
   delegate :cost, to: :task, prefix: true, allow_nil: true
@@ -24,6 +22,10 @@ class DeviceTask < ActiveRecord::Base
   delegate :department, :department_id, :user, to: :service_job
 
   attr_accessible :done, :done_at, :comment, :user_comment, :cost, :task, :service_job, :service_job_id, :task_id, :performer_id, :task, :service_job_attributes, :repair_tasks_attributes
+
+  accepts_nested_attributes_for :service_job, reject_if: proc { |attr| attr['tech_notice'].blank? }
+  accepts_nested_attributes_for :repair_tasks, allow_destroy: true
+
   validates :task, :cost, presence: true
   validates :cost, numericality: true
   validate :valid_repair if :is_repair?

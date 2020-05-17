@@ -13,7 +13,7 @@ class UsersController < ApplicationController
 
   def show
     @user = find_record User.includes(comments: :user)
-    @service_jobs = @user.service_jobs.unarchived.newest
+    @service_jobs = @user.service_jobs.not_at_archive.newest
 
     respond_to do |format|
       format.html
@@ -88,7 +88,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = authorize current_user
-    @service_jobs = @user.service_jobs.unarchived.newest
+    @service_jobs = @user.service_jobs.not_at_archive.newest
 
     respond_to do |format|
       format.html { render 'show' }

@@ -1,8 +1,7 @@
 class PaymentsReport < BaseReport
-
   def call
     result[:payment_kinds] = {}
-    payments = Payment.includes(:sale).where(sales: {date: period, status: 1})
+    payments = Payment.includes(:sale).where(sales: {date: period, status: 1}).in_department(department)
 
     Payment::KINDS.each do |kind|
       payments_of_kind = payments.where(kind: kind)

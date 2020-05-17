@@ -1,6 +1,7 @@
 class QuickOrder < ActiveRecord::Base
   DEVICE_KINDS = %w[iPhone iPad iPod Storage]
 
+  scope :in_department, ->(department) { where department_id: department }
   scope :id_asc, -> { order('quick_orders.id asc') }
   scope :created_desc, -> { order('quick_orders.created_at desc') }
   scope :in_month, -> { where('quick_orders.created_at > ?', 1.month.ago) }

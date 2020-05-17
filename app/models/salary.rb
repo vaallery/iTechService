@@ -1,10 +1,7 @@
 class Salary < ActiveRecord::Base
   default_scope { order('issued_at desc') }
 
-  scope :in_department, ->(department_id) do
-    includes(:user).where(users: {department_id: department_id})
-  end
-
+  scope :in_department, ->(department) { where(user_id: User.in_department(department)) }
   scope :ordered, -> { order('issued_at desc') }
   scope :issued_at, ->(period) { where(issued_at: period) }
   scope :salary, -> { where(is_prepayment: [false, nil]) }

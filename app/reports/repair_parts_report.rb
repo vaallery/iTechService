@@ -1,11 +1,11 @@
 class RepairPartsReport < BaseReport
-  attr_accessor :department_id
-
   def call
     result[:data] = {}
     result[:total_parts_cost] = 0
-    repair_tasks = RepairTask.includes(device_task: :service_job).where(device_tasks: {done_at: period, done: 1})
-    repair_tasks = repair_tasks.where(service_jobs: {department_id: department_id}) if department_id.present?
+    repair_tasks = RepairTask.includes(device_task: :service_job)
+                     .where(device_tasks: {done_at: period, done: 1})
+
+    repair_tasks = repair_tasks.in_department(department) if department
 
     repair_tasks.each do |repair_task|
       if repair_task.repair_parts.any?

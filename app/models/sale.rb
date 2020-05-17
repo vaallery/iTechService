@@ -1,10 +1,7 @@
 class Sale < ActiveRecord::Base
   include Document
 
-  scope :in_department, ->(department_id) do
-    includes(cash_shift: :cash_drawer).where(cash_drawers: {department_id: department_id})
-  end
-
+  scope :in_department, ->(department) { where(cash_shift_id: CashShift.in_department(department)) }
   scope :sold_at, ->(period) { where(date: period) }
   scope :date_asc, -> { order date: :asc }
   scope :posted, -> { where(status: 1) }

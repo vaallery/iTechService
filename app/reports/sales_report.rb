@@ -1,12 +1,7 @@
 class SalesReport < BaseReport
-  attr_accessor :department_id
-
   def call
     sales = Sale.sold_at(period).posted.order('date asc')
-
-    if department_id.present?
-      sales = sales.joins(cash_shift: :cash_drawer).where(cash_drawers: {department_id: department_id})
-    end
+    sales = sales.in_department(department) if department.present?
 
     data = {
       goods: {

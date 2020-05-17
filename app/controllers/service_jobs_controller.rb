@@ -7,10 +7,11 @@ class ServiceJobsController < ApplicationController
   def index
     authorize ServiceJob
 
-    if params[:location].present?
+    if params[:location] == 'archive'
+      params[:location] = Location.archive_ids
       @service_jobs = policy_scope(ServiceJob).search(params)
     else
-      @service_jobs = policy_scope(ServiceJob).unarchived.search(params)
+      @service_jobs = policy_scope(ServiceJob).not_at_archive.search(params)
     end
 
     if params.has_key? :sort and params.has_key? :direction

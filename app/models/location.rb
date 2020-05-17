@@ -9,15 +9,23 @@ class Location < ApplicationRecord
     laser
     repair
     repairmac
+    repair_notebooks
     special
+    warranty
   ].freeze
 
   scope :ordered, -> { order('position asc') }
-  scope :in_city, ->(city) { where department: Department.in_city(city) }
-  scope :in_department, ->(department) { where department: department }
+  scope :in_city, ->(city) { where department_id: Department.in_city(city) }
+  scope :in_department, ->(department) { where department_id: department }
   scope :for_schedule, -> { where(schedule: true) }
   scope :visible, -> { where hidden: [false, nil] }
+  scope :archive, -> { where code: 'archive' }
+  scope :bar, -> { where code: 'bar' }
+  scope :content, -> { where code: 'content' }
   scope :done, -> { where code: 'done' }
+  scope :repair, -> { where code: 'repair' }
+  scope :repair_notebooks, -> { where code: 'repair_notebooks' }
+  scope :warranty, -> { where code: 'warranty' }
   scope :code_start_with, ->(code) { where('code LIKE ?', "#{code}%") }
 
   scope :search, ->(params) do
@@ -36,61 +44,14 @@ class Location < ApplicationRecord
     path.all.map { |l| l.name }.join(' / ')
   end
 
-  def self.bar
-    Location.where(code: 'bar').first_or_create(name: 'Бар')
-  end
-
-  def self.content
-    Location.where(code: 'content').first_or_create(name: 'Обновление контента')
-  end
-
-  # def self.done
-  #   Location.where(code: 'done').first_or_create(name: 'Готово')
-  # end
-
-  def self.archive
-    Location.where(code: 'archive').first_or_create(name: 'Архив')
-  end
-
   def self.archive_ids
-    where(code: 'archive').pluck(:id)
-  end
-
-  def self.repair
-    Location.where(code: 'repair').first_or_create(name: 'Ремонт')
-  end
-
-  def self.warranty
-    Location.where(code: 'warranty').first_or_create(name: 'Гарантийники')
-  end
-
-  def self.popov
-    Location.where(code: 'repair_notebooks').first_or_create(name: 'Ремонт ноутбуков')
+    Location.archive.pluck(:id)
   end
 
   def self.allowed_for(user, service_job)
-    #if user.admin?
-    #  all
-    #elsif user.location.nil?
-    #  []
-    #else
-      #locations = Location.where("ancestry LIKE ? OR ancestry is NULL", "#{user.location.ancestor_ids.join('/')}%")
-      #locations = Location.where("ancestry LIKE ?", "#{user.location.ancestor_ids.join('/')}%")
-      #locations = locations.joins(:users).uniq
-      #locations_ids = []
-      #locations_ids << Location.popov.id if Location.popov.present?
-      #unless device.new_record?
-      #  locations_ids << Location.archive.id if device.location.is_done? and Location.archive.present?
-      #  locations_ids << Location.done.id if device.pending_tasks.empty? and Location.done.present?
-      #  locations_ids << Location.warranty.id if device.location.is_repair? and Location.warranty.present?
-      #end
-      #locations = locations.where locations: {id: locations_ids}
-      #locations
-    #end
     if user.admin?
       visible
     else
-      # department = (user.present? && user.department.present?) ? user.department : Department.current
       department = (service_job.present? && service_job.department.present?) ? service_job.department : Department.current
       visible.where(department_id: department.id)
     end

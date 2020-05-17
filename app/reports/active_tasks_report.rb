@@ -1,8 +1,7 @@
 class ActiveTasksReport < BaseReport
-
   def call
     result[:tasks] = []
-    received_service_jobs_ids = ServiceJob.received_at(period).pending.pluck(:id)
+    received_service_jobs_ids = ServiceJob.in_department(department).received_at(period).pending.pluck(:id)
     result[:tasks_sum] = result[:tasks_qty] = result[:tasks_qty_free] = 0
     if received_service_jobs_ids.any?
       tasks = DeviceTask.where(service_job_id: received_service_jobs_ids)

@@ -1,6 +1,6 @@
 class OrdersStatusesReport < BaseReport
   def call
-    Order.includes(:user).where(created_at: period).find_each do |order|
+    Order.includes(:user).where(created_at: period).in_department(department).find_each do |order|
       user_name = order.user.full_name
 
       if result.has_key?(user_name)

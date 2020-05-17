@@ -1,11 +1,10 @@
 class DriverReport < BaseReport
-
   def call
     result[:supply_categories] = []
-    supply_reports = SupplyReport.where date: period
+    supply_reports = SupplyReport.where(date: period, department_id: department)
     supplies_sum = 0
     if supply_reports.present?
-      if (supplies = Supply.where supply_report_id: supply_reports.map(&:id)).any?
+      if (supplies = Supply.where(supply_report_id: supply_reports)).any?
         supplies.group(:supply_category_id).sum('id').each_pair do |key, val|
           if key.present? and (supply_category = SupplyCategory.find(key)).present?
             category_supplies = supplies.where(supply_category_id: key)

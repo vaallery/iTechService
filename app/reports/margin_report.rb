@@ -10,7 +10,7 @@ class MarginReport < BaseReport
                          sum_last: 0
                        })
 
-    sales = Sale.posted.selling.sold_at(period).date_asc
+    sales = Sale.posted.selling.sold_at(period).in_department(department).date_asc
 
     sales.find_each do |sale|
       sale.sale_items.find_each do |sale_item|
