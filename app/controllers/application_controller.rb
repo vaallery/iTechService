@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :set_current_user
   before_action :store_location, except: [:create, :update, :destroy]
   after_action :verify_authorized
+  around_action :set_time_zone
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized
   respond_to :html
   helper_method :can?
@@ -55,6 +56,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def set_time_zone
+    Time.use_zone(current_user.time_zone) { yield }
+  end
 
   def change_user_department(user, new_department)
     user.department = new_department

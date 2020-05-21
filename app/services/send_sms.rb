@@ -59,7 +59,7 @@ class SendSMS
   end
 
   def check_status
-    start_time = Time.now
+    start_time = Time.current
     response = nil
 
     while true do
@@ -75,7 +75,7 @@ class SendSMS
           return response_status if response_status != 'STARTED'
         end
 
-        return :timeout if (Time.now - start_time) > 10.seconds
+        return :timeout if (Time.current - start_time) > 10.seconds
       end
     end
 

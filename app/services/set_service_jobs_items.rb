@@ -1,6 +1,6 @@
 class SetServiceJobsItems
   def call
-    log.info "Task started at #{Time.now}"
+    log.info "Task started at #{Time.current}"
     ServiceJob.where(item: nil).find_each do |service_job|
       if service_job.device_type.present?
         item = find_or_create_item service_job
@@ -13,7 +13,7 @@ class SetServiceJobsItems
         log.warn "No DeviceType. ServiceJob-#{service_job.id}."
       end
     end
-    log.info "Task finished at #{Time.now}"
+    log.info "Task finished at #{Time.current}"
     log.close
   end
 

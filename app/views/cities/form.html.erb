@@ -2,6 +2,7 @@
 
 <%= simple_form_for @city, html: {class: 'form-horizontal'} do |f| %>
   <%= f.input :name %>
+  <%= f.input :time_zone %>
   <%= f.input :color, as: :color %>
   <div class="form-actions"><%= submit_button f %></div>
 <% end %>

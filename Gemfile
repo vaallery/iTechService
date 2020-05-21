@@ -66,6 +66,7 @@ gem 'draper', '~> 2.1.0'
 gem 'seedbank', '~> 0.4.0'
 gem 'daemons', '~> 1.3.1'
 gem 'dotenv-rails', '~> 2.2.1'
+gem 'tzinfo-data'
 
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes

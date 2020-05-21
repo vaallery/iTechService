@@ -88,7 +88,7 @@ class SalesImportJob < ActiveJob::Base
   end
 
   def logs_file
-    @logs_file ||= File.new(Rails.root.join('log', "sales_import-#{Time.now.to_s(:number)}.log"), 'w')
+    @logs_file ||= File.new(Rails.root.join('log', "sales_import-#{Time.current.to_s(:number)}.log"), 'w')
   end
 
   def sale_date(sale)

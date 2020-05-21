@@ -13,11 +13,11 @@ describe ScheduleDay do
     end
 
     it 'should return begin_of_work' do
-      @schedule_day.begin_of_work.should eq(Time.now.change(hour: 10, min: 0, sec: 0))
+      @schedule_day.begin_of_work.should eq(Time.current.change(hour: 10, min: 0, sec: 0))
     end
 
     it 'should return end_of_work' do
-      @schedule_day.end_of_work.should eq(Time.now.change(hour: 18, min: 0, sec: 0))
+      @schedule_day.end_of_work.should eq(Time.current.change(hour: 18, min: 0, sec: 0))
     end
 
     it 'should return begin_of_work for given time' do

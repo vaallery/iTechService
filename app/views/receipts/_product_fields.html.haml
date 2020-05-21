@@ -1,4 +1,4 @@
-- index = Time.now.to_i
+- index = Time.current.to_i
 - prefix = "receipt[products][#{index}]"
 %tr.product-fields
   %td= text_field_tag "#{prefix}[article]", nil, class: 'input-small'

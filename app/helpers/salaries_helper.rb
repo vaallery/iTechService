@@ -8,7 +8,7 @@ module SalariesHelper
           content_tag(:tr) do
             time_text = if user.upcoming_salary_date.today?
                           text = 'Отработал(а)'
-                          years, months = ((Time.now - user.hiring_date.to_time) / 1.month).divmod(12)
+                          years, months = ((Time.current - user.hiring_date.to_time) / 1.month).divmod(12)
 
                           if years > 0
                             text << " #{years}"

@@ -12,7 +12,7 @@ class ScheduleDay < ActiveRecord::Base
   end
 
   def begin_of_work(date=nil)
-    date ||= Time.now
+    date ||= Time.current
     if hours_array.any?
       date.change hour: hours_array.first.to_i, min: 0, sec: 0
     else
@@ -21,7 +21,7 @@ class ScheduleDay < ActiveRecord::Base
   end
 
   def end_of_work(date=nil)
-    date ||= Time.now
+    date ||= Time.current
     if hours_array.any?
       date.change hour: hours_array.last.to_i, min: 59, sec: 59
     else

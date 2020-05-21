@@ -9,7 +9,7 @@ namespace :app do
   task stash_repair_parts: :environment do
     log = Logger.new('log/app_stash_repair_parts.log')
     # log = Logger.new(STDOUT)
-    start_time = Time.now
+    start_time = Time.current
 
     repair_store = Department.current.repair_store
     defect_sp_store = Department.current.defect_sp_store
@@ -42,7 +42,7 @@ namespace :app do
       end
     end
 
-    end_time = Time.now
+    end_time = Time.current
     duration = (end_time - start_time) / 1.minute
     log.info "Task finished at #{end_time} and last #{duration} minutes."
     log.close

@@ -113,6 +113,7 @@ class User < ActiveRecord::Base
   delegate :city, to: :department, allow_nil: true
   delegate :name, to: :department, prefix: true, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
+  delegate :time_zone, to: :city, allow_nil: true
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment, :department_id, :session_duration, :phone_number, :department_autochangeable

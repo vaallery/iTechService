@@ -24,7 +24,7 @@ module AcceptanceTestHelper
 
   def screenshot!
     # save_and_open_screenshot
-    save_screenshot "~/Desktop/screenshot_#{Time.now}.png", full: true
+    save_screenshot "~/Desktop/screenshot_#{Time.current}.png", full: true
   end
 
   def enable_js
