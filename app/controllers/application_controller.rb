@@ -58,7 +58,11 @@ class ApplicationController < ActionController::Base
   private
 
   def set_time_zone
-    Time.use_zone(current_user.time_zone) { yield }
+    if user_signed_in?
+      Time.use_zone(current_user.time_zone) { yield }
+    else
+      yield
+    end
   end
 
   def change_user_department(user, new_department)
