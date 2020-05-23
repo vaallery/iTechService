@@ -3,20 +3,17 @@ class SubstitutePhonesController < ApplicationController
   respond_to :html
 
   def index
+    @substitute_phones = policy_scope(SubstitutePhone).search(params[:query])
+
     respond_to do |format|
-      run SubstitutePhone::Index do
-        format.html { return render_cell SubstitutePhone::Cell::Index }
-        format.js { return }
-      end
-      format.any(:html, :js) { failed }
+      format.html { render_cell SubstitutePhone::Cell::Index, model: @substitute_phones }
+      format.js
     end
   end
 
   def show
-    run SubstitutePhone::Show do
-      return render_cell SubstitutePhone::Cell::Show
-    end
-    failed
+    @substitute_phone = find_record SubstitutePhone
+    render_cell SubstitutePhone::Cell::Show, model: @substitute_phone
   end
 
   def new
