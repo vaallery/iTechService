@@ -3,7 +3,8 @@
 .row-fluid
   .span6
     = form do |f|
-      = f.association :department, as: :radio_buttons, collection: local_departments_collection, item_wrapper_class: 'inline'
+      = f.association :department,
+        as: :radio_buttons, collection: Department.selectable, label_method: :full_name
       / TODO: display error for item
       = f.input :item, as: :device, required: true
       = f.input :condition
