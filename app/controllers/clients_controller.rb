@@ -115,9 +115,11 @@ class ClientsController < ApplicationController
 
   def export
     authorize Client
+
     respond_to do |format|
+      format.html
       format.vcf do
-        file = ExportClients.call
+        file = ExportClients.(params[:city_id])
         send_file file, filename: 'clients.vcf', type: 'application/vcf', disposition: 'inline'
       end
     end

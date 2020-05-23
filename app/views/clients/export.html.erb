@@ -1,0 +1,7 @@
+<div class="page-header">
+  <h1>Выгрузка клиентов</h1>
+</div>
+
+<% City.find_each do |city| %>
+  <%= link_to city.name, export_clients_path(city_id: city.id, format: 'vcf'), class: 'btn btn-default' %>
+<% end %>

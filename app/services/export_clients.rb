@@ -1,20 +1,15 @@
 require 'vpim/vcard'
 
-class ExportClients
-
-  def call
-    generate_vcard
+module ExportClients
+  class Client < ActiveRecord::Base
+    scope :in_city, ->(city) { where department_id: Department.in_city(city) }
   end
 
-  def self.call
-    new.call
-  end
-
-  private
-
-  def generate_vcard
+  def self.call(city_id)
     file = File.open File.join(Rails.root, 'tmp', 'clients.vcf'), 'w'
-    Client.find_each do |client|
+    clients = Client.in_city(city_id)
+
+    clients.find_each do |client|
       card = Vpim::Vcard::Maker.make2 do |maker|
         maker.add_name do |name|
           name.family = client.surname
@@ -26,8 +21,5 @@ class ExportClients
       file << card
     end
     file
-  end
-
-  class Client < ActiveRecord::Base
   end
 end
