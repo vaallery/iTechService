@@ -32,4 +32,8 @@ class SalePolicy < DocumentPolicy
   def return_check?
     any_manager?(:software) && record.is_new?
   end
+
+  def edit_price?
+    superadmin? || able_to?(:edit_price_in_sale)
+  end
 end

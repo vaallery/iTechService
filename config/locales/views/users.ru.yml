@@ -3,6 +3,7 @@ ru:
     abilities:
       comment_users: 'Комментировать сотрудников'
       edit_clients: 'Редактировать клиентов'
+      edit_price_in_sale: 'Редактировать цены в продажах'
       edit_tasks_user_comment: 'Редактировать комментарий сотрудника к задачам'
       inventory: 'Проводить инвентаризацию'
       manage_salary: 'Редактировать зарплату'

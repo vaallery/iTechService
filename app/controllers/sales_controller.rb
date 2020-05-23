@@ -105,7 +105,7 @@ class SalesController < ApplicationController
         message = 'Продажа проведена.'
 
         if @sale.service_job.present?
-          @sale.service_job.update location_id: current_user.archive_location.id
+          @sale.service_job.archive
           message += ' Устройство переведено в архив.'
         end
 

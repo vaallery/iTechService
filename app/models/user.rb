@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
     view_reports
     view_feedbacks_in_city
     manage_stocks
+    edit_price_in_sale
   ].freeze
 
   scope :in_department, ->(department) { where(department_id: department) }

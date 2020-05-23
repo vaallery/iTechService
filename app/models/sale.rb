@@ -221,6 +221,10 @@ class Sale < ActiveRecord::Base
           end
         end
       end
+      if service_job.present? && (calculation_amount != service_job.tasks_cost)
+        self.errors[:base] << 'Сумма чека не равна стоимости работ!'
+        is_valid = false
+      end
     else
       errors[:base] << I18n.t('documents.errors.cannot_be_posted')
       is_valid = false

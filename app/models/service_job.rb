@@ -349,6 +349,10 @@ class ServiceJob < ActiveRecord::Base
     new_sale
   end
 
+  def archive
+    update location_id: department.locations.archive.first.id
+  end
+
   def contact_phone_none?
     contact_phone.blank? or contact_phone == '-'
   end
