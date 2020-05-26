@@ -29,7 +29,7 @@ class TicketPdf < Prawn::Document
       span 125, position: :right do
         text @view.t('tickets.site')
         text @view.t('tickets.email')
-        text department.schedule
+        text Setting.schedule(department)
       end
     end
     move_cursor_to 180
@@ -37,11 +37,11 @@ class TicketPdf < Prawn::Document
       text "№ #{service_job.ticket_number}", align: :center, inlign_format: true, style: :bold
     end
     text service_job.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
-    text department.address, align: :center
+    text Setting.address(department), align: :center
     move_down 5
     text view.t('tickets.user', name: service_job.user_short_name)
     move_down 5
-    text I18n.t('tickets.contact_phone', number: department.contact_phone)
+    text I18n.t('tickets.contact_phone', number: Setting.contact_phone(department))
     move_down 5
     horizontal_line 0, 205
     stroke
@@ -61,7 +61,7 @@ class TicketPdf < Prawn::Document
         text @service_job.ticket_number, inlign_format: true, style: :bold
       end
       text @service_job.created_at.localtime.strftime('%H:%M %d.%m.%Y')
-      text department.address
+      text Setting.address(department)
     end
     move_down 10
     text @service_job.client_short_name
@@ -82,7 +82,7 @@ class TicketPdf < Prawn::Document
   private
 
   def logo
-    image @department.logo_path, width: 50, height: 50, at: [0, cursor]
+    image department.logo_path, width: 50, height: 50, at: [0, cursor]
   end
 
   def barcode
@@ -92,5 +92,4 @@ class TicketPdf < Prawn::Document
     outputter = Barby::PrawnOutputter.new code
     outputter.annotate_pdf self, height: 25, xdim: 1.7, x: 20, margin: 2
   end
-
 end

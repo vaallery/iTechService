@@ -28,7 +28,7 @@ class Setting < ActiveRecord::Base
   VALUE_TYPES = %w[boolean integer string text json]
 
   default_scope { order(:department_id, :presentation) }
-  scope :for_department, ->(department) { where(department_id: department.is_a?(Department) ? department.id : department) }
+  scope :for_department, ->(department) { where(department_id: department) }
 
   belongs_to :department
   delegate :name, to: :department, prefix: true, allow_nil: true

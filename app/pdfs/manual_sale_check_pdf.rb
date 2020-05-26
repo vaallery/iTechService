@@ -1,10 +1,11 @@
 # encoding: utf-8
 class ManualSaleCheckPdf < Prawn::Document
   require 'prawn/measurement_extensions'
-  attr_reader :sale
+  attr_reader :sale, :department
 
   def initialize(sale)
     @sale = sale
+    @department = sale.department
     @font_height = 10
 
     super page_size: [227, page_height], page_layout: :portrait, margin: [10, 24, 10, 10]
@@ -15,10 +16,10 @@ class ManualSaleCheckPdf < Prawn::Document
     font 'DroidSans'
     font_size @font_height
 
-    image @sale.department.logo_path, width: 30, height: 30, at: [0, cursor]
+    image department.logo_path, width: 30, height: 30, at: [0, cursor]
     move_down @font_height/2
     span 150, position: :center do
-      text Setting.get_value(:address_for_check), align: :center
+      text Setting.address_for_check(department), align: :center
       text I18n.t('sales.check_pdf.greeting'), align: :center
     end
     move_down @font_height

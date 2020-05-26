@@ -2,8 +2,11 @@
 class SaleCheckPdf < Prawn::Document
   require 'prawn/measurement_extensions'
 
+  attr_reader :sale, :department
+
   def initialize(sale, is_copy=false)
     @sale = sale
+    @department = sale.department
     @is_copy = is_copy
     @font_height = 10
 
@@ -15,10 +18,10 @@ class SaleCheckPdf < Prawn::Document
     font 'DroidSans'
     font_size @font_height
 
-    image @sale.department.logo_path, width: 30, height: 30, at: [0, cursor]
+    image department.logo_path, width: 30, height: 30, at: [0, cursor]
     move_down @font_height/2
     span 150, position: :center do
-      text Setting.get_value(:address_for_check), align: :center
+      text Setting.address_for_check(department), align: :center
       text I18n.t('sales.check_pdf.greeting'), align: :center
     end
     move_down @font_height
@@ -87,7 +90,7 @@ class SaleCheckPdf < Prawn::Document
 
   def load_items_strings
     strings = []
-    @sale.sale_items.each_with_index do |sale_item, index|
+    sale.sale_items.each_with_index do |sale_item, index|
       name = sale_item.name
       if sale_item.feature_accounting
         features = sale_item.features.map(&:value).join(', ')
@@ -101,8 +104,7 @@ class SaleCheckPdf < Prawn::Document
   def page_height
     line_height = @font_height+2
     items_lines_count = items_strings.sum{|str|str.length/25}
-    payments_count = @sale.payments.count
+    payments_count = sale.payments.count
     210 + items_lines_count*line_height + payments_count*line_height
   end
-
 end

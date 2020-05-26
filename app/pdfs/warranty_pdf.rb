@@ -2,9 +2,12 @@
 class WarrantyPdf < Prawn::Document
   require "prawn/measurement_extensions"
 
+  attr_reader :sale, :department
+
   def initialize(sale)
     super page_size: 'A4', page_layout: :portrait
     @sale = sale
+    @department = sale.department
     @font_height = 9
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
@@ -16,7 +19,7 @@ class WarrantyPdf < Prawn::Document
 
     # Organization info
     move_down 10
-    text [Setting.get_value(:organization, @sale.department).presence || I18n.t('sales.warranty_pdf.org_name'), "г. #{@sale.department.city_name}", @sale.department.address, "Конт. тел.: #{@sale.department.contact_phone}"].join(', '), align: :right, size: 8
+    text [Setting.organization(department), "г. #{department.city_name}", Setting.address(department), "Конт. тел.: #{Setting.contact_phone(department)}"].join(', '), align: :right, size: 8
 
     # Logo
     move_down 15
@@ -25,12 +28,12 @@ class WarrantyPdf < Prawn::Document
       horizontal_line 0, 530
     end
     move_up 40
-    image @sale.department.logo_path, width: 80, at: [20, cursor]
+    image department.logo_path, width: 80, at: [20, cursor]
 
     # Title
     move_down 60
     span 380, position: :right do
-      text I18n.t('sales.warranty_pdf.title', num: @sale.id, date: @sale.date.localtime.strftime('%d.%m.%Y')), size: 12, style: :bold
+      text I18n.t('sales.warranty_pdf.title', num: sale.id, date: sale.date.localtime.strftime('%d.%m.%Y')), size: 12, style: :bold
     end
 
     # Contact info
@@ -40,7 +43,7 @@ class WarrantyPdf < Prawn::Document
         text 'e-mail: info@itechstore.ru', align: :right
         text 'сайт: http://itechstore.ru', align: :right
         text 'Режим работы:', align: :right
-        text @sale.department.schedule, align: :right
+        text sale.department.schedule, align: :right
       end
     end
 
@@ -79,18 +82,18 @@ class WarrantyPdf < Prawn::Document
     end
 
     move_down 10
-    text "Для получения гарантийного обслуживания необходимо предоставить неисправный товар и гарантийный талон по адресу: #{Setting.get_value(:address_for_check)}, #{Setting.get_value(:contact_phone)}, сайт: http://itechstore.ru"
+    text "Для получения гарантийного обслуживания необходимо предоставить неисправный товар и гарантийный талон по адресу: #{Setting.address_for_check(department)}, #{Setting.contact_phone(department)}, сайт: http://itechstore.ru"
 
     # Products
     table_data = [['№', 'Артикул', 'Наименование', 'Колич.', 'Серийный номер / IMEI', 'Срок Гарантии']]
-    @sale.sale_items.each_with_index do |sale_item, index|
+    sale.sale_items.each_with_index do |sale_item, index|
       if (sale_item.warranty_term || 0) > 0
         features = sale_item.features.map(&:value).join(', ')
         table_data += [[index.next.to_s, sale_item.code, sale_item.name, sale_item.quantity, features, "#{sale_item.warranty_term} мес."]]
       end
     end
-    if @sale.service_job.present? and @sale.repair_parts.present?
-      @sale.repair_parts.each_with_index do |repair_part, index|
+    if sale.service_job.present? and sale.repair_parts.present?
+      sale.repair_parts.each_with_index do |repair_part, index|
         table_data += [[index.next.to_s, repair_part.code, repair_part.name, repair_part.quantity, '', "#{repair_part.warranty_term} мес."]] if (repair_part.warranty_term || 0) > 0
       end
     end
@@ -110,7 +113,7 @@ class WarrantyPdf < Prawn::Document
       end
       move_cursor_to y_pos
       span 220, position: :right do
-        # text "Подпись продавца /#{@sale.user_fio_short}/_________________"#, align: :right
+        # text "Подпись продавца /#{sale.user_fio_short}/_________________"#, align: :right
         text "Подпись продавца ___________________________________"#, align: :right
         move_down 30
         text 'Подпись покупателя _________________________________'#, align: :right

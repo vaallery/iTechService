@@ -22,7 +22,6 @@ class Department < ApplicationRecord
 
   attr_accessible :name, :role, :code, :url, :city_id, :brand_id, :address, :contact_phone, :schedule, :printer, :ip_network
   validates_presence_of :name, :role, :code
-  validates_presence_of :city, :address, :contact_phone, :schedule, unless: :is_store?
   validates :url, presence: true, if: :has_server?
   validate :only_one_main
 

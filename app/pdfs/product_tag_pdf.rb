@@ -68,5 +68,4 @@ class ProductTagPdf < Prawn::Document
       end
     end
   end
-
 end

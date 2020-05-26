@@ -17,6 +17,6 @@ class ImportMailer < ApplicationMailer
   private
 
   def recipients
-    Setting.get_value :emails_for_sales_import
+    Setting.emails_for_sales_import
   end
 end

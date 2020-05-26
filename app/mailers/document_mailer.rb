@@ -10,6 +10,6 @@ class DocumentMailer < ApplicationMailer
   private
 
   def recipients
-    Setting.get_value 'emails_for_acts'
+    Setting.emails_for_acts
   end
 end

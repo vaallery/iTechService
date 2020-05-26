@@ -1,11 +1,12 @@
 class ReceiptPdf < Prawn::Document
   require 'prawn/measurement_extensions'
   include ActionView::Helpers::NumberHelper
-  attr_accessor :sale
+  attr_accessor :sale, :department
 
   def initialize(sale)
     super page_size: 'A4', page_layout: :portrait
     @sale = sale
+    @department = sale.department
     @font_height = 9
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
@@ -25,7 +26,7 @@ class ReceiptPdf < Prawn::Document
   def header
     # Organization info
     move_down 10
-    text [Setting.organization(sale.department), "г. #{sale.department.city_name}", sale.department.address, "Конт. тел.: #{sale.department.contact_phone}"].join(', '), align: :right, size: 8
+    text [Setting.organization(department), "г. #{department.city_name}", Setting.address(department), "Конт. тел.: #{Setting.contact_phone(department)}"].join(', '), align: :right, size: 8
 
     # Logo
     move_down 15
@@ -34,7 +35,7 @@ class ReceiptPdf < Prawn::Document
       horizontal_line 0, 530
     end
     move_up 40
-    image sale.department.logo_path, width: 80, at: [20, cursor]
+    image department.logo_path, width: 80, at: [20, cursor]
 
     # Title
     move_down 60
@@ -49,7 +50,7 @@ class ReceiptPdf < Prawn::Document
         text 'e-mail: info@itechstore.ru', align: :right
         text 'сайт: http://itechstore.ru', align: :right
         text 'Режим работы:', align: :right
-        text sale.department.schedule, align: :right
+        text Setting.schedule(department), align: :right
       end
     end
 

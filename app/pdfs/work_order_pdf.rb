@@ -33,7 +33,7 @@ class WorkOrderPdf < Prawn::Document
 
     move_down font_size * 2.5
     text "Сервисный центр «#{department.brand_name}» #{organization}", align: :right
-    text "Юр. Адрес: #{organization}, #{Setting.get_value(:legal_address, department)}", align: :right
+    text "Юр. Адрес: #{organization}, #{Setting.legal_address(department)}", align: :right
     text "#{Setting.ogrn_inn(department)}", align: :right
     move_down font_size
     text "Фактический адрес: #{Setting.address(department)}", align: :right
