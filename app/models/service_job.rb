@@ -407,7 +407,7 @@ class ServiceJob < ActiveRecord::Base
       begin
         number = UUIDTools::UUID.random_create.hash.to_s
       end while ServiceJob.exists? ticket_number: number
-      self.ticket_number = Setting.ticket_prefix + number
+      self.ticket_number = Setting.ticket_prefix(department) + number
     end
   end
 

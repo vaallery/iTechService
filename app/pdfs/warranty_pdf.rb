@@ -16,7 +16,7 @@ class WarrantyPdf < Prawn::Document
 
     # Organization info
     move_down 10
-    text [Setting.get_value(:organization, @sale.department).presence || I18n.t('sales.warranty_pdf.org_name'), "г. #{@sale.department.city}", @sale.department.address, "Конт. тел.: #{@sale.department.contact_phone}"].join(', '), align: :right, size: 8
+    text [Setting.get_value(:organization, @sale.department).presence || I18n.t('sales.warranty_pdf.org_name'), "г. #{@sale.department.city_name}", @sale.department.address, "Конт. тел.: #{@sale.department.contact_phone}"].join(', '), align: :right, size: 8
 
     # Logo
     move_down 15
@@ -25,7 +25,7 @@ class WarrantyPdf < Prawn::Document
       horizontal_line 0, 530
     end
     move_up 40
-    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 80, at: [20, cursor]
+    image @sale.department.logo_path, width: 80, at: [20, cursor]
 
     # Title
     move_down 60

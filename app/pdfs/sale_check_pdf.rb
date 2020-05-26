@@ -15,7 +15,7 @@ class SaleCheckPdf < Prawn::Document
     font 'DroidSans'
     font_size @font_height
 
-    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 30, height: 30, at: [0, cursor]
+    image @sale.department.logo_path, width: 30, height: 30, at: [0, cursor]
     move_down @font_height/2
     span 150, position: :center do
       text Setting.get_value(:address_for_check), align: :center

@@ -15,7 +15,7 @@ class ManualSaleCheckPdf < Prawn::Document
     font 'DroidSans'
     font_size @font_height
 
-    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 30, height: 30, at: [0, cursor]
+    image @sale.department.logo_path, width: 30, height: 30, at: [0, cursor]
     move_down @font_height/2
     span 150, position: :center do
       text Setting.get_value(:address_for_check), align: :center
@@ -45,7 +45,7 @@ class ManualSaleCheckPdf < Prawn::Document
     sale.payments.each do |payment|
       text I18n.t("payments.kinds.#{payment.kind}"), indent_paragraphs: 10
       move_up font.height
-      text "#{currency_str(payment.value)}", align: :right
+      text "#{currency_str(payment.value.to_f)}", align: :right
       move_down 2
     end
 
@@ -57,7 +57,7 @@ class ManualSaleCheckPdf < Prawn::Document
     font_size @font_height*1.6 do
       text I18n.t('sales.check_pdf.total')
       move_up font.height
-      text "#{currency_str(sale.sum)}", align: :right
+      text "#{currency_str(sale.sum.to_f)}", align: :right
     end
     move_down font.height
 
@@ -97,7 +97,7 @@ class ManualSaleCheckPdf < Prawn::Document
         features = sale_item.features.map(&:value).join(', ')
         name = name + " (#{features})"
       end
-      strings << "#{index+1}. #{name}   #{sale_item.quantity} #{I18n.t('sales.check_pdf.po')} #{currency_str(sale_item.price)}"
+      strings << "#{index+1}. #{name}   #{sale_item.quantity} #{I18n.t('sales.check_pdf.po')} #{currency_str(sale_item.price.to_f)}"
     end
     strings
   end

@@ -67,7 +67,7 @@ class QuickOrderPdf < Prawn::Document
   private
 
   def logo
-    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 50, height: 50, at: [0, cursor-10]
+    image @quick_order.department.logo_path, width: 50, height: 50, at: [0, cursor-10]
   end
 
   def device_kind_image

@@ -82,7 +82,7 @@ class TicketPdf < Prawn::Document
   private
 
   def logo
-    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 50, height: 50, at: [0, cursor]
+    image @department.logo_path, width: 50, height: 50, at: [0, cursor]
   end
 
   def barcode

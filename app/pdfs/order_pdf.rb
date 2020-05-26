@@ -50,7 +50,9 @@ class OrderPdf < Prawn::Document
   private
 
   def logo
-    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 50, height: 50, at: [0, cursor-10]
+    return unless @order.department.logo_path
+
+    image @order.department.logo_path, width: 50, height: 50, at: [0, cursor-10]
   end
 
 end

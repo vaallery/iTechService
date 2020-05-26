@@ -2,7 +2,7 @@
 class QuestionnairePdf < Prawn::Document
   require 'prawn/measurement_extensions'
 
-  def initialize view, data
+  def initialize(view, data)
     super page_size: 'A4'
     @view = view
     @card_number = data[:card_number]
@@ -19,7 +19,7 @@ class QuestionnairePdf < Prawn::Document
     font 'DroidSans'
 
     # Logo
-    image File.join(Rails.root, 'app/assets/images/logo.jpg'), width: 80, at: [20, cursor]
+    image view.current_department.logo_path, height: 80, at: [20, cursor]
 
     # Title
     move_down 20

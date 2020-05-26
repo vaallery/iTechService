@@ -1,4 +1,6 @@
 class ReceiptsController < ApplicationController
+  before_action -> { authorize :receipt }
+
   def new
   end
 
