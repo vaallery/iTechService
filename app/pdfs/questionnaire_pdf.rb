@@ -19,7 +19,7 @@ class QuestionnairePdf < Prawn::Document
     font 'DroidSans'
 
     # Logo
-    image view.current_department.logo_path, height: 80, at: [20, cursor]
+    image view.current_department.logo_path, width: 80, at: [20, cursor]
 
     # Title
     move_down 20

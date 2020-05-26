@@ -14,7 +14,7 @@ class CashShiftPdf < Prawn::Document
     font 'DroidSans'
     font_size @font_height
 
-    image cash_shift.department.logo_path, width: 30, height: 30, at: [0, cursor]
+    image cash_shift.department.logo_path, width: 30, at: [0, cursor]
     move_down @font_height/2
     text @cash_shift.department.city, align: :center
     text @cash_shift.department.address, align: :center

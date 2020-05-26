@@ -16,7 +16,7 @@ class ManualSaleCheckPdf < Prawn::Document
     font 'DroidSans'
     font_size @font_height
 
-    image department.logo_path, width: 30, height: 30, at: [0, cursor]
+    image department.logo_path, width: 30, at: [0, cursor]
     move_down @font_height/2
     span 150, position: :center do
       text Setting.address_for_check(department), align: :center

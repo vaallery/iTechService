@@ -82,7 +82,7 @@ class TicketPdf < Prawn::Document
   private
 
   def logo
-    image department.logo_path, width: 50, height: 50, at: [0, cursor]
+    image department.logo_path, width: 50, at: [0, cursor]
   end
 
   def barcode
