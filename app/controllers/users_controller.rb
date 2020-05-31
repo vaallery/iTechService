@@ -143,7 +143,7 @@ class UsersController < ApplicationController
   end
 
   def create_duty_day
-    @duty_day = authorize DutyDay.new(params[:duty_day])
+    @duty_day = authorize DutyDay.new(params[:duty_day]), :manage?
     @duty_day.save
     @day = @duty_day.day
     @kind = @duty_day.kind
@@ -151,7 +151,7 @@ class UsersController < ApplicationController
   end
 
   def destroy_duty_day
-    duty_day = authorize DutyDay.find(params[:duty_day_id])
+    duty_day = authorize DutyDay.find(params[:duty_day_id]), :manage?
     @day = duty_day.day
     @kind = duty_day.kind
     duty_day.destroy
