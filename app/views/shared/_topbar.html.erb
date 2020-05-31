@@ -1,9 +1,9 @@
 <div id="topbar">
   <div id="current_user_name"><%= profile_link %></div>
   <% if current_user.department.present? %>
-    <%= department_tag current_user.department %>
+    <%= current_department_link %>
   <% else %>
-    <strong class="text-error"><%= t 'users.department_blank_error' %></strong>
+    <strong class="alert alert-error"><%= link_to 'Указать подразделение!', edit_user_department_path %></strong>
   <% end %>
   <% unless current_user.any_admin? %>
     <span><%= link_to karma_tag(current_user), rating_users_path %></span>

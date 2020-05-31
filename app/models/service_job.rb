@@ -103,8 +103,8 @@ class ServiceJob < ActiveRecord::Base
       service_jobs = service_jobs.send status_q if %w[done pending important].include? status_q
     end
 
-    unless (location_q = params[:location]).blank?
-      service_jobs = service_jobs.where service_jobs: {location_id: location_q}
+    unless params[:location_id].blank?
+      service_jobs = service_jobs.where service_jobs: params.slice(:location_id)
     end
 
     unless (ticket_q = params[:ticket]).blank?

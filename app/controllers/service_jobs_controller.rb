@@ -8,8 +8,7 @@ class ServiceJobsController < ApplicationController
     authorize ServiceJob
 
     if params[:location] == 'archive'
-      params[:location] = Location.archive_ids
-      @service_jobs = policy_scope(ServiceJob).search(params)
+      @service_jobs = policy_scope(ServiceJob).at_archive.search(params)
     else
       @service_jobs = policy_scope(ServiceJob).not_at_archive.search(params)
     end
@@ -18,8 +17,8 @@ class ServiceJobsController < ApplicationController
       @service_jobs = @service_jobs.reorder 'service_jobs.'+sort_column + ' ' + sort_direction
     end
     @service_jobs = @service_jobs.newest.page params[:page]
-    @location_name = params[:location].present? ? Location.find(params[:location]).name : 'everywhere'
-    @locations = Location.all
+    @location_name = params[:location_id].present? ? Location.find(params[:location_id]).name : t('everywhere')
+    @locations = current_user.locations
 
     respond_to do |format|
       format.html

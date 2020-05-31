@@ -14,7 +14,7 @@ class Users::SessionsController < Devise::SessionsController
     super do |user|
       if user.department_autochangeable?
         unless autochange_department(user)
-          return redirect_to edit_user_departments_path
+          return redirect_to edit_user_department_path
         end
       end
     end
@@ -32,7 +32,7 @@ class Users::SessionsController < Devise::SessionsController
         location = after_sign_in_path_for(user)
         if user.department_autochangeable?
           unless autochange_department(user)
-            location = edit_user_departments_path
+            location = edit_user_department_path
           end
         end
 

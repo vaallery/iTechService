@@ -416,7 +416,7 @@ class User < ActiveRecord::Base
   end
 
   def archive_location
-    locations.where(code: 'archive').first_or_create(name: 'Архив', department_id: self.department_id)
+    locations.archive.first
   end
 
   def done_locations

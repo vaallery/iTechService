@@ -28,7 +28,7 @@ class ServiceJobPolicy < BasePolicy
   end
 
   def repair?
-    has_role?(:superadmin, :technician)
+    any_admin?(:technician)
   end
 
   def view_repair_parts?

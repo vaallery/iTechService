@@ -2,7 +2,7 @@ class Users::DepartmentsController < ApplicationController
   skip_after_action :verify_authorized
 
   def edit
-    @departments = Department.in_city(current_user.city)
+    @departments = current_user.superadmin? ? Department.all : Department.in_city(current_user.city)
   end
 
   def update

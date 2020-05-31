@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     devise_scope :user do
       post 'sign_in_by_card', to: 'sessions#sign_in_by_card'
     end
-    resource :departments, only: %i[edit update]
+    resource :departments, only: %i[edit update], as: :department
   end
 
   namespace :service do
