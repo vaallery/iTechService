@@ -72,7 +72,7 @@ class Setting < ActiveRecord::Base
     end
 
     def parse_value(value)
-      return nil if value.blank?
+      return {} if value.blank?
 
       begin
         JSON.parse(value)
