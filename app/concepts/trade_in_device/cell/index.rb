@@ -6,6 +6,7 @@ module TradeInDevice::Cell
 
     include IndexCell
     include ActionView::Helpers::FormOptionsHelper
+    include DepartmentsHelper
 
     def page_title
       index_title = t('.title')
@@ -33,10 +34,6 @@ module TradeInDevice::Cell
       else
         nothing_found_message
       end
-    end
-
-    def department_options
-      options_from_collection_for_select Department.selectable, :id, :name, params[:department_id]
     end
   end
 end

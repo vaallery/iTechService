@@ -6,9 +6,6 @@ module ModelCell
     end
   end
 
-  private
-
-
   def t_attribute(name)
     model_class.human_attribute_name name
   end

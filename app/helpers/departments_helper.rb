@@ -25,4 +25,8 @@ module DepartmentsHelper
     content_tag :span, department.name, class: 'department_name',
                 style: "background-color: #{department.color}"
   end
+
+  def department_options_for_select
+    options_from_collection_for_select Department.selectable, :id, :name, params[:department_id]
+  end
 end
