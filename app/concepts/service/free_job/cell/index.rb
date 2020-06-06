@@ -5,6 +5,9 @@ module Service
 
       include IndexCell
       include Kaminari::Cells
+      include UsersHelper
+      include ActionView::Helpers::FormOptionsHelper
+      include DepartmentsHelper
 
       def title
         t '.index'

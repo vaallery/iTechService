@@ -70,6 +70,8 @@ class QuickOrderPdf < Prawn::Document
   private
 
   def logo
+    return unless department.logo_path
+
     image department.logo_path, width: 50, at: [0, cursor-10]
   end
 

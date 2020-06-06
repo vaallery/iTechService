@@ -4,14 +4,27 @@ module Service
     respond_to :html
 
     def index
+      free_jobs = policy_scope(FreeJob).includes(:performer)
+
+      if params[:date].present?
+        free_jobs = free_jobs.performed_on(params[:date].to_date)
+      end
+
+      if params[:performer].present?
+        performer = params[:performer].mb_chars.downcase.to_s
+        free_jobs = free_jobs.where('LOWER(name) LIKE :p OR LOWER(surname) LIKE :p', p: performer).references(:users)
+      end
+
+      if params[:department_id].present? && policy(FreeJob).view_everywhere?
+        free_jobs = free_jobs.in_department(params[:department_id])
+      end
+
+      free_jobs = free_jobs.new_first.page(params[:page])
+      content = cell(FreeJob::Cell::Index, free_jobs).call
+
       respond_to do |format|
-        run FreeJob::Index do |result|
-          content = cell(FreeJob::Cell::Index, result['model']).call
-          format.html { return render(html: content, layout: true) }
-          format.js { return render('index', locals: {content: content}) }
-        end
-        format.html { redirect_to service_free_jobs_path, alert: operation_message }
-        format.js { render_error operation_mesage }
+        format.html { return render(html: content, layout: true) }
+        format.js { return render('index', locals: {content: content}) }
       end
     end
 

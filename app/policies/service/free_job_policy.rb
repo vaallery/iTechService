@@ -1,12 +1,27 @@
 module Service
   class FreeJobPolicy < BasePolicy
     def show?
-      (same_department? && any_admin?) ||
+      view_everywhere? ||
+        (same_department? && any_admin?) ||
         (record.receiver == user)
     end
 
     def create?
-      has_role?(*MANAGER_ROLES, :software)
+      any_manager?(:software)
+    end
+
+    def view_everywhere?
+      superadmin? || able_to?(:view_quick_orders_and_free_jobs_everywhere)
+    end
+
+    class Scope < Scope
+      def resolve
+        if user.superadmin? || user.able_to?(:view_quick_orders_and_free_jobs_everywhere)
+          scope.all
+        else
+          scope.in_department(user.department)
+        end
+      end
     end
   end
 end

@@ -6,6 +6,11 @@ class QuickOrdersController < ApplicationController
     else
       @quick_orders = policy_scope(QuickOrder).in_month.undone
     end
+
+    if params[:department_id].present? && can?(:view_everywhere, QuickOrder)
+      @quick_orders = @quick_orders.in_department(params[:department_id])
+    end
+
     @quick_orders = @quick_orders.search(params).created_desc.page(params[:page])
 
     respond_to do |format|
@@ -49,10 +54,10 @@ class QuickOrdersController < ApplicationController
 
     respond_to do |format|
       if @quick_order.save
-        filename = "quick_order_#{@quick_order.number}.pdf"
-        pdf = QuickOrderPdf.new @quick_order
-        print_ticket(pdf, filename)
-        format.html { redirect_to quick_orders_path, notice: t('quick_orders.created') }
+        # filename = "quick_order_#{@quick_order.number}.pdf"
+        # pdf = QuickOrderPdf.new @quick_order
+        # print_ticket(pdf, filename)
+        format.html { redirect_to quick_order_path(@quick_order), notice: t('quick_orders.created') }
       else
         format.html { render 'form' }
       end

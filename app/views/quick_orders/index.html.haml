@@ -12,7 +12,7 @@
       = hidden_field_tag :done, params[:done]
       
       .input-append
-        = text_field_tag :number, params[:number], id: 'search_quick_order_number_input', class: 'search-query input-small', placeholder: QuickOrder.human_attribute_name(:number)
+        = text_field_tag :number, params[:number], id: 'search_quick_order_number_input', class: 'search-query input-mini', placeholder: QuickOrder.human_attribute_name(:number)
         %span.add-on.btn.clear_search_input
           %i.icon-remove
 
@@ -30,5 +30,9 @@
         = text_field_tag :task, params[:task], id: 'search_quick_order_task_input', class: 'search-query input-large', placeholder: QuickOrder.human_attribute_name(:quick_tasks)
         %span.add-on.btn.clear_search_input
           %i.icon-remove
+
+      = select_tag(:department_id, department_options_for_select, prompt: 'Все') if superadmin? || able_to?(:view_quick_orders_and_free_jobs_everywhere)
+
+      = button_tag glyph(:search), class: 'btn btn-info', type: 'submit'
 
 #resource_table= render 'table'

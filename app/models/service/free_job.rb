@@ -4,6 +4,7 @@ module Service
 
     scope :in_department, ->(department) { where department_id: department }
     scope :new_first, -> { order performed_at: :desc }
+    scope :performed_on, ->(date) { where(performed_at: date.beginning_of_day..date.end_of_day) }
 
     belongs_to :department, required: true
     belongs_to :receiver, class_name: 'User'

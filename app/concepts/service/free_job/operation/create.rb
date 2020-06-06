@@ -20,6 +20,7 @@ module Service
     def prepare!(model:, current_user:, **)
       model.receiver_id = current_user.id
       model.performer_id ||= current_user.id
+      model.department = current_user.department
       model.performed_at = Time.current
     end
 

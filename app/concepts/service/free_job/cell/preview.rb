@@ -4,8 +4,13 @@ module Service
       private
 
       include ModelCell
+      include DepartmentsHelper
 
       property :id, :client_short_name, :performer_short_name, :receiver_short_name, :task
+
+      def department
+        department_tag model.department
+      end
 
       def performed_at
         I18n.l model.performed_at, format: :date_time

@@ -9,6 +9,8 @@
 
       = text_field_tag :performer, params[:performer], class: 'search-query input-xlarge', placeholder: performer_placeholder
 
+      = select_tag(:department_id, department_options_for_select, prompt: 'Все') if superadmin? || able_to?(:view_quick_orders_and_free_jobs_everywhere)
+
       button.btn.btn-info type='submit'
         = icon('search')
 
@@ -17,6 +19,7 @@
 table.table.table-hover
   thead
     tr
+      th = t_attribute :department
       th = t_attribute :performed_at
       th = t_attribute :performer
       th = t_attribute :task
