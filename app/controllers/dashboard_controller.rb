@@ -40,7 +40,7 @@ class DashboardController < ApplicationController
   end
 
   def ready_service_jobs
-    @service_jobs = ServiceJob.located_at(current_user.done_location).order(done_at: :desc)
+    @service_jobs = ServiceJob.ready(current_department).order(done_at: :desc)
                       .search(params).page(params[:page])
     respond_to do |format|
       format.js

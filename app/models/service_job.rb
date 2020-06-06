@@ -11,6 +11,12 @@ class ServiceJob < ActiveRecord::Base
   scope :replaced, -> { where(replaced: true) }
   scope :located_at, ->(location) { where(location_id: location) }
 
+  scope :ready, ->(department = nil) do
+    locations = Location.done.short_term
+    locations = locations.in_department(department) if department
+    where location_id: locations
+  end
+
   scope :at_done, ->(department = nil) do
     locations = department ? Location.in_department(department).done : Location.done
     where(location_id: locations)

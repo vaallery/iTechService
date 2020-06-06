@@ -27,6 +27,9 @@ class Location < ApplicationRecord
   scope :repair_notebooks, -> { where code: 'repair_notebooks' }
   scope :warranty, -> { where code: 'warranty' }
   scope :code_start_with, ->(code) { where('code LIKE ?', "#{code}%") }
+  scope :short_term, -> { where storage_term: 3 }
+  scope :long_term, -> { where storage_term: 12 }
+  scope :termless, -> { where storage_term: nil }
 
   scope :search, ->(params) do
     where(department_id: params[:department_id]) if params.key?(:department_id)
