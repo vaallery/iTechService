@@ -126,7 +126,7 @@ class UsersController < ApplicationController
   def schedule
     authorize User
     @users = User.active.schedulable.id_asc
-    @locations = Location.for_schedule
+    @locations = Location.for_schedule.in_department(current_department)
   end
 
   def add_to_job_schedule

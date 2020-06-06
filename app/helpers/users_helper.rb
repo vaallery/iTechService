@@ -165,8 +165,10 @@ module UsersHelper
       day_color = 'inherit'
       day_id = ''
       style = ''
-      duty_day = DutyDay.find_by_day_and_kind day, kind
-      if duty_day.present? and (duty_user = duty_day.user).present?
+      duty_day = DutyDay.get_for(current_department, kind, day)
+      duty_user = duty_day&.user
+
+      if duty_day.present? and duty_user.present?
         day_id = duty_day.id
         day_color = duty_user.color
         day_class << ' duty'
@@ -174,8 +176,8 @@ module UsersHelper
       else
         day_class << ' empty'
       end
-      {class: day_class, data: {user: duty_user.try(:id) || '', dayid: day_id, day: day.to_s, color: day_color},
-       style: style, title: duty_user.try(:short_name)}
+      {class: day_class, data: {user: duty_user&.id || '', dayid: day_id, day: day.to_s, color: day_color},
+       style: style, title: duty_user&.short_name}
     else
       {class: calendar_day_class(user, day, month)}
     end

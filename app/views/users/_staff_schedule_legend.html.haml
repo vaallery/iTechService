@@ -1,0 +1,16 @@
+#staff_schedule_legend.well.well-small.affix
+  %table
+    - locations.each do |location|
+      %tr.location_row
+        %td
+        %td.location_name= location.name
+      - location.users.schedulable.each do |user|
+        %tr.user_row{data: {user: user.id}}
+          %td.user_color
+            %span.label{style: "background-color: #{user.color_s}",
+                            data: {color: user.color_s, 'color-format' => 'hex'}}
+              %i
+          %td.user_name
+            = user.short_name
+            - unless user.wish.blank?
+              %i.user_wish.icon-comment-alt{title: user.wish}

@@ -9,9 +9,13 @@ class ApplicationController < ActionController::Base
   around_action :set_time_zone
   rescue_from Pundit::NotAuthorizedError, with: :not_authorized
   respond_to :html
-  helper_method :can?
+  helper_method :can?, :current_department
 
   protected
+
+  def current_department
+    current_user.department
+  end
 
   def can?(action, object)
     policy(object).public_send("#{action}?")

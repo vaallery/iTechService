@@ -1,0 +1,19 @@
+%table#job_schedule_table.table.table-bordered.table-condensed
+  %caption
+    %h4= t 'users.job_schedule'
+  %tbody
+    - (1..7).each do |day|
+      %tr.job_schedule_day{data: {day: day}}
+        %th{colspan: 12}
+          = t('date.day_names')[day-1]
+          %span.pull-right= link_to_add_user_hours day
+      %tr.job_schedule_hours
+        - ('10'..'20').each do |hour|
+          %td.job_schedule_hour{data: {hour: hour}}= "#{hour} - #{hour.to_i+1}"
+        %td
+      - Location.for_schedule.each do |location|
+        %tr.job_schedule_location{data: {location: location.id, day: day}}
+          %td{colspan: 12}
+            %span= location.name
+        - location.users.working_at(day).each do |user|
+          = user_hours_row_tag day, user
