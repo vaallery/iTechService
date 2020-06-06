@@ -53,6 +53,7 @@ class User < ActiveRecord::Base
   ].freeze
 
   scope :in_department, ->(department) { where(department_id: department) }
+  scope :in_city, ->(city) { where department_id: Department.in_city(city) }
   scope :id_asc, -> { order('id asc') }
   scope :ordered, -> { order('position asc') }
   scope :any_admin, -> { where(role: %w[admin superadmin]) }

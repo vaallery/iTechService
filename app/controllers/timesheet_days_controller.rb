@@ -1,7 +1,7 @@
 class TimesheetDaysController < ApplicationController
   def index
     authorize TimesheetDay
-    @users = policy_scope(User).active.schedulable.id_asc
+    @users = policy_scope(User).active.schedulable.in_city(current_department.city).id_asc
     @timesheet_date = (params[:date].present? ? params[:date].to_date : Date.current).beginning_of_month
     respond_to do |format|
       format.html
