@@ -31,6 +31,7 @@ class Client < ActiveRecord::Base
   accepts_nested_attributes_for :client_characteristic, allow_destroy: true
 
   delegate :client_category, to: :client_characteristic, allow_nil: true
+  delegate :city, to: :department, allow_nil: true
 
   attr_accessible :name, :surname, :patronymic, :birthday, :email, :phone_number, :full_phone_number,
                   :phone_number_checked, :card_number, :admin_info, :comments_attributes, :comment,

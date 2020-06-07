@@ -4,6 +4,7 @@
     %thead
       %tr
         %th= Client.human_attribute_name(:id)
+        %th= Client.human_attribute_name(:city)
         %th= Client.human_attribute_name(:name)
         %th= Client.human_attribute_name(:phone_number)
         %th= Client.human_attribute_name(:created_at)
@@ -12,6 +13,7 @@
       - @clients.each do |client|
         %tr
           %td= link_to client.id, client_path(client)
+          %td= city_tag client.city
           %td= link_to client.short_name, client_path(client)
           %td= client.human_phone_number
           %td=l client.created_at, format: :date_time

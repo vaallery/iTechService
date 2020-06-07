@@ -649,6 +649,7 @@ ru:
           no_retail_price: 'Нет розничной цены'
 
   attributes:
+    city: :activerecord.models.city
     client: 'Клиент'
     client_category: 'Категория клиента'
     comment: 'Комментарий'

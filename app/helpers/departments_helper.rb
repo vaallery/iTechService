@@ -17,12 +17,12 @@ module DepartmentsHelper
 
   def current_department_link
     link_to current_department.name, edit_user_department_path,
-            id: 'current_department_name', class: 'department_name',
+            id: 'current_department_name', class: 'city_tag',
             style: "background-color: #{current_department.color}"
   end
 
   def department_tag(department)
-    content_tag :span, department.name, class: 'department_name',
+    content_tag :span, department.name, class: 'city_tag',
                 style: "background-color: #{department.color}"
   end
 
