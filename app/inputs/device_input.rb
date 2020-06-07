@@ -14,7 +14,9 @@ class DeviceInput < SimpleForm::Inputs::Base
   private
 
   def device
-    @builder.object.item
+    return @device if defined? @device
+
+    @device = @builder.object.item || Item.find_by(id: @builder.object.item_id)
   end
 
   def device_presenter
