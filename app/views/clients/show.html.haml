@@ -3,6 +3,7 @@
     = link_back_to_index
     = @client.full_name
   %small
+    = department_tag @client.department
     = timestamp_string_for @client
     - if @client.creator.present?
       = "#{t('attributes.user')}: "

@@ -5,6 +5,7 @@ module TradeInDevice::Cell
     private
 
     include FormCell
+    include ClientsHelper
     include ActionView::Helpers::FormOptionsHelper
     include ActionView::Helpers::DateHelper
 

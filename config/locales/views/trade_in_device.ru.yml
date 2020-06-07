@@ -18,6 +18,7 @@ ru:
         archiving_comment: 'Комментарий архивации'
         bought_device: 'Что покупают'
         check_icloud: 'Проверил iCloud'
+        client: 'Покупатель'
         client_name: 'ФИО покупателя'
         client_phone: 'Номер телефона покупателя'
         item: 'Сдают'

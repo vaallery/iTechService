@@ -7,13 +7,13 @@ class TradeInDevice < ApplicationRecord
   scope :unconfirmed, -> { where(confirmed: false) }
 
   belongs_to :item
+  belongs_to :client
   belongs_to :receiver, class_name: 'User'
   belongs_to :department
   has_many :features, through: :item
   has_many :comments, as: :commentable, dependent: :destroy
 
-  validates_presence_of :received_at, :item, :appraised_value, :appraiser, :bought_device,
-                        :client_name, :client_phone, :check_icloud
+  validates_presence_of :received_at, :item, :appraised_value, :appraiser, :bought_device,  :check_icloud
 
   delegate :name, :presentation, :imei, :serial_number, to: :item
   delegate :name, :color, to: :department, prefix: true, allow_nil: true

@@ -4,8 +4,8 @@ module TradeInDevice::Cell
 
     include FormHelper
 
-    property :appraiser, :bought_device, :client_name, :client_phone, :check_icloud, :archiving_comment, :condition,
-             :number
+    property :appraiser, :bought_device, :client_name, :client_phone, :check_icloud, :archiving_comment,
+             :condition, :number
 
     delegate :human_attribute_name, to: :TradeInDevice
     delegate :name, :presentation, to: :decorated_item
@@ -27,6 +27,11 @@ module TradeInDevice::Cell
 
     def archived
       TradeInDevice.human_attribute_name("archived/#{model.archived}")
+    end
+
+    def client
+      return unless model.client_id
+      model.client&.presentation
     end
 
     def department

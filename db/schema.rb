@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200521112820) do
+ActiveRecord::Schema.define(version: 20200607074743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1367,8 +1367,10 @@ ActiveRecord::Schema.define(version: 20200521112820) do
     t.boolean  "confirmed",          default: false, null: false
     t.boolean  "extended_guarantee"
     t.integer  "sale_amount"
+    t.integer  "client_id"
   end
 
+  add_index "trade_in_devices", ["client_id"], name: "index_trade_in_devices_on_client_id", using: :btree
   add_index "trade_in_devices", ["department_id"], name: "index_trade_in_devices_on_department_id", using: :btree
   add_index "trade_in_devices", ["item_id"], name: "index_trade_in_devices_on_item_id", using: :btree
   add_index "trade_in_devices", ["receiver_id"], name: "index_trade_in_devices_on_receiver_id", using: :btree
@@ -1502,6 +1504,7 @@ ActiveRecord::Schema.define(version: 20200521112820) do
   add_foreign_key "substitute_phones", "departments"
   add_foreign_key "substitute_phones", "items"
   add_foreign_key "substitute_phones", "service_jobs"
+  add_foreign_key "trade_in_devices", "clients"
   add_foreign_key "trade_in_devices", "departments"
   add_foreign_key "trade_in_devices", "items"
   add_foreign_key "trade_in_devices", "users", column: "receiver_id"

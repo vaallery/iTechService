@@ -14,8 +14,11 @@
       = attribute_presentation :appraised_value
       = attribute_presentation :appraiser
       = attribute_presentation :bought_device
-      = attribute_presentation :client_name
-      = attribute_presentation :client_phone
+      - if client.present?
+        = attribute_presentation :client
+      - else
+        = attribute_presentation :client_name
+        = attribute_presentation :client_phone
       = attribute_presentation :check_icloud
       = attribute_presentation :condition
       = attribute_presentation :equipment
