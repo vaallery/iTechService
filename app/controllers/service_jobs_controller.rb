@@ -75,7 +75,7 @@ class ServiceJobsController < ApplicationController
               pdf = TicketPdf.new @service_job, view_context
               filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
               pdf.render_file filepath
-              PrinterTools.print_file filepath, type: :ticket, printer: @service_job.department.printer
+              PrinterTools.print_file filepath, type: :ticket, printer: current_department.printer
             else
               pdf = TicketPdf.new @service_job, view_context, params[:part]
             end

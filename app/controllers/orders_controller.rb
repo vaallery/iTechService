@@ -39,7 +39,7 @@ class OrdersController < ApplicationController
         filename = "order_#{@order.number}.pdf"
         filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
         pdf.render_file filepath
-        PrinterTools.print_file filepath, printer: @order.department.printer
+        PrinterTools.print_file filepath, printer: current_department.printer
         send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
       end
     end

@@ -99,7 +99,7 @@ class SalesController < ApplicationController
           filename = "sale_check_#{@sale.id}.pdf"
           filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
           pdf.render_file filepath
-          PrinterTools.print_file filepath, type: :sale_check, height: pdf.page_height_mm, printer: current_user.department.printer
+          PrinterTools.print_file filepath, type: :sale_check, height: pdf.page_height_mm, printer: current_department.printer
         end
 
         message = 'Продажа проведена.'
@@ -136,7 +136,7 @@ class SalesController < ApplicationController
       end
       filepath = "#{Rails.root.to_s}/tmp/pdf/sale_check_#{@sale.id}.pdf"
       pdf.render_file filepath
-      PrinterTools.print_file filepath, type: :sale_check, height: pdf.page_height_mm, printer: current_user.department.printer
+      PrinterTools.print_file filepath, type: :sale_check, height: pdf.page_height_mm, printer: current_department.printer
     end
 
     respond_to do |format|
