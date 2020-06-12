@@ -16,7 +16,7 @@ ExceptionNotification.configure do |config|
   # Email notifier sends notifications by email.
   config.add_notifier :email, {
     email_prefix: '[ERROR] ',
-    sender_address: %{"iTechService" <#{ENV['EN_SMTP_LOGIN']}>},
-    exception_recipients: ENV['EN_RECIPIENT']
+    sender_address: %{"iTechService" <#{ENV['EMAIL_SENDER']}>},
+    exception_recipients: ENV['ADMIN_EMAIL']
   }
 end

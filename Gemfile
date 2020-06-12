@@ -44,7 +44,6 @@ gem 'exception_notification', '~> 4.1.4'#, git: 'git://github.com/alanjds/except
 gem 'private_pub', '~> 1.0.3'
 gem 'thin', '~> 1.6.4'
 gem 'twitter-bootstrap-rails', '~> 2.2.7'#, :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
-gem 'seed_dumper', '~> 0.1.3'
 gem 'irwi', '~> 0.5.0'
 gem 'RedCloth', '~> 4.3.1'
 gem 'roo', '~> 2.4.0'
