@@ -1,5 +1,6 @@
 module ServiceJobs
   class SubscriptionsController < ApplicationController
+    skip_after_action :verify_authorized
 
     def create
       @service_job = find_service_job
