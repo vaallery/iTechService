@@ -34,11 +34,11 @@ class TradeInDevicesController < ApplicationController
 
   # TODO: make it via ajax
   def print
-    run TradeInDevice::Print do |result|
-      pdf = result['pdf']
-      return send_data pdf.render, filename: pdf.filename, type: 'application/pdf', disposition: 'inline'
-    end
-    failed
+    trade_in_device = find_record TradeInDevice
+    pdf = TradeInDevicePdf.new(trade_in_device)
+    pdf.render_file
+    result = PrintFile.(pdf.filepath, type: :trade_in, printer: current_user.department.printer)
+    send_data pdf.render, filename: pdf.filename, type: 'application/pdf', disposition: :inline
   end
 
   def new
@@ -52,7 +52,8 @@ class TradeInDevicesController < ApplicationController
     run TradeInDevice::Create do
       # TradeInDevice::Print.({id: @model.id}, 'current_user' => current_user)
       # return redirect_to new_trade_in_device_path, notice: operation_message
-      return redirect_to print_trade_in_device_path(@model.id), notice: operation_message
+      # return redirect_to print_trade_in_device_path(@model.id), notice: operation_message
+      return redirect_to trade_in_device_path(@model.id), notice: operation_message
     end
     flash.now.alert = operation_message
     render_form

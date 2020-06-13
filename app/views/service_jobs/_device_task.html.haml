@@ -5,7 +5,7 @@
     %td.align_right= f.number_field :cost, class: 'device_task_cost input-small'
     %td= f.text_area :comment, rows: 3
 
-    - if able_to? :edit_tasks_user_comment
+    - if superadmin? || able_to?(:edit_tasks_user_comment)
       %td= f.text_area :user_comment, rows: 3
 
     - if can? :remove_device_tasks, f.object.service_job

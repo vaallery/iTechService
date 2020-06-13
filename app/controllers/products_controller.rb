@@ -31,6 +31,7 @@ class ProductsController < ApplicationController
   end
 
   def show
+    # TODO optimize query
     @product = find_record Product
     @items = @product.items.available
     respond_to do |format|

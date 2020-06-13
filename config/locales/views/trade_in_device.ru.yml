@@ -28,7 +28,7 @@ ru:
         replacement_status/replaced: 'Нет'
         replacement_status/in_service: 'В сервисе'
 
-    created: 'Trade-in девайс создан'
+    created: 'Устройство в Trade-in успешно принятно. Как только оно пройдёт контроль администратора, то сразу будет добавлено в общий список. Спасибо'
     destroyed: 'Trade-in девайс удалён'
     not_destroyed: 'Trade-in девайс не удалён'
     purgatory: 'Чистилище Trade-in'
