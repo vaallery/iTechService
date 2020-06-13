@@ -117,7 +117,7 @@
           %td= t("orders.statuses.#{order.status}")
           %td= order.object
           %td= order.quantity
-          %td= l order.desired_date, format: :date_time if order.desired_date.present?
+          %td= l order.desired_date, format: :default if order.desired_date.present?
 
 .form-actions
   - if can? :create, ServiceJob
