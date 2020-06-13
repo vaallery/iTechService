@@ -1,6 +1,8 @@
 class Announcement < ActiveRecord::Base
   KINDS = %w[help coffee for_coffee protector info birthday order_status order_done salary device_return]
 
+  scope :in_department, ->(department) { where(department_id: department) }
+
   belongs_to :department
   belongs_to :user, inverse_of: :announcements
   has_and_belongs_to_many :recipients, class_name: 'User', join_table: 'announcements_users', uniq: true

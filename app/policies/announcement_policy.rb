@@ -16,6 +16,6 @@ class AnnouncementPolicy < BasePolicy
   end
 
   def cancel_announce?
-    update?
+    true
   end
 end
