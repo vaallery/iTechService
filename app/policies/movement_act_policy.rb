@@ -9,7 +9,8 @@ class MovementActPolicy < DocumentPolicy
   end
 
   def modify?
-    has_role?(:technician) && record.is_spare_parts_to_defect?
+    manage? ||
+      has_role?(:technician) && record.is_spare_parts_to_defect?
   end
 
   def make_defect_sp?
