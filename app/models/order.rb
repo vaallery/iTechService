@@ -79,6 +79,10 @@ class Order < ActiveRecord::Base
     customer
   end
 
+  def client_id
+    customer_id
+  end
+
   def done?
     status == 'done'
   end
