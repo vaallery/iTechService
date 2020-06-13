@@ -27,7 +27,7 @@ class OrderPdf < Prawn::Document
         text @view.t('tickets.site')
         text @view.t('tickets.email')
         text Setting.address_for_check(department)
-        text Setting.schedule.(department)
+        text Setting.schedule(department)
       end
     end
     move_down 4
