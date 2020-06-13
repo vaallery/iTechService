@@ -7,10 +7,10 @@ class DocumentPolicy < ApplicationPolicy
     read?
   end
 
-  def create?; manage?; end
+  def create?; modify?; end
 
   def update?
-    editable? && manage?
+    editable? && modify?
   end
 
   def destroy?
@@ -18,7 +18,7 @@ class DocumentPolicy < ApplicationPolicy
   end
 
   def post?
-    postable? && manage?
+    postable? && modify?
   end
 
   def unpost?
