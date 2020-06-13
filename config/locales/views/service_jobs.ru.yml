@@ -35,7 +35,7 @@ ru:
       title: 'История перемещений'
 
     status:
-      all: 'Все статусы'
+      all: 'Все'
       done: 'Готово'
       pending: 'Не готово'
       important: 'Важно'

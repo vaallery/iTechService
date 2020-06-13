@@ -16,8 +16,16 @@ class ServiceJobsController < ApplicationController
     if params.has_key? :sort and params.has_key? :direction
       @service_jobs = @service_jobs.reorder 'service_jobs.'+sort_column + ' ' + sort_direction
     end
+
+    if params[:location_id].present?
+      @location_name = Location.find(params[:location_id]).name
+    else
+      @location_name = t('everywhere')
+      @service_jobs = @service_jobs.in_department(current_department)
+    end
+
     @service_jobs = @service_jobs.newest.page params[:page]
-    @location_name = params[:location_id].present? ? Location.find(params[:location_id]).name : t('everywhere')
+    @locations = current_department.locations.visible
 
     respond_to do |format|
       format.html

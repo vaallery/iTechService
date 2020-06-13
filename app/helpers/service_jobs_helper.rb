@@ -1,7 +1,16 @@
 # encoding: utf-8
 module ServiceJobsHelper
-  
-  def row_class_for_task task
+  def service_job_status_options(selected)
+    options_for_select [
+                         [t('service_jobs.status.all'), nil],
+                         [t('service_jobs.status.done'), 'done'],
+                         [t('service_jobs.status.pending'), 'pending'],
+                         [t('service_jobs.status.important'), 'important'],
+                       ],
+                       selected
+  end
+
+  def row_class_for_task(task)
     if task.present?
       task.done? ? 'success' : task.pending? ? (task.is_important? ? 'error' : 'warning') : ''
     else
