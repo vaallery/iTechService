@@ -13,15 +13,15 @@ class ServiceJobsController < ApplicationController
       @service_jobs = policy_scope(ServiceJob).not_at_archive.search(params)
     end
 
-    if params.has_key? :sort and params.has_key? :direction
-      @service_jobs = @service_jobs.reorder 'service_jobs.'+sort_column + ' ' + sort_direction
-    end
-
     if params[:location_id].present?
       @location_name = Location.find(params[:location_id]).name
     else
       @location_name = t('everywhere')
       @service_jobs = @service_jobs.in_department(current_department)
+    end
+
+    if params.has_key? :sort and params.has_key? :direction
+      @service_jobs = @service_jobs.reorder 'service_jobs.'+sort_column + ' ' + sort_direction
     end
 
     @service_jobs = @service_jobs.newest.page params[:page]
