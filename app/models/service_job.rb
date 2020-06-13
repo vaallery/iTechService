@@ -447,7 +447,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def validate_location
-    old_location = changed_attributes['location_id'].present? ? Location.find(changed_attributes['location_id']) : nil
+    old_location = location_id_changed? ? Location.find_by(id: location_id_was) : nil
 
     if location.is_done? && pending?
       errors.add :location_id, I18n.t('service_jobs.errors.pending_tasks')
