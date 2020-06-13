@@ -17,7 +17,7 @@ class LocationInput < SimpleForm::Inputs::Base
         end +
         content_tag(:ul, id: 'departments_list', class: 'dropdown-menu hidden') do
           departments.map do |department|
-            content_tag(:li, link_to(department.full_name, locations_path(department_id: department.id), remote: true))
+            content_tag(:li, link_to(department.full_name, locations_path(department_id: department.id, visible: true), remote: true))
           end.join.html_safe
         end
       end

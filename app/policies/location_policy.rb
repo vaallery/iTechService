@@ -1,4 +1,4 @@
-class LocationPolicy < BasePolicy
+class LocationPolicy < CommonPolicy
   def create?
     any_admin?
   end

@@ -31,10 +31,6 @@ class Location < ApplicationRecord
   scope :long_term, -> { where storage_term: 12 }
   scope :termless, -> { where storage_term: nil }
 
-  scope :search, ->(params) do
-    where(department_id: params[:department_id]) if params.key?(:department_id)
-  end
-
   belongs_to :department, required: true, inverse_of: :locations
   has_many :users
   delegate :name, to: :department, prefix: true, allow_nil: true
@@ -43,8 +39,11 @@ class Location < ApplicationRecord
   attr_accessible :name, :schedule, :position, :code, :department_id, :hidden, :storage_term
   validates_presence_of :name
 
-  def full_name
-    path.all.map { |l| l.name }.join(' / ')
+  def self.search(params)
+    locations = all
+    locations = locations.where(department_id: params[:department_id]) if params.key?(:department_id)
+    locations = locations.visible if !!params[:visible]
+    locations
   end
 
   def self.archive_ids
@@ -58,6 +57,10 @@ class Location < ApplicationRecord
       department = (service_job.present? && service_job.department.present?) ? service_job.department : Department.current
       visible.where(department_id: department.id)
     end
+  end
+
+  def full_name
+    path.all.map { |l| l.name }.join(' / ')
   end
 
   def is_done?

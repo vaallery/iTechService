@@ -18,7 +18,6 @@ class ServiceJobsController < ApplicationController
     end
     @service_jobs = @service_jobs.newest.page params[:page]
     @location_name = params[:location_id].present? ? Location.find(params[:location_id]).name : t('everywhere')
-    @locations = current_user.locations
 
     respond_to do |format|
       format.html
