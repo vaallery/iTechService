@@ -3,6 +3,10 @@ class ServiceJobPolicy < CommonPolicy
     any_manager?(:software, :media)
   end
 
+  def edit?
+    read?
+  end
+
   def update?
     same_department? && any_manager?(:software, :media, :technician, :api, :supervisor)
   end
