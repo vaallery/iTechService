@@ -56,7 +56,7 @@ class WorkOrderPdf < Prawn::Document
 
     # Title
     text "Заказ-наряд № #{service_job.ticket_number}", style: :bold, align: :center
-    text "Дата приёма: #{service_job.received_at.localtime.strftime('%d.%m.%Y')}", style: :bold, align: :center
+    text "Дата приёма: #{service_job.received_at.strftime('%d.%m.%Y')}", style: :bold, align: :center
     move_down font_size * 2
 
     # Client info

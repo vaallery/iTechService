@@ -61,7 +61,7 @@ class CashShiftPdf < Prawn::Document
 
     #text "#{view.t('sales.check_pdf.doc')} #{cash_shift.id}"
     #move_up font.height
-    text cash_shift.closed_at.localtime.strftime('%d-%m-%y %H:%M'), align: :right if cash_shift.is_closed
+    text cash_shift.closed_at.strftime('%d-%m-%y %H:%M'), align: :right if cash_shift.is_closed
 
     encrypt_document permissions: { modify_contents: false }
   end

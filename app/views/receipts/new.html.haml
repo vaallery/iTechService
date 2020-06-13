@@ -10,7 +10,7 @@
 
   .control-group
     %label.control-label= t '.date'
-    .controls= text_field_tag 'receipt[date]', l(Time.current.localtime.to_date), class: 'datepicker input-xlarge', data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1, 'date-viewmode' => 'days'}
+    .controls= text_field_tag 'receipt[date]', l(Time.current.to_date), class: 'datepicker input-xlarge', data: {'date-language' => 'ru', 'date-format' => 'dd.mm.yyyy', 'date-weekstart' => 1, 'date-viewmode' => 'days'}
 
   .control-group
     %label.control-label= t '.customer'

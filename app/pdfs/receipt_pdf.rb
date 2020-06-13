@@ -40,7 +40,7 @@ class ReceiptPdf < Prawn::Document
     # Title
     move_down 60
     span 380, position: :right do
-      text t(:title, num: sale.number, date: sale.date.localtime.strftime('%d.%m.%Y')), size: 12, style: :bold
+      text t(:title, num: sale.number, date: sale.date.strftime('%d.%m.%Y')), size: 12, style: :bold
     end
 
     # Contact info

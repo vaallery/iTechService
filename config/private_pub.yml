@@ -1,6 +1,6 @@
 defaults: &defaults
-  server: https://<%= ENV['SERVER_HOST'] %>:9292/faye
-  secret_token: <%= ENV['PRIVATE_PUB_SECRET_TOKEN'] %>
+  server: "https://ise.itech.pw:9292/faye"
+  secret_token: "<%= ENV['PRIVATE_PUB_SECRET_TOKEN'] %>"
 
 development:
   <<: *defaults

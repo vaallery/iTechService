@@ -29,7 +29,7 @@ class ManualSaleCheckPdf < Prawn::Document
     text I18n.t('sales.check_pdf.sale')
     move_up font.height
     text sale.seller, align: :right
-    text "#{I18n.t('sales.check_pdf.open')} #{sale.date.localtime.strftime('%H:%M:%S')}", align: :center
+    text "#{I18n.t('sales.check_pdf.open')} #{sale.date.strftime('%H:%M:%S')}", align: :center
 
     move_down 5
     stroke { horizontal_line 0, 205 }
@@ -64,7 +64,7 @@ class ManualSaleCheckPdf < Prawn::Document
 
     text "##{sale.cash_shift_id} #{I18n.t('sales.check_pdf.doc')} #{sale.id}"
     move_up font.height
-    text sale.date.localtime.strftime('%d-%m-%y %H:%M'), align: :right
+    text sale.date.strftime('%d-%m-%y %H:%M'), align: :right
 
     text I18n.t('sales.check_pdf.thanks1'), align: :center
     text I18n.t('sales.check_pdf.thanks2'), align: :center

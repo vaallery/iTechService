@@ -36,7 +36,7 @@ class TicketPdf < Prawn::Document
     font_size 24 do
       text "№ #{service_job.ticket_number}", align: :center, inlign_format: true, style: :bold
     end
-    text service_job.created_at.localtime.strftime('%H:%M %d.%m.%Y'), align: :center
+    text service_job.created_at.strftime('%H:%M %d.%m.%Y'), align: :center
     text Setting.address(department), align: :center
     move_down 5
     text view.t('tickets.user', name: service_job.user_short_name)
@@ -60,7 +60,7 @@ class TicketPdf < Prawn::Document
       font_size 22 do
         text @service_job.ticket_number, inlign_format: true, style: :bold
       end
-      text @service_job.created_at.localtime.strftime('%H:%M %d.%m.%Y')
+      text @service_job.created_at.strftime('%H:%M %d.%m.%Y')
       text Setting.address(department)
     end
     move_down 10
