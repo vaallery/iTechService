@@ -468,7 +468,7 @@ class ServiceJob < ActiveRecord::Base
       errors.add :location_id, I18n.t('service_jobs.errors.not_allowed')
     end
 
-    if self.location.is_repair_notebooks? and old_location.present?
+    if self.location.is_repair_notebooks? && old_location.present?
       MovementMailer.notice(self).deliver_later
     end
 

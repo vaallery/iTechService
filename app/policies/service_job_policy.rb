@@ -1,4 +1,4 @@
-class ServiceJobPolicy < BasePolicy
+class ServiceJobPolicy < CommonPolicy
   def create?
     any_manager?(:software, :media)
   end
