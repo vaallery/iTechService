@@ -4,18 +4,18 @@ class QuickOrderPolicy < BasePolicy
   end
 
   def create?
-    any_manager?(:software, :media)
+    any_manager?(:software, :media, :universal)
   end
 
   def update?
     superadmin? ||
-      same_department? && any_manager?(:media) ||
-      (has_role?(:software) && record.user_id == user.id)
+      same_department? && any_manager?(:media, :universal) ||
+      (has_role?(:software, :universal) && record.user_id == user.id)
   end
 
   def set_done?
     superadmin? ||
-      same_department? && any_manager?(:software, :media)
+      same_department? && any_manager?(:software, :media, :universal)
   end
 
   def view_everywhere?

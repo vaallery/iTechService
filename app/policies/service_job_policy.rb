@@ -1,6 +1,6 @@
 class ServiceJobPolicy < CommonPolicy
   def create?
-    any_manager?(:software, :media)
+    any_manager?(:software, :media, :universal)
   end
 
   def edit?
@@ -8,7 +8,7 @@ class ServiceJobPolicy < CommonPolicy
   end
 
   def update?
-    same_department? && any_manager?(:software, :media, :technician, :api, :supervisor)
+    same_department? && any_manager?(:software, :media, :universal, :technician, :api, :supervisor)
   end
 
   def destroy?
@@ -16,7 +16,7 @@ class ServiceJobPolicy < CommonPolicy
   end
 
   def create_sale?
-    any_manager?(:software)
+    any_manager?(:software, :universal)
   end
 
   def read_tech_notice?

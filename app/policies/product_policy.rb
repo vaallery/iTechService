@@ -32,11 +32,11 @@ class ProductPolicy < CommonPolicy
   end
 
   def find?
-    has_role?(:software, :media, :marketing)
+    has_role?(:software, :media, :universal, :marketing)
   end
 
   def choose?
-    has_role?(:software, :media, :marketing, :technician)
+    has_role?(:software, :media, :universal, :marketing, :technician)
   end
 
   def related?
@@ -44,6 +44,6 @@ class ProductPolicy < CommonPolicy
   end
 
   def select?
-    has_role?(:software, :media, :marketing, :technician)
+    has_role?(:software, :media, :universal, :marketing, :technician)
   end
 end

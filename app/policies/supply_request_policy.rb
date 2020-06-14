@@ -1,14 +1,14 @@
 class SupplyRequestPolicy < BasePolicy
   def manage?
-    any_manager? || has_role?(:technician, :media) && record.user_id == user.id && record.is_new?
+    any_manager? || has_role?(:technician, :universal, :media) && record.user_id == user.id && record.is_new?
   end
 
   def read?
-    any_manager?(:driver, :technician, :media)
+    any_manager?(:driver, :technician, :universal, :media)
   end
 
   def create?
-    any_manager?(:technician, :media)
+    any_manager?(:technician, :universal, :media)
   end
 
   def make_done?

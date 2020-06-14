@@ -8,10 +8,10 @@ class ItemPolicy < CommonPolicy
   def manage?; any_manager?; end
 
   def modify?
-    any_manager?(:software)
+    any_manager?(:software, :universal)
   end
 
   def remains_in_store?
-    any_manager?(:software)
+    any_manager?(:software, :universal)
   end
 end

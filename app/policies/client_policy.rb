@@ -1,6 +1,6 @@
 class ClientPolicy < CommonPolicy
   def create?
-    any_manager?(:software, :media)
+    any_manager?(:software, :media, :universal)
   end
 
   def update?

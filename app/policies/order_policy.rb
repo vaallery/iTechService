@@ -2,7 +2,7 @@ class OrderPolicy < BasePolicy
   def create?; true; end
 
   def update?
-    same_department? && any_manager?(:media, :marketing, :technician)
+    same_department? && any_manager?(:universal, :media, :marketing, :technician)
   end
 
   def destroy?

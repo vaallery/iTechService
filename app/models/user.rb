@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     engraver
   ].freeze
 
-  HELPABLE = %w[software media technician].freeze
+  HELPABLE = %w[software media technician universal].freeze
 
   # Keep order!
   ABILITIES = %w[

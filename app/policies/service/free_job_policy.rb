@@ -7,7 +7,7 @@ module Service
     end
 
     def create?
-      any_manager?(:software)
+      any_manager?(:software, :universal)
     end
 
     def view_everywhere?
