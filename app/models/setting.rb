@@ -22,6 +22,7 @@ class Setting < ActiveRecord::Base
     sms_notification_template: 'text',
     ticket_prefix: 'string',
     service_tasks_models: 'json',
+    sms_gateway_uri: 'string',
     sms_gateway_lines_qty: 'integer'
   }
 

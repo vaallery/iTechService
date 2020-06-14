@@ -26,6 +26,8 @@ ru:
     service_tasks_models: 'Модели девайсов для сервисных задач'
     site: 'Сайт'
     sms_notification_template: 'Шаблон СМС-уведомления'
+    sms_gateway_uri: 'Адрес СМС-шлюза'
+    sms_gateway_lines_qty: 'Количество линий СМС-шлюза'
     ticket_prefix: 'Префикс талона'
 
     errors:

@@ -6,7 +6,7 @@ class SendSMS
   attr_accessor :result
   attr_reader :line, :sms_key, :number, :message
 
-  base_uri ENV['GOIP_URI']
+  base_uri Setting.sms_gateway_uri
 
   def initialize(line: 3, number:, message:)
     @line = line
