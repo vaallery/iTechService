@@ -12,7 +12,7 @@
         span.add-on.btn.clear_search_input
           i.icon-remove
 
-      = select_tag(:department_id, department_options_for_select, prompt: t('.local')) if superadmin?
+      = select_tag(:department_id, department_options_for_select, prompt: t('.local')) if can_manage?
 
       = button_tag glyph(:search), class: 'btn btn-info', type: 'submit'
 

@@ -35,5 +35,9 @@ module TradeInDevice::Cell
         nothing_found_message
       end
     end
+
+    def can_manage?
+      current_user.superadmin? || current_user.able_to?(:manage_trade_in)
+    end
   end
 end

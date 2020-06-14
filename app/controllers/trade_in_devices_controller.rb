@@ -67,7 +67,7 @@ class TradeInDevicesController < ApplicationController
   end
 
   def update
-    permitted_params = if current_user.superadmin? || current_user.able_to?(:manage_trade_in)
+    permitted_params = if policy(TradeInDevice).manage?
                          params
                        else
                          params.merge(trade_in_device: params[:trade_in_device].slice(:apple_guarantee))
