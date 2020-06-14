@@ -3,6 +3,14 @@ class TradeInDevicePolicy < BasePolicy
     superadmin? || able_to?(:manage_trade_in)
   end
 
+  def update?
+    manage?
+  end
+
+  def destroy?
+    manage?
+  end
+
   def create?; true; end
 
   def index?; true; end
