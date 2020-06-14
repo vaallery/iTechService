@@ -81,6 +81,10 @@ class Item < ActiveRecord::Base
     features.imei.first.try(:value)
   end
 
+  def presentation
+    [name, serial_number, imei].join(' / ')
+  end
+
   def has_imei?
     features.imei.present?
   end

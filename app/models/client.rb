@@ -16,7 +16,7 @@ class Client < ActiveRecord::Base
 
   belongs_to :department
   belongs_to :client_characteristic
-  has_many :service_jobs, inverse_of: :client, dependent: :destroy
+  has_many :service_jobs, inverse_of: :client, dependent: :restrict_with_error
   has_many :devices, -> { uniq }, through: :service_jobs, source: :item#, class_name: Item
   has_many :orders, as: :customer, dependent: :destroy
   has_many :purchases, class_name: 'Sale', inverse_of: :client, dependent: :nullify
@@ -26,6 +26,7 @@ class Client < ActiveRecord::Base
   has_many :sales, inverse_of: :client, dependent: :nullify
   has_many :free_jobs, class_name: 'Service::FreeJob', dependent: :restrict_with_error
   has_many :quick_orders, dependent: :restrict_with_error
+  has_many :trade_in_devices, inverse_of: :client, dependent: :restrict_with_error
 
   accepts_nested_attributes_for :comments, allow_destroy: true, reject_if: proc { |attr| attr['content'].blank? }
   accepts_nested_attributes_for :client_characteristic, allow_destroy: true

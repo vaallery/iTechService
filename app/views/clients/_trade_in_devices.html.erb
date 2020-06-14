@@ -1,0 +1,19 @@
+<table class="table table-bordered table-hover table-condensed">
+  <caption><h4>Trade-in</h4></caption>
+
+  <thead>
+  <tr>
+    <th>Номер trade-in</th>
+    <th>Что сдали?</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% trade_in_devices.each do |trade_in_device| %>
+    <tr>
+      <td><%= link_to trade_in_device.number, trade_in_device %></td>
+      <td><%= trade_in_device.presentation %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

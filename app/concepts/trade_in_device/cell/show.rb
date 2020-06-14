@@ -31,7 +31,8 @@ module TradeInDevice::Cell
 
     def client
       return unless model.client_id
-      model.client&.presentation
+
+      link_to model.client&.presentation, client_path(model.client_id)
     end
 
     def department

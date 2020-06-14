@@ -7,7 +7,7 @@ class TradeInDevice < ApplicationRecord
   scope :unconfirmed, -> { where(confirmed: false) }
 
   belongs_to :item
-  belongs_to :client
+  belongs_to :client, inverse_of: :trade_in_devices
   belongs_to :receiver, class_name: 'User'
   belongs_to :department
   has_many :features, through: :item

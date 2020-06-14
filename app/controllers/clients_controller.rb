@@ -16,7 +16,7 @@ class ClientsController < ApplicationController
   end
 
   def show
-    @client = find_record(Client.includes(:sale_items, :orders, :free_jobs, :quick_orders, service_jobs: :device_tasks))
+    @client = find_record(Client.includes(:sale_items, :orders, :free_jobs, :quick_orders, :trade_in_devices, service_jobs: :device_tasks))
 
     respond_to do |format|
       format.html
