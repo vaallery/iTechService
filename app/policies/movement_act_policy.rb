@@ -5,15 +5,15 @@ class MovementActPolicy < DocumentPolicy
 
   def create?
     manage? ||
-      (has_role?(:technician) && record.is_new? && record.is_spare_parts_to_defect?)
+      (has_role?(:admin, :technician) && record.is_new? && record.is_spare_parts_to_defect?)
   end
 
   def modify?
     manage? ||
-      has_role?(:technician) && record.is_spare_parts_to_defect?
+      (has_role?(:admin, :technician) && record.is_spare_parts_to_defect?)
   end
 
   def make_defect_sp?
-    manage? || has_role?(:technician)
+    manage? || has_role?(:admin, :technician)
   end
 end
