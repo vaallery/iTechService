@@ -69,12 +69,12 @@ class DashboardController < ApplicationController
         @service_jobs = policy_scope(ServiceJob).located_at(location)
         @location_name = location.name
       else
-        @service_jobs = policy_scope(ServiceJob).pending
+        @service_jobs = policy_scope(ServiceJob).in_department(current_department).pending
       end
     elsif current_user.location.present?
       @service_jobs = policy_scope(ServiceJob).located_at(current_user.location)
     else
-      @service_jobs = policy_scope(ServiceJob).where(location_id: nil)
+      @service_jobs = policy_scope(ServiceJob).in_department(current_department)
     end
     if current_user.able_to?(:print_receipt)
       @service_jobs = @service_jobs.search(params).newest.page(params[:page])
