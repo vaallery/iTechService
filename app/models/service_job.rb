@@ -94,7 +94,7 @@ class ServiceJob < ActiveRecord::Base
   before_validation :validate_security_code
   before_validation :set_user_and_location
   before_validation :validate_location
-  before_validation :set_department
+  after_validation :set_department
   after_save :update_qty_replaced
   after_save :update_tasks_cost
   after_create :new_service_job_announce
@@ -441,9 +441,9 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def set_user_and_location
-    self.location_id ||= User.try(:current).try(:location_id)
-    self.user_id ||= User.try(:current).try(:id)
-    self.department_id ||= Department.current.try(:id)
+    self.user_id ||= User&.current&.id
+    self.location_id ||= User&.current&.location_id
+    self.department_id ||= Department.current&.id
   end
 
   def validate_location
