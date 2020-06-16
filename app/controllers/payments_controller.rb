@@ -1,5 +1,6 @@
 class PaymentsController < ApplicationController
   def index
+    skip_authorization
     @sale = find_sale
     @payments = @sale.payments
     params[:form_name] = 'payments/modal_index'
