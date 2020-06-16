@@ -37,11 +37,8 @@ class Task < ApplicationRecord
   end
 
   def is_actual_for?(user)
-    role == user.role
-  end
-
-  def responcible_users
-    User.where role: role
+    (role == user.role) ||
+      (user.universal? && role.in?(%w[media software]))
   end
 
   def role_name
