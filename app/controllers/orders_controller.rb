@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
     if params.has_key?(:sort) and params.has_key?(:direction)
       @orders = @orders.reorder("orders.#{sort_column} #{sort_direction}")
     else
-      @orders = @orders.oldest
+      @orders = @orders.newest
     end
 
     @orders = @orders.page(params[:page]) if params[:status].present?
