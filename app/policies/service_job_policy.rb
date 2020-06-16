@@ -61,5 +61,5 @@ class ServiceJobPolicy < CommonPolicy
 
   def task_history?; read?; end
 
-  def movement_history_history?; read?; end
+  def movement_history?; read?; end
 end
