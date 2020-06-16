@@ -184,7 +184,7 @@ class GiftCertificatesController < ApplicationController
   private
 
   def find_by_number(number = params[:number])
-    policy_scope(GiftCertificate).find_by_number(number)
+    authorize policy_scope(GiftCertificate).find_by_number(number)
   end
 
   def sort_column
