@@ -1,17 +1,21 @@
 class GiftCertificatePolicy < BasePolicy
+  def manage?
+    any_manager?(:software, :universal)
+  end
+
   def issue?
-    same_department? && any_manager?(:software, :universal)
+    same_department? && manage?
   end
 
   def activate?
-    same_department? && any_manager?(:software, :universal)
+    same_department? && manage?
   end
 
   def scan?
-    same_department? && any_admin?(:software, :universal)
+    same_department? && manage?
   end
 
   def find?
-    same_department? && any_manager?(:software, :universal)
+    same_department? && manage?
   end
 end
