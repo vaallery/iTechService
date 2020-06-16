@@ -54,10 +54,10 @@ class QuickOrdersController < ApplicationController
 
     respond_to do |format|
       if @quick_order.save
-        # filename = "quick_order_#{@quick_order.number}.pdf"
-        # pdf = QuickOrderPdf.new @quick_order
-        # print_ticket(pdf, filename)
-        format.html { redirect_to quick_order_path(@quick_order), notice: t('quick_orders.created') }
+        filename = "quick_order_#{@quick_order.number}.pdf"
+        pdf = QuickOrderPdf.new @quick_order
+        print_ticket(pdf, filename)
+        format.html { redirect_to quick_orders_path, notice: t('quick_orders.created') }
       else
         format.html { render 'form' }
       end
