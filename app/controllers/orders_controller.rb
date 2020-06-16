@@ -1,10 +1,9 @@
 class OrdersController < ApplicationController
   helper_method :sort_column, :sort_direction
   skip_before_action :authenticate_user!, :set_current_user, only: :check_status
-  skip_after_action :verify_authorized, only: [:check_status, :device_type_select]
+  skip_after_action :verify_authorized, only: %i[index check_status device_type_select]
 
   def index
-    authorize Order
     if current_user.technician? or params[:kind] == 'spare_parts'
       @orders = policy_scope(Order).technician_orders.search(params)
     elsif current_user.marketing? or params[:kind] == 'not_spare_parts'
@@ -16,7 +15,7 @@ class OrdersController < ApplicationController
     if params.has_key?(:sort) and params.has_key?(:direction)
       @orders = @orders.reorder("orders.#{sort_column} #{sort_direction}")
     else
-      @orders = @orders.newest.by_status
+      @orders = @orders.oldest
     end
 
     @orders = @orders.page(params[:page]) if params[:status].present?

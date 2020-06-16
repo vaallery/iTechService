@@ -100,7 +100,7 @@ class Order < ActiveRecord::Base
   end
 
   def self.search params
-    orders = Order.newest
+    orders = Order.all
 
     if (status_q = params[:status]).present?
       orders = orders.where status: status_q if STATUSES.include? status_q

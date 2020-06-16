@@ -1,11 +1,15 @@
-class OrderPolicy < BasePolicy
+class OrderPolicy < CommonPolicy
   def create?; true; end
 
-  def update?
-    same_department? && any_manager?(:universal, :media, :marketing, :technician)
+  def manage?
+    any_manager?(:universal, :media, :marketing, :technician)
   end
 
   def destroy?
-    same_department? && manage? || (record.user_id == user.id)
+    manage? || (record.user_id == user.id)
+  end
+
+  def history?
+    manage?
   end
 end
