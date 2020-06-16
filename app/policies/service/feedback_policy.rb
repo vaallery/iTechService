@@ -1,7 +1,13 @@
 module Service
   class FeedbackPolicy < BasePolicy
     def update?
-      (user.location_id == record.service_job.location_id) || superadmin? || able_to?(:view_feedback_notifications)
+      superadmin? || same_location? ||
+        able_to?(:view_feedback_notifications) ||
+        (same_city? && able_to?(:view_feedbacks_in_city))
+    end
+
+    def postpone?
+      update?
     end
 
     class Scope < Scope

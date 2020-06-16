@@ -12,8 +12,8 @@ module Service
     belongs_to :service_job
     validates_presence_of :service_job_id
 
-    delegate :ticket_number, :client_surname, :device_short_name, :department, :department_id, :city,
-             to: :service_job, allow_nil: true
+    delegate :ticket_number, :client_surname, :device_short_name, :department, :department_id, :city, :city_id,
+             :location, :location_id, to: :service_job, allow_nil: true
     delegate :color, :name, to: :city, prefix: true, allow_nil: true
 
     def self.max_delay_hours_for_job(job)
