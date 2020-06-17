@@ -10,13 +10,14 @@ class GiftCertificate < ActiveRecord::Base
 
   attr_accessible :number, :nominal, :status, :consumed, :consume, :department_id
   validates :number, presence: true, uniqueness: {case_sensitive: false}
-  validates :nominal, numericality: {only_integer: true, greater_than_or_equal_to: NOMINAL_MIN, less_than_or_equal_to: NOMINAL_MAX}
-  validate :nominal_must_be_multiple_of_step
+  validates :nominal, presence: true, numericality: {only_integer: true, greater_than_or_equal_to: NOMINAL_MIN, less_than_or_equal_to: NOMINAL_MAX}
   before_validation { |cert| cert.status ||= 0 }
   before_validation :validate_consumption
   before_validation :validate_status, on: :update
+  after_validation :nominal_must_be_multiple_of_step
+
   after_initialize do
-    department_id ||= Department.current.id
+    self.department_id ||= Department.current.id
   end
 
   def self.search(params)
@@ -101,6 +102,8 @@ class GiftCertificate < ActiveRecord::Base
   end
 
   def nominal_must_be_multiple_of_step
+    return unless nominal
+
     if (nominal % NOMINAL_STEP) > 0
       errors.add :nominal, :multiple_of, step: NOMINAL_STEP
     end
