@@ -113,7 +113,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :salaries, reject_if: lambda { |attrs| attrs['amount'].blank? or attrs['issued_at'].blank? }
   accepts_nested_attributes_for :installment_plans, reject_if: lambda { |attrs| (attrs['object'].blank? or attrs['cost'].blank? or attrs['issued_at'].blank?) and (attrs['installments_attributes'].blank?) }
 
-  delegate :city, to: :department, allow_nil: true
+  delegate :city, :city_id, to: :department, allow_nil: true
   delegate :name, to: :department, prefix: true, allow_nil: true
   delegate :name, to: :location, prefix: true, allow_nil: true
   delegate :time_zone, to: :city, allow_nil: true
