@@ -18,6 +18,10 @@ class QuickOrderPolicy < BasePolicy
       same_department? && any_manager?(:software, :media, :universal)
   end
 
+  def history?
+    show?
+  end
+
   def view_everywhere?
     superadmin? || able_to?(:view_quick_orders_and_free_jobs_everywhere)
   end
