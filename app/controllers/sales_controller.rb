@@ -137,11 +137,14 @@ class SalesController < ApplicationController
       filepath = "#{Rails.root.to_s}/tmp/pdf/sale_check_#{@sale.id}.pdf"
       pdf.render_file filepath
       PrinterTools.print_file filepath, type: :sale_check, height: pdf.page_height_mm, printer: current_department.printer
+      message = 'Чек отправлен на печать.'
+    else
+      message = 'Печать чеков продаж отключена.'
     end
 
     respond_to do |format|
-      format.html { redirect_to new_sale_path }
-      format.js { render nothing: true }
+      format.html { redirect_to new_sale_path, notice: message }
+      format.js { render_error message }
     end
   end
 
