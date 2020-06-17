@@ -81,6 +81,8 @@ class GiftCertificatesController < ApplicationController
     @gift_certificate = find_by_number
 
     if @gift_certificate.present?
+      authorize @gift_certificate
+
       @operation = params[:operation]
       if (@operation == 'issue') and !@gift_certificate.available?
         @error = t 'gift_certificates.errors.not_available'
@@ -90,6 +92,7 @@ class GiftCertificatesController < ApplicationController
         @form_path = (@operation == 'issue') ? issue_gift_certificates_path : activate_gift_certificates_path
       end
     else
+      skip_authorization
       @error = t 'gift_certificates.errors.not_found'
     end
     respond_to do |format|
@@ -109,6 +112,8 @@ class GiftCertificatesController < ApplicationController
 
     respond_to do |format|
       if @gift_certificate.present?
+        authorize @gift_certificate
+
         if @gift_certificate.issue
           msg = flash.now[:notice] = I18n.t('gift_certificates.issued', nominal: @gift_certificate.nominal)
           format.html { redirect_to gift_certificates_path, notice: msg }
@@ -119,6 +124,7 @@ class GiftCertificatesController < ApplicationController
           format.js { render 'error' }
         end
       else
+        skip_authorization
         msg = flash.now[:alert] = t('gift_certificates.errors.not_found')
         format.html { redirect_to gift_certificates_path, alert: msg }
         format.js { render 'error' }
@@ -131,6 +137,8 @@ class GiftCertificatesController < ApplicationController
 
     respond_to do |format|
       if @gift_certificate.present?
+        authorize @gift_certificate
+
         if @gift_certificate.update_attributes consume: params[:consume].to_i
           msg = flash.now[:notice] = @gift_certificate.used? ?
                     I18n.t('gift_certificates.activated', nominal: @gift_certificate.nominal) :
@@ -152,6 +160,7 @@ class GiftCertificatesController < ApplicationController
           format.js { render 'error' }
         end
       else
+        skip_authorization
         msg = flash.now[:alert] = t('gift_certificates.errors.not_found')
         format.html { redirect_to gift_certificates_path, alert: msg }
         format.js { render 'error' }
@@ -184,7 +193,7 @@ class GiftCertificatesController < ApplicationController
   private
 
   def find_by_number(number = params[:number])
-    authorize policy_scope(GiftCertificate).find_by_number(number)
+    policy_scope(GiftCertificate).find_by_number(number)
   end
 
   def sort_column
