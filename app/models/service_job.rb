@@ -462,11 +462,13 @@ class ServiceJob < ActiveRecord::Base
       errors.add :location_id, 'Работа не в "Готово".'
     end
 
-    if (old_location&.is_archive? && User.current.not_admin?) ||
-      (location.is_warranty? && !old_location&.is_repair?) ||
-      (location.is_special? && User.current.not_admin?) ||
-      (old_location&.is_special? && !User.current.superadmin?)
-      errors.add :location_id, I18n.t('service_jobs.errors.not_allowed')
+    if old_location.present?
+      if (old_location&.is_archive? && User.current.not_admin?) ||
+        (location.is_warranty? && !old_location&.is_repair?) ||
+        (location.is_special? && User.current.not_admin?) ||
+        (old_location&.is_special? && !User.current.superadmin?)
+        errors.add :location_id, I18n.t('service_jobs.errors.not_allowed')
+      end
     end
 
     if self.location.is_repair_notebooks? && old_location.present?
