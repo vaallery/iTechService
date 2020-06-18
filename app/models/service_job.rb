@@ -145,9 +145,10 @@ class ServiceJob < ActiveRecord::Base
     min_term = Location.done.minimum(:storage_term)
     done_location_ids = Location.done.where(storage_term: min_term).pluck(:id)
 
-    includes(:history_records)
+    jobs = includes(:history_records)
       .where(location: storage_locations, history_records: {column_name: 'location_id', new_value: done_location_ids})
       .where('history_records.created_at < ?', term.months.ago)
+    jobs
   end
 
   def as_json(options = {})
