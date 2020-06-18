@@ -11,11 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200607074743) do
+ActiveRecord::Schema.define(version: 20200618120734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
+  enable_extension "citext"
+  enable_extension "hstore"
 
   create_table "announcements", force: :cascade do |t|
     t.string   "content",       limit: 255
@@ -1352,8 +1353,8 @@ ActiveRecord::Schema.define(version: 20200607074743) do
     t.integer  "appraised_value",                    null: false
     t.string   "appraiser",                          null: false
     t.string   "bought_device",                      null: false
-    t.string   "client_name",                        null: false
-    t.string   "client_phone",                       null: false
+    t.string   "client_name"
+    t.string   "client_phone"
     t.string   "check_icloud",                       null: false
     t.integer  "replacement_status"
     t.boolean  "archived",           default: false, null: false
