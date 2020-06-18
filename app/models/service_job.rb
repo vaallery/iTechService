@@ -70,7 +70,7 @@ class ServiceJob < ActiveRecord::Base
   delegate :name, :short_name, :full_name, :surname, to: :client, prefix: true, allow_nil: true
   delegate :name, to: :department, prefix: true
   delegate :name, to: :location, prefix: true, allow_nil: true
-  delegate :city, to: :location, allow_nil: true
+  delegate :city, :city_id, to: :department, allow_nil: true
   delegate :color, to: :city, prefix: true, allow_nil: true
   delegate :pending_substitution, to: :substitute_phone, allow_nil: true
   alias_attribute :received_at, :created_at
