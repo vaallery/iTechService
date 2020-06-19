@@ -35,9 +35,7 @@ class TradeInDevicesController < ApplicationController
   # TODO: make it via ajax
   def print
     trade_in_device = find_record TradeInDevice
-    pdf = TradeInDevicePdf.new(trade_in_device)
-    pdf.render_file
-    result = PrintFile.(pdf.filepath, type: :trade_in, printer: current_user.department.printer)
+    pdf = print_ticket trade_in_device
     send_data pdf.render, filename: pdf.filename, type: 'application/pdf', disposition: :inline
   end
 
@@ -50,9 +48,7 @@ class TradeInDevicesController < ApplicationController
 
   def create
     run TradeInDevice::Create do
-      # TradeInDevice::Print.({id: @model.id}, 'current_user' => current_user)
-      # return redirect_to new_trade_in_device_path, notice: operation_message
-      # return redirect_to print_trade_in_device_path(@model.id), notice: operation_message
+      print_ticket @model
       return redirect_to trade_in_device_path(@model.id), notice: operation_message
     end
     flash.now.alert = operation_message
@@ -90,5 +86,12 @@ class TradeInDevicesController < ApplicationController
 
   def render_form
     render_cell TradeInDevice::Cell::Form
+  end
+
+  def print_ticket(trade_in_device)
+    pdf = TradeInDevicePdf.new(trade_in_device)
+    pdf.render_file
+    PrintFile.(pdf.filepath, type: :trade_in, printer: current_user.department.printer)
+    pdf
   end
 end
