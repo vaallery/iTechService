@@ -19,7 +19,7 @@ module ApplicationHelper
     end
   end
 
-  def sortable(column, title = nil)
+  def sortable(column, title = nil, remote: false)
     column = column.to_s
     title ||= column.titleize
 
@@ -33,7 +33,7 @@ module ApplicationHelper
       direction = 'asc'
     end
     title = "#{title} #{icon_tag(icon_name)}".html_safe
-    link_to title, params.merge(sort: column, direction: direction, page: nil), {class: css_class, remote: false}
+    link_to title, params.merge(sort: column, direction: direction, page: nil), {class: css_class, remote: remote}
   end
 
   def sort_fields

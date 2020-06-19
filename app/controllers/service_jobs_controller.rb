@@ -2,29 +2,29 @@ class ServiceJobsController < ApplicationController
   include ServiceJobsHelper
   helper_method :sort_column, :sort_direction
   skip_before_action :authenticate_user!, :set_current_user, only: :check_status
-  skip_after_action :verify_authorized, only: %i[check_status device_type_select quick_search]
+  skip_after_action :verify_authorized, only: %i[index check_status device_type_select quick_search]
 
   def index
-    authorize ServiceJob
-
-    if params[:location] == 'archive'
-      @service_jobs = policy_scope(ServiceJob).at_archive.search(params)
+    if params.key? :search
+      @service_jobs = policy_scope(ServiceJob).search(params[:search])
+      @location_name = Location.select(:name).find(params[:search][:location_id]).name unless params[:search][:location_id].blank?
     else
-      @service_jobs = policy_scope(ServiceJob).not_at_archive.search(params)
-    end
+      if params[:location] == 'archive'
+        @service_jobs = policy_scope(ServiceJob).at_archive
+      else
+        @service_jobs = policy_scope(ServiceJob).not_at_archive
+      end
 
-    if params[:location_id].present?
-      @location_name = Location.find(params[:location_id]).name
-    else
-      @location_name = t('everywhere')
       @service_jobs = @service_jobs.in_department(current_department)
     end
 
-    if params.has_key? :sort and params.has_key? :direction
-      @service_jobs = @service_jobs.reorder 'service_jobs.'+sort_column + ' ' + sort_direction
+    if params.key?(:sort) and params.key?(:direction)
+      @service_jobs = @service_jobs.reorder("service_jobs.#{sort_column} #{sort_direction}")
+    else
+      @service_jobs = @service_jobs.newest
     end
 
-    @service_jobs = @service_jobs.newest.page params[:page]
+    @service_jobs = @service_jobs.page params[:page]
     @locations = current_department.locations.visible
 
     respond_to do |format|

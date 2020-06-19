@@ -1,6 +1,6 @@
 # encoding: utf-8
 module ServiceJobsHelper
-  def service_job_status_options(selected)
+  def service_job_status_options(selected = nil)
     options_for_select [
                          [t('service_jobs.status.all'), nil],
                          [t('service_jobs.status.done'), 'done'],

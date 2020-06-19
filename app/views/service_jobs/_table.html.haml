@@ -5,13 +5,13 @@
   %table.table.table-hover
     %thead
       %tr
-        %th= sortable 'id', ServiceJob.human_attribute_name(:id)
-        %th= sortable 'ticket_number', ServiceJob.human_attribute_name(:ticket_number)
+        %th= sortable 'id', ServiceJob.human_attribute_name(:id), remote: true
+        %th= sortable 'ticket_number', ServiceJob.human_attribute_name(:ticket_number), remote: true
         %th= ServiceJob.human_attribute_name(:service_job)
         %th= ServiceJob.human_attribute_name(:client)
         %th= ServiceJob.human_attribute_name(:location)
-        %th= sortable 'created_at', ServiceJob.human_attribute_name(:created_at)
-        %th= sortable 'done_at', ServiceJob.human_attribute_name(:done_at)
+        %th= sortable 'created_at', ServiceJob.human_attribute_name(:created_at), remote: true
+        %th= sortable 'done_at', ServiceJob.human_attribute_name(:done_at), remote: true
         %th
     %tbody
       - @service_jobs.each do |service_job|
@@ -35,7 +35,7 @@
               = link_to_edit_small service_job# if can? :update, service_job
               = link_to_destroy_small service_job if can? :destroy, service_job
 
-  = paginate @service_jobs
+  = paginate @service_jobs, remote: true
   
 - else
   = render 'shared/empty'

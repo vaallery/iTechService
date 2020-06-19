@@ -5,7 +5,7 @@ class LocationInput < SimpleForm::Inputs::Base
     content_tag(:div, id: 'location_input', class: 'dropdown-input') do
       @builder.hidden_field(attribute_name, id: 'location_id') +
       content_tag(:span, class: 'btn-group') do
-        content_tag(:button, id: 'locations_select_button', class: 'btn dropdown-toggle', 'data-toggle' => 'dropdown') do
+        content_tag(:a, id: 'locations_select_button', class: 'btn dropdown-toggle', 'data-toggle' => 'dropdown') do
           content_tag(:span, id: 'location_value', class: 'pull-left') do
             @builder.object.location.blank? ? '-' : @builder.object.location.name
           end +
