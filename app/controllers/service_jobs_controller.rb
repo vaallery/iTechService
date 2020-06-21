@@ -137,12 +137,16 @@ class ServiceJobsController < ApplicationController
     @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
     @service_job.attributes = params_for_update
 
-    # if @service_job.changed == ['location_id']
-    #   @service_job.location_id_was
-    #   authorize @service_job, :move_transfers?
-    # else
+    if @service_job.changed == ['location_id']
+      the_policy = policy(@service_job)
+      if the_policy.move_transfers? || the_policy.update?
+        skip_authorization
+      else
+        raise Pundit::NotAuthorizedError, query: 'move?', record: @service_job, policy: the_policy
+      end
+    else
       authorize @service_job
-    # end
+    end
 
     respond_to do |format|
       if @service_job.save
