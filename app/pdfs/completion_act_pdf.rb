@@ -9,6 +9,7 @@ class CompletionActPdf < Prawn::Document
     @view_context = view_context
     department = service_job.department
     base_font_size = 7
+    page_width = 530
 
     font_families.update 'DroidSans' => {
       normal: "#{Rails.root}/app/assets/fonts/droidsans-webfont.ttf",
@@ -19,39 +20,35 @@ class CompletionActPdf < Prawn::Document
     font_size base_font_size
 
     # Logo
-    move_down 18
-    stroke do
-      line_width 2
-      horizontal_line 0, 530
-    end
-    move_up 40
-    image department.logo_path, width: 80, at: [20, cursor]
-
-    # TODO: Barcode
+    image department.logo_path, fit: [100, 30], at: [20, cursor]
 
     # Organization info
     organization = Setting.organization(department)
 
-    move_down font_size * 2.5
     text "Сервисный центр «#{department.brand_name}» #{organization}", align: :right
     text "Юр. Адрес: #{organization}, #{Setting.legal_address(department)}", align: :right
     text "#{Setting.ogrn_inn(department)}", align: :right
+
     move_down font_size
+    stroke do
+      line_width 2
+      horizontal_line 0, page_width
+    end
+    move_down font_size
+
     text "Фактический адрес: #{Setting.address(department)}", align: :right
 
     # Contact info
     move_down font_size
-    bounding_box [400, cursor], width: 130 do
-      text 'График работы:', align: :right, style: :bold
-      text Setting.schedule(department), align: :right
-      move_down font_size
-      [
-        "e-mail: #{Setting.email(department)}",
-        "Конт. тел.: #{Setting.contact_phone(department)}",
-        "сайт: #{Setting.site(department)}"
-      ].each do |str|
-        text str, align: :right
-      end
+    text 'График работы:', align: :right, style: :bold
+    text Setting.schedule(department), align: :right
+    move_down font_size
+    [
+      "e-mail: #{Setting.email(department)}",
+      "Конт. тел.: #{Setting.contact_phone(department)}",
+      "сайт: #{Setting.site(department)}"
+    ].each do |str|
+      text str, align: :right
     end
     move_up font_size * 6
 
