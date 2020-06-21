@@ -137,11 +137,12 @@ class ServiceJobsController < ApplicationController
     @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
     @service_job.attributes = params_for_update
 
-    if @service_job.changed == ['location_id']
-      authorize @service_job, :move_transfers?
-    else
+    # if @service_job.changed == ['location_id']
+    #   @service_job.location_id_was
+    #   authorize @service_job, :move_transfers?
+    # else
       authorize @service_job
-    end
+    # end
 
     respond_to do |format|
       if @service_job.save
