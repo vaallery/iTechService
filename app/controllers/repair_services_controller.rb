@@ -3,10 +3,10 @@ class RepairServicesController < ApplicationController
     authorize RepairService
     @repair_groups = RepairGroup.roots.order('name asc')
     if params[:group].blank?
-      @repair_services = RepairService.all.order('name asc')
+      @repair_services = nil
     else
       @repair_group = RepairGroup.find params[:group]
-      @repair_services = @repair_group.repair_services.order('name asc')
+      @repair_services = @repair_group.repair_services.order('name asc').includes(spare_parts: :products)
     end
 
     respond_to do |format|

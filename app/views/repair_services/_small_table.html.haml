@@ -1,4 +1,6 @@
-- if @repair_services.present? and @repair_services.any?
+- if @repair_services.nil?
+  %strong Выбери группу
+- else
   %table.table.table-condensed.table-hover
     %tbody
       - @repair_services.each do |repair_service|

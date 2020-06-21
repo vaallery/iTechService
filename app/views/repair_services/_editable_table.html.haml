@@ -1,4 +1,6 @@
-- if @repair_services.any?
+- if @repair_services.nil?
+  %strong Выбери группу
+- else
   = form_tag mass_update_repair_services_path, method: :patch do
     %table#repair_services_table.table.table-hover
       %thead

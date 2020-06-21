@@ -1,4 +1,6 @@
-- if @repair_services.any?
+- if @repair_services.nil?
+  %strong Выбери группу
+- else
   %table#repair_services_table.table.table-hover
     %thead
       %tr
@@ -9,7 +11,7 @@
         - if can? :manage, RepairService
           %th
     %tbody
-      - @repair_services.each do |repair_service|
+      - @repair_services.find_each do |repair_service|
         - parts_qty = repair_service.spare_parts.count
         %tr
           %td{rowspan: parts_qty+1}= repair_service.id
