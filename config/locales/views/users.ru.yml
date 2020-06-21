@@ -12,6 +12,7 @@ ru:
       manage_stocks: 'Управление запасами'
       manage_timesheet: "Редактировать табель"
       manage_trade_in: 'Заниматься Trade-in'
+      move_transfers: 'Перенос трансферов'
       print_receipt: "Печатать чеки"
       see_stale_service_jobs: 'Видеть залежалые устройства'
       view_feedback_notifications: 'Просматривать уведомления обратной связи'

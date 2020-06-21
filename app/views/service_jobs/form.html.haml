@@ -82,10 +82,10 @@
 
       = f.input :email, hint: t('.email_hint')
 
-      - if can? :update, @service_job
+      - if can?(:update, @service_job) || current_user.able_to_move_transfers?
         = f.input :location_id, as: :location
       - else
-        = text_field_tag :location, @service_job.location.try(:name), disabled: true, class: 'input-xlarge'
+        = f.input :location, as: :string, disabled: true, input_html: {class: 'input-xlarge'}
 
       = f.input :return_at, as: :datetime_quick_select
 

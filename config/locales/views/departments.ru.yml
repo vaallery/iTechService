@@ -16,4 +16,5 @@ ru:
       branch: 'Филиал'
       remote: 'Удалённый'
       store: 'Склад'
+      transfer: 'Трансфер'
     all: "Все"

@@ -59,6 +59,10 @@ class Location < ApplicationRecord
     end
   end
 
+  def to_s
+    name
+  end
+
   def full_name
     path.all.map { |l| l.name }.join(' / ')
   end
@@ -89,5 +93,9 @@ class Location < ApplicationRecord
 
   def is_special?
     code == 'special'
+  end
+
+  def in_transfer?
+    department.is_transfer?
   end
 end

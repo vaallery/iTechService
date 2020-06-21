@@ -51,6 +51,10 @@ class ServiceJobPolicy < CommonPolicy
     (record.user_id == user.id) or any_admin? or able_to?(:print_receipt)
   end
 
+  def move_transfers?
+    user.able_to_move_transfers?
+  end
+
   def set_keeper?; read?; end
 
   def work_order?; read?; end

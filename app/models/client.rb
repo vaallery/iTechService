@@ -84,7 +84,8 @@ class Client < ActiveRecord::Base
   def presentation
     name_phone
   end
-  
+  alias_method :to_s, :presentation
+
   def human_phone_number
     ActionController::Base.helpers.number_to_phone full_phone_number || phone_number, area_code: true
   end

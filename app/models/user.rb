@@ -50,6 +50,7 @@ class User < ActiveRecord::Base
     manage_stocks
     edit_price_in_sale
     view_quick_orders_and_free_jobs_everywhere
+    move_transfers
   ].freeze
 
   scope :in_department, ->(department) { where(department_id: department) }
@@ -342,6 +343,10 @@ class User < ActiveRecord::Base
 
   def able_to?(ability)
     abilities.include? ability.to_s
+  end
+
+  def able_to_move_transfers?
+    superadmin? || able_to?(:move_transfers)
   end
 
   def rating

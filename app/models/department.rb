@@ -4,11 +4,12 @@ class Department < ApplicationRecord
     1 => 'branch',
     2 => 'store',
     3 => 'remote',
+    4 => 'transfer'
   }
 
   default_scope { order('departments.id asc') }
   scope :branches, -> { where(role: 1) }
-  scope :selectable, -> { where(role: [0, 1, 3]) }
+  scope :selectable, -> { where(role: [0, 1, 3, 4]) }
   scope :in_city, ->(city) { where(city: city) }
 
   belongs_to :city, required: true
@@ -69,6 +70,10 @@ class Department < ApplicationRecord
 
   def is_remote?
     role == 3
+  end
+
+  def is_transfer?
+    role == 4
   end
 
   def has_server?

@@ -469,6 +469,10 @@ class ServiceJob < ActiveRecord::Base
         (old_location&.is_special? && !User.current.superadmin?)
         errors.add :location_id, I18n.t('service_jobs.errors.not_allowed')
       end
+
+      if (location.in_transfer? || old_location.in_transfer?) && !User.current.able_to_move_transfers?
+        errors.add :location_id, 'Вы не можете перемещать трансферы'
+      end
     end
 
     if self.location.is_repair_notebooks? && old_location.present?
