@@ -3,7 +3,7 @@ class DutyDay < ActiveRecord::Base
 
   default_scope { order('day desc') }
   scope :in_department, ->(department) { where user_id: User.in_department(department) }
-  scope :duties_except_user, ->(user) { where('user_id <> ?', user.id) }
+  scope :duties_except_user, ->(user) { where.not(user_id: user) }
   scope :kitchen, -> { where(kind: 'kitchen') }
   scope :salesroom, -> { where(kind: 'salesroom') }
 
