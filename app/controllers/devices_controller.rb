@@ -84,7 +84,7 @@ class DevicesController < ApplicationController
   private
 
   def set_device_groups
-    @device_groups = ProductGroup.devices.arrange_as_array({order: 'name'})
+    @device_groups = ProductGroup.devices.arrange_as_array({order: 'position'})
   end
 
   def device_params
