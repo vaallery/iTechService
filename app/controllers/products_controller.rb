@@ -1,9 +1,8 @@
 class ProductsController < ApplicationController
-  skip_after_action :verify_authorized, only: %i[show find related choose select select_group]
+  skip_after_action :verify_authorized, except: %i[create update destroy remains_in_store show_prices show_remains]
 
   def index
-    authorize Product
-    @product_groups = ProductGroup.roots
+    @product_groups = ProductGroup.roots.ordered
     if params[:group].blank?
       @opened_product_groups = []
       @products = Product.search(params)
@@ -138,7 +137,7 @@ class ProductsController < ApplicationController
   end
 
   def choose_group
-    @product_groups = ProductGroup.roots.order('id asc')
+    @product_groups = ProductGroup.includes(:product_category, :products).roots.ordered
   end
 
   def select_group
