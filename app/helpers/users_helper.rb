@@ -165,7 +165,7 @@ module UsersHelper
       day_color = 'inherit'
       day_id = ''
       style = ''
-      duty_day = DutyDay.get_for(current_department, kind, day)
+      duty_day = DutyDay.get_for(current_city, kind, day)
       duty_user = duty_day&.user
 
       if duty_day.present? and duty_user.present?
