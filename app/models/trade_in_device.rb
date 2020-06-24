@@ -42,10 +42,10 @@ class TradeInDevice < ApplicationRecord
   end
 
   def client_name
-    self['client_name'] || client.full_name
+    self['client_name'] || client&.full_name
   end
 
   def client_phone
-    self['client_phone'] || client.human_phone_number
+    self['client_phone'] || client&.human_phone_number
   end
 end
