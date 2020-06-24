@@ -55,6 +55,10 @@ class ServiceJobPolicy < CommonPolicy
     user.able_to_move_transfers?
   end
 
+  def archive?
+    update?
+  end
+
   def set_keeper?; read?; end
 
   def work_order?; read?; end

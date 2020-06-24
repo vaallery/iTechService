@@ -296,6 +296,20 @@ class ServiceJobsController < ApplicationController
     end
   end
 
+  def archive
+    @service_job = find_record ServiceJob
+    @service_job.archive
+    respond_to do |format|
+      if @service_job.in_archive?
+        format.html { redirect_to @service_job, notice: 'Работа перемещена в архив' }
+        format.js { render 'update' }
+      else
+        format.html { render_form }
+        format.js { render_error @service_job.errors.full_messages }
+      end
+    end
+  end
+
   private
 
   def params_for_update

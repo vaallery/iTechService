@@ -160,5 +160,5 @@
 
 .form-actions
   = link_to_edit @service_job
-  = link_to_archive_device @service_job if @service_job.at_done?
+  = button_to_archive_service_job @service_job if @service_job.at_done?
   = link_to_destroy @service_job if can? :destroy, @service_job
