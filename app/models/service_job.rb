@@ -464,7 +464,6 @@ class ServiceJob < ActiveRecord::Base
 
     if old_location.present?
       if (old_location&.is_archive? && User.current.not_admin?) ||
-        (location.is_warranty? && !old_location&.is_repair?) ||
         (location.is_special? && User.current.not_admin?) ||
         (old_location&.is_special? && !User.current.superadmin?)
         errors.add :location_id, I18n.t('service_jobs.errors.not_allowed')
