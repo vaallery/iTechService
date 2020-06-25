@@ -18,12 +18,13 @@ class Setting < ActiveRecord::Base
     organization: 'string',
     print_sale_check: 'boolean',
     schedule: 'string',
+    service_tasks_models: 'json',
     site: 'string',
     sms_notification_template: 'text',
-    ticket_prefix: 'string',
-    service_tasks_models: 'json',
     sms_gateway_uri: 'string',
-    sms_gateway_lines_qty: 'integer'
+    sms_gateway_lines_qty: 'integer',
+    ticket_notice: 'text',
+    ticket_prefix: 'string'
   }
 
   VALUE_TYPES = %w[boolean integer string text json]

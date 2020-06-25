@@ -28,6 +28,7 @@ ru:
     sms_notification_template: 'Шаблон СМС-уведомления'
     sms_gateway_uri: 'Адрес СМС-шлюза'
     sms_gateway_lines_qty: 'Количество линий СМС-шлюза'
+    ticket_notice: 'Примечание на талоне'
     ticket_prefix: 'Префикс талона'
 
     errors:

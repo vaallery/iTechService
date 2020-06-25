@@ -27,8 +27,8 @@ class TicketPdf < Prawn::Document
     stroke
     font_size 10 do
       span 125, position: :right do
-        text @view.t('tickets.site')
-        text @view.t('tickets.email')
+        text Setting.site(department)
+        text Setting.email(department)
         text Setting.schedule(department)
       end
     end
@@ -47,8 +47,7 @@ class TicketPdf < Prawn::Document
     stroke
     move_down 5
     font_size 10 do
-      text @view.t('tickets.notice')
-      text @view.t('tickets.check_status')
+      text Setting.ticket_notice(department)
     end
     barcode
   end
