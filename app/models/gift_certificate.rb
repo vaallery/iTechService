@@ -16,10 +16,6 @@ class GiftCertificate < ActiveRecord::Base
   before_validation :validate_status, on: :update
   after_validation :nominal_must_be_multiple_of_step
 
-  after_initialize do
-    self.department_id ||= Department.current.id
-  end
-
   def self.search(params)
     certificates = GiftCertificate.all
 
@@ -27,6 +23,10 @@ class GiftCertificate < ActiveRecord::Base
       certificates = certificates.where 'LOWER(number) = ? OR id = ?', q.mb_chars.downcase.to_s, q.to_i
     end
     certificates
+  end
+
+  def self.find_by_number(number)
+    where('LOWER(number) = ?', number.mb_chars.downcase.to_s).first
   end
 
   def status_s

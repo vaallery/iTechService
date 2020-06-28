@@ -1,4 +1,7 @@
 %dl.dl-horizontal
+  %dt= GiftCertificate.human_attribute_name(:department)
+  %dd= department_tag @gift_certificate.department
+
   %dt= GiftCertificate.human_attribute_name(:status)
   %dd= @gift_certificate.status_h
 

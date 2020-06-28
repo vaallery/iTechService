@@ -22,7 +22,7 @@ class GiftCertificatesController < ApplicationController
   end
 
   def new
-    @gift_certificate = authorize GiftCertificate.new
+    @gift_certificate = authorize GiftCertificate.new(department_id: current_department.id)
 
     respond_to do |format|
       format.html
@@ -79,11 +79,11 @@ class GiftCertificatesController < ApplicationController
 
   def scan
     @gift_certificate = find_by_number
+    @operation = params[:operation]
 
     if @gift_certificate.present?
       authorize @gift_certificate
 
-      @operation = params[:operation]
       if (@operation == 'issue') and !@gift_certificate.available?
         @error = t 'gift_certificates.errors.not_available'
       elsif (@operation == 'activate') and !@gift_certificate.issued?

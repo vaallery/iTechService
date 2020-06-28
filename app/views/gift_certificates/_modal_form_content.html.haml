@@ -25,6 +25,7 @@
           = submit_tag t('gift_certificates.submit'), class: 'btn btn-primary'
 
   - else
-    .modal-header= t "gift_certificates.index.#{@operation}"
+    .modal-header
+      = t "gift_certificates.index.#{@operation}"
     .modal-body
-      .error= @error
+      .error= "#{@error} [№ #{params[:number]}]"
