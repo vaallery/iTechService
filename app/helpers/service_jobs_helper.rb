@@ -123,9 +123,9 @@ module ServiceJobsHelper
     end
   end
 
-  def button_to_archive_service_job(service_job, remote: false, hidden: false)
+  def button_to_archive_service_job(service_job, hidden: false)
     link_to "#{glyph(:archive)} #{t('service_jobs.move_to_archive')}".html_safe,
-            archive_service_job_path(service_job), method: :put, remote: remote,
+            archive_service_job_path(service_job), method: :put, remote: true,
             id: 'service_job_archive_button', class: "btn btn-warning#{' hidden' if hidden}"
   end
 

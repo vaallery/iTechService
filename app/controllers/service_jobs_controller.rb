@@ -107,7 +107,7 @@ class ServiceJobsController < ApplicationController
 
   def edit
     @service_job = find_record ServiceJob.includes(:device_notes)
-    @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
+    build_device_note
     log_viewing
     respond_to do |format|
       format.html { render_form }
@@ -134,7 +134,7 @@ class ServiceJobsController < ApplicationController
 
   def update
     @service_job = ServiceJob.find(params[:id])
-    @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
+    build_device_note
     @service_job.attributes = params_for_update
 
     if @service_job.changed == ['location_id']
@@ -298,19 +298,20 @@ class ServiceJobsController < ApplicationController
 
   def archive
     @service_job = find_record ServiceJob
-    @service_job.archive
     respond_to do |format|
-      if @service_job.in_archive?
-        format.html { redirect_to @service_job, notice: 'Работа перемещена в архив' }
-        format.js { render 'update' }
+      if @service_job.archive
+        format.js
       else
-        format.html { render_form }
         format.js { render_error @service_job.errors.full_messages }
       end
     end
   end
 
   private
+
+  def build_device_note
+    @device_note = DeviceNote.new user_id: current_user.id, service_job_id: @service_job.id
+  end
 
   def params_for_update
     allowed_params = params[:service_job]
