@@ -1,4 +1,9 @@
 class UserPolicy < BasePolicy
+  def show?
+    (same_department? && read?) ||
+      able_to?(:see_all_users)
+  end
+
   def finance?
     same_department? && able_to?(:manage_salary)
   end
@@ -50,5 +55,17 @@ class UserPolicy < BasePolicy
 
   def manage_schedule?
     any_admin? || able_to?(:manage_schedule)
+  end
+
+  class Scope < Scope
+    def resolve
+      return scope.all if user.superadmin? || user.able_to?(:see_all_users)
+
+      if scope.column_names.include?('department_id')
+        scope.where(department_id: user.department_id)
+      else
+        scope.in_department(user.department_id)
+      end
+    end
   end
 end
