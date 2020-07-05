@@ -133,7 +133,6 @@ group :deploy, :development do
   gem 'capistrano-ssh-doctor', '~> 1.0.0'
   gem 'capistrano-db-tasks', '~> 0.6', require: false
   gem 'capistrano-sidekiq', '~> 1.0.3'
-  # gem 'airbrussh', '~> 1.3.0', require: false
   gem 'ed25519', '>= 1.2', '< 2.0'
   gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
 end
