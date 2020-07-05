@@ -48,3 +48,8 @@ set :rbenv_ruby, '2.4.10'
 
 set :conditionally_migrate, true
 set :whenever_identifier, fetch(:application)
+
+set :sidekiq_log, '/var/log/ise/sidekiq.log'
+# set :sidekiq_config, File.join(current_path, 'config', 'sidekiq.yml')
+set :sidekiq_config, 'config/sidekiq.yml'
+set :sidekiq_user, fetch(:user)

@@ -475,7 +475,7 @@ class ServiceJob < ActiveRecord::Base
     end
 
     if self.location.is_repair_notebooks? && old_location.present?
-      MovementMailer.notice(self).deliver_later
+      MovementMailer.notice(id).deliver_later
     end
 
     #if User.current.not_admin? and old_location != User.current.location
