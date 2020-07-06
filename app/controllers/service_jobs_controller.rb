@@ -142,7 +142,7 @@ class ServiceJobsController < ApplicationController
       if the_policy.move_transfers? || the_policy.update?
         skip_authorization
       else
-        raise Pundit::NotAuthorizedError, query: 'move?', record: @service_job, policy: the_policy
+        raise Pundit::NotAuthorizedError, query: 'move_transfers', record: @service_job, policy: the_policy
       end
     else
       authorize @service_job

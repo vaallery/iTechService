@@ -94,8 +94,8 @@ class ApplicationController < ActionController::Base
     authorize klass.find(params[:id])
   end
 
-  def not_authorized
-    message = 'Доступ запрещён!'
+  def not_authorized(error)
+    message = "Доступ запрещён! [#{error.query} #{error.record.class}]"
     if request.xhr?
       render js: "App.Notification.show('#{message}', 'alert');"
     else
