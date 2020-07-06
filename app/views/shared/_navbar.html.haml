@@ -1,4 +1,4 @@
-= nav_bar static: :top, brand: image_tag('logo.png'), responsive: true, fluid: true do
+= nav_bar static: :top, brand: logo_tag, responsive: true, fluid: true do
   = menu_group do
     = menu_item t('.service_job'), new_service_job_path if can? :create, ServiceJob
     = menu_item t('.free_service'), new_service_free_job_path if can? :create, Service::FreeJob
@@ -102,6 +102,7 @@
       = drop_down_divider
       -#= navbar_item t('.data_migration'), data_migration_path
       = menu_item t('settings.link'), settings_path if can? :manage, Setting
+      = menu_item 'Логотип', app_logo_path if current_user.superadmin?
       = menu_item 'Sidekiq', '/sidekiq' if current_user.superadmin?
 
     = drop_down icon_tag(:star) do

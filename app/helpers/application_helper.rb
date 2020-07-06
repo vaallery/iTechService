@@ -1,4 +1,8 @@
 module ApplicationHelper
+  def logo_tag
+    filename = Setting.app_logo_filename || 'logo.png'
+    image_tag "/#{filename}"
+  end
 
   def link_to_add_fields(name, append_to_selector, f, association, options = {})
     new_object = f.object.class.reflect_on_association(association).klass.new

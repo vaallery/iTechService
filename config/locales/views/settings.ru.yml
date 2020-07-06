@@ -11,6 +11,7 @@ ru:
     updated: 'Параметр изменён'
     address: 'Адрес'
     address_for_check: 'Адрес на чеке'
+    app_logo_filename: 'Файл логотипа'
     contact_phone: 'Контактный телефон'
     data_storage_qty: 'Количество хранилищ данных'
     email: 'E-mail'
