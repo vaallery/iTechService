@@ -1,6 +1,6 @@
 module ApplicationHelper
   def logo_tag
-    filename = Setting.app_logo_filename || 'logo.png'
+    filename = Setting.app_logo_filename.presence || 'logo.png'
     image_tag "/#{filename}"
   end
 
