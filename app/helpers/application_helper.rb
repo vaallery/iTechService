@@ -1,7 +1,6 @@
 module ApplicationHelper
   def logo_tag
-    filename = Setting.app_logo_filename.presence || 'logo.png'
-    image_tag "/#{filename}"
+    image_tag "/uploads/#{Setting.app_logo_filename}"
   end
 
   def link_to_add_fields(name, append_to_selector, f, association, options = {})

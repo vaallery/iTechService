@@ -1,0 +1,9 @@
+<%= form_tag app_logo_path, multipart: true do %>
+  <p>
+    <%= logo_tag %>
+  </p>
+  <p>
+    <%= file_field_tag :file, accept: 'image/png' %>
+  </p>
+  <%= submit_tag 'Загрузить' %>
+<% end %>
