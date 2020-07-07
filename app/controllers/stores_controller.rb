@@ -1,7 +1,7 @@
 class StoresController < ApplicationController
   def index
     authorize Store
-    @stores = policy_scope(Store).search(params).ordered
+    @stores = policy_scope(Store).search(params)
     respond_to do |format|
       format.html
       format.js { render 'shared/index' }

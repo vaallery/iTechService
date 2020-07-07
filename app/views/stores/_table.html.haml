@@ -6,6 +6,7 @@
       %th= Store.human_attribute_name(:name)
       %th= Store.human_attribute_name(:kind)
       %th= Store.human_attribute_name(:department)
+      %th= Store.human_attribute_name(:hidden)
       %th
   %tbody
     - @stores.each do |store|
@@ -15,6 +16,7 @@
         %td= link_to store.name, store_path(store)
         %td= human_store_kind store
         %td= store.department_name
+        %td= store.hidden? ? 'Скрытый' : ''
         %td.btn-group
           = link_to_show_small store
           = link_to_edit_small store
