@@ -38,5 +38,6 @@
           %span{id: "spare_part_defects-#{f.index}-#{ff.index}"}
           .row-fluid
             .span12
+              = ff.object.defect_qty
               = link_to_add_fields 'Брак', "#spare_part_defects-#{f.index}-#{ff.index}", ff, :spare_part_defects,
                                    partial: 'device_tasks/spare_part_defect_fields'
