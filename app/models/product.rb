@@ -117,7 +117,7 @@ class Product < ActiveRecord::Base
   end
 
   def quantity_by_stores
-    Store.all.collect { |store| {id: id, code: store.code, name: store.name, quantity: quantity_in_store(store)} }
+    Store.visible.collect { |store| {id: id, code: store.code, name: store.name, quantity: quantity_in_store(store)} }
   end
 
   def item
@@ -130,7 +130,7 @@ class Product < ActiveRecord::Base
 
   def remnants_hash
     res = {}
-    Store.retail.each { |store| res.store store.code, quantity_in_store(store) }
+    Store.visible.retail.each { |store| res.store store.code, quantity_in_store(store) }
     res
   end
 

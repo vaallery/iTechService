@@ -7,7 +7,7 @@
         %span.add-on.btn.clear_search_input
           %i.icon-remove
       = date_filter_fields
-      = select_tag 'store_id', options_from_collection_for_select(Store.all, 'id', 'name', params[:store_id]), prompt: DeductionAct.human_attribute_name(:store)
+      = select_tag 'store_id', options_from_collection_for_select(Store.visible, 'id', 'name', params[:store_id]), prompt: DeductionAct.human_attribute_name(:store)
       %button.filter_button.btn.btn-info.btn-small= glyph('filter')
 
 #resource_table= render 'table'

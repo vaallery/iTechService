@@ -119,7 +119,7 @@ class Purchase < ActiveRecord::Base
     (selected_item_ids || item_ids).map do |item_id|
       if (batch = batches.where(item_id: item_id).first).present?
         movement_items_attributes << {item_id: item_id, quantity: batch.quantity}
-        dst_store_id ||= batch.is_spare_part ? Store.spare_parts.first.try(:id) : Store.retail.first.try(:id)
+        dst_store_id ||= batch.is_spare_part ? Store.for_spare_parts&.id : Store.for_retail&.id
       end
     end
     MovementAct.new store_id: store_id, dst_store_id: dst_store_id, movement_items_attributes: movement_items_attributes

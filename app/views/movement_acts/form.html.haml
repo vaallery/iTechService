@@ -2,8 +2,8 @@
 = simple_form_for @movement_act, html: {class: 'form-horizontal', id: 'movement_act_form'} do |f|
   - if can? :manage, MovementAct
     = f.input :date, as: :my_datetime
-    = f.association :store, as: :select, prompt: false
-    = f.association :dst_store, as: :select, prompt: false
+    = f.association :store, as: :select, prompt: false, collection: Store.visible
+    = f.association :dst_store, as: :select, prompt: false, collection: Store.visible
   - else
     = f.hidden_field :store_id
     = f.hidden_field :dst_store_id

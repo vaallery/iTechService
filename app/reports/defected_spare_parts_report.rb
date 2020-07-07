@@ -1,6 +1,6 @@
 class DefectedSparePartsReport < BaseReport
   def call
-    stores = Store.defect_sp.in_department(department)
+    stores = Store.visible.defect_sp.in_department(department)
     movement_acts = MovementAct.posted.where(date: period, dst_store_id: stores)
     movement_items = MovementItem.where(movement_act_id: movement_acts)
 

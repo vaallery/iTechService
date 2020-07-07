@@ -2,7 +2,7 @@
 = simple_form_for @deduction_act, html: {class: 'form-horizontal', id: 'deduction_act_form'} do |f|
   - if can? :manage, DeductionAct
     = f.input :date, as: :my_datetime
-    = f.association :store, as: :select
+    = f.association :store, as: :select, collection: Store.visible
   - else
     = f.hidden_field :store_id
 

@@ -159,7 +159,7 @@ class ProductsController < ApplicationController
 
   def show_remains
     @product = find_record Product
-    @stores = Store.all
+    @stores = Store.visible
     #@store_items = @product.store_items.order('store_id asc')
     respond_to do |format|
       format.js

@@ -13,7 +13,7 @@ class FewRemnantsReport < BaseReport
     result[:stores] = {}
     result[:products] = {}
     products = Product.send(kind)
-    stores = Store.in_department(department).send(kind == :goods ? :retail : :spare_parts).order('id asc')
+    stores = Store.visible.in_department(department).send(kind == :goods ? :retail : :spare_parts).order('id asc')
     stores.each { |store| result[:stores].store store.id.to_s, {code: store.code, name: store.name} }
     products.each do |product|
       remnants = {}

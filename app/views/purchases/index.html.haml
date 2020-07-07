@@ -12,7 +12,7 @@
       = date_filter_fields
       = select_tag 'contractor_id', options_from_collection_for_select(Contractor.all, 'id', 'name', params[:contractor_id]), prompt: Purchase.human_attribute_name(:contractor)
 
-      = select_tag 'store_id', options_from_collection_for_select(Store.all, 'id', 'name', params[:store_id]), prompt: Purchase.human_attribute_name(:store)
+      = select_tag 'store_id', options_from_collection_for_select(Store.visible, 'id', 'name', params[:store_id]), prompt: Purchase.human_attribute_name(:store)
 
       %button.filter_button.btn.btn-info.btn-small
         %i.icon-filter

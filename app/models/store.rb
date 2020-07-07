@@ -13,6 +13,7 @@ class Store < ActiveRecord::Base
   scope :retail, -> { where(kind: 'retail') }
   scope :repair, -> { where(kind: 'repair') }
   scope :spare_parts, -> { where(kind: 'spare_parts') }
+  scope :visible, -> { where(hidden: [false, nil]) }
 
   belongs_to :department
   has_many :purchases, inverse_of: :store
@@ -26,7 +27,7 @@ class Store < ActiveRecord::Base
 
   delegate :name, to: :department, prefix: true, allow_nil: true
 
-  attr_accessible :code, :name, :kind, :department_id, :price_type_ids
+  attr_accessible :code, :name, :kind, :department_id, :price_type_ids, :hidden
   validates_presence_of :name, :kind, :department
 
   def self.search(params)
@@ -40,11 +41,19 @@ class Store < ActiveRecord::Base
   end
 
   def self.spare_part_ids
-    Store.spare_parts.map(&:id)
+    visible.spare_parts.map(&:id)
   end
 
   def self.current_defect_sp
-    defect_sp.where(department: Department.current).first
+    visible.defect_sp.in_department(Department.current).first
+  end
+
+  def self.for_retail
+    visible.retail.first
+  end
+
+  def self.for_spare_parts
+    visible.spare_parts.first
   end
 
   def is_spare_parts?

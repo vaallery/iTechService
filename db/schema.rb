@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200618120734) do
+ActiveRecord::Schema.define(version: 20200706130024) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -1226,6 +1226,7 @@ ActiveRecord::Schema.define(version: 20200618120734) do
     t.string   "code",          limit: 255
     t.string   "kind",          limit: 255
     t.integer  "department_id"
+    t.boolean  "hidden"
   end
 
   add_index "stores", ["code"], name: "index_stores_on_code", using: :btree

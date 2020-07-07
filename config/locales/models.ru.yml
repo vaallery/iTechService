@@ -496,6 +496,7 @@ ru:
         price: 'Стоимость закупа'
 
       store:
+        hidden: 'Скрытый'
         price_types: 'Типы цен'
 
       stolen_phone:

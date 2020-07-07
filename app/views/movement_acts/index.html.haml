@@ -8,8 +8,8 @@
         %span.add-on.btn.clear_search_input
           %i.icon-remove
       = date_filter_fields
-      = select_tag 'store_id', options_from_collection_for_select(Store.all, 'id', 'name', params[:store_id]), prompt: MovementAct.human_attribute_name(:store)
-      = select_tag 'dst_store_id', options_from_collection_for_select(Store.all, 'id', 'name', params[:dst_store_id]), prompt: MovementAct.human_attribute_name(:dst_store)
+      = select_tag 'store_id', options_from_collection_for_select(Store.visible, 'id', 'name', params[:store_id]), prompt: MovementAct.human_attribute_name(:store)
+      = select_tag 'dst_store_id', options_from_collection_for_select(Store.visible, 'id', 'name', params[:dst_store_id]), prompt: MovementAct.human_attribute_name(:dst_store)
       %button.filter_button.btn.btn-info.btn-small= glyph('filter')
 
 #resource_table= render 'table'

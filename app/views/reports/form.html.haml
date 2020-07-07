@@ -7,7 +7,7 @@
         = '_'
         = f.text_field :end_date, class: 'bootstrap-datepicker input-small'
         = f.select :name, reports_collection_for_select, prompt: t('reports.choose')
-        = f.select :store_id, Store.all.map{|s|[s.name, s.id]}, prompt: t('activerecord.models.store')
+        = f.select :store_id, Store.visible.map{|s|[s.name, s.id]}, prompt: t('activerecord.models.store')
 
 -##report_errors
 -##report_result

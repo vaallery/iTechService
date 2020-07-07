@@ -10,7 +10,7 @@
   .form-fields
     .control-group
       %label.control-label= t 'activerecord.models.store'
-      .controls= f.select :store_id, Store.all.map{|s|[s.name, s.id]}
+      .controls= f.select :store_id, Store.visible.map{|s|[s.name, s.id]}
     .control-group
       %label.control-label= t '.remnants_file'
       .controls= f.file_field :file
