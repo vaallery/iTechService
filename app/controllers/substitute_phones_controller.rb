@@ -3,7 +3,7 @@ class SubstitutePhonesController < ApplicationController
   respond_to :html
 
   def index
-    @substitute_phones = policy_scope(SubstitutePhone).search(params[:query])
+    @substitute_phones = policy_scope(SubstitutePhone).query(params.to_unsafe_hash.symbolize_keys)
 
     respond_to do |format|
       format.html { render_cell SubstitutePhone::Cell::Index, model: @substitute_phones }

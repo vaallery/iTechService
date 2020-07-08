@@ -1,6 +1,8 @@
 class SubstitutePhone < ApplicationRecord
-  scope :available, -> { where service_job_id: nil }
-  scope :in_department, ->(department) { where department_id: department }
+  scope :available, -> { not_archived.where(service_job_id: nil) }
+  scope :in_department, ->(department) { where(department_id: department) }
+  scope :archived, -> { where(archived: true) }
+  scope :not_archived, -> { where(archived: [false, nil]) }
 
   belongs_to :item
   belongs_to :department
@@ -9,6 +11,11 @@ class SubstitutePhone < ApplicationRecord
   has_many :substitutions, class_name: 'PhoneSubstitution'
 
   delegate :name, :serial_number, :imei, to: :item
+
+  def self.query(search: nil, archive: nil, **p)
+    res = self.search search
+    !!archive ? res.archived : res.not_archived
+  end
 
   def self.search(query)
     if query.blank?

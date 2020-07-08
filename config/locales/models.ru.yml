@@ -504,6 +504,7 @@ ru:
         item: 'Устройство'
 
       substitute_phone:
+        archived: 'Архивирован'
         condition: 'Состояние телефона'
         item: 'Устройство'
 
