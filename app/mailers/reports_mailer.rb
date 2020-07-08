@@ -4,8 +4,7 @@ class ReportsMailer < ApplicationMailer
   def few_remnants(report)
     @report = report
     recipients = Setting.emails_for_acts
-    department = Department.find_by_code(ENV['DEPARTMENT_CODE'])
-    mail to: recipients, subject: "[#{department.name}] #{I18n.t("reports.#{report.name}.title")}"
+    mail to: recipients, subject: I18n.t("reports.#{report.name}.title")
   end
 
   def daily_sales(report)
