@@ -1,4 +1,8 @@
 class MovementActPolicy < DocumentPolicy
+  def index?
+    manage?
+  end
+
   def manage?
     superadmin? || able_to?(:manage_stocks)
   end
