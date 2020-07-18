@@ -3,12 +3,18 @@
     %tr
       %th.center Запчасть
       %th.center Количество
+      %th.center Закуп
+      %th.center Итого
   %tbody
-    - report.result[:data].each do |spare_part, quantity|
+    - report.result[:records].each do |spare_part, data|
       %tr
         %td= spare_part
-        %td.number= quantity
+        %td.number= data[:qty]
+        %td.number= human_currency(data[:price])
+        %td.number= human_currency(data[:qty] * data[:price])
   %tfoot
     %tr
       %td Итого
       %td.number= report.result[:total_qty]
+      %td
+      %td.number= human_currency(report.result[:total_sum])

@@ -3,7 +3,7 @@ class MovementItem < ActiveRecord::Base
   belongs_to :movement_act, inverse_of: :movement_items
   belongs_to :item, inverse_of: :movement_items
 
-  delegate :code, :name, :product, :product_category, :presentation, :features, :feature_accounting, :store_items, :store_item, :quantity_in_store, to: :item, allow_nil: true
+  delegate :code, :name, :product, :product_category, :presentation, :features, :feature_accounting, :store_items, :store_item, :quantity_in_store, :purchase_price, to: :item, allow_nil: true
   delegate :store, to: :movement_act, allow_nil: true
 
   attr_accessible :movement_act_id, :item_id, :quantity
@@ -22,5 +22,4 @@ class MovementItem < ActiveRecord::Base
   def has_prices_for_store?(store)
     store.price_types.all? { |price_type| product.prices.with_type(price_type).present? }
   end
-
 end
