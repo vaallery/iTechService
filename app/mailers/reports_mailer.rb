@@ -10,6 +10,6 @@ class ReportsMailer < ApplicationMailer
   def daily_sales(report)
     @result = report.result
     mail to: Setting.emails_for_sales_report,
-         subject: "iTechService. Отчёт продаж день за #{I18n.l(report.date, format: :long)}"
+         subject: "Отчёт продаж день за #{I18n.l(report.date, format: :long)}"
   end
 end
