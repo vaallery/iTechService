@@ -134,19 +134,19 @@ class ServiceJobsController < ApplicationController
 
   def update
     @service_job = ServiceJob.find(params[:id])
-    build_device_note
-    @service_job.attributes = params_for_update
+    the_policy = policy(@service_job)
 
-    if @service_job.changed == ['location_id']
-      the_policy = policy(@service_job)
-      if the_policy.move_transfers? || the_policy.update?
-        skip_authorization
-      else
-        raise Pundit::NotAuthorizedError, query: 'move_transfers', record: @service_job, policy: the_policy
-      end
+    if the_policy.update?
+      @service_job.attributes = params_for_update
+      skip_authorization
+    elsif the_policy.move_transfers?
+      @service_job.location_id = params_for_update[:location_id]
+      skip_authorization
     else
-      authorize @service_job
+      raise Pundit::NotAuthorizedError, query: 'update', record: @service_job, policy: the_policy
     end
+
+    build_device_note
 
     respond_to do |format|
       if @service_job.save
