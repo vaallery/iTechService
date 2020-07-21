@@ -33,7 +33,6 @@ module MediaMenu
       end
       model.content = content
       model.time = Time.current
-      model.department = Department.find_by_code('vl')
     end
   end
 end

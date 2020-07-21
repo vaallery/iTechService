@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200707112603) do
+ActiveRecord::Schema.define(version: 20200721114540) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -543,15 +543,12 @@ ActiveRecord::Schema.define(version: 20200707112603) do
 
   create_table "media_orders", force: :cascade do |t|
     t.datetime "time"
-    t.string   "name",          limit: 255
-    t.string   "phone",         limit: 255
+    t.string   "name",       limit: 255
+    t.string   "phone",      limit: 255
     t.text     "content"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.integer  "department_id",             null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
-
-  add_index "media_orders", ["department_id"], name: "index_media_orders_on_department_id", using: :btree
 
   create_table "messages", force: :cascade do |t|
     t.integer  "user_id"
@@ -1474,7 +1471,6 @@ ActiveRecord::Schema.define(version: 20200707112603) do
   add_foreign_key "faults", "fault_kinds", column: "kind_id"
   add_foreign_key "faults", "users", column: "causer_id"
   add_foreign_key "lost_devices", "service_jobs"
-  add_foreign_key "media_orders", "departments"
   add_foreign_key "messages", "departments"
   add_foreign_key "option_values", "option_types"
   add_foreign_key "order_notes", "orders"
