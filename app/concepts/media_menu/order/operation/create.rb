@@ -22,21 +22,18 @@ module MediaMenu
     step Nested(Present)
     step Contract.Validate(key: :media_order)
     failure :contract_invalid!
-    step :set_content
-    step :set_time
+    step :assign_attributes
     step Contract.Persist
 
     # TYPES = {0 => 'Книги', 1 => 'Приложения', 2 => 'Музыка', 3 => 'Телешоу', 4 => 'Фильмы', 5 => 'Аудиокниги'}
-    def set_content(*, model:, order_items:, **)
+    def assign_attributes(*, model:, order_items:, **)
       content = "Фильмы\n\n"
       order_items.each do |order_item|
         content << "	•	#{order_item.track_number} - #{order_item.name}\n"
       end
       model.content = content
-    end
-
-    def set_time(*, model:, **)
       model.time = Time.current
+      model.department = Department.find_by_code('vl')
     end
   end
 end
