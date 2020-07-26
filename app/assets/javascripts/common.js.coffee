@@ -17,6 +17,9 @@ jQuery ->
       if $('#announcements>*').length
         showNotificationsIndicator()
 
+  if $('#staff_experience').length
+    $.getScript('/users/experience');
+
   $(document).ready () ->
     $('form[data-remote]').bind 'ajax:before', () ->
       CKEDITOR.instances[instance].updateElement() for instance in CKEDITOR.instances

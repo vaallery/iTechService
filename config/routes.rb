@@ -62,6 +62,7 @@ Rails.application.routes.draw do
     get :actions, on: :member
     get :finance, on: :member
     get :bonuses, on: :member
+    get :experience, on: :collection, format: :js
     resources :faults, shallow: true, only: %i[index new create destroy]
     post :create_duty_day, on: :collection
     post :destroy_duty_day, on: :collection

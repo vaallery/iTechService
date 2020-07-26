@@ -184,6 +184,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def experience
+    authorize User
+    @users = User.oncoming_salary
+    render nothing: true if @users.empty?
+  end
+
   private
 
   def load_infos

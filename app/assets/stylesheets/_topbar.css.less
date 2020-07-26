@@ -90,4 +90,33 @@
     box-shadow: none;
     background-color: #ffa4a4;
   }
+
+  #staff_experience {
+    margin-left: 1px;
+    margin-right: 1px;
+    &.notify{
+      background-color: #ffc7c5;
+      &:hover {
+        background-color: #eeb6b4;
+      }
+    }
+    .popover{
+      width: 300px;
+    }
+
+    .new_salary_link{
+      &:hover{
+        text-decoration: none;
+      }
+    }
+  }
+
+  #staff_experience_list {
+    margin-bottom: 0;
+  }
+
+  .popover-content {
+    overflow-y: scroll;
+    max-height: 80vh;
+  }
 }

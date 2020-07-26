@@ -47,6 +47,10 @@ class UserPolicy < BasePolicy
 
   def bonuses?; read?; end
 
+  def experience?
+    superadmin? || able_to?(:manage_salary)
+  end
+
   private
 
   def owner?
