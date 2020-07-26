@@ -3,7 +3,7 @@ lock "~> 3.12.1"
 
 set :application, 'itechservice'
 set :repo_url, 'git@gitlab.com:k4ir05/iTechService.git'
-set :branch, 'global'
+set :branch, 'master'
 
 # Default deploy_to directory is /var/www/my_app_name
 # set :deploy_to, "/var/www/my_app_name"
