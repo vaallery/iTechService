@@ -35,12 +35,12 @@ class ServiceJob < ActiveRecord::Base
     not_at_done.not_at_archive.where('((return_at - created_at) > ? and (return_at - created_at) < ? and return_at <= ?) or ((return_at - created_at) >= ? and return_at <= ?)', '30 min', '5 hour', DateTime.current.advance(minutes: 30), '5 hour', DateTime.current.advance(hours: 1))
   end
 
-  belongs_to :department, required: true, inverse_of: :service_jobs
+  belongs_to :department, -> { includes(:city) }, required: true, inverse_of: :service_jobs
   belongs_to :initial_department, class_name: 'Department'
   belongs_to :user, inverse_of: :service_jobs
   belongs_to :client, inverse_of: :service_jobs
   belongs_to :device_type
-  belongs_to :item
+  belongs_to :item, -> { includes(product: [:product_group, :product_category]) }
   belongs_to :location
   belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
   belongs_to :sale, inverse_of: :service_job

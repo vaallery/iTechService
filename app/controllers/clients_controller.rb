@@ -26,6 +26,8 @@ class ClientsController < ApplicationController
 
   def new
     @client = authorize Client.new
+    @client.build_client_characteristic
+
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @client }
@@ -35,6 +37,8 @@ class ClientsController < ApplicationController
 
   def edit
     @client = find_record Client
+    @client.build_client_characteristic if @client.client_characteristic.nil?
+
     respond_to do |format|
       format.html { render 'form' }
       format.js { render params[:form] == 'modal' ? 'shared/show_modal_form' : 'show_form' }

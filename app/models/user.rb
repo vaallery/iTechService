@@ -123,6 +123,11 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment, :department_id, :session_duration, :phone_number, :department_autochangeable
 
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable, :registerable, :rememberable,
+  # :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
+
   validates_presence_of :username, :role, :department
   validates_uniqueness_of :username
   validates :password, presence: true, confirmation: true, if: :password_required?
@@ -130,11 +135,6 @@ class User < ActiveRecord::Base
   validates_numericality_of :session_duration, only_integer: true, greater_than: 0, allow_nil: true
   before_validation :validate_rights_changing
   # before_save :ensure_authentication_token
-
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :registerable, :rememberable,
-  # :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :timeoutable, :recoverable, :trackable, :validatable
 
   mount_uploader :photo, PhotoUploader
 
@@ -149,10 +149,25 @@ class User < ActiveRecord::Base
     end
   end
 
-  after_initialize do |user|
-    if user.schedule_days.empty?
-      (1..7).each do |d|
-        user.schedule_days.build day: d
+  def self.search(params)
+    users = params[:all].present? ? User.all : User.active
+    unless (q_name = params[:name]).blank?
+      users = users.where 'username LIKE :q or name LIKE :q or surname LIKE :q', q: "%#{q_name}%"
+    end
+    users
+  end
+
+  def self.oncoming_salary
+    User.active.to_a.keep_if { |user| user.upcoming_salary_date&.today? }
+  end
+
+  def self.check_birthdays
+    User.active.find_each do |user|
+      announcement = user.birthday_announcement
+      announcement.update_attributes active: user.upcoming_birthday?
+      if announcement.active?
+        announcement.recipient_ids = User.any_admin.map { |u| u.id }
+        announcement.save
       end
     end
   end
@@ -223,14 +238,6 @@ class User < ActiveRecord::Base
 
   def any_admin?
     has_role? %w[admin superadmin]
-  end
-
-  def self.search(params)
-    users = params[:all].present? ? User.all : User.active
-    unless (q_name = params[:name]).blank?
-      users = users.where 'username LIKE :q or name LIKE :q or surname LIKE :q', q: "%#{q_name}%"
-    end
-    users
   end
 
   def full_name
@@ -374,10 +381,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.oncoming_salary
-    User.active.to_a.keep_if { |user| user.upcoming_salary_date&.today? }
-  end
-
   def work_days_in(date)
     timesheet_days.in_period(date).work.count
   end
@@ -406,17 +409,6 @@ class User < ActiveRecord::Base
 
   def installments
     Installment.where installment_plan_id: self.installment_plan_ids
-  end
-
-  def self.check_birthdays
-    User.active.find_each do |user|
-      announcement = user.birthday_announcement
-      announcement.update_attributes active: user.upcoming_birthday?
-      if announcement.active?
-        announcement.recipient_ids = User.any_admin.map { |u| u.id }
-        announcement.save
-      end
-    end
   end
 
   def timesheet_day(date)

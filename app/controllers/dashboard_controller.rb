@@ -63,18 +63,20 @@ class DashboardController < ApplicationController
   private
 
   def load_actual_jobs
+    @service_jobs = policy_scope(ServiceJob).includes(:client, :history_records, :location, :receiver, :user, :keeper, {device_tasks: :task, features: :feature_type})
+
     if current_user.any_admin?
       if params[:location].present?
         location = Location.find(params[:location])
-        @service_jobs = policy_scope(ServiceJob).located_at(location)
+        @service_jobs = @service_jobs.located_at(location)
         @location_name = location.name
       else
-        @service_jobs = policy_scope(ServiceJob).in_department(current_department).pending
+        @service_jobs = @service_jobs.in_department(current_department).pending
       end
     elsif current_user.location.present?
-      @service_jobs = policy_scope(ServiceJob).located_at(current_user.location)
+      @service_jobs = @service_jobs.located_at(current_user.location)
     else
-      @service_jobs = policy_scope(ServiceJob).in_department(current_department)
+      @service_jobs = @service_jobs.in_department(current_department)
     end
     if current_user.able_to?(:print_receipt)
       @service_jobs = @service_jobs.search(params).newest.page(params[:page])

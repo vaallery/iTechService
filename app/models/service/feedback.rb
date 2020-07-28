@@ -9,7 +9,7 @@ module Service
     scope :actual, -> { where('scheduled_on <= ?', Time.current) }
     scope :old_first, -> { order 'created_at ASC' }
 
-    belongs_to :service_job
+    belongs_to :service_job, -> { includes(:client, department: :city, item: {product: :product_group}) }
     validates_presence_of :service_job_id
 
     delegate :ticket_number, :client_surname, :device_short_name, :department, :department_id, :city, :city_id,

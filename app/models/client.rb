@@ -49,7 +49,6 @@ class Client < ActiveRecord::Base
   before_destroy :send_mail
 
   after_initialize do
-    build_client_characteristic if client_characteristic.nil?
     self.category ||= 0
     self.department_id ||= Department.current.id
   end
@@ -133,5 +132,4 @@ class Client < ActiveRecord::Base
   def send_mail
     DeletionMailer.notice({presentation: self.presentation}, User.current.presentation, DateTime.current).deliver_later
   end
-
 end

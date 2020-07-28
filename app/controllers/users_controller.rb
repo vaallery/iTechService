@@ -125,7 +125,7 @@ class UsersController < ApplicationController
 
   def schedule
     authorize User
-    @users = User.active.schedulable.id_asc
+    @users = User.includes(:duty_days, :department, :location).active.schedulable.id_asc
     @locations = Location.for_schedule.in_city(current_city)
   end
 
