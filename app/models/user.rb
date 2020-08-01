@@ -240,6 +240,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def role_match?(other_role)
+    (role == other_role) ||
+      (universal? && other_role.in?(%w[media software]))
+  end
+
   def full_name
     res = [surname, name, patronymic].join ' '
     res = username if res.blank?

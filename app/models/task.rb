@@ -36,11 +36,6 @@ class Task < ApplicationRecord
     end
   end
 
-  def is_actual_for?(user)
-    (role == user.role) ||
-      (user.universal? && role.in?(%w[media software]))
-  end
-
   def role_name
     role.blank? ? '-' : I18n.t("users.roles.#{role}")
   end

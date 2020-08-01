@@ -32,11 +32,11 @@ module DashboardHelper
   end
 
   def is_actual_task?(task)
-    task.is_actual_for?(current_user)
+    current_user.role_match?(task.role)
   end
 
   def is_editable_task?(device_task)
-    current_user.any_admin? ? true : device_task.is_actual_for?(current_user)
+    policy(device_task).edit?
   end
 
   def service_job_row_tag(service_job)

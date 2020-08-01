@@ -16,7 +16,7 @@ class DeviceTask < ActiveRecord::Base
   has_many :repair_parts, through: :repair_tasks
   has_one :sale_item, inverse_of: :device_task
 
-  delegate :name, :role, :is_important?, :is_actual_for?, :is_repair?, :item, to: :task, allow_nil: true
+  delegate :name, :role, :is_important?, :is_repair?, :item, to: :task, allow_nil: true
   delegate :cost, to: :task, prefix: true, allow_nil: true
   delegate :client_presentation, :ticket_number, to: :service_job, allow_nil: true
   delegate :department, :department_id, :user, to: :service_job

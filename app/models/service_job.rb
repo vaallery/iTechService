@@ -301,8 +301,8 @@ class ServiceJob < ActiveRecord::Base
     end
   end
 
-  def is_actual_for? user
-    device_tasks.any? { |t| t.is_actual_for? user }
+  def is_actual_for?(user)
+    device_tasks.any? { |t| user.role_match?(t.role) }
   end
 
   def movement_history
