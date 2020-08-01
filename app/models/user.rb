@@ -176,8 +176,16 @@ class User < ActiveRecord::Base
     false
   end
 
+  def superadmin?
+    has_role? 'superadmin'
+  end
+
   def admin?
     has_role? 'admin'
+  end
+
+  def any_admin?
+    has_role? %w[admin superadmin]
   end
 
   def not_admin?
@@ -212,10 +220,6 @@ class User < ActiveRecord::Base
     has_role? 'manager'
   end
 
-  def superadmin?
-    has_role? 'superadmin'
-  end
-
   def driver?
     self.role == 'driver'
   end
@@ -234,10 +238,6 @@ class User < ActiveRecord::Base
     else
       self.role == role
     end
-  end
-
-  def any_admin?
-    has_role? %w[admin superadmin]
   end
 
   def full_name
