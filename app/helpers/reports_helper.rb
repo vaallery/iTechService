@@ -22,6 +22,7 @@ module ReportsHelper
       driver
       few_remnants_goods
       few_remnants_spare_parts
+      body_repair_jobs
       repair_jobs
       technicians_jobs
       technicians_difficult_jobs
