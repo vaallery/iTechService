@@ -1,12 +1,15 @@
 .fields.well.well-small
+  %p
+    %strong= link_to f.object.name, f.object.repair_service
+    %span.pull-right= link_to_remove_fields f
   - if f.object.errors.any?
     %p.text-error= f.object.errors.full_messages.join('. ')
   = f.hidden_field :repair_service_id
   = f.full_error :repair_service_id, class: 'text-error'
   = f.hidden_field :store_id
   = f.full_error :store_id, class: 'text-error'
-  %strong= link_to f.object.name, f.object.repair_service
-  %span.pull-right= link_to_remove_fields f
+  - f.object.repairer ||= current_user
+  = f.association :repairer, collection: repairer_options, label_method: :presentation, input_html: {class: 'input-xlarge'}
   = f.input :price, input_html: {class: 'input-small'}
 
   #repair_parts

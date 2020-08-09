@@ -26,6 +26,7 @@ module ReportsHelper
       repair_jobs
       technicians_jobs
       technicians_difficult_jobs
+      repairers
       remnants
       sales
       margin

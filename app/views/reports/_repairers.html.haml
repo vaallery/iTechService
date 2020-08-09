@@ -1,0 +1,14 @@
+%table#repair_jobs_report.table.table-bordered.table-hover
+  %thead
+    %tr
+      %th.center Имя тех. специалиста
+      %th.center Количество работ
+  %tbody
+    - report.result[:data].each_pair do |user_id, data|
+      %tr.detailable
+        %td.name= user_id.present? ? link_to(data[:name], user_path(user_id), target: '_blank') : '-'
+        %td.number= data[:jobs_qty]
+      - data[:jobs].each do |job|
+        %tr.details
+          %td.name= job[:name]
+          %td= link_to job[:service_job_presentation], service_job_path(job[:device_id]), target: '_blank'

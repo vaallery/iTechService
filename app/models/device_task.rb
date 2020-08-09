@@ -145,9 +145,7 @@ class DeviceTask < ActiveRecord::Base
 
   def set_performer
     if performer_id.nil? and done and (user = history_records.task_completions.order_by_newest.where(new_value: true).first.try(:user)).present?
-    #if done and (user = history_records.task_completions.where(user_id: 1..10000).order_by_newest.first.user).present?
       update_attribute :performer_id, user.id
     end
   end
-
 end

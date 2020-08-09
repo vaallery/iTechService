@@ -24,6 +24,8 @@ class Location < ApplicationRecord
   scope :content, -> { where code: 'content' }
   scope :done, -> { where code: 'done' }
   scope :repair, -> { where code: 'repair' }
+  scope :repairmac, -> { where code: 'repairmac' }
+  scope :repair_mac_or_ios, -> { where code: %w[repair repairmac] }
   scope :repair_notebooks, -> { where code: 'repair_notebooks' }
   scope :warranty, -> { where code: 'warranty' }
   scope :code_start_with, ->(code) { where('code LIKE ?', "#{code}%") }

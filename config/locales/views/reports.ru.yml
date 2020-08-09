@@ -91,6 +91,8 @@ ru:
       without_payment: 'без оплаты'
     repair_parts:
       title: 'Отчёт по запчастям'
+    repairers:
+      title: 'Кто починил устройство?'
     service_job_viewings:
       title: 'Просмотр устройств'
     sms_notifications:

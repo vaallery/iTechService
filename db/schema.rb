@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200728101132) do
+ActiveRecord::Schema.define(version: 20200802103751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -910,10 +910,12 @@ ActiveRecord::Schema.define(version: 20200728101132) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.integer  "store_id"
+    t.integer  "repairer_id"
   end
 
   add_index "repair_tasks", ["device_task_id"], name: "index_repair_tasks_on_device_task_id", using: :btree
   add_index "repair_tasks", ["repair_service_id"], name: "index_repair_tasks_on_repair_service_id", using: :btree
+  add_index "repair_tasks", ["repairer_id"], name: "index_repair_tasks_on_repairer_id", using: :btree
   add_index "repair_tasks", ["store_id"], name: "index_repair_tasks_on_store_id", using: :btree
 
   create_table "revaluation_acts", force: :cascade do |t|
@@ -1485,6 +1487,7 @@ ActiveRecord::Schema.define(version: 20200728101132) do
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "products"
   add_foreign_key "quick_orders", "clients"
+  add_foreign_key "repair_tasks", "users", column: "repairer_id"
   add_foreign_key "service_feedbacks", "service_jobs"
   add_foreign_key "service_free_jobs", "clients"
   add_foreign_key "service_free_jobs", "departments"
