@@ -16,7 +16,7 @@ class ServiceJobPolicy < CommonPolicy
   end
 
   def create_sale?
-    any_manager?(:software, :universal)
+    same_department? && any_manager?(:software, :universal)
   end
 
   def read_tech_notice?
