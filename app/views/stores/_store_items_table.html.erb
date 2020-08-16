@@ -1,0 +1,39 @@
+<% total_quantity = 0 %>
+<% total_sum = 0 %>
+<table id="store_products" class="table table-bordered table-condensed table-hover">
+  <thead>
+    <tr>
+      <th class="code">Код</th>
+      <th class="name">Продукт</th>
+      <th class="quantity">Количество</th>
+      <th class="price">Закуп</th>
+      <th class="price">Итого</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <% quantity = product.quantity_in_store(@store) %>
+      <% price = product.purchase_price || 0 %>
+      <% sum = price * quantity %>
+      <% total_quantity += quantity %>
+      <% total_sum += sum %>
+
+    <tr class="product <%= 'detailable' if product.feature_accounting %>" id="product_<%= product.id %>"
+          data-path="<%= product_details_store_path(@store, product_id: product.id, format: :js) %>">
+        <td class="code"><%= product.code %></td>
+        <td class="name"><%= link_to product.name, product_path(product) %></td>
+        <td class="quantity number"><%= quantity %></td>
+        <td class="price number"><%= human_currency price %></td>
+        <td class="price number"><%= human_currency sum %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="2">Итого</td>
+    <td class="quantity number"><%= total_quantity %></td>
+    <td></td>
+    <td class="price number"><%= human_currency total_sum %></td>
+  </tr>
+  </tfoot>
+</table>

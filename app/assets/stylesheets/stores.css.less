@@ -1,7 +1,22 @@
 table#store_products{
+  width: 100%;
   tr.product{
     &.detailable{
       cursor: pointer;
+    }
+    td.code {
+      width: 20%;
+      max-width: 30px;
+      overflow-wrap: break-word;
+    }
+    td.name {
+      width: 50%;
+    }
+    td.quantity {
+      width: 10%;
+    }
+    td.price {
+      width: 10%;
     }
   }
 }
