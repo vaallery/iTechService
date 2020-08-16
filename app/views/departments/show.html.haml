@@ -5,6 +5,9 @@
     = @department.name
 
 %dl.dl-horizontal
+  %dt= model_class.human_attribute_name :short_name
+  %dd= @department.short_name.presence || '-'
+
   %dt= model_class.human_attribute_name :code
   %dd= @department.code.blank? ? '-' : @department.code
 

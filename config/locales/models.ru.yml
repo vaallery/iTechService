@@ -151,6 +151,7 @@ ru:
         printer: 'Принтер'
         role: 'Роль'
         schedule: 'График работы'
+        short_name: 'Сокращенное название'
         url: 'URL'
 
       device:

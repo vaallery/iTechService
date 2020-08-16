@@ -4,6 +4,7 @@
   = f.association :city
   = f.association :brand
   = f.input :name
+  = f.input :short_name
   = f.input :code, readonly: @department.persisted?
   = f.input :role, collection: department_roles_for_select, prompt: false
   = f.input :ip_network
