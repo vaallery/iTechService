@@ -8,7 +8,7 @@ class ServiceJobPolicy < CommonPolicy
   end
 
   def update?
-    same_department? && any_manager?(:software, :media, :universal, :technician, :api, :supervisor)
+    same_department? && any_manager?(:software, :media, :universal, :technician, :engraver, :api, :supervisor)
   end
 
   def destroy?
