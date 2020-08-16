@@ -5,6 +5,8 @@ module RepairTasksHelper
   end
 
   def repairer_options
-    User.located_at(Location.repair_mac_or_ios.in_department(current_department))
+    users = User.active.technician.in_city(current_city).to_a
+    users << current_user unless users.include?(current_user)
+    users
   end
 end
