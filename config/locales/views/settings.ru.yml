@@ -25,6 +25,7 @@ ru:
     print_sale_check: 'Печатать чеки продаж'
     schedule: 'График работы'
     service_tasks_models: 'Модели девайсов для сервисных задач'
+    show_spare_parts_qty: 'Показывать количество запчастей в видах ремонта'
     site: 'Сайт'
     sms_notification_template: 'Шаблон СМС-уведомления'
     sms_gateway_uri: 'Адрес СМС-шлюза'

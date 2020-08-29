@@ -20,6 +20,7 @@ class Setting < ActiveRecord::Base
     print_sale_check: 'boolean',
     schedule: 'string',
     service_tasks_models: 'json',
+    show_spare_parts_qty: 'boolean',
     site: 'string',
     sms_notification_template: 'text',
     sms_gateway_uri: 'string',

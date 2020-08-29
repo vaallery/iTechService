@@ -11,6 +11,7 @@
         - if can? :manage, RepairService
           %th
     %tbody
+      - show_qty = Setting.show_spare_parts_qty
       - @repair_services.find_each do |repair_service|
         - parts_qty = repair_service.spare_parts.count
         %tr
@@ -28,5 +29,7 @@
             %td
               = link_to_if (can?(:manage, Product) and spare_part.product.present?), spare_part.name, product_path(spare_part.product.id)
               %br
-              %span= t ("spare_parts.remnants.#{spare_part.remnant_s(current_user.spare_parts_store)}")
+              %span
+                = t ("spare_parts.remnants.#{spare_part.remnant_s(current_user.spare_parts_store)}")
+                = "#{spare_part.quantity_in_store(current_user.spare_parts_store)} шт." if show_qty
             %td= spare_part.comment
