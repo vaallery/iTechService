@@ -405,6 +405,7 @@ ru:
         difficult: 'Сложный'
         is_body_repair: 'Корпусный ремонт'
         is_positive_price: 'Ненулевая стоимость'
+        prices: 'Цены'
         spare_parts: 'Запчасти'
 
       repair_task:

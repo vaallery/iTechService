@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200816105157) do
+ActiveRecord::Schema.define(version: 20200829085034) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -890,10 +890,20 @@ ActiveRecord::Schema.define(version: 20200816105157) do
   add_index "repair_parts", ["item_id"], name: "index_repair_parts_on_item_id", using: :btree
   add_index "repair_parts", ["repair_task_id"], name: "index_repair_parts_on_repair_task_id", using: :btree
 
+  create_table "repair_prices", force: :cascade do |t|
+    t.integer  "repair_service_id"
+    t.integer  "department_id"
+    t.decimal  "value"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "repair_prices", ["department_id"], name: "index_repair_prices_on_department_id", using: :btree
+  add_index "repair_prices", ["repair_service_id"], name: "index_repair_prices_on_repair_service_id", using: :btree
+
   create_table "repair_services", force: :cascade do |t|
     t.integer  "repair_group_id"
     t.string   "name",              limit: 255
-    t.decimal  "price"
     t.datetime "created_at",                                    null: false
     t.datetime "updated_at",                                    null: false
     t.text     "client_info"
@@ -1488,6 +1498,8 @@ ActiveRecord::Schema.define(version: 20200816105157) do
   add_foreign_key "product_options", "option_values"
   add_foreign_key "product_options", "products"
   add_foreign_key "quick_orders", "clients"
+  add_foreign_key "repair_prices", "departments"
+  add_foreign_key "repair_prices", "repair_services"
   add_foreign_key "repair_tasks", "users", column: "repairer_id"
   add_foreign_key "service_feedbacks", "service_jobs"
   add_foreign_key "service_free_jobs", "clients"

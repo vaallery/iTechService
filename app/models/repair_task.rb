@@ -23,7 +23,7 @@ class RepairTask < ActiveRecord::Base
   before_destroy :return_spare_parts
 
   after_initialize do
-    self.price ||= repair_service.try(:price)
+    self.price ||= repair_service&.price(department)
     self.store_id = Department.current.spare_parts_store.id
     # self.store_id = User.current.try(:spare_parts_store).try(:id)
     if repair_service.present? and repair_parts.empty?

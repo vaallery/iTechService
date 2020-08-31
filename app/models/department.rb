@@ -10,6 +10,7 @@ class Department < ApplicationRecord
   default_scope { order('departments.id asc') }
   scope :branches, -> { where(role: 1) }
   scope :selectable, -> { where(role: [0, 1, 3, 4]) }
+  scope :real, -> { where(role: [0, 1, 3]) }
   scope :in_city, ->(city) { where(city: city) }
 
   belongs_to :city, required: true

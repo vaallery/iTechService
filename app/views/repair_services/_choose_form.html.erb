@@ -1,0 +1,13 @@
+<%= link_to t('done'), '#', id: 'close_repair_service_choose_form', class: 'btn btn-primary btn-small' %>
+<div class="row-fluid">
+  <div class="span4">
+    <div id="repair_groups">
+      <%= repair_groups_trees_tag @repair_groups, params[:group], additional_params.merge(mode: 'choose') %>
+    </div>
+  </div>
+  <div class="span8">
+    <div id="resource_table">
+      <%= render 'choose_table' %>
+    </div>
+  </div>
+</div>

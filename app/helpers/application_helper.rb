@@ -329,4 +329,8 @@ module ApplicationHelper
   def error_messages_for(record)
     record.errors.full_messages.join('. ') if record.errors.present?
   end
+
+  def additional_params
+    params.except(:controller, :action, :id, :format)
+  end
 end

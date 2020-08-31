@@ -10,8 +10,8 @@ class RepairGroupsController < ApplicationController
   def show
     @repair_group = find_record RepairGroup
     @repair_services = @repair_group.repair_services
-    if params[:choose] == 'true'
-      params[:table_name] = 'repair_services/small_table'
+    if params[:mode] == 'choose'
+      params[:table_name] = 'repair_services/choose_table'
     end
     respond_to do |format|
       format.js

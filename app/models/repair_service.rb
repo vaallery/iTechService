@@ -1,22 +1,27 @@
 class RepairService < ActiveRecord::Base
   default_scope { order('name asc') }
+  scope :in_group, ->(group) { where repair_group_id: group }
 
   belongs_to :repair_group
   has_many :spare_parts, dependent: :destroy
   has_many :store_items, through: :spare_parts
+  has_many :prices, class_name: 'RepairPrice', inverse_of: :repair_service
 
   accepts_nested_attributes_for :spare_parts, allow_destroy: true
-  attr_accessible :name, :price, :client_info, :repair_group_id, :is_positive_price, :difficult, :is_body_repair,
-                  :spare_parts_attributes
+  accepts_nested_attributes_for :prices
+  attr_accessible :name, :client_info, :repair_group_id, :is_positive_price, :difficult, :is_body_repair,
+                  :spare_parts_attributes, :prices_attributes
 
-  validates_presence_of :name, :price, :repair_group
+  validates_presence_of :name, :repair_group
   validates_associated :spare_parts
 
-  def self.update_prices(params)
-    params.each do |key, value|
-      repair_service = RepairService.find(key)
-      repair_service.update_attributes price: value
-    end
+  def find_price(department)
+    prices.in_department(department).first
+  end
+
+  def price(department = nil)
+    department ||= Department.current
+    find_price(department)&.value
   end
 
   def total_cost

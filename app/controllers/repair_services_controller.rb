@@ -2,12 +2,17 @@ class RepairServicesController < ApplicationController
   def index
     authorize RepairService
     @repair_groups = RepairGroup.roots.order('name asc')
-    if params[:group].blank?
-      @repair_services = nil
-    else
-      @repair_group = RepairGroup.find params[:group]
-      @repair_services = @repair_group.repair_services.order('name asc').includes(spare_parts: :products)
+
+    if params[:group].present?
+      @repair_services = RepairService.includes(spare_parts: :product).in_group(params[:group])
     end
+
+    params[:table_name] = {
+      'prices' => 'prices_table',
+      'choose' => 'choose_table'
+    }.fetch(params[:mode], 'table')
+
+    params[:department_id] ||= current_department.id
 
     respond_to do |format|
       format.html
@@ -24,6 +29,7 @@ class RepairServicesController < ApplicationController
 
   def new
     @repair_service = authorize RepairService.new(params[:repair_service])
+    build_prices
     respond_to do |format|
       format.html { render 'form' }
     end
@@ -31,6 +37,7 @@ class RepairServicesController < ApplicationController
 
   def edit
     @repair_service = find_record RepairService
+    build_prices
     respond_to do |format|
       format.html { render 'form' }
     end
@@ -60,8 +67,11 @@ class RepairServicesController < ApplicationController
 
   def mass_update
     authorize RepairService
-    RepairService.update_prices(params[:repair_services])
-    redirect_to repair_services_path
+    params[:repair_services].each do |id, value|
+      price = RepairPrice.find_by(repair_service_id: id, department_id: params[:department_id])
+      price.update value: value
+    end
+    redirect_to repair_services_path(params.slice(:mode, :department_id, :group))
   end
 
   def destroy
@@ -84,6 +94,14 @@ class RepairServicesController < ApplicationController
     @repair_service = find_record RepairService
     respond_to do |format|
       format.js
+    end
+  end
+
+  private
+
+  def build_prices
+    Department.real.each do |department|
+      @repair_service.prices.find_or_initialize_by(department_id: department.id)
     end
   end
 end

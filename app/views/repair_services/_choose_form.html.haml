@@ -1,6 +1,0 @@
-= link_to t('done'), '#', id: 'close_repair_service_choose_form', class: 'btn btn-primary btn-small'
-.row-fluid
-  .span4
-    #repair_groups{model_name: 'repair_group'}= repair_groups_trees_tag @repair_groups, @repair_group.try(:id), choose: true
-  .span8
-    #resource_table= render 'small_table'

@@ -1,0 +1,70 @@
+<% if params[:group].present? %>
+  <div class="btn-group" data-toggle="buttons-radio">
+    <% real_departments.each do |department| %>
+      <%= link_to department.short_name,
+                  repair_services_path(additional_params.merge(department_id: department.id)),
+                  class: "btn btn-default#{' active' if params[:department_id].to_i == department.id}",
+                  remote: true
+      %>
+    <% end %>
+  </div>
+
+  <% if can? :mass_update, RepairService %>
+    <%= form_tag mass_update_repair_services_path, method: :put, remote: true do %>
+      <%= hidden_field_tag :department_id, params[:department_id] %>
+      <%= hidden_field_tag :mode, params[:mode] %>
+      <%= hidden_field_tag :group, params[:group] %>
+      <table id="repair_services_table" class="table table-hover">
+        <thead>
+        <tr>
+          <th><%= RepairService.human_attribute_name(:name) %></th>
+          <th><%= RepairService.human_attribute_name(:price) %></th>
+          <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @repair_services.each do |repair_service| %>
+          <tr>
+            <td class="name"><%= repair_service.name %></td>
+            <td class="price">
+              <%= number_field_tag "repair_services[#{repair_service.id}]", repair_service.price(params[:department_id]) %>
+            </td>
+            <td class="btn-group">
+              <%= link_to_edit_small repair_service %>
+              <%= link_to_destroy_small repair_service %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+
+        <tfoot>
+        <tr>
+          <th></th>
+          <th colspan="2"><%= submit_tag t('update'), class: 'btn btn-primary' %></th>
+        </tr>
+        </tfoot>
+      </table>
+    <% end %>
+  <% else %>
+    <table id="repair_services_table" class="table table-hover">
+      <thead>
+      <tr>
+        <th><%= RepairService.human_attribute_name(:name) %></th>
+        <th><%= RepairService.human_attribute_name(:price) %></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @repair_services.each do |repair_service| %>
+        <tr>
+          <td class="name"><%= repair_service.name %></td>
+          <td class="price number"><%= human_currency repair_service.price(params[:department_id]) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% else %>
+  <strong>Выбери группу</strong>
+<% end %>

@@ -1,9 +1,0 @@
-- if @repair_services.nil?
-  %strong Выбери группу
-- else
-  %table.table.table-condensed.table-hover
-    %tbody
-      - @repair_services.each do |repair_service|
-        %tr.repair_service_row
-          %td= link_to repair_service.name, select_repair_service_path(repair_service), remote: true
-  = paginate @repair_services, remote: true if @repair_services.respond_to? :current_page

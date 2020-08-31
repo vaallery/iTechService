@@ -5,5 +5,7 @@ class RepairServicePolicy < CommonPolicy
 
   def select?; choose?; end
 
-  def mass_update?; update?; end
+  def mass_update?
+    superadmin? || able_to?(:manage_stocks)
+  end
 end
