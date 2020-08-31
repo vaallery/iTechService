@@ -11,7 +11,7 @@ class CreateRepairPrices < ActiveRecord::Migration
       Department.real.each do |department|
         RepairPrice.create! repair_service_id: service.id,
                             department_id: department.id,
-                            value: service.price || 0
+                            value: service['price']
       end
     end
 
