@@ -101,7 +101,7 @@ class GiftCertificatesController < ApplicationController
   end
 
   def find
-    @gift_certificate = find_by_number params[:id]
+    @gift_certificate = authorize find_by_number(params[:id])
     respond_to do |format|
       format.js
     end
