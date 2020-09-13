@@ -5,7 +5,8 @@ class RepairService < ActiveRecord::Base
   belongs_to :repair_group
   has_many :spare_parts, dependent: :destroy
   has_many :store_items, through: :spare_parts
-  has_many :prices, class_name: 'RepairPrice', inverse_of: :repair_service
+  has_many :prices, class_name: 'RepairPrice', inverse_of: :repair_service, dependent: :destroy
+  has_many :repair_tasks, dependent: :restrict_with_error
 
   accepts_nested_attributes_for :spare_parts, allow_destroy: true
   accepts_nested_attributes_for :prices
