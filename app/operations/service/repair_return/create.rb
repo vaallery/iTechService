@@ -40,10 +40,12 @@ module Service
           store_item.add repair_part.quantity
         end
 
-        sale_return = repair_return.sale.build_return
+        if repair_return.sale.present?
+          sale_return = repair_return.sale.build_return
 
-        unless sale_return.save and sale_return.post
-          errors << sale_return.errors.full_messages
+          unless sale_return.save and sale_return.post
+            errors << sale_return.errors.full_messages
+          end
         end
 
         unless repair_return.save
