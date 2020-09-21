@@ -9,10 +9,7 @@ class SupplyReport < ActiveRecord::Base
   validates_presence_of :date
   validates_associated :supplies
 
-  after_initialize do
-    date ||= Date.current
-    department_id ||= Department.current.id
-  end
+  delegate :name, to: :department, prefix: true, allow_nil: true
 
   def total_cost
     if supplies.any?
@@ -21,5 +18,4 @@ class SupplyReport < ActiveRecord::Base
       0
     end
   end
-
 end

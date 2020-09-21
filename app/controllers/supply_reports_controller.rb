@@ -32,6 +32,8 @@ class SupplyReportsController < ApplicationController
 
   def create
     @supply_report = authorize SupplyReport.new(params[:supply_report])
+    @supply_report.department_id ||= current_department.id
+
     respond_to do |format|
       if @supply_report.save
         format.html { redirect_to @supply_report, notice: t('supply_reports.created') }

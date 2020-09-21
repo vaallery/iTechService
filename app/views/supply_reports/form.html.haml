@@ -2,6 +2,7 @@
 = simple_form_for @supply_report, html: { id: 'supply_report_form', class: 'form-horizontal' } do |f|
 
   = f.input :date, as: :my_date
+  = f.association :department, as: :select if superadmin?
 
   %table#supplies_table.table.table-bordered.table-condensed.table-hover
     %thead
