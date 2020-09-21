@@ -37,7 +37,6 @@ class ApplicationController < ActionController::Base
     @model = result["model"]
     @_result = result
 
-    # TODO: get rid of it, use cells
     unless @model.nil?
       model_variable_name = action_name == 'index' ? @model.model_name.collection : @model.model_name.element
       model_variable_name.gsub!('/', '_')

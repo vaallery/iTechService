@@ -1,10 +1,10 @@
 class ContactsExtractionsController < ApplicationController
   def new
-    authorize :contacts_extraction
+    authorize :contacts_extractor
   end
 
   def create
-    authorize :contacts_extraction
+    authorize :contacts_extractor
     @contacts_extractor = ContactsExtractor.new(contacts_file)
     contacts_card = @contacts_extractor.perform
     send_file contacts_card, type: 'application/vcf', filename: 'contacts.vcf', disposition: 'inline'

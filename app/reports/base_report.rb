@@ -1,6 +1,5 @@
 class BaseReport
-  attr_reader :kind
-  attr_accessor :department_id
+  attr_reader :kind, :department_id
 
   def self.call(attributes = {})
     new(attributes).call
@@ -47,6 +46,10 @@ class BaseReport
 
   def period
     start_date.to_time(:local).beginning_of_day..end_date.to_time(:local).end_of_day
+  end
+
+  def department_id=(value)
+    @department_id = value.presence
   end
 
   def department
