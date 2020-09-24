@@ -140,7 +140,7 @@ class ServiceJobsController < ApplicationController
       @service_job.attributes = params_for_update
       skip_authorization
     elsif the_policy.move_transfers?
-      @service_job.location_id = params_for_update[:location_id]
+      @service_job.attributes = params_for_update.slice(:location_id, :client_notified)
       skip_authorization
     else
       raise Pundit::NotAuthorizedError, query: 'update', record: @service_job, policy: the_policy
