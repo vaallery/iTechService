@@ -1,7 +1,8 @@
 class DriverReport < BaseReport
   def call
     result[:supply_categories] = []
-    supply_reports = SupplyReport.where(date: period, department_id: department)
+    supply_reports = SupplyReport.where(date: period)
+    supply_reports = supply_reports.in_department(department) if department
     supplies_sum = 0
     if supply_reports.present?
       if (supplies = Supply.where(supply_report_id: supply_reports)).any?
