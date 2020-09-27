@@ -100,7 +100,7 @@ class Purchase < ActiveRecord::Base
   #          store_item.dec batch.quantity
   #        end
   #        #store.price_types.each do |price_type|
-  #        #  price = item.prices.find_or_initialize_by price_type_id: price_type.id, date: cur_date
+  #        #  price = item.prices.find_or_initialize_by price_type_id: price_type.id, date: date
   #        #end
   #      end
   #      update_attribute :status, 0
