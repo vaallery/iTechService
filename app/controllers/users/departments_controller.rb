@@ -2,7 +2,11 @@ class Users::DepartmentsController < ApplicationController
   skip_after_action :verify_authorized
 
   def edit
-    @departments = current_user.superadmin? ? Department.all : Department.in_city(current_user.city)
+    @departments = if (current_user.superadmin? || current_user.able_to?(:access_all_departments))
+                     Department.all
+                   else
+                     Department.in_city(current_user.city)
+                   end
   end
 
   def update

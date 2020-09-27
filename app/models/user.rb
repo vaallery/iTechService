@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
     view_quick_orders_and_free_jobs_everywhere
     move_transfers
     see_all_users
+    access_all_departments
   ].freeze
 
   scope :in_department, ->(department) { where(department_id: department) }

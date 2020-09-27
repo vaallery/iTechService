@@ -1,6 +1,7 @@
 ru:
   users:
     abilities:
+      access_all_departments: 'Доступ ко всем подразделениям'
       comment_users: 'Комментировать сотрудников'
       edit_clients: 'Редактировать клиентов'
       edit_price_in_sale: 'Редактировать цены в продажах'
