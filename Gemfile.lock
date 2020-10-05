@@ -429,6 +429,9 @@ GEM
       loofah (~> 2.3)
     rails-observers (0.1.5)
       activemodel (>= 4.0)
+    rails-pg-extras (1.2.1)
+      activerecord
+      ruby-pg-extras (= 1.2.1)
     rails-ujs (0.1.0)
       railties (>= 3.1)
     rails_autolink (1.1.6)
@@ -489,6 +492,9 @@ GEM
     ruby-graphviz (1.2.5)
       rexml
     ruby-ole (1.2.12.2)
+    ruby-pg-extras (1.2.1)
+      pg
+      terminal-table
     rubyzip (1.3.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
@@ -548,6 +554,8 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     temple (0.7.7)
+    terminal-table (1.8.0)
+      unicode-display_width (~> 1.1, >= 1.1.1)
     therubyracer (0.12.3)
       libv8 (~> 3.16.14.15)
       ref
@@ -586,6 +594,7 @@ GEM
     uber (0.1.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    unicode-display_width (1.7.0)
     uuidtools (2.1.5)
     virtus (1.0.5)
       axiom-types (~> 0.1)
@@ -682,6 +691,7 @@ DEPENDENCIES
   rails (= 4.2.11.1)
   rails-erd (~> 1.5.2)
   rails-observers (~> 0.1.5)
+  rails-pg-extras
   rails-ujs (~> 0.1.0)
   reform-rails (~> 0.1)
   rmagick (~> 2.15.4)
