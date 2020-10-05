@@ -8,7 +8,7 @@ class Purchase < ActiveRecord::Base
   belongs_to :store, inverse_of: :purchases
   has_many :batches, inverse_of: :purchase, dependent: :destroy
   has_many :items, through: :batches
-  accepts_nested_attributes_for :batches, allow_destroy: true, reject_if: lambda { |a| a[:price].blank? or a[:quantity].blank? or a[:item_id].blank? }
+  accepts_nested_attributes_for :batches, allow_destroy: true, reject_if: lambda { |a| a[:id].blank? && (a[:price].blank? || a[:quantity].blank? || a[:item_id].blank?) }
 
   attr_accessible :batches_attributes, :contractor_id, :store_id, :date, :comment, :skip_revaluation
   validates_presence_of :contractor, :store, :status, :date
@@ -19,8 +19,6 @@ class Purchase < ActiveRecord::Base
     self.date ||= DateTime.current
     self.status ||= 0
   end
-
-  #before_save :update_stock_items_and_prices
 
   def self.search(params)
     purchases = Purchase.all
@@ -63,7 +61,7 @@ class Purchase < ActiveRecord::Base
   def post
     if is_valid_for_posting?
       transaction do
-        cur_date = Date.current
+        cur_date = DateTime.current
 
         batches.each do |batch|
           unless skip_revaluation?
@@ -84,32 +82,59 @@ class Purchase < ActiveRecord::Base
         end
 
         update_attribute :status, 1
-        update_attribute :date, DateTime.current
+        update_attribute :date, cur_date
       end
     else
       false
     end
   end
 
-  def unpost
-  #  if is_posted?
-  #    transaction do
-  #      batches.each do |batch|
-  #        item = batch.item
-  #        item.store_items.in_store(self.store_id).each do |store_item|
-  #          store_item.dec batch.quantity
-  #        end
-  #        #store.price_types.each do |price_type|
-  #        #  price = item.prices.find_or_initialize_by price_type_id: price_type.id, date: date
-  #        #end
-  #      end
-  #      update_attribute :status, 0
-  #      update_attribute :date, nil
-  #    end
-  #  end
+  def update_prices(new_attributes)
+    if is_posted?
+      transaction do
+        update new_attributes
+
+        batches.each do |batch|
+          unless skip_revaluation?
+            price = batch.prices.purchase.find_for_time_or_date(date)
+            previous_price = price.find_previous
+
+            new_value = if previous_price.present?
+                          remnants_quantity = batch.product.quantity_in_store - batch.quantity
+                          remnants_cost = remnants_quantity * previous_price.value
+                          (remnants_cost + batch.sum) / (remnants_quantity + batch.quantity)
+                        else
+                          batch.price
+                        end
+            price.update value: new_value
+          end
+        end
+      end
+    end
   end
 
-  def build_revaluation_act(product_ids=nil)
+  # def unpost
+  #   if is_posted?
+  #     transaction do
+  #       batches.each do |batch|
+  #         batch.remove_from_store
+  #
+  #         unless skip_revaluation?
+  #           price = batch.prices.purchase.find_for_time_or_date(date)
+  #           price.destroy
+  #         end
+  #       end
+  #
+  #       update_attribute :status, 0
+  #       update_attribute :date, nil
+  #     end
+  #   else
+  #     errors[:base] << 'Приход не проведён!'
+  #     false
+  #   end
+  # end
+
+  def build_revaluation_act(product_ids = nil)
     RevaluationAct.new product_ids: product_ids
   end
 
@@ -126,12 +151,6 @@ class Purchase < ActiveRecord::Base
   end
 
   private
-
-  def update_stock_items_and_prices
-    if self.is_posted? and changed_attributes['status'] == 0
-
-    end
-  end
 
   def is_valid_for_posting?
     is_valid = true
@@ -150,5 +169,4 @@ class Purchase < ActiveRecord::Base
     end
     is_valid
   end
-
 end

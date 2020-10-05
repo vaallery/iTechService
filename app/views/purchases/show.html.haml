@@ -40,14 +40,14 @@
               = check_box_tag("purchase_batch_#{batch.id}", 1, false, item_id: batch.item.id, product_id: batch.product.id)
               = link_to batch.name, product_path(batch.product)
               .features= features_presentation batch.item if batch.item.present?
-          %td.price= batch.price
-          %td.quantity= batch.quantity
-          %td.sum= batch.sum
+          %td.price.number= human_currency batch.price
+          %td.quantity.number= batch.quantity
+          %td.sum.number= human_currency batch.sum
 
     %tfoot
       %tr
         %td{colspan: 4}= t 'total'
-        %td.total_sum= @purchase.total_sum
+        %td.total_sum.number= human_currency @purchase.total_sum
 
   .form-actions
     = link_to_edit @purchase if can? :edit, @purchase

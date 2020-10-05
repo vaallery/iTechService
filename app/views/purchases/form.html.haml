@@ -3,11 +3,11 @@
   - if @purchase.errors.any?
     .alert.alert-error= @purchase.errors.full_messages.join('. ')
 
-  = f.input :date, as: :my_datetime
-  = f.association :contractor, as: :select
-  = f.association :store, collection: Store.purchase.visible
-  = f.input :comment, input_html: {rows: 5}
-  = f.input :skip_revaluation
+  = f.input :date, as: :my_datetime, disabled: @purchase.is_posted?
+  = f.association :contractor, as: :select, disabled: @purchase.is_posted?
+  = f.association :store, collection: Store.purchase.visible, disabled: @purchase.is_posted?
+  = f.input :comment, input_html: {rows: 5}, disabled: @purchase.is_posted?
+  = f.input :skip_revaluation, disabled: @purchase.is_posted?
 
   %table#batches.enumerable.table.table-condensed.table-hover
     %caption
@@ -32,7 +32,7 @@
         %td.total_sum.number= @purchase.total_sum
         %td
 
-  = link_to_add_product :purchase, :batches, false
+  = link_to_add_product(:purchase, :batches, false) unless @purchase.is_posted?
 
   .form-actions
     = submit_button f

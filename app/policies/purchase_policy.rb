@@ -3,6 +3,10 @@ class PurchasePolicy < DocumentPolicy
     superadmin? || able_to?(:manage_stocks)
   end
 
+  def update?
+    record.is_posted? ? superadmin? : (editable? && manage?)
+  end
+
   def print_barcodes?; manage? end
 
   def revaluate_products?; manage? end

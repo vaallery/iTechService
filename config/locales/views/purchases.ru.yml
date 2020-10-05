@@ -6,6 +6,9 @@ ru:
     new_revaluation_act: 'Создать Акт переоценки'
     new_movement_act: "Создать Акт перемещения"
     posted: 'Приход проведён'
+    not_posted: 'Приход не проведён'
+    unposted: 'Приход отменён'
+    not_unposted: 'Приход не отменён'
     updated: 'Приход изменён'
     edit:
       title: 'Редактирование Прихода'
