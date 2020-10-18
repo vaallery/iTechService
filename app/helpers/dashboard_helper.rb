@@ -20,7 +20,7 @@ module DashboardHelper
 
   def link_to_edit_device_task(device_task)
     link_to icon_tag('edit'), edit_device_task_path(device_task), class: 'btn btn-small', remote: true,
-            disabled: !is_editable_task?(device_task)
+            disabled: !policy(device_task).edit?
   end
 
   def is_actual_service_job?(service_job)
@@ -31,12 +31,9 @@ module DashboardHelper
     current_user.any_admin? ? true : service_job.is_actual_for?(current_user)
   end
 
-  def is_actual_task?(task)
-    current_user.role_match?(task.role)
-  end
-
-  def is_editable_task?(device_task)
-    policy(device_task).edit?
+  def is_actual_task?(device_task)
+    current_user.role_match?(device_task.role) ||
+      current_user.code_match?(device_task.code)
   end
 
   def service_job_row_tag(service_job)
@@ -95,7 +92,7 @@ module DashboardHelper
         tag(:br) +
         content_tag(:strong, h(device_task.user_comment), class: 'user_comment').html_safe
       end +
-      content_tag(:td, is_editable_task?(device_task) ? link_to_edit_device_task(device_task) : nil)
+      content_tag(:td, policy(device_task).edit? ? link_to_edit_device_task(device_task) : nil)
     end.html_safe
   end
 

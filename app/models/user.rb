@@ -247,6 +247,10 @@ class User < ActiveRecord::Base
       (universal? && other_role.in?(%w[media software]))
   end
 
+  def code_match?(code)
+    technician? && code == 'repairmac'
+  end
+
   def full_name
     res = [surname, name, patronymic].join ' '
     res = username if res.blank?

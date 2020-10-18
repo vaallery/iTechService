@@ -73,6 +73,9 @@ class DashboardController < ApplicationController
       else
         @service_jobs = @service_jobs.in_department(current_department).pending
       end
+    elsif current_user.technician?
+      locations = Location.repair_mac_or_ios.in_department(current_department)
+      @service_jobs = @service_jobs.located_at(locations)
     elsif current_user.location.present?
       @service_jobs = @service_jobs.located_at(current_user.location)
     else
