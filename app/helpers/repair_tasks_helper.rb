@@ -9,7 +9,7 @@ module RepairTasksHelper
   end
 
   def repairer_options
-    users = User.active.technician.in_city(current_city).to_a
+    users = User.helps_in_repair.in_city(current_city).to_a
     users << current_user unless users.include?(current_user)
     users
   end

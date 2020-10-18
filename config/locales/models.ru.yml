@@ -592,6 +592,7 @@ ru:
         authentication_token: 'authentication_token'  #g
         birthday: 'День рождения'
         card_number: 'Номер карты'
+        can_help_in_repair: 'Может помогать в ремонте'
         comments: 'Комментарии'
         current_sign_in_at: 'Время авторизации'
         current_sign_in_ip: 'IP авторизации'

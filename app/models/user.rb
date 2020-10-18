@@ -81,6 +81,8 @@ class User < ActiveRecord::Base
   # scope :for_changing, where('users.username = ? OR users.username LIKE ?', 'vova', 'test_%')
   scope :exclude, ->(user) { where('id <> ?', user.is_a?(User) ? user.id : user) }
   #scope :upcoming_salary, where('hiring_date IN ?', [Date.current..Date.current.advance(days: 2)])
+  scope :helps_in_repair, -> { where("users.is_fired != ? AND (users.can_help_in_repair = ? OR users.role = ?)",
+                                     true, true, 'technician') }
 
   belongs_to :location
   belongs_to :department
@@ -123,7 +125,7 @@ class User < ActiveRecord::Base
   delegate :time_zone, to: :city, allow_nil: true
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment, :department_id, :session_duration, :phone_number, :department_autochangeable
+  attr_accessible :auth_token, :login, :username, :email, :role, :password, :password_confirmation, :remember_me, :location_id, :surname, :name, :patronymic, :position, :birthday, :hiring_date, :salary_date, :prepayment, :wish, :photo, :remove_photo, :photo_cache, :schedule_days_attributes, :duty_days_attributes, :card_number, :color, :karmas_attributes, :abilities, :schedule, :is_fired, :job_title, :position, :salaries_attributes, :installment_plans_attributes, :installment, :department_id, :session_duration, :phone_number, :department_autochangeable, :can_help_in_repair
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :registerable, :rememberable,
