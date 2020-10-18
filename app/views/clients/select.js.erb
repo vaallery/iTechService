@@ -6,11 +6,11 @@
     saveSale();
   <% else %>
     $client_search = $('#client_search');
-    $client_search.val('<%= @client.presentation %>');
+    $client_search.val("<%= @client.presentation %>");
     $client_search.tooltip('destroy').tooltip();
-    $client_search.css({color: '<%= @client.category_color %>'})
-      .attr('title', '<%= @client.characteristic %>')
-      .attr('data-original-title', '<%= @client.characteristic %>');
+    $client_search.css({color: "<%= @client.category_color %>"})
+      .attr('title', "<%= j @client.characteristic %>")
+      .attr('data-original-title', "<%= j @client.characteristic %>");
 
     $('#client_input').find('.client_id').val('<%= @client.id %>');
     $edit_client_link = $('#edit_client_link');
