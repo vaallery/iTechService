@@ -32,7 +32,6 @@ $(document).on 'click', '#product_choose_form #clear_product_search_field', ->
 
 $(document).on 'click', '#product_choose_form #clear_item_search_field', ->
   $('#product_choose_form #item_search_field').val('')
-  $.get '/items.js', choose: true
 
 $(document).on 'click', '#product_choose_form .product_row', ->
   $form = $('#product_choose_form')
