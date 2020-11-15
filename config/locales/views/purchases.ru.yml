@@ -19,7 +19,8 @@ ru:
     show:
       print_barcodes: "Печать штрихкодов"
     print_barcodes:
-      with_price: "С ценами"
+      with_code: "С кодом"
+      with_price: "С ценой"
       by_qty: 'С учётом количества'
       submit: 'Печать'
     errors:

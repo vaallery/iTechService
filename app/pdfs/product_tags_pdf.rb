@@ -15,7 +15,7 @@ class ProductTagsPdf < Prawn::Document
     font 'DroidSans'
     items.each do |item|
       title = ''
-      title << "#{item.code}: " if params[:with_price].blank?
+      title << "#{item.code}: " if params[:with_code]
       title << item.name
       title << "(#{item.features.map(&:value).join(', ')})" if item.feature_accounting
       price = params[:with_price] ? item.retail_price : nil
