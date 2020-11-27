@@ -71,8 +71,8 @@ class User < ActiveRecord::Base
   scope :supervisor, -> { where(role: 'supervisor') }
   scope :manager, -> { where(role: 'manager') }
   scope :working_at, ->(day) { joins(:schedule_days).where('schedule_days.day = ? AND LENGTH(schedule_days.hours) > 0', day) }
-  scope :with_active_birthdays, -> { joins(:announcements).where(announcements: {kind: 'birthday', active: true}) }
-  scope :with_inactive_birthdays, -> { joins(:announcements).where(announcements: {kind: 'birthday', active: false}) }
+  scope :with_active_birthdays, -> { joins(:announcements).where(announcements: { kind: 'birthday', active: true }) }
+  scope :with_inactive_birthdays, -> { joins(:announcements).where(announcements: { kind: 'birthday', active: false }) }
   scope :schedulable, -> { where(schedule: true) }
   scope :staff, -> { where.not(role: 'api') }
   scope :fired, -> { where(is_fired: true) }
@@ -487,6 +487,30 @@ class User < ActiveRecord::Base
     end
 
     result
+  end
+
+  def period
+    (Date.today - 1.month).to_time(:local).beginning_of_day..Date.today.to_time(:local).end_of_day
+  end
+
+  def free_jobs_count
+    Service::FreeJob.joins(:receiver, :task)
+        .in_department(department)
+        .where(performed_at: period,
+               receiver_id: id)
+        .count
+  end
+
+  def fast_jobs_count
+    QuickOrder.includes(:user)
+        .done
+        .where(created_at: period, user_id: id)
+        .in_department(department)
+        .count
+  end
+
+  def long_jobs_count
+    service_jobs.done.where("done_at > ?", DateTime.now.at_beginning_of_month).count
   end
 
   private

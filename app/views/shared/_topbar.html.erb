@@ -10,12 +10,34 @@
   <% end %>
   <%= duck_plan_tag %>
   <%= link_to_trade_in_purgatory %>
-  <span id="quick_search_form">
+  <% if [192, 124, 141].include?(current_user.id) %>
+    <span class="statistics">
+      <div class="statistics__item">
+        <%= image_tag('/free_icon.png', width: '60') %>
+          <span class="statistics__value">
+          <%= current_user.free_jobs_count %>
+        </span>
+      </div>
+      <div class="statistics__item">
+        <%= image_tag('/fast_icon.png', width: '60') %>
+          <span class="statistics__value">
+          <%= current_user.fast_jobs_count %>
+        </span>
+      </div>
+      <div class="statistics__item">
+        <%= image_tag('/long_icon.png', width: '60') %>
+          <span class="statistics__value">
+          <%= current_user.long_jobs_count %>
+        </span>
+      </div>
+    </span>
+  <% end %>
+  <div id="quick_search_form">
     <%= form_tag quick_search_service_jobs_path, method: :get, remote: true, id: 'service_jobs_quick_search_form', class: 'form-search' do %>
       <%= text_field_tag :quick_search, nil, class: 'search-query span4' %>
     <% end %>
     <ul id="quick_search_result" class="unstyled span4"></ul>
-  </span>
+  </div>
   <span class="pull-right bar-buttons">
     <%= header_link_to_scan_barcode %>
     <%= header_links_to_stale_jobs if policy(ServiceJob).stale? %>
