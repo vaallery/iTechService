@@ -495,7 +495,6 @@ class User < ActiveRecord::Base
 
   def free_jobs_count
     Service::FreeJob.joins(:receiver, :task)
-        .in_department(department)
         .where(performed_at: period,
                receiver_id: id)
         .count
@@ -505,7 +504,6 @@ class User < ActiveRecord::Base
     QuickOrder.includes(:user)
         .done
         .where(created_at: period, user_id: id)
-        .in_department(department)
         .count
   end
 
