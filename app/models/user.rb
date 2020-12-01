@@ -490,13 +490,12 @@ class User < ActiveRecord::Base
   end
 
   def period
-    (Date.today - 1.month).to_time(:local).beginning_of_day..Date.today.to_time(:local).end_of_day
+    Date.today.at_beginning_of_month.to_time(:local).beginning_of_day..Date.today.to_time(:local).end_of_day
   end
 
   def free_jobs_count
     Service::FreeJob.joins(:receiver, :task)
-        .where(performed_at: period,
-               receiver_id: id)
+        .where(performed_at: period, receiver_id: id)
         .count
   end
 
