@@ -501,13 +501,12 @@ class User < ActiveRecord::Base
 
   def fast_jobs_count
     QuickOrder.includes(:user)
-        .done
         .where(created_at: period, user_id: id)
         .count
   end
 
   def long_jobs_count
-    service_jobs.done.where("done_at > ?", DateTime.now.at_beginning_of_month).count
+    service_jobs.where("created_at > ?", Date.today.at_beginning_of_month.to_time(:local)).count
   end
 
   private
