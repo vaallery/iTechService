@@ -436,7 +436,6 @@ class User < ActiveRecord::Base
     locations.where(code: 'done')
   end
 
-
   def done_location
     min_term = done_locations.minimum(:storage_term)
     done_locations.where(storage_term: min_term).first
@@ -483,7 +482,7 @@ class User < ActiveRecord::Base
       month_count = counts_in_month.fetch(id, 0)
       fault_kind = FaultKind.find(id)
       penalty_sum = faults_on_date.where(kind: fault_kind).sum(:penalty)
-      result.store fault_kind, {month: month_count, total: count, penalty_sum: penalty_sum}
+      result.store fault_kind, { month: month_count, total: count, penalty_sum: penalty_sum }
     end
 
     result
