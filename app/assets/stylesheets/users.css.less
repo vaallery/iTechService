@@ -240,11 +240,41 @@ form.user_form{
   }
 }
 
-#users_rating_table{
+#users_rating_table {
   .rating{
     width: 20px;
   }
   .user{
     width: 25%;
+  }
+}
+
+.tel-info__add,
+.tel-info__add__list {
+  display: flex;
+}
+
+.tel-info__add__list {
+  max-height: 20px;
+  a:hover {
+    text-decoration: none;
+  }
+  &__main-item {
+
+  }
+  &__items {
+    display: none;
+  }
+  &__items > *,
+  &__main-item {
+    margin-left: 10px;
+  }
+  & > div {
+
+  }
+  img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
   }
 }

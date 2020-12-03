@@ -35,7 +35,20 @@
         %td= link_to @service_job.client.presentation, @service_job.client
       %tr
         %td= ServiceJob.human_attribute_name :contact_phone
-        %td= human_phone @service_job.contact_phone
+        %td.tel-info__add
+          %span.tel-info__add__value
+            = human_phone @service_job.contact_phone
+          - if @service_job.contact_phone.length > 1
+            #tel_info_add_list.tel-info__add__list
+              .tel-info__add__list__main-item
+                = image_tag('/tel_in.jpg', width: '60')
+              .tel-info__add__list__items
+                %a{ href: "http://wa.me/7#{@service_job.contact_phone}" }
+                  = image_tag('/tel_tel.jpg', width: '60')
+                %a{ href: "tel:+7#{@service_job.contact_phone}" }
+                  = image_tag('/tel_call.jpg', width: '60')
+                = image_tag('/tel_copy.jpg', width: '60', class: 'js--copy-number')
+
       %tr
         %td= ServiceJob.human_attribute_name :ticket_number
         %td= @service_job.ticket_number

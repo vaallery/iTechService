@@ -179,7 +179,7 @@ jQuery ->
       $.ajax
         type: 'PUT'
         url: '/users/'+user_id
-        data: {user: {schedule_days_attributes: {'0': {id: day_id, hours: hours}}}}
+        data: { user: { schedule_days_attributes: { '0': { id: day_id, hours: hours } } } }
         dataType: 'json'
         success: ->
           $row.slideUp(400).remove()
@@ -195,12 +195,12 @@ jQuery ->
 
       event.preventDefault()
 
-    $(document).on 'click', '.staff_calendar .calendar_day>span', (event)->
+    $(document).on 'click', '.staff_calendar .calendar_day>span', (event) ->
       event.preventDefault()
       $this = $(this).parent()
       if $this.hasClass 'duty'
         day_id = $this.data('dayid')
-        $.post '/users/destroy_duty_day', {duty_day_id: day_id}
+        $.post '/users/destroy_duty_day', { duty_day_id: day_id }
       else if $this.hasClass('empty')
         user_id = $('.user_row.selected', $legend).data('user')
         unless user_id is null
@@ -208,7 +208,7 @@ jQuery ->
           color = $('.user_color>span', $user).data('color')
           day = $this.data('day')
           kind = $this.parents('.staff_calendar').data('kind')
-          $.post '/users/create_duty_day', {duty_day: {day: day, user_id: user_id, kind: kind}}
+          $.post '/users/create_duty_day', { duty_day: { day: day, user_id: user_id, kind: kind } }
 
     $(document).on 'mouseenter', '.staff_calendar .calendar_day.duty>span', ->
       user = $(this).parent().data('user')
@@ -218,6 +218,20 @@ jQuery ->
       $('.user_row.hovered', $legend).removeClass('hovered')
 
     $('.user_wish', $legend).tooltip()
+
+  if '#tel_info_add_list'.length > 0
+    $('.tel-info__add__list__main-item').on 'click keypress', ->
+      $('.tel-info__add__list__items').slideToggle(200)
+      return
+
+    $('.js--copy-number').on 'click keypress', ->
+      number = $('.tel-info__add__value').text().match(/\d/g).join('')
+      $temp = $('<input>')
+      $('body').append $temp
+      $temp.val(number).select()
+      document.execCommand 'copy'
+      $temp.remove()
+      return
 
 toggle_schedule_day = (el) ->
   el.toggleClass 'work_hour'
