@@ -494,14 +494,15 @@ class User < ActiveRecord::Base
 
   def free_jobs_count
     Service::FreeJob.joins(:receiver, :task)
-        .where(performed_at: period, receiver_id: id)
-        .count
+                    .where(performed_at: period, receiver_id: id)
+                    .count
   end
 
   def fast_jobs_count
     QuickOrder.includes(:user)
-        .where(created_at: period, user_id: id)
-        .count
+              .where(created_at: period, user_id: id)
+              .done
+              .count
   end
 
   def long_jobs_count
