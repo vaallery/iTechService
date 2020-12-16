@@ -25,7 +25,7 @@
         .tel-info__add__list__items
           %a{ href: "http://wa.me/7#{@client.phone_number}", target: '_blank' }
             = image_tag('/tel_tel.jpg', width: '60')
-          %a{ href: "tel:8#{@client.phone_number}" }
+          %a{ href: "tel:8#{@client.phone_number[1..-1]}" }
             = image_tag('/tel_call.jpg', width: '60')
           = image_tag('/tel_copy.jpg', width: '60', class: 'js--copy-number')
 
