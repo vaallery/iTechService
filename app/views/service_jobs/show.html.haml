@@ -43,9 +43,9 @@
               .tel-info__add__list__main-item
                 = image_tag('/tel_in.jpg', width: '60')
               .tel-info__add__list__items
-                %a{ href: "http://wa.me/7#{@service_job.contact_phone}", target: '_blank' }
+                %a{ href: "http://wa.me/7#{human_phone(@service_job.contact_phone.gsub(/\D/, ''))}", target: '_blank' }
                   = image_tag('/tel_tel.jpg', width: '60')
-                %a{ href: "tel:8#{@service_job.contact_phone[1..-1]}" }
+                %a{ href: "tel:8#{human_phone(@service_job.contact_phone)[2..-1].gsub(/\D/, '')}" }
                   = image_tag('/tel_call.jpg', width: '60')
                 = image_tag('/tel_copy.jpg', width: '60', class: 'js--copy-number')
 
