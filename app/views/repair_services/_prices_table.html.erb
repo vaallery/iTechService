@@ -18,6 +18,7 @@
         <thead>
         <tr>
           <th><%= RepairService.human_attribute_name(:name) %></th>
+          <th><%= t('attributes.quantity') %></th>
           <th><%= RepairService.human_attribute_name(:price) %></th>
           <th></th>
         </tr>
@@ -27,6 +28,7 @@
         <% @repair_services.each do |repair_service| %>
           <tr>
             <td class="name"><%= repair_service.name %></td>
+            <td class="align_center"><%= repair_service.remnants_qty(params[:department_id]) %></td>
             <td class="price">
               <%= number_field_tag "repair_services[#{repair_service.id}]", repair_service.price(params[:department_id]) %>
             </td>

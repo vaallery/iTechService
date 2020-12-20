@@ -32,4 +32,8 @@ class RepairService < ActiveRecord::Base
   def remnants_s(store)
     %w[none low many][spare_parts.map { |sp| sp.remnant_status(store) }.min] if spare_parts.present?
   end
+
+  def remnants_qty(department)
+    store_items.in_store(Store.in_department(department).spare_parts).sum(:quantity)
+  end
 end

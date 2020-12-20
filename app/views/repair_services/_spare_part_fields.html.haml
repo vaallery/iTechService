@@ -1,6 +1,6 @@
 %tr.spare_part_fields.fields{data: {product: f.object.product_id}}
   %td.item
-    = f.object.name
+    = link_to f.object.name, f.object.product
     = f.hidden_field :product_id
   %td.quantity
     = f.input_field :quantity, class: 'input-mini', min: 1
