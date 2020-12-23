@@ -4,7 +4,9 @@ class SalesImportJob < ActiveJob::Base
 
   def perform(file = nil)
     file ||= fetch_file
-    import_sales file unless file.nil?
+    return if file.nil?
+
+    ActiveRecord::Base.uncached { import_sales file }
     ImportMailer.sales_import_log(import_logs).deliver_now
   end
 
