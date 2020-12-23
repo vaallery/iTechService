@@ -23,7 +23,7 @@ class FewRemnantsReport < BaseReport
           remnants.store store.id.to_s, qty
         end
       end
-      result[:products].store product.id.to_s, {code: product.code, name: product.name, threshold: product.quantity_threshold, remnants: remnants} unless remnants.empty?
+      result[:products].store product.id.to_s, { code: product.code, name: product.name, threshold: product.quantity_threshold, remnants: remnants } unless remnants.empty?
     end
     result
   end

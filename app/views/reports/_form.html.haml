@@ -1,15 +1,19 @@
 .page-header
   #reports_filter.navbar.container
-    .navbar-inner
-      = form_for report, as: :report, html: {id: 'report_form', class: 'navbar-search form-search'} do |f|
+    .navbar-inner{class: @new_type_report ? 'new_type_report' : ''}
+      = form_for report, as: :report, html: { id: 'report_form', class: "navbar-search form-search" } do |f|
         = button_tag glyph(:filter), class: 'btn btn-info', type: 'submit'
         = f.hidden_field :base_name
         = f.hidden_field :kind
         = f.text_field :start_date, class: 'bootstrap-datepicker input-small'
         - unless report.only_day?
-          = '_'
+          %span
+            = '_'
           = f.text_field :end_date, class: 'bootstrap-datepicker input-small'
-        = f.select :department_id, departments_collection(report.department_id), include_blank: 'Все подразделения' unless report.respond_to?(:store_id) || report.respond_to?(:location_id)
+        = f.select :department_id,
+          departments_collection(report.department_id),
+          @new_type_report ? {} : { include_blank: 'Все подразделения' },
+          { multiple: @new_type_report, class: @new_type_report ? 'multiselect' : '' } unless report.respond_to?(:store_id) || report.respond_to?(:location_id)
         = f.select :store_id, stores_collection(report.store_id), prompt: t('activerecord.models.store') if report.respond_to?(:store_id)
         = f.select :location_id, locations_collection(report.location_id), prompt: t('activerecord.models.location') if report.respond_to?(:location_id)
         = f.select :subject, report.subjects_collection if report.respond_to?(:subject)

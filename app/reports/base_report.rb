@@ -17,8 +17,7 @@ class BaseReport
     end
   end
 
-  def call
-  end
+  def call; end
 
   def result
     @result ||= {}
@@ -54,8 +53,11 @@ class BaseReport
 
   def department
     return @department if defined? @department
-
-    @department = department_id ? Department.find(department_id) : nil
+    if department_id.class == Array
+      @department = Department.where(id: department_id)
+    else
+      @department = department_id ? Department.find(department_id) : nil
+    end
   end
 
   def model_name

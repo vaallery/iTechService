@@ -1,5 +1,9 @@
 class ReportsController < ApplicationController
+
+  INDENT_JOBS = %w[users repair_jobs device_orders orders_statuses technicians_jobs technicians_difficult_jobs repairers sales quick_orders free_jobs]
+
   before_action -> { authorize :report, :manage? }
+  before_filter :indent_jobs, only: [:new, :create]
 
   def index
     respond_to do |format|
@@ -24,6 +28,12 @@ class ReportsController < ApplicationController
   end
 
   private
+
+  def indent_jobs
+    @indent_jobs = INDENT_JOBS
+    base_name, kind = params[:report][:base_name], params[:report][:kind]
+    @new_type_report = INDENT_JOBS.include?(base_name) || (base_name == 'few_remnants' && kind == 'spare_parts')
+  end
 
   def build_report
     report_name = params.dig(:report, :base_name)
