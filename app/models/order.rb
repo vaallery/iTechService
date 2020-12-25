@@ -160,7 +160,7 @@ class Order < ActiveRecord::Base
   def make_announcement
     unless changed_attributes[:status].present?
       if (announcement = create_announcement).present?
-        AnnouncementRelayJob.set(retry: false).perform_later(announcement.id)
+        AnnouncementRelayJob.perform_later(announcement.id)
       end
     end
   end
