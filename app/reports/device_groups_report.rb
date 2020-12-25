@@ -21,7 +21,7 @@ class DeviceGroupsReport < BaseReport
       qty_received = received_service_jobs.count
       qty_done = received_service_jobs.at_done.count
       qty_archived = received_service_jobs.at_archive.count
-      result[:rows] << {device_group: device_group, qty: qty_received, qty_done: qty_done, qty_archived: qty_archived}
+      result[:rows] << { device_group: device_group, qty: qty_received, qty_done: qty_done, qty_archived: qty_archived }
       result[:service_jobs_received_count] += qty_received
       result[:service_jobs_received_done_count] += qty_done
       result[:service_jobs_received_archived_count] += qty_archived

@@ -1,79 +1,80 @@
 @media print {
-  .no-print, .no-print * {
+  .no-print,
+  .no-print * {
     display: none !important;
   }
 }
 
-#report_form{
-  #report_name{
+#report_form {
+  #report_name {
     width: 400px;
   }
 }
 
-#report_result{
-  th{
+#report_result {
+  th {
     text-align: center;
   }
-
-  tfoot{
+  tfoot {
     font-weight: bold;
   }
-  caption{
+  caption {
     font-weight: bold;
     font-size: 20px;
     line-height: 22px;
   }
-  tbody>tr:hover{
-    td.warning{
+  tbody > tr:hover {
+    td.warning {
       background-color: #faf2cc;
     }
-    td.error{
+    td.error {
       background-color: #ebcccc;
     }
   }
-  td.warning{
+  td.warning {
     background-color: #fcf8e3;
   }
-  td.error{
+  td.error {
     background-color: #f2dede;
   }
-  .detailable{
+  .detailable {
     font-weight: bold;
     cursor: pointer;
   }
-  .details{
+  .details {
     display: none;
-    &[data-depth='1'] td.name{
+    &[data-depth='1'] td.name {
       padding-left: 28px;
     }
-    &[data-depth='2'] td.name{
+    &[data-depth='2'] td.name {
       padding-left: 48px;
     }
-    &[data-depth='3'] td.name{
+    &[data-depth='3'] td.name {
       padding-left: 68px;
     }
     &[data-depth='4'] td.name{
       padding-left: 88px;
     }
-    &[data-depth='5'] td.name{
+    &[data-depth='5'] td.name {
       padding-left: 98px;
     }
   }
 
-  #users_report{
-    .user, .service_job{
+  #users_report {
+    .user,
+    .service_job {
       width: 70%;
     }
-    .movement{
+    .movement {
       width: 30%;
     }
   }
 
-  #tasks_durations_report{
-    .task{
+  #tasks_durations_report {
+    .task {
       width: 70%;
     }
-    .duration{
+    .duration {
       width: 30%;
     }
   }
@@ -81,30 +82,39 @@
     .name{
       width: 40%;
     }
-    .job_price, .price {
+    .job_price,
+    .price {
       width: 30%;
     }
-    .job_price small{
+    .job_price small {
       display: block;
     }
   }
   #remnants_report {
-    tr.product>td{background-color:#d9edf7;}
-    tr.item>td{background-color:#dff0d8;}
-    tr.product:hover>td{background-color:#c4e3f3;}
-    tr.item:hover>td{background-color:#d0e9c6;}
-    .quantity{
+    tr.product > td{background-color:#d9edf7;}
+    tr.item > td{background-color:#dff0d8;}
+    tr.product:hover > td{background-color:#c4e3f3;}
+    tr.item:hover > td{background-color:#d0e9c6;}
+    .quantity {
       width: 60px;
     }
-    .price, .sum{
+    .price,
+    .sum {
       width: 160px;
     }
   }
   #sales_report {
     .time{width: 60px;}
     .quantity{width: 80px;}
-    .price, .sum, .discount {width: 100px;}
-    .client, .user {width: 150px;}
+    .price,
+    .sum,
+    .discount {
+      width: 100px;
+    }
+    .client,
+    .user {
+      width: 150px;
+    }
   }
   #tasks_undone_report {
     td {
@@ -113,73 +123,117 @@
   }
 }
 
-#reports_filter{
+#reports_filter {
   margin-top: 20px;
-  span{
+  span {
     margin-bottom: 0;
   }
-  button{
+  button {
     margin: 0;
   }
 }
 
-#reports_tables{
-  th{
+#reports_tables {
+  th {
     text-align: center;
   }
-
-  tfoot{
+  tfoot {
     font-weight: bold;
   }
-
-  .detailable{
+  .detailable {
     font-weight: bold;
     cursor: pointer;
   }
-  .details{
+  .details {
     display: none;
   }
 
-  #users_report{
-    .user, .service_job{
+  #users_report {
+    .user,
+    .service_job {
       width: 70%;
     }
-    .movement{
+    .movement {
       width: 30%;
     }
   }
 
-  #tasks_durations_report{
-    .task{
+  #tasks_durations_report {
+    .task {
       width: 70%;
     }
-    .duration{
+    .duration {
       width: 30%;
     }
   }
-  tbody>tr:hover{
-    td.warning{
+  tbody > tr:hover {
+    td.warning {
       background-color: #faf2cc;
     }
-    td.error{
+    td.error {
       background-color: #ebcccc;
     }
   }
-  td.warning{
+  td.warning {
     background-color: #fcf8e3;
   }
-  td.error{
+  td.error {
     background-color: #f2dede;
   }
-  #repair_jobs_report{
-    .name{
+  #repair_jobs_report {
+    .name {
       width: 40%;
     }
-    .job_price, .price {
+    .job_price,
+    .price {
       width: 30%;
     }
-    .job_price small{
+    .job_price small {
       display: block;
     }
+  }
+}
+
+h1.new_report {
+  font-size: 38.5px;
+  font-weight: 900;
+}
+
+.new_type_report {
+  width: 100%;
+  #report_form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    & > * {
+      margin-right: 5px;
+    }
+  }
+  .btn {
+    line-height: 1;
+  }
+  .btn-group {
+    margin-top: 0;
+  }
+  .input-small {
+    box-sizing: unset;
+  }
+  .multiselect {
+    padding: 5px 1.75rem 5px .75rem;
+  }
+  .custom-select {
+    height: 30px;
+    line-height: 1;
+  }
+  .multiselect-selected-text {
+    font-size: .9rem;
+  }
+  .multiselect-container > * {
+    padding-left: 10px;
+
+  }
+  .form-check-input {
+    position: relative;
+    left: -15px;
   }
 }

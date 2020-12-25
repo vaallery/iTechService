@@ -1,5 +1,24 @@
 jQuery ->
 
+  $('#report_form .multiselect').multiselect
+    enableClickableOptGroups: true
+    nonSelectedText: 'Все подразделения',
+    includeSelectAllOption: true,
+    selectAllText: 'Все подразделения',
+    onInitialized: ->
+      $('#report_form .multiselect-group, #report_form .multiselect-option, #report_form .multiselect-all').each ->
+        $(this).attr("type", "button")
+        return
+      return
+    onChange: (element, checked) ->
+      brands = $('#report_form .multiselect option:selected')
+      selected = []
+      $(brands).each (index, brand) ->
+        selected.push [ $(this).val() ]
+        return
+      console.log selected
+      return
+
   $('#report_name').change ->
     if $(this).val() == 'remnants'
       $('#report_store_id').show()
@@ -36,4 +55,4 @@ $(document).on 'click', '#report_result .detailable>td', ->
 $(document).on 'click', '#report_result .toggle_depth', ->
   depth = Number $(this).data('depth')
   $table = $('#report_result table')
-  $('.detailable[data-depth='+depth-1+']')
+  $('.detailable[data-depth=' + depth - 1 + ']')

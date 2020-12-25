@@ -77,7 +77,5 @@ class SalesReport < BaseReport
 
   private
 
-  def sales
-
-  end
+  def sales; end
 end
