@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201018084645) do
+ActiveRecord::Schema.define(version: 20210104093836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -400,6 +400,7 @@ ActiveRecord::Schema.define(version: 20201018084645) do
 
   add_index "features", ["feature_type_id"], name: "index_features_on_feature_type_id", using: :btree
   add_index "features", ["item_id"], name: "index_features_on_item_id", using: :btree
+  add_index "features", ["value"], name: "index_features_on_value", using: :btree
 
   create_table "features_items", force: :cascade do |t|
     t.integer "feature_id"
@@ -493,6 +494,7 @@ ActiveRecord::Schema.define(version: 20201018084645) do
     t.string   "barcode_num", limit: 255
   end
 
+  add_index "items", ["barcode_num"], name: "index_items_on_barcode_num", using: :btree
   add_index "items", ["product_id"], name: "index_items_on_product_id", using: :btree
 
   create_table "karma_groups", force: :cascade do |t|
@@ -814,6 +816,7 @@ ActiveRecord::Schema.define(version: 20201018084645) do
 
   add_index "products", ["code"], name: "index_products_on_code", using: :btree
   add_index "products", ["device_type_id"], name: "index_products_on_device_type_id", using: :btree
+  add_index "products", ["name"], name: "index_products_on_name", using: :btree
   add_index "products", ["product_category_id"], name: "index_products_on_product_category_id", using: :btree
   add_index "products", ["product_group_id"], name: "index_products_on_product_group_id", using: :btree
 

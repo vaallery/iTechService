@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
       @items.each { |item| @feature_types + item.feature_types.to_a }
       @feature_types.uniq!
     else
-      @product = Product.find(params[:product_id]) unless params[:product_id].blank?
+      @product = Product.find(params[:product_id])
       @items = policy_scope(@product.items).search(params)
       @feature_types = @product.feature_types
     end
@@ -31,7 +31,7 @@ class ItemsController < ApplicationController
     respond_to do |format|
       if @items.one?
         @item = @items.first
-        @product = @item.product
+        @product ||= @item.product
         format.js { render 'products/select' }
         if params[:saleinfo].present?
           format.json { render json: @item.as_json.merge(@item.sale_info) }
