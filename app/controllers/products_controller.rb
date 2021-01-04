@@ -98,7 +98,7 @@ class ProductsController < ApplicationController
   end
 
   def choose
-    @product_groups = ProductGroup.roots.search(params).ordered
+    @product_groups = ProductGroup.search(roots: true, **params.symbolize_keys).ordered
     @product = Product.find params[:product_id] if params[:product_id].present?
     params[:form_name] = 'products/choose_form'
     respond_to do |format|

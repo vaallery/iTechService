@@ -10,7 +10,7 @@ class StoresController < ApplicationController
 
   def show
     @store = find_record Store
-    @product_groups = ProductGroup.roots.search(params.merge(store_kind: @store.kind)).ordered
+    @product_groups = ProductGroup.search(params.symbolize_keys.merge(roots: true, store_kind: @store.kind)).ordered
     @products = @store.products
                   .includes(:product_group, :product_category, :prices, :batches, :items, :store_items)
                   .search(params)
