@@ -34,10 +34,10 @@ class ProductGroup < ActiveRecord::Base
   has_ancestry orphan_strategy: :restrict, cache_depth: true
   acts_as_list scope: [:ancestry]
 
-  def self.search(params)
-    product_groups = ProductGroup.all
+  def self.search(roots: false, form: nil, store_kind: nil, user_role: nil, **)
+    product_groups = roots ? ProductGroup.roots : ProductGroup.all
 
-    if (form = params[:form]).present?
+    if form.present?
       case form
         when 'repair_service' then product_groups = product_groups.spare_parts
         when 'purchase' then product_groups = product_groups.for_purchase
@@ -47,7 +47,7 @@ class ProductGroup < ActiveRecord::Base
       end
     end
 
-    if (store_kind = params[:store_kind]).present?
+    if store_kind.present?
       case store_kind
         when 'spare_parts', 'defect_sp' then product_groups = product_groups.spare_parts
         when 'purchase' then product_groups = product_groups.for_purchase
@@ -55,7 +55,7 @@ class ProductGroup < ActiveRecord::Base
       end
     end
 
-    if (user_role = params[:user_role]).present?
+    if user_role.present?
       case user_role
         when 'software', 'universal' then product_groups = product_groups.except_spare_parts_and_services
         when 'technician' then product_groups = product_groups.spare_parts

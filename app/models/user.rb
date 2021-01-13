@@ -501,7 +501,6 @@ class User < ActiveRecord::Base
   def fast_jobs_count
     QuickOrder.includes(:user)
               .where(created_at: period, user_id: id)
-              .done
               .count
   end
 

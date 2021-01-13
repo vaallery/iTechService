@@ -32,7 +32,7 @@ class ProductApi < Grape::API
         product_groups = ProductGroup.where id: products.collect(&:product_group_id)
         present :remnants, products, with: Entities::ProductEntity, store: store, show_group: true
       else
-        product_groups = ProductGroup.roots.search(user_role: current_user.role)
+        product_groups = ProductGroup.search(roots: true, user_role: current_user.role)
       end
       present :groups, product_groups, with: Entities::ProductGroupEntity
     else
