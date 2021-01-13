@@ -53,6 +53,7 @@
       <thead>
       <tr>
         <th><%= RepairService.human_attribute_name(:name) %></th>
+        <th><%= t('attributes.quantity') %></th>
         <th><%= RepairService.human_attribute_name(:price) %></th>
       </tr>
       </thead>
@@ -61,6 +62,7 @@
       <% @repair_services.each do |repair_service| %>
         <tr>
           <td class="name"><%= repair_service.name %></td>
+          <td class="align_center"><%= repair_service.remnants_qty(params[:department_id]) %></td>
           <td class="price number"><%= human_currency repair_service.price(params[:department_id]) %></td>
         </tr>
       <% end %>
