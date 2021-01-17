@@ -72,16 +72,19 @@ module Service
 
       def move_defected(spare_part_defect, device_task, user)
         comment = "Списание брака при ремонте. Талон: #{device_task.ticket_number}. Исполнитель: #{user.short_name}."
-        comment << ' Гарантия устройства.' if spare_part_defect.is_warranty?
 
-        movement_act = MovementAct.create(store_id: device_task.department.spare_parts_store.id,
-                                          dst_store_id: device_task.department.defect_sp_store.id,
-                                          user_id: user.id,
-                                          comment: comment,
-                                          date: DateTime.current)
+        if spare_part_defect.is_warranty?
+          spare_part_defect.store_item(device_task.department.defect_sp_store).add(spare_part_defect.qty)
+        else
+          movement_act = MovementAct.create store_id: device_task.department.spare_parts_store.id,
+                                            dst_store_id: device_task.department.defect_sp_store.id,
+                                            user_id: user.id,
+                                            comment: comment,
+                                            date: DateTime.current
 
-        movement_act.movement_items.create(item_id: spare_part_defect.item_id, quantity: spare_part_defect.qty)
-        movement_act.post
+          movement_act.movement_items.create(item_id: spare_part_defect.item_id, quantity: spare_part_defect.qty)
+          movement_act.post
+        end
       end
     end
   end

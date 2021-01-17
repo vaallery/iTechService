@@ -10,6 +10,7 @@ class SparePartDefect < ActiveRecord::Base
   belongs_to :contractor
 
   delegate :department, to: :repair_part
+  delegate :store_item, to: :item
 
   attr_accessible :item_id, :repair_part_id, :contractor_id, :qty, :is_warranty
   validates_presence_of :qty
