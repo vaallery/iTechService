@@ -49,7 +49,7 @@ class ProductGroup < ActiveRecord::Base
 
     if store_kind.present?
       case store_kind
-        when 'spare_parts', 'defect_sp' then product_groups = product_groups.spare_parts
+        when 'spare_parts', 'defect_sp', 'repair' then product_groups = product_groups.spare_parts
         when 'purchase' then product_groups = product_groups.for_purchase
         else product_groups = product_groups.except_spare_parts_and_services
       end

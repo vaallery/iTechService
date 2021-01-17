@@ -14,7 +14,7 @@ class MovementAct < ActiveRecord::Base
   delegate :name, to: :store, prefix: true, allow_nil: true
   delegate :name, to: :dst_store, prefix: true, allow_nil: true
 
-  attr_accessible :date, :dst_store_id, :store_id, :movement_items_attributes, :comment
+  attr_accessible :date, :dst_store_id, :store_id, :user_id, :movement_items_attributes, :comment
   validates_presence_of :date, :dst_store, :store, :status, :user
   validates_presence_of :comment, if: :is_to_defect?
   validates_inclusion_of :status, in: Document::STATUSES.keys
