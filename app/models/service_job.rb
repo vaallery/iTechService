@@ -274,7 +274,7 @@ class ServiceJob < ActiveRecord::Base
   end
 
   def status
-    location.try(:name) == 'Готово' ? 'done' : 'undone'
+    location.is_done? ? 'done' : 'undone'
   end
 
   def status_info
