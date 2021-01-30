@@ -1,0 +1,13 @@
+%table#users_report.table.table-bordered.table-hover
+  %caption= t '.title'
+  %thead
+    %tr
+      %th.center{rowspan: 2}= User.human_attribute_name :uniform_sex
+      %th.center{rowspan: 2}= User.human_attribute_name :uniform_size
+      %th.center{colspan: 2}= t('reports.qty')
+  %tbody
+    - report.result[:uniforms].each_pair do |uniform, count|
+      %tr.detailable
+        %td= uniform[0]
+        %td= uniform[1]
+        %td= count

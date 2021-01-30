@@ -44,6 +44,7 @@ ru:
     errors:
       not_found: 'Пользователь не найден.'
     account: 'Учётка'
+    uniform: Униформа
     add_karma: 'Карма'
     add_fault: 'Добавить минус'
     all: 'Все'

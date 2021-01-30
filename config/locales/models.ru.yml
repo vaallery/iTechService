@@ -629,6 +629,8 @@ ru:
         surname: 'Фамилия'
         username: 'Логин'
         wish: 'Пожелание'
+        uniform_sex: Тип футболки
+        uniform_size: Размер футболки
 
     errors:
       models:

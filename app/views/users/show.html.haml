@@ -19,6 +19,7 @@
       -#- if can? :manage, Salary
       -#  %li= link_to t('salaries.index.title'), '#salary_tab', 'data-toggle' => 'tab'
       %li.active= link_to t("users.account"), '#account_tab', 'data-toggle' => 'tab'
+      %li= link_to t("users.uniform"), '#uniform_tab', 'data-toggle' => 'tab'
 
     .tab-content
       #service_jobs_tab.tab-pane
@@ -156,6 +157,14 @@
           - if current_user.superadmin?
             %dt Auth Token
             %dd= @user.authentication_token
+
+      #uniform_tab.tab-pane
+        %dl.dl-horizontal
+          %dt= User.human_attribute_name :uniform_sex
+          %dd= @user.uniform_sex
+
+          %dt= User.human_attribute_name :uniform_size
+          %dd= @user.uniform_size
 
     - if can? :manage, User
       .form-actions

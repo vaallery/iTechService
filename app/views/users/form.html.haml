@@ -6,6 +6,7 @@
     %li.active= link_to t("users.info"), '#info_tab', 'data-toggle' => 'tab'
     %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
     %li= link_to t("users.account"), '#account_tab', 'data-toggle' => 'tab'
+    %li= link_to t("users.uniform"), '#uniform_tab', 'data-toggle' => 'tab'
 
   .tab-content
     #info_tab.tab-pane.active
@@ -91,5 +92,9 @@
       = f.input :password_confirmation
       = f.input :card_number
       = f.input :session_duration
+
+    #uniform_tab.tab-pane
+      = f.input :uniform_sex, collection: User::UNIFORM_SEX, value_method: :to_s
+      = f.input :uniform_size, collection: User::UNIFORM_SIZE, value_method: :to_s
   .form-actions
     = submit_button f
