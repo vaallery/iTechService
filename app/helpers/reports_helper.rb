@@ -40,6 +40,8 @@ module ReportsHelper
       service_job_viewings
       contractors_defected_spare_parts
       uniform
+      repeated_repair
+      repeated_repair2
     ].freeze
   end
 
