@@ -73,16 +73,25 @@
       = f.input :username
 
       = f.input :role, collection: accessible_roles, value_method: :to_s, label_method: lambda{|role|t("users.roles.#{role}")}
-
       - if can? :manage_rights, User
-        .control-group
-          %label.control-label= User.human_attribute_name :abilities
-          .controls
-            - User::ABILITIES.each do |ability|
-              = label_tag "user_abilities_#{ability}", class: 'checkbox' do
-                = check_box_tag "user[abilities][#{ability}]", ability, @user.able_to?(ability), {name: "user[abilities][]"}
-                = t("users.abilities.#{ability}")
-            = hidden_field_tag 'user[abilities][]', ''
+        .row-fluid
+          .control-group.span6
+            %label.control-label= User.human_attribute_name :abilities
+            .controls
+              - User::ABILITIES.each do |ability|
+                = label_tag "user_abilities_#{ability}", class: 'checkbox' do
+                  = check_box_tag "user[abilities][#{ability}]", ability, @user.able_to?(ability), {name: "user[abilities][]"}
+                  = t("users.abilities.#{ability}")
+              = hidden_field_tag 'user[abilities][]', ''
+
+          .control-group.span6
+            %label.control-label= User.human_attribute_name :activities
+            .controls
+              - User::ACTIVITIES.each do |activity|
+                = label_tag "user_activities_#{activity}", class: 'checkbox' do
+                  = check_box_tag "user[activities][#{activity}]", activity, @user.acts_to?(activity), {name: "user[activities][]"}
+                  = t("users.activities.#{activity}")
+              = hidden_field_tag 'user[activities][]', ''
 
       = f.input :can_help_in_repair
       = f.association :department, prompt: false, as: :grouped_select, collection: City.all, group_method: :selectable_departments

@@ -588,6 +588,7 @@ ru:
 
       user:
         abilities: 'Возможности'
+        activities: Уведомления в верхней строке
         announcements: 'Оповещение'
         authentication_token: 'authentication_token'  #g
         birthday: 'День рождения'
