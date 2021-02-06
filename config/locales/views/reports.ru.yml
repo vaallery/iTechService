@@ -148,6 +148,7 @@ ru:
 
     uniform:
       title: Футболки сотрудников
+      staff: Сотрудники
 
     repeated_repair:
       title: Повторные устройства

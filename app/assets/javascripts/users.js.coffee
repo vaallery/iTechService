@@ -70,6 +70,9 @@ jQuery ->
         alert status
     event.preventDefault()
 
+  $('#edit_uniform_link').click (event) ->
+    $('#uniform_view, #uniform_edit').toggleClass 'hide'
+
   if $('#staff_schedule').length > 0
     $legend = $('#staff_schedule_legend')
     $table = $('#job_schedule_table')

@@ -76,6 +76,15 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_uniform
+    @user = find_record User
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        format.js
+      end
+    end
+  end
+
   def destroy
     @user = find_record User
     @user.destroy

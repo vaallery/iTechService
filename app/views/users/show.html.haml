@@ -159,12 +159,24 @@
             %dd= @user.authentication_token
 
       #uniform_tab.tab-pane
-        %dl.dl-horizontal
-          %dt= User.human_attribute_name :uniform_sex
-          %dd= @user.uniform_sex
+        #uniform_view
+          %dl.dl-horizontal
+            %dt= User.human_attribute_name :uniform_sex
+            %dd#uniform_sex_value= @user.uniform_sex
 
-          %dt= User.human_attribute_name :uniform_size
-          %dd= @user.uniform_size
+            %dt= User.human_attribute_name :uniform_size
+            %dd#uniform_size_value= @user.uniform_size
+          - if can? :update_uniform, @user
+            %a#edit_uniform_link.btn
+              %i.icon-edit
+              Редактировать
+
+        %dl#uniform_edit.hide
+          = simple_form_for @user, url: update_uniform_user_path(@user), remote: true, method: :patch, id: 'update_uniform_user_form', html: { class: 'form-horizontal user_form', autocomplete: 'off' } do |f|
+            = f.input :uniform_sex, collection: User::UNIFORM_SEX, value_method: :to_s, selected: @user.uniform_sex, input_html: {id: :input_uniform_sex}
+            = f.input :uniform_size, collection: User::UNIFORM_SIZE, value_method: :to_s, selected: @user.uniform_size, input_html: {id: :input_uniform_size}
+            = submit_button f
+
 
     - if can? :manage, User
       .form-actions
