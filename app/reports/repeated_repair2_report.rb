@@ -18,9 +18,11 @@ class RepeatedRepair2Report < BaseReport
         and created_at >= '#{Date.parse(start_date).iso8601}'
         and created_at <= '#{Date.parse(end_date).iso8601}'
         #{"'and location_id = ' #{department.id}" if department}
-      order by s1.item_id desc
+      order by s2.c desc, s1.item_id desc, s1.created_at desc
     SQL
-    result[:jobs] = ServiceJob.find_by_sql sql
+    jobs = ServiceJob.find_by_sql sql
+    grouped_jobs = jobs.to_a.group_by(&:item_id)
+    result[:jobs] = grouped_jobs
     result
   end
 end

@@ -7,10 +7,14 @@
       %th.center{rowspan: 2}= ServiceJob.human_attribute_name :serial_number
       %th.center{colspan: 2}= ServiceJob.human_attribute_name :created_at
   %tbody
-    - report.result[:jobs].each do |job|
-      - job = job.decorate
-      %tr.detailable
-        %td= job.presentation_link
-        %td= job.imei
-        %td= job.serial_number
-        %td= l job.created_at.to_datetime, format: :date_time
+    - report.result[:jobs].each do |_id, g_jobs|
+      %tr.task_row.detailable
+        %td= g_jobs.first.presentation
+        %td{colspan: 3}= g_jobs.first.c1
+      - g_jobs.each do |job|
+        - job = job.decorate
+        %tr.service_job_row.details
+          %td= job.presentation_link
+          %td= job.imei
+          %td= job.serial_number
+          %td= l job.created_at.to_datetime, format: :date_time
