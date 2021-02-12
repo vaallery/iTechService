@@ -37,7 +37,8 @@
             saveSale();
             $.get("/products/#{@product.id}/related");
           }
-        }
+        };
+        $("#item_search_field")[0].value = null
       }
 - elsif @product.present?
   :plain
