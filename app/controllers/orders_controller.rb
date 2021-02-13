@@ -86,9 +86,11 @@ class OrdersController < ApplicationController
       if @order.update_attributes(params[:order])
         format.html { redirect_to orders_url, notice: t('orders.updated') }
         format.json { head :no_content }
+        format.js
       else
         format.html { render action: 'edit' }
         format.json { render json: @order.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
