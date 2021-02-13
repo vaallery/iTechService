@@ -17,6 +17,7 @@ class OrdersController < ApplicationController
               end
 
     @orders = @orders.search(filter_params)
+    @orders = @orders.preload(:department, :customer, :user)
 
     @orders = if params.key?(:sort) && params.key?(:direction)
                 @orders.reorder("orders.#{sort_column} #{sort_direction}")
