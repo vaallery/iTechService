@@ -1,4 +1,5 @@
 .page-header
+  .input-small
   %h1
     = auto_title
     %small= link_to t('orders.spare_parts'), orders_path(kind: 'spare_parts')
@@ -12,10 +13,12 @@
       method: 'get', html: {class: 'navbar-search form-search', id: 'search_form'}, remote: true do |f|
       =f.input :order_number, placeholder: t('orders.index.search_number_placeholder'), input_html: { class: 'input-small' }
       =f.input :customer, placeholder: Order.human_attribute_name(:customer)
-      =f.input :object, placeholder: Order.human_attribute_name(:object)
-      =f.input :user, input_html: { class: 'input-small'}, placeholder: t('orders.index.search_user_placeholder')
+      =f.input :user, input_html: { class: 'input-medium'}, placeholder: t('orders.index.search_user_placeholder')
       =f.input :object_kind, as: :select, include_blank: t("orders.object_kinds.all_kinds"),
         collection: Order::OBJECT_KINDS.map {|s| [t("orders.object_kinds.#{s}"), s] }
+      %br
+        .search-query
+      =f.input :object, as: :object, placeholder: Order.human_attribute_name(:object), input_html: { class: 'input-xxlarge' }
       %br
       =f.input :department_ids, as: :select, input_html: { multiple: true },
         collection: Department.all.order(:name), selected: current_department&.id,
@@ -28,4 +31,4 @@
       -# = orders_object_kind_filter_tag
       -# = orders_status_filter_tag
 
-#resource_table= render 'table'
+#orders_table= render 'table'

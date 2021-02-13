@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.js { render 'shared/index' }
+      format.js
       format.json { render json: @orders }
     end
   end
