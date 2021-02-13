@@ -59,11 +59,11 @@ class Order < ActiveRecord::Base
   after_update :make_announcement
 
   def self.order_by_status
-    ret = "CASE"
+    ret = 'CASE'
     STATUSES.each_with_index do |s, i|
       ret << " WHEN status = '#{s}' THEN #{i}"
     end
-    ret << " END"
+    ret << ' END'
   end
 
   scope :by_status, -> { order order_by_status }
@@ -107,11 +107,11 @@ class Order < ActiveRecord::Base
   def self.search(params)
     orders = Order.all
 
-    if (statuses = params[:statuses] & STATUSES).present?
-      orders = orders.where status: statuses if statuses.any?
-    else
-      orders = orders.actual_orders
-    end
+    orders = if (statuses = params[:statuses] & STATUSES).any?
+               orders.where status: statuses
+             else
+               orders.actual_orders
+             end
 
     if (object_kind_q = params[:object_kind]).present? && (OBJECT_KINDS.include? object_kind_q)
       orders = orders.send object_kind_q
@@ -145,7 +145,7 @@ class Order < ActiveRecord::Base
       )
     end
 
-    if (department_ids = params[:department_ids])
+    if (department_ids = params[:department_ids]).any?
       orders = orders.where(department_id: department_ids)
     end
 

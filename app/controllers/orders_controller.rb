@@ -141,10 +141,12 @@ class OrdersController < ApplicationController
     %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
   end
 
+  # @return [Hash]
   def filter_params
-    params.permit(:filter)
-          .permit(:order_number, :statuses, :object_kind, :object, :customer, :user, :department_ids)
+    params.permit(filter: [:order_number, :object_kind, :object, :customer, :user, statuses: [], department_ids: []])[:filter]
           .tap do |p|
+      p[:department_ids].reject! { |e| e.to_s.empty? }
+      p[:statuses].reject! { |e| e.to_s.empty? }
       if request.format.html?
         p[:department_ids] = [current_department&.id] if p[:department_ids].blank? && current_department
         p[:statuses] = %w[new done] if p[:statuses].blank?
