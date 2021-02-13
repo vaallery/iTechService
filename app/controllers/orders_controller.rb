@@ -1,22 +1,28 @@
+# frozen_string_literal: true
+
 class OrdersController < ApplicationController
   helper_method :sort_column, :sort_direction
   skip_before_action :authenticate_user!, :set_current_user, only: :check_status
   skip_after_action :verify_authorized, only: %i[index check_status device_type_select]
 
   def index
-    if current_user.technician? or params[:kind] == 'spare_parts'
-      @orders = policy_scope(Order).technician_orders.search(params)
-    elsif current_user.marketing? or params[:kind] == 'not_spare_parts'
-      @orders = policy_scope(Order).marketing_orders.search(params)
-    else
-      @orders = policy_scope(Order).search(params)
-    end
+    @orders = policy_scope(Order)
 
-    if params.has_key?(:sort) and params.has_key?(:direction)
-      @orders = @orders.reorder("orders.#{sort_column} #{sort_direction}")
-    else
-      @orders = @orders.newest
-    end
+    @orders = if current_user.technician? || (params[:kind] == 'spare_parts')
+                @orders.technician_orders
+              elsif current_user.marketing? || (params[:kind] == 'not_spare_parts')
+                @orders.marketing_orders
+              else
+                @orders
+              end
+
+    @orders = @orders.search(filter_params)
+
+    @orders = if params.key?(:sort) && params.key?(:direction)
+                @orders.reorder("orders.#{sort_column} #{sort_direction}")
+              else
+                @orders.newest
+              end
 
     @orders = @orders.page(params[:page]) if params[:status].present?
 
@@ -36,7 +42,7 @@ class OrdersController < ApplicationController
       format.pdf do
         pdf = OrderPdf.new @order, view_context
         filename = "order_#{@order.number}.pdf"
-        filepath = "#{Rails.root.to_s}/tmp/pdf/#{filename}"
+        filepath = "#{Rails.root}/tmp/pdf/#{filename}"
         pdf.render_file filepath
         PrinterTools.print_file filepath, printer: current_department.printer
         send_data pdf.render, filename: filename, type: 'application/pdf', disposition: 'inline'
@@ -66,7 +72,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to orders_url, notice: t('orders.created') }
         format.json { render json: @order, status: :created, location: @order }
       else
-        format.html { render action: "new" }
+        format.html { render action: 'new' }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
@@ -80,7 +86,7 @@ class OrdersController < ApplicationController
         format.html { redirect_to orders_url, notice: t('orders.updated') }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render action: 'edit' }
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
@@ -133,5 +139,16 @@ class OrdersController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : ''
+  end
+
+  def filter_params
+    params.permit(:filter)
+          .permit(:order_number, :statuses, :object_kind, :object, :customer, :user, :department_ids)
+          .tap do |p|
+      if request.format.html?
+        p[:department_ids] = [current_department&.id] if p[:department_ids].blank? && current_department
+        p[:statuses] = %w[new done] if p[:statuses].blank?
+      end
+    end
   end
 end
