@@ -154,3 +154,5 @@ ru:
       title: Повторные устройства
     repeated_repair2:
       title: Повторные устройства2
+    users_jobs:
+      title: Отчёт о работах по сотруднику

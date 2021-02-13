@@ -120,6 +120,8 @@ class User < ActiveRecord::Base
   has_many :device_notes, dependent: :destroy
   has_many :favorite_links, foreign_key: 'owner_id', dependent: :destroy
   has_many :faults, foreign_key: :causer_id, dependent: :destroy
+  has_many :quick_orders
+  has_many :service_free_jobs, :class_name => 'Service::FreeJob', foreign_key: :receiver_id
 
   attr_accessor :login, :auth_token
 

@@ -1,5 +1,16 @@
 class BaseReport
   attr_reader :kind, :department_id
+  cattr_accessor :report_params
+
+  def self.params(items = [])
+    self.report_params = items
+  end
+
+  params [:start_date, :end_date, :department_id]
+
+  def show_param?(name)
+    report_params.include?(name)
+  end
 
   def self.call(attributes = {})
     new(attributes).call
