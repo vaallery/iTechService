@@ -144,8 +144,11 @@ class OrdersController < ApplicationController
 
   # @return [Hash]
   def filter_params
-    params.permit(filter: [:order_number, :object_kind, :object, :customer, :user, statuses: [], department_ids: []])[:filter]
-          .tap do |p|
+    filter = params.permit(filter: [:order_number, :object_kind,
+                                    :object, :customer, :user,
+                                    { statuses: [], department_ids: [] }])[:filter] || { department_ids: [],
+                                                                                         statuses: [] }
+    filter.tap do |p|
       p[:department_ids].reject! { |e| e.to_s.empty? }
       p[:statuses].reject! { |e| e.to_s.empty? }
       if request.format.html?
