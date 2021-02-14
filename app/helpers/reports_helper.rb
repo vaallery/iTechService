@@ -88,6 +88,6 @@ module ReportsHelper
   end
 
   def users_collection(selected)
-    options_from_collection_for_select User.all, :id, :full_name, selected
+    options_from_collection_for_select User.active.staff.order(:name), :id, :full_name, selected
   end
 end

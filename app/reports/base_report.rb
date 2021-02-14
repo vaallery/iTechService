@@ -1,6 +1,6 @@
 class BaseReport
   attr_reader :kind, :department_id
-  cattr_accessor :report_params
+  class_attribute :report_params
 
   def self.params(items = [])
     self.report_params = items
