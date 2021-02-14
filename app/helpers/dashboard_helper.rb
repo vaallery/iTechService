@@ -41,12 +41,15 @@ module DashboardHelper
     content_tag(:tr, class: 'info service_job_row', data: { service_job_id: service_job.id }) do
       content_tag(:td, device_movement_information_tag(service_job), class: 'device_movement_column') +
         content_tag(:td, class: 'device_task_column') do
-          content_tag(:span, service_job.progress,
-                      class: "device_tasks_toggle #{progress_badge_class_for_service_job(service_job)}") +
-            link_to(service_job.presentation, service_job_path(service_job)) +
-            service_job_row_tag_device_attribute(service_job,
-                                                 %i[ticket_number claimed_defect device_condition client_comment
-                                                    type_of_work estimated_cost_of_repair])
+          c = ''.html_safe
+          c += content_tag(:span, service_job.progress,
+                           class: "device_tasks_toggle #{progress_badge_class_for_service_job(service_job)}")
+          c += link_to(service_job.presentation, service_job_path(service_job))
+          c += service_job_row_tag_device_attribute(service_job, [:ticket_number])
+          spoiler = service_job_row_tag_device_attribute(service_job, %i[claimed_defect device_condition client_comment
+                                                                         type_of_work estimated_cost_of_repair])
+          c += content_tag(:details, spoiler) unless spoiler.blank?
+          c
         end +
         content_tag(:td, class: 'client_comment_column') do
           (if service_job.client.present?
@@ -73,11 +76,11 @@ module DashboardHelper
   def service_job_row_tag_device_attribute(service_job, attributes = [])
     res = ActiveSupport::SafeBuffer.new
     attributes.each do |attr|
+      next if (attr_value = service_job.send(attr)).blank?
+
       res += tag(:br, false)
-      res += content_tag(:strong, class: "device_#{attr}") do
-        "#{ServiceJob.human_attribute_name(attr)}: "
-      end
-      res += content_tag(:span) { service_job.send(attr) }
+      res += content_tag(:strong, class: "device_#{attr}") { "#{ServiceJob.human_attribute_name(attr)}: " }
+      res += content_tag(:span) { attr_value }
     end
     res
   end
