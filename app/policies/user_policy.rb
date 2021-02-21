@@ -22,6 +22,10 @@ class UserPolicy < BasePolicy
     owner?
   end
 
+  def update_photo?
+    owner?
+  end
+
   def duty_calendar?
     owner? ||
       same_department? && (manage_schedule? || any_manager?)

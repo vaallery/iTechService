@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
-  before_action :load_infos, only: [:show, :profile]
+  before_action :load_infos, only: %i[show profile]
 
   def index
     authorize User
@@ -7,7 +9,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: {users: @users.map { |u| u.short_name }} }
+      format.json { render json: { users: @users.map(&:short_name) } }
     end
   end
 
@@ -78,10 +80,18 @@ class UsersController < ApplicationController
 
   def update_uniform
     @user = find_record User
+    @user.update_attributes(uniform_params)
     respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.js
-      end
+      format.js
+    end
+  end
+
+  def update_photo
+    @user = find_record User
+    @user.update_attributes(params[:user])
+    respond_to do |format|
+      format.html { redirect_to :profile }
+      format.js
     end
   end
 
@@ -125,9 +135,9 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(wish: params[:user_wish])
-        format.json { render json: {wish: @user.wish} }
+        format.json { render json: { wish: @user.wish } }
       else
-        format.json { render json: {error: 'error'}}
+        format.json { render json: { error: 'error' } }
       end
     end
   end
@@ -204,5 +214,9 @@ class UsersController < ApplicationController
   def load_infos
     # @infos = Info.actual.available_for(current_user).grouped_by_date.limit 20
     @infos = policy_scope(Info).actual.available_for(current_user).newest.limit(20)
+  end
+
+  def uniform_params
+    params.require(:user).permit(:uniform_sex, :uniform_size)
   end
 end

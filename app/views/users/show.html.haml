@@ -54,9 +54,6 @@
       #info_tab.tab-pane
         %dl.dl-horizontal
 
-          %dt
-          %dd= image_tag @user.photo.medium.url if @user.photo?
-
           %dt= User.human_attribute_name :fio
           %dd= @user.full_name
 
@@ -170,12 +167,12 @@
             %a#edit_uniform_link.btn
               %i.icon-edit
               Редактировать
-
-        %dl#uniform_edit.hide
-          = simple_form_for @user, url: update_uniform_user_path(@user), remote: true, method: :patch, id: 'update_uniform_user_form', html: { class: 'form-horizontal user_form', autocomplete: 'off' } do |f|
-            = f.input :uniform_sex, collection: User::UNIFORM_SEX, value_method: :to_s, selected: @user.uniform_sex, input_html: {id: :input_uniform_sex}
-            = f.input :uniform_size, collection: User::UNIFORM_SIZE, value_method: :to_s, selected: @user.uniform_size, input_html: {id: :input_uniform_size}
-            = submit_button f
+        - if can? :update_uniform, @user
+          %dl#uniform_edit.hide
+            = simple_form_for @user, url: update_uniform_user_path(@user), remote: true, method: :patch, id: 'update_uniform_user_form', html: { class: 'form-horizontal user_form', autocomplete: 'off' } do |f|
+              = f.input :uniform_sex, collection: User::UNIFORM_SEX, value_method: :to_s, selected: @user.uniform_sex, input_html: {id: :input_uniform_sex}
+              = f.input :uniform_size, collection: User::UNIFORM_SIZE, value_method: :to_s, selected: @user.uniform_size, input_html: {id: :input_uniform_size}
+              = submit_button f
 
 
     - if can? :manage, User
@@ -184,6 +181,25 @@
           = link_to (icon_tag(:money) + ' ' + t('salaries.issue')), new_salary_path(user_id: @user.id), class: 'btn'
 
   .span6
+
+
+    - if can? :update_photo, @user
+      -# user = @user
+      #update_user_photo
+        -#         = simple_form_for user,url: update_photo_user_path(user),remote: true,id: 'update_user_photo_form' do |f|
+        = simple_form_for @user, url: update_photo_user_path(@user), html: { class: 'form-horizontal user_form', autocomplete: 'off' } do |f|
+          .control-group
+            #user_photo_fields.controls
+              = image_tag f.object.photo.medium.url, class: 'avatar-medium' if f.object.photo?
+              = f.file_field :photo
+              = f.hidden_field :photo_cache
+              %label
+                = f.check_box :remove_photo
+                = t 'remove_photo'
+          = submit_button f
+    - elsif @user.photo?
+      %dt
+      %dd= image_tag @user.photo.medium.url, class: 'avatar-medium'
     - if current_user.superadmin? || able_to?(:comment_users)
       #comments.comments_list= comments_list_for @user
       = comment_form_for @user
