@@ -18,6 +18,8 @@ class ServiceJobsController < ApplicationController
       @service_jobs = @service_jobs.in_department(current_department)
     end
 
+    @service_jobs = ServiceJobFilter.call(collection: @service_jobs, **filter_params).collection
+
     if params.key?(:sort) and params.key?(:direction)
       @service_jobs = @service_jobs.reorder("service_jobs.#{sort_column} #{sort_direction}")
     else
@@ -30,7 +32,7 @@ class ServiceJobsController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @service_jobs }
-      format.js { render 'shared/index' }
+      format.js { render 'shared/index', locals: { resource_table_id: 'service_jobs_table' } }
     end
   end
 

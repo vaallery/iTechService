@@ -12,28 +12,35 @@
   <%= link_to_trade_in_purgatory %>
   <span class="statistics">
     <% if current_user.acts_to?(:free) %>
-      <div class="statistics__item">
-        <%= image_tag('/free_icon.png', width: '60') %>
+      <a onclick="$('#a_free_service_tab').click();">
+        <div class="statistics__item">
+          <%= image_tag('/free_icon.png', width: '60') %>
           <span class="statistics__value">
-          <%= current_user.free_jobs_count %>
-        </span>
-      </div>
+            <%= current_user.free_jobs_count %>
+          </span>
+        </div>
+      </a>
     <% end %>
     <% if current_user.acts_to?(:fast) %>
-      <div class="statistics__item">
+      <a onclick="$('#a_quick_orders_tab').click();">
+        <div class="statistics__item">
         <%= image_tag('/fast_icon.png', width: '60') %>
           <span class="statistics__value">
-          <%= current_user.fast_jobs_count %>
-        </span>
-      </div>
+            <%= current_user.fast_jobs_count %>
+          </span>
+        </div>
+      </a>
+
     <% end %>
     <% if current_user.acts_to?(:long) %>
-      <div class="statistics__item">
-        <%= image_tag('/long_icon.png', width: '60') %>
+      <a onclick="$('#a_service_jobs_tab').click();">
+        <div class="statistics__item">
+          <%= image_tag('/long_icon.png', width: '60') %>
           <span class="statistics__value">
-          <%= current_user.long_jobs_count %>
-        </span>
-      </div>
+            <%= current_user.long_jobs_count %>
+          </span>
+        </div>
+      </a>
     <% end %>
   </span>
   <div id="quick_search_form">

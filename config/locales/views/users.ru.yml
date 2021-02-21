@@ -71,3 +71,5 @@ ru:
     purchased_devices: "Купленные девайсы"
     department_blank_error: '!!! Необходимо указать подразделение !!!'
     actual_orders: "Актуальные заказы"
+    tabs:
+      quick_orders: :quick_orders.index.title

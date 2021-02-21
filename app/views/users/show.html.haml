@@ -12,7 +12,12 @@
 .row-fluid
   .span6
     %ul.nav.nav-tabs
-      %li= link_to User.human_attribute_name(:service_jobs), "#service_jobs_tab", 'data-toggle' => 'tab'
+      %li= link_to 'Длинная приёмка', "#service_jobs_tab", 'data-toggle' => 'tab', id: 'a_service_jobs_tab',
+        onclick: "$('#b_users_service_jobs_search_form').click();"
+      %li= link_to t("users.tabs.quick_orders"), "#quick_orders_tab", 'data-toggle' => 'tab', id: "a_quick_orders_tab",
+        onclick: "$('#b_users_quick_orders_search_form').click();"
+      %li= link_to 'Бесплатный сервис', "#free_service_tab", 'data-toggle' => 'tab', id: "a_free_service_tab",
+        onclick: "$('#b_users_free_jobs_search_form').click();"
       %li= link_to t("users.info"), "#info_tab", 'data-toggle' => 'tab'
       %li= link_to t('users.schedule'), '#schedule_tab', 'data-toggle' => 'tab'
       %li.user-fautls= link_to t('faults.index.title'), '#faults_tab', class: 'user-faults-link', data: {toggle: 'tab', source: user_faults_path(@user)}
@@ -23,33 +28,13 @@
 
     .tab-content
       #service_jobs_tab.tab-pane
-        - if @service_jobs.any?
-          %table.table.table-condensed.table-hover
-            %thead
-              %tr
-                %th= t 'service_jobs.received'
-                %th= ServiceJob.human_attribute_name(:ticket_number)
-                %th= ServiceJob.model_name.human
-                %th= ServiceJob.human_attribute_name(:client)
-                %th= ServiceJob.human_attribute_name(:location)
-                %th
-            %tbody
-              - @service_jobs.each do |service_job|
-                %tr{class: row_class_for_service_job(service_job)}
-                  %td= t 'moved', user: '', time: distance_of_time_in_words_to_now(service_job.created_at)
-                  %td= link_to service_job.ticket_number, service_job_path(service_job)
-                  %td
-                    = link_to service_job.type_name, service_job_path(service_job)
-                    %small= service_job.serial_number
-                    %p.service_job_comment_tooltip{'data-title' => service_job.comment}
-                      %i.icon-comment
-                  %td= h service_job.client_presentation
-                  %td= service_job.location.try :name
-                  %td
-                    .btn-group
-                      = link_to_show_small service_job
-                      = link_to_edit_small service_job# if can? :update, service_job
-                      = link_to_destroy_small service_job if can? :destroy, service_job
+        =render partial: 'service_jobs/user_filter_form', locals: { user: @user }
+
+      #quick_orders_tab.tab-pane
+        =render partial: 'quick_orders/user_filter_form', locals: { user: @user }
+
+      #free_service_tab.tab-pane
+        =render partial: 'service/free_jobs/user_filter_form', locals: { user: @user }
 
       #info_tab.tab-pane
         %dl.dl-horizontal
