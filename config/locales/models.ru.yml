@@ -602,6 +602,8 @@ ru:
         email: 'E-mail'
         encrypted_password: 'encrypted_password'  #g
         hiring_date: 'Дата приема на работу'
+        wishlist: Список желаний
+        hobby: Увлечения, интересы, хобби
         history_records: 'history_records'  #g
         is_fired: 'Уволен'
         job_title: "Должность"
