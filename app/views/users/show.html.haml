@@ -57,6 +57,36 @@
           %dt= User.human_attribute_name :prepayment
           %dd= @user.prepayment.present? ? @user.prepayment : '-'
 
+          #wishlist_hobby_view
+            %dl.dl-horizontal
+              %dt= User.human_attribute_name :wishlist
+              %dd
+                - if @user.wishlist.blank?
+                  -
+                - else
+                  - @user.wishlist.each do |wish|
+                    %p= link_to wish, wish
+
+              -#%dd= @user.wishlist&.any? ? @user.wishlist : '-'
+
+              %dt= User.human_attribute_name :hobby
+              %dd= @user.hobby.present? ? @user.hobby : '-'
+
+            - if can? :update_self, @user
+              %a#edit_wishlist_hobby_link.btn
+                %i.icon-edit
+                Редактировать
+          - if can? :update_self, @user
+            %dl#wishlist_hobby_edit.hide
+              = simple_form_for @user, url: update_self_user_path(@user),
+                method: :patch, id: 'update_uniform_user_form',
+                html: { class: 'form-horizontal user_form', autocomplete: 'off' } do |f|
+                = f.input :wishlist, as: :array, size: 300,
+                    input_html: {id: :input_wishlist }
+                = f.input :hobby, as: :text, input_html: {id: :input_hobby}
+                = submit_button f
+
+
           %dt= User.human_attribute_name :karmas
           %dd
             #user_karmas
@@ -169,9 +199,7 @@
 
 
     - if can? :update_photo, @user
-      -# user = @user
       #update_user_photo
-        -#         = simple_form_for user,url: update_photo_user_path(user),remote: true,id: 'update_user_photo_form' do |f|
         = simple_form_for @user, url: update_photo_user_path(@user), html: { class: 'form-horizontal user_form', autocomplete: 'off' } do |f|
           .control-group
             #user_photo_fields.controls

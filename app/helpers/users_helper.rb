@@ -228,7 +228,18 @@ module UsersHelper
 
   def profile_link
     icon_class = current_user.any_admin? ? 'user-md' : 'user'
-    link_to glyph(icon_class) + ' ' + current_user.short_name, profile_path, id: 'profile_link', data: {id: current_user.id, helpable: current_user.helpable?, location: current_user.location_id, role: current_user.role, timeout_in: current_user.timeout_in}
+    link_to profile_path, id: 'profile_link',
+                          data: {
+                            id: current_user.id,
+                            helpable: current_user.helpable?,
+                            location: current_user.location_id,
+                            role: current_user.role,
+                            timeout_in: current_user.timeout_in
+                          } do
+      c = glyph(icon_class)
+      c += " #{current_user.short_name}"
+      c
+    end
   end
 
   def karma_tag(user)

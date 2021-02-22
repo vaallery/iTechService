@@ -68,6 +68,7 @@ Rails.application.routes.draw do
     post :destroy_duty_day, on: :collection
     patch :update_uniform, on: :member
     patch :update_photo, on: :member
+    patch :update_self, on: :member
   end
 
   resources :faults, only: %i[new create]

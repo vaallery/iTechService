@@ -95,6 +95,14 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_self
+    @user = find_record User
+    @user.update_attributes(update_self_params)
+    respond_to do |format|
+      format.html { redirect_to :profile }
+    end
+  end
+
   def destroy
     @user = find_record User
     @user.destroy
@@ -218,5 +226,9 @@ class UsersController < ApplicationController
 
   def uniform_params
     params.require(:user).permit(:uniform_sex, :uniform_size)
+  end
+
+  def update_self_params
+    params.require(:user).permit(:hobby, wishlist: [])
   end
 end
