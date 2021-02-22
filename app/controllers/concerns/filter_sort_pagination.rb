@@ -27,18 +27,17 @@ module FilterSortPagination
     end
 
     def order
-      if params[:order].present?
+      order = []
+      if params[:sort].present?
+        order << { name: params[:sort], direction: (params[:direction] || :asc) }
+      elsif params[:order].present?
         order = if params[:order].is_a?(String)
                   JSON.parse(params[:order]).map(&:with_indifferent_access)
                 else
                   params[:order].map(&:permit!)
                 end
-      else
-        order = []
-        order << { name: params[:sort], direction: (params[:direction] || :asc) } if params[:sort]
       end
-      order = [] if order.blank?
-      order << { name: 'created_at', direction: 'desc' } if order.detect { |o| o[:name] == 'created_at' }.blank?
+      # order << { name: "#{}.created_at", direction: 'desc' } if order.detect { |o| o[:name] == 'created_at' }.blank?
       order
     end
   end
