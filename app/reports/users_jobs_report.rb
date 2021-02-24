@@ -22,7 +22,9 @@ class UsersJobsReport < BaseReport
         free: :service_free_jobs
       }
       settings.each do |type, relation|
-        user.send(relation).where(created_at: period).order(created_at: :asc).each do |job|
+        jobs = user.send(relation).where(created_at: period).order(created_at: :asc)
+        # jobs = jobs.preload(items: :features) if relation == :service_jobs
+        jobs.each do |job|
           add_job(item, job, type)
         end
       end

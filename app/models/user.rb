@@ -102,7 +102,7 @@ class User < ActiveRecord::Base
   has_many :orders, as: :customer, dependent: :nullify
   has_many :announcements, inverse_of: :user, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
-  has_many :service_jobs, inverse_of: :user
+  has_many :service_jobs, -> { includes(:client, :features, department: :city, item: { product: :product_group }) }, inverse_of: :user
   has_many :karmas, dependent: :destroy, inverse_of: :user
   has_many :karma_groups, through: :karmas
   has_many :bonuses, through: :karma_groups
@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
   has_many :favorite_links, foreign_key: 'owner_id', dependent: :destroy
   has_many :faults, foreign_key: :causer_id, dependent: :destroy
   has_many :quick_orders
-  has_many :service_free_jobs, :class_name => 'Service::FreeJob', foreign_key: :receiver_id
+  has_many :service_free_jobs, -> { includes(:client) }, :class_name => 'Service::FreeJob', foreign_key: :receiver_id
 
   attr_accessor :login, :auth_token
 

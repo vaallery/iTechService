@@ -40,7 +40,7 @@ class ServiceJob < ActiveRecord::Base
   belongs_to :user, inverse_of: :service_jobs
   belongs_to :client, inverse_of: :service_jobs
   belongs_to :device_type
-  belongs_to :item, -> { includes(product: [:product_group, :product_category]) }
+  belongs_to :item, -> { includes(:features, product: [:product_group, :product_category]) }
   belongs_to :location
   belongs_to :receiver, class_name: 'User', foreign_key: 'user_id'
   belongs_to :sale, inverse_of: :service_job

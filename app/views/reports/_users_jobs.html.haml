@@ -23,13 +23,24 @@
           %td
           %td
             - jobs[:fast].each do |job|
-              %span
-                =link_to job[:time], quick_order_path(job[:item]), target: "_blank"
+              - quick_order = job[:item]
+              %p
+                = link_to job[:time], quick_order_path(quick_order), target: "_blank"
+                = quick_order.client_name || quick_order.contact_phone
+                = "; "
           %td
             - jobs[:long].each do |job|
-              %span
-                =link_to job[:time], service_job_path(job[:item]), target: "_blank"
+              - service_job = job[:item]
+              %p
+                = link_to service_job_path(service_job), target: "_blank" do
+                  %span= job[:time]
+                  %span= service_job.presentation
+                = link_to service_job.client.presentation, service_job.client, target: "_blank"
+                = "; "
           %td
             - jobs[:free].each do |job|
-              %span
-                =link_to job[:time], service_free_job_path(job[:item]), target: "_blank"
+              - service_free_job = job[:item]
+              %p
+                = link_to job[:time], service_free_job_path(service_free_job), target: "_blank"
+                = link_to service_free_job.client.presentation, service_free_job.client, target: "_blank"
+                = "; "
