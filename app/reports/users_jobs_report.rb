@@ -7,7 +7,7 @@ class UsersJobsReport < BaseReport
 
   def call
     users = User
-    users = users.where(department_id: department.id) if department
+    users = users.where(department_id: department_ids) unless department_ids.blank?
     users = users.where(id: user_id) unless user_id.blank?
     users = users.all.to_a
     result[:users] = users.map do |user|
